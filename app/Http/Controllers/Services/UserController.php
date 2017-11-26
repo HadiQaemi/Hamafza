@@ -1,0 +1,465 @@
+<?php
+
+namespace App\Http\Controllers\Services;
+
+use App\HamafzaPublicClasses;
+use App\Models\hamafza\Post;
+use App\Token;
+use Request;
+use App\Http\Controllers\Controller;
+use App\HamafzaServiceClasses\UserClass;
+use Validator;
+
+class UserController extends Controller
+{
+
+    public function AboutUser()
+    {
+        $username = Request::input('unmae');
+        $uids = HamafzaPublicClasses\FunctionsClass::UserName2id($username);
+        $uid = '0';
+        $UC = new UserClass();
+        $user_data = $UC->About($uids, $uid, 'service');
+        return $user_data;
+    }
+
+    public function desktop()
+    {
+        $validator = Validator::make(Request::all(), [
+            'token' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+            $error = validation_error_to_api_json($validator->errors());
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => $error
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '3',
+                        'data' =>
+                            [
+                                [
+                                    'type' => 'tasks',
+                                    'title' => 'وظایف',
+                                    'order' => '1',
+                                    'data' =>
+                                        [
+                                            [
+                                                'type' => '11',
+                                                'title' => 'وظایف من',
+                                                'new' => '-1',
+                                                'value' => "$user->MyTasksCount",
+                                                'order' => '1',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'واگذاری های من',
+                                                'new' => '-1',
+                                                'value' => "$user->MyAssignedTasksCount",
+                                                'order' => '2',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'پیشنویس ها',
+                                                'new' => '-1',
+                                                'value' => "$user->MyDraftTasksCount",
+                                                'order' => '3',
+                                                'url' => '#'
+                                            ]
+                                        ]
+                                ],
+                                [
+                                    'type' => 'persons',
+                                    'title' => 'اشخاص',
+                                    'order' => '2',
+                                    'data' =>
+                                        [
+                                            [
+                                                'type' => '7',
+                                                'title' => 'افراد',
+                                                'new' => '-1',
+                                                'value' => "$user->UserPersonsCount",
+                                                'order' => '1',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '13',
+                                                'title' => 'گروه‌ها و کانال ها',
+                                                'new' => '-1',
+                                                'value' => "$user->ApiUserGroupsCount",
+                                                'order' => '2',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '8',
+                                                'title' => 'شاید بشناسید',
+                                                'new' => '-1',
+                                                'value' => '0',
+                                                'order' => '3',
+                                                'url' => '#'
+                                            ]
+                                        ]
+                                ],
+                                [
+                                    'type' => 'messages',
+                                    'title' => 'پیغام',
+                                    'order' => '3',
+                                    'data' =>
+                                        [
+                                            [
+                                                'type' => '14',
+                                                'title' => 'دریافتی ها',
+                                                'new' => '5',
+                                                'value' => '152',
+                                                'order' => '1',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'ارسالی ها',
+                                                'new' => '-1',
+                                                'value' => '152',
+                                                'order' => '2',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'مکالمه ها',
+                                                'new' => '-1',
+                                                'value' => '152',
+                                                'order' => '3',
+                                                'url' => '#'
+                                            ],
+                                        ]
+                                ],
+                                [
+                                    'type' => 'announces_and_forms_and_marked',
+                                    'title' => 'یادداشت ها، فرم ها',
+                                    'order' => '4',
+                                    'data' =>
+                                        [
+                                            [
+                                                'type' => '12',
+                                                'title' => 'یادداشت ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '1',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'علامت گذاری ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '2',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'فرم ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '3',
+                                                'url' => '#'
+                                            ],
+                                        ]
+                                ],
+                                [
+                                    'type' => 'user_account',
+                                    'title' => 'حساب کاربری',
+                                    'order' => '5',
+                                    'data' =>
+                                        [
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'رویداد ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '1',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'امتیاز ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '2',
+                                                'url' => '#'
+                                            ],
+                                            [
+                                                'type' => '-1',
+                                                'title' => 'خرید ها',
+                                                'new' => '-1',
+                                                'value' => '15',
+                                                'order' => '3',
+                                                'url' => '#'
+                                            ],
+                                        ]
+                                ],
+                            ]
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+    }
+
+    public function get_persons()
+    {
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '7',
+                        'data' => $user->ApiUserPersons
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+
+    }
+
+    public function get_people_you_may_know()
+    {
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '8',
+                        'data' =>
+                            [
+                                [
+                                    'user_id' => '3',
+                                    'username' => 'ali_taghavi',
+                                    'first_name' => 'علی',
+                                    'last_name' => 'تقوی',
+                                    'pic' => 'http://hamafza.ir/pics/user/43661473067619.jpg',
+                                ],
+                                [
+                                    'user_id' => '123',
+                                    'username' => 'rastegar_moghaddam',
+                                    'first_name' => 'ایمان',
+                                    'last_name' => '-رستگار مقدم',
+                                    'pic' => 'http://hamafza.ir/pics/user/a393548221e95f9bbd96eef92f80eabc.jpg',
+                                ],
+                                [
+                                    'user_id' => '543',
+                                    'username' => 'nader_gholami',
+                                    'first_name' => 'نادر',
+                                    'last_name' => 'غلامی',
+                                    'pic' => ''
+                                ],
+                                [
+                                    'user_id' => '34',
+                                    'username' => 'mohsen_nami',
+                                    'first_name' => 'محسن',
+                                    'last_name' => 'نامی',
+                                    'pic' => ''
+                                ],
+                            ]
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+
+    }
+
+    public function get_my_posts()
+    {
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $posts = $user->ApiPosts;
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '9',
+                        'data' => $posts
+                    ]
+            ];
+        return $res;
+    }
+
+    public function get_about_me()
+    {
+        if (!CheckToken(Request::get('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $posts_count = $user->posts->count();
+        $follower_persons_count = $user->follower_persons->count();
+        $followed_persons_count = $user->followed_persons->count();
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '10',
+                        'data' =>
+                            [
+                                [
+                                    'section' => 'posts',
+                                    'title' => 'پست ها',
+                                    'type' => '0',
+                                    'data' => "$posts_count"
+                                ],
+                                [
+                                    'section' => 'followers',
+                                    'title' => 'دنبال کنندگان',
+                                    'type' => '0',
+                                    'data' => "$follower_persons_count"
+                                ],
+                                [
+                                    'section' => 'followed',
+                                    'title' => 'دنبال شوندگان',
+                                    'type' => '0',
+                                    'data' => "$followed_persons_count"
+                                ],
+                                [
+                                    'section' => 'expertise',
+                                    'title' => 'تخصص ها',
+                                    'type' => '1',
+                                    'data' => $user->api_specials
+                                ],
+                                [
+                                    'section' => 'responsibility',
+                                    'title' => 'مسئولیت ها',
+                                    'type' => '2',
+                                    'data' =>$user->ApiWorks
+                                ],
+                                [
+                                    'section' => 'educations',
+                                    'title' => 'تحصیلات ها',
+                                    'type' => '3',
+                                    'data' =>$user->ApiEducations
+                                ],
+                                [
+                                    'section' => 'effects',
+                                    'title' => 'آثار',
+                                    'type' => '4',
+                                    'data' =>
+                                        [
+                                            [
+                                                'field' => 'title',
+                                                'title' => 'عنوان',
+                                                'value' => 'اثر یک',
+                                            ],
+                                            [
+                                                'field' => 'title',
+                                                'title' => 'عنوان',
+                                                'value' => 'اثر دو',
+                                            ],
+                                            [
+                                                'field' => 'title',
+                                                'title' => 'عنوان',
+                                                'value' => 'اثر سه',
+                                            ],
+                                        ]
+                                ],
+                            ]
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+    }
+
+    public function get_my_notes()
+    {
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '12',
+                        'data' => $user->ApiAnnounces
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+    }
+
+    public function get_my_groups()
+    {
+        if (!CheckToken(Request::input('token')))
+        {
+            $res =
+                [
+                    'status' => "-1",
+                    'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+                ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token',Request::get('token'))->first()->user;
+        $res =
+            [
+                'status' => "1",
+                'main' =>
+                    [
+                        'type' => '13',
+                        'data' => $user->ApiUserGroups
+                    ]
+            ];
+        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+    }
+
+}

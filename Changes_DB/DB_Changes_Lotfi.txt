@@ -1,0 +1,32 @@
+************************************************************************************************************
+**                                                                                                        **
+**  بسیار مهم:                                                                                            **
+**  رکوردهای 25 و 27 جدول hamahang_tools_available از addkeyword به keyword_addedit_form تغییر داده شود!  **
+**                                                                                                        **
+************************************************************************************************************
+
+keywords, keyword_relations => اضافه شده unique
+
+96/07/16
+bookmarks => deleted
+
+96/07/19
+keywords => اضافه شده unique *
+keyword_relations => اضافه شده unique *
+hamahang_bookmarks => اضافه شده unique
+
+96/08/16
+hamahang_help_blocks => جدید
+
+96/08/17
+hamahang_help_blocks => change fields
+hamahang_helps => جدید
+
+96/08/24
+hamahang_menu_items => [username]/desktop/helps تغییر به [username]/desktop/help
+
+96/08/30
+hamahang_help_see_alsos => جدید
+
+96/09/02
+hamahang_help_see_alsos => اضافه شده unique

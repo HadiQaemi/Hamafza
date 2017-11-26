@@ -1,0 +1,2 @@
+dar table hamahang_task field end_on_assigner_accept default 0 shod .migration ham change shod.
+dar table hamahang_access_tools_user field deleted_at afzoode shod.

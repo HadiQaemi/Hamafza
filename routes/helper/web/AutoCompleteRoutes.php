@@ -1,0 +1,30 @@
+<?php
+Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middleware' => ['dynamic_permission:auto_complete']], function ()
+{
+    Route::post('users', ['as' => 'auto_complete.users', 'uses' => 'AutoCompleteController@users', 'middleware' => ['dynamic_permission:auto_complete.users']]);
+    Route::post('pages', ['as' => 'auto_complete.pages', 'uses' => 'AutoCompleteController@pages', 'middleware' => ['dynamic_permission:auto_complete.pages']]);
+    Route::post('keywords', ['as' => 'auto_complete.keywords', 'uses' => 'AutoCompleteController@keywords', 'middleware' => ['dynamic_permission:auto_complete.keywords']]);
+    Route::post('about_user_keywords', ['as' => 'auto_complete.about_user_keywords', 'uses' => 'AutoCompleteController@about_user_keywords', 'middleware' => ['dynamic_permission:auto_complete.about_user_keywords']]);
+    Route::post('organs', ['as' => 'auto_complete.organs', 'uses' => 'AutoCompleteController@organs', 'middleware' => ['dynamic_permission:auto_complete.organs']]);
+    Route::post('chart_items', ['as' => 'auto_complete.chart_items', 'uses' => 'AutoCompleteController@chart_items', 'middleware' => ['dynamic_permission:auto_complete.chart_items']]);
+    Route::post('projects', ['as' => 'auto_complete.projects', 'uses' => 'AutoCompleteController@projects', 'middleware' => ['dynamic_permission:auto_complete.projects']]);
+    Route::post('process', ['as' => 'auto_complete.process', 'uses' => 'AutoCompleteController@process', 'middleware' => ['dynamic_permission:auto_complete.process']]);
+    Route::post('calendars', ['as' => 'auto_complete.calendars', 'uses' => 'AutoCompleteController@calendars', 'middleware' => ['dynamic_permission:auto_complete.calendars']]);
+    Route::post('tools', ['as' => 'auto_complete.tools', 'uses' => 'AutoCompleteController@tools', 'middleware' => ['dynamic_permission:auto_complete.tools']]);
+    Route::post('roles', ['as' => 'auto_complete.roles', 'uses' => 'AutoCompleteController@roles', 'middleware' => ['dynamic_permission:auto_complete.roles']]);
+    Route::post('all_roles', ['as' => 'auto_complete.all_roles', 'uses' => 'AutoCompleteController@allRoles']);
+    Route::post('menuItems', ['as' => 'auto_complete.menu_items', 'uses' => 'AutoCompleteController@menuItems', 'middleware' => ['dynamic_permission:auto_complete.menu_items']]);
+    Route::post('menus', ['as' => 'auto_complete.menus', 'uses' => 'AutoCompleteController@menus', 'middleware' => ['dynamic_permission:auto_complete.menus']]);
+    Route::post('permissions', ['as' => 'auto_complete.permissions', 'uses' => 'AutoCompleteController@permissions', 'middleware' => ['dynamic_permission:auto_complete.permissions']]);
+    Route::post('allPermissions', ['as' => 'auto_complete.all_permissions', 'uses' => 'AutoCompleteController@allPermissions', 'middleware' => ['dynamic_permission:auto_complete.all_permissions']]);
+    Route::post('provinces', ['as' => 'auto_complete.provinces', 'uses' => 'AutoCompleteController@provinces', 'middleware' => ['dynamic_permission:auto_complete.provinces']]);
+    Route::post('cities', ['as' => 'auto_complete.cities', 'uses' => 'AutoCompleteController@cities', 'middleware' => ['dynamic_permission:auto_complete.cities']]);
+    Route::post('hamahang_cities', ['as' => 'auto_complete.hamahang_cities', 'uses' => 'AutoCompleteController@hamahang_cities', 'middleware' => ['dynamic_permission:auto_complete.hamahang_cities']]);
+    Route::post('getUserCalendar', ['as' => 'auto_complete.get_user_calendar', 'uses' => 'AutoCompleteController@getUserCalendar', 'middleware' => ['dynamic_permission:auto_complete.get_user_calendar']]);
+    Route::post('acl_users', ['as' => 'auto_complete.acl_users', 'uses' => 'AutoCompleteController@aclUsers', 'middleware' => ['dynamic_permission:auto_complete.acl_users']]);
+    Route::post('acl_categories', ['as' => 'auto_complete.acl_categories', 'uses' => 'AutoCompleteController@aclCategories', 'middleware' => ['dynamic_permission:auto_complete.acl_categories']]);
+    Route::post('acl_parents_list', ['as' => 'auto_complete.acl_parents_list', 'uses' => 'AutoCompleteController@aclParentsList', 'middleware' => ['dynamic_permission:auto_complete.acl_parents_list']]);
+    Route::post('keywordsWithSubjects', ['as' => 'auto_complete.keywords_with_subjects', 'uses' => 'AutoCompleteController@keywordsWithSubjects', 'middleware' => ['dynamic_permission:auto_complete.keywords_with_subjects']]);
+    Route::post('subjects', ['as' => 'auto_complete.subjects', 'uses' => 'AutoCompleteController@subjects', 'middleware' => ['dynamic_permission:auto_complete.subjects']]);
+    Route::post('help', ['as' => 'auto_complete.help', 'uses' => 'AutoCompleteController@help']);
+});

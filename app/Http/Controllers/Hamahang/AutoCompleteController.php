@@ -1,0 +1,456 @@
+<?php
+
+namespace App\Http\Controllers\Hamahang;
+
+use App\Http\Controllers\Controller;
+use App\Models\hamafza\keyword;
+use App\Models\hamafza\Subject;
+use App\Models\Hamahang\ACL\AclCategory;
+use App\Models\Hamahang\OrgChart\org_chart_items;
+use App\Models\Hamahang\OrgChart\org_organs;
+use App\Models\Hamahang\ProvinceCity\City;
+use App\Models\Hamahang\ProvinceCity\Province;
+use App\Models\Hamahang\Tasks\tasks;
+use App\Role;
+use Auth;
+use Illuminate\Http\Request;
+use App\User;
+use DB;
+
+
+class AutoCompleteController extends Controller
+{
+    public function tasks(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = tasks::select("id", "title as text")->get();
+        }
+        else
+        {
+            $data = tasks::select("id", "title as text")->where("title", "LIKE", "%" . $x['term'] . "%")->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function users(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = User::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
+        }
+        else
+        {
+            $data = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Family", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Email", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function hamahang_cities(Request $request)
+    {
+        $cities = City::where('province_id', $request->province_id)->get(['id', 'name as text']);
+        return json_encode($cities);
+    }
+
+    public function pages(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = DB::table('pages')
+                ->join('subjects', 'subjects.id', '=', 'pages.sid')
+                ->select('subjects.title as text', 'pages.id')
+                ->get();
+        }
+        else
+        {
+            $data = DB::table('pages')
+                ->join('subjects', 'subjects.id', '=', 'pages.sid')
+                ->where('subjects.title', "LIKE", "%" . $x['term'] . "%")
+                ->select('subjects.title as text', 'pages.id')
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function organs(Request $request)
+    {
+        $x = $request->data;
+        if ($x['q'] == '...')
+        {
+            $data = org_organs::all(["id", "title as text"]);
+        }
+        else
+        {
+            $data = org_organs::select("id", "title as text")->where("title", "LIKE", "%" . $x['q'] . "%")->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function chart_items(Request $request)
+    {
+        if (!empty($request->term))
+        {
+            if ($request->term == '...')
+            {
+                $data = org_chart_items::all(["id", "title as text"]);
+            }
+            else
+            {
+                $data = org_chart_items::select("id", "title as text")->where("title", "LIKE", '%' . $request->term . '%')->get();
+            }
+            return json_encode($data);
+        }
+
+    }
+
+    public function about_user_keywords(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('keywords')
+                ->select("id", "title as text")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('keywords')
+                ->select("id", "title as text")
+                ->where("title", "LIKE", "%" . $data['term'] . "%")->get();
+        }
+        return response()->json($res);
+    }
+
+    public function keywords(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('keywords')
+                ->select("id", "title as text")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('keywords')
+                ->select("id", "title as text")
+                ->where("title", "LIKE", "%" . $data['term'] . "%")->get();
+        }
+        foreach ($res ['results'] as $keyword)
+        {
+            $keyword->id = ($request->exists('exist_in') ? $request->exist_in : 'exist_in') . $keyword->id;
+        }
+        return response()->json($res);
+    }
+
+    public function process(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('hamahang_process')
+                ->select("id", "title as text")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('hamahang_process')->select("id", "title as text")->where("title", "LIKE", "%" . $data['term'] . "%")->get();
+            return response()->json($res);
+        }
+    }
+
+    public function projects(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('hamahang_project')
+                ->select("id", "title as text")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('hamahang_project')->select("id", "title as text")->where("title", "LIKE", "%" . $data['term'] . "%")->get();
+        }
+        return response()->json($res);
+    }
+
+    public function calendars(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('hamahang_calendar')
+                ->select("id", "title")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('hamahang_calendar')
+                ->select('id', 'title')
+                ->where('uid', '=', Auth::id())
+                ->where("title", "LIKE", "%" . $data['term'] . "%")
+                ->get();
+        }
+        return response()->json($res);
+    }
+
+    public function tools()
+    {
+        $tools = \App\Models\Hamahang\Tools\Tools::select('id', 'title as text')->get();
+        return json_encode($tools);
+    }
+
+    public function allRoles(Request $request)
+    {
+        $tools = Role::select('id', 'name as text')->get();
+        return json_encode($tools);
+    }
+
+    public function roles(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = Role::all(["id", DB::raw('CONCAT(name, " ", display_name) AS text')]);
+        }
+        else
+        {
+            $data = Role::select("id", DB::raw('CONCAT(name, " ", display_name) AS text'))
+                ->where("name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("display_name", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function menuItems(Request $request)
+    {
+        $menu_id = deCode($request->menu_id);
+        $query = $request->term;
+        if ($request->term == '...')
+        {
+            $menus = \App\Models\Hamahang\Menus\MenuItem::where("menu_id", $menu_id)
+                ->get(["id", "title as text"]);
+        }
+        else
+        {
+            $menus = \App\Models\Hamahang\Menus\MenuItem::where("title", "LIKE", "%" . $query . "%")
+                ->where("menu_id", $menu_id)
+                ->get(["id", "title as text"]);
+        }
+        $menus = $menus->toArray();
+        if($request->filter_items_by_parent)
+        {
+            array_unshift($menus,['id'=>'-1','text'=>'نمایش همه'],['id'=>'0','text'=>'نمایش ریشه']);
+        }
+        return response()->json($menus);
+    }
+
+    public function menus()
+    {
+        $types = \App\Models\Hamahang\Menus\Menus::select('id', 'title as text')->get();
+        return json_encode($types);
+    }
+
+    public function permissions(Request $request)
+    {
+        $str = $request->term;
+        if ($str['term'] == '...')
+        {
+            $permissions = DB::table('permissions')->select('id', 'display_name AS text')
+                ->get();
+        }
+        else
+        {
+            $permissions = DB::table('permissions')->select('id', 'display_name AS text')
+                ->where('display_name', 'LIKE', "%" . $str['term'] . "%")
+                ->orWhere('name', 'LIKE', "%" . $str['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $permissions);
+        return response()->json($data);
+    }
+
+    public function allPermissions()
+    {
+        $permissions = DB::table('permissions')->select('id', 'display_name AS text')
+            ->get();
+        return response()->json($permissions);
+    }
+
+    public function provinces()
+    {
+        $p = \App\Models\Hamahang\ProvinceCity\Province::select('id', 'name as text')->get();
+        return json_encode($p);
+    }
+
+    public function cities(Request $request)
+    {
+
+        $cities = \App\Models\Hamahang\ProvinceCity\City::select('id', 'name as text')
+            ->where('province_id', '=', $request->pId)
+            ->get();
+        return json_encode($cities);
+    }
+
+    public function toolsOptions()
+    {
+        return \App\Models\Hamahang\Options::getList();
+    }
+
+    public function templatePosition()
+    {
+        return \App\Models\Hamahang\TemplatePosition::getList();
+    }
+
+    public function getUserCalendar()
+    {
+        $list = DB::table("hamahang_calendar")->select('id', 'title')->where('user_id', '=', \Auth::id())->get();
+        return json_encode($list);
+    }
+
+    public function aclUsers(Request $request)
+    {
+        $str = $request->term;
+        if ($request->data['term'] == '...')
+        {
+            $x = User::all(['Email as text', 'Uname as text', 'id'])->toArray();
+        }
+        else
+        {
+            $x = User::where('Uname', 'like', '%' . $request->data['term'] . '%')
+                ->orWhere('Email', 'like', '%' . $request->data['term'] . '%')
+                ->get(['Email as text', 'Uname as text', 'id'])->toArray();
+        }
+        return response()->json($x);
+    }
+
+    public function aclCategories()
+    {
+        $acl_categories = AclCategory::get(['title as text', 'id'])->toArray();
+        return json_encode($acl_categories);
+    }
+
+    public function aclParentsList(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = AclCategory::select("id", 'title AS text')->get();
+        }
+        else
+        {
+            $data = AclCategory::select("id", 'title AS text')
+                ->where("title", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function keywordsWithSubjects(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = Keyword::select("id", DB::raw('CONCAT(title) AS text'))
+                ->get();
+        }
+        else
+        {
+            $data = Keyword::select("id", DB::raw('CONCAT(title) AS text'))
+                ->where("title", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function subjects(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = Subject::select("id", DB::raw('CONCAT(title) AS text'))->get();
+        }
+        else
+        {
+            $data = Subject::select("id", DB::raw('CONCAT(title) AS text'))
+                ->where("title", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function UsersList(Request $request)
+    {
+        if ($request->term == '...')
+        {
+            $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))->get();
+        }
+        else
+        {
+            $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $request->term . "%")
+                ->Orwhere("Family", "LIKE", "%" . $request->term . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $request->term . "%")
+                ->Orwhere("Email", "LIKE", "%" . $request->term . "%")
+                ->get();
+        }
+        echo json_encode($usermodel);
+    }
+
+    public function search_list_user(Request $request)
+    {
+        $array_selected = [];
+        $users = User::where('Uname', 'Like', '%' . $request->term . '%')
+            ->orwhere('Name', 'Like', '%' . $request->term . '%')
+            ->orwhere('Family', 'Like', '%' . $request->term . '%');
+        if ((isset($request->selected_array) && is_array($request->selected_array)))
+        {
+            $array_selected = $request->selected_array;
+        }
+        $users = $users->get();
+        return view('modals.list_user_setting', compact('users', 'array_selected'));
+    }
+
+    public function selected_list_user(Request $request)
+    {
+        if ((isset($request->selected_array) && is_array($request->selected_array)))
+        {
+            $users = User::whereIn('id', $request->selected_array)->get();
+            $array_selected = $request->selected_array;
+            return view('modals.list_user_setting', compact('users', 'array_selected'));
+        }
+
+    }
+
+    public function help(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res['results'] = DB::table('hamahang_helps')
+                ->select('id', 'title as text')
+                ->get();
+        } else
+        {
+            $res['results'] = DB::table('hamahang_helps')
+                ->select('id', 'title as text')
+                ->where('title', 'LIKE', "%$data[term]%")
+                ->get();
+        }
+        return response()->json($res);
+    }
+
+}

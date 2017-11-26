@@ -1,0 +1,11 @@
+/composer.lock
+/.env
+.idea
+/vendor
+nbproject
+node_modules
+
+/storage/logs/laravel.log
+/storage/app/geoip.mmdb
+/SQL
+/hamafza.zip

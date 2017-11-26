@@ -1,0 +1,20 @@
+<?php
+Route::post('getRoles', ['as' => 'hamahang.acl.get_roles', 'uses' => 'AclController@getRoles', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_roles']]);
+Route::post('getPermissions', ['as' => 'hamahang.acl.get_permissions', 'uses' => 'AclController@getPermissions', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_permissions']]);
+Route::post('getCategories', ['as' => 'hamahang.acl.get_categories', 'uses' => 'AclController@getCategories', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_categories']]);
+Route::post('destroyRole', ['as' => 'hamahang.acl.destroy_role', 'uses' => 'AclController@destroyRole', 'middleware' => ['dynamic_permission:posts.hamahang.acl.destroy_role']]);
+Route::post('destroyPermission', ['as' => 'hamahang.acl.destroy_permission', 'uses' => 'AclController@destroyPermission', 'middleware' => ['dynamic_permission:posts.hamahang.acl.destroy_permission']]);
+Route::post('destroyCategory', ['as' => 'hamahang.acl.destroy_category', 'uses' => 'AclController@destroyCategory', 'middleware' => ['dynamic_permission:posts.hamahang.acl.destroy_category']]);
+Route::post('updateRole', ['as' => 'hamahang.acl.update_role', 'uses' => 'AclController@updateRole', 'middleware' => ['dynamic_permission:posts.hamahang.acl.update_role']]);
+Route::post('updatePermission', ['as' => 'hamahang.acl.update_permission', 'uses' => 'AclController@updatePermission', 'middleware' => ['dynamic_permission:posts.hamahang.acl.update_permission']]);
+Route::post('updateCategory', ['as' => 'hamahang.acl.update_category', 'uses' => 'AclController@updateCategory', 'middleware' => ['dynamic_permission:posts.hamahang.acl.update_category']]);
+Route::post('getRolePermissions', ['as' => 'hamahang.acl.get_role_permissions', 'uses' => 'AclController@getRolePermissions', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_role_permissions']]);
+Route::post('setRolePermissions', ['as' => 'hamahang.acl.set_role_permissions', 'uses' => 'AclController@setRolePermissions', 'middleware' => ['dynamic_permission:posts.hamahang.acl.set_role_permissions']]);
+Route::post('getUserPermissions', ['as' => 'hamahang.acl.get_user_permissions', 'uses' => 'AclController@getUserPermissions', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_user_permissions']]);
+Route::post('setUserPermissions', ['as' => 'hamahang.acl.set_user_permissions', 'uses' => 'AclController@setUserPermissions', 'middleware' => ['dynamic_permission:posts.hamahang.acl.set_user_permissions']]);
+Route::post('addNewRole', ['as' => 'hamahang.acl.add_new_role', 'uses' => 'AclController@addNewRole', 'middleware' => ['dynamic_permission:posts.hamahang.acl.add_new_role']]);
+Route::post('addNewPermission', ['as' => 'hamahang.acl.add_new_permission', 'uses' => 'AclController@addNewPermission', 'middleware' => ['dynamic_permission:posts.hamahang.acl.add_new_permission']]);
+Route::post('addNewCategory', ['as' => 'hamahang.acl.add_new_category', 'uses' => 'AclController@addNewCategory', 'middleware' => ['dynamic_permission:posts.hamahang.acl.add_new_category']]);
+Route::post('getRoleUsers', ['as' => 'hamahang.acl.get_role_users', 'uses' => 'AclController@getRoleUsers', 'middleware' => ['dynamic_permission:posts.hamahang.acl.get_role_users']]);
+Route::post('setRoleUsers', ['as' => 'hamahang.acl.set_role_users', 'uses' => 'AclController@setRoleUsers', 'middleware' => ['dynamic_permission:posts.hamahang.acl.set_role_users']]);
+Route::post('removeRoleUser', ['as' => 'hamahang.acl.remove_role_user', 'uses' => 'AclController@removeRoleUser', 'middleware' => ['dynamic_permission:posts.hamahang.acl.remove_role_user']]);

@@ -1,0 +1,1 @@
+<span>صفحات نمایه شده با</span> <span> {{$keyword->title}}</span>

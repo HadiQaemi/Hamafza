@@ -1,0 +1,1 @@
+table hamahang_item_page to hamahang_subject_ables and morfe culomn is changed

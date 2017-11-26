@@ -1,0 +1,1 @@
+<input type="button" id="submit_btn_add_announce" class="btn btn-primary FloatLeft" value="تایید" name="announce_add" id="submit">

@@ -1,0 +1,4 @@
+<?php
+Route::post('get_values_groups', ['as' => 'hamahang.summary.get_values_groups', 'uses' => 'SummaryController@get_values_groups', 'middleware' => ['dynamic_permission:posts.hamahang.summary.get_values_groups']]);
+Route::post('get_values', ['as' => 'hamahang.summary.get_values', 'uses' => 'SummaryController@get_values', 'middleware' => ['dynamic_permission:posts.hamahang.summary.get_values']]);
+Route::post('get_values_jspanel', ['as' => 'hamahang.summary.get_values_jspanel', 'uses' => 'SummaryController@get_values_jspanel', 'middleware' => ['dynamic_permission:posts.hamahang.summary.get_values_jspanel']]);

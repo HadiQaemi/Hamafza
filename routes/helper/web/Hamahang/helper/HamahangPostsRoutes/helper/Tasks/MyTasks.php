@@ -1,0 +1,16 @@
+<?php
+Route::post('MyTasksAddToPackage', ['as' => 'hamahang.tasks.my_tasks.add_to_package', 'uses' => 'PackageController@MyTaskAddToPackage', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.add_to_package']]);
+Route::post('RemoveKeyword', ['as' => 'hamahang.tasks.my_tasks.remove_keyword', 'uses' => 'TaskController@RemoveKeyword', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.remove_keyword']]);
+Route::post('ChangeAction', ['as' => 'hamahang.tasks.my_tasks.change_action', 'uses' => 'TaskController@ChangeAction', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.change_action']]);
+Route::post('reject', ['as' => 'hamahang.tasks.my_tasks.task_reject', 'uses' => 'MyTaskController@reject', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.task_reject']]);  /// task reject by employee
+Route::post('transfer', ['as' => 'hamahang.tasks.my_tasks.task_transfer', 'uses' => 'MyTaskController@transfer', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.task_transfer']]); /// task transfer by employee if te task is transferable
+Route::post('FetchList', ['as' => 'hamahang.tasks.my_tasks.fetch', 'uses' => 'MyTaskController@MyTasksFetch', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.fetch']]);
+Route::post('RemoveFromPackage', ['as' => 'hamahang.tasks.my_tasks.remove_from_package', 'uses' => 'PackageController@RemoveMyTaskFromPackage', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.remove_from_package']]);
+Route::post('TaskStart', ['as' => 'hamahang.tasks.my_tasks.task_start', 'uses' => 'MyTaskController@TaskStart', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.task_start']]);
+Route::post('NewFollowUp', ['as' => 'hamahang.tasks.my_tasks.new_follow_up', 'uses' => 'TaskController@NewFollowUp', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.new_follow_up']]);
+Route::post('change_priority', ['as' => 'hamahang.tasks.my_tasks.change_priority', 'uses' => 'TaskController@change_task_priority_user', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.change_priority']]);
+Route::post('new_package', ['as' => 'hamahang.tasks.my_tasks.new_package', 'uses' => 'TaskController@CreateNewPackage', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.new_package']]); /// create new task package
+Route::post('change_type_task', ['as' => 'hamahang.tasks.my_tasks.change_type_task', 'uses' => 'MyTaskController@change_type_task', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.change_type_task']]);
+Route::post('filter_mytask', ['as' => 'hamahang.tasks.my_tasks.filter_my_task', 'uses' => 'MyTaskController@filter_mytask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.filter_my_task']]);
+Route::post('load_mytask', ['as' => 'Hamahang.Tasks.MyTasks.load_mytask', 'uses' => 'MyTaskController@load_mytask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.load_my_task']]);
+/* ??? */Route::post('show_tasks_states', ['as' => 'hamahang.tasks.my_tasks.show_tasks_states', 'uses' => 'MyTaskController@CustomMyTasksStates']); /// search tasks in states

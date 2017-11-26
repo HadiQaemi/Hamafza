@@ -1,0 +1,1 @@
+<link rel="stylesheet" type="text/css" href="{{url('layouts/banader/css/banader_style.css')}}"/>

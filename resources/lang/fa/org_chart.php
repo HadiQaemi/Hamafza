@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'add_organization'   => 'افزودن سازمان',
+    'add_new_organization'   => 'افزودن سازمان‌ جدید',
+    'add_new_chart'   => 'افزودن چارت جدید',
+    'edit_organization_chart'   => 'ویرایش چارت سازمانی::',
+    'edit_organization'   => 'ویرایش سازمان::',
+    'edit_chart_main_info'   => 'ویرایش اطلاعات اصلی چارت',
+    'organizations_list'   => 'لیست سازمان‌ها',
+    'organizations_chart_list'   => 'لیست چارت‌های سازمان',
+    'register_main_unit'   => 'ثبت واحد اصلی',
+    'set_employee'   => 'تعیین کارمند',
+    'cancel'   => 'لغو',
+    'creator'   => 'ایجاد کننده',
+    'organ'   => 'ارگان',
+    'create'   => 'ایجاد',
+    'parent'   => 'بالادستی:',
+    'main_parent'   => 'بالادستی اصلی',
+    'chart_name'   => 'نام چارت',
+    'new_chart_added'   => 'چارت جدید افزوده شد',
+    'charts'   => 'چارت‌ها',
+    'create_chart'   => 'ایجاد چارت',
+    'chart_manager'=>'مدیریت چارت ها',
+    'show_edit_organ'=>'نمایش اطلاعات واحد سازمانی',
+    'edit_chart'=>'ویرایش چارت::',
+];

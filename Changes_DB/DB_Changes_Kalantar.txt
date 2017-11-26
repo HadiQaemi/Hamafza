@@ -1,0 +1,11 @@
+=== Renamed ===
+hamahang_tools => menuid -> tools_group_id
+=== Deleted ===
+hamahang_tools_available => relation, params 
+
+17-10-09:
+=== Deleted ===
+user => Temp_pass, Temp_pass_active
+users table
+=== Added ===
+user => new_pass

@@ -1,0 +1,3 @@
+<?php
+Route::post('FetchLibraryTasks', ['as' => 'hamahang.library.fetch_tasks', 'uses' => 'TasksLibraryController@FetchTasks', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.fetch_tasks']]);
+Route::post('RemoveLibraryTask', ['as' => 'hamahang.library.remove_library_task', 'uses' => 'TasksLibraryController@RemoveLibraryTask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.remove_library_task']]);
