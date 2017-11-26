@@ -1,0 +1,32 @@
+
+#main{
+    background-image: url("../img/background.jpg");
+    background-position:0 1300px;
+}
+#main #content_in_center{
+    top:50%;
+    margin-top: -150px;
+    position: absolute;
+    width: 100%;
+}
+
+#main #content_in_center .inner_content{
+    text-align: center;
+    height: 200px;
+    background: rgba(255,255,255,0.9);
+    width: 100%;
+    margin: auto;
+    padding-top: 50px;
+}
+#main #content_in_center .inner_content a{
+    text-align: center;
+    margin-top: 50px;
+}
+#main #content_in_center .inner_content img{
+    height: 80px;
+}
+.transparent_bg{
+    height: 100%;
+    width: 100%;
+    background: rgba(255,255,255,0.35);
+}

@@ -1,0 +1,35 @@
+.modal-open .modal {
+  background: rgba(0,0,0,0.5);
+}
+.modal-content {
+  border: none;
+  border-radius: 0;
+
+  .modal-header {
+    font-size: 30px;
+    padding: 13px 15px;
+    border-top: 4px solid transparent;
+    .close {
+      opacity: 1;
+      outline: none;
+
+      span {
+        font-size: 40px;
+        color: #7e7e7e;
+        font-weight: bold;
+      }
+
+      &:hover {
+        opacity: .8;
+      }
+    }
+
+    &.modal-header-darkblue {
+      border-top-color: #6593c5;
+    }
+
+    &.modal-header-green {
+      border-top-color: #6ec565;
+    }
+  }
+}

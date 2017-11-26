@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fancytree - Example: Glyph Extension / Bootstrap Theme</title>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<!--
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+-->
+
+	<script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<link href="../src/skin-bootstrap/ui.fancytree.css" rel="stylesheet"class="skinswitcher">
+
+	<script src="../src/jquery.fancytree.js"></script>
+	<script src="../src/jquery.fancytree.dnd.js"></script>
+	<script src="../src/jquery.fancytree.edit.js"></script>
+	<script src="../src/jquery.fancytree.glyph.js"></script>
+	<script src="../src/jquery.fancytree.table.js"></script>
+	<script src="../src/jquery.fancytree.wide.js"></script>
+
+<!-- Start_Exclude: This block is not part of the sample code
+	<link href="../lib/prettify.css" rel="stylesheet">
+	<script src="../lib/prettify.js"></script>
+	<link href="../demo/sample.css" rel="stylesheet">
+	<script src="../demo/sample.js"></script>-->
+
+	<style type="text/css">
+		body {
+			padding: 15px;
+		}
+		ul.fancytree-container {
+			border: none;
+		}
+		/* Reduce bootstrap's default 'panel' padding: */
+		div#tree {
+			padding: 3px 5px;
+		}
+	</style>
+<!-- End_Exclude -->
+
+<style type="text/css">
+	/* Define custom width and alignment of table columns */
+	#treetable {
+		table-layout: fixed;
+	}
+	#treetable tr td:nth-of-type(1) {
+		text-align: right;
+	}
+	#treetable tr td:nth-of-type(2) {
+		text-align: center;
+	}
+	#treetable tr td:nth-of-type(3) {
+		min-width: 100px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+
+
+<!-- Add code to initialize the tree when the document is loaded: -->
+<script type="text/javascript">
+	glyph_opts = {
+		map: {
+			doc: "glyphicon glyphicon-file",
+			docOpen: "glyphicon glyphicon-file",
+			checkbox: "glyphicon glyphicon-unchecked",
+			checkboxSelected: "glyphicon glyphicon-check",
+			checkboxUnknown: "glyphicon glyphicon-share",
+			dragHelper: "glyphicon glyphicon-play",
+			dropMarker: "glyphicon glyphicon-arrow-right",
+			error: "glyphicon glyphicon-warning-sign",
+			expanderClosed: "glyphicon glyphicon-menu-right",
+			expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+			expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+			folder: "glyphicon glyphicon-folder-close",
+			folderOpen: "glyphicon glyphicon-folder-open",
+			loading: "glyphicon glyphicon-refresh glyphicon-spin"
+		}
+	};
+	$(function(){
+
+		$("#treetable").fancytree({
+			extensions: ["dnd", "edit", "glyph", "table"],
+			checkbox: true,
+			dnd: {
+				focusOnClick: true,
+				dragStart: function(node, data) { return true; },
+				dragEnter: function(node, data) { return true; },
+				dragDrop: function(node, data) { data.otherNode.copyTo(node, data.hitMode); }
+			},
+			glyph: glyph_opts,
+			rtl: true,
+			source: {url: "ajax-tree-taxonomy.json", debugDelay: 1000},
+			table: {
+				checkboxColumnIdx: 1,
+				nodeColumnIdx: 2
+			},
+
+			activate: function(event, data) {
+			},
+			lazyLoad: function(event, data) {
+				data.result = {url: "ajax-sub2.json", debugDelay: 1000};
+			},
+			renderColumns: function(event, data) {
+				var node = data.node,
+					$tdList = $(node.tr).find(">td");
+					console.log(data);
+				$tdList.eq(0).text(node.getIndexHier());
+				$tdList.eq(3).text(!!node.desc);
+			}
+		});
+	});
+</script>
+
+<!-- Start_Exclude: This block is not part of the sample code -->
+<script>
+$(function(){
+
+
+	$( "#fontSize" ).change(function(){
+		$("#tree .fancytree-container").css("font-size", $(this).prop("value") + "pt");
+	});//.prop("value", 12);
+
+	$("#plainTreeStyles").on("change", "input", function(e){
+		$("#tree ul").toggleClass($(this).data("class"), $(this).is(":checked"));
+	});
+	$("#bootstrapTableStyles").on("change", "input", function(e){
+		$("#treetable").toggleClass($(this).data("class"), $(this).is(":checked"));
+	});
+});
+</script>
+<!-- End_Exclude -->
+
+</head>
+
+<body>
+	
+	<h3> Table tree </h3>
+
+	<p id="bootstrapTableStyles">
+		<b>Add table class:</b><br>
+		<label><input type="checkbox" data-class="table-bordered"> table-bordered</label>
+		<label><input type="checkbox" data-class="table-condensed" checked="checked"> table-condensed</label>
+		<label><input type="checkbox" data-class="table-striped" checked="checked"> table-striped</label>
+		<label><input type="checkbox" data-class="table-hover" checked="checked"> table-hover</label>
+		<label><input type="checkbox" data-class="table-responsive"> table-responsive</label>
+		<label><input type="checkbox" data-class="fancytree-colorize-selected"> fancytree-colorize-selected</label>
+	</p>
+
+	<table id="treetable" class="table table-condensed table-hover table-striped fancytree-fade-expander">
+		<colgroup>
+			<col width="80px"></col>
+			<col width="30px"></col>
+			<col width="*"></col>
+			<col width="100px"></col>
+			<col width="100px"></col>
+			<col width="100px"></col>
+		</colgroup>
+		<thead>
+			<tr>
+				<th></th> 
+				<th></th> 
+				<th>Classification</th> 
+				<th>Folder</th> 
+				<th></th> 
+				<th></th> 
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td> 
+				<td></td> 
+				<td></td> 
+				<td></td> 
+				<td></td> 
+				<td></td> 
+			</tr>
+		</tbody>
+</body>
+</html>

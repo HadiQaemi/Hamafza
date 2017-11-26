@@ -1,0 +1,98 @@
+/*#mainContainer {
+  top: 373px;
+}*/
+.row {
+  margin: 0;
+  height: 100%;
+}
+ul.list-light li {
+  padding: 0 20px;
+  cursor: pointer;
+  line-height: 26px;
+}
+ul.list-light li:hover {
+  background: #f4f4f4;
+}
+ul.list-light.list-light li {
+  line-height: 43px;
+}
+.findfriends {
+  padding: 15px 0;
+  border-radius: 0;
+}
+.col-md-9 .person-list {
+  font-family: 'IranSharp';
+}
+.col-md-9 .person-list li {
+  border: 1px solid #dbdbdb;
+  height: 120px;
+  background: #fff;
+  padding: 0;
+  box-shadow: 0 4px 7px rgba(162, 162, 162, 0.54);
+  width: 320px;
+  position: relative;
+  float: right;
+  margin: 14px;
+}
+.col-md-9 .person-list .person-avatar {
+  float: right;
+  margin: 8px;
+ width: 80px;
+ height: 80px;
+ border-radius: 50%;
+}
+.col-md-9 .person-list .person-name {
+  font-size: 13px;
+  line-height: 25px;
+  text-align: right;
+}
+.col-md-9 .person-list .person-moredetail {
+  font-size: 11px;
+  line-height: 17px;
+}
+.col-md-9 .person-list .person-relation {
+  color: #67ac97;
+  font-size: 12px;
+}
+.col-md-9 .person-list .person-detail {
+  margin-right: 96px;
+  padding-top: 13px;
+}
+.col-md-9 .person-list .person-circle {
+  position: absolute;
+  bottom: 7px;
+  left: 7px;
+  border: 1px solid #bababa;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.9;
+}
+.col-md-9 .person-list .person-circle.grey {
+  background: #ececec;
+}
+.col-md-9 .person-list .person-circle.green {
+  background: #32b38c;
+  color: #fff;
+}
+.col-md-9 .person-list .person-circle *:before {
+  vertical-align: middle;
+  font-size: 12px;
+}
+.col-md-9 .person-list .person-circle:hover {
+  opacity: 1;
+}
+.person-search {
+  border: 1px solid #d2d2d2;
+  line-height: 24px;
+  padding: 9px;
+  font-family: 'b nazanin';
+  font-size: 18px;
+  outline: none;
+}
+
+@media screen and (min-width: 992px) {
+  .scrl-bx {
+    height: 100%;
+    overflow: hidden;
+  }
+}

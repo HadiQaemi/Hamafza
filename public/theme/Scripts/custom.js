@@ -1,0 +1,1002 @@
+$(document).ready(function () {
+    $('.addBookmark').click(function () {
+        title = '{!! $Title !!}';
+        target_table = 'page';
+        target_id = '{!! $pid !!}';
+        if (title == '') {
+            alert('محتوا خالی است.');
+        } else {
+            $.ajax
+            ({
+                url: Baseurl + 'bookmarks/add',
+                type: 'post',
+                dataType: 'json',
+                data: {title: title, target_table: target_table, target_id: target_id},
+                success: function (response) {
+                    jQuery.noticeAdd
+                    ({
+                        type: response[0],
+                        text: response[1],
+                        stay: false
+                    });
+                }
+            });
+        }
+    });
+});
+
+$(document).click(function (event) {
+    var isloc = $(event.target).closest('.token-input-list').length;
+    if (isloc == 0) {
+        if ($('.token-input-dropdown:visible').is(":visible")) {
+            $('.token-input-dropdown:visible').hide();
+        }
+    }
+});
+
+$(document).ready(function () {
+    var slider;
+    $(".add2Group").click(function () {
+        if (Gid == '')
+            alert("ایراد  در کارکرد");
+        else {
+            $.ajax({
+                type: "POST",
+                url: Baseurl + "addGroup",
+                dataType: 'html',
+                data: ({gid: Gid}),
+                success: function (theResponse) {
+                    jQuery.noticeAdd({
+                        text: theResponse,
+                        stay: false,
+                        type: 'success'
+                    });
+                }
+            });
+        }
+    });
+    $(".AcceptUser2Group").click(function () {
+        var uid = $(this).attr('uid');
+        if (Gid == '')
+            alert("ایراد  در کارکرد");
+        else {
+            $.ajax({
+                type: "POST",
+                url: Baseurl + "AcceptUser2Group",
+                dataType: 'html',
+                data: ({gid: Gid, uid: uid, e: '1'}),
+                success: function (theResponse) {
+                    jQuery.noticeAdd({
+                        text: theResponse,
+                        stay: false,
+                        type: 'success'
+                    });
+                }
+            });
+            $(this).parent().parent().parent().parent().parent().remove();
+        }
+    });
+    $(".RemoveUser2Group").click(function () {
+        var uid = $(this).attr('uid');
+        if (Gid == '')
+            alert("ایراد در کارکرد");
+        else {
+            $.ajax({
+                type: "POST",
+                url: Baseurl + "AcceptUser2Group",
+                dataType: 'html',
+                data: ({gid: Gid, uid: uid, e: '0'}),
+                success: function (theResponse) {
+                    jQuery.noticeAdd({
+                        text: theResponse,
+                        stay: false,
+                        type: 'success'
+                    });
+                }
+            });
+            $(this).parent().parent().parent().parent().parent().remove();
+        }
+    });
+    $("#scrollReset").stop(true, true).fadeOut();
+
+    $(window).resize(function () {
+        manageScroll();
+    });
+
+    function manageScroll() {
+        if (window.innerWidth < 992) {
+            $("#vrScroll").mCustomScrollbar({
+                theme: "dark-3", advanced: {
+                    updateOnContentResize: true,
+                    updateOnImageLoad: true
+                }
+            });
+        } else {
+            $("#vrScroll").mCustomScrollbar("destroy")
+        }
+    }
+
+
+    function AddTagsByname(e, Tname, Tid) {
+        $(e).tokenInput("add", {id: Tid, name: Tname});
+
+    }
+
+    function wichLink(el, w) {
+        var htmlUrl = el.attr("href");
+        htmlUrl = htmlUrl.replace('#/', '');
+        loadCntnt(htmlUrl, w);
+
+    }
+
+    function uniqueId() {
+        return new Date().getTime()
+    }
+
+    $(".content").mCustomScrollbar({
+        callbacks: {
+            onTotalScroll: function () {
+                console.log("scrolled to bottom");
+            }
+        }
+    });
+
+    function loadCntnt(url, w) {
+        $('body').append('<div class="rplc-cntnt"></div>');
+        $(".rplc-cntnt").load(url + "?t=" + uniqueId(), function (response, status, xhr) {
+            /*New JS*/
+            //footer ++++++++++++++++++++++++
+            if (url.toLowerCase().indexOf("index") < 0) {
+                $("div.footerPage").hide()
+            } else {
+                $("div.footerPage").show()
+            }
+
+            //-------------------------------------
+            if (status == "error") {
+                var msg = "Sorry but there was an error";
+
+
+            } else {
+                var wrpr = $(".rplc-cntnt");
+                $(".rplc-cntnt").remove();
+                var cntnt;
+                if (w === 'main-menu') {
+                    cntnt = $('div[hmfz-tmplt-cntnt]', wrpr);
+                    $('div[hmfz-ui-view] *').remove();
+                    $('div[hmfz-ui-view]').empty().html(cntnt);
+                    homeSlider();
+                    $('[data-toggle="tooltip"]').tooltip();
+                    $('body').removeClass('theme-lightblue theme-pink theme-darkblue theme-gold theme-green');
+                    $('body').addClass(cntnt.attr('hmfz-tmplt-thm-clr'));
+                } else if (w === 'page-tab') {
+                    cntnt = $('div[hmfz-pg-tb-cntnt]', wrpr);
+                    $('div[hmfz-pg-tb]').empty().html(cntnt);
+                }
+//                    $(".scrl-2").mCustomScrollbar({theme: "dark-3"});
+//                    $(".scrl-3").mCustomScrollbar({theme: "dark-3"});
+            }
+            /*New JS*/
+            //footer ++++++++++++++++++++++++
+            if ($("body").find("div.footerPage").length > 1) {
+
+                $("body").find("div.footerPage").last().hide()
+            }
+            //-------------------------------------
+
+        });
+
+    }
+
+    //------------------------------------------
+
+
+    // toolbar SubMenu +++++++++++++++++++++
+
+    $(document).on("click", ".MustLogin", function (e) {
+
+        if ($("body").find("div#modalTransparent").length <= 0) {
+
+            $("body").append("<div id='modalTransparent' />")
+        }
+        if ($(this).attr("class") == "register" || $(this).attr('class') == "login") {
+            closeFlag = false
+        } else {
+            close = true
+        }
+    });
+    $(document).on("keypress", "#searchword", function (e) {
+        var keyCode = (e.keyCode ? e.keyCode : e.which);
+        if (keyCode == 13)  // the enter key code
+        {
+            $('#SearchBut').trigger('click');
+            return false;
+        }
+    });
+    $(document).on("click", ".activity", function (e) {
+        e.preventDefault();
+        //newjs
+        $('.activty-box').stop().slideToggle(400);
+        $(document).stop().mouseup(function (e) {
+            var container = $("div.activty-box");
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                container.stop().slideUp();
+            }
+        });
+    });
+    //-------------------------------------
+
+
+    // full screen ++++++++++++++++++++++++
+    $(document).on("click", ".ful-scrn", function (e) {
+        e.preventDefault();
+        $('.fix-box').toggleClass('ful-fix');
+        $(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
+        if ($(".ful-scrn span").hasClass("icon-nim-safhe"))
+            $(".ful-scrn span").removeClass("icon-nim-safhe");
+        else
+            $(".ful-scrn span").addClass("icon-nim-safhe");
+
+    });
+    //-------------------------------------
+
+
+    // Side search ++++++++++++++++++++++++
+
+    // Side search ++++++++++++++++++++++++
+    $('.sidesearch-disable').add('.side-search .close').click(function (event) {
+        closeSearch();
+    });
+
+    $(".side-search").css("top", $("#header").height());
+
+    $(window).resize(function () {
+        $(".side-search").css("top", $("#header").height())
+    });
+
+
+    $("#avatar").click(function () {
+
+        $('div.dropdown-menu').click(function (event) {
+            event.stopPropagation();
+        })
+    });
+
+
+    function openSearch(state) {
+        $('.side-search a').closest('li').eq(state).children('a').tab('show');
+        $('.side-search ul.nav-tabs li').removeClass("active").not(':eq(' + state + ')').stop(true, true).hide()
+        $('.side-search ul.nav-tabs li').eq(state).stop(true, true).show().addClass("active")
+        $("#main").stop(true).animate({
+            marginRight: "0",
+            marginLeft: "450px"
+        });
+        $(".side-search").stop(true).animate({
+            left: 0,
+            top: $("#header").height()
+        })
+    }
+
+    $(document).on('keyup', '#portallist-search', function () {
+        clearTimeout(keyword_search_time);
+        keyword_search_time = setTimeout(function () {
+            $('ul.navbar-nav .icon-dargah').click()
+        }, 1000);
+    });
+
+    function closeSearch() {
+        $("#main").stop(true).animate({
+            marginRight: "0px",
+            marginLeft: "0px"
+        });
+        $(".side-search").stop(true).animate({
+            left: -450
+        }, function () {
+            $('.side-search ul.nav-tabs li').stop(true, true).show()
+        })
+    }
+
+    //----------------------------------------
+    //----------------------------------------
+
+    // Home Slider +++++++++++++++++++++++++++
+
+    homeSlider();
+
+    function homeSlider() {
+        $('#bootslider').add('#bootslider *').off().removeData();
+        for (var member in slider)
+            delete slider[member];
+        slider = new bootslider('.bootslider', {
+            canvas: {
+                width: 1206,
+                height: 330
+            }
+        });
+        slider.init();
+    }
+
+    //----------------------------------------
+
+    // tooltip +++++++++++++++++++++++++++++++
+    $('[data-toggle="tooltip"]').tooltip();
+    //----------------------------------------
+
+    // list Search +++++++++++++++++++++++++++
+    $(document).on("keyup", "#list-search", function (e) {
+        var txt = $(this).val();
+        if (txt === '') {
+            $('.searching-cntnt *').removeClass('src-hdn src-hlt');
+        } else {
+            var txt2 = ':contains("' + txt + '")';
+            var found = $('.searching-cntnt .panel-title span' + txt2).add('.searching-cntnt li' + txt2);
+            $('.searching-cntnt .panel-title span').add('.searching-cntnt li').removeClass('src-hlt').addClass('src-hdn');
+            found.addClass('src-hlt').removeClass('src-hdn');
+        }
+    });
+
+});
+
+
+/*New JS*/
+/*For Right Sub Menu*/
+
+//++++++++++++++++++++++++++++++++++++++++
+
+var rightSubMenu = "-1600px";
+
+$(document).on("click", "#rSubMenuBtn", function (e) {
+    rightSubMenu = rightSubMenu == "0" ? "-2600px" : "0";
+    Showmenu = rightSubMenu == "0" ? "true" : "false";
+    if (rightSubMenu == "0") {
+        $("div.rightSubMenu").stop().css("display", "none");
+        $("#toolbar .btn-group").hide();
+        $("#toolbar .frst-wdt").show();
+        $(this).removeClass('icon-reorder');
+        $(this).addClass('icon-bastan');
+
+        $(document).stop().mouseup(function (e) {
+            var container = $("div.rightSubMenu >div.menu");
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+                $("#toolbar .btn-group").show();
+            $("#toolbar .frst-wdt").show();
+            $("#rSubMenuBtn").removeClass('icon-bastan');
+            $("#rSubMenuBtn").addClass('icon-reorder');
+            {
+                $("div.rightSubMenu").stop().css("display", "block").animate({
+                    right: "-2600px"
+                }, function () {
+                    if (rightSubMenu == "-2600px") {
+                        $("div.rightSubMenu").stop().css("display", "none");
+                        $("#rSubMenuBtn").removeClass('icon-bastan');
+                        $("#rSubMenuBtn").addClass('icon-reorder');
+                    }
+                })
+            }
+        });
+    }
+
+    $("div.rightSubMenu").stop().css("display", "block").animate({
+        right: rightSubMenu
+    }, function () {
+        if (rightSubMenu == "-160px") {
+            $("div.rightSubMenu").stop().css("display", "none")
+        }
+    })
+});
+
+$(document).on("click", "div.rightSubMenu div.pull-right ul li a", function () {
+    $(this).parent().addClass("active").siblings().removeClass("active");
+    $("div.rSubMenuData >div").stop().hide();
+    $("div.rSubMenuData >div#" + $(this).attr("href").split("#")[1]).stop().fadeIn();
+    return false
+});
+
+//----------------------------------------
+
+/*For Login/Register Modal Transparent Div Problem*/
+
+//++++++++++++++++++++++++++++++++++++++++
+
+var closeFlag = true;
+
+/*when click on body*/
+
+$(document).mouseup(function (e) {
+    var container = $("div.modal-dialog");
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        closeFlag = true
+    }
+});
+
+/*when click on register/login button*/
+$(document).on("click", "div#login div.register,div#register div.login,#header div.register,#header div.login", function () {
+
+    if ($("body").find("div#modalTransparent").length <= 0) {
+
+        $("body").append("<div id='modalTransparent' />")
+
+    }
+
+    if ($(this).attr("class") == "register" || $(this).attr() == "login") {
+
+        closeFlag = false
+    } else {
+        close = true
+    }
+});
+
+/*when press Esc button*/
+$(document).on("keyup", function (e) {
+
+    if (e.keyCode == 27) {
+        closeFlag = true
+    }
+});
+
+/*when click close button*/
+
+$(document).on("click", "div.modal-dialog .close", function () {
+    closeFlag = true
+});
+
+/*on close modal*/
+
+$(document).on('hidden.bs.modal', '#register,#login', function (event) {
+    if (closeFlag) {
+
+        $("body").find("div#modalTransparent").remove()
+    }
+});
+
+//----------------------------------------
+
+/*For Send Comment*/
+
+//++++++++++++++++++++++++++++++++++++++++
+var mainContainerPosition = "absolute";
+
+$(document).on("click", ".MenuDiv .comment", function () {
+    $("#toolbar .comment").trigger("click");
+    $("#TitleHead").html('نظر');
+
+});
+
+$(document).on("click", ".MenuDiv .question", function () {
+    $("#toolbar .comment").trigger("click");
+    $("#post_type").val('2').change();
+    $("#NewPost").attr('placeholder', 'پرسش تان را واردکنید');
+});
+
+$(document).on("click", "#toolbar .comment", function () {
+    mainContainerPosition = mainContainerPosition == "absolute" ? "static" : "absolute";
+    $("#commentEditorW").show();
+    $("#commentEditorW").stop().animate({
+        height: editorHeight
+    });
+
+    $(".sendComment").stop().animate({
+        height: 300
+    });
+
+    if (mainContainerPosition == "static") {
+        $("#mainContainer").css("position", mainContainerPosition);
+        $("#mainContainer").css("height", '800');
+
+    }
+
+    $(this).parent().parent().parent().find(".sendComment").slideToggle('', function () {
+
+        if (mainContainerPosition == "absolute") {
+            $("#mainContainer").css("position", mainContainerPosition);
+            $("#mainContainer").css("height", 'auto');
+        }
+    });
+});
+
+var editorHeight = "200px";
+$(document).on("keyup", "input#commentTitleWW", function (e) {
+    $("#commentEditorWW").show();
+    $("#commentEditorWW").stop().animate({
+        height: 227
+    });
+    $(".sendComment").stop().animate({
+        height: 325
+    })
+    $('#Commentkeywords2').select2();
+});
+
+$(document).on("click", "div.sendComment .fa-close", function () {
+    $("#toolbar .comment").click()
+});
+
+$(document).on("click", "div.commenTxtHolder ul li a#picUpload", function () {
+
+    $("#pictureUpload").click()
+
+});
+
+$(document).on("click", "#picUploadW", function () {
+    $("#pictureUpload").click()
+});
+
+$(document).on("click", "div.commenTxtHolder ul li a#vidUpload", function () {
+    $("#pictureUpload").click()
+});
+
+$(document).on("click", "#vidUploadW", function () {
+    $("#pictureUpload").click()
+});
+//----------------------------------------
+
+$("div.footerPage:first").remove();
+
+/*For Js Panel*/
+
+$(document).on("click", ".Delicn", function () {
+    page = $(this).attr('page');
+    id = $(this).attr('id');
+    if (id != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "DeleteRow",
+            dataType: 'html',
+            data: ({id: id, page: page}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+    $(this).parent().parent().parent().remove();
+
+});
+
+$(document).on("click", ".PostDelicn", function () {
+    page = $(this).attr('page');
+    id = $(this).attr('id');
+    if (id != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "DeleteRow",
+            dataType: 'html',
+            data: ({id: id, page: page}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+    $(this).parent().parent().parent().parent().remove();
+
+});
+
+$(document).on("click", ".CommentDelicn", function () {
+    page = $(this).attr('page');
+    id = $(this).attr('id');
+    if (id != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "DeleteRow",
+            dataType: 'html',
+            data: ({id: id, page: page}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+    $(this).parent().parent().remove();
+});
+
+$(document).on("click", ".DelicnS", function () {
+    page = $(this).attr('page');
+    id = $(this).attr('id');
+    if (id != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "DeleteRow",
+            dataType: 'html',
+            data: ({id: id, page: page}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+    $(this).parent().parent().remove();
+});
+
+
+function AddTags(Tid, Tname, val) {
+    if (val == 1 || val == 3)
+        $("#Navigatekeywords").tokenInput("clear");
+    $("#Navigatekeywords").tokenInput("add", {id: Tid, name: Tname});
+    $(".leftOver").animate({
+        scrollTop: 0
+    }, 'slow');
+    if (val == 1) {
+        $("#TagBut").trigger("click");
+        $(".icon-tag").trigger("click");
+    }
+    if (val == 2) {
+        $(".icon-tag").trigger("click");
+        $("#TagBut").trigger("click");
+    }
+}
+
+//++++++++++++++++++++++++++++++++++++++++
+$(document).on("click", ".jsPanels", function () {
+    link = $(this).attr('href');
+    title = $(this).attr('title');
+    modal = 'modal' == $(this).attr('modal') ? 'modal' : '';
+    //get_height = $(this).attr('height');
+    if (link.indexOf('share?sid') > 0)
+        title = 'بازنشر';
+    if (link.indexOf('print?sid') > 0)
+        title = 'چاپ';
+    var h = $(window).height();
+    var w = $(window).width();
+
+    var JS_Panel = $.jsPanel({
+        contentAjax: {
+            url: link,
+            method: 'POST',
+            dataType: 'json',
+            done: function (data, textStatus, jqXHR, panel) {
+                //  this.content.append(jqXHR.responseText);
+                //console.log(data.content);
+                panel.headerTitle(data.header);
+                panel.content.html(data.content);
+                panel.toolbarAdd('footer', [{item: data.footer}]);
+                //panel.content.css({"width": "800px", "max-height": "550px", "height": hei, 'overflow-y': 'auto'});  ;
+            }
+        },
+        headerControls: {
+            minimize: 'disable',
+            smallify: 'disable'
+        },
+        headerTitle: title,
+        contentOverflow: {horizontal: 'hidden', vertical: 'auto'},
+        panelSize: {width: w * 0.7, height: h * 0.7},
+        // contentSize: {width: "800px", height: hei},
+        // position: {top: h, left: w},
+        // position: 'center',
+        theme: 'default',
+        paneltype: modal,
+    });
+    //JS_Panel.resize('1000px','500px');
+    JS_Panel.content.html('<div class="loader"></div>');
+    return false
+});
+//----------------------------------------
+
+
+$(document).on("click", ".DeletePage", function () {
+    pid = $(this).attr('pid');
+    if (pid != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "DeleteRow",
+            dataType: 'html',
+            data: ({id: pid, page: 'delpage'}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+});
+
+$(document).on("click", "#TagRefBut", function () {
+    jQuery('#Tagloding').hide();
+    jQuery('#TagBut').show();
+    jQuery('#TagRefBut').hide();
+    jQuery('#KeywordFehresrt').show();
+    jQuery('#KeywordSearch').hide();
+});
+
+$(document).on('click', '#TagBut', function () {
+    keyword = jQuery('#Navigatekeywords').val();
+    keywords_and_or = jQuery('.keywords_and_or:checked').val();
+    jQuery('#Results').show();
+    jQuery('#ShowResKey').show();
+    $("#ShowResKey").trigger("click");
+    $("#KeywordSearch").html('<span class="sui-loading-back"></span> <div class="contentDiv"><div class="mainDiv"><div class="logoDiv"></div><div class="textDiv"></div></div><div class="loaderDiv"><img src="' + Baseurl + 'img/loading.gif"></div></div>');
+
+    jQuery.ajax({
+        type: "POST",
+        url: Baseurl + "api/SearchTags",
+        dataType: 'html',
+        data: {'keywords': keyword, 'keywords_and_or': keywords_and_or},
+        cache: false,
+        success: function (html) {
+            jQuery('#TagDet').hide();
+            jQuery('#TagBut').show();
+            jQuery('#TagRefBut').hide();
+            jQuery('#KeywordSearch').show();
+            jQuery('#KeywordSearch').html("<p></p>");
+            jQuery('#KeywordSearch').html(html);
+//                jQuery('#Tagloding').hide();
+            GeminiScrollbar_Results.update();
+
+
+        }
+    });
+});
+
+$(document).on("keypress", "#usernameTXT", function (event) {
+    var englishAlphabetAndWhiteSpace = /[A-Za-z]/g;
+    var key = String.fromCharCode(event.which);
+    if (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39 || englishAlphabetAndWhiteSpace.test(key)) {
+        return true;
+    }
+    return false;
+});
+
+$(document).on("paste", "#usernameTXT", function () {
+    e.preventDefault();
+});
+
+$(document).on("keypress", "#usenamew", function (event) {
+    var englishAlphabetAndWhiteSpace = /[A-Za-z]/g;
+    var key = String.fromCharCode(event.which);
+    if (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39 || englishAlphabetAndWhiteSpace.test(key)) {
+        return true;
+    }
+    return false;
+});
+
+$(document).on("paste", "#usenamew", function () {
+    e.preventDefault();
+});
+
+$(document).on("click", ".CirclePas", function () {
+    var uid = $(this).attr("uid");
+    var v = $(this).val();
+    var incircle = $(this).attr("incircle");
+    if (uid != null) {
+        $.ajax({
+            type: "POST",
+            url: Baseurl + "AddCircle",
+            dataType: 'html',
+            data: ({uid: uid, circle: v, In: incircle}),
+            success: function (theResponse) {
+                jQuery.noticeAdd({
+                    text: theResponse,
+                    stay: false,
+                    type: 'success'
+                });
+            }
+        });
+    }
+
+
+});
+
+$(document).on('click', 'ul.navbar-navtabs li a', function () {
+    var all = $('.HelpIcons');
+    all.hide();
+    switch ($(this).attr('id')) {
+        case 'tab1': {
+            $('.HelpBookmarks').show();
+            setTimeout(function () {
+                GeminiScrollbar_BookmarkFehresrt.update();
+            }, 1500);
+            break;
+        }
+        case 'tab2': {
+            $('.HelpPortals').show();
+            setTimeout(function () {
+                GeminiScrollbar_portallistDiv.update();
+            }, 1500);
+            break;
+        }
+        case 'tab3': {
+            $('.HelpKeywords').show();
+            setTimeout(function () {
+                GeminiScrollbar_keyWords.update();
+                $("#keyWords .gm-scroll-view").animate({
+                    opacity: 1,
+                }, 1000);
+            }, 1500);
+            break;
+        }
+        case 'tab4': {
+            $('.HelpSearch').show();
+            setTimeout(function () {
+                //$('.navbar-navtabs #tab4').click();
+            }, 1000);
+            break;
+        }
+        default: {
+            all.hide();
+        }
+    }
+});
+
+$(document).on('click', 'ul.navbar-nav [href="#tab1"], ul.navbar-navtabs [href="#page1"]', function () {
+    $('#BookmarkFehresrt').html
+    (
+        '<span class="sui-loading-back"></span>' +
+        '<div class="contentDiv">' +
+        '   <div class="mainDiv">' +
+        '       <div class="logoDiv"></div>' +
+        '       <div class="textDiv"></div>' +
+        '   </div>' +
+        '   <div class="loader">' +
+        // '       <img src="' + Baseurl + 'img/loading.gif" />' +
+        '   </div>' +
+        '</div>'
+    );
+    token = $('#_Alltoken').val();
+    $.ajax
+    ({
+        type: 'post',
+        url: Baseurl + 'bookmarks',
+        data: ({token: token}),
+        dataType: 'html',
+        success: function (response) {
+            $('#BookmarkFehresrt').html(response);
+        }
+    });
+});
+
+$(document).on('click', '.HazfBookmark', function () {
+    if (!_confirm_delete()) {
+        return;
+    }
+    var id = $(this).attr('data-bookmark-id');
+    if (id != null) {
+        var bookmark_id = $('#bookmark_' + id);
+        var bookmark_id_parent = bookmark_id.parent();
+        $.ajax
+        ({
+            type: 'post',
+            url: Baseurl + 'bookmarks/delete',
+            dataType: 'html',
+            data: ({id: id}),
+            success: function (response) {
+                bookmark_id.remove();
+                if (0 == bookmark_id_parent.find('li').length) {
+                    bookmark_id_parent.remove();
+                    $('#' + bookmark_id_parent.attr('class')).remove()
+                }
+                jQuery.noticeAdd
+                ({
+                    text: 'حذف با موفقیت انجام شد.',
+                    stay: false,
+                    type: 'success'
+                });
+                //$('[href=#page1]').trigger('click');
+            }
+        });
+    }
+});
+
+$(document).on('click', 'ul.navbar-nav [href="#tab2"], ul.navbar-navtabs [href="#page2"]', function () {
+    $('#PrtalFehresrt').html
+    (
+        '<span class="sui-loading-back"></span>' +
+        '<div class="contentDiv">' +
+        '   <div class="mainDiv">' +
+        '       <div class="logoDiv"></div>' +
+        '      <div class="textDiv"></div>' +
+        '   </div>' +
+        '   <div class="loader">' +
+        // '       <img src="' + Baseurl + 'img/loading.gif">' +
+        '   </div>' +
+        '</div>'
+    );
+    token = $("#_Alltoken").val();
+    $.ajax
+    ({
+        type: 'post',
+        url: Baseurl + 'portals',
+        data: {token: token, 'term': $('#portallist-search').val()},
+        dataType: 'html',
+        success: function (response) {
+            $('#PrtalFehresrt').html(response);
+            GeminiScrollbar_portallistDiv.update();
+        }
+    });
+});
+
+$(document).on('click', '.jsPanelsLive', function () {
+    eval_header = $(this).attr('data-header-function')
+    header = eval_header ? eval(eval_header) : $(this).attr('data-header')
+    eval_content = $(this).attr('data-content-function')
+    content = eval_content ? eval(eval_content) : $(this).attr('data-content')
+    eval_footer = $(this).attr('data-footer-function')
+    footer = eval_footer ? eval(eval_footer) : $(this).attr('data-footer')
+    after = $(this).attr('data-after-function');
+    var jsPanelsLive = $.jsPanel
+    ({
+        paneltype: 'modal',
+        headerTitle: 'modal jsPanel',
+        theme: 'default',
+        show: 'animated fadeInDownBig',
+        panelSize: {width: 800, height: 600},
+        callback: function (panel) {
+            $('input:first', this).focus();
+            $('button', this.content).click(function () {
+                panel.close()
+            });
+            panel.headerTitle(header);
+            panel.content.html(content);
+            panel.toolbarAdd('footer', footer);
+        }
+    });
+    jsPanelsLive.fadeOut().fadeIn(1, function () {
+        eval(after);
+    });
+    return false;
+});
+
+function _confirm_delete() {
+    var c = confirm('آیا مطمئن هستید؟');
+    return c;
+}
+
+$(document).ready(function () {
+    $('.quick-links li, .quick-links a').click(function (e) {
+        e.preventDefault();
+        $($(this).attr('href')).trigger('click');
+        h_sidenav_open(this);
+    });
+});
+
+function h_sidenav_open(thic) {
+    var w = 400;
+    if ($('.h_sidenav').width() == 0) {
+        $('.h_sidenav_client').hide();
+    }
+    $('.h_sidenav').width(w);
+    $('.h_sidenav_main').css({'margin-left': w});
+    var t = window.setInterval(function () {
+        if ($('.h_sidenav').width() >= w) {
+            clearInterval(t);
+            $('.h_sidenav_client').fadeIn();
+        }
+    }, 50);
+    $($(thic).attr('href')).trigger('click');
+}
+
+function h_sidenav_close() {
+    $('.h_sidenav_client').fadeOut('fast', function () {
+        $('.h_sidenav').width(0);
+        $('.h_sidenav_main').css({'margin-left': 0});
+    });
+    var t = window.setInterval(function () {
+        if ($('.h_sidenav').width() == 0) {
+            clearInterval(t);
+        }
+    }, 50);
+}
+
+function GeminiScrollbar_make(e) {
+    obj_e = $(e);
+    obj_e.css({'height': $(document).height() - 240, 'overflow-x': 'hide', 'overflow-y': 'scroll'});
+    return new GeminiScrollbar({element: document.querySelector(e), autoshow: false}).create();
+}
+

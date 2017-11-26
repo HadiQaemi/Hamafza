@@ -1,0 +1,113 @@
+@import 'components/media';
+.next-container {
+  padding:0!important;
+  .row {margin: 0;}
+}
+
+.worktable-menu{
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  background: #282828;
+  display: block;
+  @media screen and (min-width : @screen-sm) {
+    display: table-cell;
+    width: 200px;
+  }
+  @media screen and (min-width : @screen-md) {
+    display: table-cell;
+    width: 300px;
+  }
+  .panel {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: #e0e0e0;
+
+    .panel-heading {
+      background: transparent;
+      border-bottom: 1px solid #232323;
+      color: #e0e0e0;
+
+    }
+    .panel {
+      -webkit-box-shadow: unset;
+      box-shadow: unset;
+    }
+      .panel .panel-heading{
+        border-bottom: none;
+        padding: 10px 0;
+        padding-right: 30px;
+      }
+      .panel .panel-title{
+        font-size: 14px;
+      }
+     .panel .panel-body{
+        -webkit-box-shadow: unset !important;
+        box-shadow: unset !important;
+        border-bottom: 1px solid #343434 !important;
+        background: none;
+      }
+ 
+
+    .panel-body {
+      border: none!important;
+      background: #434343;
+      box-shadow: 0 0 10px #000 inset;
+      padding: 0;
+      ul{
+        width: 100%;
+        padding: 10px 0;
+        margin: 0;
+      }
+      li {
+        padding-right: 30px;
+        line-height: 32px;
+        cursor: pointer;
+        border-left: 5px solid transparent;
+
+        &:hover{
+
+        }
+        .panel {
+          margin: 0 -25px 0 0;
+        }
+        .panel-body li {
+          padding-right: 60px;
+          &:hover{
+            background: #3c3c3c;
+            border-color: #ad31b3;
+          }
+        }
+      }
+    }
+  }
+}
+
+.worktable-content {
+  height: auto;
+  padding-top: 15px;
+  overflow: auto;
+  display: block;
+  @media screen and (min-width : @screen-sm) {
+    display: table-cell;
+  }
+
+  .filter {
+    height: 65px;
+    background: #f6f6f6;
+  }
+
+  .table.table-default {
+    th{
+      background: #e9e9e9;
+      padding-top: 15px;
+      line-height: 35px;
+    }
+    td {
+      font-size: 14px;
+      height: 43px;
+      line-height: 43px;
+    }
+  }
+}

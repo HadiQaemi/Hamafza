@@ -1,0 +1,18 @@
+#header{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #005c9f !important;
+    border-color: -moz-use-text-color -moz-use-text-color #005c9f !important;
+}
+
+#header .user-config {
+    background: #001B68 none repeat scroll 0 0 !important;
+}
+.Logo_ham span{
+    
+}
+.logo{
+        width: 92px !important;
+}

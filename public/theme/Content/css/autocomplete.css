@@ -1,0 +1,161 @@
+
+    ul.token-input-list {
+        -webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        border-radius:3px;
+        -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+        -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition:border linear .2s;
+        -moz-transition:border linear .2s;
+        -o-transition:border linear .2s;
+        -moz-transition:box-shadow linear .2s;
+        -o-transition:box-shadow linear .2s;
+        background-color:#fff!important;
+        border:1px solid #ccc;
+        cursor:text;
+        overflow:hidden;
+        height:auto!important;
+        height:1%;
+        position:relative;
+        display:flex;
+        padding:0;
+        margin:0;
+        min-width:200px;
+        line-height:20px;
+        color:#555;
+        width:100%;
+        min-height:25px
+    }
+
+    ul.token-input-list li {
+        list-style-type:none
+    }
+
+    ul.token-input-list li input {
+        border:0;
+        padding:3px 8px;
+        background-color:#fff;
+        -webkit-appearance:caret
+    }
+
+    li.token-input-token {
+        padding:3px 5px 3px 19px;
+        margin:3px 5px 3px 0;
+        webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        border-radius:3px;
+        -webkit-box-shadow:0 0 2px #fff inset,0 1px 0 rgba(0,0,0,0.05);
+        -moz-box-shadow:0 0 2px #fff inset,0 1px 0 rgba(0,0,0,0.05);
+        box-shadow:0 0 2px #fff inset,0 1px 0 rgba(0,0,0,0.05);
+        background-color:#f6f6f6;
+        background-image:-webkit-gradient(linear,0 0,0 100%,from(#fff),color-stop(50%,#f6f6f6),to(#f4f4f4));
+        background-image:-webkit-linear-gradient(#fff,#f6f6f6 50%,#f4f4f4);
+        background-image:-moz-linear-gradient(top,#fff,#f6f6f6 50%,#f4f4f4);
+        background-image:-o-linear-gradient(#fff,#f6f6f6 50%,#f4f4f4);
+        background-image:linear-gradient(#fff,#f6f6f6 50%,#f4f4f4);
+        background-repeat:no-repeat;
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#fff4f4f4',GradientType=0);
+        -webkit-background-clip:padding-box;
+        -moz-background-clip:padding-box;
+        background-clip:padding-box;
+        -moz-background-clip:padding;
+        color:#555;
+        border:1px solid #999;
+        line-height:16px;
+        padding:3px 20px 3px 5px;
+        margin:3px 0 3px 5px;
+        position:relative;
+        cursor:default;
+        list-style:none !important;
+    }
+
+    li.token-input-token p {
+        float:left;
+        padding:0;
+        margin:0
+    }
+
+    li.token-input-token span {
+        float:right;
+        color:#777;
+        cursor:pointer
+    }
+
+    li.token-input-selected-token {
+        background-color:#08844e;
+        color:red
+    }
+
+    li.token-input-selected-token span {
+        color:#bbb
+    }
+
+    div.token-input-dropdown {
+        width:100%;
+        background-color:#fff;
+        border-left:1px solid #ccc;
+        border-right:1px solid #ccc;
+        border-bottom:1px solid #ccc;
+        cursor:default;
+        font-size:9pt;
+        font-family:Mitra;
+        z-index:10000;
+        display:none;
+        top:20px;
+        max-width:250px;
+        max-height:400px;
+        overflow:auto
+    }
+
+    div.token-input-dropdown p {
+        margin:0;
+        padding:5px;
+        font-size:9pt;
+        font-family:Mitra;
+        color:#777;
+        z-index:10000
+    }
+
+    div.token-input-dropdown ul {
+        margin:0;
+        z-index:10000;
+        padding:0
+    }
+
+    div.token-input-dropdown ul li {
+        background-color:#fff;
+        padding:3px;
+        z-index:10000;
+        list-style-type:none
+    }
+
+    div.token-input-dropdown ul li.token-input-dropdown-item {
+        z-index:10000;
+        background-color:#fafafa
+    }
+
+    div.token-input-dropdown ul li.token-input-dropdown-item2 {
+        background-color:#fff
+    }
+
+    div.token-input-dropdown ul li em {
+        font-weight:700;
+        font-style:normal
+    }
+
+    div.token-input-dropdown ul li.token-input-selected-dropdown-item {
+        background-color:#d0efa0
+    }
+
+    .token-input-delete-token {
+        font-family:tahoma
+    }
+
+    .ui-state-default td a {
+        font-size:9pt
+    }
+
+    .ui-widget-content td a {
+        font-size:9pt
+    }

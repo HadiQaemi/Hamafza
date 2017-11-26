@@ -1,0 +1,98 @@
+
+#mainContainer {
+  top: 373px;
+}
+
+.row {
+  margin: 5px;
+}
+
+ul.list-light {
+  li {
+    padding:0 20px;
+    cursor: pointer;
+    line-height: 26px;
+
+    &:hover {
+      background: #f4f4f4;
+    }
+  }
+
+  &.list-light {
+    li {
+      line-height: 43px;
+    }
+  }
+}
+
+.findfriends {
+  padding: 15px 0;
+  border-radius: 0;
+}
+
+.col-md-9 .person-list {
+  font-family: 'b mitra';
+  li{
+    border:1px solid #dbdbdb;
+    height: 120px;
+    background: #fff;
+    padding: 0;
+    box-shadow: 0 4px 7px rgba(162,162, 162, .54);
+    width: 320px;
+    position: relative;
+    float: right;
+    margin: 14px;
+  }
+  .person-avatar {
+    float: right;
+    margin: 8px;
+  }
+  .person-name{
+    font-size: 18px;
+    line-height: 25px;
+  }
+  .person-moredetail {
+    font-size: 12px;
+    line-height: 17px;
+  }
+  .person-relation {
+    color: #67ac97;
+    font-size: 12px;
+  }
+  .person-detail {
+    margin-right: 96px;
+    padding-top: 13px;
+  }
+  .person-circle {
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    border: 1px solid #bababa;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.9;
+    &.grey {
+      background: #ececec;
+    }
+    &.green {
+      background: #32b38c;
+      color: #fff;
+    }
+    *:before{
+      vertical-align: middle;
+      font-size: 12px;
+    }
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+.person-search {
+  border: 1px solid #d2d2d2;
+  line-height: 24px;
+  padding: 9px;
+  font-family: 'b nazanin';
+  font-size: 18px;
+  outline: none;
+}

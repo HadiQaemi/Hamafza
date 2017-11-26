@@ -1,0 +1,1319 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "hamafza4";
+    src:url("../fonts/Hamafza4/hamafza4.eot");
+    src:url("../fonts/Hamafza4/hamafza4.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/Hamafza4/hamafza4.woff") format("woff"),
+        url("../fonts/Hamafza4/hamafza4.ttf") format("truetype"),
+        url("../fonts/Hamafza4/hamafza4.svg#hamafza4") format("svg");
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+[data-icon]:before {
+    font-family: "hamafza4" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 10px !important;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "hamafza4" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 10px !important;
+}
+
+.icon-mize-rahnam:before {
+    content: "\e0c9";
+}
+.icon-1:before {
+    content: "a";
+}
+.icon-1-2:before {
+    content: "b";
+}
+.icon-1-3:before {
+    content: "c";
+}
+.icon-1-4:before {
+    content: "d";
+}
+.icon-2:before {
+    content: "e";
+}
+.icon-2-2:before {
+    content: "f";
+}
+.icon-2-3:before {
+    content: "g";
+}
+.icon-2-4:before {
+    content: "h";
+}
+.icon-3:before {
+    content: "i";
+}
+.icon-3-2:before {
+    content: "j";
+}
+.icon-4:before {
+    content: "k";
+}
+.icon-a-b:before {
+    content: "l";
+}
+.icon-a-b2:before {
+    content: "m";
+}
+.icon-aaaa:before {
+    content: "n";
+}
+.icon-abr:before {
+    content: "o";
+}
+.icon-abrehoroof-act:before {
+    content: "p";
+}
+.icon-abrehoroof-deact:before {
+    content: "q";
+}
+.icon-afzoodane-fard:before {
+    content: "r";
+}
+.icon-alamatgozari:before {
+    content: "s";
+}
+.icon-alamatgozari-2:before {
+    content: "t";
+}
+.icon-alamatva-yaddasht:before {
+    content: "u";
+}
+.icon-alamt-yaddasht:before {
+    content: "v";
+}
+.icon-alefba:before {
+    content: "w";
+}
+.icon-amuzesh:before {
+    content: "x";
+}
+.icon-b11:before {
+    content: "y";
+}
+.icon-b10:before {
+    content: "z";
+}
+.icon-b9:before {
+    content: "A";
+}
+.icon-b8:before {
+    content: "B";
+}
+.icon-b7:before {
+    content: "C";
+}
+.icon-b6:before {
+    content: "D";
+}
+.icon-b5:before {
+    content: "E";
+}
+.icon-b4:before {
+    content: "F";
+}
+.icon-b3:before {
+    content: "G";
+}
+.icon-b2:before {
+    content: "H";
+}
+.icon-b1:before {
+    content: "I";
+}
+.icon-ax:before {
+    content: "J";
+}
+.icon-amuzesh2:before {
+    content: "K";
+}
+.icon-b12:before {
+    content: "L";
+}
+.icon-b13:before {
+    content: "M";
+}
+.icon-b14:before {
+    content: "N";
+}
+.icon-b15:before {
+    content: "O";
+}
+.icon-b16:before {
+    content: "P";
+}
+.icon-backrast1:before {
+    content: "Q";
+}
+.icon-backrast2:before {
+    content: "R";
+}
+.icon-bakhsha-amuzesh:before {
+    content: "S";
+}
+.icon-bakhsha-asnad:before {
+    content: "T";
+}
+.icon-bakhsha-bahs:before {
+    content: "U";
+}
+.icon-bakhsha-bazar:before {
+    content: "V";
+}
+.icon-bakhsha-dade:before {
+    content: "W";
+}
+.icon-bakhsha-daneshname:before {
+    content: "X";
+}
+.icon-c2:before {
+    content: "Y";
+}
+.icon-c1:before {
+    content: "Z";
+}
+.icon-bkhsha-ashkhas:before {
+    content: "0";
+}
+.icon-baste-2:before {
+    content: "1";
+}
+.icon-baste2:before {
+    content: "2";
+}
+.icon-baste1:before {
+    content: "3";
+}
+.icon-baste:before {
+    content: "4";
+}
+.icon-bastan:before {
+    content: "5";
+}
+.icon-bala:before {
+    content: "6";
+}
+.icon-bakhsha-safar:before {
+    content: "7";
+}
+.icon-bakhsha-porso-jo:before {
+    content: "8";
+}
+.icon-bakhsha-hamayesh:before {
+    content: "9";
+}
+.icon-bakhsha-ghoran:before {
+    content: "!";
+}
+.icon-c3:before {
+    content: "\";
+}
+.icon-chap:before {
+    content: "#";
+}
+.icon-chap1:before {
+    content: "$";
+}
+.icon-chat:before {
+    content: "%";
+}
+.icon-chap2:before {
+    content: "&";
+}
+.icon-chatesouti:before {
+    content: "'";
+}
+.icon-chatetasviri:before {
+    content: "(";
+}
+.icon-choob-alef:before {
+    content: ")";
+}
+.icon-choob-alefha:before {
+    content: "*";
+}
+.icon-choob-alef-2:before {
+    content: "+";
+}
+.icon-choobalefnazok:before {
+    content: ",";
+}
+.icon-copycon:before {
+    content: "-";
+}
+.icon-d1:before {
+    content: ".";
+}
+.icon-d2:before {
+    content: "/";
+}
+.icon-d4:before {
+    content: ":";
+}
+.icon-d5:before {
+    content: ";";
+}
+.icon-d6:before {
+    content: "<";
+}
+.icon-d3:before {
+    content: "=";
+}
+.icon-d8:before {
+    content: ">";
+}
+.icon-d9:before {
+    content: "?";
+}
+.icon-d7:before {
+    content: "@";
+}
+.icon-d10:before {
+    content: "[";
+}
+.icon-d11:before {
+    content: "]";
+}
+.icon-d12:before {
+    content: "^";
+}
+.icon-d13:before {
+    content: "_";
+}
+.icon-d14:before {
+    content: "`";
+}
+.icon-davat1:before {
+    content: "{";
+}
+.icon-davat2:before {
+    content: "|";
+}
+.icon-darkhti2:before {
+    content: "}";
+}
+.icon-darkhti:before {
+    content: "~";
+}
+.icon-dargah-2:before {
+    content: "\\";
+}
+.icon-dargah:before {
+    content: "\e000";
+}
+.icon-danger:before {
+    content: "\e001";
+}
+.icon-d20:before {
+    content: "\e002";
+}
+.icon-d19:before {
+    content: "\e003";
+}
+.icon-d18:before {
+    content: "\e004";
+}
+.icon-d17:before {
+    content: "\e005";
+}
+.icon-d16:before {
+    content: "\e006";
+}
+.icon-d15:before {
+    content: "\e007";
+}
+.icon-davat3:before {
+    content: "\e008";
+}
+.icon-davat4:before {
+    content: "\e009";
+}
+.icon-detailes-act:before {
+    content: "\e00a";
+}
+.icon-detailes-deact:before {
+    content: "\e00b";
+}
+.icon-donbal-kardan-2:before {
+    content: "\e00c";
+}
+.icon-donbal-kardan:before {
+    content: "\e00d";
+}
+.icon-download:before {
+    content: "\e00e";
+}
+.icon-download-safhe:before {
+    content: "\e00f";
+}
+.icon-eghdamejadid:before {
+    content: "\e010";
+}
+.icon-etelaat:before {
+    content: "\e011";
+}
+.icon-etelaat2:before {
+    content: "\e012";
+}
+.icon-exel:before {
+    content: "\e013";
+}
+.icon-ezhare-nazar:before {
+    content: "\e014";
+}
+.icon-file-ax:before {
+    content: "\e015";
+}
+.icon-fehrest2-2:before {
+    content: "\e016";
+}
+.icon-fehrest2:before {
+    content: "\e017";
+}
+.icon-fehrest1:before {
+    content: "\e018";
+}
+.icon-fehrest:before {
+    content: "\e019";
+}
+.icon-farayand5:before {
+    content: "\e01a";
+}
+.icon-farayand4:before {
+    content: "\e01b";
+}
+.icon-farayand3:before {
+    content: "\e01c";
+}
+.icon-farayand2-2:before {
+    content: "\e01d";
+}
+.icon-farayand2:before {
+    content: "\e01e";
+}
+.icon-farayand1:before {
+    content: "\e01f";
+}
+.icon-farayand:before {
+    content: "\e020";
+}
+.icon-faaliat:before {
+    content: "\e021";
+}
+.icon-xls:before {
+    content: "\e022";
+}
+.icon-xlsx:before {
+    content: "\e022";
+}
+.icon-file-film:before {
+    content: "\e023";
+}
+.icon-mp4:before {
+    content: "\e023";
+}
+.icon-mp3:before {
+    content: "\e023";
+}
+.icon-mkv:before {
+    content: "\e023";
+}
+.icon-doc:before {
+    content: "\e024";
+}
+
+.icon-docx:before {
+    content: "\e024";
+}
+
+.icon-pdf:before {
+    content: "\e025";
+}
+.icon-ppt:before {
+    content: "\e026";
+}
+
+.icon-pptx:before {
+    content: "\e026";
+}
+.icon-film-act:before {
+    content: "\e027";
+}
+.icon-film-deact:before {
+    content: "\e028";
+}
+.icon-flesh1:before {
+    content: "\e029";
+}
+.icon-flesh2:before {
+    content: "\e02a";
+}
+.icon-flesh3:before {
+    content: "\e02b";
+}
+.icon-flesh4:before {
+    content: "\e02c";
+}
+.icon-fleshbarax:before {
+    content: "\e02d";
+}
+.icon-gamhaye-aghaz:before {
+    content: "\e02e";
+}
+.icon-hazv:before {
+    content: "\e02f";
+}
+.icon-hazf:before {
+    content: "\e030";
+}
+.icon-hamafzanoghte:before {
+    content: "\e031";
+}
+.icon-halgheha-2:before {
+    content: "\e032";
+}
+.icon-halgheha:before {
+    content: "\e033";
+}
+.icon-halghe-4:before {
+    content: "\e034";
+}
+.icon-halghe-3:before {
+    content: "\e035";
+}
+.icon-halghe-1:before {
+    content: "\e036";
+}
+.icon-gol-2:before {
+    content: "\e037";
+}
+.icon-halghe-2:before {
+    content: "\e038";
+}
+.icon-gol:before {
+    content: "\e039";
+}
+.icon-gate:before {
+    content: "\e03a";
+}
+.icon-iconhayekoli2:before {
+    content: "\e03b";
+}
+.icon-ide:before {
+    content: "\e03c";
+}
+.icon-ijad:before {
+    content: "\e03d";
+}
+.icon-iman:before {
+    content: "\e03e";
+}
+.icon-jadval-act:before {
+    content: "\e03f";
+}
+.icon-jadval-deact:before {
+    content: "\e040";
+}
+.icon-kaheshefard:before {
+    content: "\e041";
+}
+.icon-karbar:before {
+    content: "\e042";
+}
+.icon-karbar-2:before {
+    content: "\e043";
+}
+.icon-karbarpor:before {
+    content: "\e044";
+}
+.icon-karbartokhali:before {
+    content: "\e045";
+}
+.icon-karbordha:before {
+    content: "\e046";
+}
+.icon-keshoye-paeen:before {
+    content: "\e047";
+}
+.icon-hekmat:before {
+    content: "\e048";
+}
+.icon-khata:before {
+    content: "\e049";
+}
+.icon-khata-2:before {
+    content: "\e04a";
+}
+.icon-kharid-3:before {
+    content: "\e04b";
+}
+.icon-kharid:before {
+    content: "\e04c";
+}
+.icon-khane:before {
+    content: "\e04d";
+}
+.icon-kharid-2:before {
+    content: "\e04e";
+}
+.icon-khandan3:before {
+    content: "\e04f";
+}
+.icon-khandan2:before {
+    content: "\e050";
+}
+.icon-khandan1:before {
+    content: "\e051";
+}
+.icon-ketab3:before {
+    content: "\e052";
+}
+.icon-ketabkhane:before {
+    content: "\e053";
+}
+.icon-ketab2:before {
+    content: "\e054";
+}
+.icon-ketab1:before {
+    content: "\e055";
+}
+.icon-khoroj-karbar:before {
+    content: "\e056";
+}
+.icon-khorooj:before {
+    content: "\e057";
+}
+.icon-left-act:before {
+    content: "\e058";
+}
+.icon-left-deact:before {
+    content: "\e059";
+}
+.icon-libe:before {
+    content: "\e05a";
+}
+.icon-link-be-kharej1:before {
+    content: "\e05b";
+}
+.icon-link-be-kharej2:before {
+    content: "\e05c";
+}
+.icon-mafahim:before {
+    content: "\e05d";
+}
+.icon-mataleb:before {
+    content: "\e05e";
+}
+.icon-matn:before {
+    content: "\e05f";
+}
+.icon-matni-act:before {
+    content: "\e060";
+}
+.icon-matni-deact:before {
+    content: "\e061";
+}
+.icon-moredi1:before {
+    content: "\e062";
+}
+.icon-moredi:before {
+    content: "\e063";
+}
+.icon-molaheze-kardan:before {
+    content: "\e064";
+}
+.icon-molaheze3:before {
+    content: "\e065";
+}
+.icon-molaheze1:before {
+    content: "\e066";
+}
+.icon-mofid:before {
+    content: "\e067";
+}
+.icon-moarefi-2:before {
+    content: "\e068";
+}
+.icon-moarefi:before {
+    content: "\e069";
+}
+.icon-mizekar-4:before {
+    content: "\e06a";
+}
+.icon-mizekar-3:before {
+    content: "\e06b";
+}
+.icon-mizekar-2:before {
+    content: "\e06c";
+}
+.icon-mizekar:before {
+    content: "\e06d";
+}
+.icon-molaheze2:before {
+    content: "\e06e";
+}
+.icon-pdf:before {
+    content: "\e06f";
+}
+.icon-payam:before {
+    content: "\e070";
+}
+.icon-pasandidan:before {
+    content: "\e071";
+}
+.icon-paeen:before {
+    content: "\e072";
+}
+.icon-noghte:before {
+    content: "\e073";
+}
+.icon-ozviat:before {
+    content: "\e074";
+}
+.icon-nim-safhe:before {
+    content: "\e075";
+}
+.icon-nemudar-drakhti:before {
+    content: "\e076";
+}
+.icon-nemudar-drakhti-2:before {
+    content: "\e077";
+}
+.icon-nemudar-deact:before {
+    content: "\e078";
+}
+.icon-nemudar-act:before {
+    content: "\e079";
+}
+.icon-nemudar:before {
+    content: "\e07a";
+}
+.icon-nashenas:before {
+    content: "\e07b";
+}
+.icon-pin:before {
+    content: "\e07c";
+}
+.icon-play-1:before {
+    content: "\e07d";
+}
+.icon-play-2:before {
+    content: "\e07e";
+}
+.icon-pooshe:before {
+    content: "\e07f";
+}
+.icon-porsesh1:before {
+    content: "\e080";
+}
+.icon-porsesh2:before {
+    content: "\e081";
+}
+.icon-porsesh3:before {
+    content: "\e082";
+}
+.icon-porsojoo:before {
+    content: "\e083";
+}
+.icon-pp:before {
+    content: "\e084";
+}
+.icon-rad-kardan:before {
+    content: "\e085";
+}
+.icon-rahnama:before {
+    content: "\e086";
+}
+.icon-rahnama2:before {
+    content: "\e087";
+}
+.icon-rahnama-2:before {
+    content: "\e088";
+}
+.icon-send:before {
+    content: "\e089";
+}
+.icon-search:before {
+    content: "\e08a";
+}
+.icon-se-noghte:before {
+    content: "\e08b";
+}
+.icon-se-fard-2:before {
+    content: "\e08c";
+}
+.icon-se-fard:before {
+    content: "\e08d";
+}
+.icon-sabtenam2:before {
+    content: "\e08e";
+}
+.icon-sabtenam:before {
+    content: "\e08f";
+}
+.icon-rss-2:before {
+    content: "\e090";
+}
+.icon-rss:before {
+    content: "\e091";
+}
+.icon-ronevesht:before {
+    content: "\e092";
+}
+.icon-right-deact:before {
+    content: "\e093";
+}
+.icon-right-act:before {
+    content: "\e094";
+}
+.icon-shabake1-act:before {
+    content: "\e095";
+}
+.icon-shabake1-deact:before {
+    content: "\e096";
+}
+.icon-shabake-act:before {
+    content: "\e097";
+}
+.icon-shabake-deact:before {
+    content: "\e098";
+}
+.icon-shabakeye-hamafza:before {
+    content: "\e099";
+}
+.icon-shop:before {
+    content: "\e09a";
+}
+.icon-slide-act:before {
+    content: "\e09b";
+}
+.icon-slide-deact:before {
+    content: "\e09c";
+}
+.icon-taeed:before {
+    content: "\e09d";
+}
+.icon-tag:before {
+    content: "\e09e";
+}
+.icon-tajmii:before {
+    content: "\e09f";
+}
+.icon-tajmii1:before {
+    content: "\e0a0";
+}
+.icon-tag-2:before {
+    content: "\e0a1";
+}
+.icon-view-ax-active:before {
+    content: "\e0a2";
+}
+.icon-view-ax-deactive:before {
+    content: "\e0a3";
+}
+.icon-uploade-safhe:before {
+    content: "\e0a4";
+}
+.icon-upload:before {
+    content: "\e0a5";
+}
+.icon-untitled-1:before {
+    content: "\e0a6";
+}
+.icon-tmam-safhe:before {
+    content: "\e0a7";
+}
+.icon-tatbigh-2:before {
+    content: "\e0a8";
+}
+.icon-task:before {
+    content: "\e0a9";
+}
+.icon-tatbigh:before {
+    content: "\e0aa";
+}
+.icon-tarikhche-2:before {
+    content: "\e0ab";
+}
+.icon-tarikhche:before {
+    content: "\e0ac";
+}
+.icon-tamasbama:before {
+    content: "\e0ad";
+}
+.icon-tanzimat:before {
+    content: "\e0ae";
+}
+.icon-view-chap-active:before {
+    content: "\e0af";
+}
+.icon-view-chap-deactive:before {
+    content: "\e0b0";
+}
+.icon-view-detail-active:before {
+    content: "\e0b1";
+}
+.icon-view-detail-deactive:before {
+    content: "\e0b2";
+}
+.icon-view-graph-active:before {
+    content: "\e0b3";
+}
+.icon-view-graph-active2:before {
+    content: "\e0b4";
+}
+.icon-view-graph-deactive:before {
+    content: "\e0b5";
+}
+.icon-view-graph-deactive2:before {
+    content: "\e0b6";
+}
+.icon-view-horofi-active:before {
+    content: "\e0b7";
+}
+.icon-view-horofi-deactive:before {
+    content: "\e0b8";
+}
+.icon-view-jadval-active:before {
+    content: "\e0b9";
+}
+.icon-view-jadval-deactive:before {
+    content: "\e0ba";
+}
+.icon-view-matni-active:before {
+    content: "\e0bb";
+}
+.icon-yaddasht:before {
+    content: "\e0bc";
+}
+.icon-word:before {
+    content: "\e0bd";
+}
+.icon-wall-3:before {
+    content: "\e0be";
+}
+.icon-wall-2:before {
+    content: "\e0bf";
+}
+.icon-wall:before {
+    content: "\e0c0";
+}
+.icon-view-slide-deactive3:before {
+    content: "\e0c1";
+}
+.icon-view-slide-deactive:before {
+    content: "\e0c2";
+}
+.icon-view-slide-active:before {
+    content: "\e0c3";
+}
+.icon-view-rast-deactive:before {
+    content: "\e0c4";
+}
+.icon-view-rast-active-1:before {
+    content: "\e0c5";
+}
+.icon-view-nemudar-active:before {
+    content: "\e0c6";
+}
+.icon-view-matni-deactive:before {
+    content: "\e0c7";
+}
+.icon-virayesh:before {
+    content: "\e0c8";
+}
+.icon-abrekalemat:before {
+    content: "\e0ca";
+}
+.icon-afzoodane-matn:before {
+    content: "\e0cb";
+}
+.icon-reorder:before {
+    content: "\e0cc";
+}
+.icon-eye:before {
+    content: "\e0cd";
+}
+.icon-eye-slash:before {
+    content: "\e0ce";
+}
+.icon-search-1:before {
+    content: "\e0cf";
+}
+.icon-pencil:before {
+    content: "\e0d0";
+}
+.icon-pencil-1:before {
+    content: "\e0d1";
+}
+
+.icon-plus:before {
+    content: "\e0d2";
+}
+.icon-plus-1:before {
+    content: "\e0d3";
+}
+
+.glyphicon-eye-open:before {
+    content: "\e0ce";
+}
+.glyphicon-eye-close:before {
+    content: "\e0cd";
+}
+
+.icon-plus-1:before {
+    content: "\e0d3";
+}
+.icon-minus:before {
+    content: "\e0d4";
+
+}
+.icon-plus-square:before {
+    content: "\e0d5";
+    font-size: 11pt;
+    height: 10px;
+    cursor: pointer;
+}
+.icon-minus-square:before {
+    content: "\e0d6";
+    font-size: 11pt;
+    height: 10px;
+    cursor: pointer;
+
+}
+.icon-dash:before {
+    content: "\e0d7";
+}
+.icon-virayesh:before {
+    content: "\e0c8";
+}
+.icon-abrehoroof-act-1:before {
+    content: "\e0d9";
+}
+.icon-abrehoroof-deact-1:before {
+    content: "\e0da";
+}
+.icon-detailes-act-1:before {
+    content: "\e0db";
+}
+.icon-detailes-deact-1:before {
+    content: "\e0dc";
+}
+.icon-film-act-1:before {
+    content: "\e0dd";
+}
+.icon-film-deact-1:before {
+    content: "\e0de";
+}
+.icon-jadval-act-1:before {
+    content: "\e0df";
+}
+.icon-jadval-deact-1:before {
+    content: "\e0e0";
+}
+.icon-left-act-1:before {
+    content: "\e0e1";
+}
+.icon-left-deact-1:before {
+    content: "\e0e2";
+}
+.icon-matni-act-1:before {
+    content: "\e0e3";
+}
+.icon-matni-deact-1:before {
+    content: "\e0e4";
+}
+.icon-nemudar-act-1:before {
+    content: "\e0e5";
+}
+.icon-nemudar-deact-1:before {
+    content: "\e0e6";
+}
+.icon-right-act-1:before {
+    content: "\e0e7";
+}
+.icon-right-deact-1:before {
+    content: "\e0e8";
+}
+.icon-shabake1-act-1:before {
+    content: "\e0e9";
+}
+.icon-shabake1-deact-1:before {
+    content: "\e0ea";
+}
+.icon-shabake-act-1:before {
+    content: "\e0eb";
+}
+.icon-shabake-deact-1:before {
+    content: "\e0ec";
+}
+.icon-slide-act-1:before {
+    content: "\e0ed";
+}
+.icon-slide-deact-1:before {
+    content: "\e0ee";
+}
+.icon-2-1:before {
+    content: "\e0d8";
+}
+.icon-3-1:before {
+    content: "\e0ef";
+}
+.icon-2222:before {
+    content: "\e0f0";
+}
+.icon-111111:before {
+    content: "\e0f1";
+}
+.icon-aaaa-1:before {
+    content: "\e0f2";
+}
+.icon-abr-1:before {
+    content: "\e0f3";
+}
+.icon-alamatva-yaddasht-1:before {
+    content: "\e0f4";
+}
+.icon-alamt-yaddasht-1:before {
+    content: "\e0f5";
+}
+.icon-copycon-1:before {
+    content: "\e0f6";
+}
+.icon-dargah-1:before {
+    content: "\e0f7";
+}
+.icon-davat1-1:before {
+    content: "\e0f8";
+}
+.icon-davat2-1:before {
+    content: "\e0f9";
+}
+.icon-davat3-1:before {
+    content: "\e0fa";
+}
+.icon-davat4-1:before {
+    content: "\e0fb";
+}
+.icon-eghdaam:before {
+    content: "\e0fc";
+}
+.icon-eghdam:before {
+    content: "\e0fd";
+}
+.icon-error:before {
+    content: "\e0fe";
+}
+.icon-fehrest2-1:before {
+    content: "\e0ff";
+}
+.icon-fleshbarax-1:before {
+    content: "\e100";
+}
+.icon-gamhaye-aghaz-1:before {
+    content: "\e101";
+}
+.icon-gol-1:before {
+    content: "\e102";
+}
+.icon-halghe-1-1:before {
+    content: "\e103";
+}
+.icon-halghe-2-1:before {
+    content: "\e104";
+}
+.icon-halghe-3-1:before {
+    content: "\e105";
+}
+.icon-halghe-4-1:before {
+    content: "\e106";
+}
+.icon-halgheha-1:before {
+    content: "\e107";
+}
+.icon-karbordha-1:before {
+    content: "\e108";
+}
+.icon-ketabkhane-1:before {
+    content: "\e109";
+}
+.icon-kharid-1:before {
+    content: "\e10a";
+}
+.icon-link-be-kharej1-1:before {
+    content: "\e10b";
+}
+.icon-link-be-kharej2-1:before {
+    content: "\e10c";
+}
+.icon-makus-slideshow:before {
+    content: "\e10d";
+}
+.icon-matn-1:before {
+    content: "\e10e";
+}
+.icon-mize-rahnam-1:before {
+    content: "\e10f";
+}
+.icon-mizekar-1:before {
+    content: "\e110";
+}
+.icon-noghte-1:before {
+    content: "\e111";
+}
+.icon-pasandidan-1:before {
+    content: "\e112";
+}
+.icon-payam-1:before {
+    content: "\e113";
+}
+.icon-play-1-1:before {
+    content: "\e114";
+}
+.icon-play-2-1:before {
+    content: "\e115";
+}
+.icon-pooshe-1:before {
+    content: "\e116";
+}
+.icon-ronevesht-1:before {
+    content: "\e117";
+}
+.icon-rss-1:before {
+    content: "\e118";
+}
+.icon-sabtenam-1:before {
+    content: "\e119";
+}
+.icon-taeed-1:before {
+    content: "\e11a";
+}
+.icon-tajmii-1:before {
+    content: "\e11b";
+}
+.icon-tajmii1-1:before {
+    content: "\e11c";
+}
+.icon-wall-1:before {
+    content: "\e11d";
+}
+.icon-alefba-1:before {
+    content: "\e11e";
+}
+.icon-baste-1:before {
+    content: "\e11f";
+}
+.icon-chatesouti-1:before {
+    content: "\e120";
+}
+.icon-chatetasviri-1:before {
+    content: "\e121";
+}
+.icon-farayand1-1:before {
+    content: "\e122";
+}
+.icon-farayand2-1:before {
+    content: "\e123";
+}
+.icon-farayand3-1:before {
+    content: "\e124";
+}
+.icon-fehrest1-1:before {
+    content: "\e125";
+}
+.icon-hamafzanoghte-1:before {
+    content: "\e126";
+}
+.icon-hamkari:before {
+    content: "\e127";
+}
+.icon-karbarpor-1:before {
+    content: "\e128";
+}
+.icon-karbartokhali-1:before {
+    content: "\e129";
+}
+.icon-moredi-1:before {
+    content: "\e12a";
+}
+.icon-moredi1-1:before {
+    content: "\e12b";
+}
+.icon-nemudar-1:before {
+    content: "\e12c";
+}
+.icon-new:before {
+    content: "\e12d";
+}
+.icon-sabtenam2-1:before {
+    content: "\e12e";
+}
+.icon-se-noghte-1:before {
+    content: "\e12f";
+}
+.icon-send-1:before {
+    content: "\e130";
+}
+.icon-shop-1:before {
+    content: "\e131";
+}
+.icon-1-1:before {
+    content: "\e132";
+}
+.icon-help:before {
+    content: "\e133";
+}
+.icon-moarefi-1:before {
+    content: "\e134";
+}
+.icon-moredi-2:before {
+    content: "\e135";
+}
+.icon-baznashr:before {
+    content: "\e136";
+}
+.icon-shield:before {
+    content: "\e137";
+}
+.icon-txt:before {
+  content: "\e13a";
+}
+.icon-zip:before {
+  content: "\e138";
+}
+.icon-layout:before {
+  content: "\e139";
+}
+.icon-layout2:before {
+  content: "\e13b";
+}
+.icon-layout3:before {
+  content: "\e13d";
+}

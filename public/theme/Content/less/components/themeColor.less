@@ -1,0 +1,296 @@
+// header---------------------
+
+body.theme-darkblue {
+  #header {
+    background-color: #326fb3;
+    border-bottom: 1px solid #326fb3;
+    .navbar-header{
+      border-bottom-color: #326fb3;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #326fb3;
+        .logo {
+          // background-position: -29px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #28598f;
+    }
+  }
+}
+body.theme-lightblue {
+  #header {
+    background-color: #29abd6;
+    border-bottom: 1px solid #218bae;
+    .navbar-header{
+      border-bottom-color: #218bae;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #29abd6;
+        .logo {
+          // background-position: -58px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #2189ab;
+    }
+  }
+}
+body.theme-gold {
+  #header {
+    background-color: #b58d37;
+    border-bottom: 1px solid #93722d;
+    .navbar-header{
+      border-bottom-color: #93722d;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #b58d37;
+        .logo {
+          // background-position: -87px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #91712c;
+    }
+  }
+}
+body.theme-pink {
+  #header {
+    background-color: #b33284;
+    border-bottom: 1px solid #91296b;
+    .navbar-header{
+      border-bottom-color: #91296b;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #b33284;
+        .logo {
+          // background-position: -116px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #8f286a;
+    }
+  }
+}
+
+body.theme-green {
+  #header {
+    background-color: #32b38c;
+    border-bottom: 1px solid #299172;
+    .navbar-header{
+      border-bottom-color: #299172;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #32b38c;
+        .logo {
+          // background-position: -145px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #288f70;
+    }
+  }
+}
+
+// toolbar-------------------
+
+body.theme-lightblue {
+  #toolbar{
+    background: #5cbfe0;
+    border-color: #56a7c1;
+
+    .btn-group {
+      background: #53acc9;
+      .btn{
+        .toolbar-icon-backgrounds(-30px);
+      }
+    }
+  }
+}
+body.theme-gold {
+  #toolbar{
+    background: #c7a867;
+    border-color: #ad945f;
+
+    .btn-group {
+      background: #b3975c;
+      .btn{
+        .toolbar-icon-backgrounds(-60px);
+      }
+    }
+  }
+}
+body.theme-pink {
+  #toolbar{
+    background: #c563a1;
+    border-color: #ab5c8e;
+
+    .btn-group {
+      background: #8a4570;
+      .btn{
+        .toolbar-icon-backgrounds(-90px);
+      }
+    }
+  }
+}
+
+body.theme-green {
+  .toolbarContainer {
+     padding-top: 104px;
+    background: #043f3d url('../icons/socialcover.png') no-repeat center;
+
+    @media screen and (min-width : @screen-xs) {
+       padding-top: 166px;
+    }
+    @media screen and (min-width : @screen-md) {
+       padding-top: 218px;
+    }
+  }
+  #toolbar{
+    background: rgba(0,0,0,0.1);
+    border-color: #75999b;
+
+    .btn-group {
+      background: rgba(0,0,0,0.3);
+      .btn{
+        .toolbar-icon-backgrounds(-120px);
+      }
+    }
+  }
+}
+
+
+// rightMenu ----------------------------
+
+body.theme-lightblue {
+  .right-menu {
+    background: #29abd6;
+  }
+}
+body.theme-gold {
+  .right-menu {
+    background: #b58d37;
+  }
+}
+body.theme-pink {
+  .right-menu {
+    background: #b33284;
+  }
+}
+body.theme-green {
+  .right-menu {
+    background: #32b38c;
+  }
+}
+
+// panel ---------------------------------
+.panel-heading {
+
+    &.panel-heading-darkblue {
+      border-color: #58adde;
+    }
+    &.panel-heading-lightblue {
+      border-color: #58adde;
+    }
+    &.panel-heading-green {
+      border-color: #7dca75;
+    }
+    &.panel-heading-orange {
+      border-color: #e2a340;
+    }
+    &.panel-heading-gold {
+      border-color: #c7a969;
+    }
+  }
+
+  // master color----------------
+
+  body.mstr-clr.theme-green,body.mstr-clr.theme-lightblue,body.mstr-clr.theme-darkblue,body.mstr-clr.theme-gold,body.mstr-clr.theme-pink {
+  #header {
+    background-color: #32b38c;
+    border-bottom: 1px solid #299172;
+    .navbar-header{
+      border-bottom-color: #299172;
+    
+    a {
+
+      &:hover, &.active {
+        // color: #32b38c;
+        .logo {
+          // background-position: -145px -40px;
+        }
+      }
+    }
+  }
+    .user-config {
+      width: 166px;
+      background: #288f70;
+    }
+  }
+}
+body.mstr-clr.theme-green,body.mstr-clr.theme-lightblue,body.mstr-clr.theme-darkblue,body.mstr-clr.theme-gold,body.mstr-clr.theme-pink{
+  .toolbarContainer {
+     // padding-top: 104px;
+    // background: #043f3d url('../icons/socialcover.png') no-repeat center;
+    background-color: #043f3d;
+
+    // @media screen and (min-width : @screen-xs) {
+    //    padding-top: 166px;
+    // }
+    // @media screen and (min-width : @screen-md) {
+    //    padding-top: 218px;
+    // }
+  }
+  #toolbar{
+    background: rgba(0,0,0,0.1);
+    border-color: #75999b;
+
+    .btn-group {
+      background: rgba(0,0,0,0.3);
+      .btn{
+        .toolbar-icon-backgrounds(-120px);
+      }
+    }
+  }
+}
+body.mstr-clr.theme-green,body.mstr-clr.theme-lightblue,body.mstr-clr.theme-darkblue,body.mstr-clr.theme-gold,body.mstr-clr.theme-pink {
+  .right-menu {
+    background: #32b38c;
+  }
+}
+
+.panel-heading {
+
+    &.panel-heading-darkblue,
+    &.panel-heading-lightblue,
+    &.panel-heading-orange,
+    &.panel-heading-gold,
+    &.panel-heading-green {
+      border-color: #7dca75;
+    }
+  }

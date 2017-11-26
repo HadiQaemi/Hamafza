@@ -1,0 +1,152 @@
+.main-content-left .thumbnail .caption{
+    padding: 0;
+}
+
+.nav_center_footer {
+    text-align: center;
+    border-top: 1px solid #7dca75;
+    background-color: #fff;
+    width: 100%;
+}
+
+.nav_center_footer ul {
+    margin: 2px auto;
+    line-height: 35px;
+    padding-left: 0;
+}
+
+.nav_center_footer ul li {
+    margin: 2px 7px;
+    display: inline;
+    text-align: center;
+    line-height: 35px;
+}
+
+.nav_center_footer ul li span {
+    font-size: 0.7em;
+}
+
+.homepage_login span{
+    font-size: 13px;
+}
+
+.captcha-refresh-style {
+    cursor: pointer;
+    width: 30px;
+    float: right;
+    height: 34px;
+    background-color: #EEEEEE;
+    text-align: center;
+    border-radius: 0 4px 4px 0;
+    border: 1px solid #CCCCCC;
+}
+
+.role_modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.role_modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.role_modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+
+.h_sidenav
+{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #7F7F7F;
+    overflow-x: hidden;
+    transition: 1s;
+}
+
+.h_sidenav .h_sidenav_close
+{
+    color: white;
+    cursor: pointer;
+    float: left;
+    font-size: 20px;
+    text-align: left;
+    margin: 0;
+    padding: 0 5px 0 5px;
+    width: 100%;
+}
+
+.navbar-navtabs
+{
+    border: medium none;
+    margin-top: 1.5%;
+}
+
+.h_sidenav .nav-tabs > li
+{
+    border-bottom: 2px solid #ddd;
+    float: right;
+    margin: 0 0.5%;
+    text-align: center;
+    width: 24%;
+}
+
+.h_sidenav .nav-tabs > li.active > a.new_sidebar,
+.nav-tabs > li.active > a.new_sidebar:focus,
+.nav-tabs > li.active > a.new_sidebar:hover
+{
+    border-width: 0;
+}
+
+.h_sidenav .nav-tabs > li > a.new_sidebar
+{
+    border: medium none;
+    color: #fff;
+    font-size: 1em;
+    padding: 13%;
+}
+
+.h_sidenav .nav-tabs > li.active > a.new_sidebar,
+.h_sidenav .nav-tabs > li > a.new_sidebar:hover
+{
+    background: transparent none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+}
+
+.h_sidenav .nav-tabs > li > a.new_sidebar::after
+{
+    background: #fff none repeat scroll 0 0;
+    bottom: -4px;
+    content: "";
+    height: 4px;
+    left: 0;
+    position: absolute;
+    transform: scale(0);
+    transition: all 250ms ease 0s;
+    width: 100%;
+}
+
+.h_sidenav .nav-tabs > li.active > a.new_sidebar::after,
+.tabside > li:hover > a.new_sidebar::after
+{
+    transform: scale(1);
+}
+
+.h_sidenav .nav-tabs > li > a.new_sidebar::after
+{
+    background: #fff none repeat scroll 0 0;
+    color: #fff;
+}
+

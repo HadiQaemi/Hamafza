@@ -1,0 +1,71 @@
+.panel.panel-tab .navbar {
+  background: #e1e1e1;
+  border: none;
+  border-radius: 0;
+}
+.panel.panel-tab .navbar .nav-tabs {
+  border: none;
+}
+.panel.panel-tab .navbar .nav-tabs a {
+  color: #6b6a6a;
+  font-family: 'b nazanin';
+  font-size: 20px;
+  border-radius: 0;
+  border: none;
+  margin: 0 5px;
+  border-bottom: 4px solid transparent;
+  cursor: pointer;
+}
+.panel.panel-tab .navbar .nav-tabs li {
+  margin: 0;
+}
+.panel.panel-tab .navbar .nav-tabs li.active a {
+  background: transparent;
+  border-bottom: 4px solid #29abd6;
+}
+.panel.panel-tab .navbar .nav-tabs li:hover a {
+  background: transparent;
+}
+#mainContainer .next-container {
+  padding: 30px 10px;
+  font-family: 'b nazanin';
+}
+#mainContainer .next-container .row {
+  margin: 5px;
+}
+.about-panel {
+  font-family: 'b nazanin';
+}
+.about-panel .panel-heading {
+  color: #666666;
+  font-size: 36px;
+  padding: 20px 27px;
+}
+.about-panel .panel-body {
+  color: #6f6f6f;
+  font-size: 18px;
+  line-height: 46px;
+  padding: 0 27px 30px;
+  font-family: 'b nazanin';
+}
+.article-list {
+  padding: 12px 12px 20px;
+}
+.article-list li {
+  margin: 7px 0px;
+  background: #eeeeee;
+  padding: 4px 4px 15px;
+  cursor: pointer;
+  line-height: 30px;
+}
+.article-list li h3 {
+  color: #010101;
+  font-size: 18px;
+  margin: 10px 0;
+  font-family: 'b nazanin bold';
+}
+.article-list li h3 .date {
+  float: left;
+  color: #29abd6;
+  font-size: 14px;
+}

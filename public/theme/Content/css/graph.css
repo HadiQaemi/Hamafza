@@ -1,0 +1,44 @@
+
+.alchemy {
+    position: relative;
+}
+.alchemy #search form {
+    z-index: 2;
+    display: inline;
+    margin-left: 100px;
+}
+.alchemy #add-tag {
+    width: 300px;
+    display: inline-block;
+}
+.alchemy #tags input {
+    max-width: 220px;
+}
+.alchemy #tags-list {
+    padding: 0;
+}
+.alchemy #tags-list .icon-remove-sign {
+    cursor: pointer;
+}
+.alchemy #tags-list li {
+    display: inline-block;
+    margin-top: 5px;
+}
+.alchemy #tags-list span {
+    background-color: #ccc;
+    color: #333;
+    border-radius: 10em;
+    display: inline-block;
+    padding: 1px 6px;
+}
+.alchemy #filter-nodes label, .alchemy #filter-relationships label {
+    font-weight: 400;
+    margin-right: 1em;
+}
+.alchemy .clear {
+    clear: both;
+}
+.alchemy text {
+    font-weight: 200;
+    text-anchor: middle;
+}

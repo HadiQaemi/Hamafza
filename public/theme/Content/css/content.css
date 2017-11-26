@@ -1,0 +1,130 @@
+@import 'fonts.css';
+
+body {
+    font-family: 'IranSharp';
+    font-size: 0.8em;
+}
+#TextSection,#helpviewDiv{
+    width: 100%;
+    text-align: justify;
+    /*padding: 0 15px;*/
+}
+#TextSection ul,#helpviewDiv ul {
+    list-style-position: outside !important;
+    padding: 0 20px 0 0;
+}
+
+#TextSection  ul li,#helpviewDiv ul li {
+    list-style:  disc;
+    list-style: outside none disc !important;
+    margin-right:15px;
+        padding: 0;
+
+}
+
+#TextSection,#helpviewDiv ol   {
+    list-style-position: outside !important;
+}
+#helpviewDiv ol   {
+    list-style-position: outside !important;
+        padding: 0 15px;
+}
+#TextSection ol ,#helpviewDiv ol  {
+  padding-right:25px;
+}
+
+#TextSection ol li,#helpviewDiv ol li {
+    list-style-type: decimal;
+    text-indent: 0 !important;
+}
+.text-content{
+    font-size: 9pt !important;
+    font-family: IranSharp;
+    /*padding-top: 10px;*/
+
+}
+
+.text-decoration {
+  color: #555555;
+  padding: 0;
+}
+.text-decoration .text-title {
+  color: #326fb3;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  font-size: 18px;
+}
+.text-decoration .text-bggrey {
+  background-color: #f7f7f7;
+  font-size: 9pt;
+}
+.text-decoration .text-content {
+  padding: 5px 20px;
+  line-height: 28px;
+  font-size: 9pt;
+}
+.text-decoration .text-example {
+  background: #f4f4f4;
+  margin-top: 7px;
+  border-right: 3px solid #bd7261;
+  padding: 8px;
+}
+#TextSection p,#helpviewDiv p {
+    margin: 0 0 0.5em;
+    text-indent: 15px;
+}
+#TextSection p img,#helpviewDiv p img {
+    margin: auto;
+display:block;
+}
+.number {
+    text-align: center;
+}
+.HelpFire{
+    cursor: pointer;
+}
+.HelpIcon{
+    font-size: 15pt;
+    height: 15px;
+    left: 5px;
+    padding-left: 20px;
+    position: absolute;
+}
+
+.HelpIcons{
+    font-size: 15pt;
+    height: 15px;
+    left: 5px;
+    padding-left: 20px;
+    position: absolute;
+    color: #FFF;
+    text-decoration: none;
+     top: 10px;
+}
+.HelpIcons:hover{
+    color: #FFF;
+    text-decoration: none;
+}
+.code1, .code2 {
+    margin: 0  !important;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: #fffef4 none repeat scroll 0 0;
+   font-style: italic;
+    color: #333;
+}
+
+.text-content  p {
+    margin: 0 0 0.5em;
+    text-indent: 15px;
+}
+
+p.resource {
+    font-size: 11px;
+    margin-top: -1px;
+    text-align: center;
+}
+.subtitle {text-decoration:overline;background:#C7E8F4 !important;}

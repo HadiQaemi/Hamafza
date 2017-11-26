@@ -1,0 +1,102 @@
+body {
+  font-family: 'b roya';
+}
+ul,
+li {
+  list-style: none;
+}
+.row {
+  margin: 0;
+}
+.panel-login,
+.modal-login,
+.modal-register {
+  font-size: 14px;
+}
+.panel-login .register,
+.modal-login .register,
+.modal-register .register,
+.panel-login .login,
+.modal-login .login,
+.modal-register .login {
+  line-height: 36px;
+  color: #47c43a;
+  text-align: center;
+  cursor: pointer;
+}
+.panel-login .btn,
+.modal-login .btn,
+.modal-register .btn {
+  padding: 5px 35px;
+  border-radius: 0;
+  font-size: 18px;
+  outline: none;
+}
+.panel-login .btn .btn-primary,
+.modal-login .btn .btn-primary,
+.modal-register .btn .btn-primary {
+  background: #326fb3;
+}
+.modal-register .login {
+  color: #3a7ec4;
+}
+.panel-light .panel-heading {
+  font-size: 16px;
+  padding-left: 10px;
+}
+.panel-light .panel-heading .flaticon-plus:before {
+  font-size: 16px;
+}
+.album-list li {
+  cursor: pointer;
+  padding: 0 10px;
+}
+.album-list li:hover {
+  background: #ededed;
+}
+.album-list table {
+  width: 100%;
+}
+.album-list table td {
+  padding: 3px 5px;
+  font-size: 16px;
+  font-family: 'b mitra';
+  line-height: 37px;
+  color: #535353;
+}
+.album-list table td:last-child {
+  text-align: left;
+}
+.album-list button.more {
+  text-align: center;
+  border: none;
+  color: #212121;
+  background: #c0c0c0;
+  cursor: pointer;
+  width: 100%;
+  line-height: 30px;
+  font-size: 18px;
+  font-family: 'b mitra';
+  outline: none;
+}
+.album li {
+  margin: 20px 10px;
+  float: right;
+  background: #f1f1f1;
+  font-family: 'b mitra';
+  font-size: 18px;
+  color: #3c3c3c;
+  border-bottom: 4px solid #c3d8d2;
+  line-height: 45px;
+}
+.album li .title {
+  padding: 0 15px;
+}
+.blueimp-gallery > .title {
+  left: auto;
+  right: 15px;
+}
+.blueimp-gallery > .close {
+  right: auto;
+  left: 15px;
+}

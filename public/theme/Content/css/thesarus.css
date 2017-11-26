@@ -1,0 +1,16 @@
+
+.panel  .panel-light{
+   font-size: 9pt !important;
+  font-family:  'IranSharp'; 
+  line-height: 25px;
+  padding: 0 10px;
+}
+#header .quick-links{
+    margin-top: 20px;
+    height: 10px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th{
+     font-size: 9pt !important;
+  font-family:  'IranSharp'; 
+  line-height: 25px;
+}

@@ -1,0 +1,49 @@
+.notice-wrap {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	width: 250px;
+	z-index: 9999;
+}
+
+
+.notice-item {
+	background: #333;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: #eee;
+	padding:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	display: block;
+	position: relative;
+	margin: 0 0 12px 0;
+}
+.notice-item p{
+	font-family:"IranSharp", Helvetica, sans-serif;
+	font-size: 9pt;
+}
+.notice-item-close {
+	position: absolute;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	left: 6px;
+	top: 6px;
+	cursor: pointer;
+}
+.success {
+	background-color:
+ #090;
+}
+.error {
+	background-color:#900;
+}
+.notice-wrap ul li {
+	padding:3px;
+}
+.notice-wrap ul li:hover {
+	cursor:pointer;
+	background-color:#000;
+	color:#FFF;
+}

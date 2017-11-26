@@ -1,0 +1,249 @@
+
+#mainContainer .next-container .row {
+    margin: 0;
+}
+
+.panel .panel-heading {
+    font-size: 16px;
+}
+
+.person-list li {
+    cursor: pointer;
+}
+
+.person-list li:hover {
+    background: #d2d2d2;
+}
+
+.person-list table {
+    width: 100%;
+}
+
+.person-list table td {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.person-list table td:last-child {
+    text-align: left;
+    color: #043f3d;
+}
+
+.addcomment-box {
+    background: #fff;
+    height: 48px;
+}
+
+.comment-contain {
+    margin-bottom: 20px;
+    margin-left: 15px;
+
+}
+
+.comment-contain .comment-box {
+    background: #fff;
+}
+
+.comment-contain .comment-box img.avatar {
+    border: 1px solid #ddd;
+    padding: 1px;
+    width: 60px;
+    margin: 15px;
+    float: right;
+}
+
+.comment-contain .comment-box .name {
+    color: #366fb2;
+    font-size: 14px;
+    margin-right: 90px;
+    padding-top: 10px;
+}
+
+.comment-contain .comment-box .text {
+    font-size: 11px;
+    line-height: 25px;
+    margin-right: 90px;
+    text-align: justify;
+    padding-bottom: 15px;
+    margin-left: 15px;
+
+}
+
+.comment-contain .comment-box .text br {
+    display: flex;
+    margin-top: 3px;
+    content: " ";
+    display: block;
+    margin: 0.75em;
+}
+
+@media screen and (min--moz-device-pixel-ratio: 0) {
+    .comment-contain .comment-box .text br {
+        display: flex;
+        margin: 3px 0;
+    }
+}
+
+.comment-contain .like-box {
+    line-height: 35px;
+    margin-right: 96px;
+}
+
+.comment-contain .like-box40 {
+    line-height: 35px;
+    margin-right: 96px;
+    background: #eeeeee;
+}
+
+.comment-contain .like-box40 .firstRow {
+    height: 30px;
+    border-top: 2px solid #EEEEEE;
+    background: #f4f4f4;
+    color: #3972a7;
+    box-sizing: border-box;
+    padding-right: 15px;
+    padding-left: 10px;
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+}
+
+.comment-contain .like-box40 .firstRow span {
+    cursor: pointer;
+}
+
+.comment-contain .like-box .firstRow span {
+    cursor: pointer;
+}
+
+.comment-contain .like-box .firstRow {
+    height: 30px;
+    border-top: 2px solid #EEEEEE;
+    background: #f4f4f4;
+    color: #3972a7;
+    box-sizing: border-box;
+    padding-right: 15px;
+    padding-left: 10px;
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+}
+
+.comment-contain .like-box .firstRow span {
+    cursor: pointer;
+}
+
+.comment-contain .like-box .firstRow .left-detail {
+    color: #5a7179;
+    font-size: 11px;
+}
+
+.comment-contain .like-box .secondRow {
+    padding: 0 15px;
+    border-top: 2px solid #EEEEEE;
+    background: #f4f4f4;
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+    margin-top: 2px;
+    height: 30px;
+    color: #124F93;
+}
+
+.comment-contain .like-box .secondRow span {
+    cursor: pointer;
+    color: #4a749e;
+}
+
+.comment-contain .addcomment {
+    background: #f4f4f4;
+    padding: 7px 9px;
+    margin-right: 96px;
+    position: relative;
+    height: 50px;
+}
+
+.comment-contain .addcomment img {
+    float: right;
+    height: 35px;
+    width: 35px;
+    border: 1px solid #bbbbbb;
+    padding: 1px;
+}
+
+.comment-contain .addcomment .txtContain {
+    margin-right: 50px;
+    /*margin-left: 80px;*/
+    text-align: justify;
+}
+
+.comment-contain .addcomment .txtContain input {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dddddd;
+    height: 34px;
+    outline: none;
+    padding: 2px;
+    color: #808080;
+}
+
+.ContentSec {
+    background: #EEEEEE;
+}
+
+.ful-scrn {
+    display: none;
+}
+
+.WallTop {
+    border-color: #EEEEEE !important;
+}
+
+.commentShow {
+    border-style: none solid none solid;
+    border-width: medium 1px 1px;
+    border-color: #9DB8D5;
+    margin: 5px 0 5px 0;
+    height: auto !important;
+}
+
+.CommentTime {
+    text-align: left;
+    float: left;
+    width: 100px;
+    top: 0;
+    margin-top: -20px;
+    font-size: 8pt;
+}
+
+.commenTxtHolders {
+    background-color: #fff;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    padding: 10px;
+    width: 100%;
+
+}
+
+.SendButs {
+    height: 15px;
+    width: 100%;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.dropdown {
+    display: inline;
+}
+
+#Circles input[type="checkbox"], input[type="radio"] {
+    margin-left: 5px;
+}

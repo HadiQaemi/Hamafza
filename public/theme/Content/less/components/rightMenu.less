@@ -1,0 +1,64 @@
+.right-menu {
+  height: 100%;
+  background: #6391c5;
+  width: 70px;
+  position: relative;
+  @media screen and (min-width : @screen-xs) {
+     width: 80px;
+    }
+  .menu {
+    margin-bottom: 65px;
+    @media screen and (min-width : @screen-xs) {
+      padding-right: 8px;
+    }
+    li {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.2);
+      line-height: 75px;
+      border-right: 2px solid #5d8dc3;
+      text-align: center;
+      a {
+        font-family: 'b nazanin';
+        font-size: 20px;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+      }
+      &:hover{
+        background: rgba(255,255,255,0.3);
+      }
+      &.active {
+        background: #eeeeee;
+        box-shadow: 7px 0px 8px rgba(1,2,2,0.15) inset;
+        a {
+          color: #575757;
+        }
+        &.darkmenu {
+          background: #282828;
+          a {
+            color: #f9f9f9;
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    position: fixed;
+    bottom:0;
+    width: 70px;
+    text-align:center;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    @media screen and (min-width : @screen-xs) {
+     width: 80px;
+    }
+    strong {
+      font-size: 30px;
+      font-family: 'b nazanin';
+    }
+  }
+}
+

@@ -1,0 +1,112 @@
+.row {
+    margin: 5px;
+}
+.panel-login,
+.modal-login,
+.modal-register {
+    font-size: 14px;
+}
+
+.modal-register .login {
+    color: #3a7ec4;
+}
+
+.panel-list {
+    margin-bottom: 10px;
+}
+.panel-list .panel {
+    border-color: transparent;
+}
+.panel-list .panel-heading {
+    color: #404040;
+    font-size: 9pt;
+    padding: 15px 20px;
+}
+.panel-list .panel-body .txtsearch {
+    padding: 10px 17px;
+}
+.panel-list .panel-body .txtsearch input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #cdcdcd;
+    color: #cdcdcd;
+    line-height: 15px;
+    outline: none;
+    padding: 0 1px;
+    font-size: 14px;
+    font-family: 'b mitra';
+}
+.panel-list .accordion .panel-heading {
+    padding: 5px;
+}
+.panel-list .accordion .panel-heading .accordion-toggle {
+    text-decoration: none;
+}
+.panel-list .accordion .panel-body {
+    border-top-color: transparent!important;
+    padding: 5px;
+}
+.panel-list .accordion .panel-body li {
+    padding-right: 15px;
+    cursor: pointer;
+}
+.panel-list .accordion .panel-body li.selected,
+.panel-list .accordion .panel-body li:hover {
+    background: #cedff2;
+}
+.new-list li {
+    cursor: pointer;
+}
+.new-list li:hover {
+    background: #d2d2d2;
+}
+.new-list table {
+    width: 100%;
+}
+.new-list table td {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+.new-list table td:last-child {
+    text-align: left;
+    color: #043f3d;
+}
+.new-list button.more {
+    text-align: center;
+    border: none;
+    color: #fff;
+    background: #124f93;
+    cursor: pointer;
+    width: 100%;
+    line-height: 30px;
+    font-size: 18px;
+    font-family: 'b mitra';
+    outline: none;
+}
+.h1, h1 {
+    font-size: 15px;
+}
+.h2, h2 {
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 18px;
+    padding-bottom: 5px;
+}
+.h3, h3{
+    font-size: 17px;
+
+}
+.h4, h4 {
+    font-size: 16px;
+}
+.h5, h5{
+    font-size: 15px;
+
+}
+.h6, h6,.h7, h7{
+    font-size: 14px;
+
+}
+.animated  h2{
+     border-bottom: 0px ;
+    font-size:20px;
+}

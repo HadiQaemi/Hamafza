@@ -1,0 +1,289 @@
+/*fonts & font icons*/
+@import 'fonts';
+@import '../Flaticon/flaticon.css';
+
+/*bootstrap overrides*/
+@import 'bootstrap.overrides/panels';
+@import 'bootstrap.overrides/modal';
+@import 'bootstrap.overrides/input-groups.less';
+
+/*components*/
+@import 'components/media';
+@import 'components/header';
+@import 'components/slider';
+@import "components/sidesearch";
+@import 'components/toolbar';
+@import 'components/rightMenu';
+@import 'components/table';
+@import 'components/themeColor';
+*  {
+  margin: 0;
+  padding: 0;
+}
+html,body,#main{
+  height: 100%;
+}
+body {
+  background: #eeeeee;
+  overflow-x: hidden;
+  font-family: 'b roya';
+}
+
+ul, li {
+  list-style: none;
+}
+#main{
+  position: relative;
+}
+#mainContainer {
+  position: relative;
+  width: 100%;
+  top: auto;
+  // overflow: hidden;
+  bottom: 0;
+  // height: 100%;
+  right: 0;
+  @media screen and (min-width : @screen-md) {
+    top: 155px;
+    position: absolute;
+  }
+  .next-container {
+    margin-right:0;
+    margin-left: 0;
+    padding-top: 15px;
+    height: 100%;
+    overflow: auto;
+  }
+}
+.dsply-tbl{
+  display: table;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+}
+.dsply-tbl-rw{
+  display: table-row;
+  height: 100%;
+  max-width: 100%;
+  width: 100%;
+}
+.dsply-tbl-cl{
+  display: table-cell;
+  height: 100%;
+  float: none;
+  vertical-align: top;
+}
+.scrl-bx{
+ height: auto;
+  @media screen and (min-width : @screen-md) {
+    height: 450px;
+ overflow: hidden;
+  }
+}
+.scrl-2{
+  height: auto;
+   @media screen and (min-width : @screen-md) {
+  overflow-y: auto;
+  height: 100%;
+  }
+}
+.scrl{
+  .t-s,
+  .b-s,
+  .l-s,
+  .r-s{
+    display: none;
+  }
+  height: auto;
+   @media screen and (min-width : @screen-md) {
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  padding-left: 0;
+      .t-s{
+        width: 17px;
+        height: 17px;
+        background: #eee;
+        position: absolute;
+        top:0;
+        left: 0;
+        z-index: 3;
+        display: block;
+      }
+      .b-s{
+        width: 17px;
+        height: 17px;
+        background: #eee;
+        position: absolute;
+        bottom:0;
+        left: 0;
+        z-index: 3;
+        display: block;
+      }
+      .r-s{
+        width: 5px;
+        height: 100%;
+        background: #eee;
+        position: absolute;
+        top:0;
+        left: 12px;
+        height: 100%;
+        z-index: 3;
+        display: block;
+      }
+      .l-s{
+        width: 5px;
+        height: 100%;
+        background: #eee;
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 100%;
+        z-index: 3;
+        display: block;
+      }
+
+    
+  }
+ }
+ .src-hdn{
+  display: none;
+ }
+ .src-hlt{
+  // background: magenta !important;
+  // color: #fff !important;
+  margin-top: 5px;
+ }
+ .rplc-cntnt{
+  display: none;
+ }
+ .toolbarContainer{
+  position: relative;
+ }
+ .tooltip{
+  z-index: 9000;
+  position: fixed;
+ }
+ .tooltip.top  .tooltip-arrow{
+  border-top-color: #fff;
+ }
+
+.tooltip > .tooltip-inner {
+  background-color: #fff;
+  font-family: "b nazanin";
+    font-size: 14px;
+    color: #000;
+
+}
+.activty-box{
+  position: absolute;
+  top: 100%;
+  left: 55px;
+  height: 250px;
+  width: 200px;
+  background: #fff;
+  display: none;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  z-index: 500;
+  @media screen and (min-width : @screen-md) {
+    left: 64px;
+  }
+}
+.fix-box{
+  position: relative;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+  width: auto;
+  height: auto;
+}
+.ovr-flw-hdn{
+  overflow: hidden;
+}
+.fix-box.ful-fix{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+.fix-box{
+  .t-s,
+  .b-s,
+  .l-s,
+  .r-s{
+    display: none;
+  }
+}
+.ful-fix.fix-box{
+  .t-s,
+  .b-s,
+  .l-s,
+  .r-s{
+    display: block;
+    background: #fff;
+  }
+}
+.ful-scrn{
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  border: 0 none;
+  background: none;
+}
+.ful-fix .fix-inr{
+  overflow-y: auto;
+  height: 100%;
+}
+.toolbar-box{
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+  background: #fff;
+  position: relative;
+  height: 200px;
+  display: none;
+  clear:both;
+}
+.theme-green #mainContainer {
+  position: static;
+}
+
+.panel.padding-remove {
+  .panel-body {
+    padding: 0;
+  }
+}
+
+.clear{
+  clear: both;
+  clear: both;
+}
+
+
+.panel-login, .modal-login, .modal-register {
+  font-size: 14px;
+
+
+  .register, .login{
+    line-height: 36px;
+    color: #47c43a;
+    text-align: center;
+    cursor: pointer;
+  }
+  .btn {
+    padding: 5px 35px;
+    border-radius: 0;
+    font-size: 18px;
+    outline: none;
+    .btn-primary {
+      background: #326fb3;
+    }
+  }
+}
+.modal-register {
+  .login {
+    color: #3a7ec4;
+  }
+}

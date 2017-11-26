@@ -1,0 +1,118 @@
+.row {
+  margin: 0px;
+  height: 100%;
+}
+.panel-login,
+.modal-login,
+.modal-register {
+  font-size: 14px;
+}
+.panel-login .register,
+.modal-login .register,
+.modal-register .register,
+.panel-login .login,
+.modal-login .login,
+.modal-register .login {
+  line-height: 36px;
+  color: #47c43a;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal-register .login {
+  color: #3a7ec4;
+}
+.text-decoration {
+  color: #555555;
+  padding: 0;
+}
+.text-decoration .text-title {
+  color: #326fb3;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  font-size: 18px;
+}
+.text-decoration .text-bggrey {
+  background-color: #f7f7f7;
+  font-size: 16px;
+}
+
+.text-decoration .text-example {
+  background: #f4f4f4;
+  margin-top: 7px;
+  border-right: 3px solid #bd7261;
+  padding: 8px;
+}
+.panel-list {
+  margin-bottom: 10px;
+}
+.panel-list .panel {
+  border-color: transparent;
+}
+.panel-list .panel-heading {
+  color: #404040;
+  font-size: 13px;
+  padding: 15px 20px;
+}
+.panel-list .panel-body .txtsearch {
+  padding: 10px 17px;
+}
+.panel-list .panel-body .txtsearch input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #cdcdcd;
+  color: #cdcdcd;
+  line-height: 15px;
+  outline: none;
+  padding: 0 1px;
+  font-size: 14px;
+  font-family: 'b mitra';
+}
+.panel-list .accordion .panel-heading {
+  padding: 5px;
+}
+.panel-list .accordion .panel-heading .accordion-toggle {
+  text-decoration: none;
+}
+.panel-list .accordion .panel-body {
+  border-top-color: transparent!important;
+  padding: 5px;
+}
+.panel-list .accordion .panel-body li {
+  padding-right: 15px;
+  cursor: pointer;
+}
+.panel-list .accordion .panel-body li.selected,
+.panel-list .accordion .panel-body li:hover {
+  background: #cedff2;
+}
+.new-list li {
+  cursor: pointer;
+}
+.new-list li:hover {
+  background: #d2d2d2;
+}
+.new-list table {
+  width: 100%;
+}
+.new-list table td {
+  padding: 3px 5px;
+  font-size: 10px;
+}
+.new-list table td:last-child {
+  text-align: left;
+  color: #043f3d;
+}
+.new-list button.more {
+  text-align: center;
+  border: none;
+  color: #fff;
+  background: #124f93;
+  cursor: pointer;
+  width: 100%;
+  line-height: 30px;
+  font-size: 18px;
+  font-family: 'b mitra';
+  outline: none;
+}

@@ -1,0 +1,118 @@
+#mainContainer .next-container {
+  padding: 20px 5px;
+  font-family: 'b nazanin';
+}
+#mainContainer .next-container .row {
+  margin: 0;
+}
+.panel .panel-leftcolor {
+  border-left: 2px solid #6890c4;
+}
+.panel .panel-leftcolor.panel-gold {
+  border-color: #c2ab68;
+}
+.panel .panel-leftcolor.panel-gold {
+  border-color: #69c6ab;
+}
+.detail-box {
+  position: relative;
+}
+.detail-box .right-box {
+  width: 102px;
+  height: 132px;
+  background: #bccddf;
+  float: right;
+  vertical-align: top;
+  text-align: center;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.detail-box .right-box strong {
+  font-size: 34px;
+  line-height: 30px;
+  padding-top: 10px;
+  display: block;
+}
+.detail-box .title {
+  line-height: 32px;
+  color: #4375bc;
+  font-size: 24px;
+}
+.detail-box .description {
+  font-size: 16px;
+  line-height: 27px;
+  color: #606060;
+}
+.detail-box .tags {
+  padding-top: 12px;
+  overflow: hidden;
+}
+.detail-box .tags li {
+  float: right;
+  margin: 0px 5px 5px;
+  background: #6391c5;
+  width: 94px;
+  height: 34px;
+  line-height: 34px;
+  color: #fff;
+  text-align: center;
+}
+.detail-box .seecount {
+  clear: both;
+  float: right;
+  width: 102px;
+  color: #787878;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 40px;
+}
+@media screen and (min-width: 768px) {
+  .detail-box .seecount {
+    margin-top: 0;
+  }
+}
+.detail-box .last-comment {
+  width: 120px;
+  float: left;
+  font-size: 14px;
+  margin-top: 0px;
+}
+@media screen and (min-width: 768px) {
+  .detail-box .last-comment {
+    margin-left: -17px;
+    margin-top: -36px;
+    margin-bottom: -8px;
+  }
+}
+.detail-box .last-comment img {
+  float: right;
+}
+.detail-box .last-comment .name {
+  margin-right: 49px;
+  color: #366dae;
+  line-height: 24px;
+}
+.detail-box.box-gold .right-box {
+  background: #e1d1af;
+}
+.detail-box.box-gold .title {
+  color: #b59a41;
+}
+.detail-box.box-gold .tags li {
+  background: #b58d36;
+}
+.detail-box.box-gold .last-comment .name {
+  color: #b59a41;
+}
+.detail-box.box-green .right-box {
+  background: #aee1d2;
+}
+.detail-box.box-green .title {
+  color: #30cc9d;
+}
+.detail-box.box-green .tags li {
+  background: #32b38d;
+}
+.detail-box.box-green .last-comment .name {
+  color: #30cc9d;
+}

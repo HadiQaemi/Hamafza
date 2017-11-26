@@ -1,0 +1,106 @@
+body {
+  color: #373737;
+  font-family: 'b mitra';
+}
+.panel-heading{
+    padding:0px;
+}
+.main-container {
+  margin: 10px 10px;
+}
+.main-container .col-xs-1,
+.main-container .col-sm-1,
+.main-container .col-md-1,
+.main-container .col-lg-1,
+.main-container .col-xs-2,
+.main-container .col-sm-2,
+.main-container .col-md-2,
+.main-container .col-lg-2,
+.main-container .col-xs-3,
+.main-container .col-sm-3,
+.main-container .col-md-3,
+.main-container .col-lg-3,
+.main-container .col-xs-4,
+.main-container .col-sm-4,
+.main-container .col-md-4,
+.main-container .col-lg-4,
+.main-container .col-xs-5,
+.main-container .col-sm-5,
+.main-container .col-md-5,
+.main-container .col-lg-5,
+.main-container .col-xs-6,
+.main-container .col-sm-6,
+.main-container .col-md-6,
+.main-container .col-lg-6,
+.main-container .col-xs-7,
+.main-container .col-sm-7,
+.main-container .col-md-7,
+.main-container .col-lg-7,
+.main-container .col-xs-8,
+.main-container .col-sm-8,
+.main-container .col-md-8,
+.main-container .col-lg-8,
+.main-container .col-xs-9,
+.main-container .col-sm-9,
+.main-container .col-md-9,
+.main-container .col-lg-9,
+.main-container .col-xs-10,
+.main-container .col-sm-10,
+.main-container .col-md-10,
+.main-container .col-lg-10,
+.main-container .col-xs-11,
+.main-container .col-sm-11,
+.main-container .col-md-11,
+.main-container .col-lg-11,
+.main-container .col-xs-12,
+.main-container .col-sm-12,
+.main-container .col-md-12,
+.main-container .col-lg-12 {
+  padding-right: 7px;
+  padding-left: 7px;
+}
+.main-container .list-group-item {
+  border: none;
+}
+.main-container .list-group-item [class^="flaticon-"]:before,
+.main-container .list-group-item [class*=" flaticon-"]:before {
+  font-size: 40px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.main-container .list-group-item .color-lightblue[class^="flaticon-"]:before,
+.main-container .list-group-item .color-lightblue[class*=" flaticon-"]:before {
+  color: #29abd6;
+}
+.main-container .list-group-item .color-darkblue[class^="flaticon-"]:before,
+.main-container .list-group-item .color-darkblue[class*=" flaticon-"]:before {
+  color: #326fb3;
+}
+.main-container .list-group-item .color-gold[class^="flaticon-"]:before,
+.main-container .list-group-item .color-gold[class*=" flaticon-"]:before {
+  color: #b38a32;
+}
+.main-container .list-group-item .color-green[class^="flaticon-"]:before,
+.main-container .list-group-item .color-green[class*=" flaticon-"]:before {
+  color: #32b38c;
+}
+.main-container .list-group-item .color-pink[class^="flaticon-"]:before,
+.main-container .list-group-item .color-pink[class*=" flaticon-"]:before {
+  color: #b33284;
+}
+.main-container .quick-access [class^="flaticon-"]:before,
+.main-container .quick-access [class*=" flaticon-"]:before {
+  font-size: 18px;
+  margin-left: 0px;
+  color: #636363;
+}
+.main-container .quick-access .list-group-item {
+  padding: 10px 0px;
+}
+.main-container .quick-access .list-group-item a {
+  color: #373737;
+  text-decoration: none;
+}
+.main-container .quick-access .list-group-item a:hover {
+  opacity: .8;
+}

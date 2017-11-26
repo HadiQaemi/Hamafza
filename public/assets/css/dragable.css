@@ -1,0 +1,170 @@
+/*
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 13, 2016, 2:06:37 PM
+    Author     : windows7
+*/
+.scroll_x_hidden {
+    overflow-x: hidden;
+}
+
+.all-scroll-2 {
+    cursor: all-scroll;
+    /*z-index: 998522222;*/
+}
+
+.container {
+
+}
+
+input[type='checkbox'] {
+    margin-right: 15px;
+}
+
+labal {
+    margin-right: 5px;
+}
+
+/*span{*/
+
+/*min-width: 15px;*/
+/*min-height: 15px;*/
+
+/*}*/
+.state_icon {
+    top: 6.01px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.task_title {
+    margin-right: 50px;
+    margin-left: 50px;
+    line-height: 28px;
+    font-size: 8px;
+}
+
+.panel-heading {
+    font-weight: bold;
+}
+
+.circle-g {
+    height: 28px;
+    width: 28px;
+    background: greenyellow none repeat scroll 0% 0%;
+    border-radius: 25px;
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(2, 2, 2);
+    display: table-cell;
+
+}
+
+.circle-r {
+    height: 28px;
+    width: 28px;
+    background: red none repeat scroll 0% 0%;
+    border-radius: 25px;
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(255, 255, 255);
+    display: table-cell;
+}
+
+.title_div {
+    float: right;
+    vertical-align: middle;
+    padding: 5px;
+    text-align: center
+}
+
+.dragable-inner {
+    position: relative;
+    min-height: 28px;
+}
+
+.oneoff {
+    transition: background .5s;
+}
+
+.psize {
+    height: 150px;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.psize2 {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.firstContent {
+}
+
+.secendContent {
+}
+
+.thirdContent {
+}
+
+.fourthContent {
+}
+
+.dragDiv {
+    width: 150px;
+    height: 150px;
+    background: #6d1d73;
+}
+
+#origin {
+    background-color: lightgreen;
+}
+
+#origin img, #drop img {
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+#drop {
+    background-color: red;
+    min-height: 120px;
+}
+
+.over {
+    border: dashed 2px #aaaaaa;
+}
+
+.draggable {
+    direction: rtl;
+    border: solid 1px #eee;
+    margin-top: 2px;
+    padding: 2px;
+    cursor: all-scroll;
+    /*z-index: 9999999;*/
+}
+
+.draggable_inactive {
+
+    direction: rtl;
+    border: solid 1px #eee;
+    margin-top: 2px;
+    padding: 2px;
+}
+
+.draggable2 {
+    border: solid 2px #eee;
+    width: 150px;
+    height: 150px;
+    background: #331d45;
+}
+
+.mbox {
+    width: 100%;
+    height: 100px;
+    background: activeborder;
+    margin: 0px;
+}

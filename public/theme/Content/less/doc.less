@@ -1,0 +1,136 @@
+
+.row{
+  margin: 5px;
+}
+
+.panel-login, .modal-login, .modal-register {
+  font-size: 14px;
+
+
+  .register, .login{
+    line-height: 36px;
+    color: #47c43a;
+    text-align: center;
+    cursor: pointer;
+  }
+  .btn {
+    padding: 5px 35px;
+    border-radius: 0;
+    font-size: 18px;
+    outline: none;
+    .btn-primary {
+      background: #326fb3;
+    }
+  }
+}
+.modal-register {
+  .login {
+    color: #3a7ec4;
+  }
+}
+
+.text-decoration {
+  color: #555555;
+  padding: 0;
+  .text-title {
+    color: #b58d37;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    font-size: 18px;
+  }
+  .text-bggrey {
+    background-color: #f7f7f7;
+    font-size: 16px;
+  }
+  .text-content {
+    padding: 5px 20px;
+    line-height: 28px;
+    font-size: 16px;
+  }
+  .text-example {
+    background: #f4f4f4;
+    margin-top: 7px;
+    border-right: 3px solid #bd7261;
+    padding: 8px;
+  }
+}
+
+.panel-list {
+  margin-bottom: 10px;
+  .panel {
+    border-color: transparent;
+  }
+  .panel-heading {
+    color: #404040;
+    font-size: 16px;
+    padding: 15px 20px;
+  }
+  .panel-body {
+    .txtsearch {
+      padding: 10px 17px;
+      input{
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #cdcdcd;
+        color: #cdcdcd;
+        line-height: 15px;
+        outline: none;
+        padding: 0 1px;
+        font-size: 14px;
+        font-family: 'b mitra';
+      }
+    }
+  }
+  .accordion {
+    .panel-heading {
+      padding: 5px;
+      .accordion-toggle {
+        text-decoration: none;
+      }
+    }
+    .panel-body {
+      border-top-color: transparent!important;
+      padding: 5px;
+      li{
+        padding-right: 15px;
+        cursor: pointer;
+        &.selected, &:hover {
+          background: #eee2ca;
+        }
+      }
+    }
+  }
+}
+
+.new-list {
+  li {
+    cursor: pointer;
+    &:hover {
+      background: #d2d2d2;
+    }
+  }
+  table {
+    width: 100%;
+    td {
+      padding: 3px 5px;
+      font-size: 12px;
+      &:last-child {
+        text-align: left;
+        color: #b58d37;
+      }
+    }
+  }
+  button.more {
+    text-align: center;
+    border: none;
+    color: #fff;
+    background: #124f93;
+    cursor: pointer;
+    width: 100%;
+    line-height: 30px;
+    font-size: 18px;
+    font-family: 'b mitra';
+    outline: none;
+  }
+}
