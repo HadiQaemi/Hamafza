@@ -491,4 +491,27 @@
             cache: true
         }
     });
+
+    $(document).on('click', '.rahnama_btn', function(e)
+    {
+        data =
+        {
+            'target_type': 'page',
+            'target_id': '{!! $pid !!}',
+            'help_id': $('.help_relation_add').val()
+        };
+        $.ajax
+        ({
+            url: '{{ route('modals.help.relation.add') }}',
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            success: function(response)
+            {
+                jQuery.noticeAdd({type: response[0], text: response[1], stay: false});
+                $('.jsglyph-close').click();
+            }
+        });
+    });
+
 </script>

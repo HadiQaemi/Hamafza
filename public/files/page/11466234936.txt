@@ -1,0 +1,143 @@
+CREATE TABLE `homepage_slide` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`title`  varchar(800) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+`descr`  text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL ,
+`type`  int(11) NULL DEFAULT NULL ,
+`pic`  varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+`url`  varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
+AUTO_INCREMENT=2
+ROW_FORMAT=COMPACT
+;
+
+
+
+
+alter table `subjectType`
+
+add `pretitle`  varchar(400) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+add `viewalert`  int(11) NULL DEFAULT NULL ,
+add `editalert`  int(11) NULL DEFAULT NULL ,
+add `framework`  int(11) NULL DEFAULT NULL ;
+
+
+alter table `subjecttypeTab`
+add  `tem`  text CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+alter table `subject_type_fields`
+add  `help`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+
+alter table `pageslides`
+add  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+
+alter table `subjectTypeTab` 
+add  `help_pid`  int(11) NULL DEFAULT NULL ,
+add   `help_tag`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+alter table `pages` 
+add  `help_pid`  int(11) NULL DEFAULT NULL ,
+add   `help_tag`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+
+CREATE TABLE `subjecttypesec` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`asubid`  int(11) NULL DEFAULT NULL ,
+`secid`  int(11) NULL DEFAULT NULL ,
+`public`  enum('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+`private`  enum('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
+AUTO_INCREMENT=501
+ROW_FORMAT=COMPACT
+;
+
+
+alter table posts
+add `title`  varchar(400) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+alter table `user`
+add `title`  int NULL DEFAULT NULL ;
+alter table `subject_type_fields`
+add `help`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+CREATE TABLE IF NOT EXISTS `sso_session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `sesid` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `devtype` smallint(6) DEFAULT NULL,
+  `login_date` datetime DEFAULT NULL,
+  `last_activity` datetime DEFAULT NULL,
+  `last_session_id` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=160 ;
+
+//////6-3-1395
+
+
+alter table `subjecTtypeTab`
+add `help_pid`  int(11) NULL DEFAULT NULL ,
+add `help_tag`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+alter table `pages`
+add `help_pid`  int(11) NULL DEFAULT NULL ,
+add  `help_tag`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+CREATE TABLE `thesaurus_keywords` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`keyid`  int(11) NULL DEFAULT NULL ,
+`subject_id`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
+AUTO_INCREMENT=4
+ROW_FORMAT=COMPACT
+;
+
+
+CREATE TABLE `announce_keys` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`ann_id`  int(11) NULL DEFAULT NULL ,
+`key_id`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
+AUTO_INCREMENT=1
+ROW_FORMAT=COMPACT
+;
+
+ALTER TABLE `subjectType` CHANGE `name` `name` VARCHAR(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+
+alter table `announces`
+add `mostaghim`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+add `bookpage`  varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+
+CREATE TABLE `thesaurus_keywords` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`keyid`  int(11) NULL DEFAULT NULL ,
+`subject_id`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
+AUTO_INCREMENT=31
+ROW_FORMAT=COMPACT
+;
+
+ALTER TABLE `user_work` CHANGE `company` `company` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+ALTER TABLE `user_work` CHANGE `post`  `post`  VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+

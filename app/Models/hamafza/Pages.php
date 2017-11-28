@@ -52,5 +52,10 @@ class Pages extends Model
         }
         return "";
     }
+
+    public function help()
+    {
+        return $this->morphToMany('App\Models\Hamahang\Help', 'target', 'hamahang_help_relations', 'target_id', 'help_id')->withTimestamps();
+    }
 }
 

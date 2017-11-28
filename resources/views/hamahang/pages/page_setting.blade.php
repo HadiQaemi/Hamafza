@@ -231,6 +231,34 @@
             <form id="manager_form_rahnama" method="post" action="{{App::make('url')->to('/')}}/update_Help">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <label>راهنمای اینجا</label>
+                <select class="form-control help_relation_add" name="help_relation_add">
+                    @if ($help)<option value="{!! $help->id !!}" selected="selected">{!! $help->title !!}</option>@endif
+                </select><br />
+                <br />
+                <script>
+                    $('.help_relation_add').select2
+                    ({
+                        minimumInputLength: 2,
+                        dir: 'rtl',
+                        width: '95%',
+                        ajax:
+                        {
+                            type: 'post',
+                            url: '{{ route('auto_complete.help') }}',
+                            dataType: 'json',
+                            quietMillis: 50,
+                            cache: true,
+                            data: function(term) { return { term: term }; },
+                            processResults: function(data)
+                            {
+                                console.log(data);
+                                var a = true;
+                                return { results: data.results };
+                            }
+                        }
+                    });
+                </script>
+                {{--
                 <table width="100%" style="direction:rtl"  id="contactform">
                     <tbody>
                     @if(is_array($Access->tabs))
@@ -245,6 +273,7 @@
                     @endif
                     </tbody>
                 </table>
+                --}}
                 <label>اطلاعیه</label>
                 <table width="100%" style="direction:rtl"  id="contactform">
                     <tbody>

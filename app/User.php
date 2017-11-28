@@ -617,6 +617,7 @@ class User extends Authenticatable
     {
         $r['user'] = $this->get_bookmarks()->where('target_table', 'App\User')->get();
         $r['page'] = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Pages')->get();
+        $r['subject'] = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Subject')->get();
         $r['group'] = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Group')->get();
         $r['channel'] = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Channel')->get();
         return $r;

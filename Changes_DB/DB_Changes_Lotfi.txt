@@ -30,3 +30,6 @@ hamahang_help_see_alsos => جدید
 
 96/09/02
 hamahang_help_see_alsos => اضافه شده unique
+
+96/09/04
+hamahang_help_relations => جدید

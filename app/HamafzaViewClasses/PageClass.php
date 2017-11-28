@@ -154,6 +154,8 @@ class PageClass
                 $Body = $page->body;
                 $Tree = $pc->bodyList($Body);
             }
+
+
             $pattern = "/<span class=\"ThesaurusCLS.*/";
             $array = array();
             if ($num1 = preg_match_all($pattern, $Body, $array))
@@ -190,6 +192,7 @@ class PageClass
             {
                 $pFields = '';
             }
+
             $tabs = $pc->page_tabs($sid, $kind, $pid);
             //$Proccess = $pc->Proccess($pid, $uid, $sesid, $sid);
             $keys = $pc->PageKeywords($sid);
@@ -250,6 +253,7 @@ class PageClass
             $data['Films'] = $films;
             $data['Fields'] = $pFields;
             $data['Thesarus'] = $thesarus;
+
             $page = $data;
             if (is_array($data))
             {
@@ -369,7 +373,6 @@ class PageClass
         {
             $content = 'این صفحه موجود نیست';
         }
-        //dd($viewname);
         return
             [
                 'viewname' => $viewname,
@@ -792,7 +795,8 @@ class PageClass
             $subjects = Subject::where('id',$sid)->with('keywords')->first();
             $spi = $subjects->product_info;
             //return view('modals.page_setting', array('Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $rel, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi));
-            return view('hamahang.pages.page_setting', array('rels' => $relations_json,'subjects' => $subjects, 'Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $Relations_in_subject, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi, 'meta_fields' => $subjects->meta_fields))->render();
+            $help = Pages::find($pid)->help->first();
+            return view('hamahang.pages.page_setting', ['rels' => $relations_json,'subjects' => $subjects, 'Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $Relations_in_subject, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi, 'meta_fields' => $subjects->meta_fields, 'help' => $help])->render();
         }
     }
 

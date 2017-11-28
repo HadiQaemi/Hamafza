@@ -2019,26 +2019,35 @@ preventDuplicates: true,
     {
         if (auth()->check())
         {
-            $title = $request->input('title');
             $target_table = $request->input('target_table');
             $target_id = $request->input('target_id');
             $user_id = auth()->id();
-
             switch ($target_table)
             {
-                case 'user':
-                {
-                    $target_table = 'App\User';
-                    break;
-                }
                 case 'page':
                 {
-                    $target_table = 'App\Models\hamafza\Pages';
+                    $page = Pages::find($target_id);
+                    if ($page->count()) { $title = $page->subject->title; } else { return; }
+                    $target_type = 'App\Models\hamafza\Pages';
+                    break;
+                }
+                case 'subject':
+                {
+                    $subject = Subject::find($target_id);
+                    if ($subject->count()) { $title = $subject->title; } else { return; }
+                    $target_type = 'App\Models\hamafza\Subject';
+                    break;
+                }
+                case 'user':
+                {
+                    $user = User::find($target_id);
+                    if ($user->count()) { $title = $user->FullName; } else { return; }
+                    $target_type = 'App\User';
                     break;
                 }
             }
 
-            $bookmark = Bookmark::where('target_table', $target_table)->where('target_id', $target_id)->where('user_id', $user_id);
+            $bookmark = Bookmark::where('target_table', $target_type)->where('target_id', $target_id)->where('user_id', $user_id);
 
             if ($bookmark->count())
             {
@@ -2047,7 +2056,7 @@ preventDuplicates: true,
             }
             else
             {
-                Bookmark::create(['title' => $title, 'target_table' => $target_table, 'target_id' => $target_id, 'user_id' => $user_id,]);
+                Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $target_id, 'user_id' => $user_id,]);
                 return response()->json(['success', 'چوب الف با موفقیت ثبت شد.']);
             }
         }
@@ -2060,8 +2069,8 @@ preventDuplicates: true,
 
     public function bookmarks(Request $request)
     {
-        $empty = ['user' => false, 'page' => false, 'group' => true, 'channel' => true, ];
-        $bookmark_types = ['user' => 'کاربران', 'page' => 'صفحات', 'group' => 'گروه&zwnj;ها', 'channel' => 'کانال ها', ];
+        $empty = ['user' => false, 'page' => false, 'subject' => false, 'group' => true, 'channel' => true, ];
+        $bookmark_types = ['user' => 'کاربران', 'page' => 'صفحات', 'subject' => 'موضوعات', 'group' => 'گروه&zwnj;ها', 'channel' => 'کانال ها', ];
         $bookmarks = auth()->user()->bookmarks;
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_bookmarks')->with(['bookmark_types' => $bookmark_types, 'bookmarks' => $bookmarks, 'empty' => $empty, ]);
         return $r;
@@ -2104,6 +2113,15 @@ preventDuplicates: true,
                     if ($page)
                     {
                         return redirect(url($page->id));
+                    }
+                    break;
+                }
+                case 'App\Models\hamafza\Subject':
+                {
+                    $subject = Subject::find($bookmark->target_id);
+                    if ($subject)
+                    {
+                        return redirect(url($subject->id) . '/desktop');
                     }
                     break;
                 }

@@ -1,9 +1,9 @@
 $(document).ready(function () {
     $('.addBookmark').click(function () {
-        title = '{!! $Title !!}';
-        target_table = 'page';
-        target_id = '{!! $pid !!}';
-        if (title == '') {
+        var $this = $(this);
+        var target_id = $this.data('target_id');
+        var target_table = $this.data('target_type');
+        if (target_table == '' || target_id == '') {
             alert('محتوا خالی است.');
         } else {
             $.ajax
@@ -11,7 +11,7 @@ $(document).ready(function () {
                 url: Baseurl + 'bookmarks/add',
                 type: 'post',
                 dataType: 'json',
-                data: {title: title, target_table: target_table, target_id: target_id},
+                data: {target_table: target_table, target_id: target_id},
                 success: function (response) {
                     jQuery.noticeAdd
                     ({

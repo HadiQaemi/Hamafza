@@ -2689,7 +2689,7 @@ class PageClassExtend1
     public function modifyText($body, $uid = 0, $pid = 0, $sid = 0, $tabtype = false)
     {
         $body = PageClass::helper_viewer($body);
-        //$body = $this->Help_Replace($body);
+        $body = $this->Help_Replace($body);
         $list = $this->RefList($body);
         $body = ($list != '') ? $this->RefList_Replace($body, $list) : $body;
         $body = $this->Ref_Replace($body);
@@ -4425,8 +4425,12 @@ var id = data.node.id;
                 $payan = array();
                 $Enpayan = array();
                 $list = rtrim($list, ',');
-                $repss = DB::table('subjects as s')->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                    ->whereRaw("p.id in($list)")->select('s.kind', 's.title', 'p.id as pid')->orderby('s.title')->get();
+                $repss = DB::table('subjects as s')
+                    ->leftjoin('pages as p', 's.id', '=', 'p.sid')
+                    ->whereRaw("p.id in($list)")
+                    ->select('s.kind', 's.title', 'p.id as pid')
+                    ->orderby('s.title')
+                    ->get();
                 foreach ($repss as $reps)
                 {
                     $Nevisande = '';
@@ -4454,7 +4458,8 @@ var id = data.node.id;
                         {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
-                        })->where('st.field_id', '36')->where('p.id', $pid)
+                        })->where('st.field_id', '36')
+                        ->where('p.id', $pid)
                         ->select('r.field_value as field_val', 'r.field_id')->first();
                     if ($zabans && $zabans->field_val == 'انگلیسی')
                     {
@@ -4469,10 +4474,11 @@ var id = data.node.id;
                         {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
-                        })->where('st.field_id', '8')->where('p.id', $pid)
-                        ->select('r.field_value as field_val', 'r.field_id')->first();
+                        })->where('st.field_id', '8')
+                        ->where('p.id', $pid)
+                        ->select('r.field_value as field_val', 'r.field_id')
+                        ->first();
                     $motarjem = ($motarjems) ? trim($motarjems->field_val) : '-';
-
 
                     $yeartarjome = '';
                     $yeartarjome = DB::table('subject_fields_report as r')
@@ -4493,8 +4499,11 @@ var id = data.node.id;
                         {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
-                        })->where('st.field_id', '35')->where('p.id', $pid)
-                        ->select('r.field_value as field_val', 'r.field_id')->first();
+                        })
+                        ->where('st.field_id', '35')
+                        ->where('p.id', $pid)
+                        ->select('r.field_value as field_val', 'r.field_id')
+                        ->first();
                     $nashertarjome = ($nashertarjome) ? $nashertarjome->field_val : '-';
 
 
@@ -4506,8 +4515,10 @@ var id = data.node.id;
                             $join->on('st.id', '=', 'r.field_id');
                         })
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->where('st.field_id', '19')->where('p.id', $pid)
-                        ->select('r.field_value as field_val', 'r.field_id')->first();
+                        ->where('st.field_id', '19')
+                        ->where('p.id', $pid)
+                        ->select('r.field_value as field_val', 'r.field_id')
+                        ->first();
                     $Ref['year'] = ($year) ? $year->field_val : '-';
                     $mahalenteshar = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
@@ -4517,8 +4528,10 @@ var id = data.node.id;
                             $join->on('st.id', '=', 'r.field_id');
                         })
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->where('st.field_id', '92')->where('p.id', $pid)
-                        ->select('r.field_value as field_val', 'r.field_id')->first();
+                        ->where('st.field_id', '92')
+                        ->where('p.id', $pid)
+                        ->select('r.field_value as field_val', 'r.field_id')
+                        ->first();
                     $Ref['mahalenteshar'] = ($mahalenteshar) ? $mahalenteshar->field_val : '';
 
                     $nasher = DB::table('subject_fields_report as r')
@@ -4529,8 +4542,10 @@ var id = data.node.id;
                             $join->on('st.id', '=', 'r.field_id');
                         })
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->where('st.field_id', '10')->where('p.id', $pid)
-                        ->select('r.field_value as field_val', 'r.field_id')->first();
+                        ->where('st.field_id', '10')
+                        ->where('p.id', $pid)
+                        ->select('r.field_value as field_val', 'r.field_id')
+                        ->first();
                     $Ref['nasher'] = ($nasher) ? $nasher->field_val : '';
 
                     if ($kind == '42')
@@ -4545,8 +4560,10 @@ var id = data.node.id;
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
-                                ->where('st.field_id', '20')->where('p.id', $pid)
-                                ->select('r.field_value as field_val', 'r.field_id')->first();
+                                ->where('st.field_id', '20')
+                                ->where('p.id', $pid)
+                                ->select('r.field_value as field_val', 'r.field_id')
+                                ->first();
                             $Ref['Nevisande'] = ($nasher) ? $nasher->field_val : ' ';
                         }
                         else
@@ -4650,8 +4667,10 @@ var id = data.node.id;
                                 $join->on('st.id', '=', 'r.field_id');
                             })
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->where('st.field_id', '12')->where('p.id', $pid)
-                            ->select('r.field_value as field_val', 'r.field_id')->first();
+                            ->where('st.field_id', '12')
+                            ->where('p.id', $pid)
+                            ->select('r.field_value as field_val', 'r.field_id')
+                            ->first();
                         $Ref['nashrieh'] = ($nasher) ? $nasher->field_val : ' ';
 
                         $nasher = DB::table('subject_fields_report as r')
@@ -5232,6 +5251,14 @@ var id = data.node.id;
         }
         return $body;
     }
+
+
+
+
+
+
+
+
 
 
     static public function pages_list($html, $page = -1)

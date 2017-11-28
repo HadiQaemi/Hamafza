@@ -3,12 +3,13 @@
 use App\Models\hamafza\Subject;
 use App\Models\Hamahang\FileManager\Fileable;
 use App\Models\Hamahang\FileManager\FileMimeTypes;
+use App\Models\Hamahang\Help;
 use App\Models\Hamahang\Score;
 
 Route::get('test', function ()
 {
     //$help = Help::find(1);
-    //dd($help->SeeAlsos);
+    //dd($help->Pages);
     return 'test';
 });
 

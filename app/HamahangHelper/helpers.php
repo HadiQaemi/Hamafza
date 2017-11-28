@@ -408,7 +408,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $pc = new \App\HamafzaServiceClasses\PostsClass();
                     $content2 = json_encode($pc->SubjectWall($item, $uid, 0, ''));
                     $content2 = json_decode($content2);
-                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 2, ['subject_id' => $sid, 'page_id' => $pid]);
+                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 2, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                     if (Auth::check())
                     {
                         $res = [
@@ -453,7 +453,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $Title = $subject->title;
                     $PageType = 'subject';
                     $current_tab = $sid . '/desktop';
-                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 3, ['subject_id' => $sid, 'page_id' => $pid]);
+                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 3, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                     if (auth()->check())
                     {
                         $res = [
@@ -631,7 +631,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $tabs = json_encode($tabs);
                     $tabs = json_decode($tabs);
                     $tools = shortToolsGenerator('Page', $sid, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $sid], 0);
-                    $tools_menu = toolsGenerator([6 => ['uid' => $uid, 'sid' => 0]], 1, 5);
+                    $tools_menu = toolsGenerator([6 => ['uid' => $uid, 'sid' => 0]], 1, 5,['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                     $HFM_media = HFM_GenerateUploadForm(
                         [
                             ['page_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr'], "Multi"],
@@ -685,7 +685,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $Title = $pre_title . ' ' . $Title_page;
                     $sid = $sid == false ? config('constants.default_enquiry_portal_id') : $sid;
                     $post = App\Models\hamafza\Post::where('portal_id', $sid)->findOrFail($post_id);
-                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
+                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                     $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
                     if (0)
                     {
@@ -785,7 +785,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         });
                     })->get();
                     $Title = $subject->title;
-                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $sid, 'title' => $Title]], 1, 3, ['subject_id' => $sid, 'page_id' => $sid]);
+                    $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $sid, 'title' => $Title]], 1, 3, ['subject_id' => $sid, 'page_id' => $sid,'target_type'=>'subject','target_id'=>$sid,'target_type'=>'subject','target_id'=>$sid]);
                     $res['PageType'] = 'subject';
                     $res['sid'] = $sid;
                     $res['current_tab'] = $sid . '/desktop';
@@ -808,7 +808,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $PC = new \App\HamafzaViewClasses\PageClass();
                         $res = $PC->CreatPageView($pid, $params['Type'], $params['PreCode']);
                         $res = array_merge($res, ['keywords' => $pageM->subject->keywords]);
-                        $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
+                        $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
                             case '20':
@@ -852,7 +852,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 $Title = $subject->title;
                                 $contents = \App\Models\hamafza\Subject::where('kind', '11')/*->where('portal_id', $sid)*/
                                 ->orderBy('reg_date')->get();
-                                $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
+                                $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                                 $keywords = \App\Http\Controllers\Hamahang\NewsController::get_keywords($sid, config('constants.news_sidebar_paginate'));
                                 if (0)
                                 {

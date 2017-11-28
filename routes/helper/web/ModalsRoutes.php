@@ -104,5 +104,9 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
             Route::post('/content', ['uses' => 'View\ModalController@help_seealso_content', 'as' => 'modals.help.seealso_content', ]);
             Route::post('/delete', ['uses' => 'View\ModalController@help_seealso_delete', 'as' => 'modals.help.seealso.delete', ]);
         });
+        Route::group(['prefix' => 'relation'], function ()
+        {
+            Route::post('/add', ['uses' => 'View\ModalController@help_relation_add', 'as' => 'modals.help.relation.add', ]);
+        });
     });
 });

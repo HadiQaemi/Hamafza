@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View;
 
 use App\Models\hamafza\Keyword;
+use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
 use App\Models\hamafza\Ticket;
@@ -16,6 +17,7 @@ use App\Models\Hamahang\DiscountCouponRequest;
 use App\Models\Hamahang\FileManager\FileManager;
 use App\Models\Hamahang\Help;
 use App\Models\Hamahang\HelpBlock;
+use App\Models\Hamahang\HelpRelation;
 use App\Models\Hamahang\Invoice;
 use App\Models\Hamahang\InvoiceItem;
 use App\Models\Hamahang\KeywordRelation;
@@ -2389,6 +2391,26 @@ class ModalController extends Controller
         $help = Help::find($help_1_id);
         $help->SeeAlsos()->detach($help_2_id);
         return json_encode(['success', 'با موفقیت حذف شد.']);
+    }
+
+    public function help_relation_add(Request $request)
+    {
+        $target_type = $request->input('target_type');
+        $target_id = $request->input('target_id');
+        $help_id = $request->input('help_id');
+        //$created_by = auth()->id();
+        if ($help_id)
+        {
+            switch ($target_type)
+            {
+                case 'page':
+                {
+                    Pages::find($target_id)->help()->sync($help_id);
+                    break;
+                }
+            }
+            return json_encode(['success', 'با موفقیت ثبت شد.']);
+        }
     }
 
     public function getKeywordsListSubjectUsages(Request $request)
