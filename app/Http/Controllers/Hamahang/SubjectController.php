@@ -179,14 +179,32 @@ class SubjectController extends Controller
 
     public function edit_subject_type(Request $request)
     {
-        $param = ['username' => 'hamafza', 'subject_id' => deCode($request->id)];
-        $res = variable_generator('user', 'Desktop_subjects_id', 'hamafza', $param);
+
+        if ($request->exists('username'))
+        {
+            $username = $request->username;
+            $param = ['username' => $username, 'subject_id' => deCode($request->id)];
+        }
+        else
+        {
+            $username = 'amgh';
+            $param = ['username' => 'amgh', 'subject_id' => deCode($request->id)];
+        }
+        $res = variable_generator('user', 'Desktop_subjects_id', $username, $param);
         return view($res['viewname'], $res);
     }
 
-    public function add_subject_type()
+    public function add_subject_type(Request $request)
     {
-        $arr = variable_generator('user', 'asubadd', 'hamafza', '1');
+        if ($request->exists('username'))
+        {
+            $username = $request->username;
+        }
+        else
+        {
+            $username = 'amgh';
+        }
+        $arr = variable_generator('user', 'asubadd', $username, '1');
         return view($arr['viewname'], $arr);
     }
 
@@ -206,6 +224,6 @@ class SubjectController extends Controller
             return json_encode($result);
         }
     }
-    
+
 }
 

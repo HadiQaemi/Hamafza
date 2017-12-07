@@ -261,7 +261,7 @@ class UserController extends Controller
             'Name' => 'required',
             'Family' => 'required',
             'Uname' => 'required|min:6',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'confirmed|min:6',
             'Email' => 'required|email',
         ], $messages);
 

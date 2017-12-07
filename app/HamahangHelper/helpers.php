@@ -807,7 +807,28 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $Title = $pre_title . ' ' . $Title_page;
                         $PC = new \App\HamafzaViewClasses\PageClass();
                         $res = $PC->CreatPageView($pid, $params['Type'], $params['PreCode']);
-                        $res = array_merge($res, ['keywords' => $pageM->subject->keywords]);
+                        $res = array_merge($res, ['keywords' => $pageM->subject->keywords()->with('synonym_relations')->with('synonym_relations_reverse')->get()]);
+                        $keywords_relations = [];
+                        foreach ($res['keywords'] as $res_keyword_key => $res_keyword)
+                        {
+                            foreach ($res_keyword->synonym_relations as $synonym_relations)
+                            {
+                                if ($temp = Keyword::find($synonym_relations->keyword_2_id))
+                                {
+                                    $keywords_relations[$temp->id] = $temp->title;
+                                }
+                            }
+                            foreach ($res_keyword->synonym_relations_reverse as $synonym_relations_reverse)
+                            {
+                                if ($temp = Keyword::find($synonym_relations_reverse->keyword_1_id))
+                                {
+                                    $keywords_relations[$temp->id] = $temp->title;
+                                }
+                            }
+                            $res['keywords'][$res_keyword_key]->keyword_has_relation = (bool) $keywords_relations;
+                            $keywords_relations[$res_keyword->id] = $res_keyword->title;
+                            $res['keywords'][$res_keyword_key]->keyword_and_relations_json = json_encode($keywords_relations);
+                        }
                         $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
@@ -937,17 +958,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
         {
             $uid = Auth::id();
             $user = User::where('Uname', $item)->first();
+            //dd($item,$user);
 //            dd($user->works[0]->jalali_start_year);
 //            foreach ($user->works as $work){
 //                $work->jalali_start_year = HDate_GtoJ($work->start_year, 'Y/m/d');
 //                $work->jalali_end_year = HDate_GtoJ($work->end_year, 'Y/m/d');
 //            }
-
-            foreach ($user->educations as $education)
-            {
-                $education->jalali_s_year = HDate_GtoJ($education->s_year, 'Y/m/d');
-                $education->jalali_e_year = HDate_GtoJ($education->e_year, 'Y/m/d');
-            }
             $user_id = $user->id;
             $Title = $user->Name . ' ' . $user->Family;
             $PageType = 'desktop';
@@ -1037,6 +1053,14 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     return $r;
                     break;
                 case 'About':
+                    if(isset($user->educations))
+                    {
+                        foreach ($user->educations as $education)
+                        {
+                            $education->jalali_s_year = HDate_GtoJ($education->s_year, 'Y/m/d');
+                            $education->jalali_e_year = HDate_GtoJ($education->e_year, 'Y/m/d');
+                        }
+                    }
                     $alert = \App\Models\Hamahang\Alert::find(51);
                     if (session('NewUser') == 'NewUser')
                     {

@@ -75,7 +75,7 @@
                                     <div class="scrl-bx" id="vrScroll">
                                         @if(View::hasSection('position_right_col_3') || View::hasSection('Tree'))
                                             <div class="col-md-3 scrl">
-                                                <div id="pcol_3" class="scrl-2 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">
+                                                <div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">
                                                     <div style="direction: rtl">
                                                         @yield('position_right_col_3')
                                                         @yield('Tree')

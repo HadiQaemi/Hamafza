@@ -1,6 +1,7 @@
 @php ($logged_in = session('Login') && session('Login') == 'TRUE')
 <script>
     keyword_search_time = 0;
+    bookmark_search_time = 0;
     $(document).ready(function()
     {
         $('#BookmarkFehresrt').css({'height': $(document).height() - 110});
@@ -89,6 +90,11 @@
         </ul>
         <div class="tab-content" style="padding-top: 20px;">@if ($logged_in)
             <div id="page1" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-11 txtsearch">
+                        <input type="text" class="list-search col-md-5 GharbalSearchNavbar" id="bookmarklist-search" placeholder="غربال..." />
+                    </div>
+                </div>
                 <div class="innerpane" style="overflow: hidden; height: 1000px;">
                     <div id="BookmarkFehresrt" style="padding-right: 25px; height: 1000px; overflow: hidden;"></div>
                 </div>
@@ -280,6 +286,27 @@
                         });
                     }
                 });
+            });
+
+            $(document).on('keyup', '#bookmarklist-search', function ()
+            {
+                clearTimeout(bookmark_search_time);
+                bookmark_search_time = setTimeout(function ()
+                {
+                    $('#BookmarkFehresrt').html('<div class="loader"></div>');
+                    $.ajax
+                    ({
+                        type: 'post',
+                        url: Baseurl + 'bookmarks',
+                        data: {'term': $('#bookmarklist-search').val()},
+                        dataType: 'html',
+                        success: function (response)
+                        {
+                            $('#BookmarkFehresrt').html(response);
+                            GeminiScrollbar_BookmarkFehresrt.update();
+                        }
+                    });
+                }, 1000);
             });
         });
     </script>

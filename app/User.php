@@ -613,13 +613,27 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Hamahang\Bookmark')->where('user_id', auth()->id());
     }
 
-    public function getBookmarksAttribute()
+    public function bookmarks($term)
     {
-        $r['user'] = $this->get_bookmarks()->where('target_table', 'App\User')->get();
-        $r['page'] = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Pages')->get();
-        $r['subject'] = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Subject')->get();
-        $r['group'] = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Group')->get();
-        $r['channel'] = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Channel')->get();
+        $term = trim($term);
+        $user = $this->get_bookmarks()->where('target_table', 'App\User');
+        $page = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Pages');
+        $subject = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Subject');
+        $group = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Group');
+        $channel = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Channel');
+        if ($term)
+        {
+            $user->where('title', 'like', "%$term%");
+            $page->where('title', 'like', "%$term%");
+            $subject->where('title', 'like', "%$term%");
+            $group->where('title', 'like', "%$term%");
+            $channel->where('title', 'like', "%$term%");
+        }
+        $r['user'] = $user->get();
+        $r['page'] = $page->get();
+        $r['subject'] = $subject->get();
+        $r['group'] = $group->get();
+        $r['channel'] = $channel->get();
         return $r;
     }
 

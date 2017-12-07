@@ -590,7 +590,7 @@ class MenusController extends Controller
 
     public function menusList($menutype = 1, $subject_id = false)
     {
-        $menuObj = Menus::find($menutype);
+        $menuObj = Menus::with('items')->find($menutype);
         $menus = $menuObj->items()->where('status', '1')->get()->toArray();
         $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
         return \Response::json($treeMenu);

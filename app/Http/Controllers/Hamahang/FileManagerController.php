@@ -322,10 +322,10 @@ class FileManagerController extends Controller
             Request::all(),
             [
                 'pid' => 'required|integer',
-                'image' => 'required|mimes:png,jpg,jpeg,gif,bmp',
+                'image' => 'required|mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx',
             ], [],
             [
-                'image' => 'فرمت فایل باید یکی از png، jpg، jpeg، gif، bmp باشد.'
+                'image' => 'فرمت فایل باید یکی از mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx باشد.'
             ]
         );
 

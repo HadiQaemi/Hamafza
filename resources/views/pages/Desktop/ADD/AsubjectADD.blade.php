@@ -550,6 +550,6 @@
 @if($from_menu == '')
     @stop
 @else
-    {{ dd('') }}
+    {{die() }}
 @endif
 

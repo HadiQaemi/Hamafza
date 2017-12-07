@@ -13,13 +13,12 @@
 
             {
                 mRender: function (data, type, full) {
-                    return full['id']+'0';
+                    return full.page_0_id;
                 }
             },
             { data: 'title',
-
                 mRender: function (data, type, full) {
-                    return '<a target="_blank" href="{{ url('') }}/'+full['id']+'0'+'">'+full['title']+'</a>';
+                    return '<a target="_blank" href="'+full.subject_link+'">'+full['title']+'</a>';
                 }
             },
             {data: 'subject_type.name',
@@ -56,9 +55,9 @@
         ]
     });
 
-    Grid_Table.column( '0:visible' )
+    /*Grid_Table.column( '0:visible' )
         .order( 'desc' )
-        .draw();
+        .draw();*/
 
 
 </script>

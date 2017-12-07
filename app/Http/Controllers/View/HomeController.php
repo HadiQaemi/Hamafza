@@ -108,14 +108,14 @@ class HomeController extends Controller
                 elseif (config('constants.DefIndexView') == 'hamafza_2')
                 {
                     $index_view = 'layouts.homepages.hamafza_2';
+                    $news = DB::table('pages as p')
+                        ->join('subjects as s', 's.id', '=', 'p.sid')
+                        ->where('kind', '64')
+                        ->select('s.title', 'p.defimage', 'p.id')
+                        ->distinct()
+                        ->take(5)
+                        ->get();
                 }
-                $news = DB::table('pages as p')
-                    ->join('subjects as s', 's.id', '=', 'p.sid')
-                    ->where('kind', '64')
-                    ->select('s.title', 'p.defimage', 'p.id')
-                    ->distinct()
-                    ->take(5)
-                    ->get();
                 break;
             }
             case 'banader':

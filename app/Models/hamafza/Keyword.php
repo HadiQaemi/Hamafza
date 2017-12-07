@@ -59,6 +59,16 @@ class Keyword extends Model
         return $this->hasMany('App\Models\Hamahang\KeywordRelation', 'keyword_1_id');
     }
 
+    public function synonym_relations()
+    {
+        return $this->hasMany('App\Models\Hamahang\KeywordRelation', 'keyword_1_id')->where('relation_type', '7');
+    }
+
+    public function synonym_relations_reverse()
+    {
+        return $this->hasMany('App\Models\Hamahang\KeywordRelation', 'keyword_2_id')->where('relation_type', '7');
+    }
+
     public function getRelationsByTypeAttribute()
     {
         $r = null;
@@ -76,7 +86,7 @@ class Keyword extends Model
         {
             foreach ($relations2 as $relation2)
             {
-                $r[config('keyword.relation_types_relation.' . $relation2['relation_type'])]['values'][] = $relation2['keyword_1_id'];
+                        $r[config('keyword.relation_types_relation.' . $relation2['relation_type'])]['values'][] = $relation2['keyword_1_id'];
             }
         }
         return $r;

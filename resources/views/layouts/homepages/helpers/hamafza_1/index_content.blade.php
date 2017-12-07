@@ -6,7 +6,7 @@
         </div>
         <!-- /Bootslider Loader -->
         <!-- Bootslider Container -->
-        @if (App::isDownForMaintenance() || !in_array($client_ip, ['89.165.122.115', '188.34.116.207','127.0.2.1', '127.0.0.1']))
+        @if (App::isDownForMaintenance() || !isset($client_ip) ||  !in_array($client_ip, ['89.165.122.115', '188.34.116.207', '127.0.0.1']))
             <div class="bs-container">
             <!-- Bootslider Slide -->
             @if(is_array($mainSlide) && count($mainSlide)>0)

@@ -304,16 +304,14 @@ class FileController extends Controller
     public function get_file_all()
     {
         $uid = Auth::id();
-        $subjects = Subject::with('subject_type')
-            ->with('pages.user_suggests')
-            ->with('pages.page_visit')
-            ->with('pages.highlights')
-            ->with('pages.announces')
-            ->Where('admin', $uid)
-            ->orWhere('supervisor', $uid)
-            ->orWhere('supporter', $uid)
-            ->orWhere('admin', $uid)
-            ->whereHas('pages.user_suggests', function ($query) use ($uid)
+        $subjects = Subject::with('subject_type','pages.user_suggests','pages.page_visit','pages.highlights','pages.announces')
+            ->where(function($query) use ($uid)
+            {
+                $query->where('admin', $uid)
+                    ->orWhere('supervisor', $uid)
+                    ->orWhere('supporter', $uid);
+            })
+            /*->whereHas('pages.user_suggests', function ($query) use ($uid)
             {
                 $query->orWhere('uid', '=', $uid);
             })
@@ -328,7 +326,8 @@ class FileController extends Controller
             ->whereHas('pages.announces', function ($query) use ($uid)
             {
                 $query->orWhere('uid', '=', $uid);
-            })
+            })*/
+            ->whereHas('pages')
             ->where('archive', 0);
 
         return \Datatables::eloquent($subjects)
@@ -339,6 +338,15 @@ class FileController extends Controller
             ->addColumn('EditDate', function ($data)
             {
                 return $data->LastEdition;
+            })
+
+            ->addColumn('subject_link', function ($data)
+            {
+                return url($data->pages[0]->id);
+            })
+            ->addColumn('page_0_id', function ($data)
+            {
+                return $data->pages[0]->id;
             })
             ->make(true);
     }

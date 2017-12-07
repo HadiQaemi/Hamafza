@@ -17,7 +17,6 @@
             </ul>
             <div class="tab-content">
                 <div class="col-xs-12 tab-pane fade in active default-options" id="subjectsManagment">
-
                     <div class="row">
                         <div class="space-10"></div>
                         <div id="alert_subject"></div>
@@ -42,13 +41,10 @@
                 <div class="col-xs-12 tab-pane fade in  default-options" id="editSubject">
                     <div class="body_edit" style="padding-top: 20px"></div>
                 </div>
-
-
             </div>
         </div>
     </div>
     <div class="clearfixed"></div>
-    </div>
 @stop
 
 @section('specific_plugin_scripts')

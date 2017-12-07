@@ -2,6 +2,7 @@
 
 namespace App\HamafzaServiceClasses;
 
+use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -2140,7 +2141,8 @@ class PageClassExtend1
 
     public function page_files($pid)
     {
-        $files = array();
+        $files = Pages::find($pid)->files;
+        /*$files = array();
         $fileD = array();
         $Files = DB::table('page_file')
             ->where('pid', '=', $pid)
@@ -2168,6 +2170,7 @@ class PageClassExtend1
             $fileD['ext'] = $ex;
             array_push($files, $fileD);
         }
+        */
         return $files;
     }
 

@@ -110,7 +110,7 @@ class PageClass
         {
             $sid = $subject->id;
             $UC = new PagesClass();
-            $ISView = $UC->pageView('view', $sid, $pid, $uid);
+            $ISView = 1;//$UC->pageView('view', $sid, $pid, $uid);
             $page = DB::table('pages as p')
                 ->join('subjects as s', 's.id', '=', 'p.sid')
                 ->leftJoin('subject_type as sa', 's.kind', '=', 'sa.id')

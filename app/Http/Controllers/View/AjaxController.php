@@ -2069,9 +2069,10 @@ preventDuplicates: true,
 
     public function bookmarks(Request $request)
     {
+        $term = trim($request->input('term'));
         $empty = ['user' => false, 'page' => false, 'subject' => false, 'group' => true, 'channel' => true, ];
         $bookmark_types = ['user' => 'کاربران', 'page' => 'صفحات', 'subject' => 'موضوعات', 'group' => 'گروه&zwnj;ها', 'channel' => 'کانال ها', ];
-        $bookmarks = auth()->user()->bookmarks;
+        $bookmarks = auth()->user()->bookmarks($term);
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_bookmarks')->with(['bookmark_types' => $bookmark_types, 'bookmarks' => $bookmarks, 'empty' => $empty, ]);
         return $r;
     }
