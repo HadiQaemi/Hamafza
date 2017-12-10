@@ -1,3 +1,19 @@
+@if(($menus))
+    <div class="row nav_center_footer">
+        <ul>
+            @foreach($menus as $key => $menu)
+                @if($key > 0)
+                    <li><span class="icon-2-3"></span></li>
+                @endif
+                <li><a href="{{$menu->href}}">{{$menu->title }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+@else
+    {{--<span>نوع فهرست یافت نشد</span>--}}
+@endif
+
+{{--
 <div class="row nav_center_footer">
     <ul>
         @if(($menus))
@@ -12,3 +28,4 @@
         @endif
     </ul>
 </div>
+--}}
