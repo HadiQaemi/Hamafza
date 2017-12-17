@@ -62,7 +62,13 @@
         <tr style="border-bottom: lightgray solid 1px;">
             <td colspan="4"></td>
             <td><small>{!! $post->jalaliRegDateName !!}</small></td>
-            <td style="text-align: left;">{!! $post->user->SmallAvatar !!}<a href="{{ url($post->user->Uname) }}">{!! $post->user->Name !!} {!! $post->user->Family !!}</a></td>
+            <td style="text-align: left;">
+                @if (isset($post->user))
+                    {!! $post->user->SmallAvatar !!}<a href="{{ url($post->user->Uname) }}">{!! $post->user->Name !!} {!! $post->user->Family !!}</a>
+                @else
+                    <span>کاربر حذف شده است.</span>
+                @endif
+            </td>
         </tr>
     </table>
 @empty
