@@ -1554,6 +1554,7 @@ function enquiry_get_sum_rewards($reward)
 
 function h_human_date($timestamp)
 {
+    $r = null;
     $t = abs(time() - $timestamp) / 60;
     switch (true)
     {
