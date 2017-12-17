@@ -25,6 +25,7 @@
                                 <span class="input-group-addon">رمزعبور</span>
                                 <input class="form-control" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off" tabindex="0" style="direction: ltr">
                             </div>
+                            @if (!config('app.debug'))
                             <div id="captcha_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>
                             <div class="row">
                                 <div class="col-md-12" style="padding-right: 0">
@@ -47,6 +48,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group">
                                 <input type="checkbox" name="remember_me"><span style="color: black; font-size: 12px;">مرا به خاطر بسپار</span>
                             </div>

@@ -316,13 +316,12 @@ class UserController extends Controller
 
     public function login()
     {
-        if (!auth()->check())
-        {
-            return view('layouts.helpers.auth_master.login');
-        }
-        else
+        if (auth()->check())
         {
             return redirect()->to(auth()->user()->Uname);
+        } else
+        {
+            return view('layouts.helpers.auth_master.login');
         }
     }
 
@@ -338,89 +337,90 @@ class UserController extends Controller
         }
     }
 
+
+
+
+
+
+
+
+
+
     public function login_user(Request $request)
     {
-//        dd($request->all());
-        if (config('app.debug'))
-        {
-            $captcha = '';
 
-        }
-        else
-        {
-            $captcha = 'required|check_captcha:login';
-        }
-
+        $captcha = config('app.debug') ? '' : 'required|check_captcha:login';
 
         $validator = Validator::make($request->all(),
-            [
-                'captcha_code' => $captcha,
-                'username' => 'required|max:255',
-                'password' => 'required|min:1|max:255',
-            ],
-            [
-                'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.'
-            ],
-            [
-                'captcha_code' => 'کد امنیتی'
-            ]);
+        [
+            'captcha_code' => $captcha,
+            'username' => 'required|max:255',
+            'password' => 'required|min:1|max:255',
+        ],
+        [
+            'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.'
+        ],
+        [
+            'captcha_code' => 'کد امنیتی'
+        ]);
+
         if ($validator->fails())
         {
             if ($validator->errors()->has('captcha_code'))
             {
                 $validator = Validator::make($request->all(),
-                    [
-                        'captcha_code' => $captcha
-                    ],
-                    [
-                        'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.'
-                    ],
-                    [
-                        'captcha_code' => 'کد امنیتی'
-                    ]);
+                [
+                    'captcha_code' => $captcha
+                ],
+                [
+                    'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.'
+                ],
+                [
+                    'captcha_code' => 'کد امنیتی'
+                ]);
                 $result['error'] = $validator->errors();
                 $result['success'] = false;
                 return json_encode($result);
-            }
-            else
+            } else
             {
                 $result['error'] = $validator->errors();
                 $result['success'] = false;
                 return json_encode($result);
             }
-        }
-        else
+        } else
         {
-            $username = str_replace(['.',' '],'',$request->username);
+            $username = str_replace(['.', ' '],'', $request->username);
             $username = strtolower($username);
             $old_user = $this->oldAttempt($username, $request->password);
 
+            $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
+
+            /*
             if ($request->remember_me == 'on')
             {
                 $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password], true);
-            }
-            else
+            } else
             {
 
                 $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password]);
 
-                //                if ($request->remember_me == 'on')
-//                {
-//                    $remember_token = auth()->user()->remember_token;
-//                    setcookie('remember_token', $remember_token, time() + (86400 * 30), "/");
-//                }
+//              if ($request->remember_me == 'on')
+//              {
+//                  $remember_token = auth()->user()->remember_token;
+//                  setcookie('remember_token', $remember_token, time() + (86400 * 30), "/");
+//              }
             }
+            */
 
             if ($check_attempt)
             {
-//                if (rtrim(url()->previous(), '/') == route('home'))
-//                {
-//                    $previuos_url = '/' . auth()->user()->Uname;
-//                }
-//                else
-//                {
-                $previuos_url = url()->previous();
-//                }
+//              if (rtrim(url()->previous(), '/') == route('home'))
+//              {
+//                  $previuos_url = '/' . auth()->user()->Uname;
+//              } else
+//              {
+                    $previuos_url = url()->previous();
+//              }
                 $result['previous_url'] = $previuos_url;
                 $result['result'][] = trans('app.operation_is_success');
                 $result['success'] = true;
@@ -438,6 +438,15 @@ class UserController extends Controller
         $result['success'] = false;
         return json_encode($result);
     }
+
+
+
+
+
+
+
+
+
 
     public function register_user(Request $request)
     {

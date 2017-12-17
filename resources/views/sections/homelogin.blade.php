@@ -20,6 +20,7 @@
                             <input type="password" name="password" class="form-control required" style="direction: ltr;">
                         </td>
                     </tr>
+                    @if (!config('app.debug'))
                     <tr>
                         <td style="padding: 2px;padding-left: 15px;">
                             <label>کد امنیتی</label>
@@ -37,6 +38,7 @@
                             <div class="clearfixed"></div>
                         </td>
                     </tr>
+                    @endif
                     <tr>
                         <td class="homepage_login" style="padding: 2px; padding-left: 15px;">
                             <input type="button" id="btn_homepage_login_form" class="btn btn-primary" value="ورود به سامانه" style="margin:20px 0 10px 0;"/>

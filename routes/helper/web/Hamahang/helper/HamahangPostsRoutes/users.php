@@ -1,5 +1,6 @@
 <?php
-Route::post('getUser', ['as' => 'hamahang.users.get_users', 'uses' => 'UserController@getUsers', 'middleware' => ['dynamic_permission:posts.hamahang.users.get_users']]);
+//Route::post('getUser', ['as' => 'hamahang.users.get_users', 'uses' => 'UserController@getUsers', 'middleware' => ['dynamic_permission:posts.hamahang.users.get_users']]);
+Route::post('getUser', ['as' => 'hamahang.users.get_users', 'uses' => 'UserController@getUsers', 'middleware' => ['role:registerd']]);
 Route::post('countUser', ['as' => 'hamahang.users.countUser', 'uses' => 'UserController@countUser']);
 Route::post('countFilterUser', ['as' => 'hamahang.users.countFilterUser', 'uses' => 'UserController@countFilterUser']);
 Route::post('addUser', ['as' => 'hamahang.users.add_user', 'uses' => 'UserController@addUsers', 'middleware' => ['dynamic_permission:posts.hamahang.users.add_user']]);
