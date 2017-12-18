@@ -562,8 +562,9 @@
         });
     }
 
-    $(document).ready(function () {
-
+    $(document).ready(function()
+    {
+        /*
         $('.modal_users_list').change(function () {
             $('#list_user_permissions').html('');
             $('#list_user_permissions').addClass('loader');
@@ -596,6 +597,7 @@
                 }
             });
         });
+        */
 
         Data_Tables_Roles_Grid();
 

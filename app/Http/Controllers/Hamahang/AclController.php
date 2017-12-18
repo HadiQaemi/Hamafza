@@ -389,7 +389,6 @@ class AclController extends Controller
 
     public function getRoleUsers(Request $request)
     {
-//        dd($request->all());
         $role = Role::where('id', deCode($request->role_id))->first();
         return Datatables::eloquent($role->_users())
             ->addColumn('row_id', function ($data)
@@ -409,8 +408,8 @@ class AclController extends Controller
 
     public function setRoleUsers(Request $request)
     {
-//        dd($request->all());
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(),
+        [
             'item_id' => 'required',
         ]);
 
@@ -419,11 +418,10 @@ class AclController extends Controller
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
+        } else
         {
             $role = Role::findOrFail(deCode($request->item_id));
-            foreach ($request->users_list as $user)
+            foreach ($request->user_edits as $user)
             {
                 if (!User::find($user)->hasRole($role->name))
                 {
