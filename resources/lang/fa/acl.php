@@ -16,6 +16,7 @@ return [
     'submit_cancel' => 'لغو',
     'submit_edit' => 'ثبت و ویرایش',
     'submit_add' => 'ثبت و افزودن',
+    'submit_add_only' => 'افزودن',
     'add_new_role' => 'ایجاد نقش جدید',
     'add_new_permission' => 'ایجاد مجوز جدید',
     'add_new_permission_category' => 'ایجاد دسته‌بندی مجوز',

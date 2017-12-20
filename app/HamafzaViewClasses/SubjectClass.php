@@ -3,6 +3,7 @@
 namespace App\HamafzaViewClasses;
 
 use App\HamafzaGrids\SubjectGrids;
+use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
 use App\Policies\SubjectPolicy;
 use App\Policies\ToolPolicy;
@@ -138,12 +139,15 @@ class SubjectClass
 
     public static function delete($sid, $pid, $type)
     {
+        /*
         if (session('SubjectArchive') != '')
         {
             $SubjectArchive = session('SubjectArchive');
             $SubjectArchive = $SubjectArchive[0];
         }
-        return view('modals.delete', array('SubjectArchive' => $SubjectArchive, 'pid' => $pid, 'sid' => $sid));
+        */
+        $subject = Subject::find($sid);
+        return view('modals.delete', array('archived' => $subject->archive, 'pid' => $pid, 'sid' => $sid));
     }
 
     public static function announce($sid, $pid, $type, $title, $alamat, $select)

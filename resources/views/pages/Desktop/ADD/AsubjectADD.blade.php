@@ -275,7 +275,8 @@
                                                 <input type="hidden" value="" name="tab_tem[{{$i}}]" id="tab_tem_{{$i}}">
                                             </td>
                                             <td class="center" style="text-align: right;">
-                                                <input type="text" class="HelpRel" name="help[{{$i}}]"/>
+                                                <!--<input type="text" class="HelpRel" name="help[{{$i}}]"/>-->
+                                                <select class="form-control help_class" name="help[{{$i}}]"></select>
                                             </td>
                                             <td class="center" style="text-align: right;">
                                                 <input type="radio" @if($i==1) checked="" @endif value="1" name="tab_first">
@@ -295,6 +296,29 @@
                             </td>
                         </tr>
 
+                        <script>
+                            $('.help_class').select2
+                            ({
+                                minimumInputLength: 2,
+                                dir: 'rtl',
+                                width: '200',
+                                ajax:
+                                {
+                                    type: 'post',
+                                    url: '{{ route('auto_complete.help') }}',
+                                    dataType: 'json',
+                                    quietMillis: 50,
+                                    cache: true,
+                                    data: function(term) { return { term: term }; },
+                                    processResults: function(data)
+                                    {
+                                        console.log(data);
+                                        var a = true;
+                                        return { results: data.results };
+                                    }
+                                }
+                            });
+                        </script>
 
                         <tr>
                             <td colspan="2" class="col-xs-12">

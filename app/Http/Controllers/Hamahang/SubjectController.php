@@ -205,6 +205,7 @@ class SubjectController extends Controller
             $username = 'amgh';
         }
         $arr = variable_generator('user', 'asubadd', $username, '1');
+        if (false) { view('pages.Desktop.ADD.AsubjectADD'); }
         return view($arr['viewname'], $arr);
     }
 

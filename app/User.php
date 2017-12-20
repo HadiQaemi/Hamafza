@@ -141,7 +141,7 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->Name . ' ' . $this->Family;
+        return trim($this->Name) . ' ' . trim($this->Family);
     }
 
     public function getSumScoresAttribute()

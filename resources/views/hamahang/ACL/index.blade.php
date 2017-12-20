@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">{{ trans('acl.submit_cancel') }}</button>
-                    <button type="button" class="btn bg-info-300 btn_add_new_role">{{ trans('acl.submit_add') }}</button>
+                    <button type="button" class="btn bg-info-300 btn_add_new_role">{{ trans('acl.submit_add_only') }}</button>
                 </div>
             </div>
         </div>

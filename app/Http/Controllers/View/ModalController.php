@@ -493,7 +493,8 @@ class ModalController extends Controller
     {
         $res = $this->getParams(['sid', 'pid', 'type']);
         $content = SubjectClass::delete($res['sid'], $res['pid'], $res['type'])->render();
-        return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
+        $footer = '<button type="button" class="btn btn-primary" onclick="$(\'.jsglyph-close\').click();"><span> بستن </span></button>';
+        return json_encode(['header' => '', 'content' => $content, 'footer' => $footer]);
     }
 
     public function postlike()

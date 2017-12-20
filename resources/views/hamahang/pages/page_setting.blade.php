@@ -105,6 +105,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="col-xs-2">مدیر صفحه</td>
+                        <td class="col-xs-10">{{ $admin }}</td>
+                    </tr>
+                    <tr>
                         <td class="col-xs-2">کاربر</td>
                         <td class="col-xs-10">
                             <select name="users_list_setting_edit[]" id="users_list_setting_edit" multiple="multiple" class="form-control users_list_setting_edit">

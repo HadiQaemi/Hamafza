@@ -33,72 +33,75 @@ class AjaxController extends Controller
 
     public function deletesubject(Request $request)
     {
-        if (!Auth::check())
+        if (!auth()->check())
         {
             return Redirect()->to('/')->with('message', 'عدم دسترسی')->with('mestype', 'error');
-        }
-        else
+        } else
         {
-
             $sid = $request->input('sid');
             $type = $request->input('type');
-            $uid = Auth::id();
-            $Users = DB::table('subjects')->where('id', $sid)->select('manager', 'supporter', 'supervisor', 'admin')->first();
-            if ($Users && ($Users->manager == $uid || $Users->supporter == $uid || $Users->supervisor == $uid || $Users->admin == $uid || UserClass::permission('DelSubjects', $uid) == '1'))
+            $uid = auth()->id();
+            $message = null;
+            $error = false;
+            $redirect_to_home = 0;
+            $users = DB::table('subjects')->where('id', $sid)->select('manager', 'supporter', 'supervisor', 'admin')->first();
+            if ($users && ($users->manager == $uid || $users->supporter == $uid || $users->supervisor == $uid || $users->admin == $uid || '1' == UserClass::permission('DelSubjects', $uid)))
             {
-                if ($type == 'del')
+                if ($type == 'recycle')
                 {
-                    DB::table('subjects')
-                        ->where('id', $sid)
-                        ->update(array('archive' => '1'));
-                    $pages = DB::table('pages')
-                        ->where('sid', $sid)
-                        ->select('id')
-                        ->get();
-                    foreach ($pages as $value)
+                    DB::table('subjects')->where('id', $sid)->update(array('archive' => '1'));
+                    Bookmark::where('target_table', 'App\Models\hamafza\Subject')->where('target_id', $sid)->delete();
+                    /*
+                    $pages = DB::table('pages')->where('sid', $sid)->select('id')->get();
+                    foreach ($pages as $page)
                     {
-                        DB::table('bookmarks')->where('link', $value->id)->delete();
+                        DB::table('bookmarks')->where('link', $page->id)->delete();
                     }
-                    $mes = trans('labels.deleteOK');
-                    $err = false;
-                }
-                else
+                    */
+                    $message = trans('labels.deleteOK');
+                    $error = false;
+                } else if ($type == 'delete')
                 {
-                    if ($type == 'finaldel')
+                    DB::table('subjects')->where('id', $sid)->update(array('archive' => '0'));
+                    // DB::table('subject_key')->where('sid', $sid)->delete();
+                    DB::table('pages')->where('sid', $sid)->delete();
+                    DB::table('subjects')->where('id', $sid)->delete();
+                    //  DB::table('subjectsup')->where('sid', $sid)->delete();
+                    DB::table('subjects_rel')->where('sid1', $sid)->delete();
+                    DB::table('subjects_rel')->where('sid2', $sid)->delete();
+                    DB::table('process_subject')->where('sid', $sid)->delete();
+                    DB::table('process_phase_subject')->where('sid', $sid)->delete();
+                    DB::table('process_phase_subject')->where('sid', $sid)->delete();
+                    $message = trans('labels.deletefinalOK');
+                    $error = false;
+                    $redirect_to_home = 1;
+                } else
+                {
+                    if ($type == 'restore')
                     {
                         DB::table('subjects')->where('id', $sid)->update(array('archive' => '0'));
-                        // DB::table('subject_key')->where('sid', $sid)->delete();
-                        DB::table('pages')->where('sid', $sid)->delete();
-                        DB::table('subjects')->where('id', $sid)->delete();
-                        //  DB::table('subjectsup')->where('sid', $sid)->delete();
-                        DB::table('subjects_rel')->where('sid1', $sid)->delete();
-                        DB::table('subjects_rel')->where('sid2', $sid)->delete();
-                        DB::table('process_subject')->where('sid', $sid)->delete();
-                        DB::table('process_phase_subject')->where('sid', $sid)->delete();
-                        DB::table('process_phase_subject')->where('sid', $sid)->delete();
-                        $mes = trans('labels.deletefinalOK');
-                        $err = false;
-                    }
-                    else
-                    {
-                        if ($type == 'restore')
-                        {
-                            DB::table('subjects')->where('id', $sid)->update(array('archive' => '0'));
-                            $mes = trans('labels.restoreOK');
-                            $err = false;
-                        }
+                        $message = trans('labels.restoreOK');
+                        $error = false;
                     }
                 }
-            }
-            else
+            } else
             {
-                $mes = 'شما اجازه حذف ندارید';
-                $err = true;
+                $message = 'شما اجازه حذف ندارید.';
+                $error = true;
             }
-            return $mes;
+            return response()->json([$message, $error, $redirect_to_home]);
             //   return Redirect()->to('/'.$sid)->with('message', $mes)->with('mestype', 'error');
         }
     }
+
+
+
+
+
+
+
+
+
 
     public function GetSubjectFields(Request $request)
     {
@@ -358,6 +361,15 @@ preventDuplicates: true,
         return $urls;
     }
 
+
+
+
+
+
+
+
+
+
     public function Helpsearch(Request $request)
     {
         $keyword = $request->input('q');
@@ -388,6 +400,15 @@ preventDuplicates: true,
         $ss = json_encode($ss, true);
         return $ss;
     }
+
+
+
+
+
+
+
+
+
 
     public function showhelprel(Request $request)
     {
