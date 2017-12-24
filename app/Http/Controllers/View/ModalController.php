@@ -658,15 +658,35 @@ class ModalController extends Controller
         return json_encode(['header' => trans('app.search'), 'content' => $content, 'footer' => '']);
     }
 
-    public function helpView()
+    public function helpView(Request $request)
     {
-        $res = $this->getParams(['id', 'tagname', 'hid', 'pid']);
-        $id = (isset($res['id'])) ? $res['id'] : '0';
-        $tagname = (isset($res['tagname'])) ? $res['tagname'] : 'tagname';
-        $hid = (isset($res['hid'])) ? $res['hid'] : '0';
-        $pid = (isset($res['pid'])) ? $res['pid'] : '0';
-        $content = PublicClass::ShowHelp($id, $tagname, $hid, $pid);
-        return json_encode(['header' => '', 'content' => $content->render(), 'footer' => '']);
+        if ($request->exists('code'))
+        {
+            $id = deCode($request->input('code'));
+            $help = \App\Models\Hamahang\Help::find($id);
+            if ($help)
+            {
+                if ($blocks = $help->HelpBlocks)
+                {
+                    $view = null;
+                    foreach ($blocks as $block)
+                    {
+                        $view .= "$block->content<br />\r\n";
+                    }
+                }
+            }
+        } else
+        {
+            $res = $this->getParams(['id', 'tagname', 'hid', 'pid']);
+            $id = (isset($res['id'])) ? $res['id'] : '0';
+            $tagname = (isset($res['tagname'])) ? $res['tagname'] : 'tagname';
+            $hid = (isset($res['hid'])) ? $res['hid'] : '0';
+            $pid = (isset($res['pid'])) ? $res['pid'] : '0';
+            $content = PublicClass::ShowHelp($id, $tagname, $hid, $pid);
+            return json_encode(['header' => '', 'content' => $content->render(), 'footer' => '']);
+        }
+        $content = view('modals.helpview', ['view' => $view])->render();
+        return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
     }
 
     public function addSubtem()

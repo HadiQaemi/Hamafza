@@ -34,6 +34,13 @@
                     }
                 },
                 {
+                    'data': 'id',
+                    render: function(data, type, full, meta)
+                    {
+                        return full.id;
+                    }
+                },
+                {
                     data: 'usages',
                     name: 'usages'
                 },

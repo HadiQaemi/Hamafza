@@ -11,6 +11,7 @@
                     <tr>
                         <th>{{trans('help.row')}}</th>
                         <th>{{trans('help.title')}}</th>
+                        <th>{{trans('help.help_id')}}</th>
                         <th>{{trans('help.usages')}}</th>
                         <th>{{trans('help.see_also')}}</th>
                     </tr>

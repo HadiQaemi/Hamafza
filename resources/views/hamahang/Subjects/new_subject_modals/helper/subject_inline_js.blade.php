@@ -170,7 +170,7 @@
             cache: true
         }
     });
-    $(".roles_list_subject_edit").html('<option selected="selected" value="3">public عمومی</option>');
+    //$(".roles_list_subject_edit").html('<option selected="selected" value="3">public عمومی</option>');
 
     $(".keywords_list_subject").select2({
         minimumInputLength: 2,
