@@ -1,4 +1,5 @@
 <script language="javascript" type="text/javascript">
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=LmwBEEoNwME') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
     $(document).click(function () {
         $("#wordexport").off();
         $("#pdfexport").off();
@@ -44,10 +45,12 @@
 </script>
 <div style="padding: 5px">
     <div id="Tabs">
+        {{--
         <span class="help-icon-span WindowHelpIcon">
             <a data-toggle="tooltip" data-placement="top" style="float: left;padding-left: 20px;" class="jsPanels icon-help HelpIcon" title="راهنمای اینجا" href="{{App::make('url')->to('/')}}/modals/helpview?id=17&tagname=abzarbargiri&hid=6"></a>
         </span>
         <br>
+        --}}
         <p><input class="field" checked="checked" name="Numbers" id="Numbers" type="checkbox">شماره گذاری عناوین</p>
         @if (is_array($tabs))
             @foreach($tabs as $item)

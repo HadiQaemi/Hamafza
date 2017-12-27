@@ -660,6 +660,7 @@ class ModalController extends Controller
 
     public function helpView(Request $request)
     {
+        $view = trans('app.no_result');
         if ($request->exists('code'))
         {
             $id = deCode($request->input('code'));

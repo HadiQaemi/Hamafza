@@ -1,5 +1,6 @@
 @if (auth()->check() && auth()->user()->hasRole('administrator'))
     <script language="javascript" type="text/javascript">
+        $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 116px;top: -3px;"><a href="{{App::make('url')->to('/')}}/modals/helpview?code=CRIRhYzJI3k" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
         $('.delete_button').click(function ()
         {
             $('.jsglyph-close').click();
@@ -18,10 +19,6 @@
 
         });
     </script>
-    <br />
-    <span class="help-icon-span WindowHelpIcon">
-        <a href="{{ url('/modals/helpview?id=17&tagname=abzarhazf&hid=6') }}" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a>
-    </span>
     <br>
     <div style="padding: 0 15px; min-height: 150px;">
         @if ($archived)

@@ -1,5 +1,8 @@
 @extends('modals.modalmaster')
 @section('content')
+<script>
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=mu3dROMxRZE') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+</script>
 <table class="table">
     <tr>
         <th width="10px" align="center">ردیف</th>	
@@ -11,9 +14,9 @@
 
     </tr>
     <?php $i = 1; ?>
-    
-   
-    
+
+
+
     @foreach($H as $h)
     <tr>
         <td>{{ $i}}</td>
@@ -32,7 +35,7 @@
     </tr>
     <?php $i++ ?>
     @endforeach
-    
+
       @foreach($H1 as $h)
     <tr>
         <td>{{ $i}}</td>
@@ -47,7 +50,7 @@
         <td>{{ $h->name}}</td>
 
 
-        <td><a rel="nofollow" href="{{App::make('url')->to('/')}}/history/{{$pid}}/{{ $h->id}}" target="_blank">مشاهده</a></td>
+        <td>{{--<a rel="nofollow" href="{{App::make('url')->to('/')}}/history/{{$pid}}/{{ $h->id}}" target="_blank">مشاهده</a>--}}</td>
     </tr>
     <?php $i++ ?>
     @endforeach

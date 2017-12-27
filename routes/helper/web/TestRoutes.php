@@ -8,9 +8,8 @@ use App\Models\Hamahang\Score;
 
 Route::get('test', function ()
 {
-    //$help = Help::find(1);
-    //dd($help->Pages);
-    return 'test';
+    //$smart_detect = new SmartDetect();
+    //return 'test routes';
 });
 
 Route::get('abort/{code}', function ($code)

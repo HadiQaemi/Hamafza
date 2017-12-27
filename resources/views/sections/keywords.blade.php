@@ -14,11 +14,15 @@
             padding: 5px;
         }
     </style>
-    <div class="text-content bottom_keywords_client">
-        @foreach ($keywords as $item)
-            <span class="bottom_keywords" data-id="{!! $item->id !!}" data-title="{!! $item->title !!}" data-relations='{!! $item->keyword_and_relations_json !!}'><i class="fa fa-tag{!! $item->keyword_has_relation ? 's' : null !!}"></i> {!! $item->title !!}</span>
-        @endforeach
-    </div>
+    @if (isset($keywords))
+        @if (!empty($keywords))
+            <div class="text-content bottom_keywords_client">
+                @foreach ($keywords as $item)
+                    <span class="bottom_keywords" data-id="{!! $item->id !!}" data-title="{!! $item->title !!}" data-relations='{!! $item->keyword_and_relations_json !!}'><i class="fa fa-tag{!! $item->keyword_has_relation ? 's' : null !!}"></i> <span style="color: #6391C5;">{!! $item->title !!}</span></span>
+                @endforeach
+            </div>
+        @endif
+    @endif
     <script>
         $(document).on('click', '.bottom_keywords', function()
         {

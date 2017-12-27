@@ -78,10 +78,10 @@
 <div id="h_sidenav" class="h_sidenav" style="overflow: hidden;">
     <div id="h_sidenav_client" class="h_sidenav_client">
         <i class="fa fa-close h_sidenav_close" onclick="h_sidenav_close();"></i>
-        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpBookmarks" title="راهنمای اینجا" href="{!! url('/modals/helpview?id=17&tagname=sotonbarchasb&pid=17') !!}"></a>
-        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpPortals" title="راهنمای اینجا" href="{!! url('/modals/helpview?id=17&tagname=sotonbarchasb&pid=17') !!}"></a>
-        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpKeywords" title="راهنمای اینجا" href="{!! url('/modals/helpview?id=17&tagname=sotonbarchasb&pid=17') !!}"></a>
-        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpSearch" title="راهنمای اینجا" href="{!! url('/modals/helpview?id=17&tagname=sotonjostejo&pid=18') !!}"></a>
+        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpBookmarks" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=x_k4R_cmY34') !!}"></a>
+        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpPortals" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=WU99UI5IUgw') !!}"></a>
+        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpKeywords" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=UPjv2yJSc80') !!}"></a>
+        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpSearch" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=A4MfrJnJ3DI') !!}"></a>
         <ul class="nav nav-tabs navbar-navtabs" style="font-size: 11px;">
             @if ($logged_in)<li><a class="new_sidebar" data-toggle="tab" id="tab1" href="#page1">چوب&zwnj;های الف</a></li>@endif
             <li {!! $unstyle !!}><a class="new_sidebar" data-toggle="tab" id="tab2" href="#page2">درگاه&zwnj;ها</a></li>

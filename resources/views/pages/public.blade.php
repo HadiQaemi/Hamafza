@@ -20,14 +20,14 @@
 @stop
 @include('sections.keywords')
 @section('Files')
-    @if(isset($Files) && count($Files)>0)
+    @if (isset($Files) && count($Files) > 0 && !empty($Files))
         <div class="spacer">
             <div class="panel panel-light fix-box1">
                 <div class="fix-inr1" style="height: 100%">
                     <div style="padding: 0;" class="panel-heading panel-heading-darkblue"></div>
                     <div class="panel-body text-decoration">
                         <b>{{ trans('label.Files') }}</b>
-                        @foreach($Files as $file)
+                        @foreach ($Files as $file)
                             <li>
                                 <div style="display: inline-block;height: 10px; margin: 5px">
                                     <span style="font-size: 15pt;height: 10px;" class="icon icon-{{$file->extension}}"></span>

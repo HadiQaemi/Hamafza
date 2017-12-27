@@ -2,7 +2,7 @@
     <link href="{{App::make('url')->to('/')}}/theme/Content/css/magicsuggest.css" rel="stylesheet">
     <script src="{{App::make('url')->to('/')}}/theme/Scripts/magicsuggest-min.js"></script>
     <script type="text/javascript">
-        $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 116px;top: -3px;"><a href="<?php echo e(App::make('url')->to('/')); ?>/modals/helpview?id=17&tagname=abzartamas&hid=6" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+        $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 116px;top: -3px;"><a href="<?php echo e(App::make('url')->to('/')); ?>/modals/helpview?code=XmtCrynCgJE" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 //        function RemoveFile(obj) {
 //            $(obj).parent().parent().parent().remove();
 //        }
