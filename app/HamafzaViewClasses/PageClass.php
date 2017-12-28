@@ -795,7 +795,7 @@ class PageClass
 //                ->with('product_info')->first();
             $subjects = Subject::where('id', $sid)->with('keywords')->first();
             $user = User::find($subjects->admin);
-            $admin = $user ? $user->FullName : 'کاربر حذف شده است.';
+            $admin = $user ? [$user->id, $user->FullName] : [0, 'کاربر حذف شده است.'];
             $spi = $subjects->product_info;
             //return view('modals.page_setting', array('Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $rel, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi));
             $help = Pages::find($pid)->help->first();

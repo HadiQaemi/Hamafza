@@ -18,9 +18,11 @@
             <table width="100%" id="FormTable" dir="ltr">
                 <tr id="TitleRow">
                     <td dir="rtl">
-                        <input type="text" id="name" required="" class="form-control col-xs-6" name="title">
+                        <input type="text" id="name" required="" class="form-control pull-right" name="title" style="margin-bottom: -10px; width: 50%;">
                     </td>
-                    <td width="120" style="text-align: right;">مشخصات</td>
+                    <td width="120" style="text-align: right;">
+                        <div style="margin-top: 10px;">عنوان صفحه</div>
+                    </td>
                 </tr>
                 <tr dir="rtl">
                     <td dir="rtl" style="border:none;">
@@ -68,7 +70,7 @@
                     <td dir="rtl">
                         <select name="keywords_list_subject[]" multiple="multiple" class="form-control keywords_list_subject"></select>
                     </td>
-                    <td style="width:120px;border:none;text-align: right"> افزودن کلید واژه</td>
+                    <td style="width:120px;border:none;text-align: right">کلید واژه ها</td>
                 </tr>
 
             </table>

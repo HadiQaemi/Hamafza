@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View;
 
 use App\Models\hamafza\Subject;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\HamafzaViewClasses\PublicClass;
@@ -787,6 +788,19 @@ class FormsController extends Controller
             $pid = $request->input('access_pid');
             $subject_view = $request->input('subject_view');
             $subject_search = $request->input('subject_search');
+            $admin_change = $request->input('admin_change');
+
+            $user = User::find($admin_change);
+            if ($user)
+            {
+                $subject = Subject::find($sid);
+                if ($subject)
+                {
+                    $subject->admin = $admin_change;
+                    $subject->save();
+                }
+            }
+
             /* $uid = (session('uid') != '') ? session('uid') : 0;
              $sesid = (session('sesid') != '') ? session('sesid') : 0;
              $pid = $request->input('access_pid');

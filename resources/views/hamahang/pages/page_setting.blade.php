@@ -106,7 +106,11 @@
                     </tr>
                     <tr>
                         <td class="col-xs-2">مدیر صفحه</td>
-                        <td class="col-xs-10">{{ $admin }}</td>
+                        <td class="col-xs-10">
+                            <select class="form-control admin_change" name="admin_change">
+                                @if ($admin)<option value="{!! $admin[0] !!}" selected="selected">{!! $admin[1] !!}</option>@endif
+                            </select><br />
+                        </td>
                     </tr>
                     <tr>
                         <td class="col-xs-2">کاربر</td>
@@ -252,13 +256,33 @@
                             dataType: 'json',
                             quietMillis: 50,
                             cache: true,
-                            data: function(term) { return { term: term }; },
+                            data: function(term) { return {term: term}; },
                             processResults: function(data)
                             {
                                 console.log(data);
                                 var a = true;
                                 return { results: data.results };
                             }
+                        }
+                    });
+                    $('.admin_change').select2
+                    ({
+                        minimumInputLength: 2,
+                        dir: 'rtl',
+                        width: '95%',
+                        ajax:
+                        {
+                            url: '{{ route('auto_complete.users') }}',
+                            dataType: 'json',
+                            type: "POST",
+                            quietMillis: 50,
+                            data: function(term) { return {term: term}; },
+                            processResults: function(data)
+                            {
+                                return {results: data.results
+                            }
+                        },
+                        cache: true
                         }
                     });
                 </script>
