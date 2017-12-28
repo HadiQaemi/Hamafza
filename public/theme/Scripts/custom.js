@@ -722,7 +722,7 @@ $(document).on('click', '#TagBut', function () {
     jQuery('#Results').show();
     jQuery('#ShowResKey').show();
     $("#ShowResKey").trigger("click");
-    $("#KeywordSearch").html('<span class="sui-loading-back"></span> <div class="contentDiv"><div class="mainDiv"><div class="logoDiv"></div><div class="textDiv"></div></div><div class="loaderDiv"><img src="' + Baseurl + 'img/loading.gif"></div></div>');
+    $("#KeywordSearch").html('<div class="loader_slider"><div>');
 
     jQuery.ajax({
         type: "POST",
