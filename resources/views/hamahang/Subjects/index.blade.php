@@ -11,9 +11,9 @@
             <div id="sucsessMsg"></div>
             <div class="loader" style="display: none"></div>
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#subjectsManagment" class="view_btn" data-toggle="tab">موضوعات</a></li>
-                <li><a href="#addSubject" class="add_btn" data-toggle="tab">موضوع جدید</a></li>
-                <li><a href="#editSubject" class="edit_btn" data-toggle="tab">ویرایش موضوع</a></li>
+                <li class="active"><a href="#subjectsManagment" class="view_btn" data-toggle="tab">انواع صفحات</a></li>
+                <li><a href="#addSubject" class="add_btn" data-toggle="tab">نوع صفحه جدید</a></li>
+                <li><a href="#editSubject" class="edit_btn" data-toggle="tab">ویرایش نوع صفحه</a></li>
             </ul>
             <div class="tab-content">
                 <div class="col-xs-12 tab-pane fade in active default-options" id="subjectsManagment">

@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <ul class="nav nav-tabs navbar-navtabs" style="font-size: 11px; width: 90%; margin-right: 20px;">
-                    <li style="width: 49%;" class="active"><a class="new_sidebar" data-toggle="tab" href="#keyWords" style="height: 50px;">کلید واژه‌ها</a></li>
+                    <li style="width: 49%;" class="active"><a class="new_sidebar" data-toggle="tab" href="#keyWords" style="height: 50px;">گزینه‌ها</a></li>
                     <li style="width: 49%;"><a class="new_sidebar" data-toggle="tab" id="ShowResKey" href="#Results" style="height: 50px;">یافته‌ها</a></li>
                 </ul>
                 <div class="tab-content" style="width: 430px; height: 1000px; overflow: hidden;">

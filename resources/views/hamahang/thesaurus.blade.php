@@ -11,7 +11,7 @@
     <div class="row">
         <div id="jstree-tree" class=" col-sm-7">
             <div class="panel">
-                <div class="panel-heading">درخت کلید واژه</div>
+                <div class="panel-heading">{{--درخت کلید واژه--}}</div>
                 <div id="thesaurus_tree_area" class="panel-body" style="overflow-y: auto;direction: ltr">
                     <div class="tree_area" style="direction: rtl"></div>
                 </div>

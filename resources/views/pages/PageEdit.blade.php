@@ -221,19 +221,19 @@
         </div>
         <div class="panel-heading panel-heading-darkblue">{{ trans('label.Files')  }} </div>
         {{--        {{ dd(session()->get('page_file')) }}--}}
-        <span class="help-block">{{trans('app.valid_mime_type')}}: zip, doc, docx, pdf, mp3, amr</span>
-            <span class="help-block">{{trans('app.valid_max_file_size')}}: 2mb</span>
+        {{--<span class="help-block">{{trans('app.valid_mime_type')}}: zip, doc, docx, pdf, mp3, amr</span>--}}
+            {{--<span class="help-block">{{trans('app.valid_max_file_size')}}: 2mb</span>--}}
         <div class="panel-body searching-cntnt" style="margin-bottom: 10px">
             <div class="form-group">
                 <div class="clearfix"></div>
                 <div id="all_files_div"></div>
-                <div class="hr hr-double dotted"></div>
+                {{--<div class="hr hr-double dotted"></div>--}}
                 {{--<label class="col-lg-3 control-label">{{trans('app.add_file')}}</label>--}}
                 <div class="col-lg-9">
                     <div class="row-fluid">
                         <div class="filemanager-buttons-client">
                             <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('page_file') }}" data-multi_file="Multi" style="margin-right: 5px;">
-                                <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
+                                {{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
                                 <span>{{trans('app.add_file')}}</span>
                             </div>
                             {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
@@ -249,7 +249,7 @@
                     <div class="clearfix"></div>
                 </div>
                 {!! $HFM_media['ShowResultArea']['page_file'] !!}
-                <button name="addasubject" class="btn btn-primary FloatLeft add_page_files" type="button">ذخیره فایل‌(ها)</button>
+                <button name="addasubject" class="btn btn-primary FloatLeft add_page_files" type="button">بارگذاری</button>
             </div>
             {{--<form action="{{App::make('url')->to('/')}}/AttachFileinPage" method="post" enctype="multipart/form-data" name="AttachFileinPage">--}}
             {{--<input type="hidden" name="_token" value="{{ csrf_token() }}"/>--}}

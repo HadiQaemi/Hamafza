@@ -1,7 +1,7 @@
 <div class="row pull-left">
     <input type="radio" class="is_approved" id="is_approved_0" name="is_approved" value="0"{!! $is_edit && $keyword ? (0 == $keyword->is_approved ? ' checked="checked"' : null) : null !!}/>
     <label for="is_approved_0">موقت</label>
-    <input type="radio" class="is_approved" id="is_approved_1" name="is_approved" value="1"{!! $is_edit && $keyword ? (1 == $keyword->is_approved ? ' checked="checked"' : null) : null !!}/>
+    <input type="radio" class="is_approved" id="is_approved_1" name="is_approved" value="1"{!! $is_edit && $keyword ? (1 == $keyword->is_approved ? ' checked="checked"' : null) : ' checked="checked"' !!}/>
     <label for="is_approved_1">مصوب</label>
 </div>
 <div class="row pull-left">

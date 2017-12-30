@@ -313,4 +313,8 @@
     @if($subject_type_policies_Official_check == true)
         $('#PriRad').click();
     @endif
+    $(document).ready(function()
+    {
+        $('.sectype_sel1').click();
+    });
 </script>

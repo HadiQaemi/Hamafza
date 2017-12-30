@@ -17,7 +17,7 @@
         <div class="panel-body" style="padding-right: 25%;">
 {{--            <span style="padding-bottom: 10px">{{ trans('app.select_new_file') }}</span>--}}
             <form method="Post" enctype="multipart/form-data" id="image_form" action="#">
-                <input data-buttonText="انتخاب تصویر" data-input="false" data-iconName="fa fa-image" class="form-control filestyle" type="file" id="page_file_image" name="image" style="display: none;">
+                <input data-buttonText="انتخاب تصویر" data-input="false" data-iconName="" class="form-control filestyle" type="file" id="page_file_image" name="image" style="display: none;">
                 <input type="hidden" id="item_id" name="item_id" value="{{ $item_id }}">
             </form>
         </div>
@@ -25,7 +25,7 @@
 </div>
 <div class="col-xs-12">
     <div class="pull-left">
-        <button type="button" class="btn btn-primary btn_save_image">{{ trans('tasks.ok') }}</button>
+        <button type="button" class="btn btn-primary btn_save_image">بارگذاری</button>
     </div>
 </div>
 

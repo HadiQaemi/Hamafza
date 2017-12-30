@@ -13,7 +13,7 @@
         <div class="form-group">
             <div id="alert_subjects_in_jspanel"></div>
         </div>
-        <div id="tab-1" role="tabpanel" class="tab-pane active">
+        <div id="tab-1" role="tabpanel" class="tab-pane active" style="padding-right: 20px;">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             <table width="100%" id="FormTable" dir="ltr">
                 <tr id="TitleRow">
@@ -21,7 +21,7 @@
                         <input type="text" id="name" required="" class="form-control pull-right" name="title" style="margin-bottom: -10px; width: 50%;">
                     </td>
                     <td width="120" style="text-align: right;">
-                        <div style="margin-top: 10px;">عنوان صفحه</div>
+                        <div style="margin-top: 10px;">عنوان</div>
                     </td>
                 </tr>
                 <tr dir="rtl">
@@ -32,9 +32,9 @@
                         <input type="hidden" id="KindIn" name="kind" value="0">
                         <span style="float: right;margin:0px 5px;">
 							@if($subject_type_policies_Official_check == true)
-                                <input style="margin-top: 10px;" id="PubRad" checked="checked" name="sectype" value="1" type="radio"> رسمی
+                                <input style="margin-top: 10px;" id="PubRad" checked="checked" name="sectype" value="1" type="radio" class="sectype_sel1"> رسمی
                             @else
-                                <input style="margin-top: 10px;" class="disabled" disabled name="sectype" value="1" type="radio"> رسمی
+                                <input style="margin-top: 10px;" class="disabled" disabled name="sectype" value="1" type="radio" class="sectype_sel2">  رسمی
                             @endif
                             @if($subject_type_policies_personal_check == true)
                                 <input style="margin-top: 10px;" id="PriRad" name="sectype" value="0" type="radio">شخصی

@@ -7,6 +7,6 @@
 		</div>
 	</div>
 	<div class="clearfix"></div>
-	<div class="hr hr-double dotted"></div>
+	{{--<div class="hr hr-double dotted"></div>--}}
 </div>
 <div class="clearfix"></div>

@@ -35,7 +35,7 @@ return [
     'download'=>'دانلود',
     'accept'=>'تایید',
     'acceptable_prefix_of_file_not_selected'=>'پسوند های مجاز تعیین نشده است.',
-    'mime_type_not_allowed'=>'پسوند فایل مجاز نیست!',
+    'mime_type_not_allowed'=>'بارگذاری این نوع فایل مجاز نیست!',
     'file_size_not_allowed'=>'حجم فایل بیشتر از حد مجاز است!',
     'action_complete_successfully'=>'عملیات با موفقیت انجام شد. ',
     
