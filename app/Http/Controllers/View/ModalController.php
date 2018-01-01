@@ -670,7 +670,7 @@ class ModalController extends Controller
             {
                 if ($blocks = $help->HelpBlocks)
                 {
-                    $view = null;
+                    $view = "<h3 style=\"color: #6391C5;\">{$help->title}</h3>";
                     foreach ($blocks as $block)
                     {
                         $view .= "$block->content<br />\r\n";
@@ -691,7 +691,13 @@ class ModalController extends Controller
         $header = view('modals.help.view.header')->with([])->render();
         $content = view('modals.help.view.content')->with(['view' => $view, 'see_alsos' => $see_alsos])->render();
         $footer = view('modals.help.view.footer')->with([])->render();
-        return json_encode(['header' => $header, 'content' => $content, 'footer' => $footer]);
+        if ($request->exists('content'))
+        {
+            return $content;
+        } else
+        {
+            return json_encode(['header' => $header, 'content' => $content, 'footer' => $footer]);
+        }
     }
 
     public function addSubtem()

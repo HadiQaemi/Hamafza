@@ -5,8 +5,7 @@
             @if (@$see_alsos->count())
                 <div>این موارد را نیز ببینید:</div>
                 @foreach ($see_alsos as $v)
-                    <a href="{!! url('/modals/helpview?code=' . enCode($v->id)) !!}" title="راهنمای اینجا" class="jsPanels">{!! $v->title !!}</a>
-
+                    <a href="#" onclick="get_content(this, '{!! enCode($v->id) !!}');">{!! $v->title !!}</a>
                     <br />
                 @endforeach
             @endif

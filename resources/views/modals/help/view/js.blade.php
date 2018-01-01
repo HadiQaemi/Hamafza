@@ -27,13 +27,16 @@
             }
         });
     });
-    function HelpFire(pid, tagname) {
-        $.ajax({
+    function HelpFire(pid, tagname)
+    {
+        $.ajax
+        ({
             type: "POST",
             url: '{{ route('hamafza.pop_help') }}',
             dataType: 'html',
             data: ({tagname: tagname, pid: pid}),
-            success: function(theResponse) {
+            success: function(theResponse)
+            {
                 jQuery('#helpviewDiv').html("<p></p>");
                 jQuery('#helpviewDiv').append(theResponse);
                 $(".fancybox-inner").scrollTop(0);
@@ -41,5 +44,20 @@
             }
         });
     }
-
+    function get_content(thic, code)
+    {
+        e_content = $(thic).closest('.jsPanel-content');
+        e_content.html('<div class="loader"></div>');
+        $.ajax
+        ({
+            type: 'post',
+            url: '{{ route('modals.help_view') }}',
+            dataType: 'html',
+            data: ({code: code, content: true}),
+            success: function(response)
+            {
+                e_content.html(response);
+            }
+        });
+    }
 </script>
