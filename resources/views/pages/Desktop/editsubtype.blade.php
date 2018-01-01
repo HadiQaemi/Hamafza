@@ -364,35 +364,12 @@
                                                         <input type="hidden" value="" name="tab_tem[{{$i}}]" id="tab_tem_{{$i}}">
                                                     @endif
                                                 </td>
-
                                                 <td class="center" style="text-align: right;">
-
-                                                    <input type="text" class="HelpRel" id="HelpRel_{{$i}}" name="help[{{$i}}]"/>
-
-                                                    <script>
-                                                        @if ($f->help_tag != '')
-
-                                                            <?php
-                                                            $help = $f->help_tag;
-                                                            $pattern = "/{{Help\+.*=.*}}/";
-                                                            if ($num1 = preg_match_all($pattern, $help, $array)) {
-                                                                for ($x = 0; $x < $num1; $x++) {
-                                                                    $orig = $array['0'][$x];
-                                                                    $key = str_replace("{{Help+", "",$array['0'][$x]);
-                                                                    $key = str_replace("}}", "", $key);
-                                                                    $pos = strpos($key, "=");
-                                                                    $key = substr($key, $pos + 1, strlen($key) - $pos);
-                                                                }
-                                                            }
-                                                            ?>
-                                                        $(document).ready(function () {
-                                                            ids = "{{$f->help_tag}}";
-                                                            Tname = "{{$key}}";
-                                                            $("#HelpRel_{{$i}}").tokenInput("add", {id: ids, name: Tname});
-                                                        });
-                                                        @endif
-                                                    </script>
-
+                                                    @php ($help = \App\Models\Hamahang\Help::find($f->help_pid))
+                                                    <input type="hidden" name="tab_help[]" />
+                                                    <select class="form-control help_class" name="tab_help[{{ $i }}]">
+                                                        @if ($help)<option value="{!! $help->id !!}">{!! $help->title !!}</option>@endif
+                                                    </select>
                                                 </td>
                                                 <td class="center" style="text-align: right;">
                                                     <input type="radio" value="{{$i}}" name="tab_first" @if($f->first=='1') checked='' @endif>
@@ -586,6 +563,30 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $('.help_class').select2
+        ({
+            minimumInputLength: 2,
+            dir: 'rtl',
+            width: '200',
+            ajax:
+                {
+                    type: 'post',
+                    url: '{{ route('auto_complete.help') }}',
+                    dataType: 'json',
+                    quietMillis: 50,
+                    cache: true,
+                    data: function(term) { return { term: term }; },
+                    processResults: function(data)
+                    {
+                        console.log(data);
+                        var a = true;
+                        return { results: data.results };
+                    }
+                }
+        });
+    </script>
 
     <script>
         $(".users_list_subject_type_public").select2({

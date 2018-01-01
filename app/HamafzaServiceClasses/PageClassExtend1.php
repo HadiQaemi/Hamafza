@@ -736,7 +736,7 @@ class PageClassExtend1
 
         $rowTs = DB::table('pages as p')
             ->leftJoin('subject_type_tab as stt', 'p.type', '=', 'stt.tid')
-            ->select(DB::Raw("p.id as pid, p.view as pview, stt.name as tab_name, stt.view,stt.id as sttid"))
+            ->select(DB::Raw("p.id as pid, p.view as pview, stt.name as tab_name, stt.view,stt.id as sttid, stt.help_pid"))
             ->where('p.sid', $sid)->where('stt.stid', $kinds)->orderBy('stt.orders')->get();
 
         foreach ($rowTs as $value)

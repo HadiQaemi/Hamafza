@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 
 use App\Http\Controllers\Controller;
 use App\Models\hamafza\Keyword;
+use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectFieldValue;
 use App\Models\hamafza\SubjectType;
@@ -52,10 +53,21 @@ class SubjectController extends Controller
 
     public function get_subjects_jsPanel(Request $request)
     {
-
         $subject = Subject::where('kind', $request->id)->with('pages')->whereHas('pages');
 
+        /*
+        $subject_type_tab = DB::table('subject_type_tab')->where('stid', $request->id)->where('first', '1')->get()->first();
+        $page = Pages::where('sid', $subject->get()->first()->id)->get()->toArray();
+        if ($page)
+        {
+            $first = $page[$subject_type_tab->tid]['id'];
+        } else
+        {
+            $first = $subject->get()->first()->id . '/desktop';
+        }
+        */
         return Datatables::eloquent($subject)
+            //->addColumn('first', $first)
             ->addColumn('jdate', function ($data)
             {
                 if ($data->created_at != '')
@@ -191,6 +203,7 @@ class SubjectController extends Controller
             $param = ['username' => 'amgh', 'subject_id' => deCode($request->id)];
         }
         $res = variable_generator('user', 'Desktop_subjects_id', $username, $param);
+        if (false) { view('pages.Desktop.editsubtype'); }
         return view($res['viewname'], $res);
     }
 

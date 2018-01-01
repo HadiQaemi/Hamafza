@@ -3,6 +3,8 @@
 namespace App\HamafzaServiceClasses;
 
 use App\Models\hamafza\SubjectType;
+use App\Models\Hamahang\Help;
+use App\Models\Hamahang\HelpRelation;
 use Illuminate\Support\Facades\DB;
 use App\Models\subjectKey;
 use App\HamafzaViewClasses\PublicClass;
@@ -670,7 +672,7 @@ class ConfigurationClass
         {
             $ST->private = $em;
         }
-        $Tabs = DB::table('subject_type_tab')->where('stid', $stid)->select('id', 'type', 'name', 'tem', 'first', 'view', 'tid', 'help_tag')->get();
+        $Tabs = DB::table('subject_type_tab')->where('stid', $stid)->select('id', 'type', 'name', 'tem', 'first', 'view', 'tid', 'help_pid', 'help_tag')->get();
         foreach ($Tabs as $value)
         {
             $value->tem = str_replace('"', "'", $value->tem);
@@ -679,7 +681,7 @@ class ConfigurationClass
         return $ST;
     }
 
-    public static function SubjectTypeSave($tabid, $tab_del_did, $editid, $uid, $name, $department, $field_descr, $tab_tem, $department_select, $department_require, $pretitle, $keywords, $tag_select, $tag_require, $manager_title, $manager_id, $manager_select, $manager_require, $supervisor_title, $supervisor_id, $supervisor_select, $supervisor_require, $supporter_title, $supporter_id, $supporter_select, $supporter_require, $process, $proc_select, $proc_require, $help, $ViewAlert, $editalertshow, $EditAlert, $fields, $requires, $charchoob, $users_public, $roles_public, $users_private, $roles_private, $comment, $tab_name, $tab_type, $tab_first, $tab_view, $tab_tid, $writer_title, $field_name, $field_defval)
+    public static function SubjectTypeSave($tabid, $tab_del_did, $editid, $uid, $name, $department, $field_descr, $tab_tem, $department_select, $department_require, $pretitle, $keywords, $tag_select, $tag_require, $manager_title, $manager_id, $manager_select, $manager_require, $supervisor_title, $supervisor_id, $supervisor_select, $supervisor_require, $supporter_title, $supporter_id, $supporter_select, $supporter_require, $process, $proc_select, $proc_require, $help, $ViewAlert, $editalertshow, $EditAlert, $fields, $requires, $charchoob, $users_public, $roles_public, $users_private, $roles_private, $comment, $tab_name, $tab_type, $tab_first, $tab_view, $tab_tid, $writer_title, $field_name, $field_defval, $tab_help)
     {
 //        $users_public,$roles_public, $users_private,$roles_private
         $name = trim(PublicClass::Filter($name));
@@ -855,7 +857,16 @@ class ConfigurationClass
                         $first = ($tab_first == $tid) ? 1 : 0;
                         DB::table('subject_type_tab')->insert(array('admin' => $uid, 'stid' => $s_id, 'tid' => $tid, 'name' => $tab_name[$key], 'type' => $tab_type[$key]
                         , 'sptid' => '0', 'brief' => '0', 'first' => $first, 'view' => $tab_view[$key]
-                        , 'dist' => '0', 'help_pid' => $helpid, 'help_tag' => $helps, 'orders' => $tid, 'reg_date' => $reg_date, 'tem' => $tab_tem[$key]));
+                        , 'dist' => '0', 'help_pid' => isset($tab_help[$key]) ? $tab_help[$key] : 0 /*$helpid*/, 'help_tag' => $helps, 'orders' => $tid, 'reg_date' => $reg_date, 'tem' => $tab_tem[$key]));
+
+                        /*
+                        HelpRelation::create
+                        ([
+                            'target_type' => 'App\Models\hamafza\Pages',
+                            'target_id' => '',
+                            'help_id' => '',
+                        ]);
+                        */
 
                         $tid++;
                     }
@@ -1076,7 +1087,7 @@ class ConfigurationClass
                                 $tab_view[$key] = isset($tab_view[$key]) ? 1 : 0;
 
                                 $ttids = DB::table('subject_type_tab')->insertGetId(array('admin' => $uid, 'stid' => $editid, 'tid' => $tid, 'name' => $tab_name[$key], 'type' => $tab_type[$key]
-                                , 'sptid' => '0', 'brief' => '0', 'first' => $first, 'view' => $tab_view[$key], 'help_pid' => $helpid, 'help_tag' => $helps
+                                , 'sptid' => '0', 'brief' => '0', 'first' => $first, 'view' => $tab_view[$key], 'help_pid' => isset($tab_help[$key]) ? $tab_help[$key] : 0 /*$helpid*/, 'help_tag' => $helps
                                 , 'dist' => '0', 'orders' => $tid, 'reg_date' => $reg_date, 'tem' => $tab_tem[$key]));
                                 $subjects = DB::table('subjects')->where('kind', $s_id)->select('id')->get();
                                 foreach ($subjects as $items)

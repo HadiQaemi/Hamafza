@@ -477,7 +477,7 @@ class ModalController extends Controller
         $content = SubjectClass::subjectExport($res['sid'], $res['pid'], $res['type'])->render();
         $footer = '<span class="FloatLeft">'
             . '<a id="wordexport" class="btn btn-primary">دریافت فایل ورد</a> '
-            . ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
+            //. ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
             . '</span>';
         return json_encode(['header' => 'بارگیری', 'content' => $content, 'footer' => $footer]);
     }
@@ -661,6 +661,7 @@ class ModalController extends Controller
     public function helpView(Request $request)
     {
         $view = trans('app.no_result');
+        $see_alsos = null;
         if ($request->exists('code'))
         {
             $id = deCode($request->input('code'));
@@ -675,6 +676,7 @@ class ModalController extends Controller
                         $view .= "$block->content<br />\r\n";
                     }
                 }
+                $see_alsos = $help->SeeAlsos()->get();
             }
         } else
         {
@@ -686,8 +688,10 @@ class ModalController extends Controller
             $content = PublicClass::ShowHelp($id, $tagname, $hid, $pid);
             return json_encode(['header' => '', 'content' => $content->render(), 'footer' => '']);
         }
-        $content = view('modals.helpview', ['view' => $view])->render();
-        return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
+        $header = view('modals.help.view.header')->with([])->render();
+        $content = view('modals.help.view.content')->with(['view' => $view, 'see_alsos' => $see_alsos])->render();
+        $footer = view('modals.help.view.footer')->with([])->render();
+        return json_encode(['header' => $header, 'content' => $content, 'footer' => $footer]);
     }
 
     public function addSubtem()
@@ -2417,9 +2421,58 @@ class ModalController extends Controller
 
     public function help_relation_add(Request $request)
     {
+        $help_ids = [];
         $target_type = $request->input('target_type');
         $target_id = $request->input('target_id');
-        $help_id = $request->input('help_id');
+        $help_items = $request->input('help_id');
+
+        foreach ($help_items as $help_item)
+        {
+            //$get_id = str_replace(['help_relation_add[', ']'], null, $help_item['name']);
+            $help_ids[/*$get_id*/] = $help_item['value'];
+        }
+
+        $get_page = Pages::find($target_id);
+        if ($get_page)
+        {
+            if ($get_page->subject)
+            {
+                $get_subject_id = $get_page->subject->id;
+                $pages = Pages::where('sid', $get_subject_id)->select('id')->get();
+                if ($pages)
+                {
+                    foreach ($pages as $page_k => $page)
+                    {
+                        if (isset($help_ids[$page_k]))
+                        {
+                            if ($help_ids[$page_k])
+                            {
+                                DB::table('hamahang_help_relations')
+                                    ->where('target_type', 'App\Models\hamafza\Pages')
+                                    ->where('target_id', $page->id)->delete();
+                                DB::table('hamahang_help_relations')->insert
+                                ([
+                                    'target_type' => 'App\Models\hamafza\Pages',
+                                    'target_id' => $page->id,
+                                    'help_id' => $help_ids[$page_k],
+                                    'created_by' => auth()->id(),
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return json_encode(['success', 'با موفقیت ثبت شد.']);
+        /*
+        dd('');
+
+        foreach ($help_ids as $help_id)
+        {
+            //DB_table
+        }
+
+        dd($help_ids);
         //$created_by = auth()->id();
         if ($help_id)
         {
@@ -2431,8 +2484,8 @@ class ModalController extends Controller
                     break;
                 }
             }
-            return json_encode(['success', 'با موفقیت ثبت شد.']);
         }
+        */
     }
 
     public function getKeywordsListSubjectUsages(Request $request)

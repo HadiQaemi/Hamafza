@@ -798,8 +798,16 @@ class PageClass
             $admin = $user ? [$user->id, $user->FullName] : [0, 'کاربر حذف شده است.'];
             $spi = $subjects->product_info;
             //return view('modals.page_setting', array('Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $rel, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi));
-            $help = Pages::find($pid)->help->first();
-            return view('hamahang.pages.page_setting', ['admin' => $admin, 'rels' => $relations_json,'subjects' => $subjects, 'Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $Relations_in_subject, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi, 'meta_fields' => $subjects->meta_fields, 'help' => $help])->render();
+            //$help = Pages::find($pid)->help->first();
+            $pages = Pages::where('sid', $sid)->select('id')->get();
+            if ($pages)
+            {
+                foreach ($pages as $page)
+                {
+                    $helps[] = Pages::find($page->id)->help->first();
+                }
+            }
+            return view('hamahang.pages.page_setting', ['admin' => $admin, 'rels' => $relations_json,'subjects' => $subjects, 'Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $Relations_in_subject, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi, 'meta_fields' => $subjects->meta_fields, 'helps' => $helps])->render();
         }
     }
 

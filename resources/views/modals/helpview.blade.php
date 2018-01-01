@@ -1,4 +1,4 @@
-<div class="panel-body text-decoration " id="helpviewDiv" style="top: 10px;margin: 10px;width:98%;line-height: 16pt;height: 310px;overflow: auto" id="HelpContent"> 
+<div class="panel-body text-decoration " id="helpviewDiv" style="top: 10px;margin: 10px;width:98%;line-height: 16pt;height: 310px;overflow: auto" id="HelpContent">
     {!!$view!!}
 </div>
 <div class="row" style="height: 60px;">
@@ -43,7 +43,7 @@
                                 پرسش های متداول
                             </a>
 
-                        </td> 
+                        </td>
                     </tr>
                 </table>
             </center>
@@ -64,7 +64,7 @@
                     -o-transform:scale(1.25); /* Opera */
                     transform:scale(1.25);
                 }
-            </style> 
+            </style>
         </div>
 
 

@@ -53,6 +53,20 @@ class Pages extends Model
         return "";
     }
 
+    public function getTabHelpAttribute()
+    {
+        if(isset($this->subject))
+        {
+            $subject = $this->subject;
+            if (isset($subject->tabs[$this->type]))
+            {
+                $hpid = $this->subject->tabs[$this->type]->help_pid;
+                return $hpid ? enCode($hpid) : 0;
+            }
+        }
+        return 0;
+    }
+
     public function help()
     {
         return $this->morphToMany('App\Models\Hamahang\Help', 'target', 'hamahang_help_relations', 'target_id', 'help_id')->withTimestamps();

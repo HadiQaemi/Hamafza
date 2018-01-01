@@ -239,9 +239,28 @@
             <form id="manager_form_rahnama" method="post" action="{{App::make('url')->to('/')}}/update_Help">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <label>راهنمای اینجا</label>
-                <select class="form-control help_relation_add" name="help_relation_add">
-                    @if ($help)<option value="{!! $help->id !!}" selected="selected">{!! $help->title !!}</option>@endif
-                </select><br />
+                <table width="100%" style="direction:rtl"  id="contactform">
+                    <tbody>
+                    @if (is_array($Access->tabs))
+                        @foreach ($Access->tabs as $tab)
+                            <tr>
+                                <td style="width: 150px;">{{ $tab->tab_name }}</td>
+                                <td>
+                                    @php ($help = array_shift($helps))
+                                    <input type="hidden" name="help_relation_add[{!! $tab->sttid !!}]" value="0" />
+                                    <select class="form-control help_relation_add" name="help_relation_add[{!! $tab->sttid !!}]">
+                                        @if ($help)
+                                            <option value="{!! $help->id !!}" selected="selected">{!! $help->title !!}</option>
+                                        @else
+                                            <option value="0" selected="selected"></option>
+                                        @endif
+                                    </select><br />
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
                 <br />
                 <script>
                     $('.help_relation_add').select2

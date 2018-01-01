@@ -276,7 +276,8 @@
                                             </td>
                                             <td class="center" style="text-align: right;">
                                                 <!--<input type="text" class="HelpRel" name="help[{{$i}}]"/>-->
-                                                <select class="form-control help_class" name="help[{{$i}}]"></select>
+                                                <input type="hidden" name="tab_help[]" />
+                                                <select class="form-control help_class" name="tab_help[{{ $i }}]"></select>
                                             </td>
                                             <td class="center" style="text-align: right;">
                                                 <input type="radio" @if($i==1) checked="" @endif value="1" name="tab_first">

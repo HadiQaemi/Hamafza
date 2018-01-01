@@ -507,7 +507,7 @@
         {
             'target_type': 'page',
             'target_id': '{!! $pid !!}',
-            'help_id': $('.help_relation_add').val()
+            'help_id': $('.help_relation_add').serializeArray()
         };
         $.ajax
         ({
@@ -519,6 +519,7 @@
             {
                 jQuery.noticeAdd({type: response[0], text: response[1], stay: false});
                 $('.jsglyph-close').click();
+                location.reload();
             }
         });
     });

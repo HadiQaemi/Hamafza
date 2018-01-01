@@ -1499,6 +1499,7 @@ class FormsController extends Controller
             $tab_tem = $request->input('tab_tem');
             $tab_id = $request->input('tab_id');
             $tab_tid = $request->input('tab_tid');
+            $tab_help = $request->input('tab_help', []);
             for ($i = 1; $i <= 10; $i++)
             {
                 if (!array_key_exists($i, $tab_view))
@@ -1530,7 +1531,7 @@ class FormsController extends Controller
             }
             $SP = new ConfigurationClass();
 
-            $menu = $SP->SubjectTypeSave($tab_id, $tab_del_did, $editid, $uid, $name, $department, $field_descr, $tab_tem, $department_select, $department_require, $pretitle, $keywords, $tag_select, $tag_require, $manager_title, $manager_id, $manager_select, $manager_require, $supervisor_title, $supervisor_id, $supervisor_select, $supervisor_require, $supporter_title, $supporter_id, $supporter_select, $supporter_require, $process, $proc_select, $proc_require, $help, $ViewAlert, $editalertshow, $EditAlert, $field_type, $requires, $charchoob, $users_public, $roles_public, $users_private, $roles_private, $comment, $tab_name, $tab_type, $tab_first, $tab_view, $tab_tid, $writer_title, $field_name, $field_defval);
+            $menu = $SP->SubjectTypeSave($tab_id, $tab_del_did, $editid, $uid, $name, $department, $field_descr, $tab_tem, $department_select, $department_require, $pretitle, $keywords, $tag_select, $tag_require, $manager_title, $manager_id, $manager_select, $manager_require, $supervisor_title, $supervisor_id, $supervisor_select, $supervisor_require, $supporter_title, $supporter_id, $supporter_select, $supporter_require, $process, $proc_select, $proc_require, $help, $ViewAlert, $editalertshow, $EditAlert, $field_type, $requires, $charchoob, $users_public, $roles_public, $users_private, $roles_private, $comment, $tab_name, $tab_type, $tab_first, $tab_view, $tab_tid, $writer_title, $field_name, $field_defval, $tab_help);
             return Redirect()->back()->with('message', $menu)->with('mestype', 'success');
         }
     }

@@ -11,7 +11,8 @@
                 case 'page':
                 {
                     $route_parameters = $route->parameters();
-                    $page = \App\Models\hamafza\Pages::find($route_parameters['id']);
+                    $page_id = $route_parameters['id'];
+                    $page = \App\Models\hamafza\Pages::find($page_id);
                     $page_subject = $page->subject;
                     if ($page_subject)
                     {
@@ -20,6 +21,21 @@
                             case '20':
                             {
                                 $help_code = 'hpDnr77D8TQ';
+                            }
+                            default:
+                            {
+                                $help = DB::table('hamahang_help_relations')->where('target_type', 'App\Models\hamafza\Pages')->where('target_id', $page_id)->get();
+                                if ($help->count())
+                                {
+                                    if (isset($help[0]))
+                                    {
+                                        $hpid = $help[0]->help_id;
+                                        $help_code = $hpid ? enCode($hpid) : 0;
+                                    }
+                                } else
+                                {
+                                    $help_code = $page->tab_help;
+                                }
                             }
                         }
                     }
