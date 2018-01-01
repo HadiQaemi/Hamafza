@@ -8,6 +8,15 @@ use App\Models\Hamahang\Score;
 
 Route::get('test', function ()
 {
+    /*
+    ini_set('max_execution_time', '0');
+    $mail = Mail::send('test', [], function($message)
+    {
+        $message->from('no-replay@hamafza.ir', 'no-replay@hamafza.ir');
+        $message->to('mlotfi63@gmail.com');//->cc('bar@example.com');
+    });
+    dd($mail);
+    */
     //$smart_detect = new SmartDetect();
     //return 'test routes';
 });

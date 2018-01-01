@@ -1,3 +1,4 @@
+{{--
 script src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="{{App::make('url')->to('/')}}/theme/Scripts/i18n/grid.locale-en.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/ui.jqgrid-bootstrap-ui.css"/>
@@ -6,3 +7,6 @@ script src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.jqGrid.min.js" ty
 
 
 {!!$content!!}
+--}}
+
+Test Email...
