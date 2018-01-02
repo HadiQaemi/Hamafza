@@ -5,7 +5,13 @@
 @section('content')
     <div class="panel-body text-decoration ContentSec">
         <div class='text-content'>
-            @if(isset($announces) && count($announces)>0)
+            @php
+                if (isset($highlights) && count($highlights) > 0)
+                {
+                    $announces = $highlights;
+                }
+            @endphp
+            @if (isset($announces) && count($announces) > 0)
                 @foreach($announces as $item)
                     <div class="comment-contain">
                         <div class="comment-box">

@@ -4,7 +4,7 @@ File: PageClass.php
 Function: CreatPageView
 Line: Approximately Line 357
 -->
-@if ($image_exist || $fields || $PageDescription)
+{{--@if ($image_exist || $fields/* || $PageDescription*/)--}}
     <link type="text/css" rel="stylesheet" href="{{ url('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css') }}">
     <script type="text/javascript" src="{{ url('assets/Packages/PersianDateOrTimePicker/js/persian-date.js') }}"></script>
     <script type="text/javascript" src="{{ url('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js') }}"></script>
@@ -109,10 +109,4 @@ Line: Approximately Line 357
         <input type="hidden" id="subject_id" name="subject_id" value="{!! $spi['subject_id'] !!}"/>
         <input type="hidden" id="subject_count" name="subject_count" value="1"/>
     </form>
-    <hr style="border: 1px solid #7dca75;"/>
-    @if($PageDescription)
-        <div class="row">
-            {!! $PageDescription !!}
-        </div>
-    @endif
-@endif
+{{--@endif--}}

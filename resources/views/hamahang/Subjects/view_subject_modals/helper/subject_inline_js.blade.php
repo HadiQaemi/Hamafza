@@ -21,8 +21,15 @@
                 },
                 {
                     data: 'title',
-                    mRender: function (data, type, full) {
-                        var url = '{{ url('') }}'+'/'+full['id']+'/desktop';
+                    mRender: function (data, type, full)
+                    {
+                        if ('[desktop]' == full['first'])
+                        {
+                            var url = '{{ url('') }}' + '/' + full['id'] + '/desktop';
+                        } else
+                        {
+                            var url = '{{ url('') }}' + '/' + full['first'];
+                        }
                         return '<a href="'+url+'" target="_blank">'+full['title']+'</a> ';
                     }
                 },

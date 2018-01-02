@@ -54,20 +54,19 @@ class SubjectController extends Controller
     public function get_subjects_jsPanel(Request $request)
     {
         $subject = Subject::where('kind', $request->id)->with('pages')->whereHas('pages');
-
-        /*
-        $subject_type_tab = DB::table('subject_type_tab')->where('stid', $request->id)->where('first', '1')->get()->first();
-        $page = Pages::where('sid', $subject->get()->first()->id)->get()->toArray();
-        if ($page)
-        {
-            $first = $page[$subject_type_tab->tid]['id'];
-        } else
-        {
-            $first = $subject->get()->first()->id . '/desktop';
-        }
-        */
         return Datatables::eloquent($subject)
-            //->addColumn('first', $first)
+            ->addColumn('first', function($data) use ($request)
+            {
+                $r = '[desktop]';
+                $subject_type_tab = DB::table('subject_type_tab')->where('stid', $request->id)->where('first', '1')->select(['tid', 'name'])->get();
+                $pages = Pages::where('sid', $data->id)->get();
+                if ($subject_type_tab->count() && $pages->count())
+                {
+                    $tid = $subject_type_tab->first()->tid;
+                    $r = isset($pages[$tid]) ? $pages[$tid]->id : isset($pages[0]) ? $pages[0]->id : $r;
+                }
+                return $r;
+            })
             ->addColumn('jdate', function ($data)
             {
                 if ($data->created_at != '')

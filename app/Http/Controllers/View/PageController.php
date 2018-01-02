@@ -368,6 +368,7 @@ class PageController extends Controller
     public function PageDesktop($id)
     {
         $res = variable_generator('page', 'desktop', $id);
+        if (false) { view('pages.page_desktop_dashboard'); }
         return view($res['viewname'], $res);
     }
 
@@ -407,6 +408,7 @@ class PageController extends Controller
     public function announces($id)
     {
         $res = variable_generator('page', 'announces', $id);
+        if (false) { view('pages.Desktop.announces'); }
         return view($res['viewname'], $res);
     }
 

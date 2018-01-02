@@ -292,7 +292,6 @@ class PageClass
                 }
                 $viewname = ($thesarus == true || $Type == '20') ? 'pages.thesarus' : 'pages.public';
                 $Fields = PageClass::PageFields($Fields, $page['showDefimg'], $page['defimage']);
-                $content = /*$Fields . */$content;
                 $Tree = $page['Tree'];
                 if (count($Tree) > 1)
                 {
@@ -355,17 +354,17 @@ class PageClass
             {
                 $fields = [];
             }
-            if ($subject->product_info || $fields || $subject->DefImageExist || $object_page->description)
+            if ($subject->product_info || $fields || $subject->DefImageExist /*|| $object_page->description*/)
             {
                 $spi = $subject->product_info;
                 $view = view('hamahang.Bazaar.helper.bazaar-display',
-                    [
-                        'fields' => $fields,
-                        'spi' => $spi,
-                        'image' => $subject->def_image_url,
-                        'image_exist' => $subject->DefImageExist,
-                        'PageDescription' => $object_page->description
-                    ]
+                [
+                    'fields' => $fields,
+                    'spi' => $spi,
+                    'image' => $subject->def_image_url,
+                    'image_exist' => $subject->DefImageExist,
+                    //'PageDescription' => $object_page->description
+                ]
                 )->render();
                 $content = $view . $content;
             }
@@ -388,7 +387,7 @@ class PageClass
                 'current_tab' => $pid,
                 'pid' => $pid,
                 'menu' => $menu,
-                'content' => $content,
+                'content' => $content . $object_page->description,
                 'allowedittag' => $allowedittag,
                 'allowdeltag' => $allowdeltag,
                 //'keywords' => $keywords,
