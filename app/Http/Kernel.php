@@ -14,7 +14,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \App\Http\Middleware\LogRequestData::class,
+        //\App\Http\Middleware\LogRequestData::class,
         \App\Http\Middleware\SetDevDebugTrue::class,
         \App\Http\Middleware\SetPolicyForHeaderRequest::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,

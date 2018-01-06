@@ -103,7 +103,7 @@
                 $("#FilmSwitch").removeClass("UnSelectTagBut");
                 $("#SlideSwitch").removeClass("btnActive");
             });
-            $("#SlideSwitch").trigger("click");
+            $("#TextSection").trigger("click");
             $(".PageSlides").stop();
         });
     </script>

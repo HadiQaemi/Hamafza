@@ -373,6 +373,7 @@ class PageClass
         {
             $content = 'این صفحه موجود نیست';
         }
+        if (false) { view('pages.public'); }
         return
             [
                 'viewname' => $viewname,

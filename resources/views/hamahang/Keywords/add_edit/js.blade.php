@@ -69,7 +69,10 @@
                         case '{!! $relation_k !!}':
                         {
                             @foreach ($relation['values'] as $value)
-                                r += '<option value="exist_in{!! $value !!}" selected="selected">{!! \App\Models\hamafza\Keyword::find($value)->title !!}</option>';
+                                @php ($keyword_from_value = \App\Models\hamafza\Keyword::find($value))
+                                @if ($keyword_from_value)
+                                    r += '<option value="exist_in{!! $value !!}" selected="selected">{!! $keyword_from_value->title !!}</option>';
+                                @endif
                             @endforeach
                             break;
                         }
