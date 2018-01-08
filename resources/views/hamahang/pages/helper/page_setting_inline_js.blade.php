@@ -355,7 +355,8 @@
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(ravabet_apply + ravabet_save);
         } else if ($idTab == 'dasrasi')
         {
-            $('.HelpIcon').hide();
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=HZ9oCvsBlwU') !!}');
+            $('.HelpIcon').show();
             var dasrasi_apply = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
             var dasrasi_save = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" value="تایید " style=" float: left" >';
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(dasrasi_apply + dasrasi_save);

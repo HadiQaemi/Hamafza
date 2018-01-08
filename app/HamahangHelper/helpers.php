@@ -12,6 +12,7 @@ use App\Models\hamafza\Subject;
 use App\Models\Hamahang\Score;
 use App\Models\hamafza\Pages;
 use App\User;
+use App\Models\Hamahang\KeywordRelation;
 
 //----------------Begin-------------- hlper / Hamafza variable generator / helper -------------------Begin---------------//
 if (!function_exists('MyOrganGroups'))
@@ -898,35 +899,45 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 }
                                 break;
                             }
+
+
+
+
+
+
+
+
+
+
                             case '68':
                             {
-                                $Title = $subject->title;
-                                $posts = \App\Models\hamafza\Post::where('type', '2')->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
-                                $keywords = $subject->thesaurus_keywords()->withPivot(['id'])->get(['title as text', 'keyword_id as id']);
+                                $keywords = $subject->thesaurus_keywords()->withPivot(['id'])->get(['keyword_id AS id', 'title AS text', ]);
                                 foreach ($keywords as $k => $keyword)
                                 {
-                                    $Keyword_relation_1 = \App\Models\Hamahang\KeywordRelation::whereRaw("relation_type in (?,?,?) AND keyword_2_id=?", ['1', '3', '5', $keyword->id])->with('keywords_1')->first();
-                                    if ($Keyword_relation_1)
+                                    $keyword_relation_1 = KeywordRelation::whereRaw("keyword_1_id = $keyword->id AND relation_type IN ('1', '3', '5')")->with('keywords_1')->get(['id', 'keyword_1_id', 'keyword_2_id', 'relation_type'])->first();
+                                    if ($keyword_relation_1)
                                     {
-                                        $keyword->parent_id = $Keyword_relation_1['keyword_1_id'];
-                                    }
-                                    else
+                                        $keyword->parent_id = $keyword_relation_1['keyword_2_id'];
+                                    } else
                                     {
-                                        $Keyword_relation_2 = \App\Models\Hamahang\KeywordRelation::whereRaw("relation_type in (?,?,?) AND keyword_1_id=?", ['110', '310', '510', $keyword->id])->with('keywords_2')->first();
-                                        if ($Keyword_relation_2)
+                                        $keyword_relation_2 = KeywordRelation::whereRaw("keyword_2_id = $keyword->id AND relation_type IN ('110', '310', '510')")->with('keywords_2')->get(['id', 'keyword_1_id', 'keyword_2_id', 'relation_type'])->first();
+                                        if ($keyword_relation_2)
                                         {
-                                            $keyword->parent_id = $Keyword_relation_2['keyword_2_id'];
-                                        }
-                                        else
+                                            $keyword->parent_id = $keyword_relation_2['keyword_1_id'];
+                                        } else
                                         {
                                             $keyword->parent_id = 0;
                                         }
                                     }
                                 }
                                 $flat_array = $keywords->toArray();
+                                //dd($flat_array);
                                 $trees = buildTree($flat_array, 'parent_id');
                                 $trees[0]['state'] = ['opened' => 'true', 'selected' => 'true'];
-                                $res = [
+                                $Title = $subject->title;
+                                $posts = \App\Models\hamafza\Post::where('type', '2')->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
+                                $res =
+                                [
                                     'viewname' => 'hamahang.thesaurus',
                                     'trees' => json_encode($trees),
                                     'posts' => $posts,
@@ -936,6 +947,16 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 ];
                                 break;
                             }
+
+
+
+
+
+
+
+
+
+
                         }
                     }
                 }

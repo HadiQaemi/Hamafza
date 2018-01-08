@@ -39,6 +39,7 @@
                             }
                         }
                     }
+                    $help_code = '[REMOVE]';
                     break;
                 }
                 case 'page.edit':
@@ -51,7 +52,7 @@
                         {
                             case 'text':
                             {
-                                $help_code = 'zAwGoufsIUY';
+                                $help_code = 'Do5AhfWHTSs';
                                 break;
                             }
                             case 'slide':
@@ -158,7 +159,9 @@
             </div>
         @endif
     @endif
-    <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
+    @if ('[REMOVE]' != $help_code)
+        <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
+    @endif
 @else
     @if ('Page' == $type)
         <div class="btn-group pull-right mr">
