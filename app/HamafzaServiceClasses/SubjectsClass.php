@@ -423,17 +423,23 @@ class SubjectsClass
 
         $subject = Subject::find($work);
 
-        foreach ($keywords_list_subject as $key)
+        if (is_array($keywords_list_subject))
         {
-            $keywords_list_subject_tmp[] = substr($key, 8);
+            foreach ($keywords_list_subject as $key)
+            {
+                $keywords_list_subject_tmp[] = substr($key, 8);
+            }
+        } else
+        {
+            $keywords_list_subject_tmp = [];
         }
 
         $keywords_list_subject = $keywords_list_subject_tmp;
 
         if($keywords_list_subject)
+        {
             $subject->keywords()->attach($keywords_list_subject);
-
-
+        }
 
         if ($users_list_subject_view)
         {
