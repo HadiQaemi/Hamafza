@@ -133,12 +133,23 @@ if (!function_exists('buildTree'))
      * @param string $children_key
      * @return mixed
      */
-    function buildTree($flat_array, $pidKey, $parent = 0, $idKey = 'id', $children_key = 'children')
+    function buildTree($flat_array, $pidKey, $parent = 0, $idKey = 'id', $children_key = 'children', $make_unique = false)
     {
         if (empty($flat_array))
         {
             return [];
         }
+
+        if ($make_unique)
+        {
+            foreach ($flat_array as $v)
+            {
+                $uniques[$v['id']] = $v;
+            }
+            $unique = array_values($uniques);
+            $flat_array = $unique;
+        }
+
         $grouped = array();
         foreach ($flat_array as $sub)
         {

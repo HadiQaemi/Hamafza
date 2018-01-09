@@ -931,8 +931,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                     }
                                 }
                                 $flat_array = $keywords->toArray();
-                                //dd($flat_array);
-                                $trees = buildTree($flat_array, 'parent_id');
+                                $trees = buildTree($flat_array, 'parent_id', 0, 'id', 'children', true);
                                 $trees[0]['state'] = ['opened' => 'true', 'selected' => 'true'];
                                 $Title = $subject->title;
                                 $posts = \App\Models\hamafza\Post::where('type', '2')->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
