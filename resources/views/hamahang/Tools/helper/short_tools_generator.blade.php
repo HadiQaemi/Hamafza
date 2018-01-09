@@ -39,7 +39,7 @@
                             }
                         }
                     }
-                    $help_code = '[REMOVE]';
+                    //$help_code = '[REMOVE]';
                     break;
                 }
                 case 'page.edit':

@@ -70,7 +70,7 @@
             <td><input type="text" class="form-control" id="short_code" name="short_code" value="{!! $is_edit && $keyword ? $keyword->short_code : null !!}" /></td>
         </tr>
         <tr>
-            <td><label for="description">توضیح (یاداشت دامنه)</label></td>
+            <td><label for="description">توضیح (یادداشت دامنه)</label></td>
             <td colspan="2"><textarea class="form-control" id="description" name="description">{!! $is_edit && $keyword ? $keyword->description : null !!}</textarea></td>
         </tr>
     </table>

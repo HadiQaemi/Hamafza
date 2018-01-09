@@ -30,8 +30,8 @@
                                     درباره<span> « {{$item->quote}} » </span>
                                     <br>
                                 @endif
-                                @if(array_key_exists('comment',$item))
-                                    {{nl2br($item->comment)}}
+                                @if (array_key_exists('comment', $item->toArray()))
+                                    {{ nl2br($item->comment) }}
                                 @endif
                                 <div style="margin:5px; ">
                                     @if(isset($item->keywords))

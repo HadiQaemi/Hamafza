@@ -1846,7 +1846,7 @@ class ModalController extends Controller
             [
                 'title' => 'عنوان',
                 'short_code' => 'کد',
-                'description' => 'توضیح (یاداشت دامنه)',
+                'description' => 'توضیح (یادداشت دامنه)',
                 'subject_ids' => 'اصطلاح‌نامه',
                 'relation_types' => 'وابستگی ها',
                 'id' => 'شناسه',

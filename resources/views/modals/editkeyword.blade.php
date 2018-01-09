@@ -377,7 +377,7 @@
 
         <tr>
             <td style="border: none;" colspan="1">
-                توضیح (یاداشت دامنه)
+                توضیح (یادداشت دامنه)
 
             </td>
             <td colspan="3" dir="rtl" style="text-align: right;border: none;">

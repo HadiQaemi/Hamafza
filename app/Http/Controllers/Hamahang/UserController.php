@@ -570,11 +570,12 @@ class UserController extends Controller
             $user->reset_password_code = str_random(85);
             $user->reset_password_due_time = date("Y-m-d H:i:s");
             $user->save();
-            $info = [
+            $info =
+            [
                 'email' => $user->Uname,
                 'reset_password' => $user->reset_password_code,
             ];
-            Mail::to($request->input('email'))->queue(new SendForgetPasswordEmail($info));
+            Mail::to($request->input('email'))->send(new SendForgetPasswordEmail($info));
         }
 
         $result['message'][] = trans('app.register_is_success');
