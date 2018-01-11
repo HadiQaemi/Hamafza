@@ -934,13 +934,13 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'uid' => 'required',
-            'province' => 'required|numeric',
-            'city' => 'required|numeric',
-            'company' => 'required|string|min:3|max:250',
-            'section' => 'string|min:3|max:255',
             'post' => 'required|string|min:3|max:250',
-            'start_year' => 'required|jalali_date',
-            'end_year' => 'required|jalali_date',
+            'company' => 'required|string|min:3|max:250',
+            'province' => 'numeric',
+            'city' => 'numeric',
+            'section' => 'string|min:3|max:255',
+            'start_year' => 'jalali_date',
+            'end_year' => 'jalali_date',
         ],
             [],
             [

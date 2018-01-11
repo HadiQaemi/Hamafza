@@ -11,3 +11,6 @@
 
     </div>
 </div>
+<script>
+    $('#input_file_avatar').trigger( "click" );
+</script>
