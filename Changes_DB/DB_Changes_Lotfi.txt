@@ -31,3 +31,6 @@ hamahang_help_see_alsos => اضافه شده unique
 
 96/09/04
 hamahang_help_relations => جدید
+
+96/10/21
+keywords => اضافه شدن deleted_at به unique

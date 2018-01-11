@@ -1831,12 +1831,12 @@ class ModalController extends Controller
             [
                 'title_old' => 'string',
                 'title' =>
-                    [
-                        'required',
-                        'min:1',
-                        'max:255',
-                        Rule::unique('keywords')->ignore($request->input('title_old'), 'title'),
-                    ],
+                [
+                    'required',
+                    'min:1',
+                    'max:255',
+                    Rule::unique('keywords')->ignore($request->input('title_old'), 'title')->whereNull('deleted_at'),
+                ],
                 'short_code' => 'string',
                 'description' => 'string',
                 'subject_ids' => 'array',
@@ -1869,15 +1869,15 @@ class ModalController extends Controller
         $relations = $request->input('relations');
         $id = $request->input('id');
         $keyword_data_array =
-            [
-                'title' => $title,
-                'short_code' => $short_code,
-                'img_file_id' => '0',
-                'description' => $description,
-                'is_morajah' => $is_morajah,
-                'is_approved' => $is_approved,
-                'created_by' => auth()->id(),
-            ];
+        [
+            'title' => $title,
+            'short_code' => $short_code,
+            'img_file_id' => '0',
+            'description' => $description,
+            'is_morajah' => $is_morajah,
+            'is_approved' => $is_approved,
+            'created_by' => auth()->id(),
+        ];
         $keyword_add = Keyword::add($keyword_data_array, $id);
         $keyword_result = $keyword_add['result'];
         if ($keyword_result)
@@ -1889,11 +1889,11 @@ class ModalController extends Controller
             foreach ($subject_ids as $subject_id)
             {
                 $thesaurus_data_array =
-                    [
-                        'subject_id' => $subject_id,
-                        'keyword_id' => $keyword->id,
-                        'created_by' => auth()->id(),
-                    ];
+                [
+                    'subject_id' => $subject_id,
+                    'keyword_id' => $keyword->id,
+                    'created_by' => auth()->id(),
+                ];
                 $thesaurus = new ThesaurusKeyword();
                 $thesaurus->fill($thesaurus_data_array);
                 $thesaurus->save();
@@ -1919,19 +1919,19 @@ class ModalController extends Controller
                                 else
                                 {
                                     $new_keyword_data_array =
-                                        [
-                                            'title' => $value,
-                                            'created_by' => auth()->id(),
-                                        ];
+                                    [
+                                        'title' => $value,
+                                        'created_by' => auth()->id(),
+                                    ];
                                     $new_keyword_add = Keyword::add($new_keyword_data_array);
                                     $keyword_2_id = $new_keyword_add['object']->id;
                                 }
                                 $thesaurus_data_array =
-                                    [
-                                        'subject_id' => $subject_id,
-                                        'keyword_id' => $keyword_2_id,
-                                        'created_by' => auth()->id(),
-                                    ];
+                                [
+                                    'subject_id' => $subject_id,
+                                    'keyword_id' => $keyword_2_id,
+                                    'created_by' => auth()->id(),
+                                ];
                                 $thesaurus = new ThesaurusKeyword();
                                 $thesaurus->fill($thesaurus_data_array);
                                 $thesaurus->save();

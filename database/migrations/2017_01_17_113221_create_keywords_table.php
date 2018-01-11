@@ -33,7 +33,7 @@ class CreateKeywordsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['title'], self::table . '_unique');
+            $table->unique(['title', 'deleted_at'], self::table . '_unique');
         });
     }
 
