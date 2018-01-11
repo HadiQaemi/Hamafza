@@ -899,16 +899,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 }
                                 break;
                             }
-
-
-
-
-
-
-
-
-
-
+                            // درخت کلیدواژه
                             case '68':
                             {
                                 $keywords = $subject->thesaurus_keywords()->withPivot(['id'])->get(['keyword_id AS id', 'title AS text', ]);
@@ -946,21 +937,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 ];
                                 break;
                             }
-
-
-
-
-
-
-
-
-
-
                         }
                     }
                 }
             }
-            return array_merge(
+            return array_merge
+            (
                 [
                     'RightCol' => RightCol($sid, 'subjects'),
                     'tabs' => PageTabs('subject', $sid),
