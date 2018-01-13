@@ -25,9 +25,11 @@ class SubjectsClass
 						{$selpage} AND s.archive = 0  ";
         switch ($type)
         {
+            /*
             case 'Created_ME':
                 $sql .= " and sid in (  select id from subjects where admin={$uid} group by id ) ORDER BY reg_date DESC";
                 break;
+            */
             case 'New_Other':
                 $sql .= "  ORDER BY reg_date DESC";
                 break;

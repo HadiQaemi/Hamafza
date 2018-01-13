@@ -1373,9 +1373,18 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res['highlights'] = $my_highlights;
                     break;
                 case 'Files':
+                {
                     $viewname = 'pages.desktopcontents';
-                    $res = \App\HamafzaViewClasses\SubjectClass::MyPages($params['type']);
+                    //$res = \App\HamafzaViewClasses\SubjectClass::MyPages($params['type']);
+                    $res =
+                    [
+                        'viewname' => 'pages.Desktop.showpages',
+                        'PageType' => 'desktop',
+                        'sid' => $uid,
+                        'current_tab' => 'desktop',
+                    ];
                     break;
+                }
                 case 'keywords':
                     //$res = \App\HamafzaViewClasses\KeywordClass::keywords($params['sublink']);
                     $res = [

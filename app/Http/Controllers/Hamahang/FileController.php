@@ -107,7 +107,8 @@ class FileController extends Controller
         $subjects = Subject::with('pages')
             ->with('subject_type')
             ->where('archive', 0)
-            ->where('admin', Auth::id());
+            ->where('admin', Auth::id())
+            ->whereHas('pages');
 
         return \Datatables::eloquent($subjects)
             ->addColumn('JalaliRegDate', function ($data)

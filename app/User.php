@@ -637,4 +637,9 @@ class User extends Authenticatable
         return $r;
     }
 
+    public function subjects()
+    {
+        return $this->hasMany('App\Models\hamafza\Subject', 'admin')->where('archive', '0')->whereHas('pages');
+    }
+
 }

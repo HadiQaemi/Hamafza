@@ -794,42 +794,55 @@ $(document).on("click", ".CirclePas", function () {
 
 });
 
-$(document).on('click', 'ul.navbar-navtabs li a', function () {
+$(document).on('click', 'ul.navbar-navtabs li a', function()
+{
     var all = $('.HelpIcons');
     all.hide();
-    switch ($(this).attr('id')) {
-        case 'tab1': {
+    switch ($(this).attr('id'))
+    {
+        case 'tab1':
+        {
             $('.HelpBookmarks').show();
-            setTimeout(function () {
+            setTimeout(function()
+            {
                 GeminiScrollbar_BookmarkFehresrt.update();
             }, 1500);
             break;
         }
-        case 'tab2': {
+        case 'tab2':
+        {
             $('.HelpPortals').show();
-            setTimeout(function () {
+            setTimeout(function()
+            {
                 GeminiScrollbar_portallistDiv.update();
             }, 1500);
             break;
         }
-        case 'tab3': {
+        case 'tab3':
+        case 'tab3_1':
+        case 'tab3_2':
+        {
             $('.HelpKeywords').show();
-            setTimeout(function () {
+            setTimeout(function()
+            {
                 GeminiScrollbar_keyWords.update();
-                $("#keyWords .gm-scroll-view").animate({
-                    opacity: 1,
-                }, 1000);
+                $("#keyWords .gm-scroll-view").animate({opacity: 1}, 1000);
             }, 1500);
             break;
         }
-        case 'tab4': {
+        case 'tab4':
+        case 'tab4_1':
+        case 'tab4_2':
+        {
             $('.HelpSearch').show();
-            setTimeout(function () {
+            setTimeout(function()
+            {
                 //$('.navbar-navtabs #tab4').click();
             }, 1000);
             break;
         }
-        default: {
+        default:
+        {
             all.hide();
         }
     }

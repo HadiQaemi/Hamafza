@@ -16,7 +16,7 @@
         //e_description = $('#description');
         e_subject_ids = $('#subject_ids');
         e_id = $('#id');
-        e_subject_ids.select2();
+        if (!e_subject_ids.hasClass('select2-hidden-accessible')) { e_subject_ids.select2(); }
         @if ($is_edit && $keyword)
             @if ($keyword->relations_by_type)
                 @foreach ($keyword->relations_by_type as $relation_k => $relation)
@@ -24,8 +24,8 @@
                 @endforeach
             @endif
         @else
-            relation_clone(0);
         @endif
+                relation_clone(0);
     });
 
     function relation_clone(selected)
