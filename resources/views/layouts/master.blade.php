@@ -25,6 +25,7 @@
 <body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style=" position: fixed;width: 100%;">
 <div class="h_sidenav_main" id="h_sidenav_main" style="padding: 0; margin: 0; transition: margin-left 1s;">
     <div hmfz-main-header="">
+        @if ('kmkz' == config('constants.IndexView')) <style>#header { background-color: #367BAB; }</style> @endif
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
                 @include('layouts.helpers.common.sections.helpers.nav_bar.menu')

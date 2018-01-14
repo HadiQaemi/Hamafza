@@ -1,0 +1,203 @@
+.main{
+    background-color: #ebecec;
+}
+.navbar-default{
+    background-color: #367bab;
+    margin-bottom:5px;
+}
+.logo{
+    width:41px;
+    margin: -4px 0 0 0;
+}
+.nav-icons .icon-adjust{
+    margin: 8px 0;
+}
+.nav-icons li a{
+    color:#fff !important;
+    font-size: 20px;
+}
+.nav-icons .login a{
+    font-family: 'IRANSans';
+    font-weight: 500;
+    font-size: 12px;
+}
+.nav-icons .login a:nth-child(1){
+    padding: 0;
+    margin-top: 5px;
+}
+.nav-icons .login a:nth-child(2){
+    padding: 0;
+    margin-top: 20px;
+}
+#email,#pwd{
+    font-family: 'IRANSans';
+    font-weight: 500;
+    font-size: 14px;
+}
+.login_btn{
+    width: 100%;
+    font-family: 'IRANSans';
+    font-weight: 500;
+    font-size: 14px;
+    color:#fff;
+}
+.blue-btn{
+    background-color: #367bab;
+}
+.blue-btn:hover{
+    background-color: #fff;
+    color:#367bab;
+}
+.gray-btn{
+    background-color: #b6b4b4;
+    margin-bottom:15px;
+}
+.gray-btn:hover{
+    background-color: #fff;
+    color: #b6b4b4;
+}
+.sub_login{
+    font-family: 'IRANSans';
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    margin-bottom:15px;
+    text-align: center;
+}
+.line_border{
+    border-right: 1px solid #b0b1b1;
+}
+.login_height{
+    margin-top:250px;
+}
+@media screen and (max-width: 1000px) {
+    .login_height {
+        margin-top:10px;
+    }
+}
+.contents_tab{
+    background-color: #757676;
+    padding: 5px;
+}
+/* start customise css */
+.nav-pills li{
+    border-bottom:1px solid #c2c2c2 !important;
+    border-radius: 0;
+}
+.nav-pills li a{
+    font-family: 'IRANSans';
+    font-weight: 300;
+    color:#c2c2c2;
+}
+@media screen and (max-width: 1230px) {
+    .nav-pills li a {
+        font-size: 9px;
+    }
+}
+.nav-pills .active a{
+    background-color:#757676 !important;
+    border-bottom:2px solid #fff;
+    border-radius: 0;
+    color: #fff;
+    font-weight: 500;
+}
+.customize>li>a:hover{
+    background-color:#757676 !important;
+}
+/* finished customise css */
+.tab-content .menus{
+    font-family: 'IRANSans';
+    font-weight: 200;
+    color:#fff;
+}
+.tab-content .menus img{
+    margin-right: 5px;
+    width: 100%;
+}
+.tab-content .menus .row{
+    padding: 6px;
+}
+.tab-des h3{
+    font-weight: normal;
+    margin: 5px 0 10px 0;
+    font-size: 14px;
+    font-family: 'IRANSans';
+    color:#fff;
+}
+.tab-des p{
+    font-weight: 200;
+    font-family: 'IRANSans';
+    color:#fff;
+}
+@media screen and (max-width: 1000px) {
+    .tab_news {
+        margin-top:10px;
+    }
+}
+.tab_news h2{
+    font-family: 'IRANSans';
+    font-size: 16px;
+    font-weight: bold;
+    color:#fff;
+    text-align: center;
+    margin: 10px 0;
+}
+.tab_news hr{
+    margin: 5px 0;
+}
+.slide_image{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+.change_slider{
+    font-family: 'IRANSans';
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    margin-top: 5px;
+}
+.change_slider a{
+    font-family: 'IRANSans';
+    font-weight: normal;
+    font-size: 20px;
+    color: #fff;
+}
+.change_slider a:nth-child(1){
+    margin-left: 15px;
+}
+.change_slider a:nth-child(2){
+    margin-right: 15px;
+}
+.footer_links{
+    font-family: 'IRANSans';
+    font-weight: 300;
+    font-size: 12px;
+    color: #0816a0;
+    text-align: center;
+    margin: 10px 0;
+}
+.footer_links a{
+    color: #0816a0;
+}
+.slogan{
+    font-family: 'IRANSans';
+    font-weight: 300;
+    font-size: 12px;
+    background-color: #757676;
+    color:#fff;
+    padding: 10px 0;
+    text-align: center;
+}
+.slogan p{
+    margin: auto 0;
+}
+.slogan p span{
+    margin: 0 10px;
+    transform: rotate(45deg);
+}
+.slogan p a{
+    color:#fff;
+}

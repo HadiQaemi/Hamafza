@@ -13,9 +13,10 @@
         GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
     });
 </script>
-<div class="pull-left user-config">
+@php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)
+<div class="pull-left user-config"{!! $change_color !!}>
     @if(auth()->check())
-        <div class="pull-left user-config dropdown">
+        <div class="pull-left user-config dropdown"{!! $change_color !!}>
             <a href="#" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ auth()->user()->Name .' '. auth()->user()->Family }}
                 <span class="caret"></span>

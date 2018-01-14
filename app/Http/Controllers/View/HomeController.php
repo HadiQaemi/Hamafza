@@ -260,6 +260,9 @@ class HomeController extends Controller
             case 'shazand':
                 $index_view = 'layouts.homepages.shazand';
                 break;
+            case 'kmkz':
+                $index_view = 'layouts.homepages.kmkz';
+                break;
 
         }
         return view($index_view, array(
