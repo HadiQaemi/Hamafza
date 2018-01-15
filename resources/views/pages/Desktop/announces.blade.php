@@ -22,8 +22,12 @@
                                 <div class="name">در صفحه :<a target="_blank" href="{{url($item->pid)}}"> {{$item->page->subject->title}}</a></div>
                             @endif
                             <div class="text">
-                                @if(array_key_exists('atitle', $item))
+                                @if(array_key_exists('atitle', $item->toArray()))
                                     {{$item->atitle}}
+                                    <br>
+                                @endif
+                                @if(array_key_exists('title', $item->toArray()))
+                                    {{$item->title}}
                                     <br>
                                 @endif
                                 @if(trim($item->quote)!='')

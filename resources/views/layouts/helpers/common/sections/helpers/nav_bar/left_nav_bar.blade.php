@@ -134,7 +134,7 @@
                 </div>
                 <ul class="nav nav-tabs navbar-navtabs" style="font-size: 11px; width: 90%; margin-right: 20px;">
                     <li style="width: 49%;" class="active"><a id="tab3_1" class="new_sidebar" data-toggle="tab" href="#keyWords" style="height: 50px;">گزینه‌ها</a></li>
-                    <li style="width: 49%;"><a id="tab3_2" class="new_sidebar" data-toggle="tab" id="ShowResKey" href="#Results" style="height: 50px;">یافته‌ها</a></li>
+                    <li style="width: 49%;"><a class="new_sidebar" data-toggle="tab" id="ShowResKey" href="#Results" style="height: 50px;">یافته‌ها</a></li>
                 </ul>
                 <div class="tab-content" style="width: 430px; height: 1000px; overflow: hidden;">
                     <div id="keyWords" class="tab-pane active in" style="height: 100px;">
@@ -213,8 +213,8 @@
                 </div>
                 <div class="row">
                     <ul class="nav nav-tabs navbar-navtabs">
-                        <li style="width: 49%;" class="active"><a id="tab4_1" class="new_sidebar" data-toggle="tab" href="#page4_pane1" id="page4_tab1" style="height: 50px;">غربال</a></li>
-                        <li style="width: 49%;"><a id="tab4_2" class="new_sidebar" data-toggle="tab" href="#page4_pane2" id="page4_tab2" style="height: 50px;">یافته‌ها</a></li>
+                        <li style="width: 49%;" class="active"><a class="new_sidebar" data-toggle="tab" href="#page4_pane1" id="page4_tab1" style="height: 50px;">غربال</a></li>
+                        <li style="width: 49%;"><a class="new_sidebar" data-toggle="tab" href="#page4_pane2" id="page4_tab2" style="height: 50px;">یافته‌ها</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">

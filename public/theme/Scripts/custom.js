@@ -820,7 +820,7 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
         }
         case 'tab3':
         case 'tab3_1':
-        case 'tab3_2':
+        case 'ShowResKey':
         {
             $('.HelpKeywords').show();
             setTimeout(function()
@@ -831,8 +831,8 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
             break;
         }
         case 'tab4':
-        case 'tab4_1':
-        case 'tab4_2':
+        case 'page4_tab1':
+        case 'page4_tab2':
         {
             $('.HelpSearch').show();
             setTimeout(function()
