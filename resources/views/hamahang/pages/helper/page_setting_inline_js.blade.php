@@ -1,6 +1,6 @@
 <script>
-    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
-    $('.HelpIcon').hide();
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=NjcHs6n1LTI') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+    //$('.HelpIcon').hide();
     $(document).ready(function () {
         $(".token-input-list-pages").tokenInput("{{App::make('url')->to('/')}}/Pagesearch", {
             preventDuplicates: true,
@@ -344,7 +344,8 @@
         $idTab = $(this).attr('id');
         if ($idTab == 'omomi')
         {
-            $('.HelpIcon').hide();
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=NjcHs6n1LTI') !!}');
+            $('.HelpIcon').show();
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" class="btn btn-primary omomi_btn" value="تایید " style=" float: left" name="addSubject" >');
         } else if ($idTab == 'ravabet')
         {

@@ -35,7 +35,7 @@ return [
     |--------------------------------------------------------------------------
     | Default Index View
     |--------------------------------------------------------------------------
-    | Supported: "hamafza", "banader", "itrac", "shazand"
+    | Supported: "hamafza", "banader", "itrac", "shazand", "kmkz"
     |*/
     'IndexView' => env('CONSTANTS_IndexView', 'hamafza'),
 
