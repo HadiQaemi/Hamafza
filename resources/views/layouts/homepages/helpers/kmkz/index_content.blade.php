@@ -89,24 +89,6 @@
         <div class="row">
             <div class="col-md-12">
                 <p class="footer_links">{!! isset($data['links_ready']) ? $data['links_ready'] : null !!}</p>
-                {{--
-                <a href="#">اسناد</a> |
-                <a href="#">برنامه راهبردی</a> |
-                <a href="#">صنعت معدن و تجارت</a> |
-                <a href="#">تست درگاه</a> |
-                <a href="#">دانشنامه</a> |
-                <a href="#">راهنما</a> |
-                <a href="#">سامانه هم افزار</a> |
-                <a href="#">شبکه اجتماعی</a> |
-                <a href="#">فرا علم قرآن کریم</a> |
-                <a href="#">مدیریت دانش</a> |
-                <a href="#">مفاهیم</a> |
-                <a href="#">نرم افزار‌ هم‌افزا</a> |
-                <a href="#">همایش</a> |
-                <a href="#">پژوهش</a> |
-                <a href="#">چارچوب‌ها</a> |
-                <a href="#">کلیدواژه‌ها</a>
-                --}}
             </div>
         </div>
     </div>

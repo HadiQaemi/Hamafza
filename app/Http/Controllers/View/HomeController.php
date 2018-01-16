@@ -264,7 +264,7 @@ class HomeController extends Controller
                 break;
             case 'kmkz':
                 $index_view = 'layouts.homepages.kmkz';
-                $data_links = Basicdata::find(config('basicdata.kmkz.homepage_link_group_id', 9))->items()->get();
+                $data_links = Basicdata::find(config('basicdata.kmkz.homepage_link_group_id', 9))->items()->where('inactive', 0)->get();
                 if ($data_links)
                 {
                     foreach ($data_links as $data_link)
