@@ -357,11 +357,27 @@ class BasicdataController extends Controller
                     ->addColumn('related_tab', function ($data) {
                         return BasicdataValue::find($data->value)->title;
                     })
-
                     ->make(true);
                 break;
             default:
-                $r = Datatables::eloquent($basicdata_items)->make(true);
+                $r = Datatables::eloquent($basicdata_items)
+                    ->addColumn('is_link', function ($data)
+                    {
+                        if
+                        (
+                            'http://' == substr($data->value, '0', strlen('http://')) ||
+                            'https://' == substr($data->value, '0', strlen('https://')) ||
+                            'ftp://' == substr($data->value, '0', strlen('ftp://'))
+                        )
+                        {
+                            return true;
+                        } else
+                        {
+                            return false;
+                        }
+                    })
+                    ->rawColumns(['value'])
+                    ->make(true);
         }
         return $r;
     }

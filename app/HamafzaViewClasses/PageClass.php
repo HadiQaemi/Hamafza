@@ -716,13 +716,19 @@ class PageClass
                 }
             }
             $Relations_in_subject = $s['Relations'];
-            $res_array=[];
+            $res_array = [];
 
-            if($Relations_in_subject[0]['rel'] != '0')
+            if (isset($Relations_in_subject[0]))
             {
-                foreach ($Relations_in_subject as $res)
+                if (isset($Relations_in_subject[0]['rel']))
                 {
-                    $res_array[$res['rel']][] = $res;
+                    if($Relations_in_subject[0]['rel'] != '0')
+                    {
+                        foreach ($Relations_in_subject as $res)
+                        {
+                            $res_array[$res['rel']][] = $res;
+                        }
+                    }
                 }
             }
 

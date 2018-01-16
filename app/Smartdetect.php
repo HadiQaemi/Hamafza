@@ -19,6 +19,20 @@ class Smartdetect extends Model
         'action',
     ];
 
+    public function getIpAttribute()
+    {
+        return $this->where('content_type', 'ip');
+    }
+
+    public function getUserEmailAttribute()
+    {
+        return $this->where('content_type', 'user_email');
+    }
+
+    public function getUserIdAttribute()
+    {
+        return $this->where('content_type', 'user_id');
+    }
 
 }
 

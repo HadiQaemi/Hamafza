@@ -900,6 +900,9 @@ class ModalController extends Controller
     public function BasicData_valuecreateedit(Request $request)
     {
         $request->merge(array('title' => strip_tags($request->input('title'))));
+        $is_kmkz = 'kmkz' == config('constants.IndexView');
+        $has_parentid_9 = 9 == $request->input('parentid', 0);
+        $custom_value_type = $is_kmkz && $has_parentid_9 ? 'string' : 'integer';
         $validator = Validator::make
         (
             $request->all(),
@@ -907,7 +910,7 @@ class ModalController extends Controller
                 'editid' => 'required',
                 'parentid' => 'required_if:editid,0',
                 'title' => 'required',
-                'value' => 'required|integer',
+                'value' => "required|$custom_value_type",
                 'inactive' => 'required',
             ],
             [],

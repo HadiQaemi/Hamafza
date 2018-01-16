@@ -2,44 +2,97 @@
 
 namespace App\Classes;
 
-use App\Smartdetect;
+use App\Smartdetect as Model;
+use Request;
 
 class SmartdetectClass
 {
 
-    var $hostname;
+    private $model;
+    public $result;
 
     function __construct(array $config = [])
     {
-        dd($this->init());
+        $this->model = new Model();
+        $this->result = $this->hostname() || $this->user_email() || $this->user_id() || $this->hostname();
     }
 
-    function __destruct()
+    private function ip()
     {
-
-    }
-
-    private function init()
-    {
-        $request = Request();
-        $client_ip = $request->getClientIp();
-
-        $ips = Smartdetect::where('content_type', 'ip')->select(['content', 'action'])->get();
-
-        if ($ips)
+        $factor = Request::getClientIp();
+        if ($factor)
         {
-            foreach ($ips as $ip)
+            if (in_array($factor, ['127.0.0.1', ]))
             {
-                if ($client_ip == $ip->content)
+                return true;
+            }
+            $items = $this->model->ip->get();
+            if ($items)
+            {
+                foreach ($items as $item)
                 {
-                    return true;
+                    if ($factor == $item->content)
+                    {
+                        return true;
+                    }
                 }
             }
         }
+        return false;
+    }
+
+    private function user_email()
+    {
+        $factor = auth()->user()->Email;
+        if ($factor)
+        {
+            if (in_array($factor, ['root', 'administrator', 'admin', 'developer', ]))
+            {
+                return true;
+            }
+            $items = $this->model->user_email->get();
+            if ($items)
+            {
+                foreach ($items as $item)
+                {
+                    if ($factor == $item->content)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private function user_id()
+    {
+        $factor = auth()->id();
+        if ($factor)
+        {
+            if (in_array($factor, [1, ]))
+            {
+                return true;
+            }
+            $items = $this->model->user_id->get();
+            if ($items)
+            {
+                foreach ($items as $item)
+                {
+                    if ($factor == $item->content)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private function hostname()
     {
+        $factor = Request::getHttpHost();
+        dd($factor);
         /*
         local
         development
@@ -49,12 +102,12 @@ class SmartdetectClass
         //return $r;
     }
 
-    private function has_ip()
+    function result()
     {
 
     }
 
-    function result()
+    function __destruct()
     {
 
     }

@@ -27,9 +27,9 @@ return [
     'news_default_portal_id' => env('CONSTANTS_news_default_portal_id', 1),
     'news_sidebar_paginate' => env('CONSTANTS_news_sidebar_paginate', 10),
     'basicdata_groups_id' =>
-        [
-            'medals' => 2,
-        ],
+    [
+        'medals' => 2,
+    ],
 
     /*
     |--------------------------------------------------------------------------

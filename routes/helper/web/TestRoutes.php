@@ -12,6 +12,8 @@ Route::get('test', function ()
 
     $smartdetect = new SmartdetectClass();
 
+    dd($smartdetect->result);
+
     //ini_set('max_execution_time', '0');
     //$mail = Mail::send('test', [], function($message)
     //{

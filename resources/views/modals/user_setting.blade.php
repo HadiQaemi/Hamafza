@@ -26,19 +26,19 @@
             <table class="table">
                 <tbody class="ui-sortable">
                     <tr>
-                        <td>نام * </td>            
+                        <td>نام * </td>
                         <td dir="rtl">
                             <input type="hidden" name="type" value="username">
                             <input type="text" size="50" dir="rtl" id="user_name" class="form-control" value="{{Session::get('Name')}}" name="user_name"></td>
 
                     </tr>
                     <tr>
-                        <td>نام خانوادگی *</td>            
+                        <td>نام خانوادگی *</td>
                         <td dir="rtl"><input type="text" size="50" dir="rtl" id="user_family" class="form-control" value="{{Session::get('Family')}}" name="user_family"></td>
 
                     </tr>
                     <tr>
-                        <td>معرفی اجمالی *</td>            
+                        <td>معرفی اجمالی *</td>
                         <td dir="rtl"><input type="text" size="50" dir="rtl" id="user_summary" class="form-control" value="{{Session::get('Summary')}}" name="user_summary"></td>
 
                     </tr>
@@ -51,12 +51,12 @@
                                 انتخاب فایل  <input type="file" onchange="FileName(this);" id="user_pic" name="user_pic">
                             </span>
                             <span style="display: none;" class="descr"> عنوان فایل <input value="" style="width:200px" class="form-control" name="uppic"></span>
-                        </td>              
+                        </td>
                     </tr>
 
                     <tr>
                         <td colspan="6"><input type="submit" value="تایید" class="btn btn-primary" name="user_setting"></td>
-                    </tr>    
+                    </tr>
                 </tbody>
             </table>
 
@@ -68,14 +68,14 @@
                 <tbody class="tavle" style="">
 
                     <tr style="">
-                        <td>نام کاربری * </td>            
+                        <td>نام کاربری * </td>
                         <td dir="rtl"><input disabled="" type="text" size="50" dir="rtl" id="user_uname" class="form-control" value="{{Session::get('Uname')}}" name="user_uname"></td>
                 <input type="hidden" name="type" value="password">
                 <input type="hidden" name="user_unames" value="{{Session::get('Uname')}}">
 
                 </tr>
                 <tr style="">
-                    <td>رایانامه یا نام کاربری * </td>            
+                    <td>رایانامه یا نام کاربری * </td>
                     <td dir="rtl"><input disabled="" type="text" size="50" dir="rtl" id="user_mail" class="form-control" value="{{Session::get('email')}}" name="user_mail"></td>
 
                 </tr>
@@ -89,7 +89,7 @@
                 </tr>
                 <tr style="">
                     <td colspan="6"><input type="submit" value="تایید" class="btn btn-primary" name="user_setting_Acoount"></td>
-                </tr>    
+                </tr>
                 </tbody>
             </table>
             </form>

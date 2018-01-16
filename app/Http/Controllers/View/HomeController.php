@@ -6,6 +6,7 @@ use App\HamafzaViewClasses\KeywordClass;
 use App\Models\hamafza\Keyword;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
+use App\Models\Hamahang\Basicdata;
 use App\Models\Hamahang\BasicdataValue;
 use App\User;
 use Auth;
@@ -96,6 +97,7 @@ class HomeController extends Controller
 
         $chart_feed = [$articles_count, $books_count, $thesis_count, $published, $research_count, $mag, $invent_count];
         $index_view = '';
+        $data = [];
 
         switch ($index)
         {
@@ -262,10 +264,28 @@ class HomeController extends Controller
                 break;
             case 'kmkz':
                 $index_view = 'layouts.homepages.kmkz';
+                $data_links = Basicdata::find(config('basicdata.kmkz.homepage_link_group_id', 9))->items()->get();
+                if ($data_links)
+                {
+                    foreach ($data_links as $data_link)
+                    {
+                        $data_links_ready[] = "<a href='{$data_link->value}' target='_blank'>{$data_link->title}</a>";
+                    }
+                    $data_links_ready = implode(' | ', $data_links_ready);
+                } else
+                {
+                    $data_links_ready = trans('app.no_result');
+                }
+                $data =
+                [
+                    //'links' => $data_links,
+                    'links_ready' => $data_links_ready,
+                ];
                 break;
 
         }
-        return view($index_view, array(
+        $with =
+        [
             'SiteLogo' => $SiteLogo,
             'PageType' => 'home',
             'news' => $news,
@@ -283,8 +303,11 @@ class HomeController extends Controller
             'dashboard' => $dashboard,
             'Uname' => session('Uname'),
             //'keywordTab' => $keywordTab,
-            'client_ip' => $request->ip()
-        ));
+            'client_ip' => $request->ip(),
+            'data' => $data,
+        ];
+        $r = view($index_view, $with);
+        return $r;
     }
 
 }
