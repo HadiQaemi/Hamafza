@@ -569,8 +569,8 @@ class PageClassExtend1
             $Setting = array();
             $Setting['propertie'] = 0;
             //dd("admin: $admin == '1', subject_edit: $subject_edit == '1', $manager: $manager == uid: $uid, supporter: $supporter == uid: $uid, supervisor: $supervisor == uid: $uid, admin: $admin == uid: $uid");
-            //if ($admin == '1' || $subject_edit > 1 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
-            //{
+            if ($admin == '1' || $subject_edit > 0 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
+            {
                 $rowT = DB::table('subjects as s')
                     ->leftJoin('subject_type as sa', 'sa.id', '=', 's.kind')
                     ->select('s.title', 'sa.name', 's.kind')
@@ -587,13 +587,13 @@ class PageClassExtend1
                 $T1['keywords'] = $subjectKey;
                 $Setting['propertie'] = $T1;
                 $title = $rowT->title;
-            //}
-            //$Setting['Relations'] = '0';
-            //if ($admin == '1' || $subject_edit == '1' || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
-            //{
+            }
+            $Setting['Relations'] = '0';
+            if ($admin == '1' || $subject_edit == '1' || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
+            {
                 $Setting['Relations'] = PageClass::GetRelations($sid);
-            //}
-            //$Setting['Access'] = PageClass::GetAccess($pid, $sid, $manager, $supporter, $supervisor, $admin);
+            }
+            $Setting['Access'] = PageClass::GetAccess($pid, $sid, $manager, $supporter, $supervisor, $admin);
 
             $rowT = DB::table('subjects as s')
                 ->leftJoin('pages as p', 'p.sid', '=', 's.id')
