@@ -8,108 +8,146 @@ use Request;
 class SmartdetectClass
 {
 
+    private $default_ips =
+    [
+        '127.0.0.1',
+    ];
+
+    private $default_domains =
+    [
+        'localhost',
+        'local',
+        'dev',
+        'pro',
+        'staging',
+        'development',
+        'production',
+    ];
+    private $default_users =
+    [
+        'ids' => ['1', ],
+        'emails' => ['root', 'administrator', 'admin', 'developer', ],
+    ];
+    private $default_requests =
+    [
+        'debug',
+    ];
+
     private $model;
-    public $result;
+
+    public $result_factors = [];
+    public $results = [];
+    public $result = null;
 
     function __construct(array $config = [])
     {
         $this->model = new Model();
-        $this->result = $this->hostname() || $this->user_email() || $this->user_id() || $this->hostname();
+        $this->result_factors =
+        [
+            'ip' => $this->ip(),
+            'domain' => $this->domain(),
+            'user_id' => $this->user('id'),
+            'user_email' => $this->user('email'),
+            'request' => $this->request('any'),
+        ];
+        foreach ($this->result_factors as $k => $v)
+        {
+            $this->results[$k] = (bool) $v;
+        }
+        $this->result = in_array(true, $this->results);
     }
 
     private function ip()
     {
-        $factor = Request::getClientIp();
-        if ($factor)
+        if ($factor = Request::getClientIp())
         {
-            if (in_array($factor, ['127.0.0.1', ]))
+            if (in_array($factor, array_merge($this->default_ips, $this->model->ip_array_flat())))
             {
-                return true;
-            }
-            $items = $this->model->ip->get();
-            if ($items)
-            {
-                foreach ($items as $item)
-                {
-                    if ($factor == $item->content)
-                    {
-                        return true;
-                    }
-                }
+                return $factor;
             }
         }
         return false;
     }
 
-    private function user_email()
+    private function domain()
     {
-        $factor = auth()->user()->Email;
-        if ($factor)
+        if ($factor = Request::getHttpHost())
         {
-            if (in_array($factor, ['root', 'administrator', 'admin', 'developer', ]))
+            if (in_array($factor, array_merge($this->default_domains, $this->model->domain_array_flat())))
             {
-                return true;
-            }
-            $items = $this->model->user_email->get();
-            if ($items)
-            {
-                foreach ($items as $item)
-                {
-                    if ($factor == $item->content)
-                    {
-                        return true;
-                    }
-                }
+                return $factor;
             }
         }
         return false;
     }
 
-    private function user_id()
+    private function user($user_factor)
     {
-        $factor = auth()->id();
-        if ($factor)
+        if (auth()->check())
         {
-            if (in_array($factor, [1, ]))
+            switch ($user_factor)
             {
-                return true;
+                case 'id':
+                case 'email':
+                    $factor = auth()->user()->$user_factor;
+                break;
+                default:
+                    return false;
+                    break;
             }
-            $items = $this->model->user_id->get();
-            if ($items)
+            if (in_array($factor, array_merge($this->default_users[$user_factor . 's'], $this->model->user_array_flat($user_factor))))
             {
-                foreach ($items as $item)
-                {
-                    if ($factor == $item->content)
-                    {
-                        return true;
-                    }
-                }
+                return $factor;
             }
         }
         return false;
     }
 
-    private function hostname()
+    private function request($request_method = 'any')
     {
-        $factor = Request::getHttpHost();
-        dd($factor);
-        /*
-        local
-        development
-        production
-        */
-        //$r = preg_match('/.*\.local|aaa$|localhost/i', $_SERVER['HTTP_HOST'], $this->hostname);
-        //return $r;
-    }
+        $request_method = strtolower($request_method);
+        switch ($request_method)
+        {
+            case 'get':
+            case 'post':
+                $factor_method = $request_method;
+            break;
+            case 'any':
+                $factor_method = null;
+            break;
+            default:
+                return false;
+        }
+        $factors = array_merge($this->default_requests, $this->model->request_array_flat($request_method));
+        if ($factors)
+        {
+            foreach ($factors as $factor)
+            {
+                if (Request::exists($factor))
+                {
+                    if ($factor_method)
+                    {
+                        if ($factor_method == strtolower(Request::getMethod()))
+                        {
+                            return $factor;
+                        } else
+                        {
+                            return false;
+                        }
+                    } else
+                    {
+                        return $factor;
+                    }
+                }
 
-    function result()
-    {
-
+            }
+        }
+        return false;
     }
 
     function __destruct()
     {
-
+        //dd(Request::all());
     }
 
 }

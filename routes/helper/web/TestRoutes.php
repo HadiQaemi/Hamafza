@@ -10,9 +10,9 @@ use App\Models\Hamahang\Score;
 Route::get('test', function ()
 {
 
-    $smartdetect = new SmartdetectClass();
+    //$smartdetect = new SmartdetectClass();
 
-    dd($smartdetect->result);
+    //dd($smartdetect->result);
 
     //ini_set('max_execution_time', '0');
     //$mail = Mail::send('test', [], function($message)

@@ -1129,52 +1129,51 @@ class ConfigurationClass
 
     public static function GetSubjetData($uid, $sesid)
     {
-        if (UserClass::permission('subjects', $uid) == '1')
-        {
-            $Fileds = DB::table('fields as d')
-                ->where('d.id', '>', '0')
-                ->select('d.field_Desc', 'd.id as did', 'd.field_name', 'd.field_type', 'd.orders')
-                ->orderBy('d.orders')->get();
+        //if (UserClass::permission('subjects', $uid) == '1')
+        //{
+        $Fileds = DB::table('fields as d')
+            ->where('d.id', '>', '0')
+            ->select('d.field_Desc', 'd.id as did', 'd.field_name', 'd.field_type', 'd.orders')
+            ->orderBy('d.orders')->get();
 
-            $Process = DB::table('process as p')->select('p.id', 'p.name as process_name')->get();
-            $Alerts = PublicsClass::Alerts();
-            $SecGroups = DB::table('sec_groups as a')->select('id', 'name')->get();
-            $Framework = DB::table('subjects as s')
-                ->join('subject_key as sk', 's.id', '=', 'sk.sid')
-                ->where('sk.kid', '212')->select('s.id', 's.title')->get();
-            $NotIn = subjectKey::select('sid')->where('kid', '=', '212')->get();
-            $Shart = array();
-            $i = 0;
-            foreach ($NotIn as $PKey)
-            {
-                $Shart[$i] = $PKey->sid;
-                $i++;
-            }
-            $UC = new PageClass();
-            $Selpage = $UC->Sel_Page();
-            $Portals = DB::table('subjects as s')
-                ->leftJoin('pages as p', 'p.sid', '=', 's.id')
-                ->where('s.kind', '=', '27')
-                ->whereRaw($Selpage)
-                ->where('s.archive', '=', '0')
-                ->whereNotIn('s.id', $Shart)
-                ->select('p.id as pid', 's.title as title')
-                ->orderby('s.title')
-                ->get();
-
-            $Ret['Fileds'] = $Fileds;
-            $Ret['Process'] = $Process;
-            $Ret['Alerts'] = $Alerts;
-            $Ret['SecGroups'] = $SecGroups;
-            $Ret['Framework'] = $Framework;
-            $Ret['Portals'] = $Portals;
-            $err = false;
-        }
-        else
+        $Process = DB::table('process as p')->select('p.id', 'p.name as process_name')->get();
+        $Alerts = PublicsClass::Alerts();
+        $SecGroups = DB::table('sec_groups as a')->select('id', 'name')->get();
+        $Framework = DB::table('subjects as s')
+            ->join('subject_key as sk', 's.id', '=', 'sk.sid')
+            ->where('sk.kid', '212')->select('s.id', 's.title')->get();
+        $NotIn = subjectKey::select('sid')->where('kid', '=', '212')->get();
+        $Shart = array();
+        $i = 0;
+        foreach ($NotIn as $PKey)
         {
-            $err = true;
-            $Ret = trans('labels.AdminFail');
+            $Shart[$i] = $PKey->sid;
+            $i++;
         }
+        $UC = new PageClass();
+        $Selpage = $UC->Sel_Page();
+        $Portals = DB::table('subjects as s')
+            ->leftJoin('pages as p', 'p.sid', '=', 's.id')
+            ->where('s.kind', '=', '27')
+            ->whereRaw($Selpage)
+            ->where('s.archive', '=', '0')
+            ->whereNotIn('s.id', $Shart)
+            ->select('p.id as pid', 's.title as title')
+            ->orderby('s.title')
+            ->get();
+
+        $Ret['Fileds'] = $Fileds;
+        $Ret['Process'] = $Process;
+        $Ret['Alerts'] = $Alerts;
+        $Ret['SecGroups'] = $SecGroups;
+        $Ret['Framework'] = $Framework;
+        $Ret['Portals'] = $Portals;
+        $err = false;
+        //} else
+        //{
+        //    $err = true;
+        //    $Ret = trans('labels.AdminFail');
+        //}
 
         return $Ret;
     }
