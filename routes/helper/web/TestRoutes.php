@@ -10,9 +10,12 @@ use App\Models\Hamahang\Score;
 Route::get('test', function ()
 {
 
-    //$smartdetect = new SmartdetectClass();
+    if (4260 == auth()->id())
+    {
+        $smartdetect = new SmartdetectClass();
+        dd($smartdetect->result_factors);
+    }
 
-    //dd($smartdetect->result);
 
     //ini_set('max_execution_time', '0');
     //$mail = Mail::send('test', [], function($message)
