@@ -24,7 +24,7 @@
 
             <div class="daneshnameh col-xs-12  col-lg-2" style="margin-bottom: 5px;">
                 <div class="knowledge-repository">
-                    <p class="knowledge-repository-title">دانشنامه دریایی</p>
+                    <p class="knowledge-repository-title">دایره المعارف دریایی</p>
 
 
                     <div class="list">

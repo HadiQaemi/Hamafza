@@ -19,7 +19,7 @@ return [
     'APP_DEFAULT_NEWS_ID' => env('CONSTANTS_APP_DEFAULT_NEWS_ID', 90),
     'HOMEPAGE_SECOND_SLIDER_TYPE' => env('CONSTANTS_HOMEPAGE_SECOND_SLIDER_TYPE', 65), //env('APP_DEFAULT_NEWS_ID', 90),
     'defthesarus' => env('CONSTANTS_defthesarus', 44126),
-    'APP_STATIC_TOP_MENU' => env('CONSTANTS_APP_STATIC_TOP_MENU', 'شبکه اجتماعی-/4, دانشنامه دریایی-https://hamrahanpishraft.ir/360310'),
+    'APP_STATIC_TOP_MENU' => env('CONSTANTS_APP_STATIC_TOP_MENU', 'شبکه اجتماعی-/4, دایره المعارف دریایی-https://hamrahanpishraft.ir/360310'),
     'APP_RESET_PASSWORD_DUE_TIME' => env('CONSTANTS_APP_RESET_PASSWORD_DUE_TIME', '86400'),
 
     'enquiry_sidebar_paginate' => env('CONSTANTS_enquiry_sidebar_paginate', 10),
@@ -37,7 +37,7 @@ return [
     |--------------------------------------------------------------------------
     | Supported: "hamafza", "banader", "itrac", "shazand", "kmkz"
     |*/
-    'IndexView' => env('CONSTANTS_IndexView', 'hamafza'),
+    'IndexView' => env('CONSTANTS_IndexView', 'banader'),
 
     /*
     |--------------------------------------------------------------------------

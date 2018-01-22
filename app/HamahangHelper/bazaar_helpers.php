@@ -8,7 +8,7 @@ if (!function_exists('SoapGetCheckResult'))
 {
     function SoapGetCheckResult($clearText, $url = 'http://94.130.3.14/WsSecurity.asmx?wsdl', $params = [])
     {
-        $url = 'http://192.168.1.100:8080/WsSecurity.asmx?wsdl';
+		$url = 'http://89.165.122.115:8080/WsSecurity.asmx?wsdl';
         $date = date('Ymd');
         $jdate = HJDate('Ymd', false);
         //$pass = $jdate + $date;
@@ -30,7 +30,7 @@ if (!function_exists('SoapenGetEncrypt'))
 {
     function SoapenGetEncrypt($clearText, $url = 'http://94.130.3.14/WsSecurity.asmx?wsdl', $params = [])
     {
-        $url = 'http://192.168.1.100:8080/WsSecurity.asmx?wsdl';
+		$url = 'http://89.165.122.115:8080/WsSecurity.asmx?wsdl';
         $date = date('Ymd');
         $jdate = HJDate('Ymd', false);
         //$pass = $jdate + $date;
@@ -44,7 +44,7 @@ if (!function_exists('SoapenGetEncrypt'))
         ];
         $service_param = array_merge($service_param, $params);
         $res = $client->__soapCall("getEncrypt", $service_param);
-        //dd($service_param);
+        //dd($res);
         return $res->getEncryptResult;
     }
 }
@@ -52,7 +52,7 @@ if (!function_exists('SoapenGetDecrypt'))
 {
     function SoapenGetDecrypt($clearText, $url = 'http://94.130.3.14/WsSecurity.asmx?wsdl', $params = [])
     {
-        $url = 'http://192.168.1.100:8080/WsSecurity.asmx?wsdl';
+		$url = 'http://89.165.122.115:8080/WsSecurity.asmx?wsdl';
         $date = date('Ymd');
         $jdate = HJDate('Ymd', false);
         //$pass = $jdate + $date;

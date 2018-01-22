@@ -2,60 +2,60 @@
 <div class="row">
     <div class="pull-right" style="margin-right:1%; height: 438px; width: 20%;">
         <div class="panel panel-banader-index">
-            <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf;">...دانشنامه دریایی...</div>
+            <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf;">...دایره المعارف دریایی...</div>
             <div class="panel-body no-padding">
                 <div class="vertical_menu">
                     <ul class="no-margin">
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد اول - دریانوردی و سفر دریایی" href="{{url('360150/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد اول - دریانوردی و سفر دریایی" href="{{url('360150/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/darya1.png')}}">
                                 <b><span class="homepage_right_menu text-overflow-ellipsis-100">دریانوردی و سفر دریایی</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد دوم- ساختمان كشتی‌ها، رده‌بندی و بازرسی آن‌ها، تجهيزات و سيستمهای مكانيكی و الكترونيكی كشتی" href="{{url('360160/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد دوم- ساختمان كشتی‌ها، رده‌بندی و بازرسی آن‌ها، تجهيزات و سيستمهای مكانيكی و الكترونيكی كشتی" href="{{url('360160/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/sakht.png')}}">
                                 <b><span class="homepage_right_menu text-overflow-ellipsis-100">ساختمان كشتی‌ها</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد سوم - مهندسی ساحل، مدیریت سواحل، طراحی و مدیریت بنادر" href="{{url('360240/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد سوم - مهندسی ساحل، مدیریت سواحل، طراحی و مدیریت بنادر" href="{{url('360240/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/sahel.png')}}">
                                 <b><span class="homepage_right_menu"> مدیریت ساحل و بندر</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد چهارم - اقیانوس شناسی و اهداف آن" href="{{url('360250/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد چهارم - اقیانوس شناسی و اهداف آن" href="{{url('360250/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/ocean.png')}}">
                                 <b><span class="homepage_right_menu">اقیانوس‌شناسی واهداف</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد پنجم - شیمی، آلودگی و زمین شناسی دریا" href="{{url('360260/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد پنجم - شیمی، آلودگی و زمین شناسی دریا" href="{{url('360260/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/shimi.png')}}">
                                 <b><span class="homepage_right_menu">شیمی، آلودگی و زمین شناسی‌</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد ششم- زیست شناسی دریا و شیلات" href="{{url('360270/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد ششم- زیست شناسی دریا و شیلات" href="{{url('360270/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/zist.png')}}">
                                 <b><span class="homepage_right_menu">زیست شناسی دریا</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد هفتم -اصول ناوبری وهدایت کشتی، آب‌نگاری، نقشه برداری و نقشه خوانی" href="{{url('360280/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد هفتم -اصول ناوبری وهدایت کشتی، آب‌نگاری، نقشه برداری و نقشه خوانی" href="{{url('360280/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/nav.png')}}">
                                 <b><span class="homepage_right_menu"> اصول ناوبری کشتی</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;">
-                            <a title="دانشنامه دریایی و بندری: جلد هشتم- حمل و نقل دریایی و بیمه های دریایی" href="{{url('360290/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد هشتم- حمل و نقل دریایی و بیمه های دریایی" href="{{url('360290/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/haml.png')}}">
                                 <b><span class="homepage_right_menu">حمل ونقل و بیمه دریایی</span></b>
                             </a>
                         </li>
                         <li style="height: 45px;" class="list">
-                            <a title="دانشنامه دریایی و بندری: جلد نهم- حقوق و قوانین تجارت دریایی، اقتصاد دریایی" href="{{url('360300/OnlyTree')}}">
+                            <a title="دایره المعارف دریایی و بندری: جلد نهم- حقوق و قوانین تجارت دریایی، اقتصاد دریایی" href="{{url('360300/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/law.png')}}">
                                 <b><span class="homepage_right_menu"> قوانین تجارت دریایی</span></b>
                             </a>
