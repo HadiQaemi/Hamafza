@@ -110,6 +110,11 @@
                     $help_code = '5AuondmumWQ';
                     break;
                 }
+                case 'ugc.desktop.index':
+                {
+                    $help_code = 'dH_t4i3vxZE';
+                    break;
+                }
             }
         }
         //dd($route_name);

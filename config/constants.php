@@ -37,7 +37,7 @@ return [
     |--------------------------------------------------------------------------
     | Supported: "hamafza", "banader", "itrac", "shazand", "kmkz"
     |*/
-    'IndexView' => env('CONSTANTS_IndexView', 'banader'),
+    'IndexView' => env('CONSTANTS_IndexView', 'hamafza'),
 
     /*
     |--------------------------------------------------------------------------

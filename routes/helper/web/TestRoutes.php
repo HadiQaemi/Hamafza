@@ -28,6 +28,29 @@ Route::get('test', function ()
     //return 'test routes';
 });
 
+
+
+
+
+
+
+
+
+
+
+Route::get('get-old-id', function ()
+{
+    $db = DB::table('page_file')->where('name', Request::input('name'))->get()->first();
+    if ($db)
+    {
+        $out = $db->id;
+    } else
+    {
+        $out = 'Not found';
+    }
+    dd($out);
+});
+
 Route::get('abort/{code}', function ($code)
 {
     abort($code);

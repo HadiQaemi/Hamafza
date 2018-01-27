@@ -1,5 +1,5 @@
 <script>
-    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=NjcHs6n1LTI') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=AjPwZQf-b4E') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
     //$('.HelpIcon').hide();
     $(document).ready(function () {
         $(".token-input-list-pages").tokenInput("{{App::make('url')->to('/')}}/Pagesearch", {
@@ -344,26 +344,26 @@
         $idTab = $(this).attr('id');
         if ($idTab == 'omomi')
         {
-            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=NjcHs6n1LTI') !!}');
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=AjPwZQf-b4E') !!}');
             $('.HelpIcon').show();
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" class="btn btn-primary omomi_btn" value="تایید " style=" float: left" name="addSubject" >');
         } else if ($idTab == 'ravabet')
         {
-            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=QjEFk6Js2vY') !!}');
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=sAFaNZQ1JM0') !!}');
             $('.HelpIcon').show();
             var ravabet_apply = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
             var ravabet_save = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" value="تایید " style=" float: left" >';
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(ravabet_apply + ravabet_save);
         } else if ($idTab == 'dasrasi')
         {
-            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=HZ9oCvsBlwU') !!}');
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=NU2JrTxdorE') !!}');
             $('.HelpIcon').show();
             var dasrasi_apply = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
             var dasrasi_save = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" value="تایید " style=" float: left" >';
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(dasrasi_apply + dasrasi_save);
         } else if ($idTab == 'bazar')
         {
-            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=t5BuhBAH018') !!}');
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=hZv1Jiebxzk') !!}');
             $('.HelpIcon').show();
             $('#submit_bazzar').hide();
             var bazar_apply = '<input type="button" class="btn btn-primary submit_bazzar" data-apply="apply" id="submit_bazzar" name="submit_bazzar" value="تایید و ادامه" onclick="return do_submit(1);" style="float: left; ">';
@@ -371,7 +371,8 @@
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(bazar_apply + bazar_save);
         } else if ($idTab == 'rahnama')
         {
-            $('.HelpIcon').hide();
+            $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=Eam9v8FiPEA') !!}');
+            $('.HelpIcon').show();
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit"  style=" float: left" value="تایید " class="btn btn-primary rahnama_btn">');
         }
     });
