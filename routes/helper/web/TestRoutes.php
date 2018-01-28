@@ -40,13 +40,20 @@ Route::get('test', function ()
 
 Route::get('get-old-id', function ()
 {
-    $db = DB::table('page_file')->where('name', Request::input('name'))->get()->first();
-    if ($db)
+    $out = 'Error.';
+    if (Request::exists('name'))
     {
-        $out = $db->id;
+        $db = DB::table('page_file')->where('name', Request::input('name'))->get()->first();
+        if ($db)
+        {
+            $out = $db->id;
+        } else
+        {
+            $out = 'File not found.';
+        }
     } else
     {
-        $out = 'Not found';
+        $out = 'Invalid request.';
     }
     dd($out);
 });
