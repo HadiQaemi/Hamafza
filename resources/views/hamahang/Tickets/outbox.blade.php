@@ -5,16 +5,16 @@
             <div class="row">
                 <div class="space-10"></div>
                 <div id="alert_subject"></div>
-                <table id="ticketSendGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="width: 100%;">
+                <table id="ticketSendGrid" class="table dt-responsive nowrap display" style="width: 100%;">
                     <thead>
-                    <tr>
-                        <th>ردیف</th>
-                        <th>فرستنده</th>
-                        <th>عنوان</th>
-                        <th>متن پیام</th>
-                        <th>پیوست</th>
-                        <th>تاریخ</th>
-                    </tr>
+                        <tr>
+                            <th style="text-align: right;">ردیف</th>
+                            <th style="text-align: right;">فرستنده</th>
+                            <th style="text-align: right;">عنوان</th>
+                            <th style="text-align: right;">متن</th>
+                            <th style="text-align: right;">پیوست</th>
+                            <th style="text-align: right;">زمان</th>
+                        </tr>
                     </thead>
                 </table>
             </div>

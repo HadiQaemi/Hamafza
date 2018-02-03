@@ -7,6 +7,7 @@ use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
 use App\Models\hamafza\Ticket;
+use App\Models\hamafza\UserProfile;
 use App\Models\Hamahang\Address;
 use App\Models\Hamahang\Basicdata;
 use App\Models\Hamahang\BasicdataAttributes;
@@ -670,7 +671,7 @@ class ModalController extends Controller
             {
                 if ($blocks = $help->HelpBlocks)
                 {
-                    $view = "<h3 style=\"color: #6391C5;\">{$help->title}</h3>";
+                    $view = "<h3 style=\"color: black;\">{$help->title}</h3>";
                     foreach ($blocks as $block)
                     {
                         $view .= "$block->content<br />\r\n";
@@ -2306,12 +2307,14 @@ class ModalController extends Controller
     public function edit_user_detail(Request $request)
     {
         $user = User::find($request->user_id);
+        $profile = UserProfile::where('uid', $request->user_id)->first();
         $provinces = Province::all();
         $cities = City::all();
         return json_encode([
             'header' => 'تنظیمات صفحه کاربری',
             'content' => view('hamahang.Users.view_user_details_modal.content')
                 ->with('user', $user)
+                ->with('profile', $profile)
                 ->with('provinces', $provinces)
                 ->with('cities', $cities)
                 ->render(),

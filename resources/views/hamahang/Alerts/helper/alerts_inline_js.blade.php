@@ -139,7 +139,7 @@
                     $('#edit_form_alert_id').val(item_id);
                     $('#alert_edit_form').html(result.content);
                     tinymce.EditorManager.execCommand('mceAddEditor',true, 'edit_form_comment');
-                    var li_tab = '<li class=""><a href="#edit_alert" data-toggle="tab" class="legitRipple edit_tab" aria-expanded="false"><span class=""></span> {{trans('relations.edit')}}</a></li>';
+                    var li_tab = '<li class=""><a href="#edit_alert" data-toggle="tab" class="legitRipple edit_tab" aria-expanded="false"><span class=""></span> ویرایش اطلاعیه</a></li>';
                     $('.edit_tab').remove();
                     $('#manage_tab_pane').append(li_tab);
                     $('#manage_tab_pane a[href="#edit_alert"]').tab('show');

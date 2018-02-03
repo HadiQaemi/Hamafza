@@ -10,6 +10,9 @@ use App\Models\Hamahang\Score;
 Route::get('test', function ()
 {
 
+    //$columns = Schema::getColumnListing('user_profile');
+    //dd(in_array('relevant_organization', $columns));
+
     if (4260 == auth()->id())
     {
         $smartdetect = new SmartdetectClass();
@@ -46,7 +49,7 @@ Route::get('get-old-id', function ()
         $db = DB::table('page_file')->where('name', Request::input('name'))->get()->first();
         if ($db)
         {
-            $out = $db->id;
+            $out = $db->pid;
         } else
         {
             $out = 'File not found.';

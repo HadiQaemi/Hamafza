@@ -15,7 +15,7 @@
         }
     </style>
     @if (isset($keywords))
-        @if (!empty($keywords))
+        @if ($keywords)
             <div class="text-content bottom_keywords_client">
                 @foreach ($keywords as $item)
                     <span class="bottom_keywords" data-id="{!! $item->id !!}" data-title="{!! $item->title !!}" data-relations='{!! $item->keyword_and_relations_json !!}'><i class="fa fa-tag{!! $item->keyword_has_relation ? 's' : null !!}"></i> <span style="color: #6391C5;">{!! $item->title !!}</span></span>

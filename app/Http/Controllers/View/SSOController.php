@@ -273,12 +273,12 @@ class SSOController extends Controller
                 'captcha_code' => 'required|check_captcha:register',
                 'username' => 'required|unique:user,Uname',
                 'email' => 'required|email|unique:user,Email',
-                'password' => 'required|confirmed|min:6|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
+                'password' => 'required|confirmed|min:8', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
                 'name' => 'required',
                 'family' => 'required'
             ],
             [
-                'password.regex' => 'کلمه عبور باید حداقل دارای یک حرف کوچک، یک حرف بزرگ و یک عدد باشد.'
+                'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.'
             ]);
 
         if ($validator->fails())

@@ -12,7 +12,7 @@
             <div class="tab-content">
                 <div class="col-xs-12 tab-pane fade in active default-options" id="alerts_list">
                     <div class="clearfixed"></div>
-                    <table id="AlertsGrid" width="100%" class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                    <table id="AlertsGrid" width="100%" class="table table-condensed table-hover td-center-align">
                         <thead>
                         <tr>
                             <th>{{trans('alerts.row_id')}}</th>

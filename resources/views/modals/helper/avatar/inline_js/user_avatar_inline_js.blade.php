@@ -1,5 +1,5 @@
 <script>
-    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 116px;top: -3px;"><a href="{{App::make('url')->to('/')}}/modals/helpview?id=17&tagname=zabane-darbare_karbar&hid=6" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 116px;top: -3px;"><a href="{{App::make('url')->to('/')}}/modals/helpview?code=zzis_N_JMsI" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 /*var fileSelectEle = document.getElementById('input_file_avatar');
 fileSelectEle.onchange = function ()
 {
@@ -66,8 +66,8 @@ fileSelectEle.onchange = function ()
 //    $(".remove_avatar_image").off();
     $(document).on("click", ".remove_avatar_image", function () {
         confirmModal({
-            title: 'حذف تصویر آواتار',
-            message: 'آیا از حذف تصویر آواتارتان مطمئن هستید؟',
+            title: 'حذف تصویر',
+            message: 'آیا از حذف تصویر مطمئن هستید؟',
             onConfirm: function () {
                 $.ajax({
                     url: '{{ route('hamahang.users.remove_avatar') }}',

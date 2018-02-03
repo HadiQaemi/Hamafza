@@ -42,32 +42,32 @@
             </div>
             <div style="max-width:760px; display:inline-block; vertical-align:top">
                 <h1>{{ $user->Name }}  {{ $user->Family }} </h1>
-                @if(isset($user->Summary) && $user->Summary)
+                @if(isset($user->Summary) && trim($user->Summary))
                     {{ $user->Summary }}<br>
                 @endif
-                @if(isset($user->Comment) && $user->Comment)
+                @if(isset($user->Comment) && trim($user->Comment))
                     {{ $user->Comment }}<br>
                 @endif
-                @if(isset($user->profile) && $user->profile->birth_date)
-                    تاریخ تولد:{{ $user->profile->birth_date }} <span style="padding-left: 10px;"></span>
+                @if(isset($user->profile) && trim($user->profile->birth_date))
+                    <span>تاریخ تولد:</span> {{ $user->profile->birth_date }} <span style="padding-left: 10px;"></span>
                 @endif
-                @if(isset($user->profile->City) && $user->profile->City)
-                    محل تولد:{{ $user->profile->city->name }} <br>
+                @if(isset($user->profile->City) && trim($user->profile->City))
+                    <span>محل تولد:</span> {{ $user->profile->city->name }} <br>
                 @endif
                 @if($user->Email)
-                    رایانامه:<a href="mailto:{{ $user->Email }}">{{ $user->Email }} </a> <span style="padding-left: 10px;"></span>
+                    <span>رایانامه:</span> <a href="mailto:{{ $user->Email }}">{{ $user->Email }} </a> <span style="padding-left: 10px;"></span>
                 @endif
-                @if(isset($user->profile) && $user->profile->Tel_number)
-                    تلفن:{{ $user->profile->Tel_number }}-{{ $user->profile->Tel_code }} <span style="padding-left: 10px;"></span>
+                @if(isset($user->profile) && trim($user->profile->Tel_number))
+                    <span>تلفن:</span> {{ $user->profile->Tel_number }}-{{ $user->profile->Tel_code }} <span style="padding-left: 10px;"></span>
                 @endif
-                @if(isset($user->profile) && $user->profile->Website)
-                    آدرس وب سایت: <a target="_blank" href="http://{{ $user->profile->Website }}">{{ $user->profile->Website }} </a> <span style="padding-left: 10px;"></span>
+                @if(isset($user->profile) && trim($user->profile->Website))
+                    <span>وبگاه:</span> <a target="_blank" href="http://{{ $user->profile->Website }}">{{ $user->profile->Website }} </a> <span style="padding-left: 10px;"></span>
                 @endif
-                @if(isset($user->profile->Mobile) && $user->profile->Mobile)
-                    تلفن همراه: {{ $user->profile->Mobile }}<span style="padding-left: 10px;"></span>
+                @if(isset($user->profile) && trim($user->profile->Mobile))
+                    <span>تلفن همراه:</span> {{ $user->profile->Mobile }}<span style="padding-left: 10px;"></span>
                 @endif
-                @if(isset($user->profile) && $user->profile->Fax_number)
-                    فکس:{{ $user->profile->Fax_number }}-{{ $user->profile->Fax_code }}
+                @if(isset($user->profile) && trim($user->profile->Fax_number))
+                    <span>دورنگار:</span> {{ $user->profile->Fax_number }}-{{ $user->profile->Fax_code }}
                 @endif
             </div>
         </div>
@@ -183,13 +183,8 @@
         {{------------------------------------ User Detail----------------------------------------}}
         <div class="total" style="padding: 10px 10px 10px 32px;">
             <h1 class="heading" id="specials">
-                @if ($user->id == auth()->id())
-                    <div class="icon">
-                        <span class="icon-pencil-1 user_specials_edit" style="float: left;;cursor: pointer"></span>
-                    </div>
-                @endif
                 <span class="icon icon-open"></span>
-                <a id="specials">تخصص ها</a>
+                <span id="specials">تخصص‌ها</span>
             </h1>
             <div class="inner">
                 <div id="user_special_edit" class="hide">
@@ -219,28 +214,25 @@
                     @if($user_specials && $user_specials->count() > 0)
                         @foreach($user_specials as $special)
                             <li style="padding: 5px;">
-                                <div class="endorse_item">
+                                <div class="endorse_item" style="border: none;">
                                     @if($special->EndorsedByMe)
-                                        <div style="float: right;" id="{{ $special->id }}" class="fa fa-2x fa-check-square-o endorse_voted @if($user->id == auth()->id()) cursor-no-drop @else cursor-pointer @endif special"
-                                             title="حذف صحه گذاری" data-placement="top"
-                                             data-toggle="tooltip"></div>
+                                        <div style="float: right;" id="{{ $special->id }}" class="fa fa-2x fa-check-square-o endorse_voted @if($user->id == auth()->id()) cursor-no-drop @else cursor-pointer @endif special" title="حذف صحه گذاری" data-placement="top" data-toggle="tooltip"></div>
                                     @else
-                                        <div style="float: right;" id="{{ $special->id }}" class="fa fa-2x fa-check-square-o endorse_vote_icon @if($user->id == auth()->id()) cursor-no-drop @else cursor-pointer @endif special"
-                                             title="صحه گذاری" data-placement="top" data-toggle="tooltip"></div>
+                                        <div style="float: right;" id="{{ $special->id }}" class="fa fa-2x fa-check-square-o endorse_vote_icon @if($user->id == auth()->id()) cursor-no-drop @else cursor-pointer @endif special" title="صحه گذاری" data-placement="top" data-toggle="tooltip"></div>
                                     @endif
+                                    <div class="endorse_title" style="padding: 5px;background-color: #ececec; margin-left: 10px;">
+                                        <span> {{$special ? $special->keyword->title : ''}}</span>
+                                    </div>
                                     <div class="endorse_vote_count cursor-pointer" title="صحه گذاران" data-placement="top" data-toggle="tooltip">
                                         {{--                                    {{$special->endorse_users->count()}}--}}
                                         @if($special->CountEndorse != '0')
                                             @if(auth()->id() != null)
-                                                <span> صحه گذاری توسط </span><span class="span_count_users" data-toggle="modal" data-target="#user_endorse"><u>{{ $special->CountEndorse  }}</u>&nbsp;نفر </span>
+                                                <span class="span_count_users" data-toggle="modal" data-target="#user_endorse"><u>{{ $special->CountEndorse  }}</u>&nbsp;نفر صحه گذاری کرده‌اند. </span>
                                             @else
-                                                <span> صحه گذاری توسط </span><span class="span_count_users"><u>{{ $special->CountEndorse  }}</u>&nbsp;نفر </span>
+                                                <span class="span_count_users"><u>{{ $special->CountEndorse  }}</u>&nbsp;نفر صحه گذاری کرده‌اند. </span>
                                             @endif
                                         @endif
                                     </div>
-                                </div>
-                                <div class="endorse_title" style="padding: 5px;background-color: #ececec; ">
-                                    <span> {{$special ? $special->keyword->title : ''}}</span>
                                 </div>
                                 <div class="clearfixed"></div>
                             </li>
@@ -248,17 +240,23 @@
                         @endforeach
                     @endif
                 </table>
+                @if ($user->id == auth()->id())
+                    <div class="icon">
+                        <br />
+                        <a class="icon-pencil-1 user_specials_edit" style="cursor: pointer"></a> <a class="user_specials_edit" style="cursor: pointer;">ویرایش تخصص‌ها</a>
+                    </div>
+                @endif
             </div>
         </div>
 
         <div id="user_works" class="total" style="padding: 10px 10px 10px 32px;">
             <h1 class="heading">
-                <a id="specials">مسئولیت‌ها، شغل‌ها</a>
+                <span id="specials">مسئولیت‌ها، شغل‌ها</span>
             </h1>
             <h1 class="heading" style="margin: 0px;">
                 @if ($user->id == auth()->id())
-                    <span class="icon-hazv icon-plus add_new_work"></span>
-                    <span style="padding: 5px;background-color: #ececec;font-size: 11px; ">مسئولیت جدید</span>
+                    <a class="icon-hazv icon-plus add_new_work"></a>
+                    <a class="add_new_work" style="padding: 5px; font-size: 11px; cursor: pointer;">مسئولیت جدید</a>
                 @endif
             </h1>
             <div class="inner">
@@ -305,12 +303,12 @@
         <div id="user_educations" class="total" style="padding: 10px 10px 10px 32px;">
             <h1 class="heading">
                 <span class="icon icon-open"></span>
-                <a>تحصیلات</a>
+                <span>تحصیلات</span>
             </h1>
             <h1 class="heading" style="margin: 0px;">
                 @if ($user->id == auth()->id())
-                    <span class="icon-hazv icon-plus add_new_education"></span>
-                    <span style="padding: 5px;background-color: #ececec;font-size: 11px; ">تحصیلات جدید</span>
+                    <a class="icon-hazv icon-plus add_new_education"></a>
+                    <a class="add_new_education" style="padding: 5px; font-size: 11px; cursor: pointer;">تحصیلات جدید</a>
                 @endif
             </h1>
             <div class="inner">
@@ -395,18 +393,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">کاربرانی که <span class="endorse_title_modal"></span> را تایید کرده اند </h4>
+                    <h4 class="modal-title">صحه گذاران<span class="endorse_title_modal"></span></h4>
                 </div>
                 <div class="modal-body">
                     <div class="loader"></div>
                     <table class="table table-condensed ">
-                        <thead>
-                        <tr class="bg-primary">
-                            <th style="text-align: center;">ردیف</th>
-                            <th style="text-align: center;">نام و نام خانوادگی</th>
-                            <th style="text-align: center;">تصویر</th>
-                        </tr>
-                        </thead>
                         <tbody class="tbody_users">
                         <tr style="text-align: center;">
                         </tr>

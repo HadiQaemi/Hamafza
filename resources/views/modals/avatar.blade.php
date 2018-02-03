@@ -7,7 +7,7 @@
 </style>
 <div class="show_avatar_image" style="width:300px; margin: 10px auto">
     <div class="panel panel-default">
-        <div class="panel-heading">{{ trans('profile.your_avatar_image') }}</div>
+        {{--<div class="panel-heading">{{ trans('profile.your_avatar_image') }}</div>--}}
         <div class="panel-body" style="padding-top:6px;" >
             @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
                 <span class="fa fa-times remove_avater remove_avatar_image"></span>
@@ -28,6 +28,13 @@
            {{--  <a class="btn btn-info fa fa-edit edit_avatar_image_originalName" title="@if($user->avatar_info){{ trans('profile.change_profile_avatar_name') }}@endif" style="margin-right: 10px;"></a>--}}
         </div>
     </div>
+    <center>
+        @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
+            <button type="button" class="btn btn-primary remove_avatar_image">{{ trans('profile.delete_profile') }}</button>
+        @else
+            <button type="button" id="footer_selec_avatar" class="btn btn-primary select_file">{{ trans('profile.select_file') }}</button>
+        @endif
+    </center>
 </div>
 
 <div class="upload_form" style="width:300px; margin: 10px auto">

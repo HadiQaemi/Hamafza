@@ -400,7 +400,7 @@
                     data: {id: id},
                     success: function (result) {
                         var isModal = ' data-toggle="modal" data-target="#user_endorse" ';
-                        var text = '<span> صحه گذاری توسط </span><span class="span_count_users" ' + isModal + '><u>' + result.count_user_special + '</u>&nbsp;نفر </span>';
+                        var text = '<span class="span_count_users" ' + isModal + '><u>' + result.count_user_special + '</u>&nbsp;نفر صحه گذاری کرده‌اند.</span>';
                         if (result.count_user_special == '0') {
                             var text = '';
                         }
@@ -427,7 +427,7 @@
         var endorse_title = $(this).parent().parent().parent().find('.endorse_title').children().html();
         var id = ts.parent().parent().find('.special').attr('id');
         //console.log(id);
-        $('.endorse_title_modal').html('{{ $user->Name }}  {{ $user->Family }} ');
+        //$('.endorse_title_modal').html('{{ $user->Name }}  {{ $user->Family }} ');
         $.ajax({
             type: "POST",
             url: '{{ route('hamahang.users.user_endorse')}}',
@@ -440,8 +440,8 @@
                 $.each(result, function (key, value) {
                     $('.tbody_users').append('<tr style="text-align: center;">' +
                         '<td style="vertical-align: middle;">' + num + '</td>' +
-                        '<td style="vertical-align: middle;"><a target="_blank" href="' + value.Uname + '">' + value.Name + ' ' + value.Family + '</a></td>' +
                         '<td><img src="{{route('FileManager.DownloadFile',['ID',''])}}/' + value.avatar + '" style="width: 50px;height: 50px;"></td>' +
+                        '<td style="vertical-align: middle; text-align: right;"><a target="_blank" href="' + value.Uname + '">' + value.Name + ' ' + value.Family + '</a></td>' +
                         '</tr>');
                     num++;
                 });

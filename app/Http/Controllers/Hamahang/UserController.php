@@ -18,6 +18,7 @@ use App\Role;
 use App\UserRole;
 use Illuminate\Http\Request;
 use Route;
+use Schema;
 use Validator;
 use App\User;
 use Mail;
@@ -210,7 +211,7 @@ class UserController extends Controller
             'Name' => 'required',
             'Family' => 'required',
             'Uname' => 'required|unique:user|min:6',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:8',
             'Email' => 'required|email|unique:user',
         ], $messages);
 
@@ -450,57 +451,48 @@ class UserController extends Controller
 
     public function register_user(Request $request)
     {
-        if (config('app.debug'))
-        {
-            $captcha = '';
-        }
-        else
-        {
-            $captcha = 'required|check_captcha:register';
-        }
+        $captcha = config('app.debug') ? '' : 'required|check_captcha:register';
 
         $validator = Validator::make($request->all(),
-            [
-                'captcha_code' => $captcha,
-//                'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
-                'username' => 'required|unique:user,Uname|valid_username',
-                'email' => 'required|email|min:6|max:255|unique:user,Email',
-                'password' => 'required|confirmed|min:6|max:100|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
-                'name' => 'required',
-                'family' => 'required'
-            ],
-            [
-                'password.regex' => 'کلمه عبور باید حداقل دارای یک حرف کوچک، یک حرف بزرگ و یک عدد باشد.',
-                'valid_username' => 'نام کاربری معتبر نمی‌باشد.'
-//                'username.regex' => 'نام کاربری معتبر نمی‌باشد.'
-            ]);
+        [
+            'captcha_code' => $captcha,
+            //'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
+            'username' => 'required|unique:user,Uname|valid_username',
+            'email' => 'required|email|min:6|max:255|unique:user,Email',
+            'password' => 'required|confirmed|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
+            'name' => 'required',
+            'family' => 'required',
+        ],
+        [
+            'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
+            'valid_username' => 'نام کاربری معتبر نمی‌باشد.',
+            //'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
+        ]);
 
         if ($validator->fails())
         {
             if ($validator->errors()->has('captcha_code'))
             {
                 $validator = Validator::make($request->all(),
-                    [
-                        'captcha_code' => 'required|check_captcha:register'
-                    ],
-                    [
-                        'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.'
-                    ],
-                    [
-                        'captcha_code' => 'کد امنیتی'
-                    ]);
+                [
+                    'captcha_code' => 'required|check_captcha:register',
+                ],
+                [
+                    'check_captcha' => 'کد امنیتی نادرست است. لطفا مجددا سعی کنید.',
+                ],
+                [
+                    'captcha_code' => 'کد امنیتی',
+                ]);
                 $result['error'] = $validator->errors();
                 $result['success'] = false;
                 return json_encode($result);
-            }
-            else
+            } else
             {
                 $result['error'] = $validator->errors();
                 $result['success'] = false;
                 return json_encode($result);
             }
-        }
-        else
+        } else
         {
             $valid_user = str_replace('.', '', $request->username);
             $valid_user = str_replace('_', '', $valid_user);
@@ -514,6 +506,14 @@ class UserController extends Controller
             $user->Family = $request->family;
             $user->is_new = '1';
             $user->save();
+
+            $user_profile_columns = Schema::getColumnListing('user_profile');
+            if (in_array('relevant_organization', $user_profile_columns))
+            {
+                $user_profile = new UserProfile();
+                $user_profile->uid = $user->id;
+                $user_profile->relevant_organization = $request->input('relevant_organization', null);
+            }
 
             $registered_role = Role::find(config('constants.APP_REGISTERED_ROLE_ID'));
             $user->attachRole($registered_role);
@@ -748,43 +748,41 @@ class UserController extends Controller
 
     public function updateUserDetail(Request $request)
     {
-//        dd($request->all());
-        // dd($request->file('avatar_user'));
         $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|string|min:3|max:255',
-                'family' => 'required|string|min:3|max:255',
-                'summary' => 'min:3|max:255',
-                'province' => 'numeric',
-                'city' => 'numeric',
-                'mobile' => 'mobile_phone',
-                'tel_number' => 'numeric|digits:8',
-                'tel_code' => 'numeric|digits:4',
-                'fax_number' => 'numeric|digits:8',
-                'fax_code' => 'numeric|digits:4',
-                'avatar' => 'mimes:jpg,png,jpeg|max:1024',
+        [
+            'name' => 'required|string|min:3|max:255',
+            'family' => 'required|string|min:3|max:255',
+            'summary' => 'min:3|max:255',
+            'province' => 'numeric',
+            'city' => 'numeric',
+            'mobile' => 'mobile_phone',
+            'tel_number' => 'numeric|digits:8',
+            'tel_code' => 'numeric|digits:4',
+            'fax_number' => 'numeric|digits:8',
+            'fax_code' => 'numeric|digits:4',
+            'avatar' => 'mimes:jpg,png,jpeg|max:1024',
+            'relevant_organization' => 'string|max:255',
 
-            ],
-            [
-                'tel_code' => 'فرمت کد شهر فیلد تلفن ثابت رعایت نشده است.',
-                'fax_code' => 'فرمت کد شهر فیلد فکس رعایت نشده است.',
-                'avatar_user.mimes' => 'فرمت تصویر معتبر نیست',
-            ],
-            [
-                'summary' => 'معرفی اجمالی',
-                'tel_number' => 'شماره تلفن',
-                'fax_number' => 'شماره فکس',
-                'tel_code' => 'کد شهر فیلد تلفن ثابت',
-                'fax_code' => 'کد شهر فیلد فکس',
-                'avatar_user' => 'تصویر پروفایل'
-            ]);
+        ],
+        [
+            'tel_code' => 'فرمت کد شهر فیلد تلفن ثابت رعایت نشده است.',
+            'fax_code' => 'فرمت کد شهر فیلد فکس رعایت نشده است.',
+            'avatar_user.mimes' => 'فرمت تصویر معتبر نیست',
+        ],
+        [
+            'summary' => 'معرفی اجمالی',
+            'tel_number' => 'شماره تلفن',
+            'fax_number' => 'شماره فکس',
+            'tel_code' => 'کد شهر فیلد تلفن ثابت',
+            'fax_code' => 'کد شهر فیلد فکس',
+            'avatar_user' => 'تصویر پروفایل'
+        ]);
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
+        } else
         {
             if (auth()->check())
             {
@@ -819,6 +817,13 @@ class UserController extends Controller
                 $profile->Fax_number = $request->fax_number;
                 $profile->Fax_code = $request->fax_code;
                 $profile->Website = $request->website;
+
+                $user_profile_columns = Schema::getColumnListing('user_profile');
+                if (in_array('relevant_organization', $user_profile_columns))
+                {
+                    $profile->relevant_organization = $request->input('relevant_organization');
+                }
+
                 $profile->save();
             }
             $result['user_profile_url'] = '/' . auth()->user()->Uname;
@@ -839,14 +844,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'pass_now' => 'required|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
-                'pass_new' => 'required|min:6|max:100|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/',
+                'pass_now' => 'required', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
+                'pass_new' => 'required|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
                 'pass_repeat' => 'required|in:' . $request->pass_new,
 
             ],
             [
                 'pass_now.regex' => 'کلمه عبور فعلی صحیح نمی باشد',
-                'pass_new.regex' => 'کلمه عبور باید حداقل دارای یک حرف کوچک، یک حرف بزرگ و یک عدد باشد.',
+                'pass_new.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
                 'pass_repeat.in' => 'تکرار کلمه عبور صحیح نمی باشد',
             ],
             [

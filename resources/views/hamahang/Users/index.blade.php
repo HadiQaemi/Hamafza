@@ -145,7 +145,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                       
+
                                         <div class="text-left">
                                             <button id="form_created_new_btn" type="button" class="btn btn-primary submit_form_btn">
                                                 <i class=""></i> {{trans('acl.submit_add')}}

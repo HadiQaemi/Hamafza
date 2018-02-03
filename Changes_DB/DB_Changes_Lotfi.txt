@@ -34,3 +34,6 @@ hamahang_help_relations => جدید
 
 96/10/21
 keywords => اضافه شدن deleted_at به unique
+
+96/11/11
+user => revel...org field added.

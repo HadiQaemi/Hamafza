@@ -48,6 +48,7 @@ class CreateUserProfileTable extends Migration {
 			$table->integer('Vcomment')->unsigned()->default(0);
 			$table->integer('Vpic')->unsigned()->default(0);
             $table->date('birth_date')->nullable()->default(null);
+            $table->string('relevant_organization', 255)->nullable()->default(null);
 		    $table->timestamps();
             $table->softDeletes();
         });

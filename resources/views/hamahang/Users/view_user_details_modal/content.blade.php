@@ -5,8 +5,8 @@
     <div style="padding: 0 15px 15px 15px;">
         <div class="navbar ">
             <ul class="nav nav-tabs">
-                <li class="active" id="tab_edit"><a aria-controls="art-tab-1" href="#edit_user" role="tab" data-toggle="tab">ویرایش</a></li>
-                <li id="tab_pass"><a aria-controls="art-tab-2" href="#edit_pass" role="tab" data-toggle="tab">ویرایش رمز عبور</a></li>
+                <li class="active" id="tab_edit"><a aria-controls="art-tab-1" href="#edit_user" role="tab" data-toggle="tab">مشخصات</a></li>
+                <li id="tab_pass"><a aria-controls="art-tab-2" href="#edit_pass" role="tab" data-toggle="tab">تغییر رمز عبور</a></li>
             </ul>
         </div>
         <div class="user_edit_jspanel_content">
@@ -19,20 +19,22 @@
                                 <table class="table{{---striped--}} col-xs-12">
                                     <tbody>
                                     <tr>
-                                        <td><span style="color:red">*</span>نام</td>
                                         <td>
-                                            <input type="text" name="name" class="form-control required" value="{{ $user->Name }} ">
+                                            <span style="color:red">*</span>نام<br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <span style="color:red">*</span>نام خانوادگی
+                                            <br />
+                                            <br />
+                                            <br />
+                                            معرفی اجمالی
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span style="color:red">*</span>نام خانوادگی</td>
                                         <td>
-                                            <input type="text" name="family" class="form-control required" value="{{ $user->Family }}">
+                                            <input type="text" name="name" class="form-control required" value="{{ $user->Name }} "><br />
+                                            <input type="text" name="family" class="form-control required" value="{{ $user->Family }}"><br />
+                                            <input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)">
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>معرفی اجمالی</td>
-                                        <td><input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)"></td>
                                     </tr>
                                     <tr>
                                         <td>{{ trans('profile.your_avatar_image') }}</td>
@@ -121,6 +123,12 @@
                                         <td><span style="color:red">*</span>رایانامه</td>
                                         <td><input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" readonly></td>
                                     </tr>
+                                    @if ('kmkz' == config('constants.DefIndexView'))
+                                    <tr>
+                                        <td>سازمان مربوطه</td>
+                                        <td><input type="text" name="relevant_organization" class="dir_ltr form-control" value="{{ isset($profile->relevant_organization) ? $profile->relevant_organization : '' }}"></td>
+                                    </tr>
+                                    @endif
                                     <tr>
                                         <td></td>
                                         <td>

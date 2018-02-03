@@ -46,6 +46,15 @@
                                 <span class="input-group-addon icon-a-b"></span>
                             </div>
                             <div id="reg_family_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
+                            @if ('kmkz' == config('constants.DefIndexView'))
+                            <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                <span class="input-group-addon"> سازمان مربوطه </span>
+                                <input type="text" class="form-control" id="modal_relevant_organization_input" name="relevant_organization">
+                                <span class="input-group-addon icon-a-b"></span>
+                            </div>
+                            @endif
+                            <div id="reg_relevant_organization_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
+                            @if (!config('app.debug'))
                             <div class="row">
                                 <div class="col-md-12" style="padding-right: 0">
                                     <div class="col-md-6" style="padding-right: 0">
@@ -68,6 +77,7 @@
                                 </div>
                             </div>
                             <div id="reg_captcha_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
+                            @endif
                             <div class="row col-md-9 pull-left" style="margin-top: 12px;">
                                 <div class="col-md-4">
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>

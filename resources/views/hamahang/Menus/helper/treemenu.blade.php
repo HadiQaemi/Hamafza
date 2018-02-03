@@ -6,9 +6,6 @@
 
 <div class="panel-body searching-cntnt">
     <div class="panel-body searching-cntnt" style="margin-bottom: 10px">
-        <div class="txtsearch">
-            <input type="text" placeholder="{{ trans('menus.filter') }}" id="list-search"/>
-        </div>
         <div accordion="" class="panel-group accordion" id="accordion">
             <div id="Fehresrt" class="v"></div>
         </div>

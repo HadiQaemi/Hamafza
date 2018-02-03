@@ -174,7 +174,7 @@
 
         $(document).on("click", "#form_password_input", function () {
             $('#password_request_errors').css('color', 'blue');
-            $('#password_request_errors').html('کلمه عبور باید حداقل دارای یک حرف کوچک، یک حرف بزرگ و یک عدد باشد و کلمه عبور نباید کمتر از 6 کاراکتر باشد.');
+            $('#password_request_errors').html('کلمه عبور باید حداقل 8 کاراکتر باشد.');
         });
 
         $(document).on("click", "#form_name_input", function () {
