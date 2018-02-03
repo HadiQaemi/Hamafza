@@ -1007,6 +1007,7 @@ class FormsController extends Controller
         }
         else
         {
+            /*
             if (isset($request->sectype) && $request->sectype == 1)
             {
 
@@ -1022,7 +1023,7 @@ class FormsController extends Controller
                     return abort(403);
                 }
             }
-
+            */
             $validator = \Validator::make($request->all(), [
                 'title' => 'required',
             ]);

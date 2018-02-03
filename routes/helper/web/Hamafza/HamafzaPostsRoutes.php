@@ -1,7 +1,7 @@
 <?php
 Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark', 'middleware' => ['dynamic_permission:posts.hamafza.get_my_bookmark']]);
 Route::post('GetsubjectFields', ['as' => 'hamafza.get_subject_fields', 'uses' => 'View\AjaxController@GetSubjectFields', 'middleware' => ['dynamic_permission:posts.hamafza.get_subject_fields']]);
-Route::post('AddSubject', ['as' => 'hamafza.add_subject', 'uses' => 'View\FormsController@AddSubject', 'middleware' => ['dynamic_permission:posts.hamafza.add_subject']]);
+Route::post('AddSubject', ['as' => 'hamafza.add_subject', 'uses' => 'View\FormsController@AddSubject'/*, 'middleware' => ['dynamic_permission:posts.hamafza.add_subject']*//* check FormsController@AddSubject too*/]);
 Route::post('EditPageSend', ['as' => 'hamafza.edit_page_send', 'uses' => 'View\PageController@EditPageSend', 'middleware' => ['dynamic_permission:posts.hamafza.edit_page_send']]);
 Route::post('announce_send', ['as' => 'hamafza.announce_send', 'uses' => 'View\FormsController@announce_send', 'middleware' => ['dynamic_permission:posts.hamafza.announce_send']]);
 Route::post('AddThesaurus', ['as' => 'hamafza.add_thesaurus', 'uses' => 'DesktopController@AddThesaurus', 'middleware' => ['dynamic_permission:posts.hamafza.add_thesaurus']]);

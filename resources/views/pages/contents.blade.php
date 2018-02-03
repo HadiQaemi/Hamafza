@@ -143,20 +143,22 @@
                                 </div>
                                 @if (is_array($item->comments))
                                     @foreach($item->comments as $items)
-                                        <div class="addcomment commentShow">
-                                            <input class="Postid" value="{{$items->id}}" type="hidden">
-                                            <a target='_blank' href='{{$items->Uname}}'>
-                                                <img class="imgContain" title="{{ $items->Name}} {{ $items->Family}}" data-placement="top" data-toggle="tooltip"
-                                                     src="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode(\App\User::find($item->uid)->avatar)])}}">
-                                            </a>
-                                            <div class="txtContain">{{$items->comment}}</div>
-                                            <div class="CommentTime">
-                                                <span> {{$items->reg_date}} </span>
-                                                @if(session('uid') ==$items->uid)
-                                                    <span style="margin-right: 10px;" class="FloatLeft fonts icon-hazv CommentDelicn" page="comment" action="delete" id="{{$items->id}}"></span>
-                                                @endif
+                                        @if (\App\User::find($item->uid))
+                                            <div class="addcomment commentShow">
+                                                <input class="Postid" value="{{$items->id}}" type="hidden">
+                                                <a target='_blank' href='{{$items->Uname}}'>
+                                                    <img class="imgContain" title="{{ $items->Name}} {{ $items->Family}}" data-placement="top" data-toggle="tooltip"
+                                                         src="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode(\App\User::find($item->uid)->avatar)])}}">
+                                                </a>
+                                                <div class="txtContain">{{$items->comment}}</div>
+                                                <div class="CommentTime">
+                                                    <span> {{$items->reg_date}} </span>
+                                                    @if(session('uid') ==$items->uid)
+                                                        <span style="margin-right: 10px;" class="FloatLeft fonts icon-hazv CommentDelicn" page="comment" action="delete" id="{{$items->id}}"></span>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 @endif
                                 @if(auth()->check())
