@@ -64,26 +64,21 @@ class EnquiryController extends Controller
         return Datatables::eloquent($keywords_results)->make(true);
     }
 
-    /*
-    public function bazaar()
-    {
-        return view('hamahang.Bazaar.bazaar');
-    }
-    */
-
     public function index($sid = false)
     {
         $sid = false;
         $sid = $sid == false ? config('constants.default_enquiry_portal_id') : $sid;
-        $posts = Post::where('type', '2')->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
+        $sub_kind = Subject::find($sid)->sub_kind;
+        $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
+        $posts = Post::where('type', $sub_kind)->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
         if (Request::exists('tagid'))
         {
             $keyword = Keyword::find(Request::get('tagid'));
-            return view('hamahang.Enquiry.enquiry_index')->with(['posts' => $posts, 'keyword' => $keyword]);
+            return view('hamahang.Enquiry.enquiry_index')->with(['posts' => $posts, 'sub_kind' => $sub_kind, 'keyword' => $keyword]);
         }
         else
         {
-            return view('hamahang.Enquiry.enquiry_index')->with(['posts' => $posts]);
+            return view('hamahang.Enquiry.enquiry_index')->with(['posts' => $posts, 'sub_kind' => $sub_kind]);
         }
     }
 
@@ -94,19 +89,21 @@ class EnquiryController extends Controller
         $post->viewcount++;
         $post->save();
         $res['current_tab'] = $sid.'/enquiry/'.$post_id;
-        $res['tabs'][]=
-            [
-                'link'=>$sid.'/enquiry/'.$post_id,
-                'href'=>$sid.'/enquiry/'.$post_id,
-                'title'=>'پرسش',
-                'selected'=>true,
-            ];
+        $res['tabs'][] =
+        [
+            'link'=>$sid.'/enquiry/'.$post_id,
+            'href'=>$sid.'/enquiry/'.$post_id,
+            'title'=>'پرسش',
+            'selected'=>true,
+        ];
         return view($res['viewname'])->with($res);
     }
 
     public function index_ajax()
     {
         $sid = Request::exists('sid') == false ? config('constants.default_enquiry_portal_id') : Request::get('sid');
+        $sub_kind = Subject::find($sid)->sub_kind;
+        $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
         $kid = Request::get('tagid');
         $tab = Request::get('tab');
         $ord = Request::get('order');
@@ -118,7 +115,7 @@ class EnquiryController extends Controller
                 if ($kid)
                     $posts = Keyword::find($kid)->questions->$ord_sort('id');
                 else
-                    $posts = Post::where('type', '2')->orderBy('id', $ord)->get();
+                    $posts = Post::where('type', $sub_kind)->orderBy('id', $ord)->get();
             break;
             */
             case 20:
@@ -128,9 +125,9 @@ class EnquiryController extends Controller
                 }
                 else
                 {
-                    $posts = Post::where('portal_id', $sid)->where('type', '2')->orderBy('reg_date', $ord)->get();
+                    $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->orderBy('reg_date', $ord)->get();
                 }
-                break;
+            break;
             case 30:
                 if ($kid)
                 {
@@ -138,9 +135,9 @@ class EnquiryController extends Controller
                 }
                 else
                 {
-                    $posts = Post::where('portal_id', $sid)->where('type', '2')->get()->$ord_sort('TotalReward');
+                    $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->get()->$ord_sort('TotalReward');
                 }
-                break;
+            break;
             case 40:
                 if ($kid)
                 {
@@ -148,7 +145,7 @@ class EnquiryController extends Controller
                 }
                 else
                 {
-                    $posts = Post::where('portal_id', $sid)->where('type', '2')->orderBy(DB::raw('GET_POST_ANSWER_COUNT(`id`)'), $ord)->orderBy(DB::raw('GET_POST_VOTE_COUNT(`id`)'), $ord)->get();
+                    $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->orderBy(DB::raw('GET_POST_ANSWER_COUNT(`id`)'), $ord)->orderBy(DB::raw('GET_POST_VOTE_COUNT(`id`)'), $ord)->get();
                     /*
                     DB::enableQueryLog();
                     //dd(DB::getQueryLog());
@@ -175,7 +172,7 @@ class EnquiryController extends Controller
                     $posts = DB::select($select);
                     */
                 }
-                break;
+            break;
             case 50:
                 if ($kid)
                 {
@@ -185,9 +182,9 @@ class EnquiryController extends Controller
                 {
                     $posts = Post::where('portal_id', $sid)->where('type', '2')->get()->$ord_sort('VoteCount');
                 }
-                break;
+            break;
         }
-        $result = view('hamahang.Enquiry.enquiry_ajax')->with(['posts' => $posts, 'sid'=>$sid])->render();
+        $result = view('hamahang.Enquiry.enquiry_ajax')->with(['posts' => $posts, 'sid'=>$sid, 'sub_kind' => $sub_kind])->render();
         return response()->json(['success' => true, 'result' => $result]);
     }
 

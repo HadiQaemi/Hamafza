@@ -3,11 +3,11 @@
     keyword_search_time = 0;
     keyword_search = $('#keyword_search');
     keyword_search.val('');
-    function show_comment_box()
+    function show_comment_box(sub_kind)
     {
         $('#CommentPage').click();
-        $('#post_type').val(2).change();
-        $('#portal_id').val({!! $sid !!}).change();
+        $('#post_type').val(sub_kind).change();
+        $('#portal_id').val(<?php echo $sid; ?>).change();
         $('#commentTitleW').focus();
     }
     function keyword_search_do()

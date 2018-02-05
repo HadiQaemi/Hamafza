@@ -52,7 +52,7 @@ Route::get('Pagesearch', ['as' => 'page_search', 'uses' => 'View\AjaxController@
 Route::get('Groupsearch', ['as' => 'group_search', 'uses' => 'View\AjaxController@Groupsearch', 'middleware' => ['dynamic_permission:group_search']]);//p
 Route::get('/', ['as' => 'home', 'uses' => 'View\HomeController@index']);//p
 Route::get('group_edit/{id}', ['as'=>'group.edit','uses'=>'View\UserController@GroupEdit', 'middleware' => ['dynamic_permission:group.edit']])->where('id', '[0-9]+');
-Route::get('page_edit/{id}/{Type}', ['as' => 'page.edit', 'uses' => 'View\PageController@PageEditDetail', 'middleware' => ['dynamic_permission:page.edit']])->where('id', '[0-9]+', 'Type', '[a-zA-Z\-_.]+');
+Route::get('page_edit/{id}/{Type}', ['as' => 'page.edit', 'uses' => 'View\PageController@PageEditDetail'/*, 'middleware' => ['dynamic_permission:page.edit']*/])->where('id', '[0-9]+', 'Type', '[a-zA-Z\-_.]+');
 Route::any('Tagsearch', ['as' => 'tag_search', 'uses' => 'View\AjaxController@tagsearch', 'middleware' => ['dynamic_permission:tag_search']]);//p
 Route::get('history/{id}/{hid}', ['as' => 'history', 'uses' => 'View\PageController@history', 'middleware' => ['dynamic_permission:history']])->where('id', '[0-9]+')->where('hid', '[0-9]+');
 //Route::post('UserList_settings',['as' => 'UserList_settings', 'uses' => 'Hamahang\AutoCompleteController@UsersList', 'middleware' => ['dynamic_permission:user_list_settings']]);

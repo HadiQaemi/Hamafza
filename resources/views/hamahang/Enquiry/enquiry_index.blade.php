@@ -7,7 +7,13 @@
     @include('hamahang.Enquiry.helper.css')
 @stop
 @section('content')
-    @include('hamahang.Enquiry.helper.content')
+    @if (3 == $sub_kind)
+        @include ('hamahang.Enquiry.helper.content_idea')
+    @elseif (4 == $sub_kind)
+        @include ('hamahang.Enquiry.helper.content_experience')
+    @else
+        @include ('hamahang.Enquiry.helper.content')
+    @endif
 @stop
 
 @section('inline_scripts')

@@ -1344,6 +1344,23 @@ class PostsClass
     public function NewPost($uid, $sesid, $sid = 0, $type, $desc, $image, $video, $time, $all, $keys, $circles, $groups, $title, $portal_id = 0, $reward = 0)
     {
         $PC = new PageClass();
+
+        switch ($type)
+        {
+            case 3:
+                if (env('CONSTANTS_ENQUIRY_FOR_IDEA'))
+                {
+                    $sid = $portal_id = env('CONSTANTS_ENQUIRY_FOR_IDEA');
+                }
+            break;
+            case 4:
+                if (env('CONSTANTS_ENQUIRY_FOR_EXPERIENCE'))
+                {
+                    $sid = $portal_id = env('CONSTANTS_ENQUIRY_FOR_EXPERIENCE');
+                }
+            break;
+        }
+
         $pid = DB::table('posts')->insertGetId(['uid' => $uid, 'sid' => $sid, 'type' => $type, 'desc' => "$desc", 'pic' => $image, 'video' => $video, 'reg_date' => $time, 'view' => $all, 'title' => "$title", 'portal_id' => $portal_id]);
         
         if ($type == 2 && $reward > 0)

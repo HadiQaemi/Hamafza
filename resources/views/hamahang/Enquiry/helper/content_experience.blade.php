@@ -4,9 +4,11 @@
             <li>
                 <a href="#t20" id="th20" data-id="20" data-toggle="tab"><i class="fa fa-sort-amount-asc" data-ord="asc"></i> {{ trans('enquiry.new') }}</a>
             </li>
+            {{--
             <li>
                 <a href="#t30" id="th30" data-id="30" data-toggle="tab"><i class="fa fa-sort-amount-desc" data-ord="desc"></i> {{ trans('enquiry.reward') }}</a>
             </li>
+            --}}
             <li>
                 <a href="#t40" id="th40" data-id="40" data-toggle="tab"><i class="fa fa-sort-amount-desc" data-ord="desc"></i> {{ trans('enquiry.hot') }}</a>
             </li>
@@ -14,8 +16,8 @@
                 <a href="#t50" id="th50" data-id="50" data-toggle="tab"><i class="fa fa-sort-amount-desc" data-ord="desc"></i> {{ trans('enquiry.vote') }}</a>
             </li>
             <li style="margin: 10px;">
-                <button class="btn btn-info" onclick="show_comment_box(2);">
-                    <span>پرسش جدید</span>
+                <button class="btn btn-info" onclick="show_comment_box(4);">
+                    <span>تجربه جدید</span>
                 </button>
             </li>
             <li style="float: left; display: none;" id="current-keyword-area">
@@ -27,20 +29,24 @@
             </li>
         </ul>
         <div class="tab-content" style="min-height: 550px;">
+            {{--
             <div class="tab-pane" id="t10">
-                @include('hamahang.Enquiry.helper.subcontent')
+                @include('hamahang.Enquiry.helper.subcontent_experience')
             </div>
+            --}}
             <div class="tab-pane" id="t20">
-                @include('hamahang.Enquiry.helper.subcontent')
+                @include('hamahang.Enquiry.helper.subcontent_experience')
             </div>
+            {{--
             <div class="tab-pane" id="t30">
-                @include('hamahang.Enquiry.helper.subcontent')
+                @include('hamahang.Enquiry.helper.subcontent_experience')
             </div>
+            --}}
             <div class="tab-pane" id="t40">
-                @include('hamahang.Enquiry.helper.subcontent')
+                @include('hamahang.Enquiry.helper.subcontent_experience')
             </div>
             <div class="tab-pane" id="t50">
-                @include('hamahang.Enquiry.helper.subcontent')
+                @include('hamahang.Enquiry.helper.subcontent_experience')
             </div>
         </div>
         <div style="clear: both;"></div>

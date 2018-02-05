@@ -677,6 +677,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 case 'enquiry':
                 {
                     $sid = $item / 10;
+                    $sub_kind = Subject::find($sid)->sub_kind;
+                    $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
                     $pid = $item;
                     $post_id = $params['post_id'];
                     $subject = Subject::findOrFail($sid);
@@ -690,21 +692,22 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
                     if (0)
                     {
-                        view('hamahang.Enquiry.enquiry_view');
+                        view('hamahang.Enquiry.enquiry_view')->with(['sub_kind' => $sub_kind]);
                     }
                     $res =
-                        [
-                            'viewname' => 'hamahang.Enquiry.enquiry_view',
-                            'PageType' => '',
-                            'sid' => $sid,
-                            'post' => $post,
-                            'Title' => $Title,
-                            'current_tab' => '',
-                            'content' => '',
-                            'uname' => $sid,
-                            'keywords' => $keywords,
-                            'Files' => ''
-                        ];
+                    [
+                        'sub_kind' => $sub_kind,
+                        'viewname' => 'hamahang.Enquiry.enquiry_view',
+                        'PageType' => '',
+                        'sid' => $sid,
+                        'post' => $post,
+                        'Title' => $Title,
+                        'current_tab' => '',
+                        'content' => '',
+                        'uname' => $sid,
+                        'keywords' => $keywords,
+                        'Files' => ''
+                    ];
                     break;
                 }
                 case 'history':
@@ -837,34 +840,37 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             {
                                 $sid = $sid == false ? config('constants.default_enquiry_portal_id') : $sid;
                                 $Title = $subject->title;
-                                $posts = \App\Models\hamafza\Post::where('type', '2')->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
+                                $sub_kind = Subject::find($sid)->sub_kind;
+                                $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
+                                $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
                                 //$tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
                                 $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
                                 if (\Request::exists('tagid'))
                                 {
                                     $keyword = \App\Models\hamafza\Keyword::find(\Request::get('tagid'));
                                     $res =
-                                        [
-                                            'viewname' => 'hamahang.Enquiry.enquiry_index',
-                                            'posts' => $posts,
-                                            'pid' => $pid,
-                                            'sid' => $sid,
-                                            'keyword' => $keyword,
-                                            'current_tab' => $pid,
-                                            'keywords' => $keywords,
-                                        ];
-                                }
-                                else
+                                    [
+                                        'viewname' => 'hamahang.Enquiry.enquiry_index',
+                                        'posts' => $posts,
+                                        'pid' => $pid,
+                                        'sid' => $sid,
+                                        'sub_kind' => $sub_kind,
+                                        'keywords' => $keywords,
+                                        'current_tab' => $pid,
+                                        'keyword' => $keyword,
+                                    ];
+                                } else
                                 {
                                     $res =
-                                        [
-                                            'viewname' => 'hamahang.Enquiry.enquiry_index',
-                                            'posts' => $posts,
-                                            'pid' => $pid,
-                                            'sid' => $sid,
-                                            'current_tab' => $pid,
-                                            'keywords' => $keywords,
-                                        ];
+                                    [
+                                        'viewname' => 'hamahang.Enquiry.enquiry_index',
+                                        'posts' => $posts,
+                                        'pid' => $pid,
+                                        'sid' => $sid,
+                                        'sub_kind' => $sub_kind,
+                                        'keywords' => $keywords,
+                                        'current_tab' => $pid,
+                                    ];
                                 }
                                 break;
                             }
