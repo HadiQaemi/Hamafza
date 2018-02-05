@@ -115,6 +115,162 @@
                     $help_code = 'dH_t4i3vxZE';
                     break;
                 }
+				case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_tasks',false) ):
+                {
+                    $help_code = 'S6FryAHtxyg';
+                    break;
+                }
+				case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_assigned_tasks',false) ):
+                {
+                    $help_code = 'O5e86Vdno5c';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tasks.Packages':
+                {
+                    $help_code = '1HmFWYC26cI';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.project.list':
+                {
+                    $help_code = '0breATQ_KYA';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.process.list':
+                {
+                    $help_code = 'lZ9G783RBgE';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts':
+                {
+                    $help_code = 'Zo7ZOE5cN2E';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.calendar.index':
+                {
+                    $help_code = 'M_OO9Rm0N1Y';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.calendar_events.events':
+                {
+                    $help_code = 'Z25opedJJQc';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.calendar_events.sessions':
+                {
+                    $help_code = '5ioTwN_IztQ';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.calendar_events.invitations':
+                {
+                    $help_code = '9nU71Rvx6RI';
+                    break;
+                }
+				case (	strstr($route_name,'ugc.desktop.hamahang.tickets',false) ):
+                {
+                    $help_code = 'nzA32CirWps';
+                    break;
+                }
+				case (	strstr($route_name,'ugc.desktop.Hamahang.files',false) ):
+                {
+                    $help_code = 'wZruyEabWpo';
+                    break;
+                }
+				case (	strstr($route_name,'ugc.desktop.keywords',false) ):
+                {
+                    $help_code = 'JZMzyR073xs';
+                    break;
+                }
+				case 'ugc.desktop.announces':
+                {
+                    $help_code = 'dtejVqoWgs0';
+                    break;
+                }
+				case 'ugc.desktop.highlights':
+                {
+                    $help_code = 'vNdPYVsvRHk';
+                    break;
+                }
+				case (	strstr($route_name,'ugc.desktop.form_list',false) ):
+                {
+                    $help_code = '3WWSTpG_mfo';
+                    break;
+                }
+				case 'ugc.desktop.notifications':
+                {
+                    $help_code = 'qnpuF1Bip10';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.summary.index':
+                {
+                    $help_code = 'V1oBEI0xAQA';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.user_list.index':
+                {
+                    $help_code = 'oX52rdmIqC0';
+                    break;
+                }
+				case 'ugc.desktop.show_groups':
+                {
+                    $help_code = 'pbBz5nSGruc';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.list':
+                {
+                    $help_code = 'Nw_CWdNK2RA';
+                    break;
+                }
+				case 'chart':
+                {
+                    $help_code = 'XIz_3yUSMfY';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.acl.index':
+                {
+                    $help_code = 'w72rAsJvVwo';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.subjects.index':
+                {
+                    $help_code = 'KBylI3uxKNA';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.relations_index':
+                {
+                    $help_code = 'FplHsEzcGXI';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.subst_index':
+                {
+                    $help_code = 'xt8KkJ5z77g';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.alerts_index':
+                {
+                    $help_code = 'op7dbrZ6s08';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.alerts_index':
+                {
+                    $help_code = 'VBwD2MrcymM';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.basicdata.index':
+                {
+                    $help_code = '7cEatcNTIik';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.menus.index':
+                {
+                    $help_code = 'qNMuBK4h9tA';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tools.index':
+                {
+                    $help_code = 'A7R9nk-ZHk8';
+                    break;
+                }
+
             }
         }
         //dd($route_name);
@@ -122,7 +278,6 @@
 @endphp
 
 <div class="btn-group pull-right frst-wdt mr"><button type="button" id="rSubMenuBtn" class="btn  fa fa-align-justify icon-reorder" data-icon="U+E0CC" data-toggle="tooltip" data-placement="top" title="ابزارها"></button></div>
-
 @if (auth()->check())
     @if ('Page' == $type)
         @if ('0' == $vals['like'])
