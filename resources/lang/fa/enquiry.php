@@ -14,7 +14,7 @@ return
     'nocontent'                 => 'محتوایی برای نمایش وجود ندارد.',
     'answer'                    => 'پاسخ',
     'answer_idea'               => 'نظر',
-    'answer_experience'         => 'تجربه',
+    'answer_experience'         => 'نظر',
     'view'                      => 'بازدید',
     'emtiaz'                    => 'امتیاز',
     'like'                      => 'پسند',
