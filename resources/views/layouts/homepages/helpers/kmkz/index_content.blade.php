@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="min-height: 95vh;">
     <div class="col-md-3 login_height">
         @include('sections.homeright')
     </div>
@@ -14,10 +14,10 @@
             <div class="col-md-6">
                 <div class="contents_tab">
                     <ul class="nav nav-pills customize">
-                        <li class="active" style="width: 20%; text-align: center;"><a data-toggle="pill" href="#home">کتب و نشریات</a></li>
-                        <li style="width: 20%; text-align: center;"><a data-toggle="pill" href="#menu1">پایگاه‌های علمی</a></li>
-                        <li style="width: 20%; text-align: center;"><a data-toggle="pill" href="#menu2">شبکه اجتماعی</a></li>
-                        <li style="width: 20%; text-align: center;"><a data-toggle="pill" href="#menu3">سازمان‌ها</a></li>
+                        <li class="active" style="width: 25%; text-align: center;"><a data-toggle="pill" href="#home">کتب و نشریات</a></li>
+                        <li style="width: 25%; text-align: center;margin:0px"><a data-toggle="pill" href="#menu1">پایگاه‌های علمی</a></li>
+                        <li style="width: 25%; text-align: center;margin:0px"><a data-toggle="pill" href="#menu2">شبکه اجتماعی</a></li>
+                        <li style="width: 25%; text-align: center;margin:0px"><a data-toggle="pill" href="#menu3">سازمان‌ها</a></li>
                     </ul>
                     <style>
 

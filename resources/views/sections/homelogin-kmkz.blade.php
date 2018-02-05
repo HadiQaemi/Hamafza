@@ -11,10 +11,7 @@
                     <input type="password" name="password" id="password" class="form-control required" placeholder="رمز عبور" id="pwd">
                     <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
                 </div>
-                <div class="form-group homepage_login">
-                    <input type="button" id="btn_homepage_login_form" class="btn btn-default login_btn blue-btn" value="ورود به سامانه" />
-                </div>
-                @if (!config('app.debug'))
+				@if (!config('app.debug'))
                     <div class="form-group">
                         <label>کد امنیتی</label>
                         <div id="captcha_code" class="form-group input-group">
@@ -31,6 +28,9 @@
                         <div class="clearfixed"></div>
                     </div>
                 @endif
+                <div class="form-group homepage_login">
+                    <input type="button" id="btn_homepage_login_form" class="btn btn-default login_btn blue-btn" value="ورود به سامانه" />
+                </div>
                 <center>
                     <span class="homepage_register_user btn btn-default login_btn gray-btn" style="cursor: pointer;">کاربر جدید هستم</span>
                     <span class="homepage_forget_password_user" style="cursor: pointer;">رمز عبور را فراموش کرده‌ام</span>
