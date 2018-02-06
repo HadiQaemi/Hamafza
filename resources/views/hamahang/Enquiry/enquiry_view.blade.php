@@ -12,7 +12,9 @@
     @include('hamahang.Enquiry.helper.css')
 @stop
 @section('content')
-    @if (3 == $sub_kind)
+    @if (1 == $sub_kind)
+        @include ('hamahang.Enquiry.helper.view_comment')
+    @elseif (3 == $sub_kind)
         @include ('hamahang.Enquiry.helper.view_idea')
     @elseif (4 == $sub_kind)
         @include ('hamahang.Enquiry.helper.view_experience')

@@ -13,6 +13,7 @@ return
     'keywords_no_empty'         => 'استفاده شده&zwnj;ها',
     'nocontent'                 => 'محتوایی برای نمایش وجود ندارد.',
     'answer'                    => 'پاسخ',
+    'answer_comment'            => 'نظر',
     'answer_idea'               => 'نظر',
     'answer_experience'         => 'نظر',
     'view'                      => 'بازدید',

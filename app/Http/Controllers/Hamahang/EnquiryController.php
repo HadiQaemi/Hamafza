@@ -95,6 +95,9 @@ class EnquiryController extends Controller
         $post->save();
         switch ($sub_kind)
         {
+            case 1:
+                $title = 'نظر';
+                break;
             case 3:
                 $title = 'ایده';
                 break;

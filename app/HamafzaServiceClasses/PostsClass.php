@@ -1347,6 +1347,12 @@ class PostsClass
 
         switch ($type)
         {
+            case 1:
+                if (env('CONSTANTS_ENQUIRY_FOR_COMMENT'))
+                {
+                    $sid = $portal_id = env('CONSTANTS_ENQUIRY_FOR_COMMENT');
+                }
+            break;
             case 3:
                 if (env('CONSTANTS_ENQUIRY_FOR_IDEA'))
                 {

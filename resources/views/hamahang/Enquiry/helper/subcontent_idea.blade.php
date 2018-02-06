@@ -17,16 +17,16 @@
                     </div>
                 </td>
                 <td class="h-cells">
-                    <div class="h-cells-div{!! $post->answerCount ? ($post->accepted ? '-special-b' : '-special-a') : null !!}">
+                    <div class="h-cells-div">
                         <br />
                         <span class="h-cells-div-num">
-                            @if ($post->answerCount >= 1000)
-                                {!! round($post->answerCount / 1000) . "K" !!}
+                            @if ($post->comments->count() >= 1000)
+                                {!! round($post->comments->count() / 1000) . "K" !!}
                             @else
-                                {!! $post->answerCount !!}
+                                {!! $post->comments->count() !!}
                             @endif
                         </span><br />
-                        <span>{{ trans('enquiry.answer_idea') }}</span>
+                        <span>{{ trans('enquiry.answer_comment') }}</span>
                     </div>
                 </td>
                 <td class="h-cells" style="color: #9b764f;">
