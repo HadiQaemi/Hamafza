@@ -1400,7 +1400,6 @@ class PostsClass
 
         if ($keys != '')
         {
-
             $myArray = explode(',', $keys);
             foreach ($myArray as $value)
             {

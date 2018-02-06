@@ -44,9 +44,9 @@ class Keyword extends Model
         return $this->belongsToMany('App\Models\hamafza\Post', 'post_keys', 'kid', 'pid');
     }
 
-    public function questions()
+    public function questions(/*$sub_kind = 2*/)
     {
-        return $this->belongsToMany('App\Models\hamafza\Post', 'post_keys', 'kid', 'pid')->where('type', '2');
+        return $this->belongsToMany('App\Models\hamafza\Post', 'post_keys', 'kid', 'pid')/*->where('type', $sub_kind)*/;
     }
 
     public function thesauruses()

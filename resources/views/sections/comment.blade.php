@@ -20,8 +20,8 @@
                         <option value="2">پرسش</option>
                         <option value="3">ایده</option>
                         <option value="4">تجربه</option>
-                        <option value="12">خبر</option>
-                        <option value="13">مرور</option>
+                        {{--<option value="12">خبر</option>--}}
+                        {{--<option value="13">مرور</option>--}}
                     </select>
                     <div class="col-md-10 col-sm-8 col-xs-8">
                         <input type="text" id="commentTitleW" class="form-control" placeholder="عنوان">
@@ -64,10 +64,10 @@
                     </table>
                     <table class="table">
                         <tr>
-                            <td class="col-xs-1 showW_on_type_2_2">درگاه</td>
+                            <td class="col-xs-1 showW_on_type_2_2"><small>درج در درگاه</small></td>
                             <td class="col-xs-4 showW_on_type_2_2"><select class="portal_id no-padding form-control" name="portal_id" id="portal_id" style="display: inline-block;" ></select></td>
-                            <td class="col-xs-1 hideW_on_type_2_2">درج در</td>
-                            <td class="col-xs-5 hideW_on_type_2_2">
+                            <td class="col-xs-2 hideW_on_type_2_2"><small>درج در گروه ها و کانال ها</small></td>
+                            <td class="col-xs-4 hideW_on_type_2_2">
                                 <select id="groups" class="darjdar no-padding form-control" multiple>
                                     @foreach(MyOrganGroups() as $item)
                                         <option value="{{$item->id}}" class="CheckedGroup" name="CheckedGroup">{{$item->name}}</option>

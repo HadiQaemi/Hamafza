@@ -20,7 +20,7 @@ class SetDevDebugTrue
         if (in_array($request->getClientIp(), ['89.165.122.115', '188.34.116.207', '127.0.0.1']))
         {
             config(['app.debug' => true]);
-            \Debugbar::enable();
+            \Debugbar::disable();
         }
         else
         {

@@ -22,12 +22,14 @@ class EnquiryController extends Controller
     static public function get_keywords($sid = -1, $paginate = 0)
     {
         $sid = -1 == $sid ? config('constants.default_enquiry_portal_id') : $sid;
+        $sub_kind = Subject::find($sid)->sub_kind;
+        $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
         $term = Request::input('term');
         $keywords = Keyword::where('title', 'like', "%$term%")->withCount
         ([
-            'questions' => function ($query) use ($sid)
+            'questions' => function ($query) use ($sid, $sub_kind)
             {
-                $query->where('portal_id', $sid);
+                $query->where('portal_id', $sid)->where('type', $sub_kind);
             }
         ])->whereHas('questions', function ($query) use ($sid)
         {
@@ -46,12 +48,14 @@ class EnquiryController extends Controller
     public function index_ajax_sidebar()
     {
         $sid = Request::exists('sid') == false ? config('constants.default_enquiry_portal_id') : Request::get('sid');
+        $sub_kind = Subject::find($sid)->sub_kind;
+        $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
         $no_empty = Request::get('no_empty');
         $keywords_results = Keyword::withCount(
         [
-            'questions' => function ($query) use ($sid)
+            'questions' => function ($query) use ($sid, $sub_kind)
             {
-                $query->where('portal_id', $sid);
+                $query->where('portal_id', $sid)->where('type', $sub_kind);
             }
         ]);
         if ('true' == $no_empty)
@@ -84,17 +88,30 @@ class EnquiryController extends Controller
 
     public function show_question($sid = false, $post_id)
     {
+        $sub_kind = Subject::find($sid / 10)->sub_kind;
         $res = variable_generator('page','enquiry',$sid, ['post_id' => $post_id]);
         $post = Post::find($post_id);
         $post->viewcount++;
         $post->save();
-        $res['current_tab'] = $sid.'/enquiry/'.$post_id;
+        switch ($sub_kind)
+        {
+            case 3:
+                $title = 'ایده';
+                break;
+            case 4:
+                $title = 'تجربه';
+                break;
+            default:
+                $title = 'پرسش';
+                break;
+        }
+        $res['current_tab'] = "$sid/enquiry/$post_id";
         $res['tabs'][] =
         [
-            'link'=>$sid.'/enquiry/'.$post_id,
-            'href'=>$sid.'/enquiry/'.$post_id,
-            'title'=>'پرسش',
-            'selected'=>true,
+            'link' => "$sid/enquiry/$post_id",
+            'href' => "$sid/enquiry/$post_id",
+            'title' => $title,
+            'selected' => true,
         ];
         return view($res['viewname'])->with($res);
     }
@@ -110,20 +127,11 @@ class EnquiryController extends Controller
         $ord_sort = 'asc' == $ord ? 'sortBy' : 'sortByDesc';
         switch ($tab)
         {
-            /*
-            case 10:
-                if ($kid)
-                    $posts = Keyword::find($kid)->questions->$ord_sort('id');
-                else
-                    $posts = Post::where('type', $sub_kind)->orderBy('id', $ord)->get();
-            break;
-            */
             case 20:
                 if ($kid)
                 {
-                    $posts = Keyword::find($kid)->questions->where('portal_id', $sid)->$ord_sort('reg_date');
-                }
-                else
+                    $posts = Keyword::find($kid)->questions()->where('portal_id', $sid)->where('type', $sub_kind)->orderBy('reg_date', $ord)->get();
+                } else
                 {
                     $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->orderBy('reg_date', $ord)->get();
                 }
@@ -131,9 +139,8 @@ class EnquiryController extends Controller
             case 30:
                 if ($kid)
                 {
-                    $posts = Keyword::find($kid)->questions->where('portal_id', $sid)->$ord_sort('TotalReward');
-                }
-                else
+                    $posts = Keyword::find($kid)->questions->where('portal_id', $sid)->where('type', $sub_kind)->$ord_sort('TotalReward');
+                } else
                 {
                     $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->get()->$ord_sort('TotalReward');
                 }
@@ -141,9 +148,9 @@ class EnquiryController extends Controller
             case 40:
                 if ($kid)
                 {
-                    //$posts = Keyword::find($kid)->questions->where('portal_id', $sid)->$ord_sort('reg_date');
-                }
-                else
+                    //$posts = Keyword::find($kid)->questions->where('portal_id', $sid)->where('type', $sub_kind)->$ord_sort('reg_date');
+                    $posts = [];
+                } else
                 {
                     $posts = Post::where('portal_id', $sid)->where('type', $sub_kind)->orderBy(DB::raw('GET_POST_ANSWER_COUNT(`id`)'), $ord)->orderBy(DB::raw('GET_POST_VOTE_COUNT(`id`)'), $ord)->get();
                     /*
@@ -176,9 +183,8 @@ class EnquiryController extends Controller
             case 50:
                 if ($kid)
                 {
-                    $posts = Keyword::find($kid)->questions->where('portal_id', $sid)->$ord_sort('VoteCount');
-                }
-                else
+                    $posts = Keyword::find($kid)->questions->where('portal_id', $sid)->where('type', $sub_kind)->$ord_sort('VoteCount');
+                } else
                 {
                     $posts = Post::where('portal_id', $sid)->where('type', '2')->get()->$ord_sort('VoteCount');
                 }
@@ -289,7 +295,7 @@ class EnquiryController extends Controller
         switch ($what)
         {
             case 'portals':
-                $subject_result = Subject::where('kind', '20')->select(['id', 'title'])->get();
+                $subject_result = Subject::where('kind', '20')->where('sub_kind', '0')->select(['id', 'title'])->get();
                 $r = json_encode($subject_result->toArray());
                 break;
         }
