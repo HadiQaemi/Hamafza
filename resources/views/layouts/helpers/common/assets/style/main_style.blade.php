@@ -30,8 +30,13 @@ if (isset($Title))
     $pos = strpos(strip_tags($Title), 'ویرایش');
     if ($pos !== false)
         echo '<link type="image/png" rel="icon" href="' . Request::root() . '/edit.png">';
-    else
-        echo '<link type="image/png" rel="icon" href="' . Request::root() . '/favicon.png">';
+    else{
+        if(config('constants.IndexView')=='kmkz')
+            echo '<link type="image/png" rel="icon" href="' . Request::root() . '/logo-kmkz.png">';
+        else
+            echo '<link type="image/png" rel="icon" href="' . Request::root() . '/favicon.png">';
+    }
+
 }
 
 ?>
