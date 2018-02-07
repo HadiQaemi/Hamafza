@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Smartdetect extends Model
 {
 
-    protected $table = 'smartdetect';
+    const schema_table = 'smartdetect';
+
+    protected $table = self::schema_table;
 
     public function ip(array $columns = [])
     {

