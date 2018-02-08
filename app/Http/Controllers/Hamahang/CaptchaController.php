@@ -17,15 +17,17 @@ class CaptchaController extends Controller
         $quality = config('captcha.quality');
         $width = config('captcha.width');
         $height = config('captcha.height');
-        $random_string = str_replace('O', '5', strtoupper(md5(rand(0, 1000000))));
+//        $random_string = str_replace('O', '5', strtoupper(md5(rand(0, 1000000))));
+        $random_string = strtoupper((rand(0, 1000000000)));
+        /*$random_string = str_replace('O', '5', strtoupper((rand(0, 1000000000))));
         $random_string = str_replace('0', 'H', $random_string);
         $random_string = str_replace('B', 'F', $random_string);
-        $random_string = str_replace('8', '9', $random_string);
-        $captcha = substr($random_string, rand(0, 3), $length);
+        $random_string = str_replace('8', '9', $random_string);*/
+        $captcha = substr($random_string, rand(0, 5), $length);
         session()->put('captcha_' . $section, $captcha);
         $im = imagecreatetruecolor($width, $height);//200 x 70 pixel image
         $black = imagecolorallocate($im, 0, 0, 0);
-        imagecolortransparent($im, $black);//give it a black background
+        //imagecolortransparent($im, $black);//give it a black background
         switch (rand(0, 4))
         {
             case 0:

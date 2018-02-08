@@ -304,20 +304,20 @@
             </div>
         @endif
     @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
-        @if ('0' == $vals['follow'])
+    @if ('0' == $vals['follow'])
+        <div class="btn-group pull-right mr">
+            <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
+        </div>
+        @if ('page.forum' != $route_name)
             <div class="btn-group pull-right mr">
-                <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
-            </div>
-            @if ('page.forum' != $route_name)
-                <div class="btn-group pull-right mr">
-                    <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
-                </div>
-            @endif
-        @elseif ('1' == $vals['follow'])
-            <div class="btn-group pull-right mr">
-                <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
+                <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
             </div>
         @endif
+    @elseif ('1' == $vals['follow'])
+        <div class="btn-group pull-right mr">
+            <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
+        </div>
+    @endif
     @endif
     @if ('[REMOVE]' != $help_code)
         <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
@@ -335,5 +335,8 @@
         <div class="btn-group pull-right mr">
             <button type="button" class="btn fa fa-anchor icon-ezhare-nazar login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.comment') }}"></button>
         </div>
+    @endif
+    @if ('[REMOVE]' != $help_code)
+        <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
     @endif
 @endif
