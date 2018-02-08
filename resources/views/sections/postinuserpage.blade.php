@@ -132,6 +132,7 @@
                                         $.each(json_data, function (id, record)
                                         {
                                             portal_idW.append('<option value="' + record.id + '">' + record.title + '</option>');
+                                            portal_idW.find('option:first-child').attr('selected', 'selected');
                                         });
                                     }
                                 }
