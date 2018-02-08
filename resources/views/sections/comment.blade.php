@@ -101,7 +101,6 @@
                                         $.each(json_data, function (id, record)
                                         {
                                             portal_id.append('<option value="' + record.id + '">' + record.title + '</option>');
-                                            portal_id.find('option:first-child').attr('selected', 'selected');
                                         });
                                     }
                                 }
@@ -123,6 +122,7 @@
                                     showW_on_type_2_2.show();
                                     hideW_on_type_2_2.removeClass('col-xs-10');
                                     hideW_on_type_2_2.addClass('col-xs-5');
+                                    $('.portal_id').select2({data: {id: 6, text: 'پرس و جو'}});
                                 } else
                                 {
                                     // table 1
