@@ -32,14 +32,17 @@
                     }
                     case 'enquiry_pages':
                     {
-                        if (20 == $keyword_item->subject->kind)
+                        if ($keyword_item->subject)
                         {
-                            $r .=
-                            '
-                            <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" target="_blank">' . $keyword_item->title . '</a>
-                            </li>
-                            ';
+                            if (20 == $keyword_item->subject->kind)
+                            {
+                                $r .=
+                                '
+                                <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
+                                    <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" target="_blank">' . $keyword_item->title . '</a>
+                                </li>
+                                ';
+                            }
                         }
                         break;
                     }
