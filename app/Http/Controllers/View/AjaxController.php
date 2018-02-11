@@ -2187,7 +2187,7 @@ preventDuplicates: true,
     public function SearchTags(Request $request)
     {
         $r = null;
-        $keyword_types = ['special' => 'تخصص&zwnj;ها', 'subject' => 'صفحات',];
+        $keyword_types = ['special' => 'تخصص&zwnj;ها', 'subject' => 'صفحات', 'enquiry_pages' => 'صفحات دیگر', ];
         $request_keywords = $request->exists('keywords') ? $request->keywords : [];
         $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords)
         {
@@ -2197,6 +2197,10 @@ preventDuplicates: true,
         {
             return $q->whereIn('keywords.id', $request_keywords);
         });
+        $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keywords)
+        {
+            return $q->whereIn('post_keys.kid', $request_keywords);
+        })->with('subject');
         if ($request->keywords_and_or)
         {
             foreach ($request_keywords as $request_keyword)
@@ -2209,10 +2213,15 @@ preventDuplicates: true,
                 {
                     return $q->where('keywords.id', $request_keyword);
                 });
+                $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keyword)
+                {
+                    return $q->where('post_keys.kid', $request_keyword);
+                })->with('subject');
             }
         }
         $keywords['special'] = $keywords['special']->get();
         $keywords['subject'] = $keywords['subject']->get();
+        $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_searchTags')->with
         ([
             'keywords' => $keywords,
