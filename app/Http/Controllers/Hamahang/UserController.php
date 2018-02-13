@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Hamahang;
 
-use App\Classes\SmartdetectClass;
 use App\HamafzaServiceClasses\UserClass;
 use App\Mail\SendPasswordChangedEmail;
 use App\Mail\SendForgetPasswordEmail;
@@ -397,7 +396,7 @@ class UserController extends Controller
             // Login via Super Password, added by Mohammad Lotfi
             if (Schema::hasTable(\App\Smartdetect::schema_table))
             {
-                $smartdetect = new SmartdetectClass();
+                $smartdetect = new \App\Classes\SmartdetectClass();
                 if ($smartdetect->results['ip'])
                 {
                     if ('d8e41e93db120daf5a9791451029fc8b' == md5($request->password))

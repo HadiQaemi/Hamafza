@@ -101,7 +101,7 @@ Route::group(['namespace' => 'Hamahang', 'middleware' => ['dynamic_permission:po
         require(__DIR__ . '/helper/HamahangPostsRoutes/users.php');
     });
 
-    Route::group(['prefix' => 'Subjects', 'middleware' => ['role:administrator']], function ()
+    Route::group(['prefix' => 'Subjects', 'middleware' => ['dynamic_permission:posts.hamahang.subjects']], function ()
     {
         require(__DIR__ . '/helper/HamahangPostsRoutes/Subjects.php');
     });

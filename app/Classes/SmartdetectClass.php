@@ -152,3 +152,14 @@ class SmartdetectClass
 
 }
 
+// Usage:
+/*
+if (Schema::hasTable(\App\Smartdetect::schema_table))
+{
+    $smartdetect = new \App\Classes\SmartdetectClass();
+    if ($smartdetect->results['ip'])
+    {
+        dd(time());
+    }
+}
+*/
