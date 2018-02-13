@@ -44,8 +44,9 @@
                             <a href="#" postid="Comment_{!! $post->id !!}" class="Comment_Foc">{{ trans('enquiry.ezharnazar') }}</a> -
                             <a class="jsPanels" href="{!! route('modals.post_share', [ 'postid' => $post->id ]) !!}">{{ trans('enquiry.share') }}</a>
                         </div>
-                        @if ($post->isOwner)
-                            @if (0 == $post->answerCount)
+                        @php ($is_administrator = \Laratrust::hasRole('administrator'))
+                        @if ($post->isOwner || $is_administrator)
+                            @if (0 == $post->answerCount || $is_administrator)
                                 <div style="margin-right: 10px; float: left;" class="fonts icon-hazv CommentDelicn delete-post" page="Post" action="delete" id="{!! $post->id !!}"></div>
                             @endif
                         @endif

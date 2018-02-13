@@ -41,3 +41,5 @@ user => revel...org field added.
 96/11/18
 smartdetect => added
 
+96/11/24
+subjects => sub_kind => added
