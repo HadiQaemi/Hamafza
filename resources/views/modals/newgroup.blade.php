@@ -1,7 +1,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
-$("#Groupkeywords").tokenInput("{{App::make('url')->to('/')}}/Tagsearch", {
-preventDuplicates: true,
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=0') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+    $("#Groupkeywords").tokenInput("{{App::make('url')->to('/')}}/Tagsearch", {
+    preventDuplicates: true,
         hintText: "عبارتی را وارد کنید",
         noResultsText: "نتیجه‌ای یافت نشد، با زدن دکمه اینتر کلیدواژه جدیدی ایجاد می‌شود",
         searchingText: "در حال جستجو",
@@ -46,11 +47,6 @@ preventDuplicates: true,
                 <td width="160">نام گروه <font color="red">*</font></td>
                 <td>
                     <input type="form-control" style="width:388px" dir="rtl" id="group_title" class="form-control required" value="" name="group_title">
-                 <span class="help-icon-span WindowHelpIcon">
-        <a href="{{App::make('url')->to('/')}}/modals/helpview?id=17&tagname=abzarmozoejadidgoroh&hid=6" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip">
-        </a>
-    </span>
-   
                 </td>
             </tr>
             <tr>

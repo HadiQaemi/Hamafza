@@ -26,7 +26,7 @@
                         <div id="home" class="tab-pane fade in active menus">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <a href="{{ url('/444500') }}"><img src="{{ url('theme/kmkz/img/book1.jpg') }}" /></a>
+                                    <a href="{{ url('/444500') }}"><img src="{{ url(App\Models\hamafza\Pages::find(444500)->subject->defimageurl) }}" /></a>
                                 </div>
                                 <div class="col-sm-9 tab-des">
                                     <h3>فرآیند بودجه: تنظیم، تصویب، اجرا و کنترل</h3>
@@ -37,7 +37,7 @@
                         <div id="menu1" class="tab-pane fade menus">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <a href="{{ url('/444490') }}"><img src="{{ url('theme/kmkz/img/book1.jpg') }}" /></a>
+                                    <a href="{{ url('/444490') }}"><img src="{{ url(App\Models\hamafza\Pages::find(444490)->subject->defimageurl) }}" /></a>
                                 </div>
                                 <div class="col-sm-9 tab-des">
                                     <h3>فرآیند بودجه: تنظیم، تصویب، اجرا و کنترل</h3>
@@ -48,7 +48,7 @@
                         <div id="menu2" class="tab-pane fade menus">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <a href="{{ url('/') }}"><img src="{{ url('theme/kmkz/img/book1.jpg') }}" /></a>
+                                    <a href="{{ url('/4') }}"><img src="{{ url('theme/kmkz/img/4.png') }}" /></a>
                                 </div>
                                 <div class="col-sm-9 tab-des">
                                     <h3>فرآیند بودجه: تنظیم، تصویب، اجرا و کنترل</h3>
@@ -59,7 +59,7 @@
                         <div id="menu3" class="tab-pane fade menus">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <a href="{{ url('/444480') }}"><img src="{{ url('theme/kmkz/img/book1.jpg') }}" /></a>
+                                    <a href="{{ url('/444480') }}"><img src="{{ url(App\Models\hamafza\Pages::find(444480)->subject->defimageurl) }}" /></a>
                                 </div>
                                 <div class="col-sm-9 tab-des">
                                     <h3>فرآیند بودجه: تنظیم، تصویب، اجرا و کنترل</h3>
