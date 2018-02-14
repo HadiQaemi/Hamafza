@@ -75,7 +75,7 @@
                     <h2>اخبار و اطلاعیه</h2>
                     <div class="row">
                         <div class="col-sm-4">
-                            <a href="{{ url('/444510') }}"><img class="slide_image" src="{{ url('theme/kmkz/img/pic1.jpg') }}" /></a>
+                            <a href="{{ url('/444510') }}"><img class="slide_image" src="{{ url(App\Models\hamafza\Pages::find(444510)->subject->defimageurl) }}" /></a>
                             <p class="change_slider"><a href="#"><</a>همه<a href="#">></a></p>
                         </div>
                         <div class="col-sm-8 tab-des">
