@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use App\Smartdetect as Model;
 use Request;
+use Schema;
 
 class SmartdetectClass
 {
@@ -35,12 +36,28 @@ class SmartdetectClass
 
     private $model;
 
-    public $result_factors = [];
-    public $results = [];
+    public $result_factors =
+    [
+        'ip' => null,
+        'domain' => null,
+        'user_id' => null,
+        'user_email' => null,
+        'request' => null,
+    ];
+    public $results =
+    [
+        'ip' => null,
+        'domain' => null,
+        'user_id' => null,
+        'user_email' => null,
+        'request' => null,
+    ];
     public $result = null;
 
     function __construct(array $config = [])
     {
+        if (!Schema::hasTable(Model::schema_table)) { return; }
+        if (!Request::input('smartdetect', true)) { return; }
         $this->model = new Model();
         $this->result_factors =
         [

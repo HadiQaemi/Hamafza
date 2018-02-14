@@ -19,25 +19,22 @@ class SetDevDebugTrue
 
     public function handle(Request $request, Closure $next)
     {
-        $turn_on = false;
-        if (Schema::hasTable(\App\Smartdetect::schema_table))
+        $APP_DEBUG = null;
+        switch (strtolower(env('APP_DEBUG')))
         {
-            $smartdetect = new SmartdetectClass();
-            if ($smartdetect->results['ip'])
-            {
-                $turn_on = true;
-            }
+            case 'smartdetect':
+                $smartdetect = new SmartdetectClass();
+                $APP_DEBUG = $smartdetect->results['ip'];
+            break;
+            default:
+                $APP_DEBUG = env('APP_DEBUG');
         }
-
-        //if (in_array($request->getClientIp(), ['89.165.122.115', '188.34.116.207', '127.0.0.1']))
-        if ($turn_on)
+        config(['app.debug' => $APP_DEBUG]);
+        if ($APP_DEBUG)
         {
-            config(['app.debug' => true]);
             \Debugbar::disable();
-        }
-        else
+        } else
         {
-            config(['app.debug' => env('APP_DEBUG')]);
             \Debugbar::disable();
         }
         return $next($request);
