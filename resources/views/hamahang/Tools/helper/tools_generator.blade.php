@@ -18,7 +18,7 @@
                                        @if($tool->url_type==2)
                                        @php($username = auth()->check()?auth()->user()->Uname:'NotLogin')
                                        class=""
-                                       href="{{url( str_replace(['[username]','[subject_id]','[page_id]'],[$username,$option['subject_id'],$option['page_id']],$tool->url)).$get_url_str }}"
+                                       href="{{url( str_replace(['[username]','[subject_id]','[page_id]'],[$username,$option['subject_id'],$option['page_id']],$tool->url)) . (5 == $tool->id ? null : $get_url_str) }}"
                                        @elseif($tool->url_type == 1 && $tool->available->modal==0)
                                        class="{{$tool->available->url}}"
                                        @foreach($option as $key=>$opt)
