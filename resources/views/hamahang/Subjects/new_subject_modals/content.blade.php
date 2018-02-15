@@ -43,12 +43,7 @@
                         @if($subject_type_policies_Official_check == true)
                             <select class="form-control col-xs-4" id="PublicSel" name="Skind">
                                 @foreach($OfficialSubjects as $item)
-                                    <option value="{{ $item->id }}"
-                                            tem="true"
-                                            public="1"
-                                            kind="{{ $item->id}}"
-                                            framework="{{ $item->Framework}}"
-                                    >{{ $item->name}}</option>
+                                    <option value="{{ $item->id }}" tem="true" public="1" kind="{{ $item->id}}" framework="{{ $item->Framework}}">{{ $item->name}}</option>
                                 @endforeach
                             </select>
                         @endif

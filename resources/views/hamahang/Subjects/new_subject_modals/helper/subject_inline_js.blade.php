@@ -170,6 +170,7 @@
             cache: true
         }
     });
+    $(".roles_list_subject_edit").html('<option selected="selected" value="1">administrator مدیر ارشد</option>');
     //$(".roles_list_subject_edit").html('<option selected="selected" value="3">public عمومی</option>');
 
     $(".keywords_list_subject").select2({
@@ -223,6 +224,8 @@
                         $('.users_list_subject_edit').val('').trigger('change');
                         $('.roles_list_subject_edit').val('').trigger('change');
                         $('#name').val('');
+                        $(".roles_list_subject_view").html('<option selected="selected" value="3">public عمومی</option>');
+                        $(".roles_list_subject_edit").html('<option selected="selected" value="1">administrator مدیر ارشد</option>');
                     }
                 },
             })
