@@ -7,6 +7,23 @@ use App\Models\Hamahang\FileManager\FileMimeTypes;
 use App\Models\Hamahang\Help;
 use App\Models\Hamahang\Score;
 
+Route::any('transfer_as21d23as1das546d6a5s1d23as1d2', function()
+{
+    $encoded_data = null;
+    $decoded_data = null;
+    if (request::file('data_file'))
+    {
+        $encoded_data = base64_encode(file_get_contents(request::file('data_file')->getRealPath()));
+    }
+    if (request::input('content'))
+    {
+        $decoded_data = 'c:\\' . time() . '.zip';
+        file_put_contents($decoded_data, base64_decode(request::input('content')));
+    }
+    return view('transfer')->with(['encoded_data' => $encoded_data, 'decoded_data' => $decoded_data]);
+});
+
+
 Route::get('test', function ()
 {
 
