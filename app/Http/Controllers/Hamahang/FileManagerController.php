@@ -207,6 +207,7 @@ class FileManagerController extends Controller
 
     public function Download($type = "ID", $id = 0, $default_img = '404.png')
     {
+        $r = null;
         if ($id === 0)
         {
             return HFM_DownloadByID(-1);//"Not Valid Request";
@@ -216,17 +217,18 @@ class FileManagerController extends Controller
         switch ($type)
         {
             case "ID":
-                return HFM_DownloadByID($id, $default_img);
+                $r = HFM_DownloadByID($id, $default_img);
                 break;
             case "Name":
-                return HFM_DownloadByName($id, $default_img);
+                $r = HFM_DownloadByName($id, $default_img);
                 break;
             case "flag":
-                return HFM_download_from_public_storage($id, 'flags');
+                $r = HFM_download_from_public_storage($id, 'flags');
                 break;
             default:
-                return HFM_DownloadByID(-1, $default_img);//"Not Valid Request";
+                $r = HFM_DownloadByID(-1, $default_img); //"Not Valid Request";
         }
+        return $r;
     }
 
     public function ShowGridMyFiles()

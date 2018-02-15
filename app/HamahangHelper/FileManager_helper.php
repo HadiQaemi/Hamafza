@@ -62,13 +62,11 @@ if (!function_exists('HFM_DownloadByID'))
                     return $base64;
                 }
                 return response()->download($file_path, $file->originalName . $file_EXT, $headers);
-            }
-            else
+            } else
             {
                 return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
             }
-        }
-        else
+        } else
         {
             return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
         }
