@@ -127,11 +127,27 @@
             });
         });
 
+        $(document).on('keydown', '#homepage_form_login #username, #homepage_form_login #password, #homepage_form_login #captcha_code', function(e)
+        {
+            if (13 == e.keyCode)
+            {
+                $('#btn_homepage_login_form').click();
+            }
+        });
+
+        $(document).on('keydown', '#modal_login_form #username, #modal_login_form #password, #modal_login_form #captcha_code', function(e)
+        {
+            if (13 == e.keyCode)
+            {
+                $('#btn_modal_login').click();
+            }
+        });
+
         $(document).on("click", "#btn_homepage_login_form", function () {
 
             var form_data = $('#homepage_form_login').serialize();
             $('.homepage_inner_login_div').hide();
-            $('.homepage_login_div').addClass('loader')
+            $('.homepage_login_div').addClass('loader');
             $.ajax({
                 type: "POST",
                 url: '{{ route('login_user')}}',
