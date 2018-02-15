@@ -39,6 +39,10 @@ class TicketController extends Controller
             ->get();
 
         return \Datatables::of($tickets)
+            ->addColumn('has_attachment', function ($data)
+            {
+                return (bool) $data->files->count();
+            })
             ->addColumn('JalaliRegDate', function ($data)
             {
                 return $data->JalaliRegDate;
@@ -63,15 +67,19 @@ class TicketController extends Controller
 
     public function get_ticket_send()
     {
-        $tickets =  Auth::user()->SendTickets()
+        $tickets = Auth::user()->SendTickets()
             ->with('ticket_answer')
-            ->with('sender_user')
+            ->with('receiver_users')
             ->with('ticket_files')
             ->groupBy('tickets.id')
             ->orderBy('tickets.id','DESC')
             ->get();
 
         return \Datatables::of($tickets)
+            ->addColumn('has_attachment', function ($data)
+            {
+                return (bool) $data->files->count();
+            })
             ->addColumn('JalaliRegDate', function ($data)
             {
                 return $data->JalaliRegDate;

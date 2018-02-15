@@ -17,10 +17,17 @@
                 }
             },
             {
-                data: 'sender_user.Name',
-
-                mRender: function (data, type, full) {
-                    return '<a class="jsPanels" title="پیام دریافتی" href="{{ route('modals.view_message') }}?sid=' + full['id'] + '">' + full['sender_user']['Name'] + ' ' + full['sender_user']['Family'] + '</a>';
+                data: 'receiver_users',
+                render: function (data, type, full)
+                {
+                    var out = [];
+                    items = full.receiver_users;
+                    for (var item in items)
+                    {
+                        item = items[item];
+                        out.push('<a class="jsPanels" title="پیام دریافتی" href="{{ route('modals.view_message') }}?sid=' + full.id + '">' + item.Name + ' ' + item.Family + '</a>');
+                    }
+                    return out.join('، ');
                 }
             },
             {
@@ -38,11 +45,17 @@
                 }
             },
             {
-                mRender: function (data, type, full) {
-                    if (full['ticket_files'].length > 0)
-                        return '<img src="{{ url('') }}/img/clip.png">';
-                    else
-                        return '';
+                render: function (data, type, full)
+                {
+                    var r = '';
+                    if (full['has_attachment'])
+                    {
+                        r = '<a class="jsPanels" title="این نشان یعنی پیام دارای فایل پیوست است." href="{{ route('modals.view_message') }}?sid=' + full['id'] + '">' + '<div style="text-align: center; color: green;"><i class="fa fa-check fa-2x"></i></div>' + '</a>';
+                    } else
+                    {
+                        r = '<div style="text-align: center; color: lightgray;"><i class="fa fa-close"></i></div>';
+                    }
+                    return r;
                 }
             },
             {

@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#HFM_GridMyFiles">{{trans('filemanager.selectd_file')}}</a></li>
-                    <li><a data-toggle="tab" href="#HFM_UploadNewFiles">{{trans('filemanager.file_upload')}} </a></li>
+                    <li><a data-toggle="tab" href="#HFM_UploadNewFiles"> فایل های جدید</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="HFM_GridMyFiles" class="tab-pane fade in active">
@@ -40,11 +40,12 @@
                         <div class="row-fluid" style="margin-top: 15px;">
                             <hr>
                             <div class="col-xs-12">
-                                <button id="HFM_AddSelectedFilesSubmitBtn" name="upload_files" value="upload" class="btn btn-info pull-left" type="button">
-                                    <i class="glyphicon glyphicon-save-file bigger-125"></i>
+                                <button id="HFM_AddSelectedFilesSubmitBtn" name="upload_files" value="upload" class="btn btn-primary pull-left" type="button">
                                     <span>{{trans('filemanager.add_files_selected')}}</span>
                                 </button>
+                                <!--
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{trans('filemanager.cancel')}}</button>
+                                -->
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -61,7 +62,7 @@
                                                 'id'                    => 'id_input_files',
                                                 'class'                 => 'filestyle',
                                                 'data-buttonText'       => trans('filemanager.select_file'),
-                                                'data-iconName'         => 'fa fa-inbox',
+                                                //'data-iconName'         => 'fa fa-inbox',
                                                 'data-buttonName'       => 'btn btn-primary',
                                                 'data-size'             => 'sm',
                                                 'buttonBefore'          => 'true',
@@ -90,11 +91,12 @@
                         <div class="row-fluid" style="margin-top: 15px;">
                             <hr>
                             <div class="col-xs-12">
-                                <button id="HFM_UploadFormSubmitBtn" name="upload_files" value="upload" class="btn btn-info pull-left" type="button">
-                                    <i class="glyphicon  glyphicon-save-file bigger-125"></i>
+                                <button id="HFM_UploadFormSubmitBtn" name="upload_files" value="upload" class="btn btn-primary pull-left" type="button">
                                     <span>{{trans('filemanager.upload_files_selected')}}</span>
                                 </button>
+                                <!--
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{trans('filemanager.cancel')}}</button>
+                                -->
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -126,22 +128,19 @@
                         <div class="tab-content">
                             <div id="error_upload_content" class="tab-pane fade " style="max-height: 300px;
 							overflow-y: scroll;">
-                                <div class="space-10"></div>
+                                {{--<div class="space-10"></div>--}}
                                 <table id="failed_upload_files" class="table table-striped table-bordered dt-responsive nowrap display" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th>{{trans('filemanager.title')}}</th>
-                                        <th>{{trans('filemanager.size')}}</th>
-                                        <th>{{trans('filemanager.error')}}</th>
+                                    <thead style="visibility: hidden; display: none;">
+                                    <tr style="visibility: hidden; display: none;">
+                                        <th style="visibility: hidden; display: none;">{{trans('filemanager.error')}}</th>
                                     </tr>
                                     </thead>
                                 </table>
-                            </div>
+                           </div>
                             <div id="success_upload_content" class="tab-pane fade in active" style="max-height:
 							300px; overflow-y: scroll;">
                                 <div class="space-10"></div>
-                                <table id="success_upload_files" class="table table-striped table-bordered
-								dt-responsive nowrap display" width="100%">
+                                <table id="success_upload_files" class="table table-striped table-bordered dt-responsive nowrap display" width="100%">
                                     <thead>
                                     <tr>
                                         <th>{{trans('filemanager.title')}}</th>
@@ -158,8 +157,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info pull-left" data-dismiss="modal">
-                    <i class="fa fa-check"></i>
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
                     <span>{{trans('filemanager.accept')}}</span>
                 </button>
             </div>

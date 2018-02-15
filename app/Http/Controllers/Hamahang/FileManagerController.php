@@ -69,15 +69,15 @@ class FileManagerController extends Controller
                         }
                         else
                         {
-                            return json_encode(array('success' => False, 'error' => '"' . trans('filemanager.acceptable_prefix_of_file_not_selected') . '"'));
+                            return json_encode(array('success' => False, 'error' => '' . trans('filemanager.acceptable_prefix_of_file_not_selected') . ''));
                         }
                     }
                     else
                     {
-                        return json_encode(array('success' => False, 'error' => '"' . trans('filemanager.acceptable_prefix_of_file_not_selected') . '"'));
+                        return json_encode(array('success' => False, 'error' => '' . trans('filemanager.acceptable_prefix_of_file_not_selected') . ''));
                     }
 
-                    $messages = ['file.mimes' => '"' . trans('filemanager.mime_type_not_allowed') . '"', 'file.max' => '"' . trans('filemanager.file_size_not_allowed') . '"'];
+                    $messages = ['file.mimes' => '' . trans('filemanager.mime_type_not_allowed') . '', 'file.max' => '' . trans('filemanager.file_size_not_allowed') . ''];
 
                     $validator = Validator::make(array('file' => $attachment), $rules, $messages);
                     if ($validator->passes())
@@ -96,7 +96,7 @@ class FileManagerController extends Controller
                 }
                 else
                 {
-                    $failed[] = array('OrginalFileName' => $original_name, 'Size' => HFM_FileSizeConvert($attachment->getSize()), 'Icon' => $icon, 'MimeType' => $attachment->getMimeType(), 'error' => array('file' => '"' . trans('filemanager.mime_type_not_allowed') . '"'));
+                    $failed[] = array('OrginalFileName' => $original_name, 'Size' => HFM_FileSizeConvert($attachment->getSize()), 'Icon' => $icon, 'MimeType' => $attachment->getMimeType(), 'error' => array('file' => '' . trans('filemanager.mime_type_not_allowed') . ''));
                 }
             }
         }
@@ -120,7 +120,7 @@ class FileManagerController extends Controller
             $FilesForSession = $succeeded_for_session;
             session()->put('Files', array("$section" => $FilesForSession));
         }
-        return response()->json(['success' => true, 'failed' => $failed, 'succeeded' => $succeeded_for_json, 'message' => '"' . trans('filemanager.action_complete_successfully') . '"', 'attachment_files' => $this->PrepareUploadedFilesForJSON($section),]);
+        return response()->json(['success' => true, 'failed' => $failed, 'succeeded' => $succeeded_for_json, 'message' => '' . trans('filemanager.action_complete_successfully') . '', 'attachment_files' => $this->PrepareUploadedFilesForJSON($section),]);
     }
 
     public function AddSelectedFileToSession($section = "Null")
@@ -130,7 +130,7 @@ class FileManagerController extends Controller
         /*$MC_Result = HFM_CheckMultiFile($section,Request::get("$field"));
         if(!$MC_Result['result'])
         {
-            return json_encode(array('success' => False, 'error' => '"'.$MC_Result['error_msg'].'"'));
+            return json_encode(array('success' => False, 'error' => ''.$MC_Result['error_msg'].''));
         }*/
         if (Session::has('TrueTypeUpload'))
         {
@@ -149,12 +149,12 @@ class FileManagerController extends Controller
             }
             else
             {
-                return json_encode(array('success' => False, 'error' => '"' . trans('filemanager.acceptable_prefix_of_file_not_selected') . '"'));
+                return json_encode(array('success' => False, 'error' => '' . trans('filemanager.acceptable_prefix_of_file_not_selected') . ''));
             }
         }
         else
         {
-            return json_encode(array('success' => False, 'error' => '"' . trans('filemanager.acceptable_prefix_of_file_not_selected') . '"'));
+            return json_encode(array('success' => False, 'error' => '' . trans('filemanager.acceptable_prefix_of_file_not_selected') . ''));
         }
 
         $succeeded_for_json = [];
@@ -178,7 +178,7 @@ class FileManagerController extends Controller
                 }
                 else
                 {
-                    $failed[] = array('Icon' => $icon, 'Size' => HFM_FileSizeConvert($file->size), 'MimeType' => $file->mimeType, 'OrginalFileName' => $file->originalName, 'error' => array('file' => '"' . trans('filemanager.mime_type_not_allowed') . '"'));
+                    $failed[] = array('Icon' => $icon, 'Size' => HFM_FileSizeConvert($file->size), 'MimeType' => $file->mimeType, 'OrginalFileName' => $file->originalName, 'error' => array('file' => '' . trans('filemanager.mime_type_not_allowed') . ''));
                 }
             }
         }
@@ -202,7 +202,7 @@ class FileManagerController extends Controller
             $FilesForSession = $succeeded_for_session;
             session()->put('Files', array("$section" => $FilesForSession));
         }
-        return response()->json(['success' => true, 'failed' => $failed, 'succeeded' => $succeeded_for_json, 'message' => '"' . trans('filemanager.action_complete_successfully') . '"', 'attachment_files' => $this->PrepareUploadedFilesForJSON($section),]);
+        return response()->json(['success' => true, 'failed' => $failed, 'succeeded' => $succeeded_for_json, 'message' => '' . trans('filemanager.action_complete_successfully') . '', 'attachment_files' => $this->PrepareUploadedFilesForJSON($section),]);
     }
 
     public function Download($type = "ID", $id = 0, $default_img = '404.png')

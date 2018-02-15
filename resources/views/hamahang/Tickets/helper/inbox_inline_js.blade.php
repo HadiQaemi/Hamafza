@@ -44,13 +44,17 @@
                 }
             },
             {
-                render: function(data, type, full)
+                render: function (data, type, full)
                 {
-                    console.log(full.files);
-                    if (full.files.length > 0)
-                        return '<img src="{{ url('') }}/img/clip.png">';
-                    else
-                        return '';
+                    var r = '';
+                    if (full['has_attachment'])
+                    {
+                        r = '<a class="jsPanels" title="این نشان یعنی پیام دارای فایل پیوست است." href="{{ route('modals.view_message') }}?sid=' + full['id'] + '">' + '<div style="text-align: center; color: green;"><i class="fa fa-check fa-2x"></i></div>' + '</a>';
+                    } else
+                    {
+                        r = '<div style="text-align: center; color: lightgray;"><i class="fa fa-close"></i></div>';
+                    }
+                    return r;
                 }
             },
             {

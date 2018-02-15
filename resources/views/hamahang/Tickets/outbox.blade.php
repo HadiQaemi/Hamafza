@@ -9,10 +9,10 @@
                     <thead>
                         <tr>
                             <th style="text-align: right;">ردیف</th>
-                            <th style="text-align: right;">فرستنده</th>
+                            <th style="text-align: right;">گیرنده / گیرندگان</th>
                             <th style="text-align: right;">عنوان</th>
                             <th style="text-align: right;">متن</th>
-                            <th style="text-align: right;">پیوست</th>
+                            <th style="text-align: center;">دارای پیوست</th>
                             <th style="text-align: right;">زمان</th>
                         </tr>
                     </thead>

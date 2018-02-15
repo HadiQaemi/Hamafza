@@ -87,18 +87,15 @@
                 info: false,
                 paging: false,
                 columns: [
-                    {"data": "OrginalFileName"},
-                    {"data": "Size", "width": "30px"},
+                    /*{"data": "OrginalFileName"},
+                    {"data": "Size", "width": "30px"},*/
                     {
                         "data": "error",
                         "mRender": function (data, type, full) {
-                            var out = '<ul class="alert alert-danger" style="margin:0; padding:0;">';
-                            for (var x in data) {
-                                out += '<li> - ';
-                                out += data[x];
-                                out += '</li>';
-                            }
-                            out += '</ul>';
+                            var out =
+                            '<div style="margin:0; padding:0;">';
+                            for (var x in data) { out += '<span style="color: red;">' + data[x] + '</span>'; }
+                            out += ' » ' + full.OrginalFileName + '</div>';
                             return out;
                         }
                     },
