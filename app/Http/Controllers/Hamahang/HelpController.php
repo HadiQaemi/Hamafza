@@ -18,7 +18,8 @@ class HelpController extends Controller
 
     public function help_content()
     {
-        $help = Help::query();
+        //$help = Help::query();
+        $help = Help::whereHas('HelpBlocks');
         $r = Datatables::eloquent($help)
             ->editColumn('id', function ($q) { return enCode($q->id); })
             ->addColumn('blocks_count', function ($q) { return $q->blocks_count; })

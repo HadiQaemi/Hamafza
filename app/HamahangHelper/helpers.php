@@ -781,13 +781,13 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res['viewname'] = 'pages.Desktop.announces';
                     $subject = Subject::findOrFail($item);
                     $sid = $subject->id;
-                    $my_subject_highlights =auth()->user()->Announces()->whereHas('page', function ($q) use ($sid)
+                    $my_subject_highlights = auth()->user()->Announces()->whereHas('page', function ($q) use ($sid)
                     {
                         $q->whereHas('subject', function ($q) use ($sid)
                         {
                             $q->where('subjects.id', $sid);
                         });
-                    })->get();
+                    })->orderBy('id', 'desc')->get();
                     $Title = $subject->title;
                     $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $sid, 'title' => $Title]], 1, 3, ['subject_id' => $sid, 'page_id' => $sid,'target_type'=>'subject','target_id'=>$sid,'target_type'=>'subject','target_id'=>$sid]);
                     $res['PageType'] = 'subject';

@@ -185,7 +185,7 @@
                     $help_code = 'dtejVqoWgs0';
                     break;
                 }
-				case 'ugc.desktop.highlights':
+				case 'page.desktop.highlights':
                 {
                     $help_code = 'vNdPYVsvRHk';
                     break;
