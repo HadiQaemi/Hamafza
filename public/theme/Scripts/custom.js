@@ -796,7 +796,7 @@ $(document).on("click", ".CirclePas", function () {
 
 $(document).on('click', 'ul.navbar-navtabs li a', function()
 {
-    var all = $('.HelpIcons');
+    var all = $('.HelpBookmarks, .HelpPortals, .HelpKeywords, .HelpSearch');
     all.hide();
     switch ($(this).attr('id'))
     {

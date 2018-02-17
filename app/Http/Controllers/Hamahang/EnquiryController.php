@@ -109,6 +109,8 @@ class EnquiryController extends Controller
                 break;
         }
         $res['current_tab'] = "$sid/enquiry/$post_id";
+        array_pop($res['tabs']);
+        array_pop($res['tabs']);
         $res['tabs'][] =
         [
             'link' => "$sid/enquiry/$post_id",

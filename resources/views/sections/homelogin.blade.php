@@ -17,7 +17,7 @@
                         <td style="padding: 2px;width:100%;padding-left: 15px;">
                             <label>رمز عبور</label>
                             <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                            <input type="password" name="password" class="form-control required" style="direction: ltr;">
+                            <input type="password" id="password" name="password" class="form-control required" style="direction: ltr;">
                         </td>
                     </tr>
                     @if (!config('app.debug'))

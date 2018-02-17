@@ -23,7 +23,7 @@
                             <div id="password_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon">رمزعبور</span>
-                                <input class="form-control" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off" tabindex="0" style="direction: ltr">
+                                <input class="form-control" id="password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off" tabindex="0" style="direction: ltr">
                             </div>
                             @if (!config('app.debug'))
                             <div id="captcha_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>

@@ -171,8 +171,9 @@ class MyTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return $data->Name . ' ' . $data->Family;
+                return '<a href="' . url('/' . $data->Uname) . '" target="_blank">' . $data->Name . ' ' . $data->Family . '</a>';
             })
+            ->rawColumns(['employee'])
             ->make(true);
     }
 
