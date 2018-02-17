@@ -741,7 +741,7 @@ class UserController extends Controller
 
     public function updateUserDetail(Request $request)
     {
-        $validator = Validator::make($request->all(),
+        $v_fields =
         [
             'name' => 'required|string|min:3|max:255',
             'family' => 'required|string|min:3|max:255',
@@ -749,14 +749,21 @@ class UserController extends Controller
             'province' => 'numeric',
             'city' => 'numeric',
             'mobile' => 'mobile_phone',
-            'tel_number' => 'numeric|digits:8',
-            'tel_code' => 'numeric|digits:4',
-            'fax_number' => 'numeric|digits:8',
-            'fax_code' => 'numeric|digits:4',
+            //'tel_number' => 'numeric|digits:8',
+            //'tel_code' => 'numeric|digits:4',
+            //'fax_number' => 'numeric|digits:8',
+            //'fax_code' => 'numeric|digits:4',
             'avatar' => 'mimes:jpg,png,jpeg|max:1024',
             'relevant_organization' => 'string|max:255',
 
-        ],
+        ];
+        if ('shazand' == config('constants.IndexView'))
+        {
+            $v_fields['email'] = 'required|email';
+
+        }
+        $validator = Validator::make($request->all(),
+        $v_fields,
         [
             'tel_code' => 'فرمت کد شهر فیلد تلفن ثابت رعایت نشده است.',
             'fax_code' => 'فرمت کد شهر فیلد فکس رعایت نشده است.',
@@ -785,6 +792,10 @@ class UserController extends Controller
                 $user->Family = $request->family;
                 $user->Summary = $request->summary;
                 $user->Gender = $request->gender;
+                if ('shazand' == config('constants.IndexView'))
+                {
+                    $user->Email = $request->email;
+                }
                 if ($request->user_avatar)
                 {
                     $upload = HFM_Upload($request->user_avatar, 'Avatars/');

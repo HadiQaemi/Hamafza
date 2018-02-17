@@ -4,7 +4,7 @@ File: PageClass.php
 Function: CreatPageView
 Line: Approximately Line 357
 -->
-{{--@if ($image_exist || $fields/* || $PageDescription*/)--}}
+{{--@if ($image_exist || $fields)--}}
     <link type="text/css" rel="stylesheet" href="{{ url('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css') }}">
     <script type="text/javascript" src="{{ url('assets/Packages/PersianDateOrTimePicker/js/persian-date.js') }}"></script>
     <script type="text/javascript" src="{{ url('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js') }}"></script>

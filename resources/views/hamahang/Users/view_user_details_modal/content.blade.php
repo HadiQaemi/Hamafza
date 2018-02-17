@@ -121,7 +121,7 @@
                                     </tr>
                                     <tr>
                                         <td><span style="color:red">*</span>رایانامه</td>
-                                        <td><input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" readonly></td>
+                                        <td><input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" {!! 'shazand' == config('constants.IndexView') ? null : 'readonly' !!}></td>
                                     </tr>
                                     @if ('kmkz' == config('constants.DefIndexView'))
                                     <tr>

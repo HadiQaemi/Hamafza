@@ -34,7 +34,7 @@
         </div>
         <div class="col-xs-6 col-sm-4 col-md-2">
             <div class="inner_content">
-                <a href="33320">
+                <a href="6">
                     <img src="{{url('theme/shazand/img/thumbnail5.png')}}" alt="پرس و جو">
                     <p class="caption">پرس و جو</p>
                 </a>
