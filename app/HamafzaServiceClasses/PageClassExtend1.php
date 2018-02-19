@@ -573,7 +573,7 @@ class PageClassExtend1
             {
                 $rowT = DB::table('subjects as s')
                     ->leftJoin('subject_type as sa', 'sa.id', '=', 's.kind')
-                    ->select('s.title', 'sa.name', 's.kind')
+                    ->select('s.title', 'sa.name', 's.kind', 's.sub_kind')
                     ->where('s.id', $sid)->first();
 
                 $subjectKey = DB::table('subject_key as sk')
@@ -583,6 +583,7 @@ class PageClassExtend1
                 $T1['asubject'] = $rowT->name;
                 $T1['title'] = $rowT->title;
                 $T1['kind'] = $rowT->kind;
+                $T1['sub_kind'] = $rowT->sub_kind;
                 $T1['Fields'] = PageClass::GetFields($sid, $T1['kind']);
                 $T1['keywords'] = $subjectKey;
                 $Setting['propertie'] = $T1;

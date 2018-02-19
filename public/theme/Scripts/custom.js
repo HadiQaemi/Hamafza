@@ -503,7 +503,7 @@ var editorHeight = "200px";
 $(document).on("keyup", "input#commentTitleWW", function (e) {
     $("#commentEditorWW").show();
     $("#commentEditorWW").stop().animate({
-        height: 227
+        height: 325
     });
     $(".sendComment").stop().animate({
         height: 325

@@ -288,25 +288,28 @@ class EnquiryController extends Controller
                 'what' => 'required',
             ]
         );
-
         if ($validator->fails())
         {
             return response()->json(['success' => false, 'result' => $validator->errors()]);
         }
-
         $r = null;
         $what = Request::get('what');
-
+        $sid = Request::input('sid', 0);
+        $sub_kind = Request::input('sub_kind', 0);
+        $sub_kind = 2 == $sub_kind ? 0 : $sub_kind;
         switch ($what)
         {
             case 'portals':
-                $subject_result = Subject::where('kind', '20')->where('sub_kind', '0')->select(['id', 'title'])->get();
+                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
+                if ($sid)
+                {
+                    $subject_result = $subject_result->where('id', $sid);
+                }
+                $subject_result = $subject_result->get();
                 $r = json_encode($subject_result->toArray());
-                break;
+            break;
         }
-
         return response()->json(['success' => true, 'result' => [$r]]);
-
     }
 
 }

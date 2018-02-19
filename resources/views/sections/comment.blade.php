@@ -1,7 +1,16 @@
 @if (isset($sid))
-<script>
-    var Sid = '{{$sid}}';
-</script>
+    @php
+        $hide_type = false;
+        $subject = App\Models\hamafza\Subject::find($sid);
+        if ($subject)
+        {
+            $hide_type = 20 == $subject->kind;
+        }
+    @endphp
+    <script>
+        var Sid = '{{$sid}}';
+        var hide_type = '{!! $hide_type !!}';
+    </script>
 @endif
 <div class="sendComment">
     @if(session('uid') !='')
@@ -15,7 +24,7 @@
         <div class="commenTxtHolders">
             <div class="commenTxtHolders">
                 <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
-                    <select name="post_type" id="post_type" class="col-md-1 col-sm-2 col-xs-2 pull-right form-control" >
+                    <select name="post_type" id="post_type" class="col-md-1 col-sm-2 col-xs-2 pull-right form-control"{!! $hide_type ? ' disabled="disabled"' : null !!}>
                         <option value="1" selected="">نظر</option>
                         <option value="2">پرسش</option>
                         <option value="3">ایده</option>
@@ -65,7 +74,7 @@
                     <table class="table">
                         <tr>
                             <td class="col-xs-1 showW_on_type_2_2"><small>درج در درگاه</small></td>
-                            <td class="col-xs-4 showW_on_type_2_2"><select class="portal_id no-padding form-control" name="portal_id" id="portal_id" style="display: inline-block;" ></select></td>
+                            <td class="col-xs-4 showW_on_type_2_2"><select class="portal_id no-padding form-control" name="portal_id" id="portal_id" style="display: inline-block;"{!! $hide_type ? ' disabled="disabled"' : null !!}></select></td>
                             <td class="col-xs-2 hideW_on_type_2_2"><small>درج در گروه ها و کانال ها</small></td>
                             <td class="col-xs-4 hideW_on_type_2_2">
                                 <select id="groups" class="darjdar no-padding form-control" multiple>
@@ -86,27 +95,8 @@
                         {
                             portal_id = $('.portal_id');
                             reward = $('.reward');
-                            $.ajax
-                            ({
-                                type: 'post',
-                                url: '{!! route("hamahang.enquiry.get") !!}',
-                                data: {'what': 'portals'},
-                                dataType: 'json',
-                                success: function (data)
-                                {
-                                    if (data.success)
-                                    {
-                                        portal_id.empty();
-                                        json_data = JSON.parse(data.result[0]);
-                                        $.each(json_data, function (id, record)
-                                        {
-                                            portal_id.append('<option value="' + record.id + '">' + record.title + '</option>');
-                                        });
-                                    }
-                                }
-                            });
                             post_type = $('#post_type');
-                            $(document).on('change', post_type, function ()
+                            $(document).on('change', '#post_type', function ()
                             {
                                 hideW_on_type_2_1 = $('.hideW_on_type_2_1');
                                 showW_on_type_2_1 = $('.showW_on_type_2_1');
@@ -119,10 +109,8 @@
                                     hideW_on_type_2_1.addClass('col-xs-8');
                                     showW_on_type_2_1.show();
                                     // table 2
-                                    showW_on_type_2_2.show();
                                     hideW_on_type_2_2.removeClass('col-xs-10');
                                     hideW_on_type_2_2.addClass('col-xs-5');
-                                    $('.portal_id').select2({data: {id: 6, text: 'پرس و جو'}});
                                 } else
                                 {
                                     // table 1
@@ -130,12 +118,34 @@
                                     hideW_on_type_2_1.addClass('col-xs-11');
                                     showW_on_type_2_1.hide();
                                     // table 2
-                                    showW_on_type_2_2.hide();
                                     hideW_on_type_2_2.removeClass('col-xs-5');
                                     hideW_on_type_2_2.addClass('col-xs-10');
                                 }
+                                portal_id.attr('disabled', 'disabled');
+                                $.ajax
+                                ({
+                                    type: 'post',
+                                    url: '{!! route("hamahang.enquiry.get") !!}',
+                                    data: {'what': 'portals', 'sid': hide_type ? Sid : 0, 'sub_kind': post_type.val()},
+                                    dataType: 'json',
+                                    success: function (data)
+                                    {
+                                        if (data.success)
+                                        {
+                                            portal_id.empty();
+                                            json_data = JSON.parse(data.result[0]);
+                                            $.each(json_data, function (id, record)
+                                            {
+                                                portal_id.append('<option value="' + record.id + '">' + record.title + '</option>');
+                                            });
+                                            if (!hide_type)
+                                            {
+                                                portal_id.removeAttr('disabled');
+                                            }
+                                        }
+                                    }
+                                });
                             });
-                            post_type.change();
                             $(".select2_auto_complete_keywords").select2
                             ({
                                 minimumInputLength: 3,
@@ -166,6 +176,7 @@
                                 }
                             });
                             $('.portal_id, .darjdar').select2({'width': '100%', 'dir': 'rtl'});
+                            post_type.change();
                         });
                     </script>
                     <img id="output" style="display: none;width: 150px"/>

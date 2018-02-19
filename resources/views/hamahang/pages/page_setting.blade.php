@@ -33,6 +33,32 @@
                             <input type="text" style="width:388px" dir="rtl" id="subject_title" class="form-control" value="{{$Setting->title}}" name="subject_title">
                         </td>
                     </tr>
+                    @php
+                        $subject_has_posts = App\Models\hamafza\Subject::find($sid)->posts->count();
+                    @endphp
+                    @if (20 == $Setting->kind)
+                    <tr>
+                        <td>نوع درگاه پرس و جو<span style="color: red;">*</span></td>
+                        <td>
+                            @if ($subject_has_posts)
+                                <span style="color: red;">هم اکنون غیر قابل تغییر است.</span>
+                                <input type="hidden" id="sub_kind" name="sub_kind" value="-1">
+                            @else
+                                <select id="sub_kind" name="sub_kind" class="form-control" style="width: 200px;">
+                                    <option value="1"{!! 1 == $Setting->sub_kind ? ' selected="selected"' : null !!}>نظر</option>
+                                    <option value="0"{!! 0 == $Setting->sub_kind ? ' selected="selected"' : null !!}>پرسش</option>
+                                    <option value="3"{!! 3 == $Setting->sub_kind ? ' selected="selected"' : null !!}>ایده</option>
+                                    <option value="4"{!! 4 == $Setting->sub_kind ? ' selected="selected"' : null !!}>تجربه</option>
+                                </select><br />
+                                {{--
+                                <span style="color: red;">
+                                    توجه: در صورتی که نوع درگاه پرس و جو را تغییر دهید، تنها نوع درگاه تغییر می یابد، نه محتوای آن.
+                                </span>
+                                --}}
+                            @endif
+                        </td>
+                    </tr>
+                    @else
                     <tr>
                         <td>نوع <font color="red">*</font></td>
                         <td>
@@ -43,6 +69,14 @@
                             </select>
                         </td>
                     </tr>
+                    @endif
+
+
+
+
+
+
+
                     <tr>
 
                         <td>کلیدواژه ها</td>

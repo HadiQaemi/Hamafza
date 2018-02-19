@@ -1345,6 +1345,7 @@ class PostsClass
     {
         $PC = new PageClass();
 
+        /*
         switch ($type)
         {
             case 1:
@@ -1366,6 +1367,9 @@ class PostsClass
                 }
             break;
         }
+        */
+
+        //$portal_id = 0 == $portal_id ? $sid : $portal_id;
 
         $pid = DB::table('posts')->insertGetId(['uid' => $uid, 'sid' => $sid, 'type' => $type, 'desc' => "$desc", 'pic' => $image, 'video' => $video, 'reg_date' => $time, 'view' => $all, 'title' => "$title", 'portal_id' => $portal_id]);
         
