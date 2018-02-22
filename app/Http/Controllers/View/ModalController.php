@@ -424,7 +424,7 @@ class ModalController extends Controller
     {
         $HFM_message_file = HFM_GenerateUploadForm(
             [
-                ['message_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'jpg', 'jpeg', 'png'], "Multi"],
+                ['message_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'jpg', 'jpeg', 'png', 'xls', 'xlsx', 'ppt', 'pptx'], "Multi"],
             ]);
         $content = view('modals.message')
             ->with('HFM_message_file', $HFM_message_file)
@@ -741,7 +741,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
