@@ -104,7 +104,7 @@ class MyAssignedTaskController extends Controller
                 break;
             case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.state':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 $arr['MyTasksInState'] = $this->my_assigned_task_in_status()->render();
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
                 break;
@@ -434,7 +434,7 @@ class MyAssignedTaskController extends Controller
         $arr['HFM_CNT'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi'
                 ]
             ]
@@ -452,7 +452,7 @@ class MyAssignedTaskController extends Controller
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
-                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                             'Multi'
                         ]
                     ]
@@ -463,7 +463,7 @@ class MyAssignedTaskController extends Controller
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
-                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                             'Multi'
                         ]
                     ]

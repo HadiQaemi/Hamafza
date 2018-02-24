@@ -635,8 +635,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $tools_menu = toolsGenerator([6 => ['uid' => $uid, 'sid' => 0]], 1, 5,['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'subject','target_id'=>$sid]);
                     $HFM_media = HFM_GenerateUploadForm(
                         [
-                            ['page_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx'], "Multi"],
-                            ['page_file_edit', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx'], "Multi"],
+                            ['page_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx', 'ppt', 'pptx'], "Multi"],
+                            ['page_file_edit', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx', 'ppt', 'pptx'], "Multi"],
                         ]);
                     $res = [
                         'viewname' => $view,
