@@ -5,6 +5,7 @@
     <meta name="csrf-token" content="{{ $csrf}}">
     @include('layouts.helpers.common.sections.meta')
 <!---------------**Main Style**-------------->
+
     @include('layouts.helpers.common.assets.style.main_style')
     @include('layouts.homepages.helpers.banader.assets.style.after_main_style')
 <!---------------**Specific Plugin Style**-------------->
