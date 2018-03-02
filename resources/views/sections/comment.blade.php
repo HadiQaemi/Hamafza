@@ -1,3 +1,9 @@
+@php
+    $file = HFM_GenerateUploadForm([['comment_file', ['gif', 'jpg', 'jpeg', 'png', ], 'Single', ], ]);
+    $file['ShowResultArea']['comment_file'];
+    $file['UploadForm'];
+    $file['JavaScripts'];
+@endphp
 @if (isset($sid))
     @php
         $hide_type = false;
@@ -89,6 +95,7 @@
                             </td>
                         </tr>
                     </table>
+                    {{--{!! $file['Buttons']['comment_file'] !!}--}}
                     <input type="hidden" id='SelectedComment' value="">
                     <script>
                         $(document).ready(function ()
