@@ -191,5 +191,6 @@
         </div>
     </div>
 </div>
+@yield('HFM_Form_JS')
 </body>
 </html>
