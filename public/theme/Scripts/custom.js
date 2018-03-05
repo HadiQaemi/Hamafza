@@ -481,7 +481,7 @@ $(document).on("click", "#toolbar .comment", function () {
     });
 
     $(".sendComment").stop().animate({
-        height: 300
+        height: 350
     });
 
     if (mainContainerPosition == "static") {

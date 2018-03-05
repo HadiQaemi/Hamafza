@@ -17,7 +17,6 @@
 @endif
 <div class="sendComment">
     @if(session('uid') !='')
-{{--        {!! $file['ShowResultArea']['comment_file'] !!}--}}
         <div class="col-md-10 col-md-push-1">
             <h1 id="TitleHeads" class="pull-right" style="margin: 10px 2px;font-size: 1.1em;display: none"></h1>
             <span class="pull-left fa fa-close icon-bastan" style=" font-size: 10pt;height: 10px !important;margin-top: 10px;"></span>
@@ -51,6 +50,12 @@
                         </div>
                     </div>
 
+                    @if ($hide_type && false)
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {!! $file['Buttons']['comment_file'] !!}
+                            {!! $file['ShowResultArea']['comment_file'] !!}
+                        </div>
+                    @endif
 
                     <div class="col-md-12 col-sm-12 col-xs-12" id="commentEditorW">
                         {{--<style>
@@ -104,7 +109,6 @@
                                 </td>
                             </tr>
                         </table>
-{{--                        {!! $file['Buttons']['comment_file'] !!}--}}
                         <input type="hidden" id='SelectedComment' value="">
                         <script>
                             $(document).ready(function () {
@@ -407,8 +411,18 @@
 </script>
 
 
-
-@section('HFM_Form_JS')
-    {!! $file['UploadForm'] !!}}
-    {!! $file['JavaScripts'] !!}}
-@stop
+@if ($hide_type)
+    @section('HFM_Form_JS')
+        {!! $file['UploadForm'] !!}}
+        {!! $file['JavaScripts'] !!}}
+    @stop
+    <script>
+        $(document).ready(function()
+        {
+            window.setInterval(function()
+            {
+                $('.sendComment').height($('.commenTxtHolders').height() + 73);
+            }, 1000);
+        });
+    </script>
+@endif

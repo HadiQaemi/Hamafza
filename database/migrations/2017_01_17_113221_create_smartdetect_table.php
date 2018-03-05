@@ -19,8 +19,8 @@ class CreateSmartdetectTable extends Migration
         {
             $table->increments('id')->unsigned();
 
-            $table->string('content', 255)->nullable();
-            $table->enum('content_type', ['variant', 'ip', 'domain', 'user_id', 'user_email', 'request_any', 'request_get', 'request_post'])->default('variant');
+            $table->text('content', 255)->nullable();
+            $table->enum('content_type', ['variant', 'ip', 'domain', 'user_id', 'user_email', 'request_any', 'request_get', 'request_post'])->default('1');
 
             $table->timestamps();
             $table->softDeletes();
