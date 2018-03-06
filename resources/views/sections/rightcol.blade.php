@@ -11,9 +11,15 @@
         </div>
     </div>
     <style>
-        .jstree-leaf
+        .jstree-leaf > a
         {
-            color: #337ab7;
+            color: #337ab7 !important;
+            font-size: 11px !important;
+        }
+        .jstree-open > a,
+        .jstree-closed > a
+        {
+            font-size: 12px !important;
         }
     </style>
     <script>
