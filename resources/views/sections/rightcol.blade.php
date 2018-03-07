@@ -14,7 +14,7 @@
         .jstree-leaf > a
         {
             color: #337ab7 !important;
-            font-size: 11px !important;
+            font-size: 10px !important;
         }
         .jstree-open > a,
         .jstree-closed > a
@@ -61,46 +61,46 @@
                 {
                     if (n != -1)
                     {
-                        @if ('user' == $PageType)
-                            var href = id;
-                            var target = $(href).parents('.scrl-2.big');
-                            if (target.length)
-                            {
-                                e.preventDefault();
-                                target.mCustomScrollbar('scrollTo', href);
-                            }
+                                @if ('user' == $PageType)
+                        var href = id;
+                        var target = $(href).parents('.scrl-2.big');
+                        if (target.length)
+                        {
+                            e.preventDefault();
+                            target.mCustomScrollbar('scrollTo', href);
+                        }
                         @endif
                     } else
                     {
                         @if (isset($ContentType) && 'OnlyTree' == $ContentType)
-                            jQuery('#TextSection').css('width', '100%');
-                            jQuery('#TextSection').html('<div style="min-height: 350px;"><div class="loader"></div><div>');
-                            jQuery.ajax
-                            ({
-                                type: 'POST',
-                                url: '{{ route('hamafza.get_tree_node') }}',
-                                data: {ptid: id},
-                                cache: false,
-                                success: function (html)
-                                {
-                                    jQuery('#TextSection').html(html);
-                                }
-                            });
-                        @else
-                            var href = '#t' + id;
-                            window.location = href;
-                            //var urls='#t'+id;
-                            //location.hash = urls;
-                            //window.location = urls;
-                            //$("#main").css("top", "53px");
+                        jQuery('#TextSection').css('width', '100%');
+                        jQuery('#TextSection').html('<div style="min-height: 350px;"><div class="loader"></div><div>');
+                        jQuery.ajax
+                        ({
+                            type: 'POST',
+                            url: '{{ route('hamafza.get_tree_node') }}',
+                            data: {ptid: id},
+                            cache: false,
+                            success: function (html)
+                            {
+                                jQuery('#TextSection').html(html);
+                            }
+                        });
+                                @else
+                        var href = '#t' + id;
+                        window.location = href;
+                        //var urls='#t'+id;
+                        //location.hash = urls;
+                        //window.location = urls;
+                        //$("#main").css("top", "53px");
                         @endif
                     }
                 }
             }).on('activate_node.jstree', function (e, data)
-            {
-                window.location.href = data.node.a_attr.href;
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-            });
+        {
+            window.location.href = data.node.a_attr.href;
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        });
     </script>
 @endif
 @if (is_array($RightCol))
@@ -133,7 +133,7 @@
                                         {
                                             $pics = $items->avatar_img_url;//'pics/user/Users.png';
                                             //if (trim($items->Pic) != '' && file_exists('pics/user/' . $items->Pic))
-                                                //$pics = 'pics/user/' . $items->Pic;
+                                            //$pics = 'pics/user/' . $items->Pic;
                                             // $link = $items->Uname . "/wall";
                                             $link = session('Uname') . "/wall";
                                             $link2 = $items->Uname;
@@ -205,3 +205,19 @@
     @endforeach
 @endif
 
+@php
+    $route = Route::current();
+    $route_type = strtolower($route->type);
+    $route_id = $route->id;
+    //dd($route_id);
+@endphp
+
+@if ('370450' == $route_id && 'onlytree' == $route_type)
+    <script>
+        $(document).ready(function()
+        {
+            $('#19694_anchor').click();
+            $('#19695_anchor').click();
+        });
+    </script>
+@endif

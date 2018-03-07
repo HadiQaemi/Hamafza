@@ -5,61 +5,73 @@
             <div class="panel-body no-padding">
                 <div class="vertical_menu">
                     <ul class="no-margin">
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد اول - دریانوردی و سفر دریایی" href="{{url('360150/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/darya1.png')}}">
                                 <b><span class="homepage_right_menu text-overflow-ellipsis-100">دریانوردی و سفر دریایی</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد دوم- ساختمان كشتی‌ها، رده‌بندی و بازرسی آن‌ها، تجهيزات و سيستمهای مكانيكی و الكترونيكی كشتی" href="{{url('360160/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/sakht.png')}}">
                                 <b><span class="homepage_right_menu text-overflow-ellipsis-100">ساختمان كشتی‌ها</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد سوم - مهندسی ساحل، مدیریت سواحل، طراحی و مدیریت بنادر" href="{{url('360240/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/sahel.png')}}">
                                 <b><span class="homepage_right_menu"> مدیریت ساحل و بندر</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد چهارم - اقیانوس شناسی و اهداف آن" href="{{url('360250/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/ocean.png')}}">
                                 <b><span class="homepage_right_menu">اقیانوس‌شناسی واهداف</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد پنجم - شیمی، آلودگی و زمین شناسی دریا" href="{{url('360260/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/shimi.png')}}">
                                 <b><span class="homepage_right_menu">شیمی، آلودگی و زمین شناسی‌</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد ششم- زیست شناسی دریا و شیلات" href="{{url('360270/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/zist.png')}}">
                                 <b><span class="homepage_right_menu">زیست شناسی دریا</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد هفتم -اصول ناوبری وهدایت کشتی، آب‌نگاری، نقشه برداری و نقشه خوانی" href="{{url('360280/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/nav.png')}}">
                                 <b><span class="homepage_right_menu"> اصول ناوبری کشتی</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد هشتم- حمل و نقل دریایی و بیمه های دریایی" href="{{url('360290/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/haml.png')}}">
                                 <b><span class="homepage_right_menu">حمل ونقل و بیمه دریایی</span></b>
                             </a>
                         </li>
-                        <li style="height: 45px;" class="list">
+                        <li style="height: 40px;">
                             <a title="دایره المعارف دریایی و بندری: جلد نهم- حقوق و قوانین تجارت دریایی، اقتصاد دریایی" href="{{url('360300/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/law.png')}}">
                                 <b><span class="homepage_right_menu"> قوانین تجارت دریایی</span></b>
                             </a>
                         </li>
+                        <li style="height: 40px; margin-bottom: 5px;" class="list" >
+                            <a title="لغت نامه" href="{{url('370370/OnlyTree')}}">
+                                <img src="{{url('theme/newbanader/icons/law.png')}}">
+                                <b><span class="homepage_right_menu"> لغت نامه</span></b>
+                            </a>
+                        </li>
                     </ul>
+                    <style>
+                        ul > li > a > img
+                        {
+                            height: 30px !important;
+                        }
+                    </style>
                 </div>
             </div>
         </div>
