@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         <li style="height: 40px; margin-bottom: 5px;" class="list" >
-                            <a title="لغت نامه" href="{{url('370370/OnlyTree')}}">
+                            <a title="لغت نامه" href="{{url('370450/OnlyTree')}}">
                                 <img src="{{url('theme/newbanader/icons/law.png')}}">
                                 <b><span class="homepage_right_menu"> لغت نامه</span></b>
                             </a>
