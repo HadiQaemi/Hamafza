@@ -204,6 +204,7 @@
         </div>
     @endforeach
 @endif
+{{--
 
 @php
     $route = Route::current();
@@ -221,3 +222,4 @@
         });
     </script>
 @endif
+--}}
