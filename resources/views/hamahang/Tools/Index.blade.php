@@ -4,7 +4,7 @@
     {{--<link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/ChosenAjax/css/chosen.css')}}">--}}
 @stop
 @section('modal_content')
-{{--    @include('hamahang.Tools.helper.Index.modals.modal_new_tool')--}}
+    {{--    @include('hamahang.Tools.helper.Index.modals.modal_new_tool')--}}
 @stop
 @section('content')
     <div class="row-fluid">
@@ -54,12 +54,17 @@
                         </thead>
                     </table>
                     <div class="space-20"></div>
+                    <div class="row">
+                        <div class="col-xs-8 pull-right">
+                            <a href="{{ route('modals.add_tool_group') }}" class="jsPanels btn btn-primary fa fa-plus" title="افزودن دسته"></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-12 tab-pane fade in  default-options" id="toolsItems">
                     {{--<div class="space-4"></div>--}}
                     {{--<button type="button" id="add-tools-items" value="save" class="btn btn-primary pull-left" type="button">--}}
-                        {{--<i class="fa  fa-plus-circle bigger-125"></i>--}}
-                        {{--<span>{{trans('tools.new_tools')}}</span>--}}
+                    {{--<i class="fa  fa-plus-circle bigger-125"></i>--}}
+                    {{--<span>{{trans('tools.new_tools')}}</span>--}}
                     {{--</button>--}}
                     <table id="toolsGrid" style="width: 100%;" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align">
                         <thead>
@@ -73,6 +78,13 @@
                         </tr>
                         </thead>
                     </table>
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-8 pull-right">
+                            <a href="{{ route('modals.add_edit_tools') }}" class="jsPanels btn btn-primary fa fa-plus" title="افزودن ابزار"></a>
+                        </div>
+                    </div>
+                    <div class="space-4"></div>
                 </div>
                 <div class="col-xs-12 tab-pane fade in  default-options" id="groupsRoles">
                     <div class="space-4"></div>
@@ -116,34 +128,34 @@
                     </table>
                 </div>
                 <div class="col-xs-12 tab-pane fade in  default-options" id="toolsRoles">
-                    <div class="space-4"></div>
-                    <form id="tools_roles_form">
-                        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
-                            <tr>
-                                <td class="col-md-1">
-                                    <label>{{trans('tools.tools')}}</label>
-                                </td>
-                                <td class="col-md-4">
-                                    <select id="tools_list" class="select" name="tools_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>
-                                </td>
-                                <td class="col-md-1">
-                                    <label>{{trans('tools.roles')}}</label>
-                                </td>
-                                <td class="col-md-3">
-                                    <select id="roles_list" class="select" name="tools_role_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>
-                                </td>
-                                <td class="col-md-3 btn_holder" style="vertical-align: middle">
-                                    <button type="button" id="add_tools_roles" value="save" name="roles_list" class="btn btn-primary" type="button">
-                                        {{--<i class="fa fa-save bigger-125 "></i>--}}
-                                        <span>{{trans('app.save')}}</span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                    <hr class="hr-4" style="margin-bottom: 20px;">
-                    <form id="tools_roles_filter_form">
-                        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                    {{--<div class="space-4"></div>--}}
+                    {{--<form id="tools_roles_form">--}}
+                    {{--<table class="table table-condensed table-bordered table-striped table-hover td-center-align">--}}
+                    {{--<tr>--}}
+                    {{--<td class="col-md-1">--}}
+                    {{--<label>{{trans('tools.tools')}}</label>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-4">--}}
+                    {{--<select id="tools_list" class="select" name="tools_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-1">--}}
+                    {{--<label>{{trans('tools.roles')}}</label>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-3">--}}
+                    {{--<select id="roles_list" class="select" name="tools_role_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-3 btn_holder" style="vertical-align: middle">--}}
+                    {{--<button type="button" id="add_tools_roles" value="save" name="roles_list" class="btn btn-primary" type="button">--}}
+                    {{--<i class="fa fa-save bigger-125 "></i>--}}
+                    {{--<span>{{trans('app.save')}}</span>--}}
+                    {{--</button>--}}
+                    {{--</td>--}}
+                    {{--</tr>--}}
+                    {{--</table>--}}
+                    {{--</form>--}}
+                    {{--<hr class="hr-4" style="margin-bottom: 20px;">--}}
+                    <form id="tools_roles_filter_form" style="width: 75.2%;position: absolute;right: 23%;top: 12px;">
+                        <table class="td-center-align">
                             <tr>
                                 <td class="col-md-1">
                                     <label><i class="fa fa-filter"></i> {{trans('tools.tool')}}</label>
@@ -170,36 +182,43 @@
                         </thead>
                         </thead>
                     </table>
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-8 pull-right">
+                            <a href="{{ route('modals.add_roles_tools') }}" class="jsPanels btn btn-primary fa fa-plus"></a>
+                        </div>
+                    </div>
+                    <div class="space-4"></div>
                 </div>
                 <div id="toolsUsers" class="col-xs-12 tab-pane fade in  default-options">
-                    <div class="space-4"></div>
-                    <form id="tools_users_form">
-                        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
-                            <tr>
-                                <td class="col-md-1">
-                                    <label>{{trans('tools.tools')}}</label>
-                                </td>
-                                <td class="col-md-4">
-                                    <select id="tools_user_tools_list" class="select" name="datatables_tools_user_tools_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>
-                                </td>
-                                <td class="col-md-1">
-                                    <label>{{trans('tools.users')}}</label>
-                                </td>
-                                <td class="col-md-3">
-                                    <select id="tools_user_users_list" class="select" name="datatables_tools_user_user_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>
-                                </td>
-                                <td class="col-md-3 btn_holder" style="vertical-align: middle">
-                                    <button type="button" id="add_tools_users" value="save" name="roles_list" class="btn btn-primary" type="button">
-                                        {{--<i class="fa fa-save bigger-125 "></i>--}}
-                                        <span>{{trans('app.save')}}</span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                    <hr class="hr-4" style="margin-bottom: 20px;">
-                    <form id="tools_users_form">
-                        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                    {{--<div class="space-4"></div>--}}
+                    {{--<form id="tools_users_form">--}}
+                    {{--<table class="table table-condensed table-bordered table-striped table-hover td-center-align">--}}
+                    {{--<tr>--}}
+                    {{--<td class="col-md-1">--}}
+                    {{--<label>{{trans('tools.tools')}}</label>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-4">--}}
+                    {{--<select id="tools_user_tools_list" class="select" name="datatables_tools_user_tools_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-1">--}}
+                    {{--<label>{{trans('tools.users')}}</label>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-3">--}}
+                    {{--<select id="tools_user_users_list" class="select" name="datatables_tools_user_user_id" placeholder="{{ trans('tools.choose') }}"><option value="0">{{ trans('tools.choose') }}</option></select>--}}
+                    {{--</td>--}}
+                    {{--<td class="col-md-3 btn_holder" style="vertical-align: middle">--}}
+                    {{--<button type="button" id="add_tools_users" value="save" name="roles_list" class="btn btn-primary" type="button">--}}
+                    {{--<i class="fa fa-save bigger-125 "></i>--}}
+                    {{--<span>{{trans('app.save')}}</span>--}}
+                    {{--</button>--}}
+                    {{--</td>--}}
+                    {{--</tr>--}}
+                    {{--</table>--}}
+                    {{--</form>--}}
+                    {{--<hr class="hr-4" style="margin-bottom: 20px;">--}}
+                    <form id="tools_users_form" style="width: 75.2%;position: absolute;right: 23%;top: 12px;">
+                        <table class="td-center-align">
                             <tr>
                                 <td class="col-md-1">
                                     <label><i class="fa fa-filter"></i> {{trans('tools.tool')}}</label>
@@ -218,7 +237,6 @@
                         <input type="hidden" name="edit_id" value=""/>
                     </form>
                     <div class="clearfixed"></div>
-                    <hr class="hr-4" style="margin-bottom: 20px;">
                     <table id="toolsUserGrid" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align" style="width: 100%;">
                         <thead>
                         <th>{{trans('tools.row_id')}}</th>
@@ -228,6 +246,13 @@
                         </thead>
                         </thead>
                     </table>
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-8 pull-right">
+                            <a href="{{ route('modals.add_users_tools') }}" class="jsPanels btn btn-primary fa fa-plus"></a>
+                        </div>
+                    </div>
+                    <div class="space-4"></div>
                 </div>
             </div>
         </div>

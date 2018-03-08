@@ -25,13 +25,85 @@
 <body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style=" position: fixed;width: 100%;">
 <div class="h_sidenav_main" id="h_sidenav_main" style="padding: 0; margin: 0; transition: margin-left 1s;">
     <div hmfz-main-header="">
-        @if ('kmkz' == config('constants.IndexView')) <style>#header { background-color: #367BAB; }</style> @endif
+        @if ('kmkz' == config('constants.IndexView'))
+            <style>#header { background-color: #367BAB; }</style>
+        @endif
+            <style>
+                .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+                    background-color: #3986AC;
+                }
+                .navbar-default .navbar-toggle .icon-bar {
+                    background-color: #f9f9f9;
+                }
+                .navbar-default .navbar-toggle {
+                    background-color: #3986AC;
+                }
+                #myNavbar{
+                    height: 250px;
+                    color: #fff;
+                }
+                .navbar-default .navbar-nav > li > a {
+                    color: #fff;
+                }
+                .user-config{
+                    /*margin-left: -15px;*/
+                }
+                .logo{
+                    margin-right: 15px !important;
+                }
+                .banader_homepage #main {
+                    padding-top: 10px;
+                }
+                .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+                    margin-right: -15px;
+                    margin-left: 0px;
+                }
+                .mCSB_container {
+                    overflow: visible !important;
+                    width: 100% !important;
+                    height: 1000px !important;
+                }
+                /*#header .container-fluid {*/
+                /*margin-left: -15px;*/
+                /*margin-right: 15px;*/
+                /*}*/
+            </style>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
-                @include('layouts.helpers.common.sections.helpers.nav_bar.menu')
-                @include('layouts.helpers.common.sections.nav_bar')
+                <div class="navbar-header navbar-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {{--<img src="file:///C:/Users/soft/Desktop/hamafza%20960616/img/logo.png" style="float: right; margin-top: 2%; margin-right: 3px">--}}
+                    {{--<a class="navbar-brand" href="#" style="float: right;font-size: 1.9em;height: 48px;color: #FFF !important;">هم افزا</a>--}}
+                    <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
+                        @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
+                        <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
+                        @if(isset($Title))
+                            <span class="hidden-lg hidden-md hidden-sm" style="font-size: 10px;">{!!substr($Title,0,50)!!}...</span>
+                        @endif
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right" style="margin:0px">
+                        @if (auth()->check())
+                            {!! menuGenerator(3, 'horizontal') !!}
+                        @endif
+                    </ul>
+                    <ul class="nav navbar-nav navbar-left">
+                        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar')
+                    </ul>
+                </div>
             </div>
         </nav>
+        {{--<nav id="header" class="navbar navbar-default">--}}
+        {{--<div class="container-fluid">--}}
+        {{--@include('layouts.helpers.common.sections.helpers.nav_bar.menu')--}}
+        {{--@include('layouts.helpers.common.sections.nav_bar')--}}
+        {{--</div>--}}
+        {{--</nav>--}}
     </div>
     <div id="main">
         <!-- New HTMl -->
@@ -43,11 +115,11 @@
         <div hmfz-ui-view="">
             <!-- start of Main Template -->
             <div hmfz-tmplt-thm-clr="theme-darkblue" hmfz-tmplt-cntnt="">
-                <div class="toolbarContainer">
+                <div class="toolbarContainer hidden-xs hidden-sm">
                     <div id="toolbar">
                         @if(isset($Title))
                             <div class="pull-right right-detail col-md-10">
-                                <h1>{!!$Title!!}</h1>
+                                <h1>{!!$Title!!}ss</h1>
                             </div>
                         @endif
                         <div class="clearfix"></div>
@@ -59,8 +131,15 @@
                 </div>
                 <div id="mainContainer">
                     <div class="dsply-tbl">
+                        <div class="container-fullwidth hidden-lg hidden-md">
+                            <div class="tabbable-line">
+                                <ul class="nav nav-tabs header-mobile">
+                                    @yield('tabs')
+                                </ul>
+                            </div>
+                        </div>
                         <div class="dsply-tbl-rw">
-                            <div class="right-menu dsply-tbl-cl">
+                            <div class="right-menu dsply-tbl-cl hidden-xs hidden-sm">
                                 <ul class="menu">
                                     @yield('tabs')
                                 </ul>
@@ -71,11 +150,12 @@
                                     </div>
                                 @endif
                             </div>
+
                             <div hmfz-pg-tb="" class="next-container dsply-tbl-cl">
                                 <div hmfz-pg-tb-cntnt="" class="row">
-                                    <div class="scrl-bx" id="vrScroll">
+                                    <div class="scrl-bx" id="vrScroll" style="height: 90vh;width: 100%;overflow: scroll;">
                                         @if(View::hasSection('position_right_col_3') || View::hasSection('Tree'))
-                                            <div class="col-md-3 scrl">
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 scrl">
                                                 <div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">
                                                     <div style="direction: rtl">
                                                         @yield('position_right_col_3')
@@ -83,7 +163,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-9 scrl" id="Tdxcre">
+                                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 scrl" id="Tdxcre">
                                                 @else
                                                     <div class="col-md-12 scrl" id="Tdxcre">
                                                         <div style="direction: rtl">

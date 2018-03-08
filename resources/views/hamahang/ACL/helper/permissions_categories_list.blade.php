@@ -9,13 +9,27 @@
                     <input id="form{{ $type }}_id" type="hidden" name="item_id" value="{{ $type_id }}">
 
                     @foreach($item['permissions'] as $permission)
+
                         <div class="col-sm-3">
                             <div class="checkbox">
-                                <input id="selected_permission_{{ $permission['id'] }}" data-item_id="{{ $permission['id'] }}"
-                                       value="{{ $permission['id'] }}" name="selected_permission[]" type="checkbox" data-type_id="{{ $type_id }}"
-                                       class="styled checkbox_permissions" {!! checked_permission($permission["$type"], $type_id) !!}
-                                >
-                                <label>
+                                @if(stristr($permissions," ".$permission['id']." "))
+                                    <input id="selected_permission_roles{{ $permission['id'] }}" data-item_id="{{ $permission['id'] }}"
+                                           value="{{ $permission['id'] }}" name="selected_permission_roles[]" disabled checked type="checkbox" data-type_id="{{ $type_id }}"
+                                           class="styled checkbox_permissions" {!! checked_permission($permission["$type"], $type_id) !!}
+                                    >
+                                    <label>
+                                @else
+                                    {{--{{$permission['id']}}--}}
+                                    {{--{{$permissions}}--}}
+                                    {{--<br>--}}
+<!--                                        --><?php //die();?>
+                                    <input id="selected_permission_{{ $permission['id'] }}" data-item_id="{{ $permission['id'] }}"
+                                           value="{{ $permission['id'] }}" name="selected_permission[]" type="checkbox" data-type_id="{{ $type_id }}"
+                                           class="styled checkbox_permissions" {!! checked_permission($permission["$type"], $type_id) !!}
+                                    >
+                                    <label>
+                                @endif
+
                                     {{ $permission['display_name'] }}
                                 </label>
                             </div>

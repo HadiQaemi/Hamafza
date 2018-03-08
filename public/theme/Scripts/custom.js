@@ -796,7 +796,7 @@ $(document).on("click", ".CirclePas", function () {
 
 $(document).on('click', 'ul.navbar-navtabs li a', function()
 {
-    var all = $('.HelpBookmarks, .HelpPortals, .HelpKeywords, .HelpSearch');
+    var all = $('.HelpIcons');
     all.hide();
     switch ($(this).attr('id'))
     {
@@ -985,7 +985,9 @@ function h_sidenav_open(thic) {
         $('.h_sidenav_client').hide();
     }
     $('.h_sidenav').width(w);
-    $('.h_sidenav_main').css({'margin-left': w});
+    if(document.body.clientWidth > 900){
+        $('.h_sidenav_main').css({'margin-left': w});
+    }
     var t = window.setInterval(function () {
         if ($('.h_sidenav').width() >= w) {
             clearInterval(t);

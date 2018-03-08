@@ -206,11 +206,23 @@ class MenusController extends Controller
         }
         else
         {
-            $menu = new Menus();
-            $menu->uid = auth()->id();
-            $menu->title = $request->input('title');
-            $menu->description = $request->input('description');
-            $menu->save();
+            if($request->item_id)
+            {
+                $menu = Menus::find(($request->input('item_id')));
+                $menu->uid = auth()->id();
+                $menu->title = $request->input('title');
+                $menu->description = $request->input('description');
+                $menu->save();
+            }
+            else
+            {
+                $menu = new Menus();
+                $menu->uid = auth()->id();
+                $menu->title = $request->input('title');
+                $menu->description = $request->input('description');
+                $menu->save();
+
+            }
 
             $result['message'][] = trans('app.operation_is_success');
             $result['success'] = true;
@@ -347,6 +359,7 @@ class MenusController extends Controller
 
     public function storeMenuItem(Request $request)
     {
+//        dd($request->all());
         $validator = Validator::make($request->all(), [
             'link_address' => 'required',
             'title' => 'required',
@@ -363,40 +376,78 @@ class MenusController extends Controller
         }
         else
         {
-            $item = new MenuItem();
+            if($request->item_id){
+//                dd($request->all());
+                $menu_item = MenuItem::where('id', $request->input('item_id'))
+                    ->where('menu_id', deCode($request->input('menu_id')))
+                    ->first();
+                $menu_item->menu_id = decode($request->input('menu_id'));
+                $menu_item->parent_id = $request->input('parent');
+                $menu_item->title = $request->input('title');
+                $menu_item->description = $request->input('description');
+                $menu_item->href_type = $request->input('link_type') == 0 ? '0' : '1';
+                $menu_item->href = $request->input('link_address');
+                $menu_item->status = $request->input('status') == 'on' ? '1' : '0';
+                $menu_item->icon = $request->input('icon');
+                $menu_item->target = $request->input('target');
+                $menu_item->save();
+                if ($request->users_list)
+                {
+                    $menu_item->user_policy()->sync($request->users_list);
+                }
+                else
+                {
+                    $menu_item->user_policy()->sync([]);
+                }
+
+                if ($request->roles_list)
+                {
+                    $menu_item->role_policy()->sync($request->roles_list);
+                }
+                else
+                {
+                    $menu_item->role_policy()->sync([]);
+                }
+
+                $result['message'][] = trans('app.operation_is_success');
+                $result['success'] = true;
+                return json_encode($result);
+            }else{
+                $item = new MenuItem();
 //            $item->uid = auth()->id();
-            $item->menu_id = decode($request->input('menu_id'));
-            $item->parent_id = $request->input('parent');
-            $item->title = $request->input('title');
-            $item->description = $request->input('description');
-            $item->href_type = $request->input('link_type') == 0 ? '0' : '1';
-            $item->href = $request->input('link_address');
-            $item->target = $request->input('target');
-            $item->status = $request->input('status') == 'on' ? '1' : '0';
-            $item->icon = $request->input('icon');
-            $item->save();
+                $item->menu_id = decode($request->input('menu_id'));
+                $item->parent_id = $request->input('parent');
+                $item->title = $request->input('title');
+                $item->description = $request->input('description');
+                $item->href_type = $request->input('link_type') == 0 ? '0' : '1';
+                $item->href = $request->input('link_address');
+                $item->target = $request->input('target');
+                $item->status = $request->input('status') == 'on' ? '1' : '0';
+                $item->icon = $request->input('icon');
+                $item->save();
 
-            if ($request->users_list)
-            {
-                $item->user_policy()->sync($request->users_list);
-            }
-            else
-            {
-                $item->user_policy()->sync([]);
-            }
+                if ($request->users_list)
+                {
+                    $item->user_policy()->sync($request->users_list);
+                }
+                else
+                {
+                    $item->user_policy()->sync([]);
+                }
 
-            if ($request->roles_list)
-            {
-                $item->role_policy()->sync($request->roles_list);
-            }
-            else
-            {
-                $item->role_policy()->sync([]);
-            }
+                if ($request->roles_list)
+                {
+                    $item->role_policy()->sync($request->roles_list);
+                }
+                else
+                {
+                    $item->role_policy()->sync([]);
+                }
 
-            $result['message'][] = trans('app.operation_is_success');
-            $result['success'] = true;
-            return json_encode($result);
+                $result['message'][] = trans('app.operation_is_success');
+                $result['success'] = true;
+                return json_encode($result);
+            }
         }
     }
 
@@ -603,14 +654,14 @@ class MenusController extends Controller
         switch ($option)
         {
             case 'tree':
-            {
-                if ($request->exists('subject_id'))
                 {
-                    return $this->menusList($type_id, $request->input('subject_id'));
+                    if ($request->exists('subject_id'))
+                    {
+                        return $this->menusList($type_id, $request->input('subject_id'));
+                    }
+                    return $this->menusList($type_id);
+                    break;
                 }
-                return $this->menusList($type_id);
-                break;
-            }
         }
     }
 

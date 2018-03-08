@@ -9,12 +9,69 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class AclController extends Controller
 {
     public function index($username)
     {
+//        $Subjects =
+//            DB::table('user as u')
+//                ->leftJoin('role_user as ru', 'ru.user_id', '=', 'u.id')
+//                ->leftJoin('permission_role as pr', 'pr.role_id', '=', 'ru.role_id')
+//                ->where('u.id', 85)
+//                ->select('pr.permission_id as permision_id')->get();
+//        $permissions = '';
+//        foreach($Subjects as $Subject)
+//            $permissions .= ','.$Subject->permision_id;
+//        $permissions .= ',';
+//        $result['message'][] = trans('app.operation_is_success');
+//        $result['success'] = true;
+//        echo '<pre>';
+//        print_r($permissions);
+//        foreach (tree_permissions_categories(['_users']) as $item){
+//            if (array_key_exists('children', $item))
+//            {
+//            print_r($item);
+//            die();
+//           }
+//        }
+
+//        $Subjects =
+//            DB::table('user as u')
+//                ->leftJoin('role_user as ru', 'ru.user_id', '=', 'u.id')
+//                ->leftJoin('permission_role as pr', 'pr.role_id', '=', 'ru.role_id')
+//                ->where('u.id', 85)
+//                ->select('pr.permission_id as permision_id')->get();
+//
+////        echo '<pre>';
+//        $per = '';
+//        foreach($Subjects as $Subject)
+//            $per .= ','.$Subject->permision_id;
+//        echo $per;
+//        print_r($Subjects[0]->permision_id);
+//
+//        die();
+////        return redirect('/');
+//        $role = User::where('id', (85))->first();
+//        $return = Datatables::eloquent($role->subject_policies())
+////            ->addColumn('row_id', function ($data)
+////            {
+////                return $data->id;
+////            })
+////            ->editColumn('id', function ($data)
+////            {
+////                return enCode($data->id);
+////            })
+////            ->addColumn('jalali_reg_date', function ($data)
+////            {
+////                return $data->Reg_date;
+////            })
+//            ->make(true);
+//        echo '<pre>';
+//        print_r($return);
+//        die();
         $arr = variable_generator('user', 'desktop', $username);
         $categories = AclCategory::get();
         return view('hamahang.ACL.index',$arr)
@@ -240,10 +297,47 @@ class AclController extends Controller
         }
         else
         {
-            $result['message'][] = trans('app.operation_is_success');
-            $result['success'] = true;
-            $result['view'] = draw_permissions_categories(tree_permissions_categories(['_users']), $request->user_id, '_users');
-            return json_encode($result);
+            if($request->permission_type == 'roles')
+            {
+                $role = User::where('id', ($request->user_id))->first();
+                return Datatables::eloquent($role->_roles())
+                    ->make(true);
+
+            }
+            else if($request->permission_type == 'pages')
+            {
+                $Subjects =
+                    DB::table('hamahang_user_policies as hup')
+                        ->leftJoin('user as u', 'hup.user_id', '=', 'u.id')
+                        ->leftJoin('subjects as s', 'hup.target_id', '=', 's.id')
+                        ->where('u.id', $request->user_id)
+                        ->select('s.id as name','s.id as id', 's.title as display_name', 's.title as description')->take(50)->get();
+                $Subjects = ['data'=>json_decode($Subjects),'recordsTotal'=>count(json_decode($Subjects)),'recordsFiltered'=>count(json_decode($Subjects))];
+                return $Subjects;
+                $role = User::where('id', ($request->user_id))->first();
+                $return = Datatables::eloquent($role->subject_policies())
+                    ->make(true);
+            }else if($request->permission_type == 'cases')
+            {
+                $Subjects =
+                    DB::table('user as u')
+                        ->leftJoin('role_user as ru', 'ru.user_id', '=', 'u.id')
+                        ->leftJoin('permission_role as pr', 'pr.role_id', '=', 'ru.role_id')
+                        ->where('u.id', 85)
+                        ->select('pr.permission_id as permision_id')->get();
+                $permissions = ' ';
+                foreach($Subjects as $Subject)
+                    $permissions .= ' '.$Subject->permision_id;
+                $permissions .= ' ';
+                $result['message'][] = trans('app.operation_is_success');
+                $result['success'] = true;
+//                print_r($permissions);
+//                print_r($request->user_id);
+//                print_r($permissions);
+//                die();
+                $result['view'] = draw_permissions_categories(tree_permissions_categories(['_users']), $request->user_id, '_users',$permissions);
+                return json_encode($result);
+            }
         }
     }
 
@@ -409,9 +503,9 @@ class AclController extends Controller
     public function setRoleUsers(Request $request)
     {
         $validator = Validator::make($request->all(),
-        [
-            'item_id' => 'required',
-        ]);
+            [
+                'item_id' => 'required',
+            ]);
 
         if ($validator->fails())
         {

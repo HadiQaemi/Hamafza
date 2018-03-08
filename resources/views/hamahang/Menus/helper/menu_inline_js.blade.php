@@ -4,7 +4,7 @@
     var menus_items_data = '';
 
     @permission('posts.hamahang.menus.get_menus')
-        function menus_datatable_grid() {
+    function menus_datatable_grid() {
         menus_grid_data = $('#MenusGridData').DataTable({
             "dom": window.CommonDom_DataTables,
             "processing": true,
@@ -35,11 +35,19 @@
                         }
                         if (full.edit_access) {
                             result += '' +
-                                '<button style="margin-right: 3px;" title="ویرایش منو" type="button" class="btn btn-xs bg-warning-400 fa fa-edit btn_grid_menu_edit" ' +
+                                '<button style="margin-right: 3px;" title="ویرایش منو" href="{!! route('modals.add_edit_menu') !!}?item_id=' + full.id + '" class="jsPanels btn btn-xs bg-warning-400 fa fa-edit" ' +
                                 '   data-grid_item_id="' + full.id + '" ' +
                                 '   data-grid_item_title="' + full.title + '" ' +
-                                '   data-grid_item_description="' + full.description + '">' +
+                                '   data-grid_item_description="' + full.description + '" ' +
+                                '   data-grid_item_type="edit" ' +
                                 '</button>';
+
+//                            result += '' +
+//                                '<button style="margin-right: 3px;" title="ویرایش منو" type="button" class="btn btn-xs bg-warning-400 fa fa-edit btn_grid_menu_edit" ' +
+//                                '   data-grid_item_id="' + full.id + '" ' +
+//                                '   data-grid_item_title="' + full.title + '" ' +
+//                                '   data-grid_item_description="' + full.description + '">' +
+//                                '</button>';
                         }
                         if (full.delete_access) {
                             result += '' +
@@ -54,7 +62,7 @@
     @endpermission
 
     @permission('posts.hamahang.menus.get_menu_items')
-        function menu_items_datatable_grid(menu_id, target_id, parent_id) {
+    function menu_items_datatable_grid(menu_id, target_id, parent_id) {
         menus_items_data = $('#' + target_id).DataTable({
             "dom": window.CommonDom_DataTables,
             "columnDefs": [
@@ -143,9 +151,22 @@
                     sortable: false,
                     mRender: function (data, type, full) {
                         var result = '';
+                        var permitted_users = '';
+                        if(full.permitted_users.length){
+                            for (i = 0; i < full.permitted_users.length; i++) {
+                                permitted_users += (permitted_users.trim() == '' ? '' : ',') + full.permitted_users[0].user_id;
+                            }
+                        }
+                        var permitted_roles = '';
+                        if(full.permitted_roles.length){
+                            for (i = 0; i < full.permitted_roles.length; i++) {
+                                permitted_roles += (permitted_roles.trim() == '' ? '' : ',') + full.permitted_roles[0].role_id;
+                            }
+                        }
                         if (full.edit_access) {
                             result += '' +
-                                '<button style="margin-right: 3px;" title="ویرایش منو" type="button" class="btn btn-xs bg-warning-400 fa fa-edit btn_grid_menu_item_edit" ' +
+                                '<button style="margin-right: 3px;" title="ویرایش منو" href="{!! route('modals.add_edit_menu_items') !!}?item_id=' + full.id + '" class="jsPanels btn btn-xs bg-warning-400 fa fa-edit" ' +
+                                //                                '<button style="margin-right: 3px;" title="ویرایش منو" type="button" class="btn btn-xs bg-warning-400 fa fa-edit btn_grid_menu_item_edit" ' +
                                 '   data-grid_item_id="' + full.id + '" ' +
                                 '   data-grid_item_parent_id="' + full.parent_id + '" ' +
                                 '   data-grid_item_title="' + full.title + '" ' +
@@ -163,13 +184,13 @@
                             result += '' +
                                 '<button style="margin-right: 3px;" title="حذف منو" type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_menu_item" data-grid_item_id="' + full.id + '" data-grid_item_name="' + full.title + '"></button>';
                         }
-                        result += '' +
-                            '<button style="margin-right: 3px;" title="ثبت مجوز دسترسی" type="button" class="btn btn-xs bg-info-800 fa fa-lock btn_grid_add_permission" ' +
-                            '   data-grid_item_id="' + full.id + '" ' +
-                            '   data-grid_item_permitted_users=\'' + JSON.stringify(full.permitted_users) + '\'' +
-                            '   data-grid_item_permitted_roles=\'' + JSON.stringify(full.permitted_roles) + '\'' +
-                            '   data-grid_item_name="' + full.title + '">' +
-                            '</button>';
+                        // result += '' +
+                        //     '<button style="margin-right: 3px;" title="ثبت مجوز دسترسی" type="button" class="btn btn-xs bg-info-800 fa fa-lock btn_grid_add_permission" ' +
+                        //     '   data-grid_item_id="' + full.id + '" ' +
+                        //     '   data-grid_item_permitted_users=\'' + JSON.stringify(full.permitted_users) + '\'' +
+                        //     '   data-grid_item_permitted_roles=\'' + JSON.stringify(full.permitted_roles) + '\'' +
+                        //     '   data-grid_item_name="' + full.title + '">' +
+                        //     '</button>';
                         return result;
                     }
                 },
@@ -211,39 +232,39 @@
         });
     }
 
-    function edit_menu() {
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.menus.update_menu')}}',
-            dataType: "json",
-            data: $('#form_edit_menu').serialize(),
-            success: function (result) {
-                if (result.success == true) {
-                    jQuery.noticeAdd({
-                        text: result.message,
-                        stay: false,
-                        type: 'success'
-                    });
-                    menus_grid_data.ajax.reload();
-                    document.getElementById('form_edit_menu').reset();
-                    $('a[href="#menus_tab"]').click();
-                    $('.edit_menu_tab').remove();
-                }
-                else {
-                    var errors = '';
-                    for (var k in result.error) {
-                        errors += '' +
-                            '<li>' + result.error[k] + '</li>'
-                    }
-                    jQuery.noticeAdd({
-                        text: errors,
-                        stay: false,
-                        type: 'error'
-                    });
-                }
-            }
-        });
-    }
+    {{--function edit_menu() {--}}
+    {{--$.ajax({--}}
+    {{--type: "POST",--}}
+    {{--url: '{{ route('hamahang.menus.update_menu')}}',--}}
+    {{--dataType: "json",--}}
+    {{--data: $('#form_created_new_menu').serialize(),--}}
+    {{--success: function (result) {--}}
+    {{--if (result.success == true) {--}}
+    {{--jQuery.noticeAdd({--}}
+    {{--text: result.message,--}}
+    {{--stay: false,--}}
+    {{--type: 'success'--}}
+    {{--});--}}
+    {{--menus_grid_data.ajax.reload();--}}
+    {{--document.getElementById('form_edit_menu').reset();--}}
+    {{--$('a[href="#menus_tab"]').click();--}}
+    {{--$('.edit_menu_tab').remove();--}}
+    {{--}--}}
+    {{--else {--}}
+    {{--var errors = '';--}}
+    {{--for (var k in result.error) {--}}
+    {{--errors += '' +--}}
+    {{--'<li>' + result.error[k] + '</li>'--}}
+    {{--}--}}
+    {{--jQuery.noticeAdd({--}}
+    {{--text: errors,--}}
+    {{--stay: false,--}}
+    {{--type: 'error'--}}
+    {{--});--}}
+    {{--}--}}
+    {{--}--}}
+    {{--});--}}
+    {{--}--}}
 
     function destroy_menu(item_id) {
         confirmModal({
@@ -552,11 +573,12 @@
             var $this = $(this);
             var menu_id = $this.data('grid_item_id');
             $('.menu_id').val(menu_id);
+            $(".add_edit_menu_items").attr("menu_id", menu_id);
             menu_items_datatable_grid(menu_id, 'MenuItemsGridData', '-1');
             var li_menu_item_tab = '<li class=""><a href="#menu_items_tab" data-toggle="tab" class="legitRipple get_menu_items_tab" aria-expanded="false"><span class=""></span> {{trans('menus.menu_items')}} </a></li>';
             var li_menu_item_add_tab = '<li class=""><a href="#menu_item_add_tab" data-toggle="tab" class="legitRipple menu_items_add_tab" aria-expanded="false"><span class=""></span> {{trans('menus.add_menu_item')}} </a></li>';
             $('#manage').append(li_menu_item_tab);
-            $('#manage').append(li_menu_item_add_tab);
+            // $('#manage').append(li_menu_item_add_tab);
             $('#manage a[href="#menu_items_tab"]').tab('show');
         });
 

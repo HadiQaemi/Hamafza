@@ -28,15 +28,15 @@
                 <tr>
                     <td class="col-md-2">{{trans('tools.show_in')}}</td>
                     <td class="col-md-10">
-{{--                        {{ dd($tool->options->toArray()) }}--}}
+                        {{--                        {{ dd($tool->options->toArray()) }}--}}
                         <div id="options_holders">
                             @foreach($options as $option)
                                 <input type="checkbox" name="options[]" value="{{ $option->id }}"
-                                    @if(isset($tool))
-                                        @foreach($tool->options as $tool_option)
-                                            {{ $option->id == $tool_option->id ? 'checked' : '' }}
-                                        @endforeach
-                                    @endif
+                                @if(isset($tool))
+                                    @foreach($tool->options as $tool_option)
+                                        {{ $option->id == $tool_option->id ? 'checked' : '' }}
+                                            @endforeach
+                                        @endif
                                 >{{ $option->description }}<br>
                             @endforeach
                         </div>
@@ -48,11 +48,11 @@
                         <div id="position_holders">
                             @foreach($positions as $position)
                                 <input type="checkbox" name="positions[]" value="{{ $position->id }}"
-                                    @if(isset($tool))
-                                        @foreach($tool->positions as $tool_position)
-                                            {{ $position->id == $tool_position->id ? 'checked' : '' }}
-                                        @endforeach
-                                    @endif
+                                @if(isset($tool))
+                                    @foreach($tool->positions as $tool_position)
+                                        {{ $position->id == $tool_position->id ? 'checked' : '' }}
+                                            @endforeach
+                                        @endif
                                 >{{ $position->description }}
                             @endforeach
                         </div>

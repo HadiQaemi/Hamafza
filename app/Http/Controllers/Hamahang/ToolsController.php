@@ -201,8 +201,8 @@ class ToolsController extends Controller
     public function addToolsRole(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tools_id' => 'required|not_in:0',
-            'tools_role_id' => 'required|not_in:0',
+            'new_tools_id' => 'required|not_in:0',
+            'new_tools_role_id' => 'required|not_in:0',
         ], [], [
             'tools_role_id' => 'نقش',
         ]);
@@ -214,15 +214,15 @@ class ToolsController extends Controller
         }
         else
         {
-            $tools = Tools::find($request->tools_id);
-            if ($tools->role_policy->contains($request->tools_role_id))
+            $tools = Tools::find($request->new_tools_id);
+            if ($tools->role_policy->contains($request->new_tools_role_id))
             {
                 $result['error'][] = trans('tools.role_exists');
                 $result['success'] = false;
             }
             else
             {
-                $tools->role_policy()->attach([$request->tools_role_id]);
+                $tools->role_policy()->attach([$request->new_tools_role_id]);
                 $result['message'][] = trans('app.operation_is_success');
                 $result['success'] = true;
             }
@@ -234,8 +234,8 @@ class ToolsController extends Controller
     {
 //        dd($request->all());
         $validator = Validator::make($request->all(), [
-            'datatables_tools_user_tools_id' => 'required|not_in:0',
-            'datatables_tools_user_user_id' => 'required|not_in:0',
+            'new_datatables_tools_user_tools_id' => 'required|not_in:0',
+            'new_datatables_tools_user_user_id' => 'required|not_in:0',
         ], [], [
             'datatables_tools_user_tools_id' => 'ابزار',
             'datatables_tools_user_user_id' => 'کاربر',
@@ -248,15 +248,15 @@ class ToolsController extends Controller
         }
         else
         {
-            $tools = Tools::find($request->datatables_tools_user_tools_id);
-            if ($tools->user_policy->contains($request->datatables_tools_user_user_id))
+            $tools = Tools::find($request->new_datatables_tools_user_tools_id);
+            if ($tools->user_policy->contains($request->new_datatables_tools_user_user_id))
             {
                 $result['error'][] = trans('tools.role_exists');
                 $result['success'] = false;
             }
             else
             {
-                $tools->user_policy()->attach([$request->datatables_tools_user_user_id]);
+                $tools->user_policy()->attach([$request->new_datatables_tools_user_user_id]);
                 $result['message'][] = trans('app.operation_is_success');
                 $result['success'] = true;
             }

@@ -212,7 +212,12 @@
                             </table>
                         </div>
                     </div>
-
+                    <div class="row left">
+                        <button id="NewChartSubmitBtn" onclick="SaveNewChart()" value="save" class="btn btn-info" type="button">
+                            <i class="glyphicon  glyphicon-save-file bigger-125"></i>
+                            <span>{{ trans('app.register') }}</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{trans('filemanager.cancel')}}</button>
@@ -289,7 +294,9 @@
                                 '   <span>{{ trans('app.edit') }}</span>' +
                                 '</a>' +
                                 '<span> | </span>' +
-                                 '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+id+'"><i class="fa fa-object-group"></i><span style="margin-right:4px;">{{ trans('org_chart.chart_manager') }}</span></a>'
+                                (full.ChartID==null ? '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+id+'"><i class="fa fa-object-group"></i><span style="margin-right:4px;">{{ trans('org_chart.create_chart') }}</span></a>' :
+                                    '<a href="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'"   ><span>{{ trans('org_chart.view_edit') }}</span></a>')
+
                                 /*'<a style="font-size: 10px" onClick="OpenModalListOrganCharts(' + id + ',' + '"' + title + '"' + ')">' +
                                 '   <i class="fa fa-object-group"></i>' +
                                 '  {{--  {{ trans('org_chart.charts') }}--}}' +
@@ -322,8 +329,9 @@
                 success: function (data) {
                     alert('{{ trans('org_chart.new_chart_added') }}');
                     $('#AddNewChart').modal('hide');
+                    organs_grid();
                     OpenModalListOrganCharts(cur_org_id, 'salam');
-                   $('#ShowOrganCharts').modal({show: true});
+                    $('#ShowOrganCharts').modal({show: true});
                 }
             });
 
@@ -332,6 +340,7 @@
 
             cur_org_id = id;
             $('#AddNewChart').modal({show: true});
+            $('#btn_insert_chart').css('display','inline');
 
         }
         function RemoveOrg(id) {
@@ -439,6 +448,7 @@
                             window.table_organs_grid.destroy();
                             organs_grid();
                         }, 200);
+                        organs_grid();
                     }
                     else {
                         var ul = document.createElement('ul');
@@ -492,16 +502,16 @@
                 }
             });
         }
-       /* $(document).on('click', '.edit_btn', function(){
-            var title=$(this).attr('data_title');
-            var description=$(this).attr('data_description');
+        /* $(document).on('click', '.edit_btn', function(){
+             var title=$(this).attr('data_title');
+             var description=$(this).attr('data_description');
 
-            setTimeout(function(){
-                $("#root_item_title").val(title);
-                $("#organ_description").val(description);
-                }, 1000);
+             setTimeout(function(){
+                 $("#root_item_title").val(title);
+                 $("#organ_description").val(description);
+                 }, 1000);
 
-        });*/
+         });*/
         $(document).ready(function () {
             organs_grid();
             $(document).on('click', '#btn_add_Organs', function () {
