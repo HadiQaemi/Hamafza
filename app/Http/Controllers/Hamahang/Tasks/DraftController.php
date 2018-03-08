@@ -301,7 +301,7 @@ class DraftController extends Controller
     public function ShowDrafts($uname)
     {
         $arr = variable_generator('user','desktop',$uname);
-        $arr['HFM_TaskDrafts'] = HFM_GenerateUploadForm([['TaskDrafts', ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
+        $arr['HFM_TaskDrafts'] = HFM_GenerateUploadForm([['TaskDrafts', ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
         return view('hamahang.Tasks.ShowDrafts', $arr);
     }
 

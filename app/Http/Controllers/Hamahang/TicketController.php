@@ -34,6 +34,10 @@ class TicketController extends Controller
             ->with('ticket_answer')
             ->with('sender_user')
             ->with('files')
+            ->whereHas('sender_user', function($query)
+            {
+                return $query->where('Name', '<>', '');
+            })
             ->groupBy('tickets.id')
             ->orderBy('tickets.id','DESC')
             ->get();
@@ -71,6 +75,10 @@ class TicketController extends Controller
             ->with('ticket_answer')
             ->with('receiver_users')
             ->with('ticket_files')
+            ->whereHas('receiver_users', function($query)
+            {
+                return $query->where('Name', '<>', '');
+            })
             ->groupBy('tickets.id')
             ->orderBy('tickets.id','DESC')
             ->get();

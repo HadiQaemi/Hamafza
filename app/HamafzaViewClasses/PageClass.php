@@ -678,7 +678,6 @@ class PageClass
             {
                 return "شما به ابزار تنظیمات این صفحه دسترسی ندارید!";
             }
-            /*  $uid = (session('uid') != '') ? session('uid') : 0;*/
             $sesid = (session('sesid') != '') ? session('sesid') : 0;
             $SP = new \App\HamafzaServiceClasses\PageClass();
             $s = $SP->GetPageSetting($uid, $sesid, $sid, $pid);
@@ -710,7 +709,6 @@ class PageClass
                     }
                     $str .= '<tr>';
                     $pc = new PublicClass();
-                    $vals = ''; //(array_key_exists($key, $field_vals)) ? $field_vals[$key] : '';
                     $str .= $pc->field_view($field_id, $field_name, $field_type, $field_value, $requires, $Desc, $Report);
                     $str .= '</tr>';
                 }
@@ -733,41 +731,7 @@ class PageClass
             }
 
             $Relations_in_subject = json_encode($res_array);
-
-           /* $Relations = json_encode($Relations);
-            $Relations = json_decode($Relations);*/
-          /*  $rel = '<table class="table">';
-            $n = 1;
-            if (is_array($Relations_in_subject))
-            {
-                foreach ($Relations as $val)
-                {
-                    $rel .= PageClass::ManageRel($val, $n, $sid, $title);
-                    $n++;
-                }
-                $max = $n + 5;
-                $sa = array();
-                for ($n; $n <= $max; $n++)
-                {
-                    $rel .= PageClass::ManageRel($sa, $n, $sid, $title);
-                }
-
-            }
-            else
-            {
-                $sa = array();
-                $max = $n + 2;
-                $r['right']['id'] = $sid;
-                $r['right']['title'] = $title;
-                for ($n; $n <= $max; $n++)
-                {
-                    $rel .= PageClass::ManageRel($sa, $n, $sid, $title);
-                }
-            }
-            $rel .= '</table>';*/
-
             $Helps = $s['Helps'];
-//            $relations = DB::table('relations')->get();
             $relations = Relations::all();
             $relations_array = array();
             $str = '';
@@ -792,19 +756,10 @@ class PageClass
             $Setting = json_decode($Setting);
             $Access = json_encode($Access);
             $Access = json_decode($Access);
-//            $subjects = Subject::where('id',$sid)
-//                ->with('user_policies_view')
-//                ->with('keywords')
-//                ->with('role_policies_view')
-//                ->with('user_policies_edit')
-//                ->with('role_policies_edit')
-//                ->with('product_info')->first();
             $subjects = Subject::where('id', $sid)->with('keywords')->first();
             $user = User::find($subjects->admin);
             $admin = $user ? [$user->id, $user->FullName] : [0, 'کاربر حذف شده است.'];
             $spi = $subjects->product_info;
-            //return view('modals.page_setting', array('Helps' => $Helps, 'Setting' => $Setting, 'fields' => $str, 'sid' => $sid, 'relation' => $rel, 'Access' => $Access, 'pid' => $pid, 'Title' => $title, 'spi' => $spi));
-            //$help = Pages::find($pid)->help->first();
             $pages = Pages::where('sid', $sid)->select('id')->get();
             if ($pages)
             {

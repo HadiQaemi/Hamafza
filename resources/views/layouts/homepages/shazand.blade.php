@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="hamafza" class="@yield('html_class')">
 <head lang="en">
-@php($csrf = csrf_token())
-<!---------------**Meta**-------------->
+    @php($csrf = csrf_token())
     <meta name="csrf-token" content="{{ $csrf}}">
-@include('layouts.helpers.common.sections.meta')
-
+    @include('layouts.helpers.common.sections.meta')
 <!---------------**Main Style**-------------->
-@include('layouts.homepages.helpers.shazand.assets.style.main_style')
-@include('layouts.homepages.helpers.shazand.assets.style.after_main_style')
-
+    @include('layouts.helpers.common.assets.style.main_style')
+    @include('layouts.homepages.helpers.shazand.assets.style.main_style')
+    @include('layouts.homepages.helpers.shazand.assets.style.after_main_style')
 <!---------------**Specific Plugin Style**-------------->
-@include('layouts.homepages.helpers.shazand.assets.style.specific_plugin_style')
-
+    @include('layouts.homepages.helpers.shazand.assets.style.specific_plugin_style')
 <!---------------**Inline Style**-------------->
-@include('layouts.homepages.helpers.shazand.assets.style.inline_style')
-
+    @include('layouts.homepages.helpers.shazand.assets.style.inline_style')
 <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
     @include('hamahang.master.alert')

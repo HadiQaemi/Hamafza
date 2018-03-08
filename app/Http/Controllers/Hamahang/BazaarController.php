@@ -791,27 +791,25 @@ class BazaarController extends Controller
     // make a list of invoices using Datatable and Eloquent
     public function invoice_get_datatable()
     {
-        $invoices = Invoice::orderBy('id', 'DESC');
-        return Datatables::eloquent($invoices)
-            ->addColumn('customer_name', function ($data)
-            {
-                return $data->user->Name;
-            })
-            ->addColumn('customer_family', function ($data)
-            {
-                return $data->user->Family;
-            })
-            ->addColumn('customer_mellicode', function ($data)
-            {
-                return $data->user->melli_code;
-            })
+        $invoices = Invoice
+            ::with('user')
+            ->withCount
+            ([
+                'items',
+                'items as subjects' => function ($query)
+                {
+                    $query->select(DB::raw('SUM(subject_count) AS subjects'));
+                }
+            ])
+            ->select('hamahang_bazaar_invoices.*');
+        $r = Datatables::eloquent($invoices)
             ->addColumn('invoice_no', function ($data)
             {
                 return $data->invoice_no;
             })
-            ->addColumn('subject_count', function ($data)
+            ->addColumn('products_count', function ($data)
             {
-                return $data->subject_count;
+                return $data->items_count . ' ' . trans('bazaar.invoice.subject_count_product') . ' (' . $data->subjects_count . ' ' . trans('bazaar.invoice.subject_count_number') . ')';
             })
             ->addColumn('date', function ($data)
             {
@@ -825,11 +823,13 @@ class BazaarController extends Controller
             {
                 return $data->last_status;
             })
-            ->addColumn('has_coupon', function ($data)
+            ->addColumn('has_coupon_label', function ($data)
             {
                 return trans('bazaar.invoice.has_coupon_' . ($data->has_coupon ? 'yes' : 'no'));
             })
+            ->rawColumns(['has_coupon_label'])
             ->make(true);
+        return $r;
     }
 
     // make a list of invoices using Datatable and Eloquent

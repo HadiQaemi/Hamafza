@@ -41,7 +41,7 @@ class SubjectClass
     {
         $s1 = DB::table('subjects as s')->leftjoin('pages as p', 'p.sid', '=', 's.id')
             ->leftjoin('user as u', 's.admin', '=', 'u.id')
-            ->where('p.id', $pid)->select(DB::Raw('0 as part,0 as id,s.admin,s.reg_date as edit_date,"ایجاد صفحه" as name,u.Name, u.Family'))->get();
+            ->where('p.id', $pid)->select(DB::Raw('0 as part,0 as id,s.admin,s.reg_date as edit_date,"ایجاد صفحه" as name,u.Name, u.Family, u.Uname'))->get();
         $s = DB::table('history as h')
             ->leftjoin('edit_com as e', 'h.edit', '=', 'e.id')
             ->leftjoin('user as u', 'h.admin', '=', 'u.id')

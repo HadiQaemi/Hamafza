@@ -44,8 +44,8 @@ class CreateSecGroupsTable extends Migration {
 			$table->boolean('user_list', 1)->default(0);
 			$table->boolean('ticketr', 1)->default(0);
 			$table->boolean('tickets', 1)->default(0);
-			$table->integer('administrator', 1)->default(0);
-			$table->integer('ticket', 1)->default(0);
+			$table->integer('administrator')->default(0);
+			$table->integer('ticket')->default(0);
 			$table->enum('defualt', ['1','0'])->default('0');
 			$table->longText('descr');
 		    $table->timestamps();

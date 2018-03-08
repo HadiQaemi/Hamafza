@@ -1,5 +1,6 @@
 @php
     $help_code = 0;
+    $hide_type = false;
     $route = Route::current();
     if ($route)
     {
@@ -14,6 +15,7 @@
                     $page_id = $route_parameters['id'];
                     $page = \App\Models\hamafza\Pages::find($page_id);
                     $page_subject = $page->subject;
+                    $hide_type = 20 == App\Models\hamafza\Subject::find($page->subject->id)->kind;
                     if ($page_subject)
                     {
                         switch ($page_subject->kind)
@@ -299,13 +301,13 @@
             </div>
         @endif
         @if ('page.forum' != $route_name)
-            <div class="btn-group pull-right mr">
+            <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
                 <button id="CommentPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
             </div>
         @endif
     @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
     @if ('0' == $vals['follow'])
-        <div class="btn-group pull-right mr">
+        <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
             <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
         </div>
         @if ('page.forum' != $route_name)

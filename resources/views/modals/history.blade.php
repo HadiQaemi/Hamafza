@@ -20,7 +20,7 @@
     @foreach($H as $h)
     <tr>
         <td>{{ $i}}</td>
-        <td><a target="_blank" href="{{ $h->Uname }}">{{ $h->Name}} {{ $h->Family}}</a></td>
+        <td><a target="_blank" href="{{ url($h->Uname) }}">{{ $h->Name}} {{ $h->Family}}</a></td>
         <td>{{ $h->edit_date}}</td>
         @if($h->part=='0')
         <td>کلی</td>
@@ -39,7 +39,7 @@
       @foreach($H1 as $h)
     <tr>
         <td>{{ $i}}</td>
-        <td>{{ $h->Name}} {{ $h->Family}}</td>
+        <td><a target="_blank" href="{{ url($h->Uname) }}">{{ $h->Name}} {{ $h->Family}}</a></td>
         <td>{{ $h->edit_date}}</td>
         @if($h->part=='0')
         <td>کلی</td>

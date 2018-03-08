@@ -119,13 +119,13 @@ class MyTaskController extends Controller
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['packages'] = $packages;
                 $arr['filter_subject_id'] = $uname;
-                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.MyTask.MyTasksList', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.list':
                 $arr = variable_generator('user', 'desktop', $uname);
                 $arr['packages'] = $packages;
-                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.MyTask.MyTasksList', $arr);
                 break;
         }

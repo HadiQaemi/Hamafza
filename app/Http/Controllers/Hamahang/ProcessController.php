@@ -683,12 +683,12 @@ class ProcessController extends Controller
             case 'pgs.desktop.hamahang.process.list':
                 $arr = variable_generator('page','desktop',$uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.ProcessList', $arr);
                 break;
             case 'ugc.desktop.hamahang.process.list':
                 $arr = variable_generator('user','desktop',$uname);
-                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.ProcessList', $arr);
                 break;
         }
@@ -696,7 +696,7 @@ class ProcessController extends Controller
 
     public function ProcessDraftsList($uname)
     {
-        $attachment = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx'], 'Multi']]);
+        $attachment = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
         $arr = variable_generator('user','desktop',$uname);
         $arr['attach_files'] = $attachment;
 

@@ -18,8 +18,8 @@
                     '</button>'
                 );
             },
-            "processing": true,
-            "serverSide": true,
+            processing: true,
+            serverSide: true,
             "language": window.LangJson_DataTables,
             ajax:
             {
@@ -38,72 +38,36 @@
                 {
                     data: 'id',
                     name: 'id',
-                    sortable: false,
                 },
                 @if (!isset($my))
                 {
-                    data: 'customer_name',
-                    name: 'customer_name',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.customer_name;
-                    }
+                    data: 'user.Name',
+                    name: 'user.Name'
                 },
                 {
-                    data: 'customer_family',
-                    name: 'customer_family',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.customer_family;
-                    }
+                    data: 'user.Family',
+                    name: 'user.Family'
                 },
                 {
-                    data: 'customer_mellicode',
-                    name: 'customer_mellicode',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.customer_mellicode;
-                    }
+                    data: 'user.melli_code',
+                    name: 'user.melli_code'
                 },
                 @endif
                 {
                     data: 'invoice_no',
-                    name: 'invoice_no',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.invoice_no;
-                    }
+                    name: 'id',
                 },
                 {
-                    data: 'subject_count',
-                    name: 'subject_count',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.subject_count;
-                    }
+                    data: 'products_count',
+                    name: 'products_count',
                 },
                 {
                     data: 'date',
-                    name: 'date',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.date;
-                    }
+                    name: 'id',
                 },
                 {
                     data: 'amount',
-                    name: 'amount',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.amount;
-                    }
+                    name: 'payable_amount',
                 },
                 {
                     data: 'state',
@@ -115,13 +79,8 @@
                     }
                 },
                 {
-                    data: 'has_coupon',
+                    data: 'has_coupon_label',
                     name: 'has_coupon',
-                    sortable: false,
-                    mRender: function (data, type, full)
-                    {
-                        return full.has_coupon;
-                    }
                 },
                 {
                     sortable: false,

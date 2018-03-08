@@ -7,6 +7,7 @@ use App\Models\hamafza\Subject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use App\HamahangCustomClasses\HtmlDomSTR;
+use Route;
 
 class PageClassExtend1
 {
@@ -573,7 +574,7 @@ class PageClassExtend1
             {
                 $rowT = DB::table('subjects as s')
                     ->leftJoin('subject_type as sa', 'sa.id', '=', 's.kind')
-                    ->select('s.title', 'sa.name', 's.kind')
+                    ->select('s.title', 'sa.name', 's.kind', 's.sub_kind')
                     ->where('s.id', $sid)->first();
 
                 $subjectKey = DB::table('subject_key as sk')
@@ -583,6 +584,7 @@ class PageClassExtend1
                 $T1['asubject'] = $rowT->name;
                 $T1['title'] = $rowT->title;
                 $T1['kind'] = $rowT->kind;
+                $T1['sub_kind'] = $rowT->sub_kind;
                 $T1['Fields'] = PageClass::GetFields($sid, $T1['kind']);
                 $T1['keywords'] = $subjectKey;
                 $Setting['propertie'] = $T1;
@@ -1378,6 +1380,16 @@ class PageClassExtend1
     public function PageTreeBody($rows)
     {
         $bodys = '';
+        $route = Route::current();
+        $route_type = strtolower($route->type);
+        $route_id = $route->id;
+        $first_node = DB::table('page_tree')->where('tid', $route_id)->where('parent_id', '>', '0')->where('pid', '>', '0')->orderBy('orders')->orderBy('id')->first();
+        $page = Pages::find($first_node->pid);
+
+        $bodys .= '<h1 id="' . $first_node->id . '">' . $first_node->name . '</h1>';
+        $bodys .= $page->body;
+
+        /*
         foreach ($rows as $row)
         {
             $Htext = '';
@@ -1393,6 +1405,7 @@ class PageClassExtend1
                 $bodys .= $this->CrtaeData($row);
             }
         }
+        */
         return $bodys;
     }
 
@@ -1436,10 +1449,17 @@ class PageClassExtend1
                 foreach ($Page as $value)
                 {
                     $Pages = DB::table('pages')->where('id', $value->pid)->first();
-                    $PageClass = new PageClass();
                     if ($Pages)
                     {
-                        $bodys .= $PageClass->modifyText($Pages->body);
+                        $page_tree = DB::table('page_tree')->find($row->id);
+                        if ('370450' == $page_tree->tid)
+                        {
+                            $bodys .= $Pages->body;
+                        } else
+                        {
+                            $PageClass = new PageClass();
+                            $bodys .= $PageClass->modifyText($Pages->body);
+                        }
                     }
                 }
                 break;

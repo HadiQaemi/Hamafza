@@ -83,58 +83,50 @@ class SubjectController extends Controller
 
     static public function update(Request $request)
     {
-        $messages = [
+        $messages =
+        [
             'subject_title.required' => 'فیلد عنوان الزامی است',
         ];
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(),
+        [
             'subject_title' => 'required',
         ], $messages);
-        //DB::enableQueryLog();
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
+        } else
         {
             $subject = Subject::find($request->sid);
             $subject->title = $request->subject_title;
+            if (-1 != $subject->sub_kind)
+            {
+                $subject->sub_kind = $request->sub_kind;
+            }
             $subject->save();
-
-            //$PS_keywords = explode(',', $request->PS_keywords);
-
             if ($subject)
             {
                 if (!isset($request->PS_keywords))
                 {
                     $PS_keywords = [];
-                }
-                else
+                } else
                 {
                     foreach ($request->PS_keywords as $key)
                     {
                         $PS_keywords[] = substr($key, 8);
                     }
                 }
-
                 $meta_fields = $request->input('meta_fields');
-
-                //dd($meta_fields);
-
                 if ($meta_fields)
                 {
                     foreach ($meta_fields as $meta_field_key => $meta_field)
                     {
                         $meta_fields[$meta_field_key] = ['field_value' => $meta_field];
                     }
-
-
                     $subject->listfields()->sync($meta_fields);
                 }
-
                 $subject->keywords()->sync($PS_keywords);
-
                 if ($subject->keywords()->sync($PS_keywords))
                 {
                     $field = $request->field;
@@ -150,14 +142,12 @@ class SubjectController extends Controller
                                 if ($val == 'text' || $val == 'textarea' || $val == 'select' || $val == 'radio' || $val == 'keyword')
                                 {
                                     $value = (array_key_exists($key, $field)) ? $field[$key] : '';
-
                                     $subject_fields_report = new SubjectFieldValue();
                                     $subject_fields_report->sid = $subject->id;
                                     $subject_fields_report->field_id = $key;
                                     $subject_fields_report->field_value = $value;
                                     $subject_fields_report->save();
-                                }
-                                elseif ($val == 'checkbox')
+                                } elseif ($val == 'checkbox')
                                 {
                                     if (isset($field[$key]) && is_array($field[$key]))
                                     {
@@ -175,11 +165,9 @@ class SubjectController extends Controller
                             }
                         }
                     }
-
                     $message[] = 'با موفقیت ویرایش شد';
                     return json_encode($message);
-                }
-                else
+                } else
                 {
                     $message[] = 'متن مورد نظر ویرایش نشد';
                     return json_encode($message);

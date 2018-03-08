@@ -42,7 +42,7 @@ class FileManagerController extends Controller
         $succeeded_for_session = [];
 
         $failed = [];
-        $allowed = ['zip', 'pdf', 'jpg', 'jpeg', 'png', 'ico', 'rar', 'doc', 'docx', 'xls', 'xlsx'];
+        $allowed = ['zip', 'pdf', 'jpg', 'jpeg', 'png', 'ico', 'rar', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
         if (Request::file("$field")[0] !== null)
         {
             /*$MC_Result = HFM_CheckMultiFile($section,Request::file("$field"));
@@ -324,10 +324,10 @@ class FileManagerController extends Controller
             Request::all(),
             [
                 'pid' => 'required|integer',
-                'image' => 'required|mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx',
+                'image' => 'required|mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx,ppt,pptx',
             ], [],
             [
-                'image' => 'فرمت فایل باید یکی از mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx باشد.'
+                'image' => 'فرمت فایل باید یکی از mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx,ppt,pptx باشد.'
             ]
         );
 

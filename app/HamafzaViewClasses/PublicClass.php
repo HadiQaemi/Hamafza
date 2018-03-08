@@ -1140,20 +1140,24 @@ class PublicClass {
         return $refs;
     }
 
-    public function CretaeTree3L($paramarray, $idname, $parentidname, $titlename, $x = '0') {
+    public function CretaeTree3L($paramarray, $idname, $parentidname, $titlename, $x = '0')
+    {
         $refs = '';
-        foreach ( $paramarray as $row) {
+        foreach ($paramarray as $row)
+        {
             $row = (array) $row;
             $ref = &$refs[$row[$idname]];
             $ref['id'] = $row[$idname];
             $ref['parent_id'] = $row[$parentidname];
             $ref['name'] = $row[$titlename];
-            if (array_key_exists($x, $row)) {
+            if (array_key_exists($x, $row))
+            {
                 $ref['url'] = $row[$x];
-            } else {
+            } else
+            {
                 $ref['url'] = $row[$titlename];
             }
-                $list[$row[$idname]] = &$ref;
+            $list[$row[$idname]] = &$ref;
         }
         return $refs;
     }
