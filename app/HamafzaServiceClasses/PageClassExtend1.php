@@ -1440,7 +1440,14 @@ class PageClassExtend1
                     $PageClass = new PageClass();
                     if ($Pages)
                     {
-                        $bodys .= $PageClass->modifyText($Pages->body);
+                        $page_tree = DB::table('page_tree')->find($row->id);
+                        if ('370450' == $page_tree->tid)
+                        {
+                            $bodys .= $Pages->body;
+                        } else
+                        {
+                            $bodys .= $PageClass->modifyText($Pages->body);
+                        }
                     }
                 }
                 break;
