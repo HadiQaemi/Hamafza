@@ -28,46 +28,170 @@
         @if ('kmkz' == config('constants.IndexView'))
             <style>#header { background-color: #367BAB; }</style>
         @endif
-            <style>
-                .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-                    background-color: #3986AC;
-                }
-                .navbar-default .navbar-toggle .icon-bar {
-                    background-color: #f9f9f9;
-                }
-                .navbar-default .navbar-toggle {
-                    background-color: #3986AC;
-                }
-                #myNavbar{
-                    height: 250px;
-                    color: #fff;
-                }
-                .navbar-default .navbar-nav > li > a {
-                    color: #fff;
-                }
-                .user-config{
-                    /*margin-left: -15px;*/
-                }
-                .logo{
-                    margin-right: 15px !important;
-                }
-                .banader_homepage #main {
-                    padding-top: 10px;
-                }
-                .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
-                    margin-right: -15px;
-                    margin-left: 0px;
-                }
-                .mCSB_container {
-                    overflow: visible !important;
-                    width: 100% !important;
-                    height: 1000px !important;
-                }
-                /*#header .container-fluid {*/
+        <style>
+            .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+                background-color: #3986AC;
+            }
+            .navbar-default .navbar-toggle .icon-bar {
+                background-color: #f9f9f9;
+            }
+            .navbar-default .navbar-toggle {
+                background-color: #3986AC;
+            }
+            #myNavbar{
+                height: 270px;
+                color: #fff;
+            }
+            .navbar-default .navbar-nav > li > a {
+                color: #fff;
+            }
+            .user-config{
                 /*margin-left: -15px;*/
-                /*margin-right: 15px;*/
-                /*}*/
-            </style>
+            }
+            .logo{
+                margin-right: 15px !important;
+            }
+            .banader_homepage #main {
+                padding-top: 10px;
+            }
+            .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+                margin-right: -15px;
+                margin-left: 0px;
+            }
+            #header .quick-links-res .res-li {
+                padding: 0px 10px;
+            }
+            #header .quick-links-res .res-li {
+                padding: 0px 10px;
+                border-bottom: 1px solid #FFF;
+            }
+            #header .quick-links-res .res-a {
+                font-size: 15px;
+            }
+            #header .quick-links-res {
+                margin-left: 10px;
+                margin-bottom: 0;
+            }
+            @media screen and (min-width: 480px) {
+                #header .quick-links-res {
+                    margin-left: 20px;
+                }
+            }
+            #header .quick-links-res li {
+                float: right;
+            }
+            #header .quick-links-res a {
+                font-size: 18px;
+                color: #fff;
+                cursor: pointer;
+                /*line-height: 28px;*/
+            }
+            #header .quick-links-res a:hover {
+                opacity: 0.8;
+            }
+            .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+                color: #eee;
+                background-color: transparent;
+            }
+
+
+            .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+                background-color: #3986AC;
+            }
+            .navbar-default .navbar-toggle .icon-bar {
+                background-color: #f9f9f9;
+            }
+            .navbar-default .navbar-toggle {
+                background-color: #3986AC;
+            }
+            #myNavbar{
+                height: 270px;
+                color: #fff;
+            }
+            .navbar-default .navbar-nav > li > a {
+                color: #fff;
+            }
+            .user-config{
+                /*margin-left: -15px;*/
+            }
+            .logo{
+                margin-right: 15px !important;
+            }
+            .banader_homepage #main {
+                padding-top: 10px;
+            }
+            .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+                margin-right: -15px;
+                margin-left: 0px;
+            }
+            .mCSB_container {
+                overflow: visible !important;
+                width: 100% !important;
+                height: 1000px !important;
+            }
+            @media screen and (min-width: 480px) {
+                .row-hd {
+                    height: 65vh;
+                }
+            }
+            @media screen and (min-width: 892px) {
+                .row-hd {
+                    height: 85vh;
+                }
+            }
+            .hd-body{
+                direction: rtl;
+            }
+            .hd-body::-webkit-scrollbar {
+                width: 5px;
+                direction: rtl;
+            }
+
+            .hd-body::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            }
+
+            .hd-body::-webkit-scrollbar-thumb {
+                background-color: darkgrey;
+                outline: 1px solid slategrey;
+            }
+
+            .hd-tree{
+                direction: rtl;
+            }
+
+            .hd-tree::-webkit-scrollbar {
+                width: 5px;
+                direction: rtl;
+            }
+            .hd-tree::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            }
+
+            .hd-tree::-webkit-scrollbar-thumb {
+                background-color: darkgrey;
+                outline: 1px solid slategrey;
+            }
+            .row-hd{
+                direction: rtl;
+            }
+            .row-hd::-webkit-scrollbar {
+                width: 5px;
+                direction: rtl;
+            }
+
+            .row-hd::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            }
+
+            .row-hd::-webkit-scrollbar-thumb {
+                background-color: darkgrey;
+                outline: 1px solid slategrey;
+            }
+            .logo {
+                margin-right: 25px !important;
+            }
+        </style>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header navbar-right">
@@ -82,16 +206,30 @@
                         @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
-                            <span class="hidden-lg hidden-md hidden-sm" style="font-size: 10px;">{!!substr($Title,0,50)!!}...</span>
+                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!substr($Title,0,50)!!}...</span>
                         @endif
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right" style="margin:0px">
-                        @if (auth()->check())
+                    @if (auth()->check())
+                        <ul class="nav navbar-nav navbar-right quick-links-res" style="margin-right: 15px">
                             {!! menuGenerator(3, 'horizontal') !!}
-                        @endif
-                    </ul>
+                        </ul>
+                    @else
+                        <ul class="nav navbar-nav quick-links quick-links-res hidden-sm hidden-md hidden-lg">
+                            <li href="#tab2" class="res-li"><a class="res-a"><span class="" title="" data-placement="top" data-toggle="tooltip">درگاه‌ها</span></a></li>
+                            <li href="#tab3" class="res-li"><a class="res-a"><span class="" title="" data-placement="top" data-toggle="tooltip">کلید واژه‌ها</span></a></li>
+                            <li href="#tab4" class="res-li"><a class="res-a"><span class="" title="" data-placement="top" data-toggle="tooltip">جستجو</span></a></li>
+                        </ul>
+                        <ul class="nav navbar-nav quick-links-res hidden-lg hidden-md hidden-sm" style="margin-top: 15px;">
+                            <li href="#tab2" class="res-li">
+                                <a class="register res-a" data-toggle="modal" data-target="#register">ثبت نام</a>
+                            </li>
+                            <li href="#tab2" class="res-li">
+                                <a class="login res-a" data-toggle="modal" data-target="#login">ورود</a>
+                            </li>
+                        </ul>
+                    @endif
                     <ul class="nav navbar-nav navbar-left">
                         @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar')
                     </ul>
@@ -119,7 +257,7 @@
                     <div id="toolbar">
                         @if(isset($Title))
                             <div class="pull-right right-detail col-md-10">
-                                <h1>{!!$Title!!}ss</h1>
+                                <h1>{!!$Title!!}</h1>
                             </div>
                         @endif
                         <div class="clearfix"></div>
@@ -151,24 +289,29 @@
                                 @endif
                             </div>
 
-                            <div hmfz-pg-tb="" class="next-container dsply-tbl-cl">
-                                <div hmfz-pg-tb-cntnt="" class="row">
-                                    <div class="scrl-bx" id="vrScroll" style="height: 90vh;width: 100%;overflow: scroll;">
+                            <div hmfz-pg-tb="" class="next-container dsply-tbl-cl" style="overflow: hidden">
+                                <div hmfz-pg-tb-cntnt="" class="row row-hd">
+                                    {{--<div class="scrl-bx" id="vrScroll" style="height: 90vh;width: 100%;overflow: scroll;">--}}
+                                    <div class="" id="vrScroll2">
                                         @if(View::hasSection('position_right_col_3') || View::hasSection('Tree'))
                                             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 scrl">
-                                                <div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">
+                                                {{--<div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
+                                                <div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr;">
                                                     <div style="direction: rtl">
                                                         @yield('position_right_col_3')
                                                         @yield('Tree')
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 scrl" id="Tdxcre">
+                                            {{--<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 scrl" id="Tdxcre">--}}
+                                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="Tdxcre2">
                                                 @else
-                                                    <div class="col-md-12 scrl" id="Tdxcre">
+                                                    {{--<div class="col-md-12 scrl" id="Tdxcre">--}}
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="Tdxcre2" style="">
                                                         <div style="direction: rtl">
                                                             @endif
-                                                            <div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">
+                                                            {{--<div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: ltr;">
                                                                 <div style="direction: rtl;" id="master_inner_rtl_div" >
                                                                     <div class="panel panel-light fix-box" style="height: 100%;">
                                                                         <button class="ful-scrn">
@@ -212,6 +355,24 @@
             @yield('inline_scripts')
 
             <script>
+                if($(document).width() > 900){
+                    // $('.row-hd').css('height','100%');
+                    // if(($('.row-hd').height()/$(window).height())*100<80){
+                    //     $('.row-hd').css('overflow-y','hidden');
+                    // }else{
+                    $('.hd-body').css('height','80vh');
+                    $('.hd-body').css('overflow-y','auto');
+                    $('.hd-tree').css('height','80vh');
+                    $('.hd-tree').css('overflow-y','auto');
+                    $('.user-config').css('margin-left','-7px');
+                    $('.logo').css('margin-right','20px !important');
+                    // }
+                }else{
+                    // $('.row-hd').css('height',78-($('.hd-tree').height()/$(window).height())*100+'vh');
+                    $('.row-hd').css('height','90vh');
+                    $('.row-hd').css('overflow-y','auto');
+                }
+                $('.right-menu').css('height','100vh');
                 var pageheight = $(window).height();
                 var dcrl2 = pageheight;
                 //$("#Tdxcre").height(dcrl2 - 140);
@@ -271,6 +432,5 @@
         </div>
     </div>
 </div>
-@yield('HFM_Form_JS')
 </body>
 </html>
