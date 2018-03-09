@@ -174,6 +174,7 @@
             }
             .row-hd{
                 direction: rtl;
+                overflow-y: auto;
             }
             .row-hd::-webkit-scrollbar {
                 width: 5px;
@@ -360,9 +361,9 @@
                     // if(($('.row-hd').height()/$(window).height())*100<80){
                     //     $('.row-hd').css('overflow-y','hidden');
                     // }else{
-                    $('.hd-body').css('height','80vh');
+                    $('.hd-body').css('max-height','80vh');
                     $('.hd-body').css('overflow-y','auto');
-                    $('.hd-tree').css('height','80vh');
+                    $('.hd-tree').css('max-height','80vh');
                     $('.hd-tree').css('overflow-y','auto');
                     $('.user-config').css('margin-left','-7px');
                     $('.logo').css('margin-right','20px !important');

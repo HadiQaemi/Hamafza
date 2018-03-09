@@ -104,7 +104,7 @@
                         @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
-                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!substr($Title,0,50)!!}...</span>
+                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!$Title!!}</span>
                         @endif
                     </a>
                 </div>
