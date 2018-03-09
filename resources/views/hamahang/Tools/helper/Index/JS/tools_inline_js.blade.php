@@ -13,22 +13,22 @@
             ' <"row" <"col-xs-5"<"col-xs-6"i><"col-xs-6"l>><"col-xs-7 pull-left text-left"p> <"clearfixed">>',
             "language": window.LangJson_DataTables,
             initComplete: function () {
-                $("div.toolbar")
-                    .html('' +
-                        '<div class="col-xs-8 pull-left">' +
-                        '<input type="text" class="form-control" placeholder="عنوان دسته" id="new_tools_group_name" name="new_tools_group_name"> ' +
-                        '<input type="text" id="add_edit_tools_group" hidden> ' +
-                        '<input type="text" id="edit_tools_group_id" hidden> ' +
-                        '<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +
-                        '   <i ></i> ' +
-                        '   {{ trans('app.register')}}' +
-                        '</button>' +
-                        '<button class="btn btn-default btn_grid_add_new_tools_group_cancel hide" type="button">' +
-                        '   <i ></i> ' +
-                        '   {{ trans('app.cancel')}}' +
-                        '</button>' +
-                        '</div>'
-                    );
+                {{--$("div.toolbar")--}}
+                    {{--.html('' +--}}
+                        {{--'<div class="col-xs-8 pull-left">' +--}}
+                        {{--'<input type="text" class="form-control" placeholder="عنوان دسته" id="new_tools_group_name" name="new_tools_group_name"> ' +--}}
+                        {{--'<input type="text" id="add_edit_tools_group" hidden> ' +--}}
+                        {{--'<input type="text" id="edit_tools_group_id" hidden> ' +--}}
+                        {{--'<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +--}}
+                        {{--'   <i ></i> ' +--}}
+                        {{--'   {{ trans('app.register')}}' +--}}
+                        {{--'</button>' +--}}
+                        {{--'<button class="btn btn-default btn_grid_add_new_tools_group_cancel hide" type="button">' +--}}
+                        {{--'   <i ></i> ' +--}}
+                        {{--'   {{ trans('app.cancel')}}' +--}}
+                        {{--'</button>' +--}}
+                        {{--'</div>'--}}
+                    {{--);--}}
             },
             "columnDefs": [
                 {
@@ -134,14 +134,14 @@
             ' <"row" <"col-xs-5"<"col-xs-6"i><"col-xs-6"l>><"col-xs-7 pull-left text-left footer"p> <"clearfixed">>',
             "language": window.LangJson_DataTables,
             initComplete: function () {
-                $("div.tools-toolbar")
-                    .html('' +
-                        '<div class="col-xs-8 pull-left">' +
-                        '   <a href="{{ route('modals.add_edit_tools') }}" class="jsPanels btn btn-primary" title="افزودن ابزار">' +
-                        '       {{ trans('tools.new_tools')}}' +
-                        '   </a>' +
-                        '</div>'
-                    );
+                {{--$("div.tools-toolbar")--}}
+                {{--.html('' +--}}
+                {{--'<div class="col-xs-8 pull-left">' +--}}
+                {{--'   <a href="{{ route('modals.add_edit_tools') }}" class="jsPanels btn btn-primary" title="افزودن ابزار">' +--}}
+                {{--'       {{ trans('tools.new_tools')}}' +--}}
+                {{--'   </a>' +--}}
+                {{--'</div>'--}}
+                {{--);--}}
             },
             "columnDefs": [
                 {
@@ -257,22 +257,22 @@
             ' <"row" <"col-xs-5"<"col-xs-6"i><"col-xs-6"l>><"col-xs-7 pull-left text-left"p> <"clearfixed">>',
             "language": window.LangJson_DataTables,
             {{--initComplete: function () {--}}
-                {{--$("div.tools_roles-toolbar")--}}
+                    {{--$("div.tools_roles-toolbar")--}}
                     {{--.html('' +--}}
-{{--//                        '<div class="col-xs-8 pull-left">' +--}}
-                        {{--'<form id="datatables_tools_role_form" method="post">' +--}}
-                            {{--'<div class="col-xs-1" style="padding-left: 0;"><label><i class="fa fa-filter"></i> ابزار</label></div>' +--}}
-                            {{--'<div class="col-xs-3" style="padding-right: 0;"><select style="text-align: right;" id="datatables_tools_list" class="select" name="datatables_tool_id" placeholder="انتخاب ابزار"><option value="0">همه</option></select></div> ' +--}}
-                            {{--'<div class="col-xs-1" style="padding-left: 0;"><label><i class="fa fa-filter"></i> نقش</label></div>' +--}}
-                            {{--'<div class="col-xs-3" style="padding-right: 0;"><select style="text-align: right" id="datatables_roles_list" class="select" name="datatables_role_id" placeholder="انتخاب نقش"><option value="0">همه</option></select></div> ' +--}}
-                        {{--'</form>'--}}
-                        {{--'<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +--}}
-                        {{--'   <i ></i> ' +--}}
-                        {{--'   {{ trans('app.register')}}' +--}}
-                        {{--'</button>' +--}}
-{{--//                        '</div>'--}}
+                    {{--//                        '<div class="col-xs-8 pull-left">' +--}}
+                    {{--'<form id="datatables_tools_role_form" method="post">' +--}}
+                    {{--'<div class="col-xs-1" style="padding-left: 0;"><label><i class="fa fa-filter"></i> ابزار</label></div>' +--}}
+                    {{--'<div class="col-xs-3" style="padding-right: 0;"><select style="text-align: right;" id="datatables_tools_list" class="select" name="datatables_tool_id" placeholder="انتخاب ابزار"><option value="0">همه</option></select></div> ' +--}}
+                    {{--'<div class="col-xs-1" style="padding-left: 0;"><label><i class="fa fa-filter"></i> نقش</label></div>' +--}}
+                    {{--'<div class="col-xs-3" style="padding-right: 0;"><select style="text-align: right" id="datatables_roles_list" class="select" name="datatables_role_id" placeholder="انتخاب نقش"><option value="0">همه</option></select></div> ' +--}}
+                    {{--'</form>'--}}
+                    {{--'<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +--}}
+                    {{--'   <i ></i> ' +--}}
+                    {{--'   {{ trans('app.register')}}' +--}}
+                    {{--'</button>' +--}}
+                    {{--//                        '</div>'--}}
                     {{--);--}}
-            {{--},--}}
+                    {{--},--}}
             "columnDefs": [
                 {
                     "targets": [1],
@@ -288,13 +288,13 @@
                 type: 'POST',
                 "data": function (d) {
                     d.filter_tool = filter_tool,
-                    d.filter_role = filter_role;
+                        d.filter_role = filter_role;
                 },
                 {{--success:function(data) {--}}
-                    {{--$('#datatables_tools_list').change(function(){--}}
-{{--                        var id = '{!! session()->pull('datatables_tools_id') !!}';--}}
-                        {{--$('#datatables_tools_list').val(data.filter_tool);--}}
-                    {{--})--}}
+                {{--$('#datatables_tools_list').change(function(){--}}
+                {{--                        var id = '{!! session()->pull('datatables_tools_id') !!}';--}}
+                {{--$('#datatables_tools_list').val(data.filter_tool);--}}
+                {{--})--}}
                 {{--}--}}
             },
             columns: [
@@ -308,7 +308,7 @@
                     data: 'tools',
                     name: 'tools',
                     mRender: function (data, type, full) {
-                            return '<span>' + full.tool_title + '</span>';
+                        return '<span>' + full.tool_title + '</span>';
                     }
                 },
                 {
@@ -323,8 +323,8 @@
                     sortable: false,
                     mRender: function (data, type, full) {
                         var result = '';
-                            result += '' +
-                                '<button style="margin-right: 3px;" title="حذف گروه" type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_tool_role" data-grid_tool_id="' + full.tool_id + '" data-grid_role_id="' + full.role_id + '"></button>';
+                        result += '' +
+                            '<button style="margin-right: 3px;" title="حذف گروه" type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_tool_role" data-grid_tool_id="' + full.tool_id + '" data-grid_role_id="' + full.role_id + '"></button>';
                         return result;
                     }
                 },
@@ -354,7 +354,7 @@
                 type: 'POST',
                 "data": function (d) {
                     d.filter_tool = filter_tool,
-                    d.filter_user = filter_user;
+                        d.filter_user = filter_user;
                 },
             },
             columns: [
@@ -368,7 +368,7 @@
                     data: 'tools',
                     name: 'tools',
                     mRender: function (data, type, full) {
-                            return '<span>' + full.tool_title + '</span>';
+                        return '<span>' + full.tool_title + '</span>';
                     }
                 },
                 {
@@ -383,8 +383,8 @@
                     sortable: false,
                     mRender: function (data, type, full) {
                         var result = '';
-                            result += '' +
-                                '<button style="margin-right: 3px;" title="حذف گروه" type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_tool_user" data-grid_tool_id="' + full.tool_id + '" data-grid_user_id="' + full.user_id + '"></button>';
+                        result += '' +
+                            '<button style="margin-right: 3px;" title="حذف گروه" type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_tool_user" data-grid_tool_id="' + full.tool_id + '" data-grid_user_id="' + full.user_id + '"></button>';
                         return result;
                     }
                 },

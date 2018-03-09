@@ -82,6 +82,11 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     /* ??? */Route::post( 'show_edit_data_organ', ['as' => 'modals.show_edit_data_organ', 'uses' => 'View\ModalController@show_edit_data_organ', ]);
     Route::post( 'edit_user_detail', ['as' => 'modals.edit_user_detail', 'uses' => 'View\ModalController@edit_user_detail', ]);
     Route::post( 'add_edit_tools', ['as' => 'modals.add_edit_tools', 'uses' => 'View\ModalController@addEditTools']);
+    Route::post( 'add_roles_tools', ['as' => 'modals.add_roles_tools', 'uses' => 'View\ModalController@addRolesTools']);
+    Route::post( 'add_users_tools', ['as' => 'modals.add_users_tools', 'uses' => 'View\ModalController@addUsersTools']);
+    Route::post( 'add_tool_group', ['as' => 'modals.add_tool_group', 'uses' => 'View\ModalController@addToolGroup']);
+    Route::post( 'add_edit_menu', ['as' => 'modals.add_edit_menu', 'uses' => 'View\ModalController@addEditMenu']);
+    Route::post( 'add_edit_menu_items', ['as' => 'modals.add_edit_menu_items', 'uses' => 'View\ModalController@addEditMenuItems']);
     /* ??? */Route::post('CreateNewTask', ['as' => 'modals.create_new_task', 'uses' => 'View\ModalController@CreateNewTask']);
     /* ??? */Route::post('CreateNewProject', ['as' => 'modals.create_new_project', 'uses' => 'View\ModalController@CreateNewProject']);
     /* ??? */Route::post('CreateNewProcess', ['as' => 'modals.create_new_process', 'uses' => 'View\ModalController@CreateNewProcess']);

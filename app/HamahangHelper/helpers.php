@@ -322,20 +322,22 @@ if (!function_exists('tree_permissions_categories'))
 if (!function_exists('draw_permissions_categories'))
 {
 
-    function draw_permissions_categories($tree_items, $type_id, $type = '_roles')
+    function draw_permissions_categories($tree_items, $type_id, $type = '_roles', $permissions = '')
     {
+
         $out = '';
         foreach ($tree_items as $item)
         {
 //            dd($item['permissions'][0]['_roles']);
             if (array_key_exists('children', $item))
             {
-                $children = draw_permissions_categories($item['children'], $type_id, $type);
+                $children = draw_permissions_categories($item['children'], $type_id, $type, $permissions);
                 $out .= view('hamahang.ACL.helper.permissions_categories_list')
                     ->with('item', $item)
                     ->with('children', $children)
                     ->with('type_id', $type_id)
                     ->with('type', $type)
+                    ->with('permissions', $permissions)
                     ->render();
             }
             else
@@ -344,6 +346,7 @@ if (!function_exists('draw_permissions_categories'))
                     ->with('item', $item)
                     ->with('type_id', $type_id)
                     ->with('type', $type)
+                    ->with('permissions', $permissions)
                     ->render();
             }
         }

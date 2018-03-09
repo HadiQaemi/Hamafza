@@ -1,5 +1,13 @@
 <div class="row">
-    <div class="pull-right" style="margin-right:1%; height: 438px; width: 20%;">
+    <div  class="hidden-lg col-xs-12 col-sm-12 col-md-12" >
+        {!! homepage_slider() !!}
+    </div>
+</div>
+<div class="row">
+    <div class="hidden-lg col-xs-12 col-sm-12 col-md-12 space-10"></div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3" >
         <div class="panel panel-banader-index">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf;">...دایره المعارف دریایی...</div>
             <div class="panel-body no-padding">
@@ -76,10 +84,10 @@
             </div>
         </div>
     </div>
-    <div class="pull-right" style="margin-right:1%; height: 445px; width: 49%;">
+    <div  class="hidden-xs hidden-sm hidden-md col-lg-6" >
         {!! homepage_slider() !!}
     </div>
-    <div class="pull-right" style="margin-right:1%; height: 445px; width: 27%">
+    <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-3" >
         <div class="panel panel-banader-index" style="height: 100%;">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">...تبلیغات...</div>
             <div class="panel-body no-padding banader-ads text-center">
@@ -93,7 +101,7 @@
     <div class="space-10"></div>
 </div>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="panel panel-banader-index">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf">پژوهش</div>
             <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;">
@@ -208,7 +216,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="panel panel-banader-index">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">فعالان حمل و نقل دریایی</div>
             <div class="panel-body no-padding text-center mCustomScrollbar" style="height: 400px;">
@@ -259,9 +267,9 @@
                                             <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center">
                                                 <a href="{{App::make('url')->to('/')}}/{{$item->link}}">
                                                     @php
-                                                    $pic = 'pics/group/Groups.png';
-                                                    if (trim($item->pic) != '' && file_exists('pics/group/' . $item->pic))
-                                                        $pic = 'pics/group/' . $item->pic;
+                                                        $pic = 'pics/group/Groups.png';
+                                                        if (trim($item->pic) != '' && file_exists('pics/group/' . $item->pic))
+                                                            $pic = 'pics/group/' . $item->pic;
                                                     @endphp
                                                     <img style="width:80px; height: 80px; margin:auto;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; " src="{{$pic}}" class="img-responsive">
                                                     <span style="font-size: 11px; display: inline-block;">{{$item->name}}</span></a>
@@ -282,11 +290,11 @@
                                             <div class="col-md-4 col-sm-4 col-xs-4" style="text-align: center">
                                                 <a href="{{App::make('url')->to('/')}}/{{$item->link}}">
                                                     @php
-                                                    $pic = 'pics/group/Groups.png';
-                                                    if (trim($item->pic) != '' && file_exists('pics/group/' . $item->pic))
-                                                    {
-                                                        $pic = 'pics/group/' . $item->pic;
-                                                    }
+                                                        $pic = 'pics/group/Groups.png';
+                                                        if (trim($item->pic) != '' && file_exists('pics/group/' . $item->pic))
+                                                        {
+                                                            $pic = 'pics/group/' . $item->pic;
+                                                        }
                                                     @endphp
                                                     <img style="width:80px; height: 80px; margin:auto;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; " src="{{$pic}}" class="img-responsive">
                                                     <span style="display: inline-block;">{{$item->name}}</span></a>
@@ -329,7 +337,7 @@
     <div class="clearfixed"></div>
 </div>
 <div class="row">
-    <!--
+<!--
     {{--
     <div class="col-sm-6">
         <div class="panel panel-banader-index">
@@ -373,8 +381,8 @@
         </div>
     </div>
     --}}
-    -->
-    <div class="col-sm-6">
+        -->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="panel panel-banader-index">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">آمار</div>
             <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;">

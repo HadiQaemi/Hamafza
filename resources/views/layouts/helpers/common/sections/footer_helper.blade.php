@@ -1,4 +1,4 @@
-<footer class="">
+<footer class="" style="position: absolute;bottom: 0px;width: 100%">
     {!! menuGenerator(4, 'footer') !!}
 </footer>
 

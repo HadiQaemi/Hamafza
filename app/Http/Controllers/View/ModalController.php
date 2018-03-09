@@ -7,7 +7,6 @@ use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
 use App\Models\hamafza\Ticket;
-use App\Models\hamafza\UserProfile;
 use App\Models\Hamahang\Address;
 use App\Models\Hamahang\Basicdata;
 use App\Models\Hamahang\BasicdataAttributes;
@@ -23,6 +22,8 @@ use App\Models\Hamahang\Invoice;
 use App\Models\Hamahang\InvoiceItem;
 use App\Models\Hamahang\KeywordRelation;
 use App\Models\Hamahang\keywords;
+use App\Models\Hamahang\Menus\MenuItem;
+use App\Models\Hamahang\Menus\Menus;
 use App\Models\Hamahang\Options;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_charts;
@@ -37,6 +38,7 @@ use App\Models\Hamahang\Tools\Tools;
 use App\Models\Hamahang\Tools\ToolsAvailable;
 use App\Models\Hamahang\Tools\ToolsGroup;
 use App\Models\Hamahang\Tools\ToolsPosition;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use App\HamafzaViewClasses\PublicClass;
@@ -671,7 +673,7 @@ class ModalController extends Controller
             {
                 if ($blocks = $help->HelpBlocks)
                 {
-                    $view = "<h3 style=\"color: black;\">{$help->title}</h3>";
+                    $view = "<h3 style=\"color: #6391C5;\">{$help->title}</h3>";
                     foreach ($blocks as $block)
                     {
                         $view .= "$block->content<br />\r\n";
@@ -1837,12 +1839,12 @@ class ModalController extends Controller
             [
                 'title_old' => 'string',
                 'title' =>
-                [
-                    'required',
-                    'min:1',
-                    'max:255',
-                    Rule::unique('keywords')->ignore($request->input('title_old'), 'title')->whereNull('deleted_at'),
-                ],
+                    [
+                        'required',
+                        'min:1',
+                        'max:255',
+                        Rule::unique('keywords')->ignore($request->input('title_old'), 'title')->whereNull('deleted_at'),
+                    ],
                 'short_code' => 'string',
                 'description' => 'string',
                 'subject_ids' => 'array',
@@ -1875,15 +1877,15 @@ class ModalController extends Controller
         $relations = $request->input('relations');
         $id = $request->input('id');
         $keyword_data_array =
-        [
-            'title' => $title,
-            'short_code' => $short_code,
-            'img_file_id' => '0',
-            'description' => $description,
-            'is_morajah' => $is_morajah,
-            'is_approved' => $is_approved,
-            'created_by' => auth()->id(),
-        ];
+            [
+                'title' => $title,
+                'short_code' => $short_code,
+                'img_file_id' => '0',
+                'description' => $description,
+                'is_morajah' => $is_morajah,
+                'is_approved' => $is_approved,
+                'created_by' => auth()->id(),
+            ];
         $keyword_add = Keyword::add($keyword_data_array, $id);
         $keyword_result = $keyword_add['result'];
         if ($keyword_result)
@@ -1895,11 +1897,11 @@ class ModalController extends Controller
             foreach ($subject_ids as $subject_id)
             {
                 $thesaurus_data_array =
-                [
-                    'subject_id' => $subject_id,
-                    'keyword_id' => $keyword->id,
-                    'created_by' => auth()->id(),
-                ];
+                    [
+                        'subject_id' => $subject_id,
+                        'keyword_id' => $keyword->id,
+                        'created_by' => auth()->id(),
+                    ];
                 $thesaurus = new ThesaurusKeyword();
                 $thesaurus->fill($thesaurus_data_array);
                 $thesaurus->save();
@@ -1925,19 +1927,19 @@ class ModalController extends Controller
                                 else
                                 {
                                     $new_keyword_data_array =
-                                    [
-                                        'title' => $value,
-                                        'created_by' => auth()->id(),
-                                    ];
+                                        [
+                                            'title' => $value,
+                                            'created_by' => auth()->id(),
+                                        ];
                                     $new_keyword_add = Keyword::add($new_keyword_data_array);
                                     $keyword_2_id = $new_keyword_add['object']->id;
                                 }
                                 $thesaurus_data_array =
-                                [
-                                    'subject_id' => $subject_id,
-                                    'keyword_id' => $keyword_2_id,
-                                    'created_by' => auth()->id(),
-                                ];
+                                    [
+                                        'subject_id' => $subject_id,
+                                        'keyword_id' => $keyword_2_id,
+                                        'created_by' => auth()->id(),
+                                    ];
                                 $thesaurus = new ThesaurusKeyword();
                                 $thesaurus->fill($thesaurus_data_array);
                                 $thesaurus->save();
@@ -2309,14 +2311,12 @@ class ModalController extends Controller
     public function edit_user_detail(Request $request)
     {
         $user = User::find($request->user_id);
-        $profile = UserProfile::where('uid', $request->user_id)->first();
         $provinces = Province::all();
         $cities = City::all();
         return json_encode([
             'header' => 'تنظیمات صفحه کاربری',
             'content' => view('hamahang.Users.view_user_details_modal.content')
                 ->with('user', $user)
-                ->with('profile', $profile)
                 ->with('provinces', $provinces)
                 ->with('cities', $cities)
                 ->render(),
@@ -2365,6 +2365,132 @@ class ModalController extends Controller
                 ->with('tools_availables', $tools_availables)
                 ->with('tools_groups', $tools_groups)
                 ->with('tool', $tool)
+                ->render()
+        ]);
+    }
+
+    public function addRolesTools(Request $request)
+    {
+        $tools = Tools::all(['id', 'title as text']);
+        $roles = Role::all(['id', 'name', 'display_name']);
+        foreach ($roles as $role)
+        {
+            $role->text = $role->name . ' (' . $role->display_name . ')';
+        }
+
+        $with_arr = [
+            'roles' => json_encode($roles),
+            'all_tools' => json_encode($tools),
+        ];
+
+
+        return json_encode([
+            'header' => 'انتساب ابزار به نقش ها',
+            'content' => view('hamahang.Tools.helper.Index.modals.modal_add_role_tool',$with_arr)
+                ->render(),
+            'footer' => view('hamahang.Tools.helper.Index.modals.modal_add_role_tool_footer')
+                ->render()
+        ]);
+    }
+
+    public function addUsersTools(Request $request)
+    {
+        $tools = Tools::all(['id', 'title as text']);
+        $roles = Role::all(['id', 'name', 'display_name']);
+        foreach ($roles as $role)
+        {
+            $role->text = $role->name . ' (' . $role->display_name . ')';
+        }
+
+        $with_arr = [
+            'roles' => json_encode($roles),
+            'all_tools' => json_encode($tools),
+        ];
+
+
+        return json_encode([
+            'header' => 'انتساب ابزار به کاربران',
+            'content' => view('hamahang.Tools.helper.Index.modals.modal_add_user_tool',$with_arr)
+                ->render(),
+            'footer' => view('hamahang.Tools.helper.Index.modals.modal_add_user_tool_footer')
+                ->render()
+        ]);
+    }
+
+    public function addEditMenu(Request $request)
+    {
+//        $tools = Tools::all(['id', 'title as text']);
+//        $roles = Role::all(['id', 'name', 'display_name']);
+//        foreach ($roles as $role)
+//        {
+//            $role->text = $role->name . ' (' . $role->display_name . ')';
+//        }
+//
+//        $with_arr = [
+//            'roles' => json_encode($roles),
+//            'all_tools' => json_encode($tools),
+//        ];
+
+        $menu = null;
+        if ($request->item_id)
+        {
+            $menu = Menus::find(deCode($request->item_id));
+        }
+
+        return json_encode([
+            'header' => 'فهرست جدید',
+            'content' => view('hamahang.Menus.helper.Index.modals.modal_add_edit_menu')
+                ->with('menu', $menu)
+                ->render()
+            ,
+            'footer' => view('hamahang.Menus.helper.Index.modals.modal_add_edit_menu_footer')
+                ->with('menu', $menu)
+                ->render()
+        ]);
+    }
+
+    public function addEditMenuItems(Request $request)
+    {
+//        $tools = Tools::all(['id', 'title as text']);
+//        $roles = Role::all(['id', 'name', 'display_name']);
+//        foreach ($roles as $role)
+//        {
+//            $role->text = $role->name . ' (' . $role->display_name . ')';
+//        }
+//
+//        $with_arr = [
+//            'roles' => json_encode($roles),
+//            'all_tools' => json_encode($tools),
+//        ];
+
+//        dd($request->all());
+        $MenuItem = null;
+        $User = null;
+        if ($request->item_id)
+        {
+            $MenuItem = MenuItem::find(deCode($request->item_id));
+//            $ST = DB::table('hamahang_menu_items as hmi')
+//                ->leftJoin('user_profile as p', 'u.id', '=', 'p.id')
+//                ->leftJoin('user_profile as p', 'u.id', '=', 'p.id')
+//                ->select('u.id', 'u.Uname as name', 'u.Name', 'u.Family', 'u.Reg_date')->where('Active', '1')->whereRaw($search)->orderBy('u.id', 'DESC')->get();
+        }
+        if ($request->permitted_users)
+        {
+//            $MenuItem = MenuItem::find(deCode($request->permitted_users));
+        }
+//        dd();
+//        print_r($MenuItem);
+//        die();
+        return json_encode([
+            'header' => 'فهرست جدید',
+            'content' => view('hamahang.Menus.helper.Index.modals.modal_add_edit_menu_items')
+                ->with('MenuItem', $MenuItem)
+                ->with('PermittedUsers', $MenuItem->getPermittedUsersAttribute())
+                ->with('PermittedRoles', $MenuItem->getPermittedRolesAttribute())
+                ->render()
+            ,
+            'footer' => view('hamahang.Menus.helper.Index.modals.modal_add_edit_menu_items_footer')
+                ->with('MenuItem', $MenuItem)
                 ->render()
         ]);
     }

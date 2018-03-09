@@ -1,16 +1,18 @@
 <script>
     /*$(document).click(function () {  });*/
-        $("#btn_insert_chart").hide();
+        // $("#btn_insert_chart").hide();
+        $("#btn_insert_chart").show();
         $("#tab_insert_charts").click(function () {
 
            $("#btn_insert_chart").show();
         });
         $("#tab_charts").click(function () {
 
-            $("#btn_insert_chart").hide();
+            // $("#btn_insert_chart").hide();
         });
         var username=$("#input_Uname").val();
     $("#btn_insert_chart").click(function () {
+        alert('asdasd');
         $.ajax({
             type: "POST",
             url: '{{ route('hamahang.charts.insert_chart')}}',
@@ -29,6 +31,8 @@
                     messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
 
                 }
+                window.table_organs_grid.destroy();
+                organs_grid();
                 setTimeout(function(){$("#alert_insert").html('') }, 4000);
             }
         });

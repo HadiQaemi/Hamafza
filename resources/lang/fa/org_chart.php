@@ -20,6 +20,7 @@ return [
     'chart_name'   => 'نام چارت',
     'new_chart_added'   => 'چارت جدید افزوده شد',
     'charts'   => 'چارت‌ها',
+    'view_edit'   => 'مشاهده / ویرایش',
     'create_chart'   => 'ایجاد چارت',
     'chart_manager'=>'مدیریت چارت ها',
     'show_edit_organ'=>'نمایش اطلاعات واحد سازمانی',

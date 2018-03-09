@@ -39,7 +39,6 @@
                     }
                     else {
                         messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
-
                     }
                     setTimeout(function(){$("#alert_insert").html('') }, 4000);
                 }

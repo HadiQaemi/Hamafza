@@ -1,4 +1,5 @@
 @php ($logged_in = session('Login') && session('Login') == 'TRUE')
+
 <script>
     keyword_search_time = 0;
     bookmark_search_time = 0;
@@ -14,8 +15,9 @@
     });
 </script>
 @php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)
-<div class="pull-left user-config"{!! $change_color !!}>
+<div class="hidden-xs pull-left user-config"{!! $change_color !!}>
     @if(auth()->check())
+
         <div class="pull-left user-config dropdown"{!! $change_color !!}>
             <a href="#" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ auth()->user()->Name .' '. auth()->user()->Family }}
@@ -25,15 +27,17 @@
             <a href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
             <a href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
             <!-- begin cart`s basket -->
-            <a href="{{ route('ugc.desktop.hamahang.bazaar.cart', ['username' => auth()->user()->Uname]) }}" class="wall" style="visibility: {!! count(Session::get('cart')) ? 'visible' : 'hidden' !!}" id="basket_area">
-                <div style="display: inline-block;">
-                    <span>سبد خرید</span>
-                    <div id="cart_basket_count" style="display: inline-block; border-radius: 100%; background: rgba(252, 255, 7, 0.7); color: black; width: 18px; height: 18px; text-align:center; padding-top: 2px; position: absolute; font-size: 10px; top: -7px; left: -14px">
-                        {!! count(Session::get('cart')) !!}
-                    </div>
-                </div>
-            </a>
-            <!-- end cart`s basket -->
+
+        {{--<a href="{{ route('ugc.desktop.hamahang.bazaar.cart', ['username' => auth()->user()->Uname]) }}" class="wall" style="visibility: {!! count(Session::get('cart')) ? 'visible' : 'hidden' !!}" id="basket_area">--}}
+        {{--<div style="display: inline-block;">--}}
+        {{--<span>سبد خرید</span>--}}
+        {{--<div id="cart_basket_count" style="display: inline-block; border-radius: 100%; background: rgba(252, 255, 7, 0.7); color: black; width: 18px; height: 18px; text-align:center; padding-top: 2px; position: absolute; font-size: 10px; top: -7px; left: -14px">--}}
+        {{--{!! count(Session::get('cart')) !!}--}}
+        {{--</div>--}}
+        {{--</div>--}}
+        {{--</a>--}}
+
+        <!-- end cart`s basket -->
             <div class="dropdown-menu" style="z-index: 999999;">
                 <span class="glyphicon glyphicon-triangle-top"></span>
                 <img class="img-responsive pull-right jsPanels" href="{{route('modals.profile_avatar')}}" src="{{ auth()->user()->avatar_link }}"/>
@@ -69,7 +73,7 @@
 
 @php ($style = $logged_in ? null : 'style="display: none;"')
 @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')
-<ul class="nav navbar-nav pull-left quick-links">
+<ul class="nav navbar-nav pull-left quick-links hidden-xs">
     <li href="#tab1" {!! $style !!}><a><span class="icon-choobalefnazok" title="چوب‌های الف" data-placement="top" data-toggle="tooltip"></span></a></li>
     <li href="#tab2"><a><span class="icon-dargah icon-dargah-click" title="درگاه‌ها" data-placement="top" data-toggle="tooltip"></span></a></li>
     <li href="#tab3"><a><span class="icon-tag" title="کلید واژه‌ها" data-placement="top" data-toggle="tooltip"></span></a></li>
@@ -90,16 +94,16 @@
             <li {!! $unstyle !!}><a class="new_sidebar" data-toggle="tab" id="tab4" href="#page4">جستجو</a></li>
         </ul>
         <div class="tab-content" style="padding-top: 20px;">@if ($logged_in)
-            <div id="page1" class="tab-pane fade">
-                <div class="row">
-                    <div class="col-md-11 txtsearch">
-                        <input type="text" class="list-search col-md-5 GharbalSearchNavbar" id="bookmarklist-search" placeholder="غربال..." />
+                <div id="page1" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-11 txtsearch">
+                            <input type="text" class="list-search col-md-5 GharbalSearchNavbar" id="bookmarklist-search" placeholder="غربال..." />
+                        </div>
                     </div>
-                </div>
-                <div class="innerpane" style="overflow: hidden; height: 1000px;">
-                    <div id="BookmarkFehresrt" style="padding-right: 25px; height: 1000px; overflow: hidden;"></div>
-                </div>
-            </div>@endif
+                    <div class="innerpane" style="overflow: hidden; height: 1000px;">
+                        <div id="BookmarkFehresrt" style="padding-right: 25px; height: 1000px; overflow: hidden;"></div>
+                    </div>
+                </div>@endif
             <div id="page2" class="tab-pane fade">
                 <div class="row">
                     <div class="col-md-11 txtsearch">
@@ -113,8 +117,8 @@
                 </div>
             </div>
             <div id="page3" class="tab-pane fade">
-                <div class="row col-md-12 pull-left">
-                    <div class="col-md-10">
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         {{--@include('sections.tagNavigat')--}}
                         <select type="text" name="Navigatekeywords" id="Navigatekeywords" multiple="multiple" onchange="$('.keywords_and_or_client').css({'visibility': $(this).find(':selected').length > 1 ? 'visible' : 'hidden'});"></select>
                         <div style="margin-top: 10px; visibility: hidden;" class="keywords_and_or_client">
@@ -122,7 +126,7 @@
                             <input type="radio" id="keywords_and_or_1" value="1" name="keywords_and_or" class="keywords_and_or" /><label for="keywords_and_or_1" style="font-weight: normal;">همه</label>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                         <input type="button" value="بیاب" title="Searchpost" class="btn btn-primary" id="TagBut" style="padding:6px;">
                         <img id="Tagloding" src="{{App::make('url')->to('/')}}/img/loader.gif" style="display: none;"/>
                         <div id="TagRefBut" style="cursor:pointer;display:none;cursor: pointer;height: 15px;overflow: hidden;">
@@ -157,20 +161,20 @@
                                     width: '100%',
                                     tags: false,
                                     ajax:
-                                    {
-                                        url: '{{route('auto_complete.keywords')}}',
-                                        type: 'post',
-                                        dataType: 'json',
-                                        quietMillis: 150,
-                                        data: function(term)
                                         {
-                                            return {term: term, 'exist_in': ''};
-                                        },
-                                        results: function(data)
-                                        {
-                                            return {results: $.map(data, function(item) { return {text: item.text, id: item.id} })};
+                                            url: '{{route('auto_complete.keywords')}}',
+                                            type: 'post',
+                                            dataType: 'json',
+                                            quietMillis: 150,
+                                            data: function(term)
+                                            {
+                                                return {term: term, 'exist_in': ''};
+                                            },
+                                            results: function(data)
+                                            {
+                                                return {results: $.map(data, function(item) { return {text: item.text, id: item.id} })};
+                                            }
                                         }
-                                    }
                                 });
                                 $('#KeywordFehresrt').jstree({'plugins': ['search']});
                                 var to = false;
@@ -243,7 +247,7 @@
             GeminiScrollbar_make('#page4_pane2_content');
             $('#search_term').keypress(function(event) {
                 if (event.keyCode == 13 || event.which == 13) {
-                   $('#search_submit').click();
+                    $('#search_submit').click();
                 }
             });
             $(document).on('click', '#search_submit', function()
@@ -268,13 +272,13 @@
                     url: Baseurl + 'search',
                     cache: false,
                     data:
-                    {
-                        'term': search_term,
-                        'for_title': search_for_title,
-                        'for_content': search_for_content,
-                        'in_posts': search_in_posts,
-                        'in_pages': search_in_pages
-                    },
+                        {
+                            'term': search_term,
+                            'for_title': search_for_title,
+                            'for_content': search_for_content,
+                            'in_posts': search_in_posts,
+                            'in_pages': search_in_pages
+                        },
                     success: function(response)
                     {
                         $('#page4_pane2_content').fadeOut(function()

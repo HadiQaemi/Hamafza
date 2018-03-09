@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('specific_plugin_style')
-{{--    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/DataTables/datatables.css')}}">--}}
+    {{--    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/DataTables/datatables.css')}}">--}}
 @stop
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{URL::to('assets/js/uniform.min.js')}}"></script>
@@ -28,7 +28,7 @@
                                 <td class="col-xs-10">
                                     <input id="modal_add_name" name="name" type="text" class="form-control">
                                 </td>
-                                </tr>
+                            </tr>
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-lg-2 control-label">{{trans('acl.display_name')}}</span>
@@ -125,7 +125,7 @@
                                         <select id="" class="select modal_parent_list" name="parent_id">
                                             <option value="0">{{trans('acl.no_parent')}}</option>
                                             {{--@foreach($cats as $cat)--}}
-                                                {{--<option value="{{ $cat->id }}">{{ $cat->title }}</option>--}}
+                                            {{--<option value="{{ $cat->id }}">{{ $cat->title }}</option>--}}
                                             {{--@endforeach--}}
                                         </select>
                                     </td>
@@ -497,16 +497,41 @@
                                         <form id="form_add_role_user" class="form-horizontal" action="#">
                                             <input id="attach_role_users" type="hidden" name="item_id" value="">
                                             <div class="row">
-                                                <div class="col-md-10 col-md-offset-1">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label class="col-lg-3 control-label">{{trans('acl.find_user')}}</label>
-                                                        <div class="col-lg-6">
+                                                        <label class="col-lg-2 control-label">{{trans('acl.find_user')}}</label>
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
-                                                                <select name="users_name" data-placeholder="{{ trans('acl.select_user') }}" class="modal_users_list modal_users_list_user_permission select-size-xs"></select>
+                                                                <select name="users_name" id="users_name" data-placeholder="{{ trans('acl.select_user') }}" class="modal_users_list modal_users_list_user_permission select-size-xs"></select>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select class="form-control input-sm" name="permission_type" id="permission_type" >
+                                                                <option value="roles">نقش ها</option>
+                                                                <option value="pages">صفحات</option>
+                                                                <option value="cases">مجوزها</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <button data-form_id="form_created_new" type="button" class="btn btn-primary fa fa-search get_user_permissions_form_btn"></button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 hide" id="UsersPermissions_Grid_Row">
+                                                    <table id="UsersPermissions_Grid" class="table table-bordered table-striped" cellspacing="0" width="100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>{{trans('access.row')}}</th>
+                                                            <th>{{trans('auth.name')}}</th>
+                                                            <th>{{trans('acl.display_name')}}</th>
+                                                            <th>{{trans('app.action')}}</th>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                                <div class="clearfix"></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-12" id="user_permissions"></div>
@@ -518,8 +543,9 @@
                                     <div class="col-xs-12" id="list_user_permissions"></div>
                                 </div>
                                 <div class="text-left">
-                                    <button data-form_id="form_created_new" type="button" class="btn bg-grey-300 cancel_form_btn cancel_user_permissions_form_btn">{{trans('acl.submit_cancel')}} </button>
-                                    <button data-form_id="form_created_new" type="button" class="btn btn-primary hide set_user_permissions_form_btn"> {{trans('acl.submit_add')}}</button>
+                                    <button data-form_id="form_created_new" type="button" class="btn bg-grey-300 cancel_form_btn cancel_user_permissions_form_btn hide">{{trans('acl.submit_cancel')}} </button>
+                                    {{--<button data-form_id="form_created_new" type="button" class="btn btn-primary get_user_permissions_form_btn hide"> {{trans('acl.submit_add')}}</button>--}}
+                                    <button data-form_id="form_created_new" type="button" class="btn btn-primary set_user_permissions_form_btn hide"> {{trans('acl.submit_add')}}</button>
                                 </div>
                             </div>
                         </div>

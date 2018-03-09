@@ -96,13 +96,15 @@ class OrgChartController extends Controller
         $data = DB::table('hamahang_org_organs AS organs')
             ->leftJoin('user', 'user.id', '=', 'organs.uid')
             ->leftJoin('hamahang_org_organs AS ParentOrg', 'ParentOrg.id', '=', 'organs.parent_id')
+            ->leftJoin('hamahang_org_charts AS ChartsOrg', 'ChartsOrg.org_organs_id', '=', 'organs.id')
             ->select(
                 'user.Uname AS CreatorUserName',
                 'user.Name AS CreatorName',
+                'ChartsOrg.id AS ChartID',
                 'user.Family AS CreatorFamily',
                 'ParentOrg.title AS ParentTitle',
                 'organs.*'
-            )->whereNull('organs.deleted_at')
+            )->whereNull('organs.deleted_at')->groupBy('id')
             ->get();
         //return DB::getQueryLog();
         $data = collect($data)->map(function ($x)
@@ -196,7 +198,7 @@ class OrgChartController extends Controller
         })->toArray();
         $result['data'] = $data;
         //dd(json_encode($result));
-       return $result;
+        return $result;
         //return $result;
     }
     public function AjaxOrgChartDataShow()
@@ -232,37 +234,37 @@ class OrgChartController extends Controller
         }
 
     }
-     public function OrgChartShow($username,$chart_id)
-     {
-     /* $validator = Validator::make([$username,$chart_id],
-           [
-             'chart_id'=>'required'
-           ],
-           [],
-           [
-               'new_item_title' => 'عنوان ',
-               'new_item_title' => 'عنوان ',
-           ]
-       );
-       if ($validator->fails())
-       {
+    public function OrgChartShow($username,$chart_id)
+    {
+        /* $validator = Validator::make([$username,$chart_id],
+              [
+                'chart_id'=>'required'
+              ],
+              [],
+              [
+                  'new_item_title' => 'عنوان ',
+                  'new_item_title' => 'عنوان ',
+              ]
+          );
+          if ($validator->fails())
+          {
 
-           $result['error'] = $validator->errors();
-           $result['success'] = false;
-           return json_encode($result);
-       }
-       else
-       {*/
-           $Chart = org_charts::findOrFail($chart_id);
-           $arr = variable_generator('user', 'desktop', $username);
-           $arr['chart_id'] = $chart_id;
-           $arr['Chart'] = $Chart;
-           $arr['UName'] = $username;
-           return view('hamahang.OrgChart.OrgChartShow', $arr);
-       //}
+              $result['error'] = $validator->errors();
+              $result['success'] = false;
+              return json_encode($result);
+          }
+          else
+          {*/
+        $Chart = org_charts::findOrFail($chart_id);
+        $arr = variable_generator('user', 'desktop', $username);
+        $arr['chart_id'] = $chart_id;
+        $arr['Chart'] = $Chart;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.OrgChartShow', $arr);
+        //}
 
 
-   }
+    }
 
     public function ModifyChartInfo()
     {
@@ -637,7 +639,7 @@ class OrgChartController extends Controller
     }
     public function select_list_organs()
     {
-     return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->select('id', 'title as text')->get();
+        return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->select('id', 'title as text')->get();
     }
     public function insert_organs()
     {
@@ -708,7 +710,7 @@ class OrgChartController extends Controller
             $organ->save();
             $result['success'] = true;
         }
-       return $result;
+        return $result;
     }
     public function edit_chart(){
 
@@ -761,8 +763,8 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         }
-       $list_child= org_organs::select('id')->where('parent_id',4)->get();
-      // dd($list_child->toArray());
+        $list_child= org_organs::select('id')->where('parent_id',4)->get();
+        // dd($list_child->toArray());
         return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->whereNotIn('id',[$list_child->toArray()])->select('id', 'title as text')->get();
     }
     public function add_chart_item_child(){
@@ -791,7 +793,7 @@ class OrgChartController extends Controller
             $chart_item->parent_id=Request::get('item_id');
             $chart_item->chart_id=Request::get('chart_id');
             if($chart_item->save())
-            $result['success'] = true;
+                $result['success'] = true;
             else $result['success']=false;
         }
         return $result;
@@ -823,7 +825,7 @@ class OrgChartController extends Controller
             $chart_item_post->chart_item_id=Request::get('item_id');
             $chart_item_post->user_id=0;
             if($chart_item_post->save())
-             $result['success'] = true;
+                $result['success'] = true;
             else $result['success']=false;
         }
         return $result;
@@ -858,7 +860,7 @@ class OrgChartController extends Controller
     }
     public function select_list_employ(){
         if(!empty(Request::get('term')))
-        return User::where('Uname', 'Like', '%'.Request::get('term').'%')->orwhere('Name', 'Like', '%'.Request::get('term').'%')->orwhere('Family', 'Like', '%'.Request::get('term').'%')->select('id', 'Family as text')->get();
+            return User::where('Uname', 'Like', '%'.Request::get('term').'%')->orwhere('Name', 'Like', '%'.Request::get('term').'%')->orwhere('Family', 'Like', '%'.Request::get('term').'%')->select('id', 'Family as text')->get();
     }
     public function add_employ_for_post(){
 
@@ -888,7 +890,7 @@ class OrgChartController extends Controller
         return $result;
     }
     public function update_one_chart_item(){
-{
+        {
 
             $validator = Validator::make(Request::all(),
                 [

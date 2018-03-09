@@ -18,9 +18,9 @@
             initComplete: function () {
                 $("div.toolbar")
                     .html('' +
-                        '<button class="btn btn-info btn_grid_add_role" type="button">' +
+                        '<button class="btn btn-info fa fa-plus btn_grid_add_role" type="button">' +
                         '   <i ></i> ' +
-                        '   {{ trans('app.add_new_role')}}' +
+{{--                        '   {{ trans('app.add_new_role')}}' +--}}
                         '</button>'
                     );
             },
@@ -62,7 +62,7 @@
                     data: 'permissions_count',
                     searchable: false,
                     mRender: function (data, type, full) {
-                        return '<a title="نمایش مجوزهای نقش" style="cursor: pointer;" class="get_role_permission" data-item_id="' + full.id + '">' + full._permissions_count + '</a>';
+                        return '<a title="نمایش مجوزهای نقش" style="cursor: pointer;" class="get_role_permission"  data-item_id="' + full.id + '" data-item_name="' + full.display_name + '" >' + full._permissions_count + '</a>';
                     }
                 },
                 {
@@ -88,16 +88,69 @@
             ]
         });
     }
+    function Data_Tables_UsersPermissions_Grid() {
+        UsersPermissions_Grid = $('#UsersPermissions_Grid').DataTable({
+            "dom": window.CommonDom_DataTables,
+            initComplete: function () {
+                {{--$("div.toolbar")--}}
+                {{--.html('' +--}}
+                {{--'<button class="btn btn-info btn_grid_add_role" type="button">' +--}}
+                {{--'   <i ></i> ' +--}}
+                {{--'   {{ trans('app.add_new_role')}}' +--}}
+                {{--'</button>'--}}
+                {{--);--}}
+            },
+            "processing": true,
+            "serverSide": true,
+            "language": window.LangJson_DataTables,
+            ajax: {
+                url: '{!! route('hamahang.acl.get_user_permissions') !!}',
+                "data": {
+                    "user_id": $('#users_name').val(),
+                    "permission_type": $('#permission_type').val(),
+                },
+                type: 'POST'
+            },
+            columns: [
+                {
+                    "data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: 'name',
+                },
+                {
+                    data: 'display_name',
+                    mRender: function (data, type, full) {
+                        return '<span>' + full.display_name + '<span>';
+                    }
+                },
+                {
+                    data: 'action',
+                    mRender: function (data, type, full) {
+                        return '' +
+                            '<button type="button" class="btn btn-xs bg-danger-800 fa fa-trash-o btn_grid_destroy_user_permission" ' +
+                            '   data-item_type="permission" data-grid_user_id="' + full.user_id + '" ' +
+                            '   data-grid_role_id="' + full.role_id + '">' +
+                            '</button>';
+                    }
+                }
+            ]
+        });
+    }
 
     function Data_Tables_Permissions_Grid() {
+        $("div.toolbar").html('');
         Permissions_Grid = $('#Permissions_Grid').DataTable({
             "dom": window.CommonDom_DataTables,
             initComplete: function () {
                 $("div.toolbar")
                     .html('' +
-                        '<button class="btn btn-info btn_grid_add_permission" type="button">' +
+                        '<button class="btn btn-info fa fa-plus btn_grid_add_permission" type="button">' +
                         '   <i ></i> ' +
-                        '   {{ trans('app.add_new_permission')}}' +
+{{--                        '   {{ trans('app.add_new_permission')}}' +--}}
                         '</button>'
                     );
             },
@@ -151,9 +204,9 @@
             initComplete: function () {
                 $("div.toolbar")
                     .html('' +
-                        '<button class="btn btn-info btn_grid_add_category" type="button">' +
+                        '<button class="btn btn-info fa fa-plus btn_grid_add_category" type="button">' +
                         '   <i ></i> ' +
-                        '   {{ trans('app.add_new_permission_category')}}' +
+{{--                        '   {{ trans('app.add_new_permission_category')}}' +--}}
                         '</button>'
                     );
             },
@@ -506,6 +559,34 @@
         });
     }
 
+    function destroy_user_permission(item_id, item_name) {
+        alert('hi hadi');
+        {{--confirmModal({--}}
+        {{--title: '{{trans('acl.remove_permission')}}',--}}
+        {{--message: '{{trans('access.are_you_sure')}}',--}}
+        {{--onConfirm: function () {--}}
+        {{--$.ajax({--}}
+        {{--url: '{!! route('hamahang.acl.destroy_permission')!!}',--}}
+        {{--type: 'POST', // Send post dat--}}
+        {{--dataType: "json",--}}
+        {{--data: {--}}
+        {{--item_id: item_id--}}
+        {{--},--}}
+        {{--async: false,--}}
+        {{--success: function (result) {--}}
+        {{--if (result.success == true) {--}}
+        {{--reload_Grid_Table(Permissions_Grid, 1);--}}
+        {{--}--}}
+        {{--else {--}}
+        {{--messageModal('error', 'خطا در حذف', result.error);--}}
+        {{--}--}}
+        {{--}--}}
+        {{--});--}}
+        {{--},--}}
+        {{--afterConfirm: 'close'--}}
+        {{--});--}}
+    }
+
     function destroy_cat_permission(item_id, item_name) {
         confirmModal({
             title: '{{trans('acl.remove_acl_category')}}',
@@ -564,8 +645,9 @@
 
     $(document).ready(function()
     {
+        $('#UsersPermissions_Grid').DataTable({});
         /*
-        $('.modal_users_list').change(function () {
+        $('.get_user_permissions_form_btn').change(function () {
             $('#list_user_permissions').html('');
             $('#list_user_permissions').addClass('loader');
             $.ajax({
@@ -598,6 +680,54 @@
             });
         });
         */
+        $('.get_user_permissions_form_btn').click(function () {
+            var tb = 0;
+            $('.set_user_permissions_form_btn').addClass('hide');
+            $('.cancel_user_permissions_form_btn').addClass('hide');
+            if($('#permission_type').val()=='cases')
+            {
+                $('#list_user_permissions').html('');
+                $('#list_user_permissions').addClass('loader');
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route('hamahang.acl.get_user_permissions')}}',
+                    dataType: "json",
+                    data: {
+                        user_id: $("#users_name").val(),
+                        permission_type: $('#permission_type').val()
+                    },
+                    success: function (result) {
+                        $('#list_user_permissions').removeClass('loader');
+                        $('#list_user_permissions').html('');
+                        if (result.success == true) {
+                            if(result.view) {
+                                $('.set_user_permissions_form_btn').removeClass('hide');
+                                $('.cancel_user_permissions_form_btn').removeClass('hide');
+                                $('#list_user_permissions').html(result.view);
+                                $('.styled').uniform();
+                                $('#UsersPermissions_Grid_Row').addClass('hide');
+                            }
+                            else {
+                                $('.set_user_permissions_form_btn').addClass('hide');
+                                $('#list_user_permissions').html('دسته‌بندی مجوزی ثبت نشده است.');
+                            }
+                        }
+                        else {
+                            messageModal('error', 'خطا در واکشی اطلاعات', result.error);
+                        }
+
+
+                    }
+                });
+            }
+            else
+            {
+                $('#UsersPermissions_Grid_Row').removeClass('hide');
+                $('#UsersPermissions_Grid').dataTable().fnDestroy();
+                Data_Tables_UsersPermissions_Grid();
+            }
+
+        });
 
         Data_Tables_Roles_Grid();
 
@@ -653,6 +783,13 @@
             }
             else
                 Data_Tables_Roles_Grid();
+            $("div.toolbar")
+                .html('' +
+                    '<button class="btn btn-info fa fa-plus btn_grid_add_role" type="button">' +
+                    '   <i ></i> ' +
+{{--                    '   {{ trans('app.add_new_role')}}' +--}}
+                    '</button>'
+                );
         });
 
         $(document).on("click", ".permissions_tab", function () {
@@ -660,6 +797,13 @@
                 reload_Grid_Table(Permissions_Grid, 1);
             else
                 Data_Tables_Permissions_Grid();
+            $("div.toolbar")
+                .html('' +
+                    '<button class="btn btn-info fa fa-plus btn_grid_add_permission" type="button">' +
+                    '   <i ></i> ' +
+{{--                    '   {{ trans('app.add_new_permission')}}' +--}}
+                    '</button>'
+                );
         });
 
         $(document).on("click", ".acl_cats_tab", function () {
@@ -667,6 +811,18 @@
                 reload_Grid_Table(Categories_Grid, 2);
             else
                 Data_Tables_Categories_Grid();
+            $("div.toolbar")
+                .html('' +
+                    '<button class="btn btn-info fa fa-plus btn_grid_add_category" type="button">' +
+                    '   <i ></i> ' +
+{{--                    '   {{ trans('app.add_new_permission_category')}}' +--}}
+                    '</button>'
+                );
+        });
+
+        $(document).on("click", ".acl_user_permissions_tab", function () {
+            $("div.toolbar")
+                .html('');
         });
 
         $(document).on("click", ".btn_grid_add_role", function () {
@@ -746,6 +902,13 @@
             destroy_permission(item_id, item_name);
         });
 
+        $(document).on("click", ".btn_grid_destroy_user_permission", function () {
+            var $this = $(this);
+            var role_id = $this.data('grid_role_id');
+            var user_id = $this.data('grid_user_id');
+            destroy_user_permission(role_id, user_id);
+        });
+
         $(document).on("click", ".btn_grid_destroy_category", function () {
             var $this = $(this);
             var item_id = $this.data('grid_item_id');
@@ -755,6 +918,7 @@
 
         $(document).on("click", ".get_role_permission", function () {
             var $this = $(this);
+            
             var item_id = $this.data('item_id');
             $.ajax({
                 type: "POST",
@@ -776,7 +940,7 @@
                             '<li class="">' +
                             '   <a href="#acl_cats_manage_tab_pan" data-toggle="tab" id="acl_cats_manage_tab" class="legitRipple edit_cat_tab" aria-expanded="false">' +
                             '       <span class=""></span>' +
-                            '{{trans('acl.manage_role_permissions')}}' +
+                            '{{trans('acl.manage_role_permissions')}}' + ' ' + $this.data('item_name')
                             '   </a>' +
                             '</li>';
 

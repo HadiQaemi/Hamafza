@@ -19,14 +19,14 @@
                                 </li>
                                 @endpermission
 
-                                @permission('posts.hamahang.menus.store_menu')
-                                <li class="">
-                                    <a href="#add_tab" data-toggle="tab" class="legitRipple" aria-expanded="false">
-                                        <span></span>
-                                        {{trans('menus.add_a_new_menu')}}
-                                    </a>
-                                </li>
-                                @endpermission
+                                {{--@permission('posts.hamahang.menus.store_menu')--}}
+                                {{--<li class="">--}}
+                                {{--<a href="#add_tab" data-toggle="tab" class="legitRipple" aria-expanded="false">--}}
+                                {{--<span></span>--}}
+                                {{--{{trans('menus.add_a_new_menu')}}--}}
+                                {{--</a>--}}
+                                {{--</li>--}}
+                                {{--@endpermission--}}
                             </ul>
                             <div class="tab-content">
 
@@ -46,6 +46,12 @@
                                             </table>
                                         </div>
                                         <div class="clearfix"></div>
+                                    </div>
+                                    <div class="space-4"></div>
+                                    <div class="row">
+                                        <div class="col-xs-8 pull-right">
+                                            <a href="{{ route('modals.add_edit_menu') }}" class="jsPanels btn btn-primary fa fa-plus"></a>
+                                        </div>
                                     </div>
                                 </div>
                                 @endpermission
@@ -151,132 +157,137 @@
                                         </thead>
                                     </table>
                                     <div class="clearfix"></div>
+                                    <div class="row">
+                                        <div class="col-xs-8 pull-right">
+                                            <a href="{{ route('modals.add_edit_menu_items') }}" class="jsPanels btn btn-primary fa fa-plus add_edit_menu_items"></a>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="menu_item_add_tab">
                                     <div class="row">
-                                        <form id="menu_item_form_created_new" class="form-horizontal" action="#">
-                                            <input class="menu_id" type="hidden" name="menu_id" value="">
-                                            <table class="table col-xs-12">
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('acl.parent')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <select id="parent_list" class="select2 parent_list" name="parent">
-                                                            <option value="0">{{trans('acl.no_parent')}}</option>
-                                                            {{--@foreach($menu_items as $menu_item)--}}
-                                                            {{--<option value="{{ $menu_item->id }}">{{ $menu_item->title }}</option>--}}
-                                                            {{--@endforeach--}}
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.menu_title')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <input name="title" type="text" class="form-control" placeholder="{{trans('menus.menu_title')}}">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.menu_description')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <input name="description" type="text" class="form-control added_date" placeholder="{{trans('menus.menu_description')}}">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2 link_type">
-                                                        <label class=" control-label">{{trans('menus.link_type')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="link_type" value="0" disabled>{{trans('menus.internal')}}<br>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="link_type" value="1" checked>{{trans('menus.external')}}<br>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                {{--<tr class="route_variables">--}}
-                                                {{--<td class="col-xs-2">--}}
-                                                {{--<label class="control-label">{{trans('menus.route_variables')}}</label>--}}
+                                        {{--<form id="menu_item_form_created_new" class="form-horizontal" action="#">--}}
+                                        {{--<input class="menu_id" type="hidden" name="menu_id" value="">--}}
+                                        {{--<table class="table col-xs-12">--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('acl.parent')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<select id="parent_list" class="select2 parent_list" name="parent">--}}
+                                        {{--<option value="0">{{trans('acl.no_parent')}}</option>--}}
+                                        {{--@foreach($menu_items as $menu_item)--}}
+                                        {{--<option value="{{ $menu_item->id }}">{{ $menu_item->title }}</option>--}}
+                                        {{--@endforeach--}}
+                                        {{--</select>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.menu_title')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<input name="title" type="text" class="form-control" placeholder="{{trans('menus.menu_title')}}">--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.menu_description')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<input name="description" type="text" class="form-control added_date" placeholder="{{trans('menus.menu_description')}}">--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2 link_type">--}}
+                                        {{--<label class=" control-label">{{trans('menus.link_type')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<label class="radio-inline">--}}
+                                        {{--<input type="radio" name="link_type" value="0" disabled>{{trans('menus.internal')}}<br>--}}
+                                        {{--</label>--}}
+                                        {{--<label class="radio-inline">--}}
+                                        {{--<input type="radio" name="link_type" value="1" checked>{{trans('menus.external')}}<br>--}}
+                                        {{--</label>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr class="route_variables">--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.route_variables')}}</label>--}}
 
-                                                {{--</td>--}}
-                                                {{--<td class="col-xs-10">--}}
-                                                {{--<div id="route_variables"></div>--}}
-                                                {{--</td>--}}
-                                                {{--</tr>--}}
-                                                <tr class="route_name_div">
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.link_address')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <input name="link_address" id="route_name" class="form-control link_address" value="" placeholder="{{trans('menus.link_address')}}">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.link_opening_type')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="target" value="_blank" checked>{{trans('menus.open_in_new_window')}}<br>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="target" value="_self">{{trans('menus.open_in_current_window')}}<br>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.show_status')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <label>
-                                                            <input name="status" type="checkbox" class="switchery" checked="checked">
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">{{trans('menus.icon')}}</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <input name="icon" id="" class="form-control" value="" placeholder="{{trans('menus.icon')}}">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <span style="color: blue; font-size: 14px;">مجوز ها: </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">کاربر</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <select name="users_list[]" id="add_new_users_list" multiple="multiple" data-placeholder="{{ trans('menus.select_user') }}" class="select-size-xs users_list"></select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-xs-2">
-                                                        <label class="control-label">نقش</label>
-                                                    </td>
-                                                    <td class="col-xs-10">
-                                                        <select name="roles_list[]" multiple="multiple" class="form-control roles_list"></select>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div class="text-left">
-                                                <button type="button" class="btn bg-grey-300 menu_item_cancel_form_btn">{{trans('acl.submit_cancel')}} </button>
-                                                <button type="button" class="btn btn-primary menu_item_submit_form_btn">
-                                                    <i></i> تایید
-                                                </button>
-                                            </div>
-                                        </form>
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<div id="route_variables"></div>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr class="route_name_div">--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.link_address')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<input name="link_address" id="route_name" class="form-control link_address" value="" placeholder="{{trans('menus.link_address')}}">--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.link_opening_type')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<label class="radio-inline">--}}
+                                        {{--<input type="radio" name="target" value="_blank" checked>{{trans('menus.open_in_new_window')}}<br>--}}
+                                        {{--</label>--}}
+                                        {{--<label class="radio-inline">--}}
+                                        {{--<input type="radio" name="target" value="_self">{{trans('menus.open_in_current_window')}}<br>--}}
+                                        {{--</label>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.show_status')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<label>--}}
+                                        {{--<input name="status" type="checkbox" class="switchery" checked="checked">--}}
+                                        {{--</label>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">{{trans('menus.icon')}}</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<input name="icon" id="" class="form-control" value="" placeholder="{{trans('menus.icon')}}">--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<span style="color: blue; font-size: 14px;">مجوز ها: </span>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">کاربر</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<select name="users_list[]" id="add_new_users_list" multiple="multiple" data-placeholder="{{ trans('menus.select_user') }}" class="select-size-xs users_list"></select>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--<tr>--}}
+                                        {{--<td class="col-xs-2">--}}
+                                        {{--<label class="control-label">نقش</label>--}}
+                                        {{--</td>--}}
+                                        {{--<td class="col-xs-10">--}}
+                                        {{--<select name="roles_list[]" multiple="multiple" class="form-control roles_list"></select>--}}
+                                        {{--</td>--}}
+                                        {{--</tr>--}}
+                                        {{--</table>--}}
+                                        {{--<div class="text-left">--}}
+                                        {{--<button type="button" class="btn bg-grey-300 menu_item_cancel_form_btn">{{trans('acl.submit_cancel')}} </button>--}}
+                                        {{--<button type="button" class="btn btn-primary menu_item_submit_form_btn">--}}
+                                        {{--<i></i> تایید--}}
+                                        {{--</button>--}}
+                                        {{--</div>--}}
+                                        {{--</form>--}}
                                     </div>
                                 </div>
 
