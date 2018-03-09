@@ -26,7 +26,10 @@
         @if ($enabled)
             <a href="{{ $basic_data_value->attrs()->where('basicdata_attribute_id', 7)->withPivot('value')->first()->pivot->value }}"><span style="color: white">[برای سفارش خرید با تخفیف ویژه کلیک کنید.]</span></a>
         @else
-            <span style="color: white">تمامی موجودی این محصول به فروش رسیده است.</span>
+            <span style="color: white">
+                @php ($bdv = \App\Models\Hamahang\Basicdata::find(5)->items()->where('id', '147')->get()->first())
+                {!! $bdv ? $bdv->value : 'تمامی موجودی این محصول به فروش رسیده است.' !!}
+            </span>
         @endif
     </div>
 @else

@@ -39,14 +39,14 @@
             },
         });
     }
-    function get_content(id, title, value, parentid)
+    function get_content(id, title, value, parentid, is_link)
     {
         comment = $('.jsPanelsLive_content' + id).attr('data-comment');
         r  =
         '<div style="padding: 10px;">' +
         '   <div class="row" style="margin-top: 5px;">' +
         '       <div class="col-sm-9"><label>عنوان:</label> <input type="text" id="title" name="title" class="form-control" value="' + title + '" /></div>' +
-        '       <div class="col-sm-3"><label>مقدار:</label> <input type="text" id="value" name="value" class="form-control" style="direction: ltr;" value="' + atob(value) + '" /></div>' +
+        '       <div class="col-sm-3"><label>مقدار:</label> <input type="text" id="value" name="value" class="form-control" style="direction: ltr;" value="' + (is_link ? atob(value) : value) + '" /></div>' +
         '   </div>' +
         '   <div class="row" style="margin-top: 5px;">' +
         '       <div class="col-sm-12"><label>توضیحات:</label> <textarea id="comment" name="comment" class="form-control">' + comment + '</textarea></div>' +
@@ -136,7 +136,7 @@
                     '    <span class="jsPanelsLive_content' + full.id + '" data-comment="' + full.comment + '"></span>' +
                     '</div>';
                     make_delete = '<i class="fa fa-times" style="font-size: 17px; cursor: pointer; " onclick="if (confirm(\'آیا مطمئن هستید؟\')) { do_delete_value(' + full.id + ',groupGrid); }"></i>';
-                    data_content_function = 'get_content(\'' + full.id + '\', \'' + full.title + '\', \'' + btoa(full.value) + '\', \'' + full.parent_id + '\')';
+                    data_content_function = 'get_content(\'' + full.id + '\', \'' + full.title + '\', \'' + (full.is_link ? btoa(full.value) : full.value) + '\', \'' + full.parent_id + '\', ' + full.is_link + ')';
                     make_edit = '<a class="jsPanelsLive" data-id="' + full.id + '" data-header="ویرایش ' + full.title + '" data-content-function="' + data_content_function + ' " data-footer-function="get_footer(' + full.id + ')" style="font-size: 15px; cursor: pointer;"><i class="fa fa-pencil-square-o"></i></a>';
                     return make_content + make_edit + ' ' + make_delete;
                 }

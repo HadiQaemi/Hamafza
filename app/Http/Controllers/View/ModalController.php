@@ -902,8 +902,10 @@ class ModalController extends Controller
     {
         $request->merge(array('title' => strip_tags($request->input('title'))));
         $is_kmkz = 'kmkz' == config('constants.IndexView');
+        $is_banader = 'banader' == config('constants.IndexView');
         $has_parentid_9 = 9 == $request->input('parentid', 0);
-        $custom_value_type = $is_kmkz && $has_parentid_9 ? 'string' : 'integer';
+        $has_parentid_5 = 5 == $request->input('parentid', 0);
+        $custom_value_type = ($is_kmkz && $has_parentid_9) || $is_banader && $has_parentid_5 ? 'string' : 'integer';
         $validator = Validator::make
         (
             $request->all(),

@@ -55,19 +55,19 @@
                 @endif
                 {
                     data: 'invoice_no',
-                    name: 'id',
+                    name: 'id'
                 },
                 {
                     data: 'products_count',
-                    name: 'products_count',
+                    name: 'products_count'
                 },
                 {
                     data: 'date',
-                    name: 'id',
+                    name: 'id'
                 },
                 {
                     data: 'amount',
-                    name: 'payable_amount',
+                    name: 'payable_amount'
                 },
                 {
                     data: 'state',
@@ -80,7 +80,7 @@
                 },
                 {
                     data: 'has_coupon_label',
-                    name: 'has_coupon',
+                    name: 'has_coupon'
                 },
                 {
                     sortable: false,
