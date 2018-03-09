@@ -52,17 +52,17 @@
                             <div class="form-group">
                                 <input type="checkbox" name="remember_me"><span style="color: black; font-size: 12px;">مرا به خاطر بسپار</span>
                             </div>
-                            <div class="row col-md-9 pull-left">
-                                <div class="col-md-4">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas" tabindex="6">فراموشی رمز عبور</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register" tabindex="5">ثبت نام</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn btn-primary" id="btn_modal_login" tabindex="2">ورود</button>
-                                </div>
-                            </div>
+                            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register">ثبت نام</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<button class="btn btn-primary" id="LoginButt">ورود</button>
+								</div>
+							</div>
                         </form>
                     </div>
                     <div class="clearfix"></div>

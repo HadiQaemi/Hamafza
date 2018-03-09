@@ -78,17 +78,17 @@
                             </div>
                             <div id="reg_captcha_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
                             @endif
-                            <div class="row col-md-9 pull-left" style="margin-top: 12px;">
-                                <div class="col-md-4">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#login" class="login">ورود</div>
-                                </div>
-                                <div class="col-md-5">
-                                    <button type="button" class="btn btn-success" id="btn_modal_register">ثبت کاربر جدید</button>
-                                </div>
-                            </div>
+                            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register">ثبت نام</div>
+								</div>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<button class="btn btn-primary" id="LoginButt">ورود</button>
+								</div>
+							</div>
                             <div class="clearfix"></div>
                         </form>
                     </div>

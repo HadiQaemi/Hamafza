@@ -126,15 +126,15 @@
                                     <ul class="list-unstyled">
                                         @if (count($paya) > 0)
                                             @foreach ($paya as $item)
-                                                <li class="col-md-12 no-padding" style="margin-bottom: 2px;">
-                                                    <div class="col-md-3">
+                                                <li class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" style="margin-bottom: 2px;">
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                                                         @if ($item->DefImageUrl)
                                                             <img title="{{$item->title}}" style="width: 100%; height: 75px; border:1px dashed #eee;" src="{{$item->DefImageUrl}}">
                                                         @else
                                                             <img title="{{$item->title}}" style="width: 100%; height: 75px; border:1px dashed #eee;" src="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode(-1)])}}">
                                                         @endif
                                                     </div>
-                                                    <div class="col-md-9">
+                                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                                         <h3 class="no-margin" style="text-align:justify;font-size: 12px;">
                                                             <a title="{{$item->title}}" href="{{url(isset($item->pages[0]) ? $item->pages[0]->id : '')}}">{{mb_substr($item->title,0,70, "utf-8").'...'}}</a>
                                                         </h3>
