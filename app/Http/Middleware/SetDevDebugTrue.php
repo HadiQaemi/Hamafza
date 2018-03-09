@@ -32,7 +32,7 @@ class SetDevDebugTrue
         config(['app.debug' => $APP_DEBUG]);
         if ($APP_DEBUG)
         {
-            \Debugbar::enable();
+            \Debugbar::disable();
         } else
         {
             \Debugbar::disable();
