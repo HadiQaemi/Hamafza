@@ -103,8 +103,8 @@
                     <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
                         @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
-                        @if(isset($Title))
-                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!$Title!!}</span>
+                        @if(trim(config('constants.SiteFullTitle')) != '')
+                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!config('constants.SiteFullTitle')!!}</span>
                         @endif
                     </a>
                 </div>
