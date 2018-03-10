@@ -22,177 +22,12 @@
     @include('layouts.helpers.common.assets.script.main_scripts')
     @yield('after_main_scripts')
 </head>
-<body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style=" position: fixed;width: 100%;">
+<body dir="rtl" class="mstr-clr responsive-theme" hmfz-ui-thm="" style=" position: fixed;width: 100%;">
 <div class="h_sidenav_main" id="h_sidenav_main" style="padding: 0; margin: 0; transition: margin-left 1s;">
     <div hmfz-main-header="">
         @if ('kmkz' == config('constants.IndexView'))
             <style>#header { background-color: #367BAB; }</style>
         @endif
-        <style>
-            .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-                background-color: #3986AC;
-            }
-            .navbar-default .navbar-toggle .icon-bar {
-                background-color: #f9f9f9;
-            }
-            .navbar-default .navbar-toggle {
-                background-color: #3986AC;
-            }
-            #myNavbar{
-                height: 270px;
-                color: #fff;
-            }
-            .navbar-default .navbar-nav > li > a {
-                color: #fff;
-            }
-            .user-config{
-                /*margin-left: -15px;*/
-            }
-            .logo{
-                margin-right: 15px !important;
-            }
-            .banader_homepage #main {
-                padding-top: 10px;
-            }
-            .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
-                margin-right: -15px;
-                margin-left: 0px;
-            }
-            #header .quick-links-res .res-li {
-                padding: 0px 10px;
-            }
-            #header .quick-links-res .res-li {
-                padding: 0px 10px;
-                border-bottom: 1px solid #FFF;
-            }
-            #header .quick-links-res .res-a {
-                font-size: 15px;
-            }
-            #header .quick-links-res {
-                margin-left: 10px;
-                margin-bottom: 0;
-            }
-            @media screen and (min-width: 480px) {
-                #header .quick-links-res {
-                    margin-left: 20px;
-                }
-            }
-            #header .quick-links-res li {
-                float: right;
-            }
-            #header .quick-links-res a {
-                font-size: 18px;
-                color: #fff;
-                cursor: pointer;
-                /*line-height: 28px;*/
-            }
-            #header .quick-links-res a:hover {
-                opacity: 0.8;
-            }
-            .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-                color: #eee;
-                background-color: transparent;
-            }
-
-
-            .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-                background-color: #3986AC;
-            }
-            .navbar-default .navbar-toggle .icon-bar {
-                background-color: #f9f9f9;
-            }
-            .navbar-default .navbar-toggle {
-                background-color: #3986AC;
-            }
-            #myNavbar{
-                height: 270px;
-                color: #fff;
-            }
-            .navbar-default .navbar-nav > li > a {
-                color: #fff;
-            }
-            .user-config{
-                /*margin-left: -15px;*/
-            }
-            .logo{
-                margin-right: 15px !important;
-            }
-            .banader_homepage #main {
-                padding-top: 10px;
-            }
-            .container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
-                margin-right: -15px;
-                margin-left: 0px;
-            }
-            .mCSB_container {
-                overflow: visible !important;
-                width: 100% !important;
-                height: 1000px !important;
-            }
-            @media screen and (min-width: 480px) {
-                .row-hd {
-                    height: 65vh;
-                }
-            }
-            @media screen and (min-width: 892px) {
-                .row-hd {
-                    height: 85vh;
-                }
-            }
-            .hd-body{
-                direction: rtl;
-            }
-            .hd-body::-webkit-scrollbar {
-                width: 5px;
-                direction: rtl;
-            }
-
-            .hd-body::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            }
-
-            .hd-body::-webkit-scrollbar-thumb {
-                background-color: darkgrey;
-                outline: 1px solid slategrey;
-            }
-
-            .hd-tree{
-                direction: rtl;
-            }
-
-            .hd-tree::-webkit-scrollbar {
-                width: 5px;
-                direction: rtl;
-            }
-            .hd-tree::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            }
-
-            .hd-tree::-webkit-scrollbar-thumb {
-                background-color: darkgrey;
-                outline: 1px solid slategrey;
-            }
-            .row-hd{
-                direction: rtl;
-                overflow-y: auto;
-            }
-            .row-hd::-webkit-scrollbar {
-                width: 5px;
-                direction: rtl;
-            }
-
-            .row-hd::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            }
-
-            .row-hd::-webkit-scrollbar-thumb {
-                background-color: darkgrey;
-                outline: 1px solid slategrey;
-            }
-            .logo {
-                margin-right: 25px !important;
-            }
-        </style>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header navbar-right">
@@ -207,7 +42,7 @@
                         @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
-                            <span class="hidden-lg hidden-md" style="font-size: 10px;">{!!substr($Title,0,50)!!}...</span>
+                            <span class="hidden-lg hidden-md hidden-sm" style="font-size: 10px;">{{mb_substr($Title,0,50, "utf-8").'...'}}</span>
                         @endif
                     </a>
                 </div>
@@ -356,21 +191,15 @@
             @yield('inline_scripts')
 
             <script>
-                if($(document).width() > 900){
-                    // $('.row-hd').css('height','100%');
-                    // if(($('.row-hd').height()/$(window).height())*100<80){
-                    //     $('.row-hd').css('overflow-y','hidden');
-                    // }else{
+                if($(document).width() > 1000){
                     $('.hd-body').css('max-height','80vh');
                     $('.hd-body').css('overflow-y','auto');
                     $('.hd-tree').css('max-height','80vh');
                     $('.hd-tree').css('overflow-y','auto');
                     $('.user-config').css('margin-left','-7px');
                     $('.logo').css('margin-right','20px !important');
-                    // }
                 }else{
-                    // $('.row-hd').css('height',78-($('.hd-tree').height()/$(window).height())*100+'vh');
-                    $('.row-hd').css('height','90vh');
+                    $('.row-hd').css('height','85vh');
                     $('.row-hd').css('overflow-y','auto');
                 }
                 $('.right-menu').css('height','100vh');

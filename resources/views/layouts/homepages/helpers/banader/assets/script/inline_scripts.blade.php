@@ -7,8 +7,15 @@
         });
     </script>
 @endif
-
 <script>
+    if($(document).width() > 900){
+        // $('.user-config').css('margin-left','-7px');
+        $('.logo').css('margin-right','20px !important');
+        // }
+    }else{
+        $('.row-hd').css('height','90vh');
+        $('.row-hd').css('overflow-y','auto');
+    }
     $(document).ready(function () {
         $("#TagRes").mCustomScrollbar();
     });

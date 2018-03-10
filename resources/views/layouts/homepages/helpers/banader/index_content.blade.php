@@ -1,14 +1,11 @@
 <div class="row">
-    <div  class="hidden-lg col-xs-12 col-sm-12 col-md-12" >
+    <div  class="hidden-lg col-xs-12 col-sm-12 col-md-12 less-ver-padding less-hor-margin" >
         {!! homepage_slider() !!}
     </div>
 </div>
 <div class="row">
-    <div class="hidden-lg col-xs-12 col-sm-12 col-md-12 space-10"></div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3" >
-        <div class="panel panel-banader-index">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 less-ver-padding" >
+        <div class="panel panel-banader-index less-hor-margin">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf;">...دایره المعارف دریایی...</div>
             <div class="panel-body no-padding">
                 <div class="vertical_menu">
@@ -84,11 +81,11 @@
             </div>
         </div>
     </div>
-    <div  class="hidden-xs hidden-sm hidden-md col-lg-6" >
+    <div  class="hidden-xs hidden-sm hidden-md col-lg-6 less-ver-padding" >
         {!! homepage_slider() !!}
     </div>
-    <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-3" >
-        <div class="panel panel-banader-index" style="height: 100%;">
+    <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-3 less-ver-padding" >
+        <div class="panel panel-banader-index less-hor-margin" style="height: 100%;">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">...تبلیغات...</div>
             <div class="panel-body no-padding banader-ads text-center">
                 {!! homepage_ads() !!}
@@ -98,11 +95,8 @@
     <div class="clearfixed"></div>
 </div>
 <div class="row">
-    <div class="space-10"></div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="panel panel-banader-index">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 less-ver-padding">
+        <div class="panel panel-banader-index less-hor-margin">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf">پژوهش</div>
             <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;">
                 <ul class="underlined_menu nav nav-tabs">
@@ -216,8 +210,8 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="panel panel-banader-index">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 less-ver-padding">
+        <div class="panel panel-banader-index less-hor-margin">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">فعالان حمل و نقل دریایی</div>
             <div class="panel-body no-padding text-center mCustomScrollbar" style="height: 400px;">
                 <ul class="nav nav-tabs underlined_menu">
@@ -382,8 +376,8 @@
     </div>
     --}}
         -->
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="panel panel-banader-index">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 less-ver-padding">
+        <div class="panel panel-banader-index less-hor-margin">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3acfe3;">آمار</div>
             <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;">
                 <div id="chart_statistics" style="direction: ltr; text-align: center;"></div>
