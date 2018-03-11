@@ -11,7 +11,7 @@
     }
 
 </style>
-<ul class="nav navbar-nav navbar-right quick-links-res hidden-xs hidden-sm">
+<ul class="nav navbar-nav navbar-right quick-links-res hidden-xs">
     @foreach($menus as $menu)
         <li><a href="{{$menu->href}}">{{$menu->title }}</a></li>
     @endforeach

@@ -986,7 +986,7 @@ function h_sidenav_open(thic) {
         $('.h_sidenav_client').hide();
     }
     $('.h_sidenav').width(w);
-    if(document.body.clientWidth > 900){
+    if(document.body.clientWidth > 1000){
         $('.h_sidenav_main').css({'margin-left': w});
     }
     var t = window.setInterval(function () {
