@@ -800,8 +800,7 @@ class BazaarController extends Controller
                 {
                     $query->select(DB::raw('SUM(subject_count) AS subjects'));
                 }
-            ])
-            ->select('hamahang_bazaar_invoices.*');
+            ]);
         $r = Datatables::eloquent($invoices)
             ->addColumn('invoice_no', function ($data)
             {
