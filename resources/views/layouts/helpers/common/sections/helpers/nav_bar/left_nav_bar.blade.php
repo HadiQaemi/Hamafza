@@ -19,13 +19,13 @@
     @if(auth()->check())
 
         <div class="pull-left user-config dropdown"{!! $change_color !!}>
-            <a href="#" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="#" style="background-color: transparent !important;" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ auth()->user()->Name .' '. auth()->user()->Family }}
                 <span class="caret"></span>
                 <img class="img-circle img-responsive jsPanels" href="{{route('modals.profile_avatar')}}" src="{{ auth()->user()->avatar_link }}"/>
             </a>
-            <a href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
-            <a href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
+            <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
+            <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
             <!-- begin cart`s basket -->
 
         {{--<a href="{{ route('ugc.desktop.hamahang.bazaar.cart', ['username' => auth()->user()->Uname]) }}" class="wall" style="visibility: {!! count(Session::get('cart')) ? 'visible' : 'hidden' !!}" id="basket_area">--}}

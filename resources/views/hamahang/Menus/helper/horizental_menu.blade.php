@@ -13,7 +13,7 @@
 </style>
 <ul class="nav navbar-nav navbar-right quick-links-res hidden-xs">
     @foreach($menus as $menu)
-        <li><a href="{{$menu->href}}">{{$menu->title }}</a></li>
+        <li><a style="color:#FFF !important;" href="{{$menu->href}}">{{$menu->title }}</a></li>
     @endforeach
 </ul>
 <ul class="nav navbar-nav navbar-right quick-links-res hidden-sm hidden-md hidden-lg">
