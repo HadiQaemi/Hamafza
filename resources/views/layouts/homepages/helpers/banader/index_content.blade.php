@@ -3,6 +3,36 @@
         {!! homepage_slider() !!}
     </div>
 </div>
+
+{{--
+<div class="row multi-level-menu">
+    <ul class="main">
+        <li><a href="#">صفحه اصلی</a></li>
+        <li>
+            <a href="#">طراحی داخلی</a>
+            <ul>
+                <li><a href="#">وب</a></li>
+                <li>
+                    <a href="#">شیوه نامه</a>
+                    <ul>
+                        <li><a href="#">پایه ها</a></li>
+                        <li><a href="#">لیست های لیست های لیست ها</a></li>
+                        <li><a href="#">زمینه ها</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">جاوا اسکریپت جاوا اسکریپت</a>
+                    <ul>
+                        <li><a href="#">ایجکس</a></li>
+                        <li><a href="#">جی کوئری</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+--}}
+
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 less-ver-padding" >
         <div class="panel panel-banader-index less-hor-margin">
