@@ -39,7 +39,7 @@
             },
         });
     }
-    function get_content(id, title, value, parentid, is_link)
+    function get_content(id, title, value, parentid, is_link, inactive)
     {
         comment = $('.jsPanelsLive_content' + id).attr('data-comment');
         r  =
@@ -52,7 +52,9 @@
         '       <div class="col-sm-12"><label>توضیحات:</label> <textarea id="comment" name="comment" class="form-control">' + comment + '</textarea></div>' +
         '   </div>' +
         '   <div class="row" style="margin-top: 5px;">' +
-        '           <label>وضعیت:</label> <input type="radio" id="0" name="inactive" value="0" checked="checked" /><label for="inactive_0">فعال</label> <input type="radio" id="inactive_1" name="inactive" value="1" /><label for="inactive_1">غیر فعال</label>' +
+        '       <label>وضعیت:</label>' +
+        '       <input type="radio" id="0" name="inactive" value="0" ' + ('0' == inactive ? 'checked="checked"' : 'null') + '/><label for="inactive_0">فعال</label>' +
+        '       <input type="radio" id="inactive_1" name="inactive" value="0" ' + ('1' == inactive ? 'checked="checked"' : 'null') + '/><label  for="inactive_1">غیر فعال</label>' +
         '   </div>' +
         '</div>' +
         '<input type="hidden" id="parentid" name="parentid" value="' + parentid + '" />';
@@ -136,7 +138,7 @@
                     '    <span class="jsPanelsLive_content' + full.id + '" data-comment="' + full.comment + '"></span>' +
                     '</div>';
                     make_delete = '<i class="fa fa-times" style="font-size: 17px; cursor: pointer; " onclick="if (confirm(\'آیا مطمئن هستید؟\')) { do_delete_value(' + full.id + ',groupGrid); }"></i>';
-                    data_content_function = 'get_content(\'' + full.id + '\', \'' + full.title + '\', \'' + (full.is_link ? btoa(full.value) : full.value) + '\', \'' + full.parent_id + '\', ' + full.is_link + ')';
+                    data_content_function = 'get_content(\'' + full.id + '\', \'' + full.title + '\', \'' + (full.is_link ? btoa(full.value) : full.value) + '\', \'' + full.parent_id + '\', ' + full.is_link + ',\'' + full.inactive + '\'' + ')';
                     make_edit = '<a class="jsPanelsLive" data-id="' + full.id + '" data-header="ویرایش ' + full.title + '" data-content-function="' + data_content_function + ' " data-footer-function="get_footer(' + full.id + ')" style="font-size: 15px; cursor: pointer;"><i class="fa fa-pencil-square-o"></i></a>';
                     return make_content + make_edit + ' ' + make_delete;
                 }
