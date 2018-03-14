@@ -1376,6 +1376,12 @@ class UserClass
 
     public static function permission($module, $uid)
     {
+        switch ($module)
+        {
+            case 'subjects':
+                return '1';
+            break;
+        }
         $access = '0';
         if (isset($uid))
         {
