@@ -189,16 +189,27 @@
         }
     }
 
-    function HFM_RemoveAllFFS(Section) {
-        var confirm_result = confirm("{{trans('filemanager.are_you_sure')}}");
-        if (confirm_result == true) {
-            var link = '{{URL::route('FileManager.RemoveFileFromSession',array('section'=> "",'record'=>''))}}/' + Section + "/AllFile";
-            $.ajax({
+    function HFM_RemoveAllFFS(Section, tak_conf)
+    {
+        if (undefined == tak_conf)
+        {
+            var confirm_result = confirm('{{ trans('filemanager.are_you_sure') }}');
+        } else
+        {
+            var confirm_result = true;
+        }
+        if (true == confirm_result)
+        {
+            var link = '{{ URL::route('FileManager.RemoveFileFromSession', array('section' => '','record' => '')) }}/' + Section + '/AllFile';
+            $.ajax
+            ({
                 type: 'post',
                 url: link,
-                data: {
+                data:
+                {
                     AllRemove: Section,
-                    success: function () {
+                    success: function ()
+                    {
                         HFM_LoadUploadedFiles(Section);
                     }
                 }

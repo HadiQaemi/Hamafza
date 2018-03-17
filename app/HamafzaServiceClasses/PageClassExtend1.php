@@ -2162,7 +2162,8 @@ class PageClassExtend1
 
     public function page_files($pid)
     {
-        $files = Pages::find($pid)->files;
+        $files = Pages::find($pid);
+        $files = $files ? $files->files : [];
         /*$files = array();
         $fileD = array();
         $Files = DB::table('page_file')

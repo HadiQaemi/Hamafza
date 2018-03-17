@@ -1,11 +1,11 @@
 <?php
 
+use App\HamafzaServiceClasses\PageClass;
 use App\HamafzaServiceClasses\PostsClass;
 use App\HamafzaViewClasses\DesktopClass;
 use App\HamafzaServiceClasses\UserClass;
 use App\HamafzaViewClasses\PublicClass;
 use App\HamahangCustomClasses\Widgets;
-use App\HamafzaViewClasses\PageClass;
 use App\Models\hamafza\Keyword;
 use App\Models\hamafza\History;
 use App\Models\hamafza\Subject;
@@ -697,6 +697,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     {
                         view('hamahang.Enquiry.enquiry_view')->with(['sub_kind' => $sub_kind]);
                     }
+                    $PClass = new PageClass();
+                    $files = $PClass->page_files($post_id);
                     $res =
                     [
                         'sub_kind' => $sub_kind,
@@ -709,7 +711,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         'content' => '',
                         'uname' => $sid,
                         'keywords' => $keywords,
-                        'Files' => ''
+                        'Files' => $files
                     ];
                     break;
                 }

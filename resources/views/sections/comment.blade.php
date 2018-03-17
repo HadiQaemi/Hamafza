@@ -49,8 +49,7 @@
                             </div>
                         </div>
                     </div>
-
-                    @if ($hide_type && false)
+                    @if ($hide_type)
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             {!! $file['Buttons']['comment_file'] !!}
                             {!! $file['ShowResultArea']['comment_file'] !!}
@@ -273,7 +272,8 @@
             text = $('#post_type option:selected').text() + '‌' + " تان را بنویسید";
         $("#NewPost").attr("placeholder", text);
     });
-    $("#btnpost").click(function () {
+    $('#btnpost').click(function ()
+    {
         uid = curUid;
         pid = Sid;
         type = $("#post_type").val();
@@ -283,7 +283,9 @@
         title = $("#commentTitleW").val();
         selectText = $("#SelectedComment").val();
         if (selectText != '')
+        {
             desc = "درباره «" + selectText + "»<hr>" + desc;
+        }
         $("#SelectedComment").val("");
         image = '';
         video = '';
@@ -314,29 +316,29 @@
         control.val('').clone(true);
         // file=$("#pictureUpload").files[0];
 
-        $.ajax({
+        $.ajax
+        ({
             type: "POST",
             url: Baseurl + "newpost",
             processData: false, // tell jQuery not to process the data
             contentType: false, // tell jQuery not to set contentType
             data: formData,
-            success: function (theResponse) {
-                if (theResponse.hasOwnProperty('success')) {
-                    if (theResponse.success) {
+            success: function (theResponse)
+            {
+                if (theResponse.hasOwnProperty('success'))
+                {
+                    if (theResponse.success)
+                    {
 
-                    } else {
+                    } else
+                    {
                         messageModal('fail', 'خطا', ['میزان پاداش نمی تواند بیشتر از میزان موجودی امتیاز شما باشد.']);
                     }
                 }
+                HFM_RemoveAllFFS('{{ $file['ShowResultArea']['comment_file']['section'] }}', true);
                 $("#commentTitleWW").val("");
                 $("#NewPostW").val("");
-
-                jQuery.noticeAdd({
-                    text: 'انجام شد',
-                    stay: false,
-                    type: 'success'
-                });
-
+                jQuery.noticeAdd({text: 'انجام شد', stay: false, type: 'success'});
                 var pic = "{{App::make('url')->to('/')}}" + "/" + "{{session('pic')}}";
                 var name = "{{session('Name')}}" + "  " + "{{session('Family')}}";
                 var newcom = '<div class="comment-contain"><div class="comment-box"><img class="avatar mCS_img_loaded" src="' + pic + '">';
@@ -350,7 +352,8 @@
 
         $(".icon-bastan").click();
 
-        window.setTimeout(function () {
+        window.setTimeout(function ()
+        {
             $('#th20').click();
             $('#th20').click();
         }, 2000);
@@ -398,12 +401,7 @@
         var newString = tmp.textContent || tmp.innerText;
         // this next piece converts line breaks into break tags
         // and removes the seemingly endless crap code
-        newString = newString.replace(/\n\n/g, "<br />").replace( /
-    .*<!--.*-->
-    /
-        g, ""
-    )
-        ;
+        newString = newString.replace(/\n\n/g, "<br />").replace(/.*<!--.*-->/g, "");
         // this next piece removes any break tags (up to 10) at beginning
 
         return newString;
