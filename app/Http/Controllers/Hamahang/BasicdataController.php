@@ -168,7 +168,7 @@ class BasicdataController extends Controller
                     })
                     ->addColumn('max_medal', function ($data)
                     {
-                         return '';
+                        return '';
                     })
                     ->addColumn('d', function ($data)
                     {
@@ -257,7 +257,9 @@ class BasicdataController extends Controller
                         return $r;
                     })
                     ->addColumn('related_tab', function ($data) {
-                       return BasicdataValue::find($data->value)->title;
+                        $get_title = BasicdataValue::find($data->value);
+                        $r = $get_title ? $get_title->title : '-';
+                        return $r;
                     })
                     ->make(true);
                 break;
@@ -554,12 +556,12 @@ class BasicdataController extends Controller
             $basic_data_value->save();
             $basic_data_attribute_url = $basic_data_value->attrs()->where('basicdata_attribute_id', config('basicdata.social_attr_link'))->withPivot('value')->first();
             $basic_data_attribute_url = BasicdataAttributesValues::where('basicdata_value_id', $basic_data_attribute_url->pivot->basicdata_value_id)
-             ->where('basicdata_attribute_id', $basic_data_attribute_url->pivot->basicdata_attribute_id)->first();
+                ->where('basicdata_attribute_id', $basic_data_attribute_url->pivot->basicdata_attribute_id)->first();
             $basic_data_attribute_url->value = Request::input('url_address');
             $basic_data_attribute_url->save();
             $basic_data_attribute_image = $basic_data_value->attrs()->where('basicdata_attribute_id', config('basicdata.social_attr_image'))->withPivot('value')->first();
             $basic_data_attribute_image = BasicdataAttributesValues::where('basicdata_value_id', $basic_data_attribute_image->pivot->basicdata_value_id)
-            ->where('basicdata_attribute_id', $basic_data_attribute_image->pivot->basicdata_attribute_id)->first();
+                ->where('basicdata_attribute_id', $basic_data_attribute_image->pivot->basicdata_attribute_id)->first();
             HFM_SaveSingleFile('edit_item_image', 'App\Models\Hamahang\BasicdataAttributesValues', 'value', $basic_data_attribute_image->id);
             $result['message'][] = trans('app.operation_is_success');
             $result['success'] = true;

@@ -21,6 +21,10 @@
         {
             font-size: 12px !important;
         }
+        #TextSection > h2:first-child
+        {
+            color: #337ab7 !important;
+        }
     </style>
     <script>
         $(function () {
