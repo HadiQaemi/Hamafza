@@ -954,7 +954,7 @@ div.dataTables_wrapper .text-left .dataTables_paginate {
 .dashboard_box_disabled {
     border-color: #bbb;
     cursor: not-allowed;
-    background: #eee !important;
+    background: #f9f9f9 !important;
 }
 
 .dashboard_box_disabled a {
@@ -1694,3 +1694,19 @@ th{
     clear: both;
 }
 
+.edited-addon {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #fff !important;
+    border: none !important;
+}
+.edited-addon:last-child {
+    border: none !important;
+}
+.div-schedul{
+    font-size: 12px;
+}

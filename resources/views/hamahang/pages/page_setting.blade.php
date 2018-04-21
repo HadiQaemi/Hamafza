@@ -19,7 +19,7 @@
             <li class="tab" id="rahnama"><a aria-controls="sooreh-tab-5" href="#sooreh-tab-5" role="tab" data-toggle="tab">راهنما</a></li>
         </ul>
     </div>
-    <div class="tab-content" style="overflow-y:auto;height: 280px;">
+    <div class="tab-content" style="overflow-y:auto;">
         <div id="sooreh-tab-1" role="tabpanel" class="tab-pane active" >
             <form id="form_subject_omomi" method="post" >
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>

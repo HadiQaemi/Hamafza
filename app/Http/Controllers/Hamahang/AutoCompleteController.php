@@ -153,6 +153,27 @@ class AutoCompleteController extends Controller
         return response()->json($res);
     }
 
+    public function resources(Request $request)
+    {
+        $data = $request->term;
+        if ($data['term'] == '...')
+        {
+            $res ['results'] = DB::table('new_hamafza_resources')
+                ->select("id", "resource as text")->get();
+        }
+        else
+        {
+            $res ['results'] = DB::table('new_hamafza_resources')
+                ->select("id", "resource as text")
+                ->where("resource", "LIKE", "%" . $data['term'] . "%")->get();
+        }
+        foreach ($res ['results'] as $keyword)
+        {
+            $keyword->id = ($request->exists('exist_in') ? $request->exist_in : 'exist_in') . $keyword->id;
+        }
+        return response()->json($res);
+    }
+
     public function process(Request $request)
     {
         $data = $request->term;

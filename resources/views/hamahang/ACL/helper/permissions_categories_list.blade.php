@@ -12,6 +12,7 @@
 
                         <div class="col-sm-3">
                             <div class="checkbox">
+                                {{--{{$permissions}}--}}
                                 @if(stristr($permissions," ".$permission['id']." "))
                                     <input id="selected_permission_roles{{ $permission['id'] }}" data-item_id="{{ $permission['id'] }}"
                                            value="{{ $permission['id'] }}" name="selected_permission_roles[]" disabled checked type="checkbox" data-type_id="{{ $type_id }}"

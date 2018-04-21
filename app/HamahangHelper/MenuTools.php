@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\hamafza\Subject;
+
 if (!function_exists('buildMenuTree'))
 {
     /**
@@ -217,7 +219,7 @@ if (!function_exists('policy_CanView'))
      */
     function policy_CanView($id = '', $Model, $ModelPolicy, $PolicyMethod = 'canView', $abort = false)
     {
-        //dd($Model,$ModelPolicy,$PolicyMethod);
+//        dd($Model,$ModelPolicy,$PolicyMethod);
         $item = '';
         if ($id != '')
         {
@@ -240,6 +242,53 @@ if (!function_exists('policy_CanView'))
         if (!$access && $abort)
         {
             abort($abort);
+        }
+        if($id!='' && $Model=='\App\Models\hamafza\Subject')
+        {
+			$Subjects2 =
+					DB::table('hamahang_role_policies as hrp')
+						->where('hrp.role_id', 3)
+						->where('hrp.target_id', $id)
+						->select('hrp.target_id as target_id')->take(50)->get();
+			
+			if(count($Subjects2)==0){
+				if (Auth::check())
+				{
+					$Subjects =
+					DB::table('hamahang_user_policies as hup')
+						->leftJoin('user as u', 'hup.user_id', '=', 'u.id')
+						->where('u.id', $user->id)
+						->where('hup.target_id', $id)
+						->select('u.Uname as name')->take(50)->get();
+						
+					$Subjects2 =
+						DB::table('hamahang_role_policies as hrp')
+							->leftJoin('role_user as ru', 'ru.role_id', '=', 'hrp.role_id')
+							->leftJoin('user as u', 'u.id', '=', 'ru.user_id')
+							->where('u.id', $user->id)
+							->where('hrp.target_id', $id)
+							->select('u.Uname as name')->take(50)->get();
+					if(count($Subjects)==0 && count($Subjects2)==0)
+					{
+						abort($abort);
+					}
+				}
+				else
+				{
+					$Subjects2 =
+						DB::table('hamahang_role_policies as hrp')
+							->where('hrp.role_id', 3)
+							->where('hrp.target_id', $id)
+							->select('hrp.target_id as target_id')->take(50)->get();
+					if(count($Subjects2)==0)
+					{
+						abort($abort);
+					}
+				}
+			}
+			
+            
+
         }
 
         return $access;

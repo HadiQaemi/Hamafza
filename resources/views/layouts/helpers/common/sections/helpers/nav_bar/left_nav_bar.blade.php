@@ -15,7 +15,7 @@
     });
 </script>
 @php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)
-<div class="hidden-xs pull-left user-config"{!! $change_color !!}>
+<div class="hidden-xs pull-left user-config logo-configs"{!! $change_color !!}>
     @if(auth()->check())
 
         <div class="pull-left user-config dropdown"{!! $change_color !!}>

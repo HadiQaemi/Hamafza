@@ -29,4 +29,4 @@ Route::post('add_employ_for_post', ['as' => 'hamahang.org_chart.add_employ_for_p
 Route::post('delete_chart', ['as' => 'hamahang.org_chart.modals.delete_chart', 'uses' => 'ChartsController@deletechart', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.delete_chart']]);
 Route::post('update_one_chart_item', ['as' => 'hamahang.org_chart.update_one_chart_item', 'uses' => 'OrgChartController@update_one_chart_item', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.update_one_chart_item']]);
 Route::post('AjaxOrgChartDataShow', ['as' => 'hamahang.org_chart.ajax_org_chart_data_show', 'uses' => 'OrgChartController@AjaxOrgChartDataShow', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_chart_data_show']]);
-/* ??? */Route::post('fetch_organ_charts', ['as' => 'hamahang.org_chart.fetch_organ_charts', 'uses' => 'OrganizationController@fetch_organ_charts']);
+/* ??? */Route::post('fetch_organ_charts', ['as' => 'hamahang.org_chart.fetch_organ_charts', 'uses' => 'OrganizationController@fetch_organ_charts', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.fetch_organ_charts']]);

@@ -508,6 +508,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
     }
 
+    public function _permissions()
+    {
+        return $this->belongsToMany('App\Permission','permission_user', 'user_id',  'permission_id');
+    }
+
     public function Forms()
     {
         return $this->hasMany('App\Models\hamafza\Form', 'admin');

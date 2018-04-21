@@ -15,7 +15,7 @@ class keywords extends Model
     {
         $k = new keywords;
         $k->title = $keyword;
-        $k->uid = Auth::id();
+//        $k->uid = Auth::id();
         $k->save();
 
         return $k->id;

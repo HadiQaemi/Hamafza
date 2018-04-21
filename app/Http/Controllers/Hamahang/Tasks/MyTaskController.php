@@ -112,7 +112,28 @@ class MyTaskController extends Controller
 
     public function MyTasksList($uname)
     {
+//        $total = tasks::FetchDraftsTasks();
+////        $total = drafts::FetchDraftsList();
+//        foreach ($total as $t)
+//        {
+//            $d = new jDateTime;
+//            $datetime = explode(' ', $t->cr);
+//            $date = explode('-', $datetime[0]);
+//            $time = explode(':', $datetime[1]);
+//            $g_timestamp = mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]);
+//            $jdate = $d->getdate($g_timestamp);
+//            $jdate = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
+//            $t->cr = $jdate;
+//        }
+//        $data = collect($total)->map(function ($x)
+//        {
+//            return (array)$x;
+//        })->toArray();
+//        $result['data'] = $data;
+//        return json_encode($result);
+
         $packages = task_packages::where('uid', Auth::id())->get();
+//        dd(\Route::currentRouteName());
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.list':
@@ -135,10 +156,11 @@ class MyTaskController extends Controller
     {
         $Tasks = tasks::MyTasks(Request::input('subject_id'));
         $date = new jDateTime;
+//        dd(Datatables::of($Tasks));
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
-                return GetTaskStatusName($data->type);
+                return GetTaskStatusName($data->task_status);
             })
             ->editColumn('use_type', function ($data)
             {
@@ -184,24 +206,6 @@ class MyTaskController extends Controller
         $assign->reject_description = Request::input('desc');
         $assign->save();
         return json_encode(['success' => true]);
-    }
-
-    public function transfer()
-    {
-        //DB::transaction(function () {
-        $transfer = new task_transfers;
-        $transfer->description = Request::input('ttDesc');
-        $transfer->timestamp = time();
-        $transfer->assignment_id = Request::input('id');
-        $transfer->save();
-        $assign = task_assignments::find(Request::input('id'));
-        $assign->transmitter_id = Auth::id();
-        $assign->transferred_to_id = Request::input('ttid');
-        $assign->save();
-        task_assignments::create_task_assignment(Request::input('ttid'), $assign->task_id, $assign->assigner_id);
-        //task_logs::CreateNewLog($assign->task_id,Request::input('id'),'transfer',null,$new_assign->id);
-        return json_encode('ok');
-        //});
     }
 
     public function ShowCustomMyTasks()

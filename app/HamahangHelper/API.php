@@ -1,5 +1,8 @@
 <?php
 //-----------Begin---------------- Api Services -------------------Begin---------------//
+use App\User;
+use App\Token;
+use App\HamafzaServiceClasses\PageClass;
 if (!function_exists('CheckToken'))
 {
 
@@ -262,4 +265,5 @@ if (!function_exists('GetUserDesktopInfo'))
     }
 
 }
+
 //----------------End-------------- Api Services -------------------End---------------//

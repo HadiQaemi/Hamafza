@@ -191,12 +191,56 @@
             @yield('inline_scripts')
 
             <script>
+				function SaveTask(form_id, again,action) {
+					//console.log(form_id);
+					$('#task_form_action').val(action);
+					var form_data = $('#' + form_id).serialize();
+					$.ajax({
+						type: "POST",
+						url: '{{ route('hamahang.tasks.save_task')}}',
+						dataType: "json",
+						data: form_data,
+						success: function (result) {
+							console.log(result);
+							if (result.success == true) {
+								if (again == 1) {
+									ResetForm();
+								}
+								else {
+									$('.jsPanel-btn-close').click();
+								}
+								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+							}
+							else {
+								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+							}
+						}
+					});
+				}
+				$(document).on('click', '.save_task', function () {
+
+					var save_type = $("input[name='new_task_save_type']:checked").val()
+					var $this = $(this);
+					var form_id = $this.data('form_id');
+					var save_again = $this.data('again_save');
+					if (save_type == 1) {
+						SaveTask(form_id, save_again,1);
+					}
+					else if (save_type == 0) {
+						SaveTask(form_id, save_again,0);
+						//save_as_draft(form_id, save_again);
+					}
+					else
+					{
+						alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+					}
+				});
                 if($(document).width() > 1000){
                     $('.hd-body').css('max-height','80vh');
                     $('.hd-body').css('overflow-y','auto');
                     $('.hd-tree').css('max-height','80vh');
                     $('.hd-tree').css('overflow-y','auto');
-                    $('.user-config').css('margin-left','-7px');
+                    // $('.user-config').css('margin-left','-7px');
                     $('.logo').css('margin-right','20px !important');
                 }else{
                     $('.row-hd').css('height','85vh');

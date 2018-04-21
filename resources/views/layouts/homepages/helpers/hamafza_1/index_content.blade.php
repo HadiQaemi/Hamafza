@@ -1,5 +1,5 @@
 <div hmfz-tmplt-thm-clr="" hmfz-tmplt-cntnt="">
-    ﻿    <div class="bootslider minislider" id="bootslider" style="margin-top: 55px;">
+    ﻿    <div class="bootslider minislider" id="bootslider">
         <!-- Bootslider Loader -->
         <div class="bs-loader">
             <img src="homslider/loader.gif" width="31" height="31" alt="Loading.." id="loader"/>

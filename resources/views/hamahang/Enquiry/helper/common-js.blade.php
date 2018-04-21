@@ -5,11 +5,17 @@
     keyword_search.val('');
     function show_comment_box(sub_kind)
     {
+		$('.sendComment').css('display','block');
         $('#CommentPage').click();
         $('#post_type').val(sub_kind).change();
         $('#portal_id').val(<?php echo $sid; ?>).change();
         $('#commentTitleW').focus();
     }
+	$('.icon-bastan').click( function () {
+		$('.sendComment').css('display','none');
+        $('#CommentPage').click();
+        $('#commentTitleW').focus();
+	});
     function keyword_search_do()
     {
         paginate_current_page = 0;

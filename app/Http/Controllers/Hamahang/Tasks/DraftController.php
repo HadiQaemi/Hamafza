@@ -278,7 +278,8 @@ class DraftController extends Controller
 
     public function FetchDraftsList()
     {
-        $total = drafts::FetchDraftsList();
+        $total = tasks::FetchDraftsTasks();
+//        $total = drafts::FetchDraftsList();
         foreach ($total as $t)
         {
             $d = new jDateTime;

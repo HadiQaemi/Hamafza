@@ -697,7 +697,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     {
                         view('hamahang.Enquiry.enquiry_view')->with(['sub_kind' => $sub_kind]);
                     }
-                    $PClass = new PageClass();
+					$PClass = new PageClass();
                     $files = $PClass->page_files($post_id);
                     $res =
                     [

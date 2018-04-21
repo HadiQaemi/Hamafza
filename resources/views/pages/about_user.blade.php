@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-    <div class="panel-body text-decoration">
+    <div class="panel-body text-decoration"  style="direction:rtl">
         @if(auth()->check() && auth()->user()->is_new == '1')
             <div class="gkCode10" style="padding-right: 30px;">
                 <div id="new_user_alert">

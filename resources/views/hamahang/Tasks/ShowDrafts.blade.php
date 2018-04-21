@@ -437,8 +437,24 @@
 			//editor = new $.fn.dataTables.Editor({});
 			refreshDraftsDatatable();
 		});
-
-
+		$(document).on('click', '.update_task', function () {
+			var save_type = $("input[name='new_task_save_type']:checked").val();
+			$('#task_of_action').val('fffffffffffffff');
+			var $this = $(this);
+			var form_id = $this.data('form_id');
+			var save_again = $this.data('again_save');
+			if (save_type == 1) {
+				UpdateTask(form_id, save_again,1);
+			}
+			else if (save_type == 0) {
+				UpdateTask(form_id, save_again,0);
+				//save_as_draft(form_id, save_again);
+			}
+			else
+			{
+				alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+			}
+		});
 		var t2_default;
 		var current_tab = '';
 		var current_id = '';
@@ -533,8 +549,9 @@
 							"bSortable": false,
 							"mRender": function (data, type, full) {
 								var id = full.id;
-								return '<span class="cursor-pointer" style="color: dodgerblue" onclick="modify_task(' + full.id + ')"><i class="fa fa-edit" ></i> ویرایش و انتشار</span>\
-                                <span class="cursor-pointer" style="color: red" onclick="remove_task(' + full.id + ')"><i class="fa fa-remove" ></i>حذف</span>';
+								//return '<span class="cursor-pointer" style="color: dodgerblue" onclick="modify_task(' + full.id + ')"><i class="fa fa-edit" ></i> ویرایش و انتشار</span>\n' +
+								return '<span class="cursor-pointer" style="color: dodgerblue" ><a style="float: right;" class="jsPanels" href="/modals/ShowTaskForm?tid='+id+'" title="{{trans('tasks.show_task')}}">{{trans('tasks.show_task')}}</a></span>'+
+                                '<span class="cursor-pointer" style="color: red" onclick="remove_task(' + full.id + ')"><i class="fa fa-remove" ></i>حذف</span>';
 							}
 						}
 					]

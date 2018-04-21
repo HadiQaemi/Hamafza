@@ -1,5 +1,9 @@
 <?php
 //----------------Begin-------------- Tasks / Projects / Process -------------------Begin---------------//
+use App\Models\Hamahang\keywords;
+use App\Models\Hamahang\resources;
+use App\HamahangCustomClasses\jDateTime;
+
 if (!function_exists('hamahang_get_task_use_type_name'))
 {
     function hamahang_get_task_use_type_name($use_type)
@@ -115,7 +119,7 @@ if (!function_exists('hamahang_make_task_respite'))
     function hamahang_make_task_respite($input_date, $input_time)
     {
         $cTime = time();
-        $date = new \jDateTime();
+        $date = new jDateTime;
         date_default_timezone_set('Asia/Tehran');
         $date_to_split = explode('-', $input_date);
         $time_to_split = explode(':', $input_time);
@@ -206,6 +210,22 @@ if (!function_exists('hamahang_add_keyword'))
             $keyword_id = keywords::add_new_keyword($keyword);
         }
         return $keyword_id;
+    }
+}
+if (!function_exists('new_hamafza_add_resource'))
+{
+    function new_hamafza_add_resource($resource)
+    {
+        $keyword_id = '';
+        if (substr($resource, 0, 8) == 'exist_in')
+        {
+            $resource = (int)substr($resource, 8);
+        }
+        else
+        {
+            $resource = resources::add_new_resource($resource);
+        }
+        return $resource;
     }
 }
 //----------------End-------------- Tasks / Projects / Process -------------------End---------------//

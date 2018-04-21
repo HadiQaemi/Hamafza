@@ -25,7 +25,7 @@ Route::post('RestartTask', ['as' => 'hamahang.tasks.my_assigned_tasks.restart_ta
 Route::post('change_type_task_assigner', ['as' => 'hamahang.tasks.my_tasks_assigner.change_type_task', 'uses' => 'MyAssignedTaskController@change_type_task', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.my_tasks_assigner.change_type_task']]);
 Route::post('filter_mytask_assigner', ['as' => 'hamahang.tasks.my_tasks_assigner.filter_my_assigned_task', 'uses' => 'MyAssignedTaskController@filter_mytask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.my_tasks_assigner.filter_my_assigned_task']]);
 
-/* ??? */Route::post('RefreshTaskChilds', ['as' => 'hamahang.tasks.my_assigned_tasks.RefreshTaskChilds', 'uses' => 'TaskController@RefreshTaskChilds']);
-/* ??? */Route::post('GetData', ['as' => 'hamahang.tasks.my_assigned_tasks.GetData', 'uses' => 'TaskController@GetData']);
-/* ??? */Route::post('ShowDraftTaskFiles', ['as' => 'hamahang.tasks.my_assigned_tasks.ShowDraftTaskFiles', 'uses' => 'DraftController@ShowDraftTaskFiles']);
-/* ??? */Route::post('NewFollowUp', ['as' => 'hamahang.tasks.my_assigned_tasks.NewFollowUp', 'uses' => 'TaskController@NewFollowUp']);
+/* ??? */Route::post('RefreshTaskChilds', ['as' => 'hamahang.tasks.my_assigned_tasks.RefreshTaskChilds', 'uses' => 'TaskController@RefreshTaskChilds', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.refresh_task_childs']]);
+/* ??? */Route::post('GetData', ['as' => 'hamahang.tasks.my_assigned_tasks.GetData', 'uses' => 'TaskController@GetData', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.get_data']]);
+/* ??? */Route::post('ShowDraftTaskFiles', ['as' => 'hamahang.tasks.my_assigned_tasks.ShowDraftTaskFiles', 'uses' => 'DraftController@ShowDraftTaskFiles', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.show_draft_task_files']]);
+/* ??? */Route::post('NewFollowUp', ['as' => 'hamahang.tasks.my_assigned_tasks.NewFollowUp', 'uses' => 'TaskController@NewFollowUp', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_assigned_tasks.new_follow_up']]);

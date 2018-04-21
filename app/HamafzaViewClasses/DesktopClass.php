@@ -389,7 +389,7 @@ class DesktopClass
         $user_data = $UC->DesktopDashboard($user_id);
         $res = '';
         $Uname = session('Uname');
-        if (is_array($user_data) && count($user_data) > 0)
+        if (is_array($user_data) && count($user_data) > 0 && auth()->check())
         {
             $measure = $user_data['Measure'];
             $Emails = $user_data['Emails'];

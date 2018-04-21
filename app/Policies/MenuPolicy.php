@@ -62,6 +62,7 @@ class MenuPolicy
         //Check Policy by Role
         $permitted_roles = $menu_item->permitted_roles;
         $user_roles = $user->_roles->toArray();
+//        dd($permitted_roles,$user->_roles->toArray());
         if (isset($permitted_roles) && is_array($permitted_roles))
         {
             foreach ($permitted_roles as $role)
@@ -84,8 +85,10 @@ class MenuPolicy
 
     public function canView(User $user, MenuItem $menu_item)
     {
+        if(!auth()->check())
+            return false;
         $this->getAllParents($menu_item);
-
+//        dd($user->uname);
         $parent_access = $this->canParentsView($user);
         $item_access = $this->checkMenuItemAccess($user, $menu_item);
         if ($parent_access == false)

@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Role;
 use Closure;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 
 class DynamicPermission
@@ -15,7 +17,9 @@ class DynamicPermission
 
     public function handle($request, Closure $next, $permission)
     {
+//        echo '<hr/>'."page==".Input::get("page").\Route::currentRouteName().'='.($permission).'<hr/>';
         return $next($request);
+
         $role_name = config('constants.APP_PUBLIC_ROLE');
         $role = Role::where('name', $role_name)->first();
         if ($role && $role->_permissions)
@@ -35,15 +39,18 @@ class DynamicPermission
                     }
                     else
                     {
-                        abort('403');
+                        return response()->view('errors.403');
+                        //abort('403');
                     }
                 }
                 else
                 {
-                    abort('403');
+                    return response()->view('errors.403');
+                    //abort('403');
                 }
             }
         }
-        abort('403');
+        return response()->view('errors.403');
+        //abort('403');
     }
 }

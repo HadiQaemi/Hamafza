@@ -14,7 +14,9 @@
                 <div style="margin:15px;" class="gkCode10"> {{session('NewAlert')}}</div>
                 <?php  Session::put('NewAlert', '');?>
             @endif
+{{--            {!!$Tree!!}--}}
             {!!$content!!}
+{{--            {{$content}}--}}
         </div>
     </div>
 @stop

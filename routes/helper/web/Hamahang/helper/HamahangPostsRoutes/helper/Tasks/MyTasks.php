@@ -13,4 +13,4 @@ Route::post('new_package', ['as' => 'hamahang.tasks.my_tasks.new_package', 'uses
 Route::post('change_type_task', ['as' => 'hamahang.tasks.my_tasks.change_type_task', 'uses' => 'MyTaskController@change_type_task', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.change_type_task']]);
 Route::post('filter_mytask', ['as' => 'hamahang.tasks.my_tasks.filter_my_task', 'uses' => 'MyTaskController@filter_mytask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.filter_my_task']]);
 Route::post('load_mytask', ['as' => 'Hamahang.Tasks.MyTasks.load_mytask', 'uses' => 'MyTaskController@load_mytask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.load_my_task']]);
-/* ??? */Route::post('show_tasks_states', ['as' => 'hamahang.tasks.my_tasks.show_tasks_states', 'uses' => 'MyTaskController@CustomMyTasksStates']); /// search tasks in states
+/* ??? */Route::post('show_tasks_states', ['as' => 'hamahang.tasks.my_tasks.show_tasks_states', 'uses' => 'MyTaskController@CustomMyTasksStates', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.my_tasks.custom_my_tasks_states']]); /// search tasks in states

@@ -2,6 +2,7 @@
 
 namespace App\Models\Hamahang\Tasks;
 
+use App\HamafzaViewClasses\TaskClass;
 use DB;
 use Auth;
 use Request;
@@ -15,6 +16,33 @@ class tasks extends Model
     protected $table = 'hamahang_task';
     protected $dates = ['deleted_at'];
 
+    public static function FetchDraftsTasks()
+    {
+        $total = DB::table('hamahang_task')
+            ->whereNull('hamahang_task.deleted_at')
+            ->where('hamahang_task.uid', '=', Auth::id())
+            ->where('hamahang_task.is_save', '=', 0)
+            ->select('hamahang_task.form_data as title', 'hamahang_task.id as id', 'hamahang_task.created_at as cr')
+            ->get();
+
+        foreach ($total as $draft)
+        {
+            //die(var_dump(unserialize($draft->title)));
+            $draft->title = unserialize($draft->title)['title'];
+        }
+        return $total;
+    }
+
+    public static function DraftTaskInfo($id)
+    {
+        $total = DB::table('hamahang_task')
+            ->whereNull('hamahang_task.deleted_at')
+            ->where('hamahang_task.uid', '=', Auth::id())
+            ->where('hamahang_task.id', '=', $id)
+            ->first();
+
+        return $total;
+    }
     public static function ScheduleTaskCopy($relation_id, $schedule_time = 0)
     {
         $relation_targetid_res = DB::table('schedule_relations')->where('id', '=', $relation_id)->first();
@@ -514,14 +542,18 @@ class tasks extends Model
         return $x;
     }
 
-    public static function CreateNewTask($serialize, $title, $desc, $task_type, $duration_timestamp, $use_type, $end_on_assigner_accept = 0, $transferable = 0, $creation_report = 0, $completion_report = 0, $report_to_managers = 0, $schedule_id = 0, $schedule_time = 0)
+    public static function CreateNewTask($serialize ,$title ,$task_form_action ,$desc ,$task_type, $task_kind, $task_status, $duration_timestamp, $use_type, $end_on_assigner_accept = 0, $transferable = 0, $creation_report = 0, $completion_report = 0, $report_to_managers = 0, $respite_timing_type , $schedule_id = 0, $schedule_time = 0)
     {
         $task = new tasks;
         $task->form_data = $serialize;
+        $task->task_attributes = $serialize;
         $task->uid = Auth::id();
         $task->title = $title;
         $task->desc = $desc;
         $task->type = $task_type;
+        $task->kind = $task_kind;
+        $task->is_save = $task_form_action;
+        $task->task_status = $task_status;
         $task->duration_timestamp = $duration_timestamp;
         $task->use_type = $use_type;
         $task->end_on_assigner_accept = $end_on_assigner_accept;
@@ -529,6 +561,7 @@ class tasks extends Model
         $task->report_on_create_point = $creation_report;
         $task->report_on_completion_point = $completion_report;
         $task->report_to_managers = $report_to_managers;
+        $task->respite_timing_type = $respite_timing_type;
         $task->schedule_id = $schedule_id;
         $task->schedule_time = ($schedule_time == 0)?date('Y-m-d H:i:s'): $schedule_time;
         $task->save();
@@ -546,51 +579,79 @@ class tasks extends Model
             $uid = Auth::id();
         }
 
-        if ($api)
-        {
-            $result = DB::table('hamahang_task')
-                ->select("hamahang_task.id AS task_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", DB::raw("CAST( hamahang_task_status.type AS CHAR ) AS type"), DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), 'user.Pic AS employee_pic', "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
-                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
-                ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
-                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
-                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-                ->whereNull('hamahang_task_assignments.transmitter_id')
-                ->where('hamahang_task_assignments.employee_id', '=', $uid)
-                ->whereNull('hamahang_task_assignments.reject_description')
-                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
-                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
-            if ($subject_id)
-            {
-                $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-                    ->where('hamahang_subject_ables.subject_id', '=',$subject_id)
-                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
-                    ->whereNull('hamahang_subject_ables.deleted_at');
-            }
-            $result = $result->get();
-        }
-        else
-        {
-            $result = DB::table('hamahang_task')
-                ->select("hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
-                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
-                ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
-                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
-                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-                ->whereNull('hamahang_task_assignments.transmitter_id')
-                ->whereNull('hamahang_task_assignments.reject_description')
-                ->where('hamahang_task_assignments.employee_id', '=', $uid)
-                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
-                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
-            if ($subject_id)
-            {
-                $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-                    ->where('hamahang_subject_ables.subject_id', '=',$subject_id)
-                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
-                    ->whereNull('hamahang_subject_ables.deleted_at');
-            }
-            $result = $result->get();
-            //d($result4);
-        }
+//        if ($api)
+//        {
+//            $result = DB::table('hamahang_task')
+//                ->select("hamahang_task.id AS task_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", DB::raw("CAST( hamahang_task_status.type AS CHAR ) AS type"), DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), 'user.Pic AS employee_pic', "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+//                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+//                ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
+//                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+//                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+//                ->whereNull('hamahang_task_assignments.transmitter_id')
+//                ->where('hamahang_task_assignments.employee_id', '=', $uid)
+//                ->whereNull('hamahang_task_assignments.reject_description')
+//                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+//                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
+//
+//            $result = DB::table('hamahang_task')
+//                ->select("hamahang_task.id AS task_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", DB::raw("CAST( hamahang_task_status.type AS CHAR ) AS type"), DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), 'user.Pic AS employee_pic', "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+//                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+//                ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
+//                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+//                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+//                ->whereNull('hamahang_task_assignments.transmitter_id')
+//                ->where('hamahang_task_assignments.employee_id', '=', $uid)
+//                ->whereNull('hamahang_task_assignments.reject_description')
+//                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+//                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
+//            if ($subject_id)
+//            {
+//                $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+//                    ->where('hamahang_subject_ables.subject_id', '=',$subject_id)
+//                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
+//                    ->whereNull('hamahang_subject_ables.deleted_at');
+//            }
+//            $result = $result->get();
+//        }
+//        else
+//        {
+//            $result = DB::table('hamahang_task')
+//                ->select("hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+//                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+//                ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
+//                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+//                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+//                ->whereNull('hamahang_task_assignments.transmitter_id')
+//                ->whereNull('hamahang_task_assignments.reject_description')
+//                ->where('hamahang_task_assignments.employee_id', '=', $uid)
+//                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+//                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
+//            if ($subject_id)
+//            {
+//                $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+//                    ->where('hamahang_subject_ables.subject_id', '=',$subject_id)
+//                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
+//                    ->whereNull('hamahang_subject_ables.deleted_at');
+//            }
+//            $result = $result->get();
+//            //d($result4);
+//        }
+
+        $result = DB::table('hamahang_task')
+            ->select("hamahang_task.task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+            ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
+            ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+//            ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+            ->whereNull('hamahang_task_assignments.transmitter_id')
+            ->where('hamahang_task_assignments.employee_id', '=', $uid)
+            ->whereNull('hamahang_task_assignments.reject_description')
+//                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
+//            ->toSql();
+//        $result = $result->get();
+//        dd(DB::getQueryLog());
+//        dd($result);
         return $result;
     }
 

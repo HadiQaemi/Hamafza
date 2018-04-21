@@ -49,7 +49,7 @@ class AuthController extends Controller
 
         $validator = Validator::make(Request::all(), [
             'username'   => 'required',
-            'password'   => 'required|min:4',
+            'password'   => 'required',
             'imei'       => 'required',
             'os_name'    => 'required',
             'os_version' => 'required',
@@ -68,7 +68,6 @@ class AuthController extends Controller
         }
         $username = Request::input('username');
         $password = Request::input('password');
-
         if (Auth::attempt(['Uname' => $username, 'password' => $password],false,false) || Auth::attempt(['email' => $username, 'password' => $password],false,false) )
         {
             $user = Get_User_Info($username);

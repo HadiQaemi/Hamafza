@@ -297,10 +297,12 @@ class EnquiryController extends Controller
         $sid = Request::input('sid', 0);
         $sub_kind = Request::input('sub_kind', 0);
         $sub_kind = 2 == $sub_kind ? 0 : $sub_kind;
+
         switch ($what)
         {
             case 'portals':
-                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
+//                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
+                $subject_result = Subject::where('kind', '20')->where('kind', $sub_kind)->select(['id', 'title']);
                 if ($sid)
                 {
                     $subject_result = $subject_result->where('id', $sid);

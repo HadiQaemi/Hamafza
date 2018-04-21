@@ -323,7 +323,7 @@ class AclController extends Controller
                     DB::table('user as u')
                         ->leftJoin('role_user as ru', 'ru.user_id', '=', 'u.id')
                         ->leftJoin('permission_role as pr', 'pr.role_id', '=', 'ru.role_id')
-                        ->where('u.id', 85)
+                        ->where('u.id', $request->user_id)
                         ->select('pr.permission_id as permision_id')->get();
                 $permissions = ' ';
                 foreach($Subjects as $Subject)

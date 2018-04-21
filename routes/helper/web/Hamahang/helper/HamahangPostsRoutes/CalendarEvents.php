@@ -33,4 +33,4 @@ Route::post('sessionModal', ['as' => 'hamahang.calendar_events.session_modal', '
 Route::post('invitationModal', ['as' => 'hamahang.calendar_events.invitation_modal', 'uses' => 'CalendarEventsController@invitationModal', 'middleware' => ['dynamic_permission:posts.hamahang.calendar_events.invitation_modal']]);
 Route::post('reminderModal', ['as' => 'hamahang.calendar_events.reminder_modal', 'uses' => 'CalendarEventsController@reminderModal', 'middleware' => ['dynamic_permission:posts.hamahang.calendar_events.reminder_modal']]);
 Route::post('addReminderModal', ['as' => 'hamahang.calendar_events.add_reminder_modal', 'uses' => 'CalendarEventsController@addReminderModal', 'middleware' => ['dynamic_permission:posts.hamahang.calendar_events.add_reminder_modal']]);
-/* ??? */Route::post('minutesModal', ['as' => 'hamahang.calendar_events.minutes_modal', 'uses' => 'CalendarEventsController@minutesModal']);
+/* ??? */Route::post('minutesModal', ['as' => 'hamahang.calendar_events.minutes_modal', 'uses' => 'CalendarEventsController@minutesModal', 'middleware' => ['dynamic_permission:posts.hamahang.calendar_events.minutes_modal']]);

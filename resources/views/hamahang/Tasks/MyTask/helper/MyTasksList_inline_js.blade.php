@@ -33,6 +33,23 @@
         @endif
 
     };
+    $(document).on('click', '.update_task', function () {
+        var save_type = $("input[name='new_task_save_type']:checked").val();
+        var $this = $(this);
+        var form_id = $this.data('form_id');
+        var save_again = $this.data('again_save');
+        if (save_type == 1) {
+            UpdateTask(form_id, save_again,'');
+        }
+        else if (save_type == 0) {
+            UpdateTask(form_id, save_again,0);
+            //save_as_draft(form_id, save_again);
+        }
+        else
+        {
+            alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+        }
+    });
 
     $('#MyTasksTable').DataTable({
         "dom": window.CommonDom_DataTables,
@@ -55,7 +72,8 @@
                 "data": "title",
                 "mRender": function (data, type, full) {
                     var id = full.id;
-                    return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
+                    // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";<a style="float: right;" class="jsPanels" href="/modals/ShowTaskForm?tid='+id+'" title="{{trans('tasks.show_task')}}">{{trans('tasks.show_task')}}</a>
+                    return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
                 }
             },
             {"data": "employee"},

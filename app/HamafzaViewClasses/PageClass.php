@@ -269,7 +269,61 @@ class PageClass
                     '   <img src="/Content/images/ajax-loader.gif" width="32" height="32" /><br />' .
                     '   <strong>Loading</strong>' .
                     '</div>' .
-                    '<div id="TextSection" style="display: inline-block;">' . $page['content'] . '</div>';
+                    '<div id="TextSection" style="display: inline-block;">' .
+                    '<div class="col-xs-12">'.
+                        '<div id="buttoninfullscreen" class="buttoninfullscreen deactive hidden" style="margin-right: -2.4%">
+                            <div class="right-new">
+                                <i class="fa fa-angle-double-left" aria-hidden="true" onclick="openNav00()"></i>
+                                <i class="fa fa-angle-double-right deactive hidden" aria-hidden="true" onclick="closeNav00()"></i>
+                                <div id="new-fehrest" class="hidden">
+                                    <div id="mySidenav00" class="sidenav0 hidden">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        '.
+                        '<div class="col-xs-12" id="new-content" style="direction: rtl">'.$page['content'] . '</div>'.
+                    '</div>
+                            
+                    <script>
+                        function openNav00() {
+                            $(".fa-angle-double-left").addClass("hidden");
+                            $(".fa-angle-double-left").addClass("deactive");
+                            $(".fa-angle-double-right").removeClass("hidden");
+                            $(".fa-angle-double-right").removeClass("deactive");
+                            $("#new-fehrest").removeClass("hidden");
+                            $("#mySidenav00").removeClass("hidden");
+                            $("#buttoninfullscreen").addClass("col-xs-3");
+//                            $("#new-fehrest").addClass("col-xs-3");
+                            $(".buttoninfullscreen").css("width","25%");
+                            $(".buttoninfullscreen").css("right","0px");
+                            $(".buttoninfullscreen").css("top","-15px");
+                            $(".buttoninfullscreen").css("height","100v");
+                            $(".buttoninfullscreen").css("position","relative");
+                            $("#new-content").addClass("col-xs-9");
+                            $("#new-content").removeClass("col-xs-12");
+                            
+                        }
+                        function closeNav00() {
+                            $(".fa-angle-double-right").addClass("hidden");
+                            $(".fa-angle-double-right").addClass("deactive");
+                            $(".fa-angle-double-left").removeClass("hidden");
+                            $(".fa-angle-double-left").removeClass("deactive");
+                            $("#new-fehrest").addClass("hidden");
+//                            $("#new-fehrest").removeClass("col-xs-3");
+                            $(".buttoninfullscreen").css("width","1.5%");
+                            $(".buttoninfullscreen").css("position","fixed");
+                            $(".buttoninfullscreen").css("right","65px");
+                            $(".buttoninfullscreen").css("height","100%");
+                            $(".buttoninfullscreen").css("top","2px");
+                            $("#buttoninfullscreen").removeClass("col-xs-3");
+                            $("#new-content").removeClass("col-xs-9");
+                            $("#new-content").addClass("col-xs-12");
+                            
+                        }
+                    </script>';
+                ?>
+                <?php
                 $tabs = $page['tabs'];
                 //dd($tabs);
                 $keywords = $page['Keywords'];
@@ -1153,7 +1207,7 @@ $("#SlideSwitch").removeClass("btnActive");
         $end .= '
             Galleria.loadTheme("' . url('/') . '/theme/Scripts/galleria.classic.min.js");
             Galleria.run(".galleria");
-              $(".Fehrest").hide();
+              //$(".Fehrest").hide();
                  //       $("#accordion").hide();
 
        });  </script>

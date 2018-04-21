@@ -32,6 +32,8 @@ use App\Models\Hamahang\PaymentGatewayRawLogs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
 use App\Models\Hamahang\Score;
+use App\Models\Hamahang\Tasks\task_history;
+use App\Models\Hamahang\Tasks\tasks;
 use App\Models\Hamahang\TemplatePosition;
 use App\Models\Hamahang\ThesaurusKeyword;
 use App\Models\Hamahang\Tools\Tools;
@@ -56,6 +58,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\View\UserController;
 use Illuminate\Validation\Rule;
+use JDateTime;
 use Session;
 use Validator;
 
@@ -752,6 +755,124 @@ class ModalController extends Controller
             'header' => trans('tasks.create_new_task'),
             'content' => view('hamahang.Tasks.helper.CreateNewTask.CreateNewTaskWindow', $arr)->render(),
             'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'CreateNewTask')->render()
+        ]);
+    }
+
+    public function ShowTaskForm()
+    {
+        $res = $this->getParams(['tid','sid']);
+        if ($res['tid'])
+        {
+            $task = tasks::DraftTaskInfo($res['tid']);
+        }
+
+        if ($res['sid'])
+        {
+            $res['subject'] = Subject::find($res['sid']);
+        }
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        $task = unserialize($task->task_attributes);
+        $task_pages = array();
+        if(isset($task['pages']))
+        {
+            if(count($task['pages'])>0)
+            {
+                $pages = array();
+                if(is_array($task['pages']))
+                    $pages = $task['pages'];
+                else
+                    $pages = array($task['pages']);
+                $task_pages = DB::table('subjects as s')
+                    ->leftJoin('pages as p', 's.id', '=', 'p.sid')
+                    ->select('p.id', 's.title')
+                    ->whereIn('p.id', $pages)->get();
+            }
+        }
+
+        $task_users = array();
+        if(isset($task['users']))
+        {
+            if(count($task['users'])>0)
+            {
+                $users = array();
+                if(is_array($task['users']))
+                    $users = $task['users'];
+                else
+                    $users = array($task['users']);
+                $task_users = DB::table('user')
+                    ->select('Name', 'Family', 'id')
+                    ->whereIn('id', $users)->get();
+            }
+        }
+
+        $task_transcripts = array();
+        if(isset($task['transcripts']))
+        {
+            if(count($task['transcripts'])>0)
+            {
+                $transcripts = array();
+                if(is_array($task['transcripts']))
+                    $transcripts = $task['transcripts'];
+                else
+                    $transcripts = array($task['transcripts']);
+                $task_transcripts = DB::table('user')
+                    ->select('Name', 'Family', 'id')
+                    ->whereIn('id', $transcripts)->get();
+            }
+        }
+
+        $task_keywords = array();
+        if(isset($task['keywords']))
+        {
+            if(count($task['keywords'])>0)
+            {
+                $keywords = array();
+                if(is_array($task['keywords']))
+                {
+                    foreach ($task['keywords'] as $k=>$v)
+                        $keywords[$k] = str_replace('exist_in','',$v);
+                }
+                else
+                    $keywords = array(str_replace('exist_in','',$task['keywords']));
+                $task_keywords = DB::table('keywords')
+                    ->select('id', 'title')
+                    ->whereIn('id', $keywords)->get();
+            }
+        }
+
+        $task_history = task_history::GetTaskHistory($res['tid']);
+        foreach ($task_history as $t)
+        {
+            $d = new jDateTime;
+            $datetime = explode(' ', $t->created_at);
+            $date = explode('-', $datetime[0]);
+            $time = explode(':', $datetime[1]);
+            $g_timestamp = mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]);
+            $jdate = $d->getdate($g_timestamp);
+            $jdate = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
+            $t->created_at = $jdate;
+        }
+//        dd($task_history);
+        $res['task'] = $task;
+        $res['task_id'] = enCode($res['tid']);
+        $res['pages'] = $task_pages;
+        $res['task_pages'] = $task_pages;
+        $res['task_users'] = $task_users;
+        $res['task_transcripts'] = $task_transcripts;
+        $res['task_keywords'] = $task_keywords;
+        $res['task_history'] = $task_history;
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ShowTaskForm')->render()
         ]);
     }
 

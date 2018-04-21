@@ -5062,15 +5062,26 @@ var id = data.node.id;
         $Users = DB::table('user as u')->where('u.Active', '1')->select('u.id', 'u.uname', 'u.Name', 'u.Family', 'u.Pic', 'u.Summary')->orderBy('id', 'desc')->take(4)->get();
         $i = 1;
         $j = 1;
-        $ress = '<div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 CountDiVBordered" >
-                        <div class="DivCounters  PersonCounter" >
-                          <span>  ' . $Uscount . '  </span>
-                        </div>
-                        <span><a class="jsPanels" title="جستجوی اعضاء" href="modals/sociasearch?type=user">جستجوی کاربران</a></span>
-                        <span class="member">کاربران جدید</span>    
-                        <span class=" person-list GroupList">';
+        $ress =
+            '<div class="col-xs-12 col-sm-6 CountDiVBordered">
+				<div class="CountDiVBordered-header">
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span class="user-logo"></span>
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span style="vertical-align: top;line-height: 80px;font-size: large;">کاربران</span>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span style="vertical-align: top;line-height: 80px;font-size: large;">' . $Uscount . '</span>
+					</div>
+				</div>
+				<div class="col-xs-12" style="margin: 10px 0px;">
+					<a class="jsPanels" title="جستجوی اعضاء" href="modals/sociasearch?type=user">جستجوی کاربران</a>
+				</div>
+			
+				<div class="CountDiVBordered-content">
+					<div class="CountDiVBordered-content-li">';
         foreach ($Users as $UserS)
         {
             $tid = $UserS->id;
@@ -5091,12 +5102,14 @@ var id = data.node.id;
             {
                 $link = config('constants.SiteAddress') . "user/{$tid}";
             }
-            $res .= '<li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/user/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
-            $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail">' . $summary . '</div>';
-            $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li>';
-
+            $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
+						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/user/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
+						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . $link . '">' . $title . '</a></div>
+					</div>';
             $i++;
         }
+        $ress .= '</div></div>';
+
         $f = $ress . $res . '</span> </div> ';
         $res = '';
         $type = 'group';
@@ -5104,13 +5117,26 @@ var id = data.node.id;
             ->take(4)->get();
         $Uscount = DB::table('user_group')->select('id')->where('isorgan', '0')->count();
         $i = 1;
-        $ress = '<div class="col-xs-4 col-sm-4 col-md-4 CountDiVBordered">
-                        <div class="DivCounters GroupCounter" >
-                          <span>  ' . $Uscount . '  </span>
-                        </div>
-                        <span ><a class="jsPanels" title="جستجوی دسته‌ها" href="modals/sociasearch?type=group">جستجوی گروه‌ها</a></span>
-                        <span class="member">دسته‌های جدید</span>    
-                        <span class=" person-list GroupList">';
+        $ress =
+            '<div class="col-xs-12 col-sm-6 CountDiVBordered">
+				<div class="CountDiVBordered-header">
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span class="group-logo"></span>
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span style="vertical-align: top;line-height: 80px;font-size: large;">گروه‌ها</span>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+						<span style="vertical-align: top;line-height: 80px;font-size: large;">' . $Uscount . '</span>
+					</div>
+				</div>
+				<div class="col-xs-12" style="margin: 10px 0px;">
+					<a class="jsPanels" title="جستجوی دسته‌ها" href="modals/sociasearch?type=group">جستجوی گروه‌ها</a>
+				</div>
+				
+				<div class="CountDiVBordered-content">
+					<div class="CountDiVBordered-content-li">';
         foreach ($user_groups as $UserS)
         {
             $tid = $UserS->id;
@@ -5119,13 +5145,15 @@ var id = data.node.id;
             $summary = $UserS->summary;
             $pic = (trim($UserS->pic)) ? $UserS->pic : 'defgroup.png';
             $link = config('constants.SiteAddress') . $link;
-            $res .= '<li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
-            $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail"></div>';
-            $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li>';
+            $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
+						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
+						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . $link . '">' . $title . '</a></div>
+					</div>';
 
             $i++;
         }
-        $g = $ress . $res . '</span> </div> ';
+        $ress .= '</div></div>';
+        $g = $ress . '</span> </div> ';
 
         $res = '';
         $type = 'group';
@@ -5140,6 +5168,26 @@ var id = data.node.id;
                         <span ><a class="jsPanels" title="جستجوی کانال‌ ها" href="modals/sociasearch?type=organ">جستجوی کانال‌ها</a></span>
                         <span class="member">کانال‌های جدید</span>    
                         <span class=" person-list GroupList">';
+        $ress =
+            '<div class="col-xs-12 col-sm-6 CountDiVBordered">
+			<div class="CountDiVBordered-header">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+					<span class="canal-logo"></span>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+					<span style="vertical-align: top;line-height: 80px;font-size: large;">کانال‌ها</span>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 noPadding">
+					<span style="vertical-align: top;line-height: 80px;font-size: large;">' . $Uscount . '</span>
+				</div>
+			</div>
+			<div class="col-xs-12" style="margin: 10px 0px;">
+				<a class="jsPanels" title="جستجوی کانال‌ ها" href="modals/sociasearch?type=organ">جستجوی کانال‌ها</a>
+			</div>
+			
+			<div class="CountDiVBordered-content">
+				<div class="CountDiVBordered-content-li">';
         foreach ($user_groups as $UserS)
         {
             $tid = $UserS->id;
@@ -5152,9 +5200,14 @@ var id = data.node.id;
             $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail"></div>';
             $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li>';
 
+            $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
+						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
+						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . $link . '">' . $title . '</a></div>
+					</div>';
             $i++;
         }
-        $c = $ress . $res . '</span> </div> ';
+        $ress .= '</div></div></div>';
+        $c = $ress . '</span> </div> ';
         return $f . $g . $c;
     }
 
@@ -5272,7 +5325,7 @@ var id = data.node.id;
             {
                 $body = str_replace($quote, $quotestyle, $body);
             }
-           // dd($quote, $quotestyle, $body);
+            // dd($quote, $quotestyle, $body);
         }
         return $body;
     }

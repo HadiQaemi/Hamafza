@@ -3,6 +3,12 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
+use App\Models\Hamahang\Tasks\task_history;
+use App\Models\Hamahang\Tasks\task_action;
+use App\Models\Hamahang\Tasks\task_resources;
+use App\Models\Hamahang\Tasks\task_relations;
+use App\Models\Hamahang\Tasks\task_schedule;
 use DB;
 use Auth;
 use Request;
@@ -852,229 +858,338 @@ class MyAssignedTaskController extends Controller
         return json_encode($x);
     }
 
+    public function update_task()
+    {
+        dd(Request::all());
+        $task = tasks::find(deCode(Request::input('tid')));
+        dd($task);
+//        ($task_id, $action_status, $reject_description, $power_mental, $power_physical, $quality, $duration, $duration_type, $desc, $percent)
+
+//        task_action::create_task_action();
+        $task->save();
+//        return $total;
+    }
+
     public function save()
     {
+//        dd(Request::all());
+
         $result = '';
-        $messages =
-            [
-                'users.required' => 'انتخاب مسئول برای وظیفه الزامی است.',
-                'users.array' => 'انتخاب مسئول برای وظیفه الزامی است.',
-                'users.exists' => ' مسئول انتخاب شده برای وظیفه معتبر نمی باشد.',
-            ];
-        $rules =
-            [
-                'use_type' => 'required|in:0,1,2',
-                'assign_type' => 'required_if:use_type,0|in:1,2',
-                'project_id' => 'required_if:use_type,1',
-                'process_id' => 'required_if:use_type,2',
-                'respite_timing_type' => 'required_if:use_type,0|in:0,1',
-                'respite_date' => 'required_if:respite_timing_type,1',
-                'respite_time' => 'required_if:respite_timing_type,1',
-                'duration_day' => 'required_if:respite_timing_type,0|required_if:use_type,1,2|integer',
-                'duration_hour' => 'required_if:respite_timing_type,0|integer|max:59|min:0',
-                'duration_min' => 'required_if:respite_timing_type,0|integer|max:59|min:0|in:0,5,10,15,20,25,30,35,40,45,50,55',
-                //'duration_sec' => 'required_if:respite_timing_type,0',
-                'users' => 'required|array|exists:user,id',
-                'title' => 'required|string',
-                'type' => 'required',
-                //'task_desc' => 'required',
-                //'report_on_cr' => 'required',
-                //'report_on_co' => 'required',
-                //'report_to_manager' => 'required',
-                //'predicted_time' => 'required',
-                //'end_on_assigner_accept' => 'required',
-                //'transferable' => 'required',
-                'immediate' => 'required',
-                'importance' => 'required',
-                //'project' => 'required_if:use_type,1',
-                //'pages' => 'required',
-                //'transcripts' => 'required',
-//            'keywords' => 'required',
-            'save_type' => 'required',
-            'process_id' => 'required_if:use_type,2',
-        ];
-        $validator = Validator::make(Request::all(), $rules, $messages);
-        if ($validator->fails())
+        if (Request::input('respite_timing_type') == 1)
         {
-            $result['error'] = $validator->errors();
-            $result['success'] = false;
-            return json_encode($result);
+            $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
         }
-        else
+        elseif (Request::input('respite_timing_type') == 0)
         {
-            if (Request::input('use_type') == 0)
+            $day_no = Request::input('duration_day');
+            $hour_no = Request::input('duration_hour');//Request::input('duration_hour');
+            $min_no = Request::input('duration_min');//Request::input('duration_min');
+            $sec_no = 0;//Request::input('duration_sec');
+            $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+        }
+        $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_form_action'), Request::input('task_desc'), Request::input('type'), Request::input('kind'), Request::input('task_status'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'), Request::input('respite_timing_type'));
+
+        if(Request::exists('task_form_action')==1)
+        {
+            if (Request::exists('new_task_resources_h'))
             {
-                if (Request::input('respite_timing_type') == 1)
+                $new_task_resources_amount = Request::input('new_task_resources_amount');
+                $new_task_resources_cost = Request::input('new_task_resources_cost');
+                foreach (Request::input('new_task_resources_h') as $k => $kw)
                 {
-                    $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
-                }
-                elseif (Request::input('respite_timing_type') == 0)
-                {
-                    $day_no = Request::input('duration_day');
-                    $hour_no = Request::input('duration_hour');//Request::input('duration_hour');
-                    $min_no = Request::input('duration_min');//Request::input('duration_min');
-                    $sec_no = 0;//Request::input('duration_sec');
-                    $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+                    //$task_id, $amount, $cost, $resource_id
+                    task_resources::create_task_resource($task->id, $new_task_resources_amount[$k],$new_task_resources_cost[$k],new_hamafza_add_resource($kw));
                 }
             }
-            elseif (Request::input('use_type') == 1 || Request::input('use_type') == 2)
+            if (Request::exists('task_schedul'))
             {
-                $day_no = Request::input('duration_day');
-                $hour_no = 0;//Request::input('duration_hour');
-                $min_no = 0;//Request::input('duration_min');
-                $sec_no = 0;//Request::input('duration_sec');
-                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+                $schedul = array(
+                    'task_schedul' => Request::input('task_schedul'),
+                    'task_schedul_num' => Request::input(Request::input('task_schedul').'_num'),
+                    'task_schedul_value' => Request::input(Request::input('task_schedul').'_value')
+                );
+
+                task_schedule::create_task_schedule($task->id, Request::input('task_schedul'),serialize($schedul),
+                    Request::input('schedul_begin_date'), Request::input('schedul_end_date'), Request::input('schedul_end_date_date'), Request::input('schedul_end_num_events'));
             }
-
-            if (Request::input('use_type') != 2)
+            if (Request::exists('pages'))
             {
-                if (Request::input('assign_type') == 1)
+                foreach (Request::input('pages') as $page_id)
                 {
-                    $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_desc'), Request::input('type'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'));
-                    HFM_SaveMultiFiles('CreateNewTask', '\App\Models\Hamahang\Tasks\task_files', 'task_id', $task->id, ['field' => 1]);
-                    if (Request::exists('pages'))
-                    {
-                        foreach (Request::input('pages') as $page_id)
-                        {
-                            hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
-                        }
-                    }
-                    $assign = task_assignments::create_task_assignment(Request::input('users')[0], $task->id);
-                    project_task::add_task_to_project($task->id, Request::get('project_id'));
-                    task_status::create_task_status($task->id);
-                    task_logs::CreateNewLog($task->id, $assign->id, 'create');
-
-                    foreach (Request::input('users') as $key => $value_employee_id)
-                    {
-                        if ($key != 0)
-                        {
-                            task_staffs::create_task_staff($assign->id, $value_employee_id);
-                        }
-                        task_priority::create_task_priority($task->id, Request::input('immediate'), Request::input('importance'), $value_employee_id);
-                    }
-
-                    if (Request::exists('transcripts'))
-                    {
-                        foreach (Request::input('transcripts') as $transcript)
-                        {
-                            task_transcripts::create_task_transcript($task->id, $transcript);
-                        }
-                    }
-
-                    if (Request::exists('keywords'))
-                    {
-                        foreach (Request::input('keywords') as $kw)
-                        {
-                            task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
-                        }
-                    }
-                    $notice = new task_notices;
-                    $notice->task_id = $task->id;
-                    $notice->save();
-
-                    $result['success'] = true;
-                    return json_encode($result);
+                    hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
                 }
-                elseif (Request::input('assign_type') == 2)
+            }
+            if (Request::exists('transcripts'))
+            {
+                if(Request::input('report_on_cr')==1)
                 {
-                    foreach (Request::input('users') as $u)
+                    foreach (Request::input('transcripts') as $transcript)
                     {
-                        $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_desc'), Request::input('type'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'));
-                        $assign = task_assignments::create_task_assignment($u, $task->id);
-                        task_priority::full_create_priority($task->id, Request::input('immediate'), Request::input('importance'), $u, Auth::id());
-                        task_logs::CreateNewLog($task->id, $assign->id, 'create');
-                        task_status::create_task_status($task->id, $assign->id);
-                        project_task::add_task_to_project($task->id, Request::get('project_id'));
-                        HFM_SaveMultiFiles('CreateNewTask', '\App\Models\Hamahang\Tasks\task_files', 'task_id', $task->id);
-                        if (Request::exists('pages'))
-                        {
-                            foreach (Request::input('pages') as $page_id)
-                            {
-                                hamahang_subject_ables::create_items_page($page_id,$task->id,  'App\Models\Hamahang\Tasks\tasks');
-                            }
-                        }
-                        if (Request::exists('transcripts'))
-                        {
-                            foreach (Request::input('transcripts') as $transcript)
-                            {
-                                task_transcripts::create_task_transcript($task->id, $transcript);
-                            }
-                        }
-                        if (Request::exists('keyword'))
-                        {
-                            foreach (Request::exists('keyword') as $kw)
-                            {
-                                task_keywords::create_task_keyword($task->id, $kw);
-                            }
-                        }
-                        task_notices::create_new_notice($task->id);
+                        task_transcripts::create_task_transcript($task->id, $transcript);
                     }
                 }
             }
-            else
+
+            if (Request::exists('keywords'))
             {
-                $task = new process_task;
-                $task->users = serialize(Request::input('users'));
-                $task->transcripts = serialize(Request::input('transcripts'));
-                $task->keywords = serialize(Request::input('keyword'));
-                //$task->page = serialize($)
-                $task->title = Request::input('title');
-                $task->process_id = Request::input('process_id')[0];
-                $task->type = Request::input('type');
-                $task->desc = Request::input('task_desc');
-                $task->uid = Auth::id();
-                $task->report_on_create_point = Request::input('report_on_cr');
-                $task->report_on_completion_point = Request::input('report_on_co');
-                $task->report_to_managers = Request::input('report_to_manager');
-                $task->importance = Request::input('importance');
-                $task->immediate = Request::input('immediate');
-                $task->respite = $respite_duration_timestamp;
-                $task->predicted_time = Request::input('predicted_time');
-                if (Request::input('report_on_cr') == true)
+                foreach (Request::input('keywords') as $kw)
                 {
-                    $task->report_on_create_point = 1;
+                    task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
                 }
-                if (Request::input('report_on_co') == true)
+            }
+
+            if (Request::exists('users'))
+            {
+                foreach (Request::input('users') as $key => $value_employee_id)
                 {
-                    $task->report_on_completion_point = 1;
-                }
-                if (Request::input('transferable') == true)
-                {
-                    $task->transferable = 1;
-                }
-                if (Request::input('end_on_assigner_accept') == true)
-                {
-                    $task->end_on_assigner_accept = 1;
-                }
-                $arr_files = [];
-                if (Session::has('Files'))
-                {
-                    $files = Session::get('Files');
-                    if (isset($files['CreateNewTask']) && is_array($files['CreateNewTask']))
+                    if(Request::input('assign_type') == 1 )
                     {
-                        $task_files = $files['CreateNewTask'];
-                        if (is_array($task_files))
+                        if($key == 0)
                         {
-                            foreach ($task_files as $key => $value)
-                            {
-                                array_push($arr_files, $key);
-                            }
+                            task_assignments::create_task_assignment(Request::input('users')[0] ,1 ,$task->id);
+                        }
+                        else
+                        {
+                            task_assignments::create_task_assignment(Request::input('users')[0] ,0 ,$task->id);
                         }
                     }
+                    elseif(Request::input('assign_type') == 2)
+                    {
+                        task_assignments::create_task_assignment(Request::input('users')[0] ,1 ,$task->id);
+                    }
+                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'), $value_employee_id);
                 }
-                $task->files = serialize($arr_files);
-                $task->save();
             }
-//            if (Request::input('use_type') == 2)
+            task_history::create_task_history($task->id, 'create', serialize(Request::all()));
+
+        }
+
+        $result['success'] = true;
+        return json_encode($result);
+//        dd($task);
+//
+//
+//
+//        $messages =
+//            [
+//                'users.required' => 'انتخاب مسئول برای وظیفه الزامی است.',
+//                'users.array' => 'انتخاب مسئول برای وظیفه الزامی است.',
+//                'users.exists' => ' مسئول انتخاب شده برای وظیفه معتبر نمی باشد.',
+//            ];
+//        $rules =
+//            [
+//                'use_type' => 'required|in:0,1,2',
+//                'assign_type' => 'required_if:use_type,0|in:1,2',
+//                'project_id' => 'required_if:use_type,1',
+//                'process_id' => 'required_if:use_type,2',
+//                'respite_timing_type' => 'required_if:use_type,0|in:0,1',
+//                'respite_date' => 'required_if:respite_timing_type,1',
+//                'respite_time' => 'required_if:respite_timing_type,1',
+//                'duration_day' => 'required_if:respite_timing_type,0|required_if:use_type,1,2|integer',
+//                'duration_hour' => 'required_if:respite_timing_type,0|integer|max:59|min:0',
+//                'duration_min' => 'required_if:respite_timing_type,0|integer|max:59|min:0|in:0,5,10,15,20,25,30,35,40,45,50,55',
+//                //'duration_sec' => 'required_if:respite_timing_type,0',
+//                'users' => 'required|array|exists:user,id',
+//                'title' => 'required|string',
+//                'type' => 'required',
+//                //'task_desc' => 'required',
+//                //'report_on_cr' => 'required',
+//                //'report_on_co' => 'required',
+//                //'report_to_manager' => 'required',
+//                //'predicted_time' => 'required',
+//                //'end_on_assigner_accept' => 'required',
+//                //'transferable' => 'required',
+//                'immediate' => 'required',
+//                'importance' => 'required',
+//                //'project' => 'required_if:use_type,1',
+//                //'pages' => 'required',
+//                //'transcripts' => 'required',
+////            'keywords' => 'required',
+//            'save_type' => 'required',
+//            'process_id' => 'required_if:use_type,2',
+//        ];
+//        $validator = Validator::make(Request::all(), $rules, $messages);
+//        if ($validator->fails())
+//        {
+//            $result['error'] = $validator->errors();
+//            $result['success'] = false;
+//            return json_encode($result);
+//        }
+//        else
+//        {
+//            if (Request::input('use_type') == 0)
 //            {
-//                return Redirect::route('ugc.desktop.Hamahang.Process.List', ['username' => Auth::user()->Uname]);
+//                if (Request::input('respite_timing_type') == 1)
+//                {
+//                    $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
+//                }
+//                elseif (Request::input('respite_timing_type') == 0)
+//                {
+//                    $day_no = Request::input('duration_day');
+//                    $hour_no = Request::input('duration_hour');//Request::input('duration_hour');
+//                    $min_no = Request::input('duration_min');//Request::input('duration_min');
+//                    $sec_no = 0;//Request::input('duration_sec');
+//                    $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+//                }
+//            }
+//            elseif (Request::input('use_type') == 1 || Request::input('use_type') == 2)
+//            {
+//                $day_no = Request::input('duration_day');
+//                $hour_no = 0;//Request::input('duration_hour');
+//                $min_no = 0;//Request::input('duration_min');
+//                $sec_no = 0;//Request::input('duration_sec');
+//                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+//            }
+//
+//            if (Request::input('use_type') != 2)
+//            {
+//                if (Request::input('assign_type') == 1)
+//                {
+//                    $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_desc'), Request::input('type'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'));
+//                    HFM_SaveMultiFiles('CreateNewTask', '\App\Models\Hamahang\Tasks\task_files', 'task_id', $task->id, ['field' => 1]);
+//                    if (Request::exists('pages'))
+//                    {
+//                        foreach (Request::input('pages') as $page_id)
+//                        {
+//                            hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
+//                        }
+//                    }
+//                    $assign = task_assignments::create_task_assignment(Request::input('users')[0], $task->id);
+//                    project_task::add_task_to_project($task->id, Request::get('project_id'));
+//                    task_status::create_task_status($task->id);
+//                    task_logs::CreateNewLog($task->id, $assign->id, 'create');
+//
+//                    foreach (Request::input('users') as $key => $value_employee_id)
+//                    {
+//                        if ($key != 0)
+//                        {
+//                            task_staffs::create_task_staff($assign->id, $value_employee_id);
+//                        }
+//                        task_priority::create_task_priority($task->id, Request::input('immediate'), Request::input('importance'), $value_employee_id);
+//                    }
+//
+//                    if (Request::exists('transcripts'))
+//                    {
+//                        foreach (Request::input('transcripts') as $transcript)
+//                        {
+//                            task_transcripts::create_task_transcript($task->id, $transcript);
+//                        }
+//                    }
+//
+//                    if (Request::exists('keywords'))
+//                    {
+//                        foreach (Request::input('keywords') as $kw)
+//                        {
+//                            task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
+//                        }
+//                    }
+//                    $notice = new task_notices;
+//                    $notice->task_id = $task->id;
+//                    $notice->save();
+//
+//                    $result['success'] = true;
+//                    return json_encode($result);
+//                }
+//                elseif (Request::input('assign_type') == 2)
+//                {
+//                    foreach (Request::input('users') as $u)
+//                    {
+//                        $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_desc'), Request::input('type'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'));
+//                        $assign = task_assignments::create_task_assignment($u, $task->id);
+//                        task_priority::full_create_priority($task->id, Request::input('immediate'), Request::input('importance'), $u, Auth::id());
+//                        task_logs::CreateNewLog($task->id, $assign->id, 'create');
+//                        task_status::create_task_status($task->id, $assign->id);
+//                        project_task::add_task_to_project($task->id, Request::get('project_id'));
+//                        HFM_SaveMultiFiles('CreateNewTask', '\App\Models\Hamahang\Tasks\task_files', 'task_id', $task->id);
+//                        if (Request::exists('pages'))
+//                        {
+//                            foreach (Request::input('pages') as $page_id)
+//                            {
+//                                hamahang_subject_ables::create_items_page($page_id,$task->id,  'App\Models\Hamahang\Tasks\tasks');
+//                            }
+//                        }
+//                        if (Request::exists('transcripts'))
+//                        {
+//                            foreach (Request::input('transcripts') as $transcript)
+//                            {
+//                                task_transcripts::create_task_transcript($task->id, $transcript);
+//                            }
+//                        }
+//                        if (Request::exists('keyword'))
+//                        {
+//                            foreach (Request::exists('keyword') as $kw)
+//                            {
+//                                task_keywords::create_task_keyword($task->id, $kw);
+//                            }
+//                        }
+//                        task_notices::create_new_notice($task->id);
+//                    }
+//                }
 //            }
 //            else
 //            {
-//                $result['success'] = true;
-//                return json_encode($result);
+//                $task = new process_task;
+//                $task->users = serialize(Request::input('users'));
+//                $task->transcripts = serialize(Request::input('transcripts'));
+//                $task->keywords = serialize(Request::input('keyword'));
+//                //$task->page = serialize($)
+//                $task->title = Request::input('title');
+//                $task->process_id = Request::input('process_id')[0];
+//                $task->type = Request::input('type');
+//                $task->desc = Request::input('task_desc');
+//                $task->uid = Auth::id();
+//                $task->report_on_create_point = Request::input('report_on_cr');
+//                $task->report_on_completion_point = Request::input('report_on_co');
+//                $task->report_to_managers = Request::input('report_to_manager');
+//                $task->importance = Request::input('importance');
+//                $task->immediate = Request::input('immediate');
+//                $task->respite = $respite_duration_timestamp;
+//                $task->predicted_time = Request::input('predicted_time');
+//                if (Request::input('report_on_cr') == true)
+//                {
+//                    $task->report_on_create_point = 1;
+//                }
+//                if (Request::input('report_on_co') == true)
+//                {
+//                    $task->report_on_completion_point = 1;
+//                }
+//                if (Request::input('transferable') == true)
+//                {
+//                    $task->transferable = 1;
+//                }
+//                if (Request::input('end_on_assigner_accept') == true)
+//                {
+//                    $task->end_on_assigner_accept = 1;
+//                }
+//                $arr_files = [];
+//                if (Session::has('Files'))
+//                {
+//                    $files = Session::get('Files');
+//                    if (isset($files['CreateNewTask']) && is_array($files['CreateNewTask']))
+//                    {
+//                        $task_files = $files['CreateNewTask'];
+//                        if (is_array($task_files))
+//                        {
+//                            foreach ($task_files as $key => $value)
+//                            {
+//                                array_push($arr_files, $key);
+//                            }
+//                        }
+//                    }
+//                }
+//                $task->files = serialize($arr_files);
+//                $task->save();
 //            }
-        }
+////            if (Request::input('use_type') == 2)
+////            {
+////                return Redirect::route('ugc.desktop.Hamahang.Process.List', ['username' => Auth::user()->Uname]);
+////            }
+////            else
+////            {
+////                $result['success'] = true;
+////                return json_encode($result);
+////            }
+//        }
     }
 
     public function TaskStop()

@@ -82,34 +82,35 @@ Route::post('addItemResearch', ['as' => 'hamafza.add_item_research', 'uses' => '
 Route::post('addItemResearchSelect2', ['as' => 'hamafza.add_item_research_select_2', 'uses' => 'Hamahang\BasicdataController@addItemResearchSelect2', 'middleware' => ['dynamic_permission:posts.hamafza.add_item_research_select_2']]);
 Route::post('updateItemResearch', ['as' => 'hamafza.update_item_research', 'uses' => 'Hamahang\BasicdataController@updateItemResearch', 'middleware' => ['dynamic_permission:posts.hamafza.update_item_research']]);
 Route::post('getKeywordsList', ['as' => 'hamafza.get_keywords_list', 'uses' => 'Hamahang\KeywordsController@getKeywordsList', 'middleware' => ['dynamic_permission:posts.hamafza.get_keywords_list']]);
-Route::post('pages_list_load_more', ['as' => 'pages_list_load_more', 'uses' => 'Services\PageController@pages_list']);
-/* ??? */Route::post('keywords/save', ['as' => 'keywords.save', 'uses' => 'Hamahang\KeywordsController@save_new_keyword']);
-/* ??? */Route::post('GroupContentsPaging', ['as' => 'GroupContentsPaging', 'uses' => 'View\AjaxController@GroupContentsPaging']);
-/* ??? */Route::post('savePageImage', ['as' => 'savePageImage', 'uses' => 'View\PageController@savePageImage']);
-/* ??? */Route::post('renamePageImage', ['as' => 'renamePageImage', 'uses' => 'View\PageController@renamePageImage']);
-/* ??? */Route::post('removePageImage', ['as' => 'removePageImage', 'uses' => 'View\PageController@removePageImage']);
-/* ??? */Route::post('searchUser', 'View\AjaxController@searchUser');
-/* ??? */Route::post('PageWallPaging', ['as' => 'PageWallPaging', 'uses' => 'View\AjaxController@PageWallPaging']);
-/* ??? */Route::post('GetUserContentPaging', ['as' => 'GetUserContentPaging', 'uses' => 'View\AjaxController@GetUserContentPaging']);
-/* ??? */Route::post('GetWallByPaging', ['as' => 'GetWallByPaging', 'uses' => 'View\AjaxController@GetWallByPaging']);
-/* ??? */Route::post('highlight', ['as' => 'highlight', 'uses' => 'View\AjaxController@highlight']);
-/* ??? */Route::post('measure_add', ['as' => 'measure_add', 'uses' => 'View\FormsController@measure_add']);
-/* ??? */Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
-/* ??? */Route::post('asubjects', ['as' => 'asubjects', 'uses' => 'SubjectController@asubjects']);
-/* ??? */Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
-/* ??? */Route::post('endorse', ['as' => 'hamafza.endorse', 'uses' => 'View\AjaxController@endorse']);
-/* ??? */Route::post('user_measures', ['as' => 'hamafza.user_measures', 'uses' => 'DesktopController@user_measures']); //review?//
-/* ??? */Route::post('like', ['as' => 'hamafza.page_like', 'uses' => 'View\AjaxController@pagelike']);
-/* ??? */Route::post('follow', ['as' => 'hamafza.page_follow', 'uses' => 'View\AjaxController@pagefollow']);
+/* ??? */Route::post('pages_list_load_more', ['as' => 'pages_list_load_more', 'uses' => 'Services\PageController@pages_list', 'middleware' => ['dynamic_permission:posts.hamafza.page_controller_pages_list']]);
+/* ??? */Route::post('keywords/save', ['as' => 'keywords.save', 'uses' => 'Hamahang\KeywordsController@save_new_keyword', 'middleware' => ['dynamic_permission:posts.hamafza.keywords_controller_save_new_keyword']]);
+/* ??? */Route::post('GroupContentsPaging', ['as' => 'GroupContentsPaging', 'uses' => 'View\AjaxController@GroupContentsPaging', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_group_contents_paging']]);
+/* ??? */Route::post('savePageImage', ['as' => 'savePageImage', 'uses' => 'View\PageController@savePageImage', 'middleware' => ['dynamic_permission:posts.hamafza.page_controller_save_page_image']]);
+/* ??? */Route::post('renamePageImage', ['as' => 'renamePageImage', 'uses' => 'View\PageController@renamePageImage', 'middleware' => ['dynamic_permission:posts.hamafza.page_controller_rename_page_image']]);
+/* ??? */Route::post('removePageImage', ['as' => 'removePageImage', 'uses' => 'View\PageController@removePageImage', 'middleware' => ['dynamic_permission:posts.hamafza.page_controller_remove_page_image']]);
+/* ??? */Route::post('searchUser', ['as' => 'searchUser', 'uses' => 'View\AjaxController@searchUser', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_search_user']]);
+/* ??? *///Route::post('searchUser', 'View\AjaxController@searchUser');
+/* ??? */Route::post('PageWallPaging', ['as' => 'PageWallPaging', 'uses' => 'View\AjaxController@PageWallPaging', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_Page_wall_paging']]);
+/* ??? */Route::post('GetUserContentPaging', ['as' => 'GetUserContentPaging', 'uses' => 'View\AjaxController@GetUserContentPaging', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_get_user_content_paging']]);
+/* ??? */Route::post('GetWallByPaging', ['as' => 'GetWallByPaging', 'uses' => 'View\AjaxController@GetWallByPaging', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_get_wall_by_paging']]);
+/* ??? */Route::post('highlight', ['as' => 'highlight', 'uses' => 'View\AjaxController@highlight', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_highlight']]);
+/* ??? */Route::post('measure_add', ['as' => 'measure_add', 'uses' => 'View\FormsController@measure_add', 'middleware' => ['dynamic_permission:posts.hamafza.forms_controller_measure_add']]);
+/* ??? */Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_search_tags']]);
+/* ??? */Route::post('asubjects', ['as' => 'asubjects', 'uses' => 'SubjectController@asubjects', 'middleware' => ['dynamic_permission:posts.hamafza.subject_controller_a_subjects']]);
+/* ??? */Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_search']]);
+/* ??? */Route::post('endorse', ['as' => 'hamafza.endorse', 'uses' => 'View\AjaxController@endorse', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_endorse']]);
+/* ??? */Route::post('user_measures', ['as' => 'hamafza.user_measures', 'uses' => 'DesktopController@user_measures', 'middleware' => ['dynamic_permission:posts.hamafza.desktop_controller_user_measures']]); //review?//
+/* ??? */Route::post('like', ['as' => 'hamafza.page_like', 'uses' => 'View\AjaxController@pagelike', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_page_like']]);
+/* ??? */Route::post('follow', ['as' => 'hamafza.page_follow', 'uses' => 'View\AjaxController@pagefollow', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_page_follow']]);
 
-Route::post('pages_list_load_more', ['as' => 'pages_list_load_more', 'uses' => 'Services\PageController@pages_list']);
+/* ??? */Route::post('pages_list_load_more', ['as' => 'pages_list_load_more', 'uses' => 'Services\PageController@pages_list', 'middleware' => ['dynamic_permission:posts.hamafza.page_controller_pages_list']]);
 
-Route::group(['prefix' => 'bookmarks'], function ()
+/* ??? */Route::group(['prefix' => 'bookmarks'], function ()
 {
-    Route::post('/', ['uses' => 'View\AjaxController@bookmarks', 'as' => 'bookmarks', ]);
-    Route::post('/add', ['uses' => 'View\AjaxController@bookmark_add', 'as' => 'bookmark_add', ]);
-    Route::post('/delete', ['uses' => 'View\AjaxController@bookmarks_delete', 'as' => 'bookmarks.delete', ]);
+/* ??? */    Route::post('/', ['uses' => 'View\AjaxController@bookmarks', 'as' => 'bookmarks', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_bookmarks']]);
+/* ??? */    Route::post('/add', ['uses' => 'View\AjaxController@bookmark_add', 'as' => 'bookmark_add', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_bookmark_add']]);
+/* ??? */    Route::post('/delete', ['uses' => 'View\AjaxController@bookmarks_delete', 'as' => 'bookmarks.delete', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_delete']]);
 });
 
-Route::post('/portals', ['uses' => 'View\AjaxController@portals', 'as' => 'portals', ]);
+/* ??? */    Route::post('/portals', ['uses' => 'View\AjaxController@portals', 'as' => 'portals', 'middleware' => ['dynamic_permission:posts.hamafza.ajax_controller_portals']]);
 

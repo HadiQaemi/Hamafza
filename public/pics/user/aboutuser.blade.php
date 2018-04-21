@@ -21,7 +21,7 @@
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/jsclender/lang/calendar-fa.js"></script>
 @endif
 @include('sections.contextmenu')
-<div class="panel-body text-decoration">
+<div class="panel-body text-decoration" style="direction:rtl">
     <div class='text-content'>
         @if( $Alert!='')
         <div class="gkCode10" style="  margin: 10px;">
