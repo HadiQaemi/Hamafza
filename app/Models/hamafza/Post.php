@@ -73,7 +73,7 @@ class Post extends Model
 
     public function getHumanCreateTimeAttribute()
     {
-        return h_human_date($this->reg_date)?h_human_date($this->reg_date)." قبل":HDate_GtoJ(date('Y/m/d H:M', $this->reg_date));
+        return h_human_date($this->reg_date)?h_human_date($this->reg_date)." قبل":HDate_GtoJ(date('Y/m/d H:M', (int)$this->reg_date));
     }
 
     public function reward()

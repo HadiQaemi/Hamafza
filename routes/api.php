@@ -1,22 +1,22 @@
 <?php
 
-Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
+/*Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
 Route::post('GetsubjectFields', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetSubjectFields']);
 Route::post('GetMyPortal', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetMyPortal']);
 Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
 Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
 Route::post('GetTreeNode', ['as' => 'GetTreeNode', 'uses' => 'View\AjaxController@GetTreeNode']);
 Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxController@GetTreeNodes']);
-
+*/
 
 
 Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
     Route::post('get_sites', [
         'uses' => 'PublicController@GetSites'
     ]);
-    Route::post('get_portals', [
+    /*Route::post('get_portals', [
         'uses' => 'PublicController@GetPortals'
-    ]);
+    ]);*/
     Route::get('searchkeywords', [
         'uses' => 'PublicController@searchKeywords'
     ]);
@@ -27,7 +27,7 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
     Route::get('search', [
         'uses' => 'PublicController@search'
     ]);
-    Route::post('get_page_detail', [
+    Route::get('get_page_detail', [
         'as' => 'api.v43.get_page_detail',
         'uses' => 'PageController@PageDetail'
     ]);
@@ -37,10 +37,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'uses' => 'UserController@get_persons'
     ]);
 
-    Route::post('get_people_you_may_know', [
+    /*Route::post('get_people_you_may_know', [
         'as' => 'api.v43.get_people_you_may_know',
         'uses' => 'UserController@get_people_you_may_know'
-    ]);
+    ]);*/
 
     Route::post('get_my_posts', [
         'as' => 'api.v43.get_my_posts',
@@ -77,7 +77,7 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'as' => 'api.v43.user.password_reset',
             'uses' => 'AuthController@password_reset'
         ]);
-        Route::post('get_desktop_info', [
+        Route::get('desktop', [
             'as' => 'api.v43.user.desktop',
             'uses' => 'UserController@desktop'
         ]);
@@ -96,6 +96,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         Route::get('portals', [
             'as' => 'api.v43.user.portals',
             'uses' => 'UserController@portals'
+        ]);
+        Route::get('get_my_wall', [
+            'as' => 'api.v43.user.get_my_wall',
+            'uses' => 'UserController@get_my_wall'
         ]);
 
 
@@ -294,7 +298,7 @@ Route::group(array('prefix' => 'admin_methods'), function () {
             }
         }
         \App\Models\hamafza\Pages::whereNotIn('id', $res)
-            ->forceDelete();
+                ->forceDelete();
     });
 
     Route::get('deleteSubjectsWithNoPages/{secret_key}', function ($secret_key) {
@@ -307,7 +311,7 @@ Route::group(array('prefix' => 'admin_methods'), function () {
             $res[] = $subject->id;
         }
         App\Models\hamafza\Subject::whereNotIn('id', $res)
-            ->forceDelete();
+                ->forceDelete();
     });
 
     Route::get('convertAvatars/{secret_key}', function ($secret_key) {

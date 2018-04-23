@@ -68,7 +68,7 @@ class AuthController extends Controller
         }
         $username = Request::input('username');
         $password = Request::input('password');
-        if (Auth::attempt(['Uname' => $username, 'password' => $password],false,false) || Auth::attempt(['email' => $username, 'password' => $password],false,false) )
+	if (Auth::attempt(['Uname' => $username, 'password' => $password],false,false) || Auth::attempt(['email' => $username, 'password' => $password],false,false) )
         {
             $user = Get_User_Info($username);
             $token = Token::GenerateToken($user->uid,Request::input('imei'),Request::input('os_name'),Request::input('os_version'),Request::input('device_name'));
@@ -78,7 +78,7 @@ class AuthController extends Controller
                     'help'    => "http://hamafza.ir/18",
                     'info'    => $user,
                     'menu'    => GetMenu(),
-                    'main'    => array('type'=>'2', 'url'=>'','data'=>Get_User_Wall()),
+                    //'main'    => array('type'=>'2', 'url'=>'','data'=>Get_User_Wall($user->uid,1,0)),
                     'token'   => $token['token']
                 ];
             return response()->json($res)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8' ]);
@@ -124,14 +124,14 @@ class AuthController extends Controller
         $user->Password = Hash::make(Request::input('password'));
         $user->Family = Request::input('last_name');
         $user->save();
-        $token = Token::GenerateToken($user->uid,Request::input('imei'),Request::input('os_name'),Request::input('os_version'),Request::input('device_name'));
+        $token = Token::GenerateToken($user->id,Request::input('imei'),Request::input('os_name'),Request::input('os_version'),Request::input('device_name'));
         $res =
             [
                 'status'  => "1",
                 'help'    => "http://hamafza.ir/18",
                 'info'    => Get_User_Info(Request::input('username')),
                 'menu'    => GetMenu(),
-                'main'    => array('type'=>'2', 'url'=>'','data'=>Get_User_Wall()),
+                //'main'    => array('type'=>'2', 'url'=>'','data'=>Get_User_Wall($user->uid,1,0)),
                 'token'   => $token['token']
             ];
         return response()->json($res)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8' ]);

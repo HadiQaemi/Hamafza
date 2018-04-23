@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\HamafzaServiceClasses\UserClass;
 use Validator;
 use App\Models\hamafza\Subject;
+use App\HamafzaViewClasses\DesktopClass;
+
 class UserController extends Controller {
 
     public function AboutUser() {
@@ -23,7 +25,7 @@ class UserController extends Controller {
 
     public function desktop() {
         $validator = Validator::make(Request::all(), [
-            'token' => 'required',
+                    'token' => 'required',
         ]);
         if ($validator->fails()) {
             $error = validation_error_to_api_json($validator->errors());
@@ -40,13 +42,9 @@ class UserController extends Controller {
             ];
             return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
-        $res = [
-            'status' => "1",
-            'main' =>
-                [
-                    'type' => '3',
-                    'data' =>
+        $auth_user = Token::where('token', Request::get('token'))->first()->user;
+
+        $res ['desktop_sections'] =
                         [
                             [
                                 'type' => 'tasks',
@@ -55,28 +53,28 @@ class UserController extends Controller {
                                 'data' =>
                                     [
                                         [
-                                            'type' => '11',
+                                            'active' => '1',
                                             'title' => 'وظایف من',
                                             'new' => '-1',
-                                            'value' => "$user->MyTasksCount",
-                                            'order' => '1',
-                                            'url' => '#'
+                                            'value' => "$auth_user->MyTasksCount",
+                                            //'icon' => 'fa-tasks',
+                                            //'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'واگذاری های من',
                                             'new' => '-1',
-                                            'value' => "$user->MyAssignedTasksCount",
-                                            'order' => '2',
-                                            'url' => '#'
+                                            'value' => "$auth_user->MyAssignedTasksCount",
+                                           // 'icon' => 'fa-list-alt',
+                                            //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'پیشنویس ها',
                                             'new' => '-1',
-                                            'value' => "$user->MyDraftTasksCount",
-                                            'order' => '3',
-                                            'url' => '#'
+                                            'value' => "$auth_user->MyDraftTasksCount",
+                                          ///  'icon' => 'fa-pencil-square ',
+                                            //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
                                         ]
                                     ]
                             ],
@@ -87,28 +85,28 @@ class UserController extends Controller {
                                 'data' =>
                                     [
                                         [
-                                            'type' => '7',
+                                            'active' => '1',
                                             'title' => 'افراد',
                                             'new' => '-1',
-                                            'value' => "$user->UserPersonsCount",
-                                            'order' => '1',
-                                            'url' => '#'
+                                            'value' => "$auth_user->UserPersonsCount",
+                                            //'icon' => 'fa-user',
+                                            //'url' => '#'
                                         ],
                                         [
-                                            'type' => '13',
-                                            'title' => 'گروه‌ها و کانال ها',
+                                            'active' => '1',
+                                            'title' => 'گروه ها و کانال ها',
                                             'new' => '-1',
-                                            'value' => "$user->ApiUserGroupsCount",
-                                            'order' => '2',
-                                            'url' => '#'
+                                            'value' => "$auth_user->ApiUserGroupsCount",
+                                           /// 'icon' => 'fa-users',
+                                            //'url' => '#'
                                         ],
                                         [
-                                            'type' => '8',
+                                            'active' => '0',
                                             'title' => 'شاید بشناسید',
                                             'new' => '-1',
                                             'value' => '0',
-                                            'order' => '3',
-                                            'url' => '#'
+                                           // 'icon' => 'fa-user-o',
+                                           // 'url' => '#'
                                         ]
                                     ]
                             ],
@@ -119,28 +117,28 @@ class UserController extends Controller {
                                 'data' =>
                                     [
                                         [
-                                            'type' => '14',
+                                            'active' => '1',
                                             'title' => 'دریافتی ها',
-                                            'new' => '5',
-                                            'value' => '152',
-                                            'order' => '1',
-                                            'url' => '#'
+                                            'new' => "$auth_user->NewRecieveTicketsCount",
+                                            'value' => "$auth_user->RecieveTicketsCount",
+                                          //  'icon' => 'fa-inbox',
+                                            //'url' => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'ارسالی ها',
                                             'new' => '-1',
-                                            'value' => '152',
-                                            'order' => '2',
-                                            'url' => '#'
+                                            'value' => "$auth_user->SendTicketsCount",
+                                         //   'icon' => 'fa-paper-plane-o',
+                                            //'url' => route('ugc.desktop.hamahang.tickets.outbox', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '0',
                                             'title' => 'مکالمه ها',
                                             'new' => '-1',
-                                            'value' => '152',
-                                            'order' => '3',
-                                            'url' => '#'
+                                            'value' => '---',
+                                         //   'icon' => 'fa-commenting ',
+                                            //'url' => '#'
                                         ],
                                     ]
                             ],
@@ -151,28 +149,28 @@ class UserController extends Controller {
                                 'data' =>
                                     [
                                         [
-                                            'type' => '12',
+                                            'active' => '1',
                                             'title' => 'یادداشت ها',
                                             'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '1',
-                                            'url' => '#'
+                                            'value' => "$auth_user->AnnouncesCount",
+                                            //'icon' => 'fa-pencil',
+                                            //'url' => route('ugc.desktop.announces', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'علامت گذاری ها',
                                             'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '2',
-                                            'url' => '#'
+                                            'value' => "$auth_user->HighlightsCount",
+                                          //  'icon' => 'fa-bookmark-o',
+                                           /// 'url' => route('ugc.desktop.highlights', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'فرم ها',
                                             'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '3',
-                                            'url' => '#'
+                                            'value' => "$auth_user->FormsCount",
+                                           // 'icon' => 'fa-wpforms',
+                                           // 'url' => route('ugc.desktop.form_list.me', ['username' => $auth_user->Uname])
                                         ],
                                     ]
                             ],
@@ -183,35 +181,33 @@ class UserController extends Controller {
                                 'data' =>
                                     [
                                         [
-                                            'type' => '-1',
-                                            'title' => 'رویداد ها',
-                                            'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '1',
-                                            'url' => '#'
+                                            'active' => '1',
+                                            'title' => 'هشدار ها',
+                                            'new' => "$auth_user->NewEmailsCount",
+                                            'value' => "$auth_user->EmailsCount",
+                                          //  'icon' => 'fa-clock-o',
+                                           // 'url' => route('ugc.desktop.notifications', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '1',
                                             'title' => 'امتیاز ها',
                                             'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '2',
-                                            'url' => '#'
+                                            'value' => "$auth_user->TotalScores",
+                                          //  'icon' => 'fa-certificate ',
+                                           // 'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
                                         ],
                                         [
-                                            'type' => '-1',
+                                            'active' => '0',
                                             'title' => 'خرید ها',
                                             'new' => '-1',
-                                            'value' => '15',
-                                            'order' => '3',
-                                            'url' => '#'
+                                            'value' => '---',
+                                          //  'icon' => 'fa-shopping-basket',
+                                           // 'url' => '#'
                                         ],
                                     ]
                             ],
-                        ]
-                ]
-        ];
-        return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+                        ];
+        return $res;
     }
 
     public function get_persons() {
@@ -227,9 +223,9 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '7',
-                    'data' => $user->ApiUserPersons
-                ]
+                'type' => '7',
+                'data' => $user->ApiUserPersons
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
@@ -246,39 +242,39 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '8',
-                    'data' =>
+                'type' => '8',
+                'data' =>
+                    [
                         [
-                            [
-                                'user_id' => '3',
-                                'username' => 'ali_taghavi',
-                                'first_name' => 'علی',
-                                'last_name' => 'تقوی',
-                                'pic' => 'http://hamafza.ir/pics/user/43661473067619.jpg',
-                            ],
-                            [
-                                'user_id' => '123',
-                                'username' => 'rastegar_moghaddam',
-                                'first_name' => 'ایمان',
-                                'last_name' => '-رستگار مقدم',
-                                'pic' => 'http://hamafza.ir/pics/user/a393548221e95f9bbd96eef92f80eabc.jpg',
-                            ],
-                            [
-                                'user_id' => '543',
-                                'username' => 'nader_gholami',
-                                'first_name' => 'نادر',
-                                'last_name' => 'غلامی',
-                                'pic' => ''
-                            ],
-                            [
-                                'user_id' => '34',
-                                'username' => 'mohsen_nami',
-                                'first_name' => 'محسن',
-                                'last_name' => 'نامی',
-                                'pic' => ''
-                            ],
-                        ]
+                        'user_id' => '3',
+                        'username' => 'ali_taghavi',
+                        'first_name' => 'علی',
+                        'last_name' => 'تقوی',
+                        'pic' => 'http://hamafza.ir/pics/user/43661473067619.jpg',
+                    ],
+                        [
+                        'user_id' => '123',
+                        'username' => 'rastegar_moghaddam',
+                        'first_name' => 'ایمان',
+                        'last_name' => '-رستگار مقدم',
+                        'pic' => 'http://hamafza.ir/pics/user/a393548221e95f9bbd96eef92f80eabc.jpg',
+                    ],
+                        [
+                        'user_id' => '543',
+                        'username' => 'nader_gholami',
+                        'first_name' => 'نادر',
+                        'last_name' => 'غلامی',
+                        'pic' => ''
+                    ],
+                        [
+                        'user_id' => '34',
+                        'username' => 'mohsen_nami',
+                        'first_name' => 'محسن',
+                        'last_name' => 'نامی',
+                        'pic' => ''
+                    ],
                 ]
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
@@ -297,9 +293,30 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '9',
-                    'data' => $posts
-                ]
+                'type' => '9',
+                'data' => $posts
+            ]
+        ];
+        return $res;
+    }
+
+    public function get_my_wall() {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token', Request::get('token'))->first()->user;
+
+        $res = [
+            'status' => "1",
+            'main' =>
+                [
+                
+                'data' => Get_User_Wall($user->id, Request::input('limit'), Request::input('offset'))
+            ]
         ];
         return $res;
     }
@@ -320,70 +337,70 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '10',
-                    'data' =>
+                'type' => '10',
+                'data' =>
+                    [
                         [
+                        'section' => 'posts',
+                        'title' => 'پست ها',
+                        'type' => '0',
+                        'data' => "$posts_count"
+                    ],
+                        [
+                        'section' => 'followers',
+                        'title' => 'دنبال کنندگان',
+                        'type' => '0',
+                        'data' => "$follower_persons_count"
+                    ],
+                        [
+                        'section' => 'followed',
+                        'title' => 'دنبال شوندگان',
+                        'type' => '0',
+                        'data' => "$followed_persons_count"
+                    ],
+                        [
+                        'section' => 'expertise',
+                        'title' => 'تخصص ها',
+                        'type' => '1',
+                        'data' => $user->api_specials
+                    ],
+                        [
+                        'section' => 'responsibility',
+                        'title' => 'مسئولیت ها',
+                        'type' => '2',
+                        'data' => $user->ApiWorks
+                    ],
+                        [
+                        'section' => 'educations',
+                        'title' => 'تحصیلات ها',
+                        'type' => '3',
+                        'data' => $user->ApiEducations
+                    ],
+                        [
+                        'section' => 'effects',
+                        'title' => 'آثار',
+                        'type' => '4',
+                        'data' =>
                             [
-                                'section' => 'posts',
-                                'title' => 'پست ها',
-                                'type' => '0',
-                                'data' => "$posts_count"
+                                [
+                                'field' => 'title',
+                                'title' => 'عنوان',
+                                'value' => 'اثر یک',
                             ],
-                            [
-                                'section' => 'followers',
-                                'title' => 'دنبال کنندگان',
-                                'type' => '0',
-                                'data' => "$follower_persons_count"
+                                [
+                                'field' => 'title',
+                                'title' => 'عنوان',
+                                'value' => 'اثر دو',
                             ],
-                            [
-                                'section' => 'followed',
-                                'title' => 'دنبال شوندگان',
-                                'type' => '0',
-                                'data' => "$followed_persons_count"
-                            ],
-                            [
-                                'section' => 'expertise',
-                                'title' => 'تخصص ها',
-                                'type' => '1',
-                                'data' => $user->api_specials
-                            ],
-                            [
-                                'section' => 'responsibility',
-                                'title' => 'مسئولیت ها',
-                                'type' => '2',
-                                'data' => $user->ApiWorks
-                            ],
-                            [
-                                'section' => 'educations',
-                                'title' => 'تحصیلات ها',
-                                'type' => '3',
-                                'data' => $user->ApiEducations
-                            ],
-                            [
-                                'section' => 'effects',
-                                'title' => 'آثار',
-                                'type' => '4',
-                                'data' =>
-                                    [
-                                        [
-                                            'field' => 'title',
-                                            'title' => 'عنوان',
-                                            'value' => 'اثر یک',
-                                        ],
-                                        [
-                                            'field' => 'title',
-                                            'title' => 'عنوان',
-                                            'value' => 'اثر دو',
-                                        ],
-                                        [
-                                            'field' => 'title',
-                                            'title' => 'عنوان',
-                                            'value' => 'اثر سه',
-                                        ],
-                                    ]
+                                [
+                                'field' => 'title',
+                                'title' => 'عنوان',
+                                'value' => 'اثر سه',
                             ],
                         ]
+                    ],
                 ]
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
@@ -401,9 +418,9 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '12',
-                    'data' => $user->ApiAnnounces
-                ]
+                'type' => '12',
+                'data' => $user->ApiAnnounces
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
@@ -421,9 +438,9 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '13',
-                    'data' => $user->ApiUserGroups
-                ]
+                'type' => '13',
+                'data' => $user->ApiUserGroups
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
@@ -442,9 +459,9 @@ class UserController extends Controller {
             'status' => "1",
             'main' =>
                 [
-                    'type' => '13',
-                    'data' => $data
-                ]
+                'type' => '13',
+                'data' => $data
+            ]
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
