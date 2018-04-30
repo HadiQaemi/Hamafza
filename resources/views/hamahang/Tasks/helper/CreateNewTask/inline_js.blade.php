@@ -13,31 +13,11 @@
 
         if (id == 1) {
             var txt = '' +
-                '<div class="row-fluid">' +
-                '   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">' +
-                '       <div class=" row">' +
-                '           <div class="col-sm-6 col-xs-12">' +
-                '               <label class="line-height-30 pull-right">تاریخ</label>' +
-                '               <div class=" pull-right">' +//input-group
-//                '                   <span class="input-group-addon" id="respite_date">' +
-//                '                       <i class="fa fa-calendar"></i>' +
-//                '                   </span>' +
-                '                   <input type="text" class="form-control DatePicker" name="respite_date" aria-describedby="respite_date">' +
-                '               </div>' +
-                '           </div>' +
-                '           <div class="col-sm-6 col-xs-12">' +
-                '               <label class="line-height-30">ساعت</label>' +
-                '               <div class=" pull-right">' +//input-group
-//                '                   <span class="input-group-addon" id="respite_time">' +
-//                '                       <i class="fa fa-clock-o"></i>' +
-//                '                   </span>' +
-                '                   <input type="text" class="form-control TimePicker" name="respite_time" aria-describedby="respite_time">' +
-                '               </div>' +
-                '           </div>' +
-                '       </div>' +
-                '   </div>' +
-                '   <div class="clearfix"></div>' +
-                '</div>';
+                '<label class="line-height-30 pull-right">تاریخ</label>' +
+                '<input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">' +
+                '<label class="line-height-30 pull-right">ساعت</label>' +
+                '<input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">' +
+                '';
             $('#normal_task_timing').html(txt);
             $(".TimePicker").persianDatepicker({
                 format: "HH:mm:ss a",
@@ -55,21 +35,12 @@
         }
         if (id == 0) {
             var txt = '' +
-                '<div class="row-fluid">\n' +
-                '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
-                '       <div class="row-fluid">\n' +
-                '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
-                '               <label class="pull-right">روز</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
-                '               <label class="pull-right">ساعت</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
-                '               <label class="pull-right">دقیقه</label>\n' +
-                '           </div>\n' +
-                '       </div>\n' +
-                '   </div>\n' +
-                '   <div class="clearfix"></div>\n' +
-                '</div>\n';
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
+                '<label class="pull-right">روز</label>\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
+                '<label class="pull-right">ساعت</label>\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
+                '<label class="pull-right">دقیقه</label>';
 
             $('#normal_task_timing').html(txt);
 
@@ -600,7 +571,21 @@
             }
         }
     });
-    //sended to master.blade
+
+    $('#reject_assigner').on('click', function() {
+        if($(this).is(":checked")){
+            $(".assingned_options").prop('disabled', true);
+            $(".rejected_options").prop('disabled', false);
+        }
+        else {
+            $(".rejected_options").prop('disabled', true);
+            $(".assingned_options").prop('disabled', false);
+        }
+    });
+
+
+    //************** sended to master.blade
+
     {{--function SaveTask(form_id, again,action) {--}}
         {{--//console.log(form_id);--}}
         {{--$('#task_form_action').val(action);--}}
@@ -675,6 +660,21 @@
             $('.send_message').show();
         else
             $('.send_message').hide();
+
+        var title = $('#task_title').val();
+        if(title.trim().length>0 && none>0)
+            $('.new_task_save_type_final').click();
+        else
+            $('.new_task_save_type_draft').click();
+    });
+
+    $('#task_title').on('keyup', function() {
+        var title = $(this).val();
+        var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
+        if(title.trim().length>0 && new_task_users_responsible>0)
+            $('.new_task_save_type_final').click();
+        else
+            $('.new_task_save_type_draft').click();
     });
 	
 	$('#task_schedul').on('change', function() {
@@ -695,7 +695,14 @@
         $('.person_option').hide();
         $('.send_message').hide();
         $('.transcript_option').hide();
-
-        $('.new_task_save_type_final').click();
+		$('#create_new_task').on('click', function() {
+            var title = $('#task_title').val();
+            var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
+            if(title.trim().length>0 && new_task_users_responsible>0)
+                $('.new_task_save_type_final').click();
+            else
+                $('.new_task_save_type_draft').click();
+		});
+        $('.new_task_save_type_draft').click();
     })
 </script>

@@ -480,7 +480,7 @@ class User extends Authenticatable
 
     public function MyAssignedTasks()
     {
-        return $this->belongsToMany('App\Models\Hamahang\Tasks\tasks', 'hamahang_task_assignments', 'assigner_id', 'task_id');
+        return $this->belongsToMany('App\Models\Hamahang\Tasks\tasks', 'hamahang_task_assignments', 'uid', 'task_id');
     }
 
     public function getMyAssignedTasksCountAttribute()
@@ -506,6 +506,11 @@ class User extends Authenticatable
     public function _roles()
     {
         return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+    }
+
+    public function _permissions()
+    {
+        return $this->belongsToMany('App\Permission','permission_user', 'user_id',  'permission_id');
     }
 
     public function Forms()
@@ -608,21 +613,19 @@ class User extends Authenticatable
         return $this->morphedByMany('App\Models\hamafza\SubjectType', 'target', 'hamahang_user_policies','user_id','target_id')->wherePivot('type','2');
     }
 
-    public function get_bookmarks($uid)
+    public function get_bookmarks()
     {
-        return $this->hasMany('App\Models\Hamahang\Bookmark')->where('user_id', $uid);
+        return $this->hasMany('App\Models\Hamahang\Bookmark')->where('user_id', auth()->id());
     }
-    
-    
 
     public function bookmarks($term)
     {
         $term = trim($term);
-        $user = $this->get_bookmarks(auth()->id())->where('target_table', 'App\User');
-        $page = $this->get_bookmarks(auth()->id())->where('target_table', 'App\Models\hamafza\Pages');
-        $subject = $this->get_bookmarks(auth()->id())->where('target_table', 'App\Models\hamafza\Subject');
-        $group = $this->get_bookmarks(auth()->id())->where('target_table', 'App\Models\Hamahang\Group');
-        $channel = $this->get_bookmarks(auth()->id())->where('target_table', 'App\Models\Hamahang\Channel');
+        $user = $this->get_bookmarks()->where('target_table', 'App\User');
+        $page = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Pages');
+        $subject = $this->get_bookmarks()->where('target_table', 'App\Models\hamafza\Subject');
+        $group = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Group');
+        $channel = $this->get_bookmarks()->where('target_table', 'App\Models\Hamahang\Channel');
         if ($term)
         {
             $user->where('title', 'like', "%$term%");
@@ -643,31 +646,5 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\hamafza\Subject', 'admin')->where('archive', '0')->whereHas('pages');
     }
-    
-    public function getApiBookmarksAttribute($term,$uid)
-    {
-        $term = trim($term);
-        $user = $this->get_bookmarks($uid)->where('target_table', 'App\User');
-        $page = $this->get_bookmarks($uid)->where('target_table', 'App\Models\hamafza\Pages');
-        $subject = $this->get_bookmarks($uid)->where('target_table', 'App\Models\hamafza\Subject');
-        $group = $this->get_bookmarks($uid)->where('target_table', 'App\Models\Hamahang\Group');
-        $channel = $this->get_bookmarks($uid)->where('target_table', 'App\Models\Hamahang\Channel');
-        if ($term)
-        {
-            $user->where('title', 'like', "%$term%");
-            $page->where('title', 'like', "%$term%");
-            $subject->where('title', 'like', "%$term%");
-            $group->where('title', 'like', "%$term%");
-            $channel->where('title', 'like', "%$term%");
-        }
-        $r['user'] = $user->get();
-        $r['page'] = $page->get();
-        $r['subject'] = $subject->get();
-        $r['group'] = $group->get();
-        $r['channel'] = $channel->get();
-        return $r;
-    }
-    
-    
 
 }

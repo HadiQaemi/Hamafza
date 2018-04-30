@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function () {
+
         initDraggable();
         $(".DatePicker").persianDatepicker({
             observer: true,
@@ -10,7 +11,8 @@
             filter_mytask();
         });
     });
-
+</script>
+<script>
     function initDraggable() {
         $(".draggable").draggable({
             cursor: "all-scroll",
@@ -23,6 +25,7 @@
         $(".droppable").droppable({
             accept: ".draggable",
             drop: function (event, ui) {
+                // alert('drop');
                 $(this).removeClass("border").removeClass("over");
                 var Drag_Destination = $(this).attr('id');
                 var dropped = ui.draggable;
@@ -32,10 +35,12 @@
                 $(dropped).detach().appendTo(droppedOn);//.css({top: 0, left: 0,'background-color': '#e0f7fa', 'width':'auto','position': 'relative'})
             },
             over: function (event, elem) {
+                // alert('over');
                 $(this).data('id');
                 $(this).addClass("over");
             },
             out: function (event, elem) {
+                // alert('out');
                 $(this).removeClass("over");
             }
         });

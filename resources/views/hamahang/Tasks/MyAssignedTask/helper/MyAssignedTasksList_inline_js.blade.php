@@ -32,7 +32,8 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
+                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
                     }
                 },
                 {"data": "employee"},

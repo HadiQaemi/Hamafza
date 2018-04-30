@@ -27,11 +27,13 @@
         <div class="col-xs-5 form-inline" id="create_rapid_task_priority" style="">
             <div class="col-xs-6 center_text_align">
                 <label class="radio-inline">
-                    <input checked type="radio" name="importance" id="create_rapid_task_importance" value="1"/>
+                    {{--<input checked type="radio" name="importance" id="create_rapid_task_importance" value="1"/>--}}
+                    <input checked type="radio" name="importance" value="1"/>
                     {{trans('tasks.important')}}
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="importance" id="create_rapid_task_importance" value="0"/>
+                    {{--<input type="radio" name="importance" id="create_rapid_task_importance" value="0"/>--}}
+                    <input type="radio" name="importance" value="0"/>
                     {{trans('tasks.non-important')}}
                 </label>
                 <span style="margin-right: 10px;">|</span>
@@ -39,11 +41,13 @@
 
             <div class="col-xs-6 center_text_align" style="padding-right: 0px;padding-left: 0px;">
                 <label class="radio-inline" style="padding-right: 10px;">
-                    <input checked type="radio" name="immediacy" id="create_rapid_task_immediate" value="1"/>
+                    {{--<input checked type="radio" name="immediacy" id="create_rapid_task_immediate" value="1"/>--}}
+                    <input checked type="radio" name="immediacy" value="1"/>
                     {{trans('tasks.immediate')}}
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="immediacy" id="create_rapid_task_immediate" value="0"/>
+                    {{--<input type="radio" name="immediacy" id="create_rapid_task_immediate" value="0"/>--}}
+                    <input type="radio" name="immediacy" value="0"/>
                     {{trans('tasks.non-immediate')}}
                 </label>
             </div>

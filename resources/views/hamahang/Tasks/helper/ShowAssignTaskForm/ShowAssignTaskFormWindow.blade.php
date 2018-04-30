@@ -27,7 +27,7 @@
     </ul>
     @php
     $task = $res['task'];
-    $edit_able = ($res['task_all']->uid != Auth::id() ? true : false);
+    $edit_able = ($res['task_all']->uid == Auth::id() ? true : false);
     @endphp
 
     {{--<form action="{{ route('hamahang.tasks.save_task') }}" class="" name="ShowTaskForm" id="ShowTaskForm" method="post"--}}
@@ -103,7 +103,7 @@
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
-                        <div class="col-sm-6 line-height-35" style="padding-right: 5px;">
+                        <div class="col-sm-6" style="padding-right: 5px;">
 
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users_responsible']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
@@ -138,11 +138,11 @@
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
                             <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_cr" id="report-type1" ' : 'disabled'}} value="1"/>
-                            <label for="report-type1" class="transcript_option">{{ trans('tasks.report_on_task_creation') }}</label>
+                            <label for="report-type1" class="">{{ trans('tasks.report_on_task_creation') }}</label>
                             <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_co" id="report-type2" ' : 'disabled'}} value="1"/>
-                            <label for="report-type2" class="transcript_option">{{ trans('tasks.report_on_task_completion') }}</label>
+                            <label for="report-type2" class="">{{ trans('tasks.report_on_task_completion') }}</label>
                             <input type="checkbox" {{$edit_able == 1 ? ' name="report_to_manager" id="report-type3" ' : 'disabled'}} value="1"/>
-                            <label for="report-type3" class="transcript_option">{{ trans('tasks.report_on_responsible') }}</label>
+                            <label for="report-type3" class="">{{ trans('tasks.report_on_responsible') }}</label>
                         </div>
                     </div>
                 </div>
@@ -418,7 +418,7 @@
                             <th class="col-xs-5">{{ trans('tasks.resource') }}</th>
                             <th class="col-xs-1">{{ trans('tasks.amount') }}</th>
                             <th class="col-xs-2">{{ trans('tasks.cost') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+{{--                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>--}}
                         </tr>
                         </thead>
                         <tbody id="resources_task_list">
@@ -445,9 +445,9 @@
                                             <input name="new_task_resources_cost[]" type="hidden" value="{{$res['task']['new_task_resources_cost'][$k]}}"/>
                                         </label>
                                     </td>
-                                    <td>
-                                        <span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
-                                    </td>
+                                    {{--<td>--}}
+                                        {{--<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         @endif
@@ -486,7 +486,7 @@
                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                             <th class="col-xs-2">{{ trans('tasks.relation') }}</th>
                             <th class="col-xs-3">{{ trans('tasks.delay') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                            {{--<th class="col-xs-1">{{ trans('tasks.action') }}</th>--}}
                         </tr>
                         </thead>
                         <tbody id="rel_task_list">
@@ -533,9 +533,9 @@
                                             </div>
                                         </label>
                                     </td>
-                                    <td>
-                                        <span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
-                                    </td>
+                                    {{--<td>--}}
+                                        {{--<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         @endif
@@ -544,321 +544,191 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_t5" style="padding: 8px;">
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.form') }}</label>
-                        </span>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.status') }}</label>
                     </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.status') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="not_start" value="not_start" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                    <div class="col-lg-11">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="not_start" value="0" checked/>
                             <label for="not_start">{{ trans('tasks.not_start') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-3">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="radio" name="task_status" id="on_done" value="on_done"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
-                            <label for="on_done">{{ trans('tasks.on_done').' '.trans('tasks.precent_progress') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" id="num_event" class="form-control" style="width: 40px;" name="num_day" value="" >
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_done" value="status_done" />
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="on_done" value="1"/>
+                            <label for="on_done">{{ trans('tasks.on_done')}}</label>
+                            <input type="text" id="num_event" class="form-control" style="width: 40px;display: inline" name="progress" value="" >
+                            <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_done" value="2" />
                             <label for="status_done">{{ trans('tasks.status_done') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_finished" value="status_finished"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_finished" value="3"/>
                             <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_suspended" value="status_suspended"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_suspended" value="4"/>
                             <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
-                        </span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.reject') }}</label>
-                        </span>
+                <div class="row col-lg-12" style="margin-top: 20px">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
+                        <input type="checkbox" name="reject_assigner" id="reject_assigner" class="" style="display: inline"/>
+                        <label for="reject_assigner" class="rejected_options" >{{ trans('tasks.reject_assigner') }}</label>
                     </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="checkbox" name="reject_assigner" id="reject_assigner" value="reject_assigner"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="reject_assigner">{{ trans('tasks.reject_assigner') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-9">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" class="form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
-                        </span>
+                    <div class="col-lg-9" style="height: 30px;line-height: 30px;">
+                        <input type="text" class="rejected_options form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value="" disabled=""/>
                     </div>
                 </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.reject_to') }}</label>
-                        </span>
+                <div class="row col-lg-12" style="margin-top: 20px">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding assingned_options">
+                        <label class="line-height-35">{{ trans('tasks.reject_to') }}</label>
                     </div>
-                    <div class="col-xs-10">
-                        <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts"
+                    <div class="col-lg-10">
+                        <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
                                 data-placeholder="{{trans('tasks.select_some_options')}}" multiple></select>
                         <span class=" Chosen-LeftIcon"></span>
                     </div>
-                    <div class="col-xs-1 pull_right">
-                        <span class="input-group-addon edited-addon pull_right" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
-                        </span>
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels assingned_options" title="{{ trans('tasks.selecet_user') }}">
+                            <span class="icon icon-afzoodane-fard fonts"></span>
+                        </a>
                     </div>
                 </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
-                        </span>
+                <div class="row col-lg-12" style="margin-top: 20px;border-bottom: 1px solid #999;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
                     </div>
-                    <div class="col-xs-11">
+                    <div class="col-lg-11">
                         <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                data-placeholder="{{trans('tasks.select_some_options')}}"
                                 multiple="multiple"></select>
                         <span class=" Chosen-LeftIcon"></span>
                     </div>
                 </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready') }}</label>
-                        </span>
+                <div class="row col-lg-12" style="border-bottom: 1px solid #999;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.ready') }}</label>
                     </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready_body') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_body" id="ready_body_0" value="0" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                    <div class="col-lg-11">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <label for="">{{ trans('tasks.ready_body')}}</label>
+
+                            <input type="radio" name="ready_body" id="ready_body_0" value="0"/>
                             <label for="ready_body_0">{{ trans('tasks.low') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
+
                             <input type="radio" name="ready_body" id="ready_body_l" value="1"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
                             <label for="ready_body_l">{{ trans('tasks.high') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 50px">
+                            <label for="on_done">{{ trans('tasks.ready_mental')}}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0"/>
+                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
+                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
+                        </div>
 
                     </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready_mental') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
-                        </span>
-                    </div>
                 </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-3" style="padding: 0px;margin: 0px;">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.duration') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="text" class="form-control" name="action_duration" id="action_duration" value="1"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
+                <div class="row col-lg-12" style="margin-top: 20px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.duration') }}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="text" class="form-control display-inline" name="action_duration" id="action_duration" value="1"/>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
                             <select id="action_time_type" name="action_time_type" class="form-control">
-                                <option value="hour">{{trans('tasks.hour')}}</option>
-                                <option value="daily">{{trans('tasks.day')}}</option>
-                                <option value="weekly">{{trans('tasks.week')}}</option>
-                                <option value="monthly">{{trans('tasks.month')}}</option>
+                                <option value="1">{{trans('tasks.hour')}}</option>
+                                <option value="24">{{trans('tasks.day')}}</option>
+                                <option value="168">{{trans('tasks.week')}}</option>
+                                <option value="720">{{trans('tasks.month')}}</option>
                             </select>
-                        </span>
-                    </div>
-                    <div class="col-xs-1" style="padding: 0px; margin-right: 10px;">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.done_time') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2" style="padding: 0px; margin: 0px;">
-                        <div class="col-xs-3" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="done_time" id="to_end" value="to_end"/>
-                            </span>
                         </div>
-                        <div class="col-xs-3" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <label for="to_end">{{ trans('tasks.to_end') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-6" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <select id="task_schedul_" name="task_schedul_" class="form-control">
-                                    <option value="daily">{{trans('tasks.this')}} {{trans('tasks.day')}}</option>
-                                    <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
-                                    <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
-                                </select>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
-                            </span>
-                        </div>
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <label for="determined-time">{{ trans('tasks.in') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-5">
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <input type="text" class="form-control DatePicker" name="action_date" aria-describedby="respite_date">
-                            </span>
-                        </div>
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                {{ trans('tasks.hour') }}
-                            </span>
-                        </div>
-                        <div class="col-xs-4">
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <input type="text" class="form-control TimePicker" name="action_time" aria-describedby="respite_time">
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="done_time" id="not-determine" value="not-determine"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>
-                        </span>
                     </div>
                 </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{trans('tasks.description')}}</label>
-                        </span>
+                <div class="row col-lg-12" style="margin-top: 20px;border-bottom: 1px solid #999;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.done_time') }}</label>
                     </div>
-                    <div class="col-xs-11">
+                    <div class="col-lg-10">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="done_time" id="to_end" value="to_end"/>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <label for="to_end">{{ trans('tasks.to_end') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                            <select id="task_schedul_" name="to_end" class="form-control">
+                                <option value="daily">{{trans('tasks.this')}} {{trans('tasks.day')}}</option>
+                                <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
+                                <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
+                            </select>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                            <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
+                            <label for="determined-time">{{ trans('tasks.in') }}</label>
+                            <input type="text" class="form-control DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                            <label for="determined-time">{{ trans('tasks.hour') }}</label>
+                            <input type="text" class="form-control TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                            <input type="radio" name="done_time" id="not-determine" value="not-determine"/>
+                            <label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-top: 20px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
+                    </div>
+                    <div class="col-lg-10">
                         <input type="text" name="action_explain" id="explain" class="form-control" placeholder="{{trans('tasks.description')}}"/>
                     </div>
                 </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{ trans('tasks.quality_done') }}</label>
-                        </span>
+                @if($edit_able == 1)
+                <div class="row col-lg-12" style="margin-top: 20px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.quality_done') }}</label>
                     </div>
-                    <div class="col-xs-9">
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-excelent" value="excelent"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-excelent">{{ trans('tasks.excelent') }}</label>
-                            </span>
+                    <div class="col-lg-10">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-excelent" value="excelent"/>
+                            <label for="quality-excelent">{{ trans('tasks.excelent') }}</label>
                         </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-well" value="well"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-well">{{ trans('tasks.well') }}</label>
-                            </span>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-well" value="well"/>
+                            <label for="quality-well">{{ trans('tasks.well') }}</label>
                         </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-average" value="average"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-average">{{ trans('tasks.average') }}</label>
-                            </span>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-average" value="average"/>
+                            <label for="quality-average">{{ trans('tasks.average') }}</label>
                         </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-week" value="week"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-week">{{ trans('tasks.week') }}</label>
-                            </span>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-week" value="week"/>
+                            <label for="quality-week">{{ trans('tasks.week') }}</label>
                         </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
-                            </span>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
+                            <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
                         </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-not_determined" value="not_determined" checked/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-not_determined">{{ trans('tasks.not_determined') }}</label>
-                            </span>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="quality_done" id="quality-not_determined" value="not_determined" checked/>
+                            <label for="quality-not_determined">{{ trans('tasks.not_determined') }}</label>
                         </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                             <label for="quality-not_determined">{{ trans('tasks.score') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="text" name="quality_score" id="quality-score" value="" class="form-control"/>
-                        </span>
+                            <input type="text" name="quality_score" id="quality-score" value="" class="form-control display-inline" style="display: inline;width: 40px;"/>
+                        </div>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">

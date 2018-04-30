@@ -870,6 +870,107 @@ class MyAssignedTaskController extends Controller
 //        return $total;
     }
 
+    public function SetActToTask()
+    {
+//        dd(Request::all());
+        $task_all = Session::get('ShowAssignTaskForm_task_all');
+        $task_id = Session::get('ShowAssignTaskForm_tid');
+        $assign_id = Session::get('ShowAssignTaskForm_aid');
+        $task_assignment = task_assignments::where('id', '=', $assign_id)
+            ->select('assigner_id', 'uid', 'staff_id')->first();
+        if(Session::get('ShowAssignTaskForm_is_creator'))
+        {
+//            $task = task_assignments::find($assign_id);
+//            $task->save();
+        }
+        else{
+
+        }
+
+        //
+        $action = "";
+        if(Request::exists('reject_assigner'))
+        {
+            $action = 'rejection';
+            DB::table('hamahang_task_assignments')
+                ->where('id', (int) $assign_id)
+                ->update(['status' => 1,'reject_description'=>Request::input('explain_reject')]);
+            task_assignments::create_task_assignment($task_assignment['uid'] ,$task_assignment['uid'] ,$task_id,$assign_id);
+            task_history::create_task_history($task_id, 'reject', serialize(Request::all()),$task_assignment['uid']);
+            task_status::create_task_status($task_id, 0, 0, $task_assignment['uid'], time());
+
+        }else if (Request::exists('assigns_new'))
+        {
+            $action = 'assignmention';
+            $staff = '';
+            foreach (Request::input('assigns_new') as $key => $value_employee_id)
+            {
+                if($key == 0)
+                {
+                    $staff = Request::input('assigns_new')[$key];
+                    task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
+                }
+                else
+                {
+                    task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
+                }
+                task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'], $value_employee_id);
+                task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
+            }
+            task_history::create_task_history($task_id, 'assign', serialize(Request::all()),implode(', ',Request::input('assigns_new')));
+            DB::table('hamahang_task_assignments')
+                ->where('id', (int) $assign_id)
+                ->update(['status' => 1]);
+        }
+        //task_status
+        $reject_description = "";
+        if (Request::exists('explain_reject'))
+            $reject_description = Request::input('explain_reject');
+        $power_physical = "";
+        if (Request::exists('ready_body'))
+            $power_physical = Request::input('ready_body');
+        $power_mental = "";
+        if (Request::exists('ready_mental'))
+            $power_mental = Request::input('ready_mental');
+        $quality = "";
+        if (Request::exists('quality'))
+            $quality = Request::input('ready_mental');
+
+        $respite_duration_timestamp = 0;
+        if (Request::input('done_time') == 'determined-time')
+        {
+            $respite_duration_timestamp = hamahang_make_task_respite(Request::input('action_date'), Request::input('action_time'));
+        }
+        elseif (Request::input('done_time') == 'not-determine')
+        {
+            $respite_duration_timestamp = null;
+        }
+        elseif (Request::input('done_time') == 'to_end')
+        {
+            if(Request::input('to_end') == 'daily')
+                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 1, 0, 0, 0);
+            if(Request::input('to_end') == 'weekly')
+                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 7, 0, 0, 0);
+            if(Request::input('to_end') == 'monthly')
+                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 30, 0, 0, 0);
+        }
+        task_action::create_task_action($task_id, Request::input('task_status'), Request::input('progress'), $action,$reject_description,
+            $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
+
+        if (Request::exists('keywords'))
+        {
+            foreach (Request::input('keywords') as $kw)
+            {
+                task_keywords::create_task_keyword($task_id, hamahang_add_keyword($kw));
+            }
+        }
+
+
+        $result['success'] = true;
+        return json_encode($result);
+
+    }
+
     public function save()
     {
 //        dd(Request::all());
@@ -878,6 +979,10 @@ class MyAssignedTaskController extends Controller
         if (Request::input('respite_timing_type') == 1)
         {
             $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
+        }
+        elseif (Request::input('respite_timing_type') == 2)
+        {
+            $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 0, 0, 0, 0);
         }
         elseif (Request::input('respite_timing_type') == 0)
         {
@@ -937,7 +1042,7 @@ class MyAssignedTaskController extends Controller
                     task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
                 }
             }
-
+            $staff = '';
             if (Request::exists('users'))
             {
                 foreach (Request::input('users') as $key => $value_employee_id)
@@ -946,18 +1051,20 @@ class MyAssignedTaskController extends Controller
                     {
                         if($key == 0)
                         {
-                            task_assignments::create_task_assignment(Request::input('users')[0] ,1 ,$task->id);
+                            $staff = Request::input('users')[0];
+                            task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
                         }
                         else
                         {
-                            task_assignments::create_task_assignment(Request::input('users')[0] ,0 ,$task->id);
+                            task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
                         }
                     }
                     elseif(Request::input('assign_type') == 2)
                     {
-                        task_assignments::create_task_assignment(Request::input('users')[0] ,1 ,$task->id);
+                        task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
                     }
                     task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'), $value_employee_id);
+                    task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
                 }
             }
             task_history::create_task_history($task->id, 'create', serialize(Request::all()));

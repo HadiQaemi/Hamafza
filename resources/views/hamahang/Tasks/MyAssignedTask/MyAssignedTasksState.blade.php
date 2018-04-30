@@ -28,7 +28,7 @@
             background-color: #ffffff;
             z-index:100;
             bottom:22px;
-            height: 43;
+            height: 43px;
             padding-bottom: 10px;
             width:100%;
         }
@@ -42,10 +42,13 @@
         .scrlbig{
             overflow-y: hidden !important;
         }
+        .panel-light{
+            height: 450px;
+        }
     </style>
 @stop
 @section('content')
-    <div style="position: relative;height: 100%;width: 100%;">
+    <div style="position: relative;height: 430px;width: 100%;">
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">

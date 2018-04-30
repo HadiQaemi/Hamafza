@@ -218,9 +218,8 @@
 					});
 				}
 				$(document).on('click', '.save_task', function () {
-
 					var save_type = $("input[name='new_task_save_type']:checked").val()
-					var $this = $(this);
+                    var $this = $(this);
 					var form_id = $this.data('form_id');
 					var save_again = $this.data('again_save');
 					if (save_type == 1) {
@@ -230,10 +229,41 @@
 						SaveTask(form_id, save_again,0);
 						//save_as_draft(form_id, save_again);
 					}
+                    else if (save_type == 2) {
+					    alert('2');
+					}
+                    else if (save_type == 3) {
+                        alert('3');
+                    }
 					else
 					{
 						alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
 					}
+				});
+				function SetActToTask(form_id) {
+                    //console.log(form_id);
+                    var form_data = $('#' + form_id).serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ route('hamahang.tasks.set_act_to_task')}}',
+                        dataType: "json",
+                        data: form_data,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.success == true) {
+                                $('.jsPanel-btn-close').click();
+                                messageModal('success','{{trans('tasks.submit_action')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                            }
+                            else {
+                                messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                            }
+                        }
+                    });
+                }
+				$(document).on('click', '.act_on_task', function () {
+					var $this = $(this);
+					var form_id = $this.data('form_id');
+					SetActToTask(form_id);
 				});
                 if($(document).width() > 1000){
                     $('.hd-body').css('max-height','80vh');

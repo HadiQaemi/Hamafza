@@ -156,7 +156,7 @@ class MyTaskController extends Controller
     {
         $Tasks = tasks::MyTasks(Request::input('subject_id'));
         $date = new jDateTime;
-//        dd(Datatables::of($Tasks));
+//        dd(Request::input('subject_id'));
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {

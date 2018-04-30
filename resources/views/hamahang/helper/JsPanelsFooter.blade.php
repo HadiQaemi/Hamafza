@@ -25,6 +25,21 @@
             <span>ثبت</span>
         </button>
     </div>
+@elseif($btn_type == 'ShowAssignTaskForm')
+    <div>
+        {{--<input type="radio" name="new_task_save_type" class="new_task_save_type_draft" value="0"/>--}}
+        {{--<label>{{ trans('general.draft') }}</label>--}}
+        {{--<input type="radio" name="new_task_save_type" class="new_task_save_type_final" value="1"/>--}}
+        {{--<label>{{ trans('general.final') }}</label>--}}
+    </div>
+    <a data-form_id = "ShowTaskForm" data-again_save = "1" class="btn btn-primary pull-left act_on_task" id="">
+        <i ></i>
+        {{trans('tasks.submit')}}
+    </a>
+    {{--<a class="btn btn-primary pull-left update_task" id="save_commit" type="button" data-again_save = "2" data-form_id="ShowTaskForm">--}}
+        {{--<i ></i>--}}
+        {{--{{trans('tasks.ok')}}--}}
+    {{--</a>--}}
 @elseif($btn_type == 'ShowTaskForm')
     <div>
         {{--<input type="radio" name="new_task_save_type" class="new_task_save_type_draft" value="0"/>--}}
@@ -42,19 +57,24 @@
     {{--</a>--}}
 @elseif($btn_type == 'CreateNewTask')
     <div>
-        <input type="radio" name="new_task_save_type" class="new_task_save_type_draft" value="0"/>
-        <label>{{ trans('general.draft') }}</label>
-        <input type="radio" name="new_task_save_type" class="new_task_save_type_final" value="1"/>
-        <label>{{ trans('general.final') }}</label>
+        <input type="radio" name="new_task_save_type" class="new_task_save_public_library" id="new_task_save_public_library" value="2"/>
+        <label for="new_task_save_public_library">{{ trans('tasks.library').' '.trans('tasks.public') }}</label>
+        <input type="radio" name="new_task_save_type" class="new_task_save_private_library" id="new_task_save_private_library" value="3"/>
+        <label for="new_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>
+
+        <input type="radio" name="new_task_save_type" class="new_task_save_type_draft" id="new_task_save_type_draft" value="0" checked/>
+        <label for="new_task_save_type_draft">{{ trans('general.draft') }}</label>
+        <input type="radio" name="new_task_save_type" class="new_task_save_type_final" id="new_task_save_type_final" value="1"/>
+        <label for="new_task_save_type_final">{{ trans('general.final') }}</label>
     </div>
     <a data-form_id = "create_new_task" data-again_save = "1" class="btn btn-primary pull-left save_task" id="">
         <i ></i>
         {{trans('tasks.save_and_create_new')}}
     </a>
-    {{--<a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="create_new_task">--}}
-        {{--<i ></i>--}}
-        {{--{{trans('tasks.ok')}}--}}
-    {{--</a>--}}
+    <a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="create_new_task">
+        <i ></i>
+        {{trans('tasks.ok')}}
+    </a>
 @elseif($btn_type == 'NewProcessWindow')
     <div class="col-xs-12">
         <span class="pull-left">

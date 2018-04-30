@@ -636,19 +636,21 @@ class tasks extends Model
 //            $result = $result->get();
 //            //d($result4);
 //        }
-
+//        DB::enableQueryLog();
         $result = DB::table('hamahang_task')
-            ->select("hamahang_task.task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
             ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
-            ->join('user', 'user.id', '=', 'hamahang_task_assignments.assigner_id')
+            ->join('user', 'user.id', '=', 'hamahang_task_assignments.uid')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
 //            ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-            ->whereNull('hamahang_task_assignments.transmitter_id')
+            //->whereNull('hamahang_task_assignments.transmitter_id')
             ->where('hamahang_task_assignments.employee_id', '=', $uid)
+            ->where('hamahang_task_assignments.status', '=', 0)
             ->whereNull('hamahang_task_assignments.reject_description')
 //                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
-            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid]);
-//            ->toSql();
+            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid])
+//            ->toSql()
+        ;
 //        $result = $result->get();
 //        dd(DB::getQueryLog());
 //        dd($result);
@@ -674,8 +676,9 @@ class tasks extends Model
                 ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
                 ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-                ->whereNull('hamahang_task_assignments.transmitter_id')
-                ->where('hamahang_task_assignments.assigner_id', '=', $uid)
+//                ->whereNull('hamahang_task_assignments.transmitter_id')
+//                ->where('hamahang_task_assignments.status','=',0)
+                ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
                 ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()]);
             if ($subject_id)
@@ -695,10 +698,11 @@ class tasks extends Model
                 ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
                 ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-                ->whereNull('hamahang_task_assignments.transmitter_id')
-                ->where('hamahang_task_assignments.assigner_id', '=', $uid)
+//                ->whereNull('hamahang_task_assignments.transmitter_id')
+//                ->where('hamahang_task_assignments.status','=',0)
+                ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
-                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()]);
+                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ?)', [Auth::id()]);
             if ($subject_id)
             {
                 $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
@@ -706,6 +710,8 @@ class tasks extends Model
                     ->where('hamahang_subject_ables.subject_id', '=', $subject_id)
                     ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks');
             }
+//            $result = $result->tosql();
+//            dd($result);
             $result = $result->get();
         }
         return $result;
@@ -727,6 +733,7 @@ class tasks extends Model
     {
         $tasks_immediate_importance = self::whereHas('Assignment', function ($query) use ($type)
         {
+
             if ($type == 'MyTasks')
             {
                 $query->whereHas('Employee', function ($query)
@@ -742,6 +749,7 @@ class tasks extends Model
                 });
             }
         });
+//        dd($tasks_immediate_importance);
         $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Priority', function ($query) use ($immediate, $importance)
         {
             $query->where('immediate', $immediate)->where('importance', $importance);
@@ -967,7 +975,8 @@ class tasks extends Model
 
     public function Assignment()
     {
-        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->whereNull('transmitter_id')->whereNull('transferred_to_id');
+//        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->whereNull('transmitter_id')->whereNull('transferred_to_id');
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->where('status','=',0);//->whereNull('assigner_id');
     }
 
     public function Priorities()
@@ -988,6 +997,11 @@ class tasks extends Model
     public function Status()
     {
         return $this->hasOne('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id');
+    }
+
+    public function Action()
+    {
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_action', 'task_id', 'id');
     }
 
     public function Subjects()

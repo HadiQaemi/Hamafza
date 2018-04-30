@@ -12,13 +12,14 @@ class task_history extends Model
     use softdeletes;
     protected $table = "hamahang_task_history";
 
-    public static function create_task_history($task_id, $operation_type, $operation_value, $uid = -1)
+    public static function create_task_history($task_id, $operation_type, $operation_value, $descript=null, $uid = -1)
     {
 
         $keyword = new task_history;
         $keyword->uid = ($uid == -1) ? Auth::id() : $uid;
         $keyword->operator_id = ($uid == -1) ? Auth::id() : $uid;
         $keyword->task_id = $task_id;
+        $keyword->descript = $descript;
         $keyword->operation_type = $operation_type;
         $keyword->operation_value = $operation_value;
         $keyword->save();

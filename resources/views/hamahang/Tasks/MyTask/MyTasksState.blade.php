@@ -26,7 +26,7 @@
             position: absolute;
             background-color: #ffffff;
             z-index: 10;
-            bottom: 22px;
+            bottom: 0px;
             padding-bottom: 10px;
             width: 100%;
         }
@@ -35,6 +35,7 @@
             position: relative;
             width: 100%;
             top: 35px;
+            height: 430px;
         }
 
         .scrlbig {

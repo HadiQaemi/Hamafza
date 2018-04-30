@@ -3,6 +3,7 @@ Route::post('SelectTaskWindow', ['as' => 'hamahang.tasks.select_task_window', 'u
 Route::post('FetchTasksForSelectTaskWindow', ['as' => 'hamahang.tasks.fetch_tasks_for_select_task_window', 'uses' => 'TaskController@FetchTasksForSelectTaskWindow', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.fetch_tasks_for_select_task_window']]);
 Route::post('list', ['as' => 'hamahang.tasks.use_selected_tasks', 'uses' => 'TaskController@use_selected_tasks', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.use_selected_tasks']]);
 Route::post('save_task', ['as' => 'hamahang.tasks.save_task', 'uses' => 'MyAssignedTaskController@save', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.save_task']]);
+Route::post('set_act_to_task', ['as' => 'hamahang.tasks.set_act_to_task', 'uses' => 'MyAssignedTaskController@SetActToTask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.set_act_to_task']]);
 Route::post('update_task', ['as' => 'hamahang.tasks.update_task', 'uses' => 'MyAssignedTaskController@update_task', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.update_task']]);
 Route::post('save_drafts', ['as' => 'hamahang.tasks.save_drafts', 'uses' => 'DraftController@save_drafts', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.save_drafts']]);
 Route::post('draft_info', ['as' => 'hamahang.tasks.draft_info', 'uses' => 'DraftController@task_draft_info', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.draft_info']]);

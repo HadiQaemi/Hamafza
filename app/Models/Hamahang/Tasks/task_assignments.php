@@ -13,16 +13,17 @@ class task_assignments extends Model
     public $table = 'hamahang_task_assignments';
     protected $dates = ['deleted_at'];
 
-    public static function create_task_assignment($employee_id,$is_response , $task_id, $transferer_to = null, $transmitter_id = null, $reject_description = null, $assigner_id = -1, $uid = -1)
+    public static function create_task_assignment($employee_id,$staff_id , $task_id, $assigner_id = null, $reject_description = null, $uid = -1)
     {
         $assign = new task_assignments;
         $assign->uid = ($uid == -1) ? Auth::id() : $uid;
-        $assign->assigner_id = ($assigner_id == -1) ? Auth::id() : $assigner_id;
+        $assign->assigner_id = $assigner_id == null ? 0 : $assigner_id;
         $assign->employee_id = $employee_id;
         $assign->task_id = $task_id;
 //        $assign->is_response = $is_response;
-        $assign->transferred_to_id = $transferer_to;
-        $assign->transmitter_id = $transmitter_id;
+//        $assign->transferred_to_id = $transferer_to;
+//        $assign->transmitter_id = $transmitter_id;
+        $assign->staff_id = $staff_id;
         $assign->reject_description = $reject_description;
         $assign->save();
         return $assign;
@@ -31,7 +32,7 @@ class task_assignments extends Model
     /*------------------------------- relations ----------------------------------------*/
     public function Assigner()
     {
-        return $this->hasOne('App\User', 'id', 'assigner_id');
+        return $this->hasOne('App\User', 'id', 'uid');
     }
 
     public function Employee()
