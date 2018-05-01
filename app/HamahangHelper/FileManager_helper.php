@@ -20,7 +20,9 @@ if (!function_exists('HFM_Upload'))
         $size = $file->getSize();
         $Path = '/uploads/' . $CustomPath;
 
-        $originalNameWithoutExt = substr($originalName, 0, strlen($originalName) - strlen($extension) - 1);
+        //$originalNameWithoutExt = substr($originalName, 0, strlen($originalName) - strlen($extension) - 1);
+        $originalNameWithoutExt = str_replace($extension, null, $originalName);
+
         $OriginalFileName = HFM_Sanitize($originalNameWithoutExt);
         $extension = HFM_Sanitize($extension);
         $filename = $CustomUID . '_' . md5_file($file) . "_" . time() . $extension;
