@@ -1624,6 +1624,7 @@ preventDuplicates: true,
         $SP = new \App\HamafzaServiceClasses\PageClass();
         $menu = $SP->subjectPrint($type, $pids, $sid, $pids, $numbers);
         $html = $menu['print'];
+        $html = str_replace('../../FileManager/', url('') . '/FileManager/', $html);
         if ($type == 'word')
         {
             $html = '<head><title></title></head><style>table {border-collapse: collapse;}table, th, td {border: 1px solid black;}</style><body>' . $html . '</body>';
