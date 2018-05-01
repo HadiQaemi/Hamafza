@@ -1627,7 +1627,7 @@ preventDuplicates: true,
         $html = str_replace('../../FileManager/', url('') . '/FileManager/', $html);
         if ($type == 'word')
         {
-            $html = '<head><title></title></head><style>table {border-collapse: collapse;}table, th, td {border: 1px solid black;}</style><body>' . $html . '</body>';
+            $html = '<head><title></title></head><style>table {border-collapse: collapse;}table, th, td {border: 1px solid black;}</style><body><p>' . $title . '</p>' . $html . '</body>';
             $htmltodoc = new \App\HamafzaViewClasses\htmltodoc();
             $FULLSITE = url('/');
             $html = str_replace("<p", "<p lang=FA dir=RTL style='font-weight: normal;font-family:\"B Nazanin\";text-align: justify;font-size:14pt'", $html);
