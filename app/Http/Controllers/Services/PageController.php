@@ -11,6 +11,7 @@ use Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use App\Token;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller {
 
@@ -138,6 +139,22 @@ class PageController extends Controller {
                 ]
             ]
         ];
+          $uid= Token::where('token', Request::input('token'))->first()->user->id;
+         $pageDet = DB::table('subject_member')
+                ->where('uid', $uid)->where('sid', $subject->id)->select('id', 'relation', 'follow', 'like')->first();
+           
+            if ($pageDet)
+            {
+                $res['like'] = $pageDet->like;
+                $res['follow'] = $pageDet->follow;
+                $res['relation'] = $pageDet->relation;
+            }
+            else
+            {
+                $res['like'] = '0';
+                $res['follow'] = 0;
+                $res['relation'] = 0;
+            }
         return response()
                         ->json($res, 200)
                         ->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
