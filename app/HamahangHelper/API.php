@@ -138,7 +138,7 @@ if (!function_exists('Get_User_Wall')) {
         //$User = User::where('Uname', $user)->firstOrFail();
 
         $PostsClass = new PostsClass();
-        return $PostsClass->UserWall($id, $limit,$offset);
+        return $PostsClass->UserWall($id, $limit,$offset,true);
     }
 
 }

@@ -31,6 +31,22 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.get_page_detail',
         'uses' => 'PageController@PageDetail'
     ]);
+    Route::post('like', [
+        'as' => 'api.v43.like',
+        'uses' => 'PageController@like'
+    ]);
+    Route::post('dislike', [
+        'as' => 'api.v43.dislike',
+        'uses' => 'PageController@dislike'
+    ]);
+    Route::post('follow', [
+        'as' => 'api.v43.follow',
+        'uses' => 'PageController@follow'
+    ]);
+    Route::post('unfollow', [
+        'as' => 'api.v43.unfollow',
+        'uses' => 'PageController@unfollow'
+    ]);
 
     Route::post('get_persons', [
         'as' => 'api.v43.get_persons',
