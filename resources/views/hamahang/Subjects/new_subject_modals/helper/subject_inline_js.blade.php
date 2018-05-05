@@ -14,7 +14,7 @@
             var token = '{{ csrf_token() }}';
             $.ajax({
                 type: "POST",
-                url: Baseurl + "api/GetsubjectFields",
+                url: Baseurl + "GetsubjectFields",
                 dataType: 'html',
                 data: ({kind: kind, _token: token}),
                 success: function (theResponse) {

@@ -23,6 +23,7 @@ class storeLogRequest implements ShouldQueue
     public function __construct($request_info)
     {
         $this->request_info = $request_info;
+        $this->handle();
     }
 
     /**
@@ -62,7 +63,6 @@ class storeLogRequest implements ShouldQueue
         $logs->is_secure = $request_info['is_secure'];
 //        $logs->post_data = $request_info['post_data'];
         $logs->response_format = $request_info['response_format'];
-
 
         $logs->save();
     }

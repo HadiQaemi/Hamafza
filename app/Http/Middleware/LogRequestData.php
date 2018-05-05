@@ -18,7 +18,7 @@ class LogRequestData
      */
     public function handle($request, Closure $next)
     {
-        $request_info['ip'] = Request::ip();;
+        $request_info['ip'] = Request::ip();
         $request_info['url'] = Request::url();
         $request_info['uri'] = Request::getUri();
         $request_info['path'] = Request::path();
@@ -30,7 +30,6 @@ class LogRequestData
         $request_info['is_secure'] = Request::secure() == true ? '1' : '0';
         //$request_info['post_data'] = Request::instance()->getContent();
         $request_info['response_format'] = Request::format();
-
 
         //$IP_info = geoip()->getLocation();
         $job = (new storeLogRequest($request_info))->onQueue('log_request');
