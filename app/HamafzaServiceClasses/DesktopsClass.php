@@ -90,7 +90,7 @@ class DesktopsClass
         return $Ret;
     }
 
-    /*function RelationMemus($uid, $sesid)
+    function RelationMemus($uid, $sesid)
     {
         $menus = array();
 
@@ -568,7 +568,7 @@ class DesktopsClass
             array_push($menus, $menu);
         }
         return $menus;
-    }*/
+    }
 
     /*public function user_tools($sid, $pid = 0, $uid, $subtype)
     {
