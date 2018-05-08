@@ -1533,6 +1533,7 @@ class MyAssignedTaskController extends Controller
                 $task->save();
 
                 $x = 0;
+                $staff = '';
                 if (sizeof($selected_users) > 0)
                 {
                     foreach ($selected_users as $u)
@@ -1540,20 +1541,22 @@ class MyAssignedTaskController extends Controller
                         if ($x == 0)
                         {
                             ///////نفر اول بعنوان مسوول ثبت می شود
-                            $assign = task_assignments::create_task_assignment($u, $task->id);
+//                            $assign = task_assignments::create_task_assignment($u, $task->id);
+                            $staff = $u;
                             $x = 1;
                         }
-                        else
-                        {
-                            /////////// ثبت سایر افراد وظیفه
-                            task_staffs::create_task_staff($assign->id, $u);
-                        }
+//                        else
+//                        {
+//                            /////////// ثبت سایر افراد وظیفه
+//                            task_staffs::create_task_staff($assign->id, $u);
+//                        }
+                        task_assignments::create_task_assignment($u ,$staff ,$task->id,0);
                     }
                 }
 
                 $status = task_status::create_task_status($task->id);
                 $priority = task_priority::create_task_priority($task->id, $immediacy, $importance);
-                $employee = User::find($assign->employee_id);
+                $employee = User::find($staff);
 
                 $respite_date = hamahang_respite_remain(strtotime($task->schedule_time), $task->duration_timestamp);
                 if ($respite_date[0]['delayed'] == 1)

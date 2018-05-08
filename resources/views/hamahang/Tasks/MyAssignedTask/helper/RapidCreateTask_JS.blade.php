@@ -78,7 +78,7 @@
                         ,{!! $function !!},'data'
                     @endif
                     );--}}
-                        reload_mytask();
+                        //reload_mytask();
 
                 }
                 else {

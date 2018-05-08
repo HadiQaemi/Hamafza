@@ -101,9 +101,9 @@
                             <input type="radio" name="assign_type" id="use_type2" class="person_option" value="2"/>
                             <label class="person_option" for="use_type2">{{ trans('tasks.individual') }}</label>
 
-                            <input type="checkbox" name="send_mail" id="send_mail" class="send_message" value="1"/>
+                            <input type="checkbox" name="send_mail" id="send_mail" class="send_message" value="1" checked/>
                             <label class="send_message" for="send_mail">{{ trans('tasks.send-mail') }}</label>
-                            <input type="checkbox" name="send_sms" id="send_sms" class="send_message" value="1"/>
+                            <input type="checkbox" name="send_sms" id="send_sms" class="send_message" value="1" disabled="disabled"/>
                             <label class="send_message" for="send_sms">{{ trans('tasks.send-sms') }}</label>
                         </div>
                     </div>

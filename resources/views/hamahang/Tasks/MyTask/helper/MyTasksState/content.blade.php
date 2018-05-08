@@ -8,7 +8,7 @@
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
+                                <span class="pull-right" data-toggle="tooltip">
                                       {{--title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}--}}{{-- {!!$user->SmallAvatar!!}--}}
                                       {{--title="">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}--}}{{-- {!!$user->SmallAvatar!!}--}}
                                 </span>
@@ -39,17 +39,20 @@
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
+                                <span class="pull-right" data-toggle="tooltip">
                                       {{--title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}--}}{{-- {!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
                             <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}"><?php if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else $title = $task->title; echo $title; ?>
+                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                    <?php if (strlen($task->title) > 16)
+                                    {
+                                        $title = substr($task->title, 0, 16);
+                                        $title .= '...';
+                                    }
+                                    else
+                                        $title = $task->title;
+                                    echo $title; ?>
                                 </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -69,7 +72,7 @@
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
+                                <span class="pull-right" data-toggle="tooltip">
                                       {{--title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}--}}{{-- {!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
@@ -99,7 +102,7 @@
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
+                                <span class="pull-right" data-toggle="tooltip">
                                       {{--title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}--}}{{-- {!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>

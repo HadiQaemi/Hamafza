@@ -864,9 +864,10 @@ class ModalController extends Controller
         }
 
         $task_history = task_history::GetTaskHistory($res['tid']);
+        $d = new jDateTime;
         foreach ($task_history as $t)
         {
-            $d = new jDateTime;
+
             $datetime = explode(' ', $t->created_at);
             $date = explode('-', $datetime[0]);
             $time = explode(':', $datetime[1]);
@@ -875,7 +876,24 @@ class ModalController extends Controller
             $jdate = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
             $t->created_at = $jdate;
         }
-//        dd($task_history);
+        if(isset($task['respite_date']))
+        {
+            $date = explode('-', $task['respite_date']);
+            $task['respite_date'] = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+        }
+        if(isset($task['schedul_begin_date'])) {
+            $date = explode('-', $task['schedul_begin_date']);
+            $task['schedul_begin_date'] = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+//            $task['schedul_begin_date'] = jDateTime::mktime(24, 0, 0, $date[1], $date[2], $date[0], true);
+        }
+        if(isset($task['schedul_end_date_date'])) {
+            $date = explode('-', $task['schedul_end_date_date']);
+            $task['schedul_end_date_date'] = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2], '-');
+//            mktime(24, 0, 0, $date[1], $date[2], $date[0], true);
+//                mktime($hour, $minute, $second, $month, $day, $year, $jalali = null, $timezone = null)
+        }
+//        $task['respite_date'];
+//        dd($task['schedul_begin_date']);
         Session::put('ShowAssignTaskForm_tid',$res['tid']);
         Session::put('ShowAssignTaskForm_aid',$res['aid']);
         Session::put('ShowAssignTaskForm_is_creator',$task_all->uid != Auth::id() ? true : false);

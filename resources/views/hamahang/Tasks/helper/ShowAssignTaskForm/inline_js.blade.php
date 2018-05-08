@@ -13,31 +13,32 @@
 
         if (id == 1) {
             var txt = '' +
-                '<div class="row-fluid">' +
-                '   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">' +
-                '       <div class=" row">' +
-                '           <div class="col-sm-6 col-xs-12">' +
-                '               <label class="line-height-30 pull-right">تاریخ</label>' +
-                '               <div class=" pull-right">' +//input-group
+                // '<div class="row-fluid">' +
+                // '   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">' +
+                // '       <div class=" row">' +
+                // '           <div class="col-sm-6 col-xs-12">' +
+                '               <label class="line-height-30">تاریخ</label>' +
+                // '               <div class=" pull-right">' +//input-group
 //                '                   <span class="input-group-addon" id="respite_date">' +
 //                '                       <i class="fa fa-calendar"></i>' +
 //                '                   </span>' +
-                '                   <input type="text" class="form-control DatePicker" name="respite_date" aria-describedby="respite_date">' +
-                '               </div>' +
-                '           </div>' +
-                '           <div class="col-sm-6 col-xs-12">' +
+                '                   <input type="text" class="form-control" name="respite_date" id="respite_date" {{ isset($task['respite_date']) ? 'value='.$task['respite_date'] : '' }} aria-describedby="respite_date">' +
+//                 '               </div>' +
+//                 '           </div>' +
+//                 '           <div class="col-sm-6 col-xs-12">' +
                 '               <label class="line-height-30">ساعت</label>' +
-                '               <div class=" pull-right">' +//input-group
-//                '                   <span class="input-group-addon" id="respite_time">' +
-//                '                       <i class="fa fa-clock-o"></i>' +
-//                '                   </span>' +
-                '                   <input type="text" class="form-control TimePicker" name="respite_time" aria-describedby="respite_time">' +
-                '               </div>' +
-                '           </div>' +
-                '       </div>' +
-                '   </div>' +
-                '   <div class="clearfix"></div>' +
-                '</div>';
+//                 '               <div class=" pull-right">' +//input-group
+// //                '                   <span class="input-group-addon" id="respite_time">' +
+// //                '                       <i class="fa fa-clock-o"></i>' +
+// //                '                   </span>' +
+                '                   <input type="text" class="form-control TimePicker" name="respite_time" aria-describedby="respite_time" {{ isset($task['respite_time']) ? 'value='.$task['respite_time'] : '' }}>' +
+//                 '               </div>' +
+//                 '           </div>' +
+//                 '       </div>' +
+//                 '   </div>' +
+//                 '   <div class="clearfix"></div>' +
+//                 '</div>' +
+            '';
             $('#normal_task_timing').html(txt);
             $(".TimePicker").persianDatepicker({
                 format: "HH:mm:ss a",
@@ -47,29 +48,30 @@
                 onlyTimePicker: true
             });
 
-            $(".DatePicker").persianDatepicker({
+            $("#respite_date").persianDatepicker({
                 observer: true,
                 autoClose: true,
-                format: 'YYYY-MM-DD'
+                format: 'YYYY-MM-DD',
             });
         }
         if (id == 0) {
             var txt = '' +
-                '<div class="row-fluid">\n' +
-                '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
-                '       <div class="row-fluid">\n' +
-                '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
+                // '<div class="row-fluid">\n' +
+                // '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
+                // '       <div class="row-fluid">\n' +
+                // '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
                 '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
                 '               <label class="pull-right">روز</label>\n' +
                 '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
                 '               <label class="pull-right">ساعت</label>\n' +
                 '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
                 '               <label class="pull-right">دقیقه</label>\n' +
-                '           </div>\n' +
-                '       </div>\n' +
-                '   </div>\n' +
-                '   <div class="clearfix"></div>\n' +
-                '</div>\n';
+                // '           </div>\n' +
+                // '       </div>\n' +
+                // '   </div>\n' +
+                // '   <div class="clearfix"></div>\n' +
+                // '</div>\n'
+                '';
 
             $('#normal_task_timing').html(txt);
 
@@ -614,6 +616,14 @@
     });
 
     $(document).ready(function () {
+        @if($task['respite_timing_type']==0 || $task['respite_timing_type']==1)
+            change_normal_task_timing_type({{$task['respite_timing_type']}});
+        @endif
+//        $("#respite_date").persianDatepicker({
+//            observer: true,
+//            autoClose: true,
+//            format: 'YYYY-MM-DD'
+//        });
         $('.person_option').hide();
         $('.send_message').hide();
         $('.transcript_option').hide();
