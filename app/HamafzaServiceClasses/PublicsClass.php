@@ -1210,7 +1210,8 @@ class PublicsClass
         $rows = DB::table('subst')->select('first', 'second')->get();
         foreach ($rows as $row)
         {
-            $string = str_replace($row->first, $row->second, $string);
+            //hqi استفاده از استمر
+            //$string = str_replace($row->first, $row->second, $string);
         }
         return trim($string);
     }
