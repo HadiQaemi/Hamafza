@@ -1,6 +1,6 @@
 <script language="javascript" type="text/javascript">
     $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 116px; top: -3px;"><a href="{!! url('/modals/helpview?code=LmwBEEoNwME') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
-    $(document).click(function () {
+    $(document).ready(function () {
         $("#wordexport").off();
         $("#pdfexport").off();
         $("#wordexport").click(function () {
