@@ -341,6 +341,18 @@ class UserController extends Controller {
                 'data' =>
                     [
                         [
+                        'section' => 'name',
+                        'title' => 'نام',
+                        'type' => '0',
+                        'data' => "$user->Name $user->Family"
+                    ],
+                        [
+                        'section' => 'summary',
+                        'title' => 'عنوان',
+                        'type' => '0',
+                        'data' => "$user->Summary"
+                    ],
+                        [
                         'section' => 'posts',
                         'title' => 'پست ها',
                         'type' => '0',
