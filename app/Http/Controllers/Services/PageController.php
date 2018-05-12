@@ -368,5 +368,74 @@ class PageController extends Controller {
         $result = PageClass::pages_list($html, $page);
         return response()->json(['success' => true, 'result' => [$result[0], $result[1]]]);
     }
+    
+    public function newpost(Request $request)
+    {
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $error = validation_error_to_api_json($validator->errors());
+            $res = [
+                'status' => "-1",
+                'error' => $error
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+       
+        $user= Token::where('token', Request::input('token'))->first()->user;
+     
+        $uid = $user->id;
+        
+        $pid = Request::input('pid');
+        $type = Request::input('type');
+        $desc = Request::input('desc');
+        $all = '1';
+        $keys = Request::input('keys');
+        $cids = "all";
+        $gids = Request::input('gids');
+        $title = Request::input('title');
+        $portal_id ="null";
+        $reward = $user->TotalScores;
+        $sesid = 0;
+        $file = Request::file('image');
+        $tmpFileName = '';
+        if ($file)
+        {
+            if ($file->isValid())
+            {
+                $extension = $file->getClientOriginalExtension();
+                $tmpFileName = $uid . time() . '.' . $extension; // renameing image
+                $img = Image::make($file->getRealPath());
+                $img->resize(800, null, function ($constraint)
+                {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save('uploads/' . $tmpFileName)->destroy();
+                $tmpFileName = $tmpFileName;
+            }
+        }
+        $video = '';
+
+        $SP = new \App\HamafzaServiceClasses\PostsClass();
+        $time = time();
+        $menu = $SP->NewPost($uid, $sesid, $pid, $type, $desc, $tmpFileName, $video, $time, $all, $keys, $cids, $gids, $title, $portal_id, $reward);
+        if ($menu)
+        {
+            $file = HFM_SaveMultiFiles('comment_file', '\App\Models\Hamahang\FileManager\Fileable', 'fileable_id', $menu, ['created_by' => $user->id, 'fileable_type' => 'App\Models\hamafza\Pages', 'type' => 2]);
+        }
+        return  [
+                'status' => "1",
+               
+            ];;
+    }
 
 }

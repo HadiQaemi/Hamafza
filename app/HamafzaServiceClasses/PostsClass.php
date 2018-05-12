@@ -1173,7 +1173,7 @@ class PostsClass {
                 $score_id = config('score.6');
                 break;
         }
-        score_register('App\Models\hamafza\Post', $pid, $score_id);
+        score_register('App\Models\hamafza\Post', $pid, $score_id,$uid);
 
         if ($keys != '') {
             $myArray = explode(',', $keys);

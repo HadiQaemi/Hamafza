@@ -39,6 +39,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.dislike',
         'uses' => 'PageController@dislike'
     ]);
+    Route::post('newpost', [
+        'as' => 'api.v43.newpost',
+        'uses' => 'PageController@newpost'
+    ]);
     Route::post('follow', [
         'as' => 'api.v43.follow',
         'uses' => 'PageController@follow'
