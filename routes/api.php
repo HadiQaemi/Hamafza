@@ -51,6 +51,21 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.unfollow',
         'uses' => 'PageController@unfollow'
     ]);
+    
+    Route::post('toggle_bookmark', [
+        'as' => 'api.v43.toggle_bookmark',
+        'uses' => 'PageController@bookmark_toggle'
+    ]);
+    
+    Route::post('delete_bookmark', [
+        'as' => 'api.v43.delete_bookmark',
+        'uses' => 'PageController@bookmark_delete'
+    ]);
+    
+    Route::post('add_announce', [
+        'as' => 'api.v43.add_announce',
+        'uses' => 'PageController@announce_add'
+    ]);
 
     Route::post('get_persons', [
         'as' => 'api.v43.get_persons',
