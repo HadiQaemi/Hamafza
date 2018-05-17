@@ -13,31 +13,11 @@
 
         if (id == 1) {
             var txt = '' +
-                '<div class="row-fluid">' +
-                '   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">' +
-                '       <div class=" row">' +
-                '           <div class="col-sm-6 col-xs-12">' +
-                '               <label class="line-height-30 pull-right">تاریخ</label>' +
-                '               <div class=" pull-right">' +//input-group
-//                '                   <span class="input-group-addon" id="respite_date">' +
-//                '                       <i class="fa fa-calendar"></i>' +
-//                '                   </span>' +
-                '                   <input type="text" class="form-control DatePicker" name="respite_date" aria-describedby="respite_date">' +
-                '               </div>' +
-                '           </div>' +
-                '           <div class="col-sm-6 col-xs-12">' +
-                '               <label class="line-height-30">ساعت</label>' +
-                '               <div class=" pull-right">' +//input-group
-//                '                   <span class="input-group-addon" id="respite_time">' +
-//                '                       <i class="fa fa-clock-o"></i>' +
-//                '                   </span>' +
-                '                   <input type="text" class="form-control TimePicker" name="respite_time" aria-describedby="respite_time">' +
-                '               </div>' +
-                '           </div>' +
-                '       </div>' +
-                '   </div>' +
-                '   <div class="clearfix"></div>' +
-                '</div>';
+                '<label class="line-height-30 pull-right">تاریخ</label>' +
+                '<input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">' +
+                '<label class="line-height-30 pull-right">ساعت</label>' +
+                '<input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">' +
+                '';
             $('#normal_task_timing').html(txt);
             $(".TimePicker").persianDatepicker({
                 format: "HH:mm:ss a",
@@ -55,21 +35,12 @@
         }
         if (id == 0) {
             var txt = '' +
-                '<div class="row-fluid">\n' +
-                '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
-                '       <div class="row-fluid">\n' +
-                '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
-                '               <label class="pull-right">روز</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
-                '               <label class="pull-right">ساعت</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
-                '               <label class="pull-right">دقیقه</label>\n' +
-                '           </div>\n' +
-                '       </div>\n' +
-                '   </div>\n' +
-                '   <div class="clearfix"></div>\n' +
-                '</div>\n';
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
+                '<label class="pull-right">روز</label>\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
+                '<label class="pull-right">ساعت</label>\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
+                '<label class="pull-right">دقیقه</label>';
 
             $('#normal_task_timing').html(txt);
 
@@ -282,13 +253,14 @@
             }
         });
     }
-    function SaveTask(form_id, again,action) {
+
+    function UpdateTask(form_id, again,action) {
         //console.log(form_id);
-		$('#task_form_action').val(action);
+        $('#task_form_action').val(action);
         var form_data = $('#' + form_id).serialize();
         $.ajax({
             type: "POST",
-            url: '{{ route('hamahang.tasks.save_task')}}',
+            url: '{{ route('hamahang.tasks.update_task')}}',
             dataType: "json",
             data: form_data,
             success: function (result) {
@@ -327,84 +299,115 @@
         autoClose: true,
         format: 'YYYY-MM-DD'
     });
+    $(".DatePicker_begin_date").persianDatepicker({
+        observer: true,
+        autoClose: true,
+        format: 'YYYY-MM-DD'
+    });
+    $(".DatePicker_end_date_date").persianDatepicker({
+        observer: true,
+        autoClose: true,
+        format: 'YYYY-MM-DD'
+    });
     function remove_new_task(num_add_rel_task) {
         $('#num_add_rel_task' + num_add_rel_task).remove();
     }
-	var num_add_rel_task = 1;
-	$("#add_rel_task").click(function () {
+    var num_add_rel_task = 1;
+    $("#add_rel_task").click(function () {
 //	    alert($('#new_task_tasks').val());
-		var project_span = '' +
-			'   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
-//			'       <td>\n' +
-//			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-//			'       </td>\n' +
-			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+$('#select2-new_task_tasks-container').val()+'</label>\n' +
-			'       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'           <label class="input-group pull-right">\n' +
-							$('#new_task_weight').val() +
-			'       		<input name="new_task_weight[]" type="hidden" value="' +$('#new_task_weight').val()+ '"/>' +
-			'           </label>\n' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'       	<select name="new_task_relation[]" class="form-control" >\n' +
-			'				<option value="end_start">پایان به شروع</option>\n' +
-			'				<option value="start_start">شروع به شروع</option>\n' +
-			'				<option value="start_end">شروع به پایان</option>\n' +
-			'				<option value="end_end">پایان به پایان</option>\n' +
-			'				<option value="up">بالادستی</option>\n' +
-			'				<option value="down">پایین دستی</option>\n' +
-			'				<option value="after">گردش کار - بعدی</option>\n' +
-			'				<option value="previous">گردش کار - قبلی</option>\n' +
-			'			</select>\n' +
-			'       </td>\n' +
-			'		<td>\n' +
-			'           <label class="input-group pull-right">\n' +
-			'       		<div class="col-xs-6"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
-			'       		<div class="col-xs-6"><select name="new_task_delay_type[]" class="form-control" >\n' +
-			'					<option value="day">روز</option>\n' +
-			'					<option value="week">هفته</option>\n' +
-			'					<option value="month">ماه</option>\n' +
-			'				</select></div>\n' +
-			'           </label>\n' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
-			'       </td>\n' +
-			'    </tr>\n';
+        var project_span = '' +
+            '   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
+            //			'       <td>\n' +
+            //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+            //			'       </td>\n' +
+            '       <td>\n' +
+            '       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
+            '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
+            '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_tasks-container').attr('title')+ '"/>' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#new_task_weight').val() +
+            '       		<input name="new_task_weight[]" type="hidden" value="' +$('#new_task_weight').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '       	<select name="new_task_relation[]" class="form-control" >\n' +
+            '				<option value="end_start">پایان به شروع</option>\n' +
+            '				<option value="start_start">شروع به شروع</option>\n' +
+            '				<option value="start_end">شروع به پایان</option>\n' +
+            '				<option value="end_end">پایان به پایان</option>\n' +
+            '				<option value="up">بالادستی</option>\n' +
+            '				<option value="down">پایین دستی</option>\n' +
+            '				<option value="after">گردش کار - بعدی</option>\n' +
+            '				<option value="previous">گردش کار - قبلی</option>\n' +
+            '			</select>\n' +
+            '       </td>\n' +
+            '		<td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            '       		<div class="col-xs-6"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
+            '       		<div class="col-xs-6"><select name="new_task_delay_type[]" class="form-control" >\n' +
+            '					<option value="day">روز</option>\n' +
+            '					<option value="week">هفته</option>\n' +
+            '					<option value="month">ماه</option>\n' +
+            '				</select></div>\n' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+            '       </td>\n' +
+            '    </tr>\n';
         $('#rel_task_list').append(project_span);
-	});
-	var num_add_resource_task = 1;
-	$("#add_resource_task").click(function () {
-	    var project_span = '' +
-			'   <tr id="add_resource_task'+num_add_resource_task+'">\n' +
-//			'       <td>\n' +
-//			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-//			'       </td>\n' +
-			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_resources-container').attr('title')+'</label>\n' +
-			'       		<input name="new_task_resources_h[]" type="hidden" value="' +($('#select2-new_task_resources-container').val().trim()=='' ? $('#select2-new_task_resources-container').attr('title') : $('#select2-new_task_resources-container').val())+ '"/>' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'           <label class="input-group pull-right">\n' +
-							$('#new_task_resources_amount').val() +
-			'       		<input name="new_task_resources_amount[]" type="hidden" value="' +$('#new_task_resources_amount').val()+ '"/>' +
-			'           </label>\n' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'           <label class="input-group pull-right">\n' +
-							$('#new_task_resources_cost').val() +
-			'       		<input name="new_task_resources_cost[]" type="hidden" value="' +$('#new_task_resources_cost').val()+ '"/>' +
-			'           </label>\n' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
-			'       </td>\n' +
-			'    </tr>\n';
+    });
+    var num_add_resource_task = 1;
+    $("#add_resource_task").click(function () {
+        var project_span = '' +
+            '   <tr id="add_resource_task'+num_add_resource_task+'">\n' +
+            //			'       <td>\n' +
+            //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+            //			'       </td>\n' +
+            '       <td>\n' +
+            '       	<label class="pull-right" for="r2">'+$('#select2-new_task_resources-container').attr('title')+'</label>\n' +
+            '       		<input name="new_task_resources_h[]" type="hidden" value="' +($('#select2-new_task_resources-container').val().trim()=='' ? $('#select2-new_task_resources-container').attr('title') : $('#select2-new_task_resources-container').val())+ '"/>' +
+            '       		<input name="new_task_resources_t[]" type="hidden" value="' +$('#select2-new_task_resources-container').attr('title')+ '"/>' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#new_task_resources_amount').val() +
+            '       		<input name="new_task_resources_amount[]" type="hidden" value="' +$('#new_task_resources_amount').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#new_task_resources_cost').val() +
+            '       		<input name="new_task_resources_cost[]" type="hidden" value="' +$('#new_task_resources_cost').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
+            '       </td>\n' +
+            '    </tr>\n';
         $('#resources_task_list').append(project_span);
-	});
+    });
+    $("#add_message_task").click(function () {
+        var project_span = '' +
+            '   <tr id="add_resource_task'+num_add_resource_task+'">\n' +
+            //			'       <td>\n' +
+            //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+            //			'       </td>\n' +
+            '       <td>\n' +
+            '       	<label class="pull-right" for="r2">'+$('#user').val()+'</label>\n' +
+            '       		<input name="message_username[]" type="hidden" value="' +$('#user').val()+ '"/>' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#message').val() +
+            '       		<input name="messages[]" type="hidden" value="' +$('#message').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '    </tr>\n';
+        $('#message_task_list').append(project_span);
+    });
 
     $(".select2_auto_complete_user").select2({
         minimumInputLength: 3,
@@ -460,7 +463,7 @@
             }
         }
     });
-	$(".select2_auto_complete_tasks").select2({
+    $(".select2_auto_complete_tasks").select2({
         minimumInputLength: 3,
         dir: "rtl",
         width: "100%",
@@ -569,43 +572,101 @@
         }
     });
 
-    $(document).on('click', '.save_task', function () {
-        var save_type = $("input[name='new_task_save_type']:checked").val()
-        var $this = $(this);
-        var form_id = $this.data('form_id');
-        var save_again = $this.data('again_save');
-        if (save_type == 1) {
-            SaveTask(form_id, save_again,1);
+    $('#reject_assigner').on('click', function() {
+        if($(this).is(":checked")){
+            $(".assingned_options").prop('disabled', true);
+            $(".rejected_options").prop('disabled', false);
         }
-        else if (save_type == 0) {
-            SaveTask(form_id, save_again,0);
-            //save_as_draft(form_id, save_again);
-        }
-        else
-        {
-            alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+        else {
+            $(".rejected_options").prop('disabled', true);
+            $(".assingned_options").prop('disabled', false);
         }
     });
 
-    $('#new_task_users').on('change', function() {
+
+    //************** sended to master.blade
+
+    {{--function SaveTask(form_id, again,action) {--}}
+    {{--//console.log(form_id);--}}
+    {{--$('#task_form_action').val(action);--}}
+    {{--var form_data = $('#' + form_id).serialize();--}}
+    {{--$.ajax({--}}
+    {{--type: "POST",--}}
+    {{--url: '{{ route('hamahang.tasks.save_task')}}',--}}
+    {{--dataType: "json",--}}
+    {{--data: form_data,--}}
+    {{--success: function (result) {--}}
+    {{--console.log(result);--}}
+    {{--if (result.success == true) {--}}
+    {{--if (again == 1) {--}}
+    {{--ResetForm();--}}
+    {{--}--}}
+    {{--else {--}}
+    {{--$('.jsPanel-btn-close').click();--}}
+    {{--}--}}
+    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+    {{--}--}}
+    {{--else {--}}
+    {{--messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);--}}
+    {{--}--}}
+    {{--}--}}
+    {{--});--}}
+    {{--}--}}
+    {{--$(document).on('click', '.save_task', function () {--}}
+
+    {{--var save_type = $("input[name='new_task_save_type']:checked").val()--}}
+    {{--var $this = $(this);--}}
+    {{--var form_id = $this.data('form_id');--}}
+    {{--var save_again = $this.data('again_save');--}}
+    {{--if (save_type == 1) {--}}
+    {{--SaveTask(form_id, save_again,1);--}}
+    {{--}--}}
+    {{--else if (save_type == 0) {--}}
+    {{--SaveTask(form_id, save_again,0);--}}
+    {{--//save_as_draft(form_id, save_again);--}}
+    {{--}--}}
+    {{--else--}}
+    {{--{--}}
+    {{--alert('{{ trans('tasks.the_save_type_is_not_selected') }}');--}}
+    {{--}--}}
+    {{--});--}}
+
+
+
+    $('#new_task_users_responsible').on('change', function() {
         var none = $(this).find('option:selected').length;
         if(none > 1)
             $('.person_option').show();
         else
             $('.person_option').hide();
-		if(none >= 1)
+        if(none >= 1)
             $('.send_message').show();
         else
             $('.send_message').hide();
+
+        var title = $('#task_title').val();
+        if(title.trim().length>0 && none>0)
+            $('.new_task_save_type_final').click();
+        else
+            $('.new_task_save_type_draft').click();
     });
-	
-	$('#task_schedul').on('change', function() {
+
+    $('#task_title').on('keyup', function() {
+        var title = $(this).val();
+        var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
+        if(title.trim().length>0 && new_task_users_responsible>0)
+            $('.new_task_save_type_final').click();
+        else
+            $('.new_task_save_type_draft').click();
+    });
+
+    $('#task_schedul').on('change', function() {
         var schedul = $(this).val();
-		$('.div-schedul div').addClass('hidden');
-		$('.'+schedul).removeClass('hidden');
+        $('.div-schedul div').addClass('hidden');
+        $('.'+schedul).removeClass('hidden');
     });
-	
-	$('#new_task_transcripts').on('change', function() {
+
+    $('#new_task_transcripts').on('change', function() {
         var none = $(this).find('option:selected').length;
         if(none >=1)
             $('.transcript_option').show();
@@ -617,7 +678,14 @@
         $('.person_option').hide();
         $('.send_message').hide();
         $('.transcript_option').hide();
-
-        $('.new_task_save_type_final').click();
+        $('#create_new_task').on('click', function() {
+            var title = $('#task_title').val();
+            var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
+            if(title.trim().length>0 && new_task_users_responsible>0)
+                $('.new_task_save_type_final').click();
+            else
+                $('.new_task_save_type_draft').click();
+        });
+        $('.new_task_save_type_draft').click();
     })
 </script>

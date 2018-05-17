@@ -33,23 +33,7 @@
         @endif
 
     };
-    $(document).on('click', '.update_task', function () {
-        var save_type = $("input[name='new_task_save_type']:checked").val();
-        var $this = $(this);
-        var form_id = $this.data('form_id');
-        var save_again = $this.data('again_save');
-        if (save_type == 1) {
-            UpdateTask(form_id, save_again,'');
-        }
-        else if (save_type == 0) {
-            UpdateTask(form_id, save_again,0);
-            //save_as_draft(form_id, save_again);
-        }
-        else
-        {
-            alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
-        }
-    });
+  
 
     $('#MyTasksTable').DataTable({
         "dom": window.CommonDom_DataTables,

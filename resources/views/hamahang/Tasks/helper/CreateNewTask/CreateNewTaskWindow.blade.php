@@ -33,7 +33,7 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
                     <div class="col-lg-10">
                         <div class="row">
-                            <input type="text" class="form-control" name="title" id="task_title" placeholder="{{ trans('tasks.title') }}"/>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('tasks.title') }}"/>
                         </div>
                         <div class="row">
                             <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
@@ -86,7 +86,7 @@
                     <div class="col-lg-10">
                         <div class="col-sm-6 row" style="padding: 0px;">
                             <select id="new_task_users_responsible" name="users[]" class="select2_auto_complete_user col-xs-12"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                    data-placeholder="{{trans('tasks.select_some_persons')}}" multiple>
                                 <option value=""></option>
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
@@ -113,7 +113,7 @@
                     <div class="col-lg-10">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select id="new_task_transcripts" name="transcripts[]" class="select2_auto_complete_transcripts"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple></select>
+                                    data-placeholder="{{trans('tasks.select_some_persons')}}" multiple></select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
@@ -139,39 +139,74 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 noRightPadding noLeftPadding line-height-35">
-                        <div class="col-xs-3 noRightPadding noLeftPadding">
-                            <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>
-                            <label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>
-                            <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>
-                            <label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>
-                        </div>
-                        <div id="normal_task_timing" class="col-xs-5 form-inline noRightPadding noLeftPadding">
+                    <div class="col-lg-10 line-height-35">
+                        <div class="col-xs-12 noRightPadding noLeftPadding">
+                            <span class="pull-right;">
+                                <input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>
+                                <label for="on-time">{{ trans('tasks.on-time') }}</label>
+                                <input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>
+                                <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
+                            </span>
+                            <span class="pull-right;">
+                                <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>
+                                <label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>
+                                <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>
+                                <label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>
+                            </span>
+
+                            <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>
                                 <label class="pull-right">روز</label>
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_hour" id="duration_hour" value="0"/>
                                 <label class="pull-right">ساعت</label>
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_min" id="duration_min" value="0"/>
                                 <label class="pull-right">دقیقه</label>
-                        </div>
-                        <div class="col-xs-4 noRightPadding noLeftPadding">
-                            <input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>
-                            <label for="on-time">{{ trans('tasks.on-time') }}</label>
-                            <input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>
-                            <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
+                            </span>
                         </div>
                     </div>
                 </div>
-
-                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
-                    <div class="row-fluid pull-right">
-                        <div class="filemanager-buttons-client">
+                {{--<div class="row col-lg-12">--}}
+                    {{--<div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">--}}
+                        {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 line-height-35">--}}
+                            {{--<label class="">{{ trans('tasks.do_respite') }}</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-lg-10 noRightPadding noLeftPadding line-height-35">--}}
+                        {{--<div class="col-xs-3 noRightPadding noLeftPadding">--}}
+                            {{--<input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>--}}
+                            {{--<label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>--}}
+                            {{--<input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>--}}
+                            {{--<label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>--}}
+                        {{--</div>--}}
+                        {{--<div id="normal_task_timing" class="col-xs-5 form-inline noRightPadding noLeftPadding">--}}
+                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>--}}
+                                {{--<label class="pull-right">روز</label>--}}
+                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_hour" id="duration_hour" value="0"/>--}}
+                                {{--<label class="pull-right">ساعت</label>--}}
+                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_min" id="duration_min" value="0"/>--}}
+                                {{--<label class="pull-right">دقیقه</label>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-xs-4 noRightPadding noLeftPadding">--}}
+                            {{--<input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>--}}
+                            {{--<label for="on-time">{{ trans('tasks.on-time') }}</label>--}}
+                            {{--<input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>--}}
+                            {{--<label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                <div class="row col-lg-12">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 line-height-35 pull-right">
+                        <div class="filemanager-buttons-client pull-right">
                             <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
                                 <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
                                 <span>{{trans('app.add_file')}}</span>
@@ -187,6 +222,26 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
+
+                {{--<div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">--}}
+                    {{--<label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>--}}
+                    {{--<div class="row-fluid pull-right">--}}
+                        {{--<div class="filemanager-buttons-client">--}}
+                            {{--<div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">--}}
+                                {{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
+                                {{--<span>{{trans('app.add_file')}}</span>--}}
+                            {{--</div>--}}
+                            {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
+                            {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
+                            {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="pull-right filemanager-title-client">--}}
+                            {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
+                        {{--</div>--}}
+                        {{--<div class="clearfix"></div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="row-fluid">
                     {!! $HFM_CN_Task['ShowResultArea']['CreateNewTask'] !!}
                 </div>

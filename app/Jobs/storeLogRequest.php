@@ -23,7 +23,7 @@ class storeLogRequest implements ShouldQueue
     public function __construct($request_info)
     {
         $this->request_info = $request_info;
-        $this->handle();
+        //$this->handle();
     }
 
     /**

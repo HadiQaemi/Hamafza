@@ -20,5 +20,6 @@ Route::group(['prefix' => 'Tasks', 'namespace' => 'Tasks', 'middleware' => ['dyn
 });
 Route::group(['prefix' => 'TasksLibrary', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.task_library']], function ()
 {
-    /* ??? */Route::get('list', ['as' => 'ugc.desktop.hamahang.TasksLibrary.Library.list', 'uses' => 'TasksLibraryController@index', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.TasksLibrary.Library.list']]);
+    /* ??? */Route::get('GenralList', ['as' => 'ugc.desktop.hamahang.tasks.library', 'uses' => 'TasksLibraryController@GeneralList', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.library']]);
+    /* ??? */Route::get('PersonalList', ['as' => 'ugc.desktop.hamahang.tasks.library', 'uses' => 'TasksLibraryController@PersonalList', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.library']]);
 });

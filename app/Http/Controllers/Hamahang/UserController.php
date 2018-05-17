@@ -16,6 +16,7 @@ use App\Models\Hamahang\FileManager\FileManager;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Role;
 use App\UserRole;
+use DB;
 use Illuminate\Http\Request;
 use Route;
 use Schema;
@@ -98,6 +99,25 @@ class UserController extends Controller
         return view($res['viewname'], $res)->with('users', $users);
     }
 
+    public function getUser($ids)
+    {
+        $users_name = array();
+        $users_id = array();
+        if(!is_array($ids))
+            $users_id[] = $ids;
+        else
+            $users_id = $ids;
+        $users = DB::table('user')
+            ->select('Name', 'Family')
+            ->whereIn('id',$users_id)
+            ->get();
+        $names = '';
+        foreach ($users as $user)
+        {
+            $names .= (trim($names)=='' ? '' : ', ').$user->Name.' '.$user->Family;
+        }
+        return $names;
+    }
     public function getUsers(Request $request)
     {
         if (!empty($request->input('extra')))

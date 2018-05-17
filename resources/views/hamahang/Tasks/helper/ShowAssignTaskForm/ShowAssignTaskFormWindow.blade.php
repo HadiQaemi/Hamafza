@@ -801,7 +801,7 @@
                                             <label class="pull-right" for="r2">{{$task_history->Name.' '.$task_history->Family}}</label>
                                         </td>
                                         <td>
-                                            <label class="pull-right" for="r2">{{ trans('tasks.'.$task_history->operation_type) }}</label>
+                                            <label class="pull-right" for="r2">{{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}</label>
                                         </td>
                                         <td>
                                             <label class="pull-right" for="r2">{{$task_history->created_at}}</label>
@@ -1117,5 +1117,5 @@
 <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-date.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js')}}"></script>
 
-@include('hamahang.Tasks.helper.ShowAssignTaskForm.inline_js')
+@include('hamahang.Tasks.helper.ShowLiberaryTaskForm.inline_js')
 {!! $HFM_CN_Task['JavaScripts'] !!}

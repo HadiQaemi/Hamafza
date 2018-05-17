@@ -1,3 +1,8 @@
 <?php
 Route::post('FetchLibraryTasks', ['as' => 'hamahang.library.fetch_tasks', 'uses' => 'TasksLibraryController@FetchTasks', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.fetch_tasks']]);
+Route::post('SaveToLibraryTask', ['as' => 'hamahang.library.SaveToLibraryTask', 'uses' => 'TasksLibraryController@save', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.save']]);
+Route::post('UpdateLibraryTask', ['as' => 'hamahang.library.UpdateLibraryTask', 'uses' => 'TasksLibraryController@update', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.update']]);
+Route::post('GeneralFetch', ['as' => 'hamahang.library.GeneralFetch', 'uses' => 'TasksLibraryController@GeneralFetch', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.GeneralFetch']]);
+Route::post('PrivateFetch', ['as' => 'hamahang.library.PrivateFetch', 'uses' => 'TasksLibraryController@PrivateFetch', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.PrivateFetch']]);
 Route::post('RemoveLibraryTask', ['as' => 'hamahang.library.remove_library_task', 'uses' => 'TasksLibraryController@RemoveLibraryTask', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.remove_library_task']]);
+Route::post('DeleteTaskLiberary', ['as' => 'hamahang.library.DeleteTaskLiberary', 'uses' => 'TasksLibraryController@DeleteTaskLiberary', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library.DeleteTaskLiberary']]);

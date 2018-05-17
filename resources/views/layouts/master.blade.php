@@ -217,8 +217,88 @@
 						}
 					});
 				}
+                function UpdateTask(form_id, again,action) {
+                    //console.log(form_id);
+                    $('#task_form_action').val(action);
+                    var form_data = $('#' + form_id).serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ route('hamahang.tasks.update_task')}}',
+                        dataType: "json",
+                        data: form_data,
+                        success: function (result) {
+                            if (result.success == true) {
+                                $('.jsPanel-btn-close').click();
+                                messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                            }
+                            else {
+                                messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                            }
+                        }
+                    });
+                }
+				function UpdateLibraryTask(form_id, again,action) {
+					$('#task_form_action').val(action);
+					var form_data = $('#' + form_id).serialize();
+					$.ajax({
+						type: "POST",
+						url: '{{ route('hamahang.library.UpdateLibraryTask')}}',
+						dataType: "json",
+						data: form_data,
+						success: function (result) {
+							console.log(result);
+							if (result.success == true) {
+								if (again == 1) {
+									ResetForm();
+								}
+								else {
+									$('.jsPanel-btn-close').click();
+								}
+								messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+							}
+							else {
+								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+							}
+						}
+					});
+				}
+				function SaveInLibraryTask(form_id, again,action) {
+					$('#task_form_action').val(action);
+					var form_data = $('#' + form_id).serialize();
+					$.ajax({
+						type: "POST",
+						url: '{{ route('hamahang.library.SaveToLibraryTask')}}',
+						dataType: "json",
+						data: form_data,
+						success: function (result) {
+							console.log(result);
+							if (result.success == true) {
+								if (again == 1) {
+									ResetForm();
+								}
+								else {
+									$('.jsPanel-btn-close').click();
+								}
+								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+							}
+							else {
+								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+							}
+						}
+					});
+				}
+                $(document).on('click', '.update_task', function () {
+                    var save_type = $("input[name='new_task_save_type']:checked").val();
+                    $('#task_of_action').val('fffffffffffffff');
+                    var $this = $(this);
+                    var form_id = $this.data('form_id');
+                    var save_again = $this.data('again_save');
+                    UpdateTask(form_id, save_again,1);
+                });
 				$(document).on('click', '.save_task', function () {
-					var save_type = $("input[name='new_task_save_type']:checked").val()
+					var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :
+                        ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
+                            ($("input[name='show_task_save_type_final']:checked").val() != undefined ? $("input[name='show_task_save_type_final']:checked").val() : '') );
                     var $this = $(this);
 					var form_id = $this.data('form_id');
 					var save_again = $this.data('again_save');
@@ -230,16 +310,42 @@
 						//save_as_draft(form_id, save_again);
 					}
                     else if (save_type == 2) {
-					    alert('2');
+                        SaveInLibraryTask(form_id, save_again,'public');
 					}
                     else if (save_type == 3) {
-                        alert('3');
+                        SaveInLibraryTask(form_id, save_again,'private');
                     }
 					else
 					{
-						alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+					    if($("input[name='show_task_save_type_final']:checked").val()==1)
+                            SaveTask(form_id, save_again,0);
+					    else
+						    alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
 					}
 				});
+                $(document).on('click', '.edit_liberary_new_task', function () {
+                    var save_type = $("input[name='liberary_task_save_type']:checked").val();
+                    var $this = $(this);
+                    var form_id = $this.data('form_id');
+                    var save_again = $this.data('again_save');
+                    if (save_type == 1) {
+                        SaveTask(form_id, save_again,1);
+                    }
+                    else if (save_type == 0) {
+                        SaveTask(form_id, save_again,0);
+                        //save_as_draft(form_id, save_again);
+                    }
+                    else if (save_type == 2) {
+                        UpdateLibraryTask(form_id, save_again,'public');
+                    }
+                    else if (save_type == 3) {
+                        UpdateLibraryTask(form_id, save_again,'private');
+                    }
+                    else
+                    {
+                        alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+                    }
+                });
 				function SetActToTask(form_id) {
                     //console.log(form_id);
                     var form_data = $('#' + form_id).serialize();

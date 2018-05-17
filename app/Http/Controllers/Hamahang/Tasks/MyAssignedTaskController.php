@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Http\Controllers\Hamahang\UserController;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
@@ -860,22 +861,74 @@ class MyAssignedTaskController extends Controller
 
     public function update_task()
     {
-        dd(Request::all());
-        $task = tasks::find(deCode(Request::input('tid')));
-        dd($task);
-//        ($task_id, $action_status, $reject_description, $power_mental, $power_physical, $quality, $duration, $duration_type, $desc, $percent)
+        $validator = Validator::make(Request::all(), [
+            'title' => 'required|string',
+            'users' => 'required|array',
+        ],[
+            'selected_users.required'=>'باید کاربر انتخاب شود'
+        ],[
+                'title'=>'عنوان وظیفه',
+                'users'=>'کاربر'
+            ]
+        );
 
-//        task_action::create_task_action();
-        $task->save();
-//        return $total;
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else {
+            $result = '';
+            if (Request::input('respite_timing_type') == 1)
+            {
+                $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
+            }
+            elseif (Request::input('respite_timing_type') == 2)
+            {
+                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 0, 0, 0, 0);
+            }
+            elseif (Request::input('respite_timing_type') == 0)
+            {
+                $day_no = Request::input('duration_day');
+                $hour_no = Request::input('duration_hour');//Request::input('duration_hour');
+                $min_no = Request::input('duration_min');//Request::input('duration_min');
+                $sec_no = 0;//Request::input('duration_sec');
+                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
+            }
+            $task = tasks::where('id','=',decode(\Session::get('TaskForm_tid')))->first();
+//                ->update(['title' => Request::input('title'), 'type' => Request::input('task_form_action'),
+//                    'task_attributes' => serialize(Request::all())]);
+            $task->form_data = serialize(Request::all());
+            $task->task_attributes = serialize(Request::all());
+            $task->uid = Auth::id();
+            $task->title = Request::input('title');
+            $task->desc = Request::input('task_desc');
+            $task->type = Request::input('type');
+            $task->kind = Request::input('kind');
+            $task->is_save = 0;
+            $task->task_status = Request::input('task_status');
+            $task->duration_timestamp = $respite_duration_timestamp;
+            $task->use_type = Request::input('use_type');
+            $task->end_on_assigner_accept = Request::input('end_on_assigner_accept');
+            $task->transferable = Request::input('transferable');
+            $task->report_on_create_point = Request::input('report_on_cr');
+            $task->report_on_completion_point = Request::input('report_on_co');
+            $task->report_to_managers = Request::input('report_to_manager');
+            $task->respite_timing_type = Request::input('respite_timing_type');
+            $task->save();
+        }
+        $result['success'] = true;
+        return json_encode($result);
+
     }
 
     public function SetActToTask()
     {
 //        dd(Request::all());
-        $task_all = Session::get('ShowAssignTaskForm_task_all');
-        $task_id = Session::get('ShowAssignTaskForm_tid');
-        $assign_id = Session::get('ShowAssignTaskForm_aid');
+        $task_all = Session::get('TaskForm_task_all');
+        $task_id = Session::get('TaskForm_tid');
+        $assign_id = Session::get('TaskForm_aid');
         $task_assignment = task_assignments::where('id', '=', $assign_id)
             ->select('assigner_id', 'uid', 'staff_id')->first();
         if(Session::get('ShowAssignTaskForm_is_creator'))
@@ -886,7 +939,7 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
-
+//        dd($task_id);
         //
         $action = "";
         if(Request::exists('reject_assigner'))
@@ -917,7 +970,8 @@ class MyAssignedTaskController extends Controller
                 task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'], $value_employee_id);
                 task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
             }
-            task_history::create_task_history($task_id, 'assign', serialize(Request::all()),implode(', ',Request::input('assigns_new')));
+            $UserController = new UserController();
+            task_history::create_task_history($task_id, 'assign', serialize(Request::all()), $UserController->getUser(Request::input('assigns_new')));
             DB::table('hamahang_task_assignments')
                 ->where('id', (int) $assign_id)
                 ->update(['status' => 1]);
@@ -974,6 +1028,22 @@ class MyAssignedTaskController extends Controller
     public function save()
     {
 //        dd(Request::all());
+        $validator = Validator::make(Request::all(), [
+            'title' => 'required|string',
+            'users' => 'required|array',
+        ],[
+            'selected_users.required'=>'باید کاربر انتخاب شود'
+        ],[
+                'title'=>'عنوان وظیفه',
+                'users'=>'کاربر'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
 
         $result = '';
         if (Request::input('respite_timing_type') == 1)

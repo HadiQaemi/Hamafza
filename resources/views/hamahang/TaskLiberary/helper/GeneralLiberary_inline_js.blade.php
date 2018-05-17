@@ -13,11 +13,11 @@
             @endif
 
         }
-        $('#MyAssignedTasksTable').DataTable({
+        $('#GeneralLiberaryTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "serverSide": true,
             "ajax": {
-                "url": "{{ route('hamahang.tasks.my_assigned_tasks.fetch') }}",
+                "url": "{{ route('hamahang.library.GeneralFetch') }}",
                 "type": "POST",
                 "data": send_info,
 
@@ -26,36 +26,24 @@
             "language": LangJson_DataTables,
             "processing": true,
             columns: [
-                {"data": "id", "width": "5%"},
-                {"data": "use_type"},
-                {
-                    "data": "title",
+                {"data": "title", "width": "50%",
+                    "bSearchable": false,
+                    "bSortable": false,
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
+                        var title = full.title;
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowLiberaryTaskForm?tid="+full.id+"'>"+title+"</a>";
                     }
                 },
-                {"data": "employee"},
-                {"data": "immediate"},
-                {"data": "respite"},
-                {"data": "type"},
+                {"data": "creator"},
+                {"data": "created_at"},
                 {
                     "data": "id", "width": "8%",
                     "bSearchable": false,
                     "bSortable": false,
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i>حذف</i></a>";
-                    }
-                }
-                , {
-                    "data": "id",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "mRender": function (data, type, full) {
-                        var id = full.id;
-                        return "<a class='cls3' style='margin: 2px' onclick='save_as_library_task(" + full.id + ")' href=\"#\">افزودن به کتابخانه</a>";
+                        return "<a style='margin:2px;' class='cls3' onclick='del(\'" + full.id + "\')' href=\"#\"><i>حذف</i></a>";
                     }
                 }
             ]
@@ -451,7 +439,24 @@
 
     }
     function del(id) {
-        confirm("Are you sure?");
+        if(confirm("{{trans('tasks.modal_t6ask_detail_delete_task_msg')}}"))
+        {
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.library.DeleteTaskLiberary')}}',
+                dataType: "json",
+                data: {id:id},
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        messageModal('success','{{trans('tasks.delete_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                    }
+                    else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                }
+            });
+        }
     }
     function f(id) {
         show_task_info();

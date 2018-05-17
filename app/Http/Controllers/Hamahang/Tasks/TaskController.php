@@ -393,7 +393,7 @@ class TaskController extends Controller
             }
             case 200:
             {
-                $tasks = DB::table('hamahang_tasks_library')->where('uid', '=', Auth::id())
+                $tasks = DB::table('hamahang_task_library')->where('uid', '=', Auth::id())
                     ->whereNull('deleted_at')
                     ->get();
                 $data = collect($tasks)->map(function ($x)

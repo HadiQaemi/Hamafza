@@ -13,11 +13,32 @@
 
         if (id == 1) {
             var txt = '' +
-                '<label class="line-height-30 pull-right">تاریخ</label>' +
-                '<input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">' +
-                '<label class="line-height-30 pull-right">ساعت</label>' +
-                '<input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">' +
-                '';
+                // '<div class="row-fluid">' +
+                // '   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">' +
+                // '       <div class=" row">' +
+                // '           <div class="col-sm-6 col-xs-12">' +
+                '               <label class="line-height-30">تاریخ</label>' +
+                // '               <div class=" pull-right">' +//input-group
+//                '                   <span class="input-group-addon" id="respite_date">' +
+//                '                       <i class="fa fa-calendar"></i>' +
+//                '                   </span>' +
+                '                   <input type="text" class="form-control" name="respite_date" id="respite_date" {{ isset($task['respite_date']) ? 'value='.$task['respite_date'] : '' }} aria-describedby="respite_date">' +
+//                 '               </div>' +
+//                 '           </div>' +
+//                 '           <div class="col-sm-6 col-xs-12">' +
+                '               <label class="line-height-30">ساعت</label>' +
+//                 '               <div class=" pull-right">' +//input-group
+// //                '                   <span class="input-group-addon" id="respite_time">' +
+// //                '                       <i class="fa fa-clock-o"></i>' +
+// //                '                   </span>' +
+                '                   <input type="text" class="form-control TimePicker" name="respite_time" aria-describedby="respite_time" {{ isset($task['respite_time']) ? 'value='.$task['respite_time'] : '' }}>' +
+//                 '               </div>' +
+//                 '           </div>' +
+//                 '       </div>' +
+//                 '   </div>' +
+//                 '   <div class="clearfix"></div>' +
+//                 '</div>' +
+            '';
             $('#normal_task_timing').html(txt);
             $(".TimePicker").persianDatepicker({
                 format: "HH:mm:ss a",
@@ -27,20 +48,30 @@
                 onlyTimePicker: true
             });
 
-            $(".DatePicker").persianDatepicker({
+            $("#respite_date").persianDatepicker({
                 observer: true,
                 autoClose: true,
-                format: 'YYYY-MM-DD'
+                format: 'YYYY-MM-DD',
             });
         }
         if (id == 0) {
             var txt = '' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
-                '<label class="pull-right">روز</label>\n' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
-                '<label class="pull-right">ساعت</label>\n' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
-                '<label class="pull-right">دقیقه</label>';
+                // '<div class="row-fluid">\n' +
+                // '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
+                // '       <div class="row-fluid">\n' +
+                // '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
+                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
+                '               <label class="pull-right">روز</label>\n' +
+                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
+                '               <label class="pull-right">ساعت</label>\n' +
+                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
+                '               <label class="pull-right">دقیقه</label>\n' +
+                // '           </div>\n' +
+                // '       </div>\n' +
+                // '   </div>\n' +
+                // '   <div class="clearfix"></div>\n' +
+                // '</div>\n'
+                '';
 
             $('#normal_task_timing').html(txt);
 
@@ -253,14 +284,13 @@
             }
         });
     }
-
-    function UpdateTask(form_id, again,action) {
+    function SaveTask(form_id, again,action) {
         //console.log(form_id);
 		$('#task_form_action').val(action);
         var form_data = $('#' + form_id).serialize();
         $.ajax({
             type: "POST",
-            url: '{{ route('hamahang.tasks.update_task')}}',
+            url: '{{ route('hamahang.tasks.save_task')}}',
             dataType: "json",
             data: form_data,
             success: function (result) {
@@ -299,16 +329,6 @@
         autoClose: true,
         format: 'YYYY-MM-DD'
     });
-    $(".DatePicker_begin_date").persianDatepicker({
-        observer: true,
-        autoClose: true,
-        format: 'YYYY-MM-DD'
-    });
-    $(".DatePicker_end_date_date").persianDatepicker({
-        observer: true,
-        autoClose: true,
-        format: 'YYYY-MM-DD'
-    });
     function remove_new_task(num_add_rel_task) {
         $('#num_add_rel_task' + num_add_rel_task).remove();
     }
@@ -321,9 +341,8 @@
 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
 //			'       </td>\n' +
 			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
+			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+$('#select2-new_task_tasks-container').val()+'</label>\n' +
 			'       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
-			'       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_tasks-container').attr('title')+ '"/>' +
 			'       </td>\n' +
 			'       <td>\n' +
 			'           <label class="input-group pull-right">\n' +
@@ -369,7 +388,6 @@
 			'       <td>\n' +
 			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_resources-container').attr('title')+'</label>\n' +
 			'       		<input name="new_task_resources_h[]" type="hidden" value="' +($('#select2-new_task_resources-container').val().trim()=='' ? $('#select2-new_task_resources-container').attr('title') : $('#select2-new_task_resources-container').val())+ '"/>' +
-			'       		<input name="new_task_resources_t[]" type="hidden" value="' +$('#select2-new_task_resources-container').attr('title')+ '"/>' +
 			'       </td>\n' +
 			'       <td>\n' +
 			'           <label class="input-group pull-right">\n' +
@@ -388,25 +406,6 @@
 			'       </td>\n' +
 			'    </tr>\n';
         $('#resources_task_list').append(project_span);
-	});
-	$("#add_message_task").click(function () {
-	    var project_span = '' +
-			'   <tr id="add_resource_task'+num_add_resource_task+'">\n' +
-//			'       <td>\n' +
-//			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-//			'       </td>\n' +
-			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#user').val()+'</label>\n' +
-			'       		<input name="message_username[]" type="hidden" value="' +$('#user').val()+ '"/>' +
-			'       </td>\n' +
-			'       <td>\n' +
-			'           <label class="input-group pull-right">\n' +
-							$('#message').val() +
-			'       		<input name="messages[]" type="hidden" value="' +$('#message').val()+ '"/>' +
-			'           </label>\n' +
-			'       </td>\n' +
-			'    </tr>\n';
-        $('#message_task_list').append(project_span);
 	});
 
     $(".select2_auto_complete_user").select2({
@@ -572,67 +571,8 @@
         }
     });
 
-    $('#reject_assigner').on('click', function() {
-        if($(this).is(":checked")){
-            $(".assingned_options").prop('disabled', true);
-            $(".rejected_options").prop('disabled', false);
-        }
-        else {
-            $(".rejected_options").prop('disabled', true);
-            $(".assingned_options").prop('disabled', false);
-        }
-    });
 
-
-    //************** sended to master.blade
-
-    {{--function SaveTask(form_id, again,action) {--}}
-        {{--//console.log(form_id);--}}
-        {{--$('#task_form_action').val(action);--}}
-        {{--var form_data = $('#' + form_id).serialize();--}}
-        {{--$.ajax({--}}
-            {{--type: "POST",--}}
-            {{--url: '{{ route('hamahang.tasks.save_task')}}',--}}
-            {{--dataType: "json",--}}
-            {{--data: form_data,--}}
-            {{--success: function (result) {--}}
-                {{--console.log(result);--}}
-                {{--if (result.success == true) {--}}
-                    {{--if (again == 1) {--}}
-                        {{--ResetForm();--}}
-                    {{--}--}}
-                    {{--else {--}}
-                        {{--$('.jsPanel-btn-close').click();--}}
-                    {{--}--}}
-                    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
-                {{--}--}}
-                {{--else {--}}
-                    {{--messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);--}}
-                {{--}--}}
-            {{--}--}}
-        {{--});--}}
-    {{--}--}}
-    {{--$(document).on('click', '.save_task', function () {--}}
-
-        {{--var save_type = $("input[name='new_task_save_type']:checked").val()--}}
-        {{--var $this = $(this);--}}
-        {{--var form_id = $this.data('form_id');--}}
-        {{--var save_again = $this.data('again_save');--}}
-        {{--if (save_type == 1) {--}}
-            {{--SaveTask(form_id, save_again,1);--}}
-        {{--}--}}
-        {{--else if (save_type == 0) {--}}
-            {{--SaveTask(form_id, save_again,0);--}}
-            {{--//save_as_draft(form_id, save_again);--}}
-        {{--}--}}
-        {{--else--}}
-        {{--{--}}
-            {{--alert('{{ trans('tasks.the_save_type_is_not_selected') }}');--}}
-        {{--}--}}
-    {{--});--}}
-
-
-    $('#new_task_users_responsible').on('change', function() {
+    $('#new_task_users').on('change', function() {
         var none = $(this).find('option:selected').length;
         if(none > 1)
             $('.person_option').show();
@@ -642,21 +582,6 @@
             $('.send_message').show();
         else
             $('.send_message').hide();
-
-        var title = $('#task_title').val();
-        if(title.trim().length>0 && none>0)
-            $('.new_task_save_type_final').click();
-        else
-            $('.new_task_save_type_draft').click();
-    });
-
-    $('#task_title').on('keyup', function() {
-        var title = $(this).val();
-        var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
-        if(title.trim().length>0 && new_task_users_responsible>0)
-            $('.new_task_save_type_final').click();
-        else
-            $('.new_task_save_type_draft').click();
     });
 	
 	$('#task_schedul').on('change', function() {
@@ -674,17 +599,18 @@
     });
 
     $(document).ready(function () {
+        @if($task['respite_timing_type']==0 || $task['respite_timing_type']==1)
+            change_normal_task_timing_type({{$task['respite_timing_type']}});
+        @endif
+//        $("#respite_date").persianDatepicker({
+//            observer: true,
+//            autoClose: true,
+//            format: 'YYYY-MM-DD'
+//        });
         $('.person_option').hide();
         $('.send_message').hide();
         $('.transcript_option').hide();
-		$('#create_new_task').on('click', function() {
-            var title = $('#task_title').val();
-            var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
-            if(title.trim().length>0 && new_task_users_responsible>0)
-                $('.new_task_save_type_final').click();
-            else
-                $('.new_task_save_type_draft').click();
-		});
-        $('.new_task_save_type_draft').click();
+
+        $('.new_task_save_type_final').click();
     })
 </script>
