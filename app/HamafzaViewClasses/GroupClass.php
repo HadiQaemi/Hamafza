@@ -268,10 +268,9 @@ class GroupClass
         {
             $value->desc = nl2br(stripslashes($value->desc));
             session('Gname', $uname);
-            if (!empty($value->pic))
-            {
-                $value->desc .= '<img src="' . App::make('url')->to('/') . '/uploads/' . $value->pic . '">';
-            }
+           /* if (!empty($value->pic)) {
+                $value->desc .= '<img src="' . url('/') . '/uploads/' . $value->pic . '">';
+            }*/
         }
         $content2 = json_encode($content2);
         $content2 = json_decode($content2);
@@ -291,7 +290,7 @@ class GroupClass
                 'Title' => $title,
                 'Small' => $uid,
                 'pid' => $pid,
-                'content' => '0',//$content2,
+                'content' => $content2,
                 'tabs' => $tabs,
                 'Tree' => $Tree,
                 'sid' => $gid

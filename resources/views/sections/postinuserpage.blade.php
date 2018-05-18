@@ -43,6 +43,7 @@
             @if (isset($sid))
                 <script>
                     var Sid = '{{$sid}}';
+                    var Tree = '{{$Tree}}'
                 </script>
             @endif
             <div class="commenTxtHolders">
@@ -273,6 +274,10 @@
             keys = $("#keywords").val();
             cids = $("#CidsW").val();
             gids = $("#groupsW").val();
+            if(Tree=='groupadmin' || Tree=='ismember')
+            {
+               gids+=","+ Sid; 
+            }
             portal_idW_val = portal_idW.val();
             rewardW_val = rewardW.val();
             var allVals = [];
