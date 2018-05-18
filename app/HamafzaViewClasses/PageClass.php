@@ -313,7 +313,7 @@ class PageClass
 //                            $("#new-fehrest").removeClass("col-xs-3");
                             $(".buttoninfullscreen").css("width","1.5%");
                             $(".buttoninfullscreen").css("position","fixed");
-                            $(".buttoninfullscreen").css("right","65px");
+                            $(".buttoninfullscreen").css("right","15px");
                             $(".buttoninfullscreen").css("height","100%");
                             $(".buttoninfullscreen").css("top","2px");
                             $("#buttoninfullscreen").removeClass("col-xs-3");
