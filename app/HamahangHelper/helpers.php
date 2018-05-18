@@ -408,7 +408,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $pid = $subject->pages[0]->id;
                     $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                     if(!$canView){
-                        return false;
+                        return 403;
                     }
                     $Title = $subject->title;
                     $current_tab = $item . '/forum';
@@ -458,7 +458,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $pid = $subject->pages[0]->id;
                     $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                     if(!$canView){
-                        return false;
+                        return 403;
                     }
                     $Title = $subject->title;
                     $PageType = 'subject';
@@ -693,7 +693,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $subject = Subject::findOrFail($sid);
                     $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                     if(!$canView){
-                        return false;
+                        return 403;
                     }
                     $Title_page = $subject->title;
                     $pre_title = $subject->subject_type->pretitle;
@@ -726,7 +726,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 case 'history':
                 {
-                    $pageM = Pages::findOrFail($item);
+                    $pageM = Pages::find($item);
+                    if($pageM == null){
+                        return 404;
+                    }
                     if ($pageM)
                     {
                         $pid = $item;
@@ -734,7 +737,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $subject = Subject::findOrFail($pageM->sid);
                         $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                         if(!$canView){
-                            return false;
+                            return 403;
                         }
                         $Title_page = $pageM->subject->title;
                         $pre_title = $pageM->subject->subject_type->pretitle;
@@ -815,7 +818,11 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 default :
                 {
-                    $pageM = Pages::findOrFail($item);
+
+                    $pageM = Pages::find($item);
+                    if($pageM == null){
+                        return 404;
+                    }
                     $Type = $params['Type'];
                     if ($pageM)
                     {
@@ -824,7 +831,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $subject = Subject::findOrFail($pageM->sid);
                         $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                         if(!$canView){
-                            return false;
+                            return 403;
                         }
                         $Title_page = $pageM->subject->title;
                         $pre_title = $pageM->subject->subject_type->pretitle;
