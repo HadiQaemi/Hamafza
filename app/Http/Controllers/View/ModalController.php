@@ -910,7 +910,7 @@ class ModalController extends Controller
             'header' => trans('tasks.show_task'),
             'content' => view('hamahang.Tasks.helper.ShowLiberaryTaskForm.ShowLiberaryTaskFormWindow', $arr)
                 ->with('res', $res)->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type' => 'ShowLiberaryTaskForm' , 'type' => $task_all->type])->render()
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type' => 'ShowLiberaryTaskForm' , 'type' => $task->type])->render()
         ]);
     }
 

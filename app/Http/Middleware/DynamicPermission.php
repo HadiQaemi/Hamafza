@@ -17,8 +17,8 @@ class DynamicPermission
 
     public function handle($request, Closure $next, $permission)
     {
-//        echo '<hr/>'."page==".Input::get("page").\Route::currentRouteName().'='.($permission).'<hr/>';
-        return $next($request);
+//        echo '<hr/>'.($permission).'<hr/>';
+//        return $next($request);
 
         $role_name = config('constants.APP_PUBLIC_ROLE');
         $role = Role::where('name', $role_name)->first();
@@ -39,17 +39,20 @@ class DynamicPermission
                     }
                     else
                     {
+                        echo '<hr/>'.($permission).'<hr/>';
                         return response()->view('errors.403');
                         //abort('403');
                     }
                 }
                 else
                 {
+                    echo '<hr/>'.($permission).'<hr/>';
                     return response()->view('errors.403');
                     //abort('403');
                 }
             }
         }
+        echo '<hr/>'.($permission).'<hr/>';
         return response()->view('errors.403');
         //abort('403');
     }

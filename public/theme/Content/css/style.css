@@ -2649,6 +2649,7 @@ a .navbar-brand{
     padding: 0px 10px;
     overflow-y: auto;
     height: 100%;
+    max-width: 350px;
 }
 
 .desktop-tool {

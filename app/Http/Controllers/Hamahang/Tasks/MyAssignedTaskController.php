@@ -896,7 +896,7 @@ class MyAssignedTaskController extends Controller
                 $sec_no = 0;//Request::input('duration_sec');
                 $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
             }
-            $task = tasks::where('id','=',decode(\Session::get('TaskForm_tid')))->first();
+            $task = tasks::where('id','=',(\Session::get('TaskForm_tid')))->first();
 //                ->update(['title' => Request::input('title'), 'type' => Request::input('task_form_action'),
 //                    'task_attributes' => serialize(Request::all())]);
             $task->form_data = serialize(Request::all());
