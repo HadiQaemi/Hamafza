@@ -362,6 +362,8 @@ class PageController extends Controller
         $id = ($PreCode != '' && $id != '' && is_numeric($id)) ? $id : $PreCode;
         $param = ['id' => $id, 'Type' => $Type, 'PreCode' => $PreCode];
         $res = variable_generator('page', 'defualt', $id, $param);
+        if(!$res)
+            return view('errors.403');
         return view($res['viewname'], $res);
     }
 

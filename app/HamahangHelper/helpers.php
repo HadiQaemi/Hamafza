@@ -406,7 +406,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $PageType = 'subject';
                     $subject = Subject::findOrFail($sid);
                     $pid = $subject->pages[0]->id;
-                    policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    if(!$canView){
+                        return false;
+                    }
                     $Title = $subject->title;
                     $current_tab = $item . '/forum';
                     $pc = new \App\HamafzaServiceClasses\PostsClass();
@@ -453,7 +456,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $sid = $item;
                     $subject = Subject::findOrFail($item);
                     $pid = $subject->pages[0]->id;
-                    policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    if(!$canView){
+                        return false;
+                    }
                     $Title = $subject->title;
                     $PageType = 'subject';
                     $current_tab = $sid . '/desktop';
@@ -685,7 +691,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $pid = $item;
                     $post_id = $params['post_id'];
                     $subject = Subject::findOrFail($sid);
-                    policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                    if(!$canView){
+                        return false;
+                    }
                     $Title_page = $subject->title;
                     $pre_title = $subject->subject_type->pretitle;
                     $Title = $pre_title . ' ' . $Title_page;
@@ -723,7 +732,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $pid = $item;
                         $sid = $pageM->sid;
                         $subject = Subject::findOrFail($pageM->sid);
-                        policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                        $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                        if(!$canView){
+                            return false;
+                        }
                         $Title_page = $pageM->subject->title;
                         $pre_title = $pageM->subject->subject_type->pretitle;
                         $Title = 'تاریخچه: ' . $pre_title . ' ' . $Title_page;
@@ -810,7 +822,10 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $pid = $item;
                         $sid = $pageM->sid;
                         $subject = Subject::findOrFail($pageM->sid);
-                        policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                        $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
+                        if(!$canView){
+                            return false;
+                        }
                         $Title_page = $pageM->subject->title;
                         $pre_title = $pageM->subject->subject_type->pretitle;
                         $Title = $pre_title . ' ' . $Title_page;

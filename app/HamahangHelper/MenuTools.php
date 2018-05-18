@@ -241,7 +241,8 @@ if (!function_exists('policy_CanView'))
 
         if (!$access && $abort)
         {
-            abort($abort);
+            return false;
+//            abort($abort);
         }
         if($id!='' && $Model=='\App\Models\hamafza\Subject')
         {
@@ -270,7 +271,8 @@ if (!function_exists('policy_CanView'))
 							->select('u.Uname as name')->take(50)->get();
 					if(count($Subjects)==0 && count($Subjects2)==0)
 					{
-						abort($abort);
+                        return false;
+//						abort($abort);
 					}
 				}
 				else
@@ -282,7 +284,8 @@ if (!function_exists('policy_CanView'))
 							->select('hrp.target_id as target_id')->take(50)->get();
 					if(count($Subjects2)==0)
 					{
-						abort($abort);
+                        return false;
+//						abort($abort);
 					}
 				}
 			}
