@@ -163,14 +163,17 @@
             $(hr).insertAfter('#hiden_holder');
         }
         var clone = $('#hiden_holder').clone();
-        clone.removeAttr("id").addClass('hiden_holder');
+        console.log(clone);
+        clone.removeAttr("id").addClass('hiden_holder row');
         clone.find('a').remove();
-        clone.append('<a class="btn btn-default btn-xs fa fa-close" href="#" onclick="removeHiddenTime(this);"></a>');
+        // clone.append('<a class="btn btn-default btn-xs fa fa-close" href="#" onclick="removeHiddenTime(this);"></a>');
+        clone.append('<div class="col-xs-2"><a class="btn btn-default btn-xs fa fa-close" href="#" onclick="removeHiddenTime(this);"></a></div>');
         clone.insertAfter('#hidentime hr');
     }
     function removeHiddenTime(el) {
         //   console.log($(el));
-        $(el).parent().remove();
+        // $(el).parent().remove();
+        $(el).parent().parent().remove();
     }
     function removeAllHiddenTime() {
         $('.hiden_holder').remove();
@@ -179,6 +182,9 @@
         //$('#sharingSelect').clone().insertAfter('#sharingSelect');\
         var id = $('select[name="sharing_calendar_list[]').select().val();
         var color = $('input[name="sharing-color[]"] ').val();
+        var sharing_type1 = $('input[name="sharing_type[]"]:checked ').val();
+        var sharing_type = $('#'+sharing_type1).html();
+        $('#lastShring').removeClass('hidden');
         vals = {};
         if (parseInt(id)) {
             var old = $('input[name="sharing_calendars"]').val();
@@ -195,10 +201,11 @@
             }
             var txt = $('select[name="sharing_calendar_list[]"] > option:selected').text();
             addRow = '<tr id="row-' + id + '">';
-            addRow += '<td>' + (parseInt(lastRow) + 1) + '</td>';
-            addRow += '<td>' + txt + '</td>';
-            addRow += '<td style="width:10px;background-color:' + color + '"></td>';
-            addRow += '<td><a class="btn btn-default btn-xs fa fa-close" href="#"onclick="removeSharing(' + id + ');"></a></td></tr>';
+            addRow += '<th>' + (parseInt(lastRow) + 1) + '</th>';
+            addRow += '<th>' + txt + '</th>';
+            addRow += '<th>' + sharing_type + '</th>';
+            addRow += '<th style="width:10px;background-color:' + color + '"></th>';
+            addRow += '<th><a class="btn btn-default btn-xs fa fa-close" href="#"onclick="removeSharing(' + id + ');"></a></th></tr>';
             addRow += '</tr>';
             $('#lastShring table tbody').append(addRow);
         }
@@ -419,7 +426,7 @@
             $(this).css('background', '#ededed');
             var ii = $('#personalCalendarGrid  i');
             for (x = 0; x < ii.length; x++) {
-                console.log($(ii[x]));
+                // console.log($(ii[x]));
                 if ($(ii[x]).hasClass('fa-eye')) {
                     $(ii[x]).removeClass('fa-eye');
                     $(ii[x]).addClass('fa-eye-slash');
