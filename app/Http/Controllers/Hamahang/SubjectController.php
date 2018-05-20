@@ -27,6 +27,31 @@ class SubjectController extends Controller
 
     public function get_subjects()
     {
+        $subjectType = DB::table('subject_type')
+            ->leftJoin('subjects','subject_type.id','=','subjects.kind')
+            ->select('subject_type.id','subject_type.name','subject_type.comment','subject_type.created_at',
+                DB::raw('COUNT(subjects.kind) as get_subject_count'))
+            ->groupBy('subjects.kind')
+//            ->orderBy('subject_type.id')
+            ->get();
+        return \Datatables::of($subjectType)
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->addColumn('jdate', function ($data)
+            {
+                if ($data->created_at != '')
+                {
+                    return HDate_GtoJ($data->created_at);
+                }
+                else
+                {
+                    return '';
+                }
+            })
+            ->make(true);
+
         $subjectType = SubjectType::with('subjects');
         return Datatables::eloquent($subjectType)
             ->editColumn('id', function ($data)
