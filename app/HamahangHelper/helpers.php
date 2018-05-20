@@ -1149,6 +1149,9 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $viewname = 'pages.user_desktop_dashboard';
                     $res = DesktopClass::DrawDashboard($user_id);
                     $auth_user = auth()->user();
+                    if($auth_user==null){
+                        return 403;
+                    }
                     $res ['desktop_sections'] =
                         [
                             [

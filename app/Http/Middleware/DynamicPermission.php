@@ -52,7 +52,7 @@ class DynamicPermission
                 }
             }
         }
-        echo '<hr/>'.($permission).'<hr/>';
+
         return response()->view('errors.403');
         //abort('403');
     }
