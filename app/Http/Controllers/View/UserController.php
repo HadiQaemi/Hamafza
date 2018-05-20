@@ -63,7 +63,7 @@ class UserController extends Controller
         {
             $res = variable_generator('user', 'DefDesktop', $name);
             if(in_array($res,[403,404]))
-                return view('errors'., $res);
+                return view('errors.'.$res);
             return view($res['viewname'], $res);
         }
     }
