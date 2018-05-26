@@ -41,6 +41,26 @@ class AutoCompleteController extends Controller
         }*/
         return response()->json($res);
     }
+    
+    public function userslist()
+    {
+        $data = Request::input('term');
+        if ($data == '...')
+        {
+            $data = User::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
+        }
+        else
+        {
+            $data2 = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $data . "%")
+                ->Orwhere("Family", "LIKE", "%" . $data . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $data . "%")
+                ->Orwhere("Email", "LIKE", "%" . $data . "%")
+                ->get();
+        }
+        $data2 = array('results' => $data2);
+        return response()->json($data2);
+    }
 
    
 }

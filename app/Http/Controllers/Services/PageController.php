@@ -599,4 +599,87 @@ class PageController extends Controller {
         return response()->json(['success', $mes]);
     }
 
+    public function sendMessage() {
+//        dd($request->all());
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $error = validation_error_to_api_json($validator->errors());
+            $res = [
+                'status' => "-1",
+                'error' => $error
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+
+        $user = Token::where('token', Request::input('token'))->first()->user;
+        $uid = $user->id;
+
+        //$sesid =  0;
+        $title = Request::input('title');
+        $comment = Request::input('comment');
+        $user_edits = explode(",", Request::input('users'));
+        
+//            dd($user_edits);
+//            $files = $request->file('file');
+//            $filetitle = Request::input('ftitle');
+       
+        //$Slides = array();
+
+//            $uploadcount = 0;
+//            if (is_array($files) && count($files) > 0)
+//            {
+//                foreach ($files as $key => $file)
+//                {
+//                    if ($file)
+//                    {
+//                        if ($file->isValid())
+//                        {
+//                            $tmpFilePath = 'files/ticket/' . $uid . '/';
+//                            if (!file_exists(public_path() . '/' . $tmpFilePath))
+//                            {
+//                                mkdir(public_path() . '/' . $tmpFilePath, 0777, true);
+//                            }
+//                            $extension = $file->getClientOriginalExtension();
+//                            $tmpFileName = $uid . $key . time() . '.' . $extension; // renameing image
+//                            $file->move($tmpFilePath, $tmpFileName);
+//                            $Slides[$uploadcount]['name'] = $uid . '/' . $tmpFileName;
+//                            $Slides[$uploadcount]['title'] = $filetitle[$key];
+//                        }
+//                    }
+//                    $uploadcount++;
+//                }
+//            }
+        $reg_date = gmdate("Y-m-d H:i:s", time() + 12600);
+        $tid = DB::table('tickets')->insertGetId(array('uid' => $uid, 'title' => $title, 'login' => '0', 'reg_date' => $reg_date));
+
+        //$file = HFM_SaveMultiFiles('message_file', '\App\Models\Hamahang\FileManager\Fileable', 'fileable_id', $tid, ['created_by' => auth()->id(), 'fileable_type' => 'App\Models\hamafza\Ticket', 'type' => 1]);
+
+        DB::table('ticket_answer')->insert(array('uid' => $uid, 'tid' => $tid, 'comment' => $comment, 'reg_date' => $reg_date));
+        if (is_array($user_edits)) {
+            foreach ($user_edits as $key => $val) {
+                if (intval($val) != 0) {
+                    DB::table('ticket_recieve')->insert(array('tid' => $tid, 'uid' => $val, 'del' => 0));
+                    //  Alerts::Message($val, $uid);
+                }
+            }
+        }
+        /*if (is_array($Slides) && count($Slides) > 0) {
+            foreach ($Slides as $value) {
+                DB::table('ticket_file')->insert(array('aid' => $tid, 'name' => $value['name'], 'title' => $value['title']));
+            }
+        }*/
+        $mes = trans('labels.SMSSEndOK');
+        return response()->json(['success', $mes]);
+    }
+
 }

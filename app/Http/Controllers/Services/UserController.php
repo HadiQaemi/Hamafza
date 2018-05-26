@@ -504,5 +504,20 @@ class UserController extends Controller {
         ];
         return $r;
     }
+    
+    function MyGroups()
+    {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $user = Token::where('token', Request::get('token'))->first()->user;
+        return \Illuminate\Support\Facades\DB::table('user_group as g')->leftjoin('user_group_member as u', 'u.gid', '=', 'g.id')
+            ->where('u.uid', $user->id)->select('g.id', 'g.name')
+            ->get();
+    }
 
 }

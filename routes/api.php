@@ -1,22 +1,22 @@
 <?php
 
-/*Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
-Route::post('GetsubjectFields', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetSubjectFields']);
-Route::post('GetMyPortal', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetMyPortal']);
-Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
-Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
-Route::post('GetTreeNode', ['as' => 'GetTreeNode', 'uses' => 'View\AjaxController@GetTreeNode']);
-Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxController@GetTreeNodes']);
-*/
+/* Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
+  Route::post('GetsubjectFields', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetSubjectFields']);
+  Route::post('GetMyPortal', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetMyPortal']);
+  Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
+  Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
+  Route::post('GetTreeNode', ['as' => 'GetTreeNode', 'uses' => 'View\AjaxController@GetTreeNode']);
+  Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxController@GetTreeNodes']);
+ */
 
 
 Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
     Route::post('get_sites', [
         'uses' => 'PublicController@GetSites'
     ]);
-    /*Route::post('get_portals', [
-        'uses' => 'PublicController@GetPortals'
-    ]);*/
+    /* Route::post('get_portals', [
+      'uses' => 'PublicController@GetPortals'
+      ]); */
     Route::get('searchkeywords', [
         'uses' => 'PublicController@searchKeywords'
     ]);
@@ -24,6 +24,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.keywords',
         'uses' => 'AutoCompleteController@keywords',
         'middleware' => ['dynamic_permission:auto_complete.keywords']]);
+    Route::get('userslist', [
+        'as' => 'api.v43.userslist',
+        'uses' => 'AutoCompleteController@userslist',
+        'middleware' => ['dynamic_permission:auto_complete.users']]);
     Route::get('search', [
         'uses' => 'PublicController@search'
     ]);
@@ -51,20 +55,24 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.unfollow',
         'uses' => 'PageController@unfollow'
     ]);
-    
+
     Route::post('toggle_bookmark', [
         'as' => 'api.v43.toggle_bookmark',
         'uses' => 'PageController@bookmark_toggle'
     ]);
-    
+
     Route::post('delete_bookmark', [
         'as' => 'api.v43.delete_bookmark',
         'uses' => 'PageController@bookmark_delete'
     ]);
-    
+
     Route::post('add_announce', [
         'as' => 'api.v43.add_announce',
         'uses' => 'PageController@announce_add'
+    ]);
+    Route::post('send_message', [
+        'as' => 'api.v43.send_message',
+        'uses' => 'PageController@sendMessage'
     ]);
 
     Route::post('get_persons', [
@@ -72,10 +80,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'uses' => 'UserController@get_persons'
     ]);
 
-    /*Route::post('get_people_you_may_know', [
-        'as' => 'api.v43.get_people_you_may_know',
-        'uses' => 'UserController@get_people_you_may_know'
-    ]);*/
+    /* Route::post('get_people_you_may_know', [
+      'as' => 'api.v43.get_people_you_may_know',
+      'uses' => 'UserController@get_people_you_may_know'
+      ]); */
 
     Route::post('get_my_posts', [
         'as' => 'api.v43.get_my_posts',
@@ -136,6 +144,11 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'as' => 'api.v43.user.get_my_wall',
             'uses' => 'UserController@get_my_wall'
         ]);
+        Route::get('get_my_groups', [
+            'as' => 'api.v43.user.get_my_groups',
+            'uses' => 'UserController@MyGroups'
+        ]);
+
 
 
 
