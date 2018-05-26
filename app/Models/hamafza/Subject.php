@@ -38,7 +38,7 @@ class Subject extends Model
 
     public function posts()
     {
-        return $this->hasMany('App\Models\hamafza\Post', 'sid', 'id');
+        return $this->hasMany('App\Models\hamafza\Post', 'sid', 'id')->orderby('id','desc');
     }
 
     public static function page_tabs($subject_id)
@@ -102,7 +102,9 @@ class Subject extends Model
                         'full_name' => "$user->FullName",
                         'post' => "$post->desc",
                         'comment_count' => "$comments_count",
-                        'like_count' => "$liks_count"
+                        'like_count' => "$liks_count",
+                        'title'=>"$post->title",
+                        'type'=>"$post->type"
                     ];
             }
         }
