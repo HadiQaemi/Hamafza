@@ -1699,14 +1699,34 @@ th{
     font-size: 12px;
     font-weight: normal;
     line-height: 1;
-    color: #555;
+    color: #000 !important;
     text-align: center;
     background-color: #fff !important;
     border: none !important;
+}
+.input-group-addon:first-child {
+    border-right: 1px solid #000;
+    border-left: 0px;
 }
 .edited-addon:last-child {
     border: none !important;
 }
 .div-schedul{
     font-size: 12px;
+}
+.pointer{
+    cursor: pointer !important;
+}
+.list-group-item:last-child {
+    border: none;
+}
+.jsPanel-content-noheader{
+    height: 215px !important;
+}
+#modal_fullcalendar_menu div a{
+    padding: 3px 8px !important;
+    margin: 0px !important;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    color: #555 !important;
 }

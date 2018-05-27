@@ -562,8 +562,8 @@ class CalendarController extends Controller
         // $params = Request::();
         $uid = (session('uid') != '' && session('uid') != '') ? session('uid') : 0;
         $validator = \Validator::make(Request::all(), [
-            'htitle' => 'required',
-            'htype' => 'required|in:1,2,3',
+            'title' => 'required',
+            'calander_type' => 'required',
         ]);
         if ($validator->fails())
         {
@@ -574,18 +574,81 @@ class CalendarController extends Controller
         else
         {
             $calendar = new Calendar();
-            $calendar->title = Request::input('htitle');
-            $calendar->type = Request::input('htype');
-            $calendar->is_default = Request::input('his_default');
+            $calendar->title = Request::input('title');
+            $calendar->type = Request::input('calander_type');
+            $calendar->is_default = Request::input('is_default');
+            $calendar->prayer_times = Request::input('description');
+            $calendar->prayer_time_province = Request::input('description');
+            $calendar->prayer_time_city = Request::input('description');
+            if (Request::exists('beginning_day'))
+                $calendar->beginning_day = Request::input('beginning_day');
+            if (Request::exists('prayer_times'))
+                $calendar->prayer_poss = Request::input('prayer_times');
+            if (Request::exists('monasebat'))
+                $calendar->show_events = 1;
+            if (Request::exists('prayer_times'))
+                $calendar->show_prayer = 1;
+            if (Request::exists('brith_day'))
+                $calendar->show_birthday = 1;
             $calendar->description = Request::input('description');
             $calendar->user_id = $uid;
             $calendar->uid = $uid;
+
         }
         if ($calendar->save())
         {
             if ($calendar->is_default)
             {
                 $this->setDefaultCalendar($calendar->id);
+            }
+            if (Request::exists('viewPermissions'))
+            {
+                foreach (Request::input('viewPermissions') as $value_user_id)
+                {
+                    $Calendar_Permission = new Calendar_Permission();
+                    $Calendar_Permission->uid = $uid;
+                    $Calendar_Permission->user_id = $value_user_id;
+                    $Calendar_Permission->calendar_id = $calendar->id;
+                    $Calendar_Permission->access = 'view';
+                    $Calendar_Permission->save();
+                }
+            }
+            if (Request::exists('editPermissions'))
+            {
+                foreach (Request::input('editPermissions') as $value_user_id)
+                {
+                    $Calendar_Permission = new Calendar_Permission();
+                    $Calendar_Permission->uid = $uid;
+                    $Calendar_Permission->user_id = $value_user_id;
+                    $Calendar_Permission->calendar_id = $calendar->id;
+                    $Calendar_Permission->access = 'edit';
+                    $Calendar_Permission->save();
+                }
+            }
+            if (Request::exists('hidden_from'))
+            {
+                foreach (Request::input('hidden_from') as $key => $hidden_from)
+                {
+                    $Calendar_Hiddentimes = new Calendar_Hiddentimes();
+                    $Calendar_Hiddentimes->uid = $uid;
+                    $Calendar_Hiddentimes->calendar_id = $calendar->id;
+                    $Calendar_Hiddentimes->time_from = $hidden_from;
+                    $Calendar_Hiddentimes->time_to = Request::input('hidden_to')[$key];
+                    $Calendar_Hiddentimes->save();
+                }
+            }
+            if (Request::exists('sharing_calendar_list'))
+            {
+                foreach (Request::input('sharing_calendar_list') as $key => $sharing_calendar)
+                {
+                    $Calendar_Hiddentimes = new Calendar_Sharing();
+                    $Calendar_Hiddentimes->uid = $uid;
+                    $Calendar_Hiddentimes->calendar_share_to = $calendar->id;
+                    $Calendar_Hiddentimes->calendar_share_of = $sharing_calendar;
+                    $Calendar_Hiddentimes->type = Request::input('sharing_type')[$key];
+                    $Calendar_Hiddentimes->color = Request::input('sharing-color')[$key];
+                    $Calendar_Hiddentimes->save();
+                }
             }
             return json_encode(['success'=>true, 'id' => $calendar->id, 'sowConfig' => Request::input('showConfig')]);
         }
@@ -1037,7 +1100,7 @@ class CalendarController extends Controller
 
     public function personalCalendar()
     {
-        $calendars = Calendar::select('id', 'title', 'is_default')->where('hamahang_calendar.user_id', '=', auth()->id());
+        $calendars = Calendar::select('id', 'title', 'is_default')->where('hamahang_calendar.user_id', '=', auth()->id())->orderBy('is_default');
         return Datatables::eloquent($calendars)->make(true);
     }
 

@@ -73,6 +73,32 @@ return [
     /*---------------------------------------------------------------------------------------------------------------------|
    |          edit calendar modal                                                                                         |
    ----------------------------------------------------------------------------------------------------------------------*/
+    'modal_calendar_add_holiday_events'=>'اضافه کردن مناسبت ها و روزهای تعطیل براساس:',
+    'month_one'=>'فروردین',
+    'month_two'=>'اردیبهشت',
+    'month_three'=>'خرداد',
+    'month_four'=>'تیر',
+    'month_five'=>'مرداد',
+    'month_six'=>'شهریور',
+    'month_seven'=>'مهر',
+    'month_eight'=>'آبان',
+    'month_nine'=>'آذر',
+    'month_ten'=>'دی',
+    'month_eleven'=>'بهمن',
+    'month_twelve'=>'اسفند',
+    'events'=>'رویدادها',
+    'notification'=>'اطلاعیه',
+    'sms'=>'پیامک',
+    'email'=>'رایانامه',
+    'execution'=>'اجرای نرم افزار',
+    'modal_calendar_announce_start'=>'اعلام شروع',
+    'modal_calendar_repeate'=>'تکرار',
+    'modal_calendar_offline'=>'ساعت خاموشی',
+    'modal_calendar_meeting'=>'جلسه',
+    'modal_calendar_type'=>'نوع',
+    'modal_calendar_from'=>'از',
+    'modal_calendar_until'=>'تا',
+    'modal_calendar_priod'=>'مدت',
     'modal_calendar_saturday'=>'شنبه',
     'modal_calendar_sunday'=>'یک شنبه',
     'modal_calendar_monday'=>'دو شنبه',
@@ -134,6 +160,10 @@ return [
     /*---------------------------------------------------------------------------------------------------------------------|
 |          calendar fullcalendar menu modal                                                                                |
 --------------------------------------------------------------------------------------------------------------------------*/
+    'modal_fullcalendar_menu_defined_task'=>'وظایف تعریف شده',
+    'modal_fullcalendar_menu_new_task'=>'وظیفه جدید',
+    'modal_fullcalendar_menu_presence'=>'حضور',
+    'modal_fullcalendar_menu_memo'=>'یادداشت',
     'modal_fullcalendar_menu_save_event'=>'ثبت رویداد',
     'modal_fullcalendar_menu_save_session'=>'ثبت جلسه',
     'modal_fullcalendar_menu_save_invitation'=>'ثبت دعوتنامه',

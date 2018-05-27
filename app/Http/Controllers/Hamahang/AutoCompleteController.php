@@ -445,6 +445,32 @@ class AutoCompleteController extends Controller
         return view('modals.list_user_setting', compact('users', 'array_selected'));
     }
 
+    public function search_list_task(Request $request)
+    {
+        $tasks = DB::table('hamahang_task')
+            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_status.type as task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+            ->join('user', 'user.id', '=', 'hamahang_task_assignments.uid')
+            ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+            ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+            //->whereNull('hamahang_task_assignments.transmitter_id')
+            ->where('hamahang_task_assignments.employee_id', '=', Auth::id())
+            ->where('hamahang_task_assignments.status', '=', 0)
+            ->where('hamahang_task.title', 'Like', '%' . $request->term . '%')
+            ->whereNull('hamahang_task_assignments.reject_description')
+            ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()])
+//            ->toSql()
+        ;
+        $array_selected = [];
+        if ((isset($request->selected_array) && is_array($request->selected_array)))
+        {
+            $array_selected = $request->selected_array;
+        }
+        $tasks = $tasks->get();
+        return view('modals.list_task_setting', compact('tasks', 'array_selected'));
+    }
+
     public function selected_list_user(Request $request)
     {
         if ((isset($request->selected_array) && is_array($request->selected_array)))
@@ -456,6 +482,25 @@ class AutoCompleteController extends Controller
 
     }
 
+    public function selected_list_task(Request $request)
+    {
+        if ((isset($request->selected_array) && is_array($request->selected_array)))
+        {
+            $tasks = DB::table('hamahang_task')
+                ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_status.type as task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+                ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+                ->join('user', 'user.id', '=', 'hamahang_task_assignments.uid')
+                ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+                ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()])
+                ->where('hamahang_task_assignments.employee_id', '=', Auth::id())
+                ->groupBy('hamahang_task.id')
+                ->whereIn('hamahang_task.id', $request->selected_array)->get();
+            $array_selected = $request->selected_array;
+            return view('modals.list_task_setting', compact('tasks', 'array_selected'));
+        }
+
+    }
     public function help(Request $request)
     {
         $data = $request->term;

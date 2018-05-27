@@ -330,7 +330,6 @@
                     </div>
                 </div>
                 <div class="col-xs-12 noRightPadding noLeftPadding">
-
                     <div class="col-xs-10 noRightPadding noLeftPadding">
                         <div class="daily col-xs-1 noRightPadding noLeftPadding">
                             <label for="r2" class=" line-height-35">{{ trans('tasks.end') }}</label>

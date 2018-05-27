@@ -245,23 +245,48 @@
                 content: '' +
                 '<div id="modal_fullcalendar_menu" class="list-group">' +
                 '   <div>' +
+				'		<a href="#" class="list-group-item" onclick="showMultiTaskingModal()">'+
+                '           {{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
+                '       </a>' +
+                '   </div>' +
+				'   <div style="border-bottom:1px solid #aaa">' +
                 '       <a href="#" class="list-group-item" onclick="showEvenModal()" > ' +
-                '           <i class="fa fa-calendar "></i> {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+
+                '           {{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
+                '       </a>' +
+                '   </div>' +
+				'   <div>' +
+                '       <a href="#" class="list-group-item" onclick="showEvenModal()" > ' +
+                '           {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showSessionModal();">' +
-                '           <i  class="fa fa fa-address-card "></i>{{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
+                '           {{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showInvitationModal();">' +
-                '           <i  class="fa fa-envelope "></i>{{trans('calendar.modal_fullcalendar_menu_save_invitation')}}'+
+                '           {{trans('calendar.modal_fullcalendar_menu_save_invitation')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           <i  class="fa fa-bell "></i >{{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
+                '           {{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
+                '       </a>' +
+                '   </div>' +
+                '   <div>' +
+                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '           {{trans('calendar.modal_fullcalendar_menu_presence')}}'+
+                '       </a>' +
+                '   </div>' +
+                '   <div style="border-bottom:1px solid #aaa">' +
+                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '           {{trans('calendar.modal_fullcalendar_menu_memo')}}'+
+                '       </a>' +
+                '   </div>' +
+                '   <div>' +
+                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '           {{trans('calendar.modal_calendar_new_time_border')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <input type="hidden" name="startdate" value="" >' +

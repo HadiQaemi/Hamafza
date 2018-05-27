@@ -645,7 +645,7 @@ class CalendarEventsController extends Controller
     {
         $jdate = new jDateTime();
         $cid = Request::input('cid');
-        //dd($cid);
+//        echo ($cid);
         if ($cid)
         {
             $calendar = Calendar::select('id', 'title', 'default_options', 'sharing_options')
@@ -666,7 +666,6 @@ class CalendarEventsController extends Controller
         // dd($calendar['sharing_options']);
         if ($calendar['default_options'] != '')
         {
-
             $defaultoption = (array)json_decode(unserialize($calendar['default_options']));
         }
         // dd($defaultoption);
@@ -741,6 +740,7 @@ class CalendarEventsController extends Controller
                 $v->title = $h->Description;
             }
         }
+        $type_events = '';
         if (isset($eventtype) && count($eventtype) > 0)
         {
             $type_events = DB::table('hamahang_calendar_user_events as eventTable')

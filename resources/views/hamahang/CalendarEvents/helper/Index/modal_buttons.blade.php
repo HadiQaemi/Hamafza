@@ -2,7 +2,6 @@
     <button type="button" name="saveEvent" id="saveEvent" value="save"
             class="btn btn-info"
             type="button">
-        <i class="glyphicon  glyphicon-save-file bigger-125"></i>
         <span>{{trans('calendar_events.ce_saved_label')}}</span>
     </button>
     @elseif($btn_type=='editEvent')

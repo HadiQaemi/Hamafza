@@ -57,7 +57,9 @@ Route::any('Tagsearch', ['as' => 'tag_search', 'uses' => 'View\AjaxController@ta
 Route::get('history/{id}/{hid}', ['as' => 'history', 'uses' => 'View\PageController@history', 'middleware' => ['dynamic_permission:history']])->where('id', '[0-9]+')->where('hid', '[0-9]+');
 //Route::post('UserList_settings',['as' => 'UserList_settings', 'uses' => 'Hamahang\AutoCompleteController@UsersList', 'middleware' => ['dynamic_permission:user_list_settings']]);
 Route::post('search_list_user',['as' => 'search_list_user', 'uses' => 'Hamahang\AutoCompleteController@search_list_user', 'middleware' => ['dynamic_permission:search_list_user']]);
+Route::post('search_list_task',['as' => 'search_list_task', 'uses' => 'Hamahang\AutoCompleteController@search_list_task', 'middleware' => ['dynamic_permission:search_list_task']]);
 Route::post('selected_list_user',['as' => 'selected_list_user', 'uses' => 'Hamahang\AutoCompleteController@selected_list_user', 'middleware' => ['dynamic_permission:selected_list_user']]);
+Route::post('selected_list_task',['as' => 'selected_list_task', 'uses' => 'Hamahang\AutoCompleteController@selected_list_task', 'middleware' => ['dynamic_permission:selected_list_task']]);
 
 
 /* * ======================___BEGIN___All Page Routes___BEGIN___==================* */

@@ -2381,6 +2381,18 @@ class ModalController extends Controller
         ]);
     }
 
+    public function multi_task(Request $request)
+    {
+        return json_encode([
+            'header' => trans('calendar.modal_fullcalendar_menu_defined_task'),
+            'content' => view('modals.basic_data.calendar_settings.jsp_multi_task_setting_content')
+                ->with('id_select', $request->id_select)
+                ->render(),
+            'footer' => view('modals.basic_data.calendar_settings.jsp_multi_task_setting_footer')
+                ->render()
+        ]);
+    }
+
     public function basicdata_ad_research_view(Request $request)
     {
 //        dd($request->parent_id);

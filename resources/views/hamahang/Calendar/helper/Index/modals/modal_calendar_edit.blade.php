@@ -153,7 +153,7 @@
                                                 <span class="glyphicon glyphicon-time"></span>
                                             </span>
                                         <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar.calendar_to')}}" name="hidden_to[]" id="hidden_to" aria-describedby="respite_time">
-                                    </div>
+                                    </div>modals.basic_data.user_settings.jsp_user_setting_content
                                     <div class="col-xs-2">
                                         <a class="btn btn-default btn-xs fa fa-clone" href="#" onclick="addNewHideTime();"></a>
                                         <a class="btn btn-default btn-xs fa fa-close" href="#" onclick="removeAllHiddenTime();"></a>
@@ -258,11 +258,178 @@
             <div class="panel panel-info col-md-12">
                 <div class="panel-body" id="item_permission">
                     <form class="form-inline" id="calendar_permission_form">
-                        <table class="table table-bordered col-md-12">
-                            <tbody>
+                        <div class="row line-height-35 margin-top-10">
+                            <div class="row col-xs-12">
+                                <div class="col-xs-1 noLeftPadding noRightPadding"><label for="interval_title">{{trans("calendar.modal_calendar_setting_title")}}:</label></div>
+                                <div class="col-xs-11 noLeftPadding noRightPadding"><input name="interval_title" id="interval_title" class="form-control" placeholder=""></div>
+                            </div>
+                            <div class="row col-xs-12 line-height-35 margin-top-10">
+                                <div class="col-xs-1 noLeftPadding noRightPadding"><label for="">{{trans("calendar.modal_calendar_priod")}}:</label></div>
+                                <div class="col-xs-1 noLeftPadding noRightPadding">
+                                    <label for="interval_from">{{trans("calendar.modal_calendar_from")}}</label>
+                                </div>
+                                <div class="col-xs-1 noLeftPadding noRightPadding">
+                                    <input name="interval_from" id="interval_from" class="form-control" size="2" placeholder="">
+                                </div>
+                                <div class="col-xs-1 noLeftPadding noRightPadding">
+                                    <label for="interval_until">{{trans("calendar.modal_calendar_until")}}</label>
+                                </div>
+                                <div class="col-xs-1 noLeftPadding noRightPadding">
+                                    <input name="interval_until" id="interval_until" class="form-control" size="2" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-xs-12 line-height-35 margin-top-10">
+                                <div class="col-xs-1 noLeftPadding noRightPadding"><label for="">{{trans("calendar.modal_calendar_type")}}:</label></div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_type" type="radio" id="interval_offline" value="meeting">
+                                    <label for="interval_offline">{{trans("calendar.modal_calendar_offline")}}</label>
+                                </div>
+                                <div class="col-xs-1 noLeftPadding noRightPadding">
+                                    <input name="interval_type" type="radio" id="interval_meeting" value="meeting">
+                                    <label for="interval_meeting">{{trans("calendar.modal_calendar_meeting")}}</label>
+                                </div>
+                            </div>
+                            <div class="row col-xs-12 line-height-35 margin-top-10" style="border-bottom: solid 1px #ccc;margin-bottom: 10px;padding-bottom: 50px">
+                                <div class="col-xs-2 noLeftPadding noRightPadding"><label for="">{{trans("calendar.modal_calendar_announce_start")}}:</label></div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_announce_by_events" type="checkbox" id="interval_announce_by_events" value="1">
+                                    <label for="interval_announce_by_events">{{trans("calendar.events")}}</label>
+                                </div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_announce_by_notification" type="checkbox" id="interval_announce_by_notification" value="1">
+                                    <label for="interval_announce_by_notification">{{trans("calendar.notification")}}</label>
+                                </div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_announce_by_sms" type="checkbox" id="interval_announce_by_sms" value="1">
+                                    <label for="interval_announce_by_sms">{{trans("calendar.sms")}}</label>
+                                </div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_announce_by_email" type="checkbox" id="interval_announce_by_email" value="1">
+                                    <label for="interval_announce_by_email">{{trans("calendar.email")}}</label>
+                                </div>
+                                <div class="col-xs-2 noLeftPadding noRightPadding">
+                                    <input name="interval_announce_by_execution" type="checkbox" id="interval_announce_by_execution" value="1">
+                                    <label for="interval_announce_by_execution">{{trans("calendar.execution")}}</label>
+                                </div>
+                            </div>
+                            <div class="input-group col-xs-12 line-height-35 margin-top-10">
+                                <div class="col-xs-1">
+                                    <label class="pull-right line-height-35" >{{trans('calendar.modal_calendar_repeate')}}:</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <div class="col-xs-2 noRightPadding noLeftPadding">
+                                        <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
+                                        <input type="text" id="task_schedul_num" class="form-control" style="width: 40px;" name="task_schedul_num" value="" >
+                                    </div>
+                                    <div class="col-xs-1 noRightPadding noLeftPadding">
+                                        <select id="task_schedul" name="task_schedul" class="form-control line-height-35">
+                                            <option value="minute">{{trans('tasks.minute')}}</option>
+                                            <option value="hour">{{trans('tasks.hour')}}</option>
+                                            <option value="daily">{{trans('tasks.day')}}</option>
+                                            <option value="weekly" selected="selected">{{trans('tasks.week')}}</option>
+                                            <option value="monthly">{{trans('tasks.month')}}</option>
+                                            <option value="seasonly">{{trans('tasks.season')}}</option>
+                                            <option value="yearly">{{trans('tasks.year')}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-9 div-schedul">
+                                        <div class="minute col-xs-12 hidden">
+                                        </div>
+                                        <div class="hour col-xs-12 hidden">
+                                        </div>
+                                        <div class="daily col-xs-12 hidden">
+                                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control TimePicker line-height-35']) !!}--}}
+                                        </div>
+                                        <div class="weekly row">
+                                            @for ($i = 0; $i < 7; $i++)
+                                                <div class="input-group pull-right weekly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
+                                                    <input id="weekly_value_{{$i}}" class="" style="width: 22px;" name="weekly_value[]" type="checkbox" value="{{$i}}">
+                                                    <label style="line-height: 10px;" for="{{ "weekly_value_$i" }}">{{trans('tasks.array_weekly_weekdays.'.$i)}}</label>
+                                                </div>
+                                            @endfor
+                                        </div>
+                                        <div class="monthly hidden">
+                                            <div class="input-group pull-right monthly col-xs-12" style="padding: 5px;height: 52px;">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <div class="input-group pull-right monthly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
+                                                        <input id="monthly_value_{{$i}}" class="" style="width: 22px;" name="monthly_value[]" type="checkbox" value="{{$i}}">
+                                                        <label style="line-height: 10px;" for="{{ "monthly_value_$i" }}">{{trans('tasks.array_monthly_months.'.$i)}}</label>
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                        <div class="seasonly hidden">
+                                            <div class="input-group pull-right seasonly col-xs-12" style="padding: 5px;height: 52px;">
+                                                @for ($i = 0; $i < 4; $i++)
+                                                    <div class="input-group pull-right seasonly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
+                                                        <input id="seasonly_value_{{$i}}" class="" style="width: 22px;" name="seasonly_value[]" type="checkbox" value="{{$i}}">
+                                                        <label style="line-height: 10px;" for="{{ "seasonly_value_$i" }}">{{trans('tasks.array_seasonly_seasons.'.$i)}}</label>
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                        <div class="yearly hidden">
+                                            <div class="input-group pull-right yearly col-xs-12" style="padding: 5px;height: 52px;">
+                                                @for ($i = 0; $i < 12; $i++)
+                                                    <div class="input-group pull-right yearly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
+                                                        <input id="yearly_num_{{$i}}" class="" style="width: 10px;" name="yearly_num[]" type="checkbox" value="{{$i}}">
+                                                        <label style="line-height: 10px;" for="{{ "yearly_num_$i" }}">{{trans('tasks.array_yearly_years.'.$i)}}</label>
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group col-xs-12 noRightPadding noLeftPadding line-height-35 margin-top-10">
+                                <div class="col-xs-1 pull-right">
+                                    <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}:</label>
+                                </div>
+                                <div class="col-xs-2">
+                                    <input type="text" class="form-control DatePicker_begin_date" name="schedul_begin_date" aria-describedby="schedul_begin_date" id="schedul_begin_date">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noRightPadding noLeftPadding line-height-35 margin-top-10">
+                                <div class="col-xs-10 noRightPadding noLeftPadding">
+                                    <div class="daily col-xs-1">
+                                        <label class="line-height-35">{{ trans('tasks.end') }}:</label>
+                                    </div>
+                                    <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
+                                        <input type="radio" name="schedul_end_date" value="schedul_end_date_none" id="schedul_end_date_none"/>
+                                        <label for="schedul_end_date_none">{{ trans('tasks.none') }}</label>
+                                    </div>
+                                    <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
+                                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                                            <input type="radio" name="schedul_end_date" value="schedul_end_date_events" id="schedul_end_date_events"/>
+                                        </span>
+                                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
+                                            <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
+                                        </span>
+                                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                                            <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" >
+                                        </span>
+                                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
+                                            <label for="schedul_end_date_events_">{{ trans('tasks.event') }}</label>
+                                        </span>
+                                    </div>
+                                    <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
+                                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
+                                            <input type="radio" name="schedul_end_date" value="schedul_end_date_date" id="schedul_end_date_date" checked/>
+                                        </span>
+                                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
+                                            <label for="schedul_end_date_date">{{ trans('tasks.in-date') }}</label>
+                                        </span>
+                                    </div>
+                                    <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
+                                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                                            <input type="text" class="form-control DatePicker_end_date_date" name="schedul_end_date_date" aria-describedby="schedul_end_date_date" id="schedul_end_date_">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-                            </tbody>
-                        </table>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -297,6 +464,22 @@
                                 {{trans('calendar.modal_calendar_thursday')}}
                                 <input type="checkbox" name="friday"/>
                                 {{trans('calendar.modal_calendar_friday')}}
+                            </div>
+                        </div>
+                        <div class="row line-height-35 margin-top-10">
+                            <div class="col-xs-2 noLeftPadding noRightPadding">
+                                <i class="fa fa-angle-double-right pointer"></i>
+                                {{trans('calendar.month_one')}}
+                                <i class="fa fa-angle-double-left pointer"></i>
+                            </div>
+                            <div class="col-xs-4 noLeftPadding noRightPadding">
+                                <input type="checkbox" name="add_holiday_events"/>
+                                {{trans('calendar.modal_calendar_add_holiday_events')}}
+                            </div>
+                            <div class="col-xs-6 noLeftPadding noRightPadding">
+                                <select class="form-control col-xs-8" dir="rtl" name="tab_type[1]">
+                                    <option value="sun">تقویم پایه</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -572,5 +755,20 @@
                 }
             });
         }, 1000);
+    });
+    $(".DatePicker_begin_date").persianDatepicker({
+        observer: true,
+        autoClose: true,
+        format: 'YYYY-MM-DD'
+    });
+    $(".DatePicker_end_date_date").persianDatepicker({
+        observer: true,
+        autoClose: true,
+        format: 'YYYY-MM-DD'
+    });
+    $('#task_schedul').on('change', function() {
+        var schedul = $(this).val();
+        $('.div-schedul div').addClass('hidden');
+        $('.'+schedul).removeClass('hidden');
     });
 </script>

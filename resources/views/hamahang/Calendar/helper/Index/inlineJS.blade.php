@@ -187,13 +187,14 @@
         $('#lastShring').removeClass('hidden');
         vals = {};
         if (parseInt(id)) {
-            var old = $('input[name="sharing_calendars"]').val();
+            /*
+			var old = $('input[name="sharing_calendars"]').val();
             if (old != false) {
                 vals = JSON.parse(old);
             }
             vals[id] = color;
             $('input[name="sharing_calendars"]').val(JSON.stringify(vals));
-
+			*/
             if ($('#lastShring > table tr:last > td:first').length) {
                 var lastRow = $('#lastShring > table tr:last > td:first').text();
             } else {
@@ -532,6 +533,72 @@
             }
         });
         return res;
+    }
+    /*####################################################################################################################*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------show multiTaskingModal ---------------------------------------------------*/
+    function showMultiTaskingModal() {
+        // $('#form-event')[0].reset();
+        $('#errMSg').html('');
+        startdate = $('#modal_fullcalendar_menu input[name="startdate"]').val().split("/");
+        var starttime = new Array();
+        enddate = $('#modal_fullcalendar_menu input[name="enddate"]').val().split("/");
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        var endtime = $('#modal_fullcalendar_menu input[name="endtime"]').val();
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        //console.log(startdate);return;
+        for (var i = 0; i < startdate.length; i++) {
+            startdate[i] = persianToEngilshDigit(startdate[i]);
+        }
+        for (var i = 0; i < enddate.length; i++) {
+            enddate[i] = persianToEngilshDigit(enddate[i]);
+        }
+        enddate = enddate.join('-');
+        startdate = startdate.join('-');
+        newEventModal = $.jsPanel({
+            position: {my: "center-top", at: "center-top", offsetY: 15},
+            contentSize: {width: 800, height: 300},
+            contentAjax: {
+                url: '{{ URL::route('modals.multi_task' )}}',
+                method: 'POST',
+                dataType: 'json',
+                done: function (data, textStatus, jqXHR, panel) {
+                    this.headerTitle(data.header);
+                    this.content.html(data.content);
+                    this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#form-multi-tasking input[name="startdate"]').val(startdate);
+                    $('#form-multi-tasking input[name="enddate"]').val(enddate);
+                    $('#form-multi-tasking input[name="starttime"]').val(startdate);
+                    $('#form-multi-tasking input[name="endtime"]').val(endtime);
+                    $('#form-multi-tasking input[name="starttime"]').val(starttime);
+                    // $('#form-event .modal-title span:first-child').html('{{ trans('calendar.new_event') }}');
+                    $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
+                }
+            }
+        });
+
+        newEventModal.content.html('<div class="loader"></div>');
+        addMenuDialog.close();
+        $.ajax({
+            url: '{{ URL::route('ugc.desktop.hamahang.calendar.user_calendar',['uname'=>$uname] )}}',
+            type: 'GET', // Send post dat
+            async: false,
+            success: function (s) {
+                s = JSON.parse(s);
+                var options = '';
+                $('select[name="cid"]').empty();
+                for (var i = 0; i < s.length; i++) {
+                    if (s[i].is_default == 1) {
+                        options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                    }
+                    else {
+                        options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                    }
+                }
+                $('select[name="cid"]').append(options);
+            }
+        });
     }
     /*####################################################################################################################*/
     /*--------------------------------------------------------------------------------------------------------------------*/
