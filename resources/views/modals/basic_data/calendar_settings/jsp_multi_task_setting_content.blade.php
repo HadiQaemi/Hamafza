@@ -18,7 +18,7 @@
             </div>
 
         </div>
-        <div class="col-md-9" style="">
+        <div class="col-md-9" style="overflow-x: auto">
             <div id="GroupsDiv">
             </div>
             <div id="OrgansDiv">
@@ -29,66 +29,92 @@
             <div id="div_loader" class="loader"></div>
             <div id="SearchDiv" class="">
                 <div class="noLeftPadding noRightPadding no-margin-left no-margin-right">
-                    <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                        <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                            <label class="line-height-30 pull-right"> {{trans('calendar_events.ce_startdate_label')}}</label>
+                    <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                        <div class="col-xs-2 noLeftPadding noRightPadding">
+                            <label>
+                                {{trans('calendar_events.ce_modal_events_title_field_lable')}}
+                            </label>
                         </div>
-                        <div class="col-xs-11 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                            <div class="col-sm-6 col-xs-6 noRightPadding no-margin-left no-margin-right">
-                                <div class="input-group pull-right">
-                                    <input type="text"
-                                           class="form-control DatePicker clsDatePicker col-xs-4"
-                                           name="startdate"
-                                           placeholder="{{trans('calendar_events.ce_date_label')}}"
-                                           aria-describedby="startdate-session">
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                                <div class=' input-group date'>
-                                    <input type="text" class="form-control TimePicker"
-                                           placeholder="{{trans('calendar_events.ce_hour_label')}}"
-                                           name="starttime"
-                                           aria-describedby="starttime">
-                                </div>
-                            </div>
+                        <div class="col-xs-10">
+                            <input name="title" class="form-control"placeholder="">
                         </div>
                     </div>
-                    <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                        <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                    <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                        <div class="col-xs-2 noLeftPadding noRightPadding">
+                            <label>
+                                {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                            </label>
                         </div>
-                        <div class="col-xs-11 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                            <div class="col-sm-6 col-xs-6 noRightPadding no-margin-left no-margin-right">
-                                <div class="input-group pull-right">
-                                    <input type="text"
-                                           class="form-control DatePicker  clsDatePicker col-xs-4"
-                                           name="enddate"
-                                           placeholder="{{trans('calendar_events.ce_date_label')}}"
-                                           aria-describedby="enddate-session">
+                        <div class="col-xs-10">
+                            <select name="cid" class="chosen-rtl"></select>
+                        </div>
+                    </div>
+                    <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                        <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                            <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                <label class="line-height-30 pull-right"> {{trans('calendar_events.ce_startdate_label')}}</label>
+                            </div>
+                            <div class="col-xs-11 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                <div class="col-sm-6 col-xs-6 noRightPadding no-margin-left no-margin-right">
+                                    <div class="input-group pull-right">
+                                        <input type="text"
+                                               class="form-control DatePicker clsDatePicker col-xs-4"
+                                               name="startdate"
+                                               placeholder="{{trans('calendar_events.ce_date_label')}}"
+                                               aria-describedby="startdate-session">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                    <div class=' input-group date'>
+                                        <input type="text" class="form-control TimePicker"
+                                               placeholder="{{trans('calendar_events.ce_hour_label')}}"
+                                               name="starttime"
+                                               aria-describedby="starttime">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                                <div class=' input-group date'>
+                        </div>
+                        <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                            <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                            </div>
+                            <div class="col-xs-11 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                <div class="col-sm-6 col-xs-6 noRightPadding no-margin-left no-margin-right">
+                                    <div class="input-group pull-right">
+                                        <input type="text"
+                                               class="form-control DatePicker  clsDatePicker col-xs-4"
+                                               name="enddate"
+                                               placeholder="{{trans('calendar_events.ce_date_label')}}"
+                                               aria-describedby="enddate-session">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                    <div class=' input-group date'>
 
-                                    <input type="text" class="form-control TimePicker"
-                                           placeholder=" {{trans('calendar_events.ce_hour_label')}}"
-                                           name="endtime"
-                                           aria-describedby="endtime">
+                                        <input type="text" class="form-control TimePicker"
+                                               placeholder=" {{trans('calendar_events.ce_hour_label')}}"
+                                               name="endtime"
+                                               aria-describedby="endtime">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>   سه حرف از عنوان وظیفه یا وظیفه ها را وارد نمایید.</div>
-                <div class="space-6"></div>
-                <input type="text" id="Search_Box" class="form-control" onkeyup="send_tasks(this,event)">
-                <hr>
-                <div class="div_scroll_serchad_user">
-                <ul class="person_list  row" id="SearchedUsers">
 
-                </ul>
+                <div class="row col-xs-12 margin-top-20">
+                    <div>   سه حرف از عنوان وظیفه یا وظیفه ها را وارد نمایید.</div>
+                    <div class="space-6"></div>
+                    <input type="text" id="Search_Box" class="form-control" onkeyup="send_tasks(this,event)" autocomplete="off">
+                    <hr>
+                    <div class="div_scroll_serchad_user">
+                        <ul class="person_list  row" id="SearchedUsers">
+
+                        </ul>
+                    </div>
+                    <div id="div_loader_searched" class="loader" style="margin-top: 50px;"></div>
+
                 </div>
-                <div id="div_loader_searched" class="loader" style="margin-top: 50px;"></div>
             </div>
             <div id="SelectedDiv" style="display: none;">
                 <div class="div_scroll_serchad_user">
@@ -118,4 +144,31 @@ var select='{{$id_select}}';
         onlyTimePicker: true
     });
     $(".TimePicker").val('');
+    $.ajax({
+        url: '{{ URL::route('auto_complete.get_user_calendar')}}',
+        type: 'Post', // Send post dat
+        dataType:'json',
+        success: function (s) {
+
+            var options = '';
+            $('select[name="cid"]').empty();
+            for (var i = 0; i < s.length; i++) {
+                if(s[i].is_default ==1)
+                {
+                    options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+                else{
+                    options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+
+
+            }
+
+            $('select[name="cid"]').append(options);
+            $('select[name="cid"]').select2({
+                dir: "rtl",
+                width: '100%',
+            });
+        }
+    });
 </script>

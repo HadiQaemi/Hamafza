@@ -14,7 +14,8 @@
     @elseif($btn_type=='session')
     <button type="button" name="saveSessionUserEvent" id="saveSessionUserEvent"
             class="btn btn-info pull-left">
-        <i class="glyphicon  glyphicon-arrow-left bigger-125"><span> {{trans('calendar_events.ce_saved_and_continue')}}</span></i>
+        {{--<i class="glyphicon  glyphicon-arrow-left bigger-125"><span> {{trans('calendar_events.ce_saved_and_continue')}}</span></i>--}}
+        <span> {{trans('calendar_events.ce_saved_label')}}</span>
     </button>
 @elseif($btn_type=='editSession')
     <button type="button" name="saveSessionUserEvent" id="saveSessionUserEvent"
@@ -29,7 +30,7 @@
 @elseif($btn_type=='invitation')
     <button type="button" name="saveInvitationUserEvent" id="saveInvitationUserEvent"
             class="btn btn-info pull-left">
-        <i class="glyphicon  glyphicon-arrow-left bigger-125"><span> {{trans('calendar_events.ce_saved_and_continue')}}</span></i>
+        <span> {{trans('calendar_events.ce_modal_invitation_navbar_nav2')}}</span>
     </button>
 @elseif($btn_type=='editReminder')
     <button type="button" name="saveReminderUserEvent" id="saveReminderUserEvent"

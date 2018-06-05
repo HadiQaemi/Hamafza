@@ -92,8 +92,8 @@ return [
 /*----------------------------------------------------------------------------------------------------------------------------|
 | calendar_events/helper/index/modal_invitation.blade.php                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------*/
-    'ce_modal_invitation_header_title'=>'دعوتنامه جدید',
-    'ce_modal_invitation_header_title'=>'ویرایش دعوتنامه',
+    'ce_modal_invitation_header_title_new'=>'دعوتنامه جدید',
+    'ce_modal_invitation_header_title_edit'=>'ویرایش دعوتنامه',
 
     'ce_modal_invitation_navbar_nav1'=>'ثبت رویداد',
     'ce_modal_invitation_navbar_nav2'=>'ثبت دعوتنامه',

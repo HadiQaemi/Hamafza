@@ -36,7 +36,7 @@ class CalendarEventsController extends Controller
 {
     public function index($username)
     {
-        can('calendar_events_manager_view');
+//        can('calendar_events_manager_view');
         $arr = variable_generator('user','desktop',$username);
         $arr['HFM_CalendarEvent'] = HFM_GenerateUploadForm([['CalendarEvent', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
         /* foreach ($events as $index=>$event)
@@ -60,7 +60,7 @@ class CalendarEventsController extends Controller
              }
 
          }*/
-        return view('hamahang.calendar_events.Index', $arr);
+        return view('hamahang.calendarEvents.Index', $arr);
     }
 
     public function saveUserEvent()
@@ -155,192 +155,300 @@ class CalendarEventsController extends Controller
     public function saveSessionEvent()
     {
         $uid = Auth::id();
+        //dd(Request::input('mode'));
+        $type = Request::input('type') ? Request::input('type') : 0;
+        // die(dd(Request::input('type')));
+        $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
+            'htitle' => 'required|string',
+            'hcid' => 'required|integer',
+            'hstartdate' => 'required',
+            'henddate' => 'required',
+
             'hagenda' => 'required|string',
-            'hevent_id' => 'required|integer',
+//            'hevent_id' => 'required|integer',
             'hlocation' => 'required',
             'session_voting_users' => 'required_without:session_notvoting_users',
-            'session_notvoting_users' => 'required_without:session_voting_users'
+            'session_notvoting_users' => 'required_without:session_voting_users',
         ]);
+        //DB::enableQueryLog();
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
             $result['success'] = false;
-            // dd(Request::input('haudiences'));
-
             return json_encode($result);
         }
         else
         {
-            // die(dd(Request::input('mode')));
-            if (Request::input('mode') == 'edit')
+            if (Request::input('event_id') && Request::input('mode') == 'edit')
             {
-                // DB::enableQueryLog();
-                //dd(Request::input('hevent_id'));
-                $sessionObj = Session_Events::where('event_id', '=', Request::input('hevent_id'))->firstOrFail();
-                //dd(DB::getQueryLog());
+                $userEvent = User_Event::find(Request::input('event_id'));
+
             }
             else
             {
-                $sessionObj = new Session_Events();
-            }
-            //$haudiences = explode(',',Request::input('haudiences'));
-            $users_voting = explode(',', Request::input('session_voting_users'));
-
-            $users_notvoting = explode(',', Request::input('session_notvoting_users'));
-            //    die(dd($uid));
-            $sessionObj->uid = $uid;
-
-            $sessionObj->event_id = Request::input('hevent_id');
-            $sessionObj->agenda = Request::input('hagenda');
-            $sessionObj->term = Request::input('term');
-            $sessionObj->type = Request::input('type');
-            $sessionObj->location = Request::input('hlocation');
-            $sessionObj->send_Invitation = Request::input('send_Invitation');
-            $sessionObj->create_session_page = Request::input('create_session_page');
-            $sessionObj->allow_inform_invitees = Request::input('allow_inform_invitees');
-            $sessionObj->session_chief = Request::input('session_chief');
-            $sessionObj->session_secretary = Request::input('session_secretary');
-            $sessionObj->session_facilitator = Request::input('session_facilitator');
-            $sessionObj->long = Request::input('long');
-            $sessionObj->lat = Request::input('lat');
-            $sessionObj->location_phone = Request::input('location_phone');
-            $sessionObj->coordination_phone = Request::input('coordination_phone');
-            Event_Invitees::where('event_id', '=', Request::input('hevent_id'))->delete();
-            foreach ($users_voting as $u)
-            {
-                $invitees = new Event_Invitees();
-                $invitees->uid = $u;
-                $invitees->user_type = 1;
-                $invitees->event_id = Request::input('hevent_id');
-                $invitees->save();
-            }
-            foreach ($users_notvoting as $u)
-            {
-                $invitees = new Event_Invitees();
-                $invitees->uid = $u;
-                $invitees->user_type = 2;
-                $invitees->event_id = Request::input('hevent_id');
-                $invitees->save();
-            }
-            if (Session::has('Files'))
-            {
-                $files = Session::get('Files');
-                if (isset($files['CalendarEvent']) && is_array($files['CalendarEvent']))
-                {
-                    $sessiofiles = $files['CalendarEvent'];
-                    foreach ($sessiofiles as $key => $value)
-                    {
-                        $f = new Events_Files();
-                        $f->event_id = Request::input('hevent_id');
-                        $f->file_id = $key;
-                        $f->save();
-                    }
-                    unset($files['CalendarEvent']);
-                    Session::put('Files', $files);
-                }
-
+                $userEvent = new User_Event();
             }
 
-            if ($sessionObj->save())
+            $userEvent->uid = $uid;
+            $userEvent->title = Request::input('htitle');
+            $userEvent->allDay = Request::input('allDay');
+            $startdate = explode('-', Request::input('hstartdate'));
+            if (Request::input('allDay') == 1)
             {
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+            }
+            else
+            {
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
+            }
 
-                User_Event::setType($sessionObj->event_id, 1);
+            //die(dd($startdate));
 
+            $enddate = explode('-', Request::input('henddate'));
+            if (Request::input('allDay') == 1)
+            {
+                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+            }
+            else
+            {
+                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
+            }
+            $userEvent->description = Request::input('description');
+            $userEvent->type = $type;
+            $userEvent->cid = Request::input('hcid');
+
+            //die(dd(DB::getQueryLog()));
+            if ($userEvent->save())
+            {
                 if (Request::input('mode') == 'edit')
                 {
-                    return json_encode(array('success' => true, 'mode' => 'edit'));
+                    // DB::enableQueryLog();
+                    //dd(Request::input('hevent_id'));
+                    $sessionObj = Session_Events::where('event_id', '=', Request::input('hevent_id'))->firstOrFail();
+                    //dd(DB::getQueryLog());
                 }
                 else
                 {
-                    if (Request::input('mode') == 'calendar')
-                    {
-                        $event = $this->getEventById(Request::input('hevent_id'));
-                        return json_encode(array('success' => true, 'event' => $event, 'mode' => 'calendar'));
+                    $sessionObj = new Session_Events();
+                }
 
+                $users_voting = explode(',', Request::input('session_voting_users'));
+
+                $users_notvoting = explode(',', Request::input('session_notvoting_users'));
+                //    die(dd($uid));
+                $sessionObj->uid = $uid;
+
+//                $sessionObj->event_id = Request::input('hevent_id');
+                $sessionObj->event_id = $userEvent->id;
+                $sessionObj->agenda = Request::input('hagenda');
+                $sessionObj->term = Request::input('term');
+                $sessionObj->type = Request::input('type');
+                $sessionObj->location = Request::input('hlocation');
+                $sessionObj->send_Invitation = Request::input('send_Invitation');
+                $sessionObj->create_session_page = Request::input('create_session_page');
+                $sessionObj->allow_inform_invitees = Request::input('allow_inform_invitees');
+                $sessionObj->session_chief = Request::input('session_chief');
+                $sessionObj->session_secretary = Request::input('session_secretary');
+                $sessionObj->session_facilitator = Request::input('session_facilitator');
+                $sessionObj->long = Request::input('long');
+                $sessionObj->lat = Request::input('lat');
+                $sessionObj->location_phone = Request::input('location_phone');
+                $sessionObj->coordination_phone = Request::input('coordination_phone');
+//                Event_Invitees::where('event_id', '=', Request::input('hevent_id'))->delete();
+                Event_Invitees::where('event_id', '=', $userEvent->id)->delete();
+                foreach ($users_voting as $u)
+                {
+                    $invitees = new Event_Invitees();
+                    $invitees->uid = $u;
+                    $invitees->user_type = 1;
+//                    $invitees->event_id = Request::input('hevent_id');
+                    $invitees->event_id = $userEvent->id;
+                    $invitees->save();
+                }
+                foreach ($users_notvoting as $u)
+                {
+                    $invitees = new Event_Invitees();
+                    $invitees->uid = $u;
+                    $invitees->user_type = 2;
+//                    $invitees->event_id = Request::input('hevent_id');
+                    $invitees->event_id = $userEvent->id;
+                    $invitees->save();
+                }
+                if (Session::has('Files'))
+                {
+                    $files = Session::get('Files');
+                    if (isset($files['CalendarEvent']) && is_array($files['CalendarEvent']))
+                    {
+                        $sessiofiles = $files['CalendarEvent'];
+                        foreach ($sessiofiles as $key => $value)
+                        {
+                            $f = new Events_Files();
+//                            $f->event_id = Request::input('hevent_id');
+                            $f->event_id = $userEvent->id;
+                            $f->file_id = $key;
+                            $f->save();
+                        }
+                        unset($files['CalendarEvent']);
+                        Session::put('Files', $files);
+                    }
+
+                }
+
+                if ($sessionObj->save())
+                {
+
+                    User_Event::setType($sessionObj->event_id, 1);
+
+                    if (Request::input('mode') == 'edit')
+                    {
+                        return json_encode(array('success' => true, 'mode' => 'edit'));
                     }
                     else
                     {
-                        return json_encode(array('success' => true));
-                    }
-                }
+                        if (Request::input('mode') == 'calendar')
+                        {
+                            $event = $this->getEventById($userEvent->id);
+                            return json_encode(array('success' => true, 'event' => $event, 'mode' => 'calendar'));
 
+                        }
+                        else
+                        {
+                            return json_encode(array('success' => true));
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                return json_encode(array('success' => false));
             }
         }
-
-
     }
 
     public function saveInvitation()
     {
-        //  dd(Request::input('mode'));
         $uid = Auth::id();
-        if (Request::input('mode') == 'edit')
-        {
-            $invitationObj = Invitation_Events::where('event_id', '=', Request::input('hevent_id'))->firstOrFail();
-
-        }
-        else
-        {
-            $invitationObj = new Invitation_Events();
-        }
-
+        //dd(Request::input('mode'));
+        $type = Request::input('type') ? Request::input('type') : 0;
+        // die(dd(Request::input('type')));
+        $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
-            'hevent_id' => 'required|integer',
+            'htitle' => 'required|string',
+            'hcid' => 'required|integer',
+            'hstartdate' => 'required',
+            'henddate' => 'required',
+
             'hlocation' => 'required',
             'haudiences' => 'required|string'
         ]);
+        //DB::enableQueryLog();
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
             $result['success'] = false;
-            // dd(Request::input('haudiences'));
-
             return json_encode($result);
         }
         else
         {
-            $invitationObj->uid = $uid;
-            $invitationObj->event_id = Request::input('hevent_id');
-            $invitationObj->about = Request::input('about');
-            $invitationObj->type = Request::input('type');
-            $invitationObj->location = Request::input('hlocation');
-            $invitationObj->term = Request::input('term');
-            $invitationObj->allow_inform_invitees = Request::input('allow_inform_invitees');
-            $invitationObj->long = Request::input('long');
-            $invitationObj->lat = Request::input('lat');
-            $haudiences = explode(',', Request::input('haudiences'));
-            Event_Invitees::where('event_id', '=', Request::input('hevent_id'))->delete();
-            foreach ($haudiences as $h)
+            if (Request::input('event_id') && Request::input('mode') == 'edit')
             {
-                $invitees = new Event_Invitees();
-                $invitees->uid = $h;
-                $invitees->event_id = Request::input('hevent_id');
-                $invitees->save();
+                $userEvent = User_Event::find(Request::input('event_id'));
+
             }
-            if ($invitationObj->save())
+            else
             {
-                User_Event::setType($invitationObj->event_id, 2);
+                $userEvent = new User_Event();
+            }
+
+            $userEvent->uid = $uid;
+            $userEvent->title = Request::input('htitle');
+            $userEvent->allDay = Request::input('allDay');
+            $startdate = explode('-', Request::input('hstartdate'));
+            if (Request::input('allDay') == 1)
+            {
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+            }
+            else
+            {
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
+            }
+
+            //die(dd($startdate));
+
+            $enddate = explode('-', Request::input('henddate'));
+            if (Request::input('allDay') == 1)
+            {
+                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+            }
+            else
+            {
+                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
+            }
+            $userEvent->description = Request::input('description');
+            $userEvent->type = $type;
+            $userEvent->cid = Request::input('hcid');
+
+            //die(dd(DB::getQueryLog()));
+            if ($userEvent->save())
+            {
+                $uid = Auth::id();
                 if (Request::input('mode') == 'edit')
                 {
-                    return json_encode(array('success' => true, 'mode' => 'edit'));
+                    $invitationObj = Invitation_Events::where('event_id', '=', Request::input('hevent_id'))->firstOrFail();
+
                 }
                 else
                 {
-                    if (Request::input('mode') == 'calendar')
-                    {
-                        $event = $this->getEventById(Request::input('hevent_id'));
-                        return json_encode(array('success' => true, 'event' => $event, 'mode' => 'calendar'));
+                    $invitationObj = new Invitation_Events();
+                }
 
+                $invitationObj->uid = $uid;
+                $invitationObj->event_id = $userEvent->id;
+                $invitationObj->about = Request::input('about');
+                $invitationObj->type = Request::input('type');
+                $invitationObj->location = Request::input('hlocation');
+                $invitationObj->term = Request::input('term');
+                $invitationObj->allow_inform_invitees = Request::input('allow_inform_invitees');
+                $invitationObj->long = Request::input('long');
+                $invitationObj->lat = Request::input('lat');
+                $haudiences = explode(',', Request::input('haudiences'));
+                Event_Invitees::where('event_id', '=', $userEvent->id)->delete();
+                foreach ($haudiences as $h)
+                {
+                    $invitees = new Event_Invitees();
+                    $invitees->uid = $h;
+                    $invitees->event_id = $userEvent->id;
+                    $invitees->save();
+                }
+                if ($invitationObj->save())
+                {
+                    User_Event::setType($invitationObj->event_id, 2);
+                    if (Request::input('mode') == 'edit')
+                    {
+                        return json_encode(array('success' => true, 'mode' => 'edit'));
                     }
                     else
                     {
-                        return json_encode(array('success' => true));
+                        if (Request::input('mode') == 'calendar')
+                        {
+                            $event = $this->getEventById(Request::input('hevent_id'));
+                            return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
+
+                        }
+                        else
+                        {
+                            return json_encode(array('success' => true));
+                        }
                     }
                 }
+
+            }else
+            {
+                return json_encode(array('success' => false));
             }
         }
-
     }
 
     public function saveReminder()
@@ -795,7 +903,8 @@ class CalendarEventsController extends Controller
             'defaultoptions' => json_encode($defaultoption),
             'sharing_options' => json_encode($sharing_options),
             'sharing_ids' => $sharing_ids,
-            'events' => $events
+//            'events' => $events
+            'events' => []
         ));
     }
 
@@ -1265,10 +1374,10 @@ class CalendarEventsController extends Controller
         if(Request::input('mode')=='editInvitation')
         {
             $btn= 'editInvitation';
-            $title = trans('calendar_events.ce_modal_invitation_header_title');
+            $title = trans('calendar_events.ce_modal_invitation_header_title_edit');
         }else{
             $btn='invitation';
-            $title = trans('calendar_events.ce_modal_invitation_header_title');
+            $title = trans('calendar_events.ce_modal_invitation_header_title_new');
         }
         return json_encode([
             'header'=>$title,

@@ -1,6 +1,9 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
-        <li  class="active">
+        <li  class="eventTask">
+            <a href="#tab_event" data-toggle="tab">رویداد</a>
+        </li>
+        <li class="active" id="define">
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
         <li>
@@ -28,6 +31,66 @@
     <form action="{{ route('hamahang.tasks.save_task') }}" class="" name="create_new_task" id="create_new_task" method="post"
           enctype="multipart/form-data">
         <div class="tab-content new-task-form">
+            <div class="tab-pane eventTask" style="padding-top: 8px;margin-top:20px" id="tab_event">
+                <div class="no-margin-right">
+                    <div class="col-xs-12 margin-top-20">
+                        <div class="col-xs-2">
+                            <label>
+                                {{trans('calendar_events.ce_modal_events_title_field_lable')}}
+                            </label>
+                        </div>
+                        <div class="col-xs-10">
+                            <input name="title" class="form-control"placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-top-20">
+                        <div class="col-xs-2">
+                            <label>
+                                {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                            </label>
+                        </div>
+                        <div class="col-xs-10">
+                            <select name="cid" class="chosen-rtl"></select>
+                        </div>
+                    </div>
+                    <div class="row col-xs-12 margin-top-20">
+                        <div class="col-xs-1">
+                            <label class="line-height-30 pull-right"> {{trans('calendar_events.ce_startdate_label')}}</label>
+                        </div>
+                        <div class="col-xs-11 no-margin-right">
+                            <div class="col-sm-4 col-xs-6">
+                                <div class="input-group pull-right">
+                                    <input type="text" class="form-control DatePicker clsDatePicker col-xs-4" name="startdate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
+                                <div class=' input-group date'>
+                                    <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" aria-describedby="starttime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-xs-12 margin-top-20">
+                        <div class="col-xs-1">
+                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                        </div>
+                        <div class="col-xs-11">
+                            <div class="col-sm-4 col-xs-6">
+                                <div class="input-group pull-right">
+                                    <input type="text" class="form-control DatePicker clsDatePicker col-xs-4" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="enddate-session">
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <div class=' input-group date'>
+                                    <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="endtime" aria-describedby="endtime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="tab-pane active" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
@@ -260,7 +323,7 @@
                 <div class="input-group col-xs-12" style="margin: 0 0 15px 5px;">
                     <div class="col-xs-1 noRightPadding noLeftPadding">
                         <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
-                        <input type="text" id="task_schedul_num" class="form-control" style="width: 40px;" name="task_schedul_num" value="" >
+                        <input type="text" id="task_schedul_num" class="form-control" style="width: 30px;padding: 0px;margin: 0px;padding-right: 9px;" name="task_schedul_num" value="" >
                     </div>
                     <div class="col-xs-2 noRightPadding noLeftPadding">
                         <select id="task_schedul" name="task_schedul" class="form-control line-height-35">
@@ -1151,6 +1214,35 @@
     {{--</form>--}}
     {{--{!! $HFM_CN_Task['UploadForm'] !!}--}}
 {{--</div>--}}
+<script>
+    $.ajax({
+        url: '{{ URL::route('auto_complete.get_user_calendar')}}',
+        type: 'Post', // Send post dat
+        dataType:'json',
+        success: function (s) {
+
+            var options = '';
+            $('select[name="cid"]').empty();
+            for (var i = 0; i < s.length; i++) {
+                if(s[i].is_default ==1)
+                {
+                    options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+                else{
+                    options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+
+
+            }
+
+            $('select[name="cid"]').append(options);
+            $('select[name="cid"]').select2({
+                dir: "rtl",
+                width: '100%',
+            });
+        }
+    });
+</script>
 
 <script type="text/javascript" src="{{URL::to('assets/Packages/DataTables/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/bootstrap/js/bootstrap-filestyle.js')}}"></script>

@@ -1730,3 +1730,6 @@ th{
 .fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
     color: #555 !important;
 }
+.fc-title{
+    color: #FFF0FF !important;
+}

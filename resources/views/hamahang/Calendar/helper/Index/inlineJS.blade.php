@@ -600,6 +600,77 @@
             }
         });
     }
+	    /*####################################################################################################################*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------show create task modal---------------------------------------------------*/
+    function showTaskModal() {
+        // $('#form-event')[0].reset();
+        $('#errMSg').html('');
+        startdate = $('#modal_fullcalendar_menu input[name="startdate"]').val().split("/");
+        var starttime = new Array();
+        enddate = $('#modal_fullcalendar_menu input[name="enddate"]').val().split("/");
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        var endtime = $('#modal_fullcalendar_menu input[name="endtime"]').val();
+        var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        //console.log(startdate);return;
+        for (var i = 0; i < startdate.length; i++) {
+            startdate[i] = persianToEngilshDigit(startdate[i]);
+        }
+        for (var i = 0; i < enddate.length; i++) {
+            enddate[i] = persianToEngilshDigit(enddate[i]);
+        }
+        enddate = enddate.join('-');
+        startdate = startdate.join('-');
+        newEventModal = $.jsPanel({
+            position: {my: "center-top", at: "center-top", offsetY: 15},
+            contentSize: {width: 800, height: 400},
+            contentAjax: {
+                url: '{{ URL::route('modals.create_new_task' )}}',
+                method: 'POST',
+                dataType: 'json',
+                done: function (data, textStatus, jqXHR, panel) {
+                    this.headerTitle(data.header);
+                    this.content.html(data.content);
+                    this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#create_new_task input[name="startdate"]').val(startdate);
+                    $('#create_new_task input[name="enddate"]').val(enddate);
+                    $('#create_new_task input[name="starttime"]').val(startdate);
+                    $('#create_new_task input[name="endtime"]').val(endtime);
+                    $('#create_new_task input[name="starttime"]').val(starttime);
+                    $('#create_new_task').css("overflow", "scroll");
+                    $('#create_new_task').css("height", "350px");
+                    $('#define').removeClass('active');
+                    $('#create_new_task #tab_t1').removeClass('active');
+                    $('.eventTask').addClass('active');
+                    $('#form-event .modal-title span:first-child').html('{{ trans('calendar.new_event') }}');
+                    $('#create_new_task form').append('<input type="hidden" name="mode" value="calendar"/>');
+                }
+            }
+        });
+
+        newEventModal.content.html('<div class="loader"></div>');
+        addMenuDialog.close();
+        $.ajax({
+            url: '{{ URL::route('ugc.desktop.hamahang.calendar.user_calendar',['uname'=>$uname] )}}',
+            type: 'GET', // Send post dat
+            async: false,
+            success: function (s) {
+                s = JSON.parse(s);
+                var options = '';
+                $('select[name="cid"]').empty();
+                for (var i = 0; i < s.length; i++) {
+                    if (s[i].is_default == 1) {
+                        options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                    }
+                    else {
+                        options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                    }
+                }
+                $('select[name="cid"]').append(options);
+            }
+        });
+    }
     /*####################################################################################################################*/
     /*--------------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------show eventModal ---------------------------------------------------*/
