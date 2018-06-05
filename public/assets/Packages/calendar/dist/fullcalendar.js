@@ -7250,7 +7250,7 @@ TimeGrid.mixin({
 
 		if (shouldOverlap) {
 			// double the width, but don't go beyond the maximum forward coordinate (1.0)
-			forwardCoord = Math.min(1, backwardCoord + (forwardCoord - backwardCoord) * 2);
+			//forwardCoord = Math.min(1, backwardCoord + (forwardCoord - backwardCoord) * 2);
 		}
 
 		if (this.isRTL) {

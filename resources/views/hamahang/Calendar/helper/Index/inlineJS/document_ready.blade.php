@@ -472,12 +472,13 @@
                                     else {
                                         var color = '#1e893a';
                                     }
+                                    allday = res.sharing_events[i].allDay == "1" ? 1 : null
                                     events[eventIndex] = {
                                         className: 'event  share_event share_event_' + res.sharing_events[i].sharId,
                                         title: res.sharing_events[i].title,
                                         start: res.sharing_events[i].startdate,
                                         end: res.sharing_events[i].enddate,
-                                        allDay: res.sharing_events[i].allDay,
+                                        allDay: allday,
                                         color: color
                                     };
                                     eventIndex++;
