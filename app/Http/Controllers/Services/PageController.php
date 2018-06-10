@@ -488,10 +488,18 @@ class PageController extends Controller {
 
         if ($bookmark->count()) {
             $bookmark->delete();
-            return response()->json(['success', 'چوب الف با موفقیت حذف شد.']);
+            $res = [
+                'status' => "1",
+                'message' => 'چوب الف با موفقیت حذف شد.'
+            ];
+            return response()->json($res);
         } else {
             Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $target_id, 'user_id' => $user_id,]);
-            return response()->json(['success', 'چوب الف با موفقیت ثبت شد.']);
+            $res = [
+                'status' => "1",
+                'message' => 'چوب الف با موفقیت ثبت شد.'
+            ];
+            return response()->json($res);
         }
     }
 
@@ -523,9 +531,17 @@ class PageController extends Controller {
         if ($bookmark) {
 
             $bookmark->delete();
-            return response()->json(['success', 'چوب الف با موفقیت حذف شد.']);
+            $res = [
+                'status' => "1",
+                'message' => 'چوب الف با موفقیت حذف شد.'
+            ];
+            return response()->json($res);
         } else {
-            return response()->json(['fail', 'یافت نشد']);
+            $res = [
+                'status' => "-1",
+                'message' => 'یافت نشد'
+            ];
+            return response()->json($res);
         }
     }
 
@@ -595,8 +611,12 @@ class PageController extends Controller {
                     ]
             );
         }
-        $mes = trans('labels.ann_ok');
-        return response()->json(['success', $mes]);
+        $res = [
+            'status' => "1",
+            'message' => trans('labels.ann_ok')
+        ];
+
+        return response()->json($res);
     }
 
     public function sendMessage() {
