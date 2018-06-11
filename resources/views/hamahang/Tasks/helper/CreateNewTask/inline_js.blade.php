@@ -643,7 +643,7 @@
         else
             $('.send_message').hide();
 
-        var title = $('#task_title').val();
+        var title = $('#title').val();
         if(title.trim().length>0 && none>0)
             $('.new_task_save_type_final').click();
         else
@@ -678,7 +678,7 @@
         $('.send_message').hide();
         $('.transcript_option').hide();
 		$('#create_new_task').on('click', function() {
-            var title = $('#task_title').val();
+            var title = $('#title').val();
             var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
             if(title.trim().length>0 && new_task_users_responsible>0)
                 $('.new_task_save_type_final').click();

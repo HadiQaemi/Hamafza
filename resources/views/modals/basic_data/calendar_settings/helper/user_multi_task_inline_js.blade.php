@@ -51,16 +51,53 @@
     $(document).ready(function(){
 
         $("#InsertBtn_task").click(function () {
-            alert('InsertBtn_task');
-            var localRels = '';
-            var localRelsName = '';
-
-            for(var i=0;f[i];i++)
-           {
-
-                $('#'+select).append('<option selected="selected" value='+f[i]+'>'+name_array[i]+' '+family_array[i]+'</option>').change();
-            }
-            $(this).parent().parent().parent().parent().find('.jsglyph-close').click();
+            var saveObj = {};
+            saveObj.title = $('#title').val();
+            saveObj.cid = $('#cid').val();
+            saveObj.startdate = $('#startdate').val();
+            saveObj.starttime = $('#starttime').val();
+            saveObj.enddate = $('#enddate').val();
+            saveObj.endtime = $('#endtime').val();
+            saveObj.event_type = 'task';
+            saveObj.multiTaskTime = f;
+            var res = '';
+            $.ajax({
+                url: '{{ URL::route('hamahang.calendar_events.save_selected_task_event')}}',
+                type: 'POST', // Send post dat
+                data: saveObj,
+                async: false,
+                success: function (s) {
+                    res = JSON.parse(s);
+                    if (res.success == false) {
+                        $('#' + errorMsg_id).empty();
+                        errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);
+                        // $('#' + errorMsg_id).html(warning);
+                    } else {
+                        eventInfo = JSON.parse(res.event);
+                        console.log(eventInfo);
+                        console.log(eventInfo.title);
+                        (function ($) {
+                            $("#calendar").fullCalendar('addEventSource', [{
+                                start: eventInfo.startdate,
+                                end: eventInfo.enddate,
+                                title: eventInfo.title,
+                                color: eventInfo.bgColor,
+                                block: true
+                            }]);
+                        })(jQuery_2);
+                        sessionModal.close();
+                        var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
+                        messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');
+                    }
+                }
+            });
+            // for(var i=0;f[i];i++)
+            // {
+            //     $('#'+select).append('<option selected="selected" value='+f[i]+'>'+name_array[i]+' '+family_array[i]+'</option>').change();
+            //
+            // }
+            // $(this).parent().parent().parent().parent().find('.jsglyph-close').click();
         });
         $('#html1').jstree({
             'core' : {
@@ -71,7 +108,7 @@
                 ]
             }
         });
-       instance = $('#html1').jstree(true);
+        instance = $('#html1').jstree(true);
         instance.deselect_all();
         instance.select_node('1');
         $('#html1').on("select_node.jstree", function (e, data) {

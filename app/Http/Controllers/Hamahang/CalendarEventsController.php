@@ -63,11 +63,88 @@ class CalendarEventsController extends Controller
         return view('hamahang.calendarEvents.Index', $arr);
     }
 
+    public function saveSelectedTaskEvent()
+    {
+        $validator = \Validator::make(Request::all(), [
+            'title' => 'required|string',
+            'cid' => 'required|integer',
+            'startdate' => 'required',
+            'starttime' => 'required',
+            'enddate' => 'required',
+            'enddate' => 'required'
+        ]);
+        //DB::enableQueryLog();
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        if (Request::input('event_id') && Request::input('mode') == 'edit')
+        {
+            $userEvent = User_Event::find(Request::input('event_id'));
+        }
+        else
+        {
+            $userEvent = new User_Event();
+        }
+        $uid = Auth::id();
+        $type = Request::input('type') ? Request::input('type') : 0;
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
+//            dd(Request::all());
+        $jdate = new jDateTime();
+        $userEvent->uid = $uid;
+        $userEvent->title = Request::input('title');
+        $userEvent->allDay = Request::input('allDay');
+        $startdate = explode('-', Request::input('startdate'));
+//            dd(Request::input('event_startdate'));
+        if (Request::input('allDay') == 1)
+        {
+            $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+        }
+        else
+        {
+            $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
+        }
+
+        //die(dd($startdate));
+
+        $enddate = explode('-', Request::input('enddate'));
+        if (Request::input('allDay') == 1)
+        {
+            $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+        }
+        else
+        {
+            $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
+        }
+        $userEvent->description = Request::input('description');
+        $userEvent->type = $type;
+        $userEvent->event_type = $event_type;
+        $userEvent->cid = Request::input('event_cid');
+        //die(dd(DB::getQueryLog()));
+        if ($userEvent->save())
+        {
+            $final_result = ['success' => true, 'event' => $userEvent, 'mode' => 'calendar'];
+        }
+
+        foreach (Request::input('multiTaskTime') as $taskid)
+        {
+            $eventTask = new Events_Tasks();
+            $eventTask->uid = $uid;
+            $eventTask->task_id = $taskid;
+            $eventTask->event_id = $userEvent->id;
+            $eventTask->save();
+        }
+
+        return json_encode($final_result);
+    }
     public function saveUserEvent()
     {
         $uid = Auth::id();
         //dd(Request::input('mode'));
         $type = Request::input('type') ? Request::input('type') : 0;
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         // die(dd(Request::input('type')));
         $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
@@ -121,6 +198,7 @@ class CalendarEventsController extends Controller
             }
             $userEvent->description = Request::input('description');
             $userEvent->type = $type;
+            $userEvent->event_type = $event_type;
             $userEvent->cid = Request::input('hcid');
 
             //die(dd(DB::getQueryLog()));
@@ -155,8 +233,9 @@ class CalendarEventsController extends Controller
     public function saveSessionEvent()
     {
         $uid = Auth::id();
-        //dd(Request::input('mode'));
+//        dd(Request::input('event_type'));
         $type = Request::input('type') ? Request::input('type') : 0;
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         // die(dd(Request::input('type')));
         $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
@@ -216,8 +295,8 @@ class CalendarEventsController extends Controller
             }
             $userEvent->description = Request::input('description');
             $userEvent->type = $type;
+            $userEvent->event_type = $event_type;
             $userEvent->cid = Request::input('hcid');
-
             //die(dd(DB::getQueryLog()));
             if ($userEvent->save())
             {
@@ -332,6 +411,7 @@ class CalendarEventsController extends Controller
         $uid = Auth::id();
         //dd(Request::input('mode'));
         $type = Request::input('type') ? Request::input('type') : 0;
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         // die(dd(Request::input('type')));
         $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
@@ -388,6 +468,7 @@ class CalendarEventsController extends Controller
             }
             $userEvent->description = Request::input('description');
             $userEvent->type = $type;
+            $userEvent->event_type = $event_type;
             $userEvent->cid = Request::input('hcid');
 
             //die(dd(DB::getQueryLog()));

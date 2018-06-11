@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\Models\Hamahang\Tasks\tasks;
 use DB;
 use Auth;
 use Request;
@@ -166,6 +167,49 @@ class CalendarController extends Controller
         $arr['uname'] = $user['Uname'];
         $arr['HFM_CalendarEvent'] = HFM_GenerateUploadForm([['CalendarEvent', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
         return view('hamahang.Calendar.Index', $arr);
+    }
+
+    function SetTask($Uname)
+    {
+        /*dd((serialize(array(
+            'jalali'=> array('checked'=>1 ,'color'=>'#db832b'),
+            'gergorian'=> array('checked'=>1 ,'color'=>'#db832b'),
+            'ghamari'=> array('checked'=>1 ,'color'=>'#db832b'),
+            'vacation'=> array('checked'=>1 ,'color'=>'#f73900'),
+            'event'=>  array('checked'=>1 ,'color'=>'#116df7'),
+            'session'=>array('checked'=>1 ,'color'=>'#16224f'),
+            'invitation'=> array('checked'=>1 ,'color'=>'#db832b'),
+            'reminder'=>array('checked'=>1 ,'color'=>'#26242d'),
+            ))));*/
+        $date = date('Y-m-d-D');
+        $date = preg_split('/\-/',$date);
+        $gdate['cal'] = jDateTime::toJalali($date[0],$date[1],$date[2]);
+        $gdate['strCal'] = jDateTime::convertNumbers(implode('-',jDateTime::toJalali($date[0],$date[1],$date[2])));
+        $gdate['getDayNames'] = jDateTime::getDayNames($date[3]);
+        $gdate['getMonthNames'] = jDateTime::getMonthNames($gdate['cal'][1]);
+
+        $arr = variable_generator('user', 'desktop', $Uname);
+        DB::enableQueryLog();
+        $arr['cal'] = DB::table('hamahang_calendar')
+            ->select('hamahang_calendar.*')
+            ->where('hamahang_calendar.user_id', '=', Auth::id())
+            ->get();
+        if (!$arr['cal']->count())
+        {
+            $arr['cal'][0] = (object)array('title' => 'تقویمی موجود نیست ', 'id' => 0);
+        }
+        // var_dump($arr['cal'][0]);die();
+        Session::put('current_c', $arr['cal'][0]->id);
+        Session::put('current_c_title', $arr['cal'][0]->title);
+        $arr['cal_title'] = Session::get('current_c_title', $arr['cal'][0]->title);
+        $user = Auth::user()->getAttributes();
+        $arr['uname'] = $user['Uname'];
+        $arr['HFM_CalendarEvent'] = HFM_GenerateUploadForm([['CalendarEvent', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
+
+        $arr['filter_subject_id'] = $Uname;
+        $arr['date'] = $gdate;
+        $arr = array_merge($arr, tasks::MyTasksPriorityTime());
+        return view('hamahang.Calendar.SetTask', $arr);
     }
 
     public function calendar()

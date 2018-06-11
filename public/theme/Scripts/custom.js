@@ -232,29 +232,79 @@ $(document).ready(function () {
     // full screen ++++++++++++++++++++++++
     $(document).on("click", ".ful-scrn", function (e) {
         e.preventDefault();
-        $('.fix-box').toggleClass('ful-fix');
-        //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
-        if ($(".ful-scrn span").hasClass("icon-nim-safhe"))
-            $(".ful-scrn span").removeClass("icon-nim-safhe");
-        else
-            $(".ful-scrn span").addClass("icon-nim-safhe");
-		//alert($('#pcol_32').html());
-		if ($("#new-fehrest").hasClass("hidden")){
-			$('#new-fehrest').removeClass("hidden");
-		}else{
-			$('#new-fehrest').addClass("hidden");
-		}
-		if ($("#buttoninfullscreen").hasClass("hidden")){
-			$('#buttoninfullscreen').removeClass("hidden");
-		}else{
-			$('#buttoninfullscreen').addClass("hidden");
-		}
-		var str = $('#pcol_32').html();
-		$('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
-		
+        var rel = $(this).attr('rel');
+        if(rel ==2)
+        {
+            $('.second-fix-box').toggleClass('ful-fix');
+            //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
+            if ($(".second-fix-box .ful-scrn span").hasClass("icon-nim-safhe"))
+                $(".second-fix-box .ful-scrn span").removeClass("icon-nim-safhe");
+            else
+                $(".second-fix-box .ful-scrn span").addClass("icon-nim-safhe");
+            //alert($('#pcol_32').html());
+            if ($("#new-fehrest").hasClass("hidden")){
+                $('#new-fehrest').removeClass("hidden");
+            }else{
+                $('#new-fehrest').addClass("hidden");
+            }
+            if ($("#buttoninfullscreen").hasClass("hidden")){
+                $('#buttoninfullscreen').removeClass("hidden");
+            }else{
+                $('#buttoninfullscreen').addClass("hidden");
+            }
+            var str = $('#pcol_32').html();
+            $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
+        }else{
+            $('.first-fix-box').toggleClass('ful-fix');
+            //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
+            if ($(".first-fix-box .ful-scrn span").hasClass("icon-nim-safhe"))
+                $(".first-fix-box .ful-scrn span").removeClass("icon-nim-safhe");
+            else
+                $(".first-fix-box .ful-scrn span").addClass("icon-nim-safhe");
+            //alert($('#pcol_32').html());
+            if ($("#new-fehrest").hasClass("hidden")){
+                $('#new-fehrest').removeClass("hidden");
+            }else{
+                $('#new-fehrest').addClass("hidden");
+            }
+            if ($("#buttoninfullscreen").hasClass("hidden")){
+                $('#buttoninfullscreen').removeClass("hidden");
+            }else{
+                $('#buttoninfullscreen').addClass("hidden");
+            }
+            var str = $('#pcol_32').html();
+            $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
+
+        }
+
     });
     //-------------------------------------
+    // full screen2 ++++++++++++++++++++++++
+    $(document).on("click", ".ful-scrn2", function (e) {
+        alert('asdasd');
+        e.preventDefault();
+        $('.fix-box2').toggleClass('ful-fix2');
+        //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
+        if ($(".ful-scrn2 span").hasClass("icon-nim-safhe"))
+            $(".ful-scrn2 span").removeClass("icon-nim-safhe");
+        else
+            $(".ful-scrn2 span").addClass("icon-nim-safhe");
+        //alert($('#pcol_32').html());
+        if ($("#new-fehrest").hasClass("hidden")){
+            $('#new-fehrest').removeClass("hidden");
+        }else{
+            $('#new-fehrest').addClass("hidden");
+        }
+        if ($("#buttoninfullscreen").hasClass("hidden")){
+            $('#buttoninfullscreen').removeClass("hidden");
+        }else{
+            $('#buttoninfullscreen').addClass("hidden");
+        }
+        var str = $('#pcol_32').html();
+        $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
 
+    });
+    //-------------------------------------
 
     // Side search ++++++++++++++++++++++++
 

@@ -36,7 +36,8 @@
                             </label>
                         </div>
                         <div class="col-xs-10">
-                            <input name="title" class="form-control"placeholder="">
+                            <input name="title" id="title" class="form-control" placeholder="">
+                            <input name="event_type" id="event_type" type="hidden" class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
@@ -46,7 +47,7 @@
                             </label>
                         </div>
                         <div class="col-xs-10">
-                            <select name="cid" class="chosen-rtl"></select>
+                            <select name="cid" id="cid" class="chosen-rtl"></select>
                         </div>
                     </div>
                     <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-20">
@@ -60,6 +61,7 @@
                                         <input type="text"
                                                class="form-control DatePicker clsDatePicker col-xs-4"
                                                name="startdate"
+                                               id="startdate"
                                                placeholder="{{trans('calendar_events.ce_date_label')}}"
                                                aria-describedby="startdate-session">
                                     </div>
@@ -69,6 +71,7 @@
                                         <input type="text" class="form-control TimePicker"
                                                placeholder="{{trans('calendar_events.ce_hour_label')}}"
                                                name="starttime"
+                                               id="starttime"
                                                aria-describedby="starttime">
                                     </div>
                                 </div>
@@ -84,6 +87,7 @@
                                         <input type="text"
                                                class="form-control DatePicker  clsDatePicker col-xs-4"
                                                name="enddate"
+                                               id="enddate"
                                                placeholder="{{trans('calendar_events.ce_date_label')}}"
                                                aria-describedby="enddate-session">
                                     </div>
@@ -94,6 +98,7 @@
                                         <input type="text" class="form-control TimePicker"
                                                placeholder=" {{trans('calendar_events.ce_hour_label')}}"
                                                name="endtime"
+                                               id="endtime"
                                                aria-describedby="endtime">
                                     </div>
                                 </div>

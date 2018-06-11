@@ -19,8 +19,8 @@
                             {{trans('calendar_events.ce_modal_events_title_field_lable')}}
                         </div>
                         <div class="col-xs-10">
-                            <input name="title" class="form-control"
-                                   placeholder="">
+                            <input name="title" class="form-control" placeholder="">
+                            <input name="event_type" type="hidden" class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="col-xs-12 margin-top-10">

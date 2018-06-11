@@ -149,7 +149,7 @@
                                                             {{--<div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
                                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: ltr;">
                                                                 <div style="direction: rtl;" id="master_inner_rtl_div" >
-                                                                    <div class="panel panel-light fix-box" style="height: 100%;">
+                                                                    <div class="panel panel-light fix-box first-fix-box" style="height: 100%;">
                                                                         <button class="ful-scrn">
                                                                             <span class="glyphicon glyphicon-fullscreen"></span>
                                                                         </button>
@@ -202,6 +202,7 @@
 						data: form_data,
 						success: function (result) {
 							console.log(result);
+                            // result = JSON.parse(result);
 							if (result.success == true) {
 								if (again == 1) {
 									ResetForm();
@@ -210,6 +211,16 @@
 									$('.jsPanel-btn-close').click();
 								}
 								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                                eventInfo = (result.event);
+                                (function ($) {
+                                    $("#calendar").fullCalendar('addEventSource', [{
+                                        start: eventInfo.startdate,
+                                        end: eventInfo.enddate,
+                                        title: eventInfo.title,
+                                        color: eventInfo.bgColor,
+                                        block: true
+                                    }]);
+                                })(jQuery_2);
 							}
 							else {
 								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);

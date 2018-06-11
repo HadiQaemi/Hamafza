@@ -1066,6 +1066,34 @@ class TaskController extends Controller
         }
     }
 
+    public function filter_task_priority_time()
+    {
+        //dd(Request::all());
+        $validator = Validator::make(Request::all(), [
+            'task_title' => 'string',
+            'respite' => 'integer',
+            'official_type' => 'array',
+            'task_status' => 'array',
+        ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            $respite = Request::get('respite');
+            $task_title = Request::get('task_title');
+            $task_status = Request::get('task_status');
+            $official_type = Request::get('official_type');
+            $with_array = tasks::MyTasksPriorityTime($task_status, $task_title, $respite, $official_type);
+            $result['data'] = view('hamahang.Tasks.helper.priority.content')->with($with_array)->render();
+            $result['success'] = true;
+            return json_encode($result);
+        }
+    }
+
     /*public function change_task_priority_user()
     {
         //die('sssss');

@@ -11,6 +11,9 @@
         $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
             filter_tasks_priority();
         });
+        $('#form_filter_priority_time').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+            filter_tasks_priority_time();
+        });
         $("#states-multi-select-users").select2({
             minimumInputLength: 1,
             tags: false,
@@ -53,14 +56,25 @@
         $(".droppable").droppable({
             accept: ".draggable",
             drop: function (event, ui) {
-                // console.log("droped");
                 $(this).removeClass("border").removeClass("over");
                 var Drag_Destination = $(this).attr('id');
+
+                var hour = $('#'+Drag_Destination).attr('hour');
+                var day = $('#'+Drag_Destination).attr('day');
                 var dropped = ui.draggable;
                 var task_id = dropped.data('task_id');
-                submit_change_priority(Drag_Destination, task_id);
-                var droppedOn = $(this);
-                $(dropped).detach().appendTo(droppedOn);
+                var Drag_Action = dropped.data('action');
+                var title = dropped.data('title');
+                if(Drag_Action=='task_timing')
+                {
+                    showTimeAndTask(title,day,day,hour,hour,droppedOn);
+                    var droppedOn = $(this);
+                    $(dropped).detach().appendTo(droppedOn);
+                }else{
+                    submit_change_priority(Drag_Destination, task_id);
+                    var droppedOn = $(this);
+                    $(dropped).detach().appendTo(droppedOn);
+                }
             },
             over: function (event, elem) {
                 $(this).data('id');
@@ -76,10 +90,62 @@
         });
         $(".droppable").sortable();
     }
+
+    function showTimeAndTask(title, startdate, enddate, starttime, endtime, droppedOn) {
+        startdate = startdate.split("/");
+        starttime = starttime.split("-");
+        endtime = starttime[0]
+        starttime = starttime[1];
+
+        newEventModal = $.jsPanel({
+            position: {my: "center-top", at: "center-top", offsetY: 15},
+            contentSize: {width: 800, height: 300},
+            contentAjax: {
+                url: '{{ URL::route('modals.task_time' )}}',
+                method: 'POST',
+                dataType: 'json',
+                done: function (data, textStatus, jqXHR, panel) {
+                    this.headerTitle(data.header);
+                    this.content.html(data.content);
+                    this.toolbarAdd('footer', [{item: data.footer}]);
+
+                    $('#form-multi-tasking input[name="startdate"]').val(startdate);
+                    $('#form-multi-tasking input[name="enddate"]').val(enddate);
+                    $('#form-multi-tasking input[name="starttime"]').val(starttime);
+                    $('#form-multi-tasking input[name="endtime"]').val(endtime);
+                    $('#form-multi-tasking #take_title').text("{{trans('calendar.modal_calendar_setting_title')}} : " + title);
+                    $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
+                    $('#form-multi-tasking form').append('<input type="hidden" name="droppedOn" id="droppedOn" value="'+droppedOn+'"/>');
+                }
+            }
+        });
+
+        newEventModal.content.html('<div class="loader"></div>');
+
+    }
     function filter_tasks_priority(data) {
         console.log(data);
         $.ajax({
             url: '{{ route('hamahang.tasks.priority.filter') }}',
+            method: 'POST',
+            dataType: "json",
+            data: $("#form_filter_priority").serialize(),
+            success: function (res) {
+                //console.log(res.success);
+                if (res.success == true) {
+                    $('#priority_content_area').html(res.data);
+                    initDraggable();
+                    //messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'});
+                } else if (res.success == false) {
+                    messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);
+                }
+            }
+        });
+    }
+    function filter_tasks_priority_time(data) {
+        console.log(data);
+        $.ajax({
+            url: '{{ route('hamahang.tasks.priority.filter_time') }}',
             method: 'POST',
             dataType: "json",
             data: $("#form_filter_priority").serialize(),

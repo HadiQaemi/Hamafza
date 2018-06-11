@@ -502,7 +502,7 @@ class jDateTime
 	/**
 	 * Returns correct names for week days
 	 */
-	private static function getDayNames($day, $shorten = false, $len = 1, $numeric = false)
+	public static function getDayNames($day, $shorten = false, $len = 1, $numeric = false)
 	{
 		$days = array('sat' => array(1, 'شنبه'), 'sun' => array(2, 'یکشنبه'), 'mon' => array(3, 'دوشنبه'), 'tue' => array(4, 'سه شنبه'), 'wed' => array(5, 'چهارشنبه'), 'thu' => array(6, 'پنجشنبه'), 'fri' => array(7, 'جمعه'));
 		$day = substr(strtolower($day), 0, 3);
@@ -513,7 +513,7 @@ class jDateTime
 	/**
 	 * Returns correct names for months
 	 */
-	private static function getMonthNames($month, $shorten = false, $len = 3)
+    public static function getMonthNames($month, $shorten = false, $len = 3)
 	{
 		// Convert
 		$months = array('فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند');
@@ -525,7 +525,7 @@ class jDateTime
 	/**
 	 * Converts latin numbers to farsi script
 	 */
-	private static function convertNumbers($matches)
+    public static function convertNumbers($matches)
 	{
 		$farsi_array = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
 		$english_array = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');

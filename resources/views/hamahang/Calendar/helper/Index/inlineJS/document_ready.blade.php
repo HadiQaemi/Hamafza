@@ -33,6 +33,11 @@
         }
         return peDigitArr.join('');
     }
+    function set_time_task()
+    {
+        $('#calendar_time_task').trigger('click');
+        jQuery('#calendar_time_task').click();
+    }
     /*#############################################################################################*/
     /*------------------------------------------------------------------------------------------------*/
     /*---------------------------------------second to tim --------------------------------------------*/
@@ -313,6 +318,11 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+                droppable: false, // this allows things to be dropped onto the calendar
+                drop: function() {
+                    // is the "remove after drop" checkbox checked?
+                    alert('adasdasd');
+                },
                 selectable: true,
                 selectHelper: true,
                 select: function (start, end, jsEvent, view) {
@@ -497,8 +507,128 @@
         $('.fc-right .fc-button-group').prepend(
             '<button type="button" class="fc-year-button fc-button fc-state-default fc-corner-left ">{{trans("calendar.calendar_year_button_title")}}  </button>' +
             '<button type="button" class="fc-6month-button fc-button fc-state-default " >{{trans("calendar.calendar_sixmonth_button_title")}} </button>' +
-            '<button type="button" class="fc-seasonDay-button fc-button fc-state-default  ">{{trans("calendar.calendar_sesoan_button_title")}} </button>'
+            '<button type="button" class="fc-seasonDay-button fc-button fc-state-default  ">{{trans("calendar.calendar_sesoan_button_title")}} </button>'+
+            '<button type="button" class="fc-button fc-state-default calendar-time-task " id="calendar_time_task">{{trans("calendar.new")}} </button>'
         );
+
+        $('#calendar_time_task').click(function () {
+            alert('set_time_task set_time_taskddddddddd set_time_taskddddddddd');
+            loading({id: 'calendar'}, 1);
+            $('.fc-right .fc-button-group button').removeClass('fc-state-active');
+            $(this).addClass('fc-state-active');
+            $('.fc-view').html('<div class ="season-view col-md-12">' + '</div>');
+            var selected = 0;
+            if ($('input[name="selectedSeason"]').length != 0) {
+                selected = $('input[name="selectedSeason"]').val();
+            }
+            if ($('input[name="selectedSeason"]').length != 0) {
+                selected = $('input[name="selectedSeason"]').val();
+            }
+            //console.log(selected);
+            var currentDate = persianDate(new Date());
+            if (selected == 0 || selected == 'undefined' || typeof selected == 'undefined') {
+                if (currentDate.pDate.month >= 10) {
+                    selected = 4;
+                } else if (currentDate.pDate.month >= 7) {
+                    selected = 3;
+                } else if (currentDate.pDate.month >= 4) {
+                    selected = 2;
+                } else {
+                    selected = 1;
+                }
+            }
+            //   console.log(selected);
+            //alert(currentDate.pDate.month);
+            if (selected == 4) {
+                var season = new Array(10, 11, 12);
+                var seansonPersian = '{{trans("calendar.calendar_season_button_clicked_winter")}}';
+
+            } else if (selected == 3) {
+                var season = new Array(7, 8, 9);
+                var seansonPersian = '{{trans("calendar.calendar_season_button_clicked_fall")}}';
+            } else if (selected == 2) {
+                var season = new Array(4, 5, 6);
+                var seansonPersian = '{{trans("calendar.calendar_season_button_clicked_summer")}}';
+            } else {
+                var season = new Array(1, 2, 3);
+                var seansonPersian = '{{trans("calendar.calendar_season_button_clicked_spring")}}';
+            }
+            a = persianDate([currentDate.pDate.year, currentDate.pDate.month]);
+            var title_html =
+                '<h2 id="sesasonTitle">' + a.format('MMMM') + ' ' + currentDate.pDate.year + '</h2>' +
+                '<input type="hidden" name="selectedSeason" value="' + selected + '"/>' +
+                '<input type="hidden" name="selectedSeasonYear" value="' + selected + '"/>';
+            $('.fc-center').html(title_html);
+            var btn = '' +
+                '<button type="button" class=" fc_next_season_btn fc-next-button fc-button fc-state-default fc-corner-right" onclick="nextSeason(' + selected + ');"><span class="fc-icon fc-icon-left-single-arrow"></span></button>' +
+                '<button type="button" class="fc-prev-button fc-pre-season fc-button fc-state-default fc-corner-left" onclick="preSeason(' + selected + ');"><span class="fc-icon fc-icon-right-single-arrow"></span></button>';
+            $('.fc-left').html(btn);
+            var html = '<table class="col-md-12 table" style="direction: rtl">';
+            html += '<thead class="fc-head"><th></th> ';
+            for (var i = 1; i < 12; i++) {
+                html += '<th class="col-md-3 fc-widget-header" style="padding: 7px 0px;">' + (2*i+1) + '-' + (2*i+2) + '</th>'
+            }
+            html += '</thead>';
+            html += '<tbody lass="fc-body">';
+            for (j = 1; j <= 31; j++) {
+                html += '<tr>';
+                html += '<td>' + j + '</td>';
+                for (var i = 0; i < 12; i++) {
+                    html += '<td data-id="' + season[0] + '_' + j + '_' + i + '" ></td>';
+                }
+                html += '</tr>';
+            }
+            html += '</tbody>';
+            html += '</table><div class="clearfixed"></div>';
+            var cid = $('.calendar-main-setting input[name="lastSelectdCalendar"]').val();
+            $('.season-view').html(html);
+            var obj = {};
+            obj.cid = cid;
+            obj.selected = selected;
+            $.ajax({
+                url: '{{ URL::route('hamahang.calendar.get_seanson_events')}}',
+                type: 'post', // Send post dat
+                async: false,
+                data: obj,
+                success: function (s) {
+                    res = JSON.parse(s);
+                    seasonEvents = res;
+                    //console.log(seasonEvents);
+                    loading({id: 'calendar'}, 0);
+                    for (month in res) {
+                        for (d in res[month]) {
+                            //console.log(month+'_'+d);
+                            // $('td[data-id="'++'"]');
+                            // for( event in res[month][d])
+                            //{
+                            if (res[month][d].length > 0) {
+                                var html = '';
+                                html += '<div class="event-view-content">';
+                                if (res[month][d].length > 3) {
+                                    html += '<a >';
+                                    '<div class=""  style="background-color:' + res[month][d][0].color + '" evenId="' + res[month][d][0].id + '"><span class="fc-title">' + res[month][d][0].title + '</span></div></a>';
+                                    html += '<a style="margin: 2px;" class="">';
+                                    html += '<div class="" style="background-color:' + res[month][d][1].color + '" evenId="' + res[month][d][1].id + '"><span class="fc-title">' + res[month][d][1].title + '</span></div></a>';
+                                    html += '<a  class="">';
+                                    html += '<div class="" style="background-color:' + res[month][d][2].color + '" evenId="' + res[month][d][2].id + '"><span    class="fc-title">' + res[month][d][2].title + '</span></div></a>';
+                                    html += '<div evenId="all"><a href="#" onclick="seaonToDay(' + month + ',' + d + ')">{{trans("calendar.calendar_season_button_clicked_more")}}</a></div>';
+                                } else {
+                                    for (var i = 0; i < res[month][d].length; i++) {
+                                        //console.log(res[month][d][i]['color']);
+                                        html += '<a class="">';
+                                        html += '<div class="" style="background-color:' + res[month][d][i].color + '"  evenId="' + res[month][d][i].id + '"><span class="fc-title">' + res[month][d][i].title + '</span></div></a>';
+                                    }
+                                }
+                                html += '</div>';
+                                // console.log($('td[data-id="' + month + '_' + d + '"]'));
+                                $('td[data-id="' + month + '_' + d + '"]').html(html);
+                            }
+                            //}
+                        }
+                    }
+                }
+            });
+        });
         $('.fc-seasonDay-button').click(function () {
             loading({id: 'calendar'}, 1);
             $('.fc-right .fc-button-group button').removeClass('fc-state-active');
@@ -1082,6 +1212,70 @@
             }
         });
         /*----------------------------------------------------------------------------------------*/
+        /*-------------------------------------save task ( in user evemnt modal)---------------------------------------*/
+        /*----------------------------------------------------------------------------------------*/
+        function save_time_task(form_id, again,action) {
+            //console.log(form_id);
+            $('#task_form_action').val(action);
+            var form_data = $('#' + form_id).serialize();
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.tasks.save_task')}}',
+                dataType: "json",
+                data: form_data,
+                success: function (result) {
+                    console.log(result);
+                    // result = JSON.parse(result);
+                    if (result.success == true) {
+                        if (again == 1) {
+                            ResetForm();
+                        }
+                        else {
+                            $('.jsPanel-btn-close').click();
+                        }
+                        messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                        eventInfo = (result.event);
+                        (function ($) {
+                            $("#calendar").fullCalendar('addEventSource', [{
+                                start: eventInfo.startdate,
+                                end: eventInfo.enddate,
+                                title: eventInfo.title,
+                                color: eventInfo.bgColor,
+                                block: true
+                            }]);
+                        })(jQuery_2);
+                        newEventModal.close();
+                        alert('new alert');
+                    }
+                    else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                }
+            });
+        }
+        $(document).on('click', '.save_time_task', function () {
+            var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :
+                ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
+                    ($("input[name='show_task_save_type_final']:checked").val() != undefined ? $("input[name='show_task_save_type_final']:checked").val() : '') );
+            var $this = $(this);
+            var form_id = $this.data('form_id');
+            var save_again = $this.data('again_save');
+            if (save_type == 1) {
+                save_time_task(form_id, save_again,1);
+            }
+            else if (save_type == 0) {
+                save_time_task(form_id, save_again,0);
+                //save_as_draft(form_id, save_again);
+            }
+            else
+            {
+                if($("input[name='show_task_save_type_final']:checked").val()==1)
+                    save_time_task(form_id, save_again,0);
+                else
+                    alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
+            }
+        });
+        /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save event ( in user evemnt modal)---------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
         $(document).on('click', '#saveEvent', function () {
@@ -1139,6 +1333,7 @@
             // console.log('#' + form_id + ' select[name="cid"]');
             //console.log($('#' + form_id + ' select[name="cid"]').val());
             saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
+            saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
             saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
             saveObj.hstartdate = $('#' + form_id + ' input[name="startdate"]').val();
             saveObj.starttime = $('#' + form_id + ' input[name="starttime"]').val();
@@ -1338,6 +1533,7 @@
             var invitationObj = {};
 
             invitationObj.htitle = $('#invitation_form input[name="title"]').val();
+            invitationObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
             invitationObj.hcid = $('#invitation_form select[name="cid"]').val();
             invitationObj.hstartdate = $('#invitation_form input[name="startdate"]').val();
             invitationObj.starttime = $('#invitation_form input[name="starttime"]').val();

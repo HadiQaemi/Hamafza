@@ -736,6 +736,66 @@ class tasks extends Model
 //            ->get();
 //    }
 
+    public static function tasks_list_all($type = 'MyTasks', $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
+    {
+        $tasks_immediate_importance = self::whereHas('Assignment', function ($query) use ($type)
+        {
+
+            if ($type == 'MyTasks')
+            {
+                $query->whereHas('Employee', function ($query)
+                {
+                    $query->where('id', auth()->id());
+                });
+            }
+            elseif($type == 'MyAssignedTasks')
+            {
+                $query->whereHas('Assigner', function ($query)
+                {
+                    $query->where('id', auth()->id());
+                });
+            }
+        });
+//        dd($tasks_immediate_importance);
+
+        if ($status_filter)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query) use ($status_filter)
+            {
+                $query->whereIn('type', $status_filter);
+            });
+        }
+        else
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query)
+            {
+                $query->whereIn('type', [0, 1, 2, 3, 4]);
+            });
+        }
+
+        if ($title_filter)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->where('title', 'like', '%' . $title_filter . '%');
+        }
+
+        if ($official_type)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', $official_type);
+        }
+
+        $tasks_immediate_importance = $tasks_immediate_importance->get();
+
+        if ($respite_filter)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->filter(function ($item) use ($respite_filter)
+            {
+                return $item->RespiteRemain['days'] >= (int)$respite_filter;
+            });
+        }
+
+        return $tasks_immediate_importance;
+    }
+
     public static function tasks_immediate_importance($immediate = 0, $importance = 0, $type = 'MyTasks', $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
     {
         $tasks_immediate_importance = self::whereHas('Assignment', function ($query) use ($type)
@@ -805,6 +865,12 @@ class tasks extends Model
             'tasks_not_immediate_importance' => self::tasks_immediate_importance(0, 1, 'MyTasks',$status_filter, $title_filter, $respite_filter, $official_type),
             'tasks_immediate_not_importance' => self::tasks_immediate_importance(1, 0,'MyTasks', $status_filter, $title_filter, $respite_filter, $official_type),
             'tasks_not_immediate_not_importance' => self::tasks_immediate_importance(0, 0,'MyTasks', $status_filter, $title_filter, $respite_filter, $official_type)
+        ];
+    }
+    public static function MyTasksPriorityTime($status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
+    {
+        return [
+            'MyTasksPriorityTime' => self::tasks_list_all('MyTasks', $status_filter, $title_filter, $respite_filter, $official_type)
         ];
     }
     public static function MyTasksStatus($importance=false,$immediate=false, $title_filter = false, $respite_filter = false, $official_type = false)

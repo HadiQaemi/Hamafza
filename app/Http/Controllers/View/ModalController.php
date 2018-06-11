@@ -2393,6 +2393,17 @@ class ModalController extends Controller
         ]);
     }
 
+    public function task_time(Request $request)
+    {
+        return json_encode([
+            'header' => trans('calendar.task_timming'),
+            'content' => view('modals.basic_data.calendar_settings.task_time_content')
+                ->render(),
+            'footer' => view('modals.basic_data.calendar_settings.task_time_footer')
+                ->render()
+        ]);
+    }
+
     public function basicdata_ad_research_view(Request $request)
     {
 //        dd($request->parent_id);

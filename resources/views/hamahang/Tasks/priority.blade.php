@@ -15,10 +15,10 @@
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">
-    @include('hamahang.Tasks.MyTask.helper.task_related_pages')
-    @include('hamahang.Tasks.helper.priority.priority_filter')
-    </div>
-    </div>
+                @include('hamahang.Tasks.MyTask.helper.task_related_pages')
+                @include('hamahang.Tasks.helper.priority.priority_filter')
+            </div>
+        </div>
     </div>
     @include('hamahang.Tasks.helper.priority.content')
 

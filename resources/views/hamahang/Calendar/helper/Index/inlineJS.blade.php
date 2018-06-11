@@ -567,6 +567,7 @@
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#form-multi-tasking input[name="event_type"]').val('multi_task');
                     $('#form-multi-tasking input[name="startdate"]').val(startdate);
                     $('#form-multi-tasking input[name="enddate"]').val(enddate);
                     $('#form-multi-tasking input[name="starttime"]').val(startdate);
@@ -633,16 +634,28 @@
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#create_new_task input[name="event_type"]').val('task');
                     $('#create_new_task input[name="startdate"]').val(startdate);
                     $('#create_new_task input[name="enddate"]').val(enddate);
                     $('#create_new_task input[name="starttime"]').val(startdate);
                     $('#create_new_task input[name="endtime"]').val(endtime);
                     $('#create_new_task input[name="starttime"]').val(starttime);
-                    $('#create_new_task').css("overflow", "scroll");
+                    $('#create_new_task #task_form_action').val('add_event');
+                    $('#create_new_task').css("overflow-y", "scroll");
                     $('#create_new_task').css("height", "350px");
+                    $('#new_task_save_type_draft').css("display", "none");
+                    $('#new_task_save_private_library').css("display", "none");
+                    $('#new_task_save_public_library').css("display", "none");
+                    $('#new_task_save_type_final').css("display", "none");
+                    $('#new_task_save_type_draft_l').css("display", "none");
+                    $('#new_task_save_private_library_l').css("display", "none");
+                    $('#new_task_save_public_library_l').css("display", "none");
+                    $('#new_task_save_type_final_l').css("display", "none");
                     $('#define').removeClass('active');
                     $('#create_new_task #tab_t1').removeClass('active');
                     $('.eventTask').addClass('active');
+                    $('#save_commit').addClass('save_time_task');
+                    $('#save_commit').removeClass('save_task');
                     $('#form-event .modal-title span:first-child').html('{{ trans('calendar.new_event') }}');
                     $('#create_new_task form').append('<input type="hidden" name="mode" value="calendar"/>');
                 }
@@ -684,6 +697,7 @@
         var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
         var endtime = $('#modal_fullcalendar_menu input[name="endtime"]').val();
         var starttime = $('#modal_fullcalendar_menu input[name="starttime"]').val();
+        
         //console.log(startdate);return;
         for (var i = 0; i < startdate.length; i++) {
             startdate[i] = persianToEngilshDigit(startdate[i]);
@@ -704,6 +718,7 @@
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#form-event input[name="event_type"]').val('event');
                     $('#form-event input[name="startdate"]').val(startdate);
                     $('#form-event input[name="enddate"]').val(enddate);
                     $('#form-event input[name="starttime"]').val(startdate);
@@ -767,6 +782,7 @@
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#sessionForm input[name="event_type"]').val('session');
                     $('#sessionForm input[name="startdate"]').val(startdate.join('-'));
                     $('#sessionForm input[name="starttime"]').val(starttime);
                     $('#sessionForm input[name="enddate"]').val(enddate.join('-'));
@@ -864,6 +880,7 @@
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
+                    $('#reminder_form input[name="event_type"]').val('reminder');
                     $('#reminder_form input[name="startdate"]').val(startdate.join('-'));
                     $('#reminder_form input[name="starttime"]').val(starttime);
                     $('#form-reminder-content').hide();
