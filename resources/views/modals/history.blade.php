@@ -20,7 +20,7 @@
     @foreach($H as $h)
     <tr>
         <td>{{ $i}}</td>
-        <td><a target="_blank" href="{{ url($h->Uname) }}">{{ $h->Name}} {{ $h->Family}}</a></td>
+        <td><a target="_blank" href="{{ is_string(url($h->Uname)) ? url($h->Uname) : $h->Uname }}">{{ $h->Name}} {{ $h->Family}}</a></td>
         <td>{{ $h->edit_date}}</td>
         @if($h->part=='0')
         <td>کلی</td>
@@ -54,4 +54,5 @@
     </tr>
     <?php $i++ ?>
     @endforeach
+</table>
     @stop
