@@ -698,8 +698,11 @@ class PageController extends Controller {
                 DB::table('ticket_file')->insert(array('aid' => $tid, 'name' => $value['name'], 'title' => $value['title']));
             }
         }*/
-        $mes = trans('labels.SMSSEndOK');
-        return response()->json(['success', $mes]);
+        $res = [
+            'status' => "1",
+            'message' => trans('labels.SMSSEndOK')
+        ];
+        return response()->json($res);
     }
 
 }
