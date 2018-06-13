@@ -15,9 +15,9 @@
                 @foreach($announces as $item)
                     <div class="comment-contain">
                         <div class="comment-box">
-                            @if(!empty($type) && $type=='announce')
+{{--                            @if(!empty($type) && $type=='announce')--}}
                                 <img class="avatar mCS_img_loaded" src="{{url('theme/Content/icons/yddasht.png')}}">
-                            @endif
+                            {{--@endif--}}
                             @if($item->page->subject->title!='')
                                 <div class="name">در صفحه :<a target="_blank" href="{{url($item->pid)}}"> {{$item->page->subject->title}}</a></div>
                             @endif
