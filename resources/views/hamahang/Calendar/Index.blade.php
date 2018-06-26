@@ -51,6 +51,7 @@
                     {{-- <div class="pull-left"></div>--}}
                 </div>
                {{-- <hr style="margin: 4px ;	border: 1px solid #8c8b8b;">--}}
+                <div id="calendar_sidebar" class="hidden"></div>
                 <div id='calendar' class="col-xs-12"></div>
                 <div class="clearfixed"></div>
             </div>
@@ -73,6 +74,7 @@
     <script type="text/javascript">var jQuery_2 = $.noConflict(true);</script>
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
+        $('.ful-scrn').attr('rel',3);
         $('#inlineDatepicker').persianDatepicker({
             timePicker: {
                 enabled: true

@@ -18,6 +18,29 @@
     {!! index_view_style(config('constants.IndexView')) !!}
 <!---------------**Inline Style**-------------->
     @yield('inline_style')
+    <style>
+        #vrScroll2 .scrl{
+            height: 85vh;
+            overflow: auto;
+            margin-bottom: 50px;
+        }
+        #vrScroll2 .scrl{
+            direction: rtl;
+        }
+        #vrScroll2 .scrl::-webkit-scrollbar {
+            width: 5px;
+            direction: rtl;
+        }
+
+        #vrScroll2 .scrl::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+
+        #vrScroll2 .scrl::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+        }
+    </style>
 <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
     @yield('after_main_scripts')
@@ -282,7 +305,6 @@
 						dataType: "json",
 						data: form_data,
 						success: function (result) {
-							console.log(result);
 							if (result.success == true) {
 								if (again == 1) {
 									ResetForm();
@@ -290,7 +312,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+								{{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
 							}
 							else {
 								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -321,7 +343,14 @@
 						//save_as_draft(form_id, save_again);
 					}
                     else if (save_type == 2) {
-                        SaveInLibraryTask(form_id, save_again,'public');
+					    if($("input[name='type']:checked").val()==1)
+					    {
+                            SaveInLibraryTask(form_id, save_again,'private');
+                            // $('#PrivateLiberaryTable').DataTable().ajax.reload();
+                        }else{
+                            SaveInLibraryTask(form_id, save_again,'public');
+                            // $('#GeneralLiberaryTable').DataTable().ajax.reload();
+                        }
 					}
                     else if (save_type == 3) {
                         SaveInLibraryTask(form_id, save_again,'private');

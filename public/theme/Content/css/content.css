@@ -14,12 +14,27 @@ body {
     padding: 0 20px 0 0;
 }
 
+.right-new #TextSection ul,#helpviewDiv ul {
+    padding: 0 10px 0 0 !important;
+}
+
+#Fehresrt-new ul{
+    padding: 0 10px 0 0 !important;
+}
+
+#Fehresrt-new ul li{
+    margin-right: 5px !important;
+}
+
+#Fehresrt-new ul li .jstree-leaf > .jstree-ocl{
+    display: none;
+}
+
 #TextSection  ul li,#helpviewDiv ul li {
     list-style:  disc;
     list-style: outside none disc !important;
     margin-right:15px;
-        padding: 0;
-
+    padding: 0;
 }
 
 #TextSection,#helpviewDiv ol   {
@@ -27,10 +42,10 @@ body {
 }
 #helpviewDiv ol   {
     list-style-position: outside !important;
-        padding: 0 15px;
+    padding: 0 15px;
 }
 #TextSection ol ,#helpviewDiv ol  {
-  padding-right:25px;
+    padding-right:25px;
 }
 
 #TextSection ol li,#helpviewDiv ol li {
@@ -41,7 +56,6 @@ body {
     font-size: 9pt !important;
     font-family: IranSharp;
     /*padding-top: 10px;*/
-
 }
 
 .text-decoration {
@@ -76,7 +90,7 @@ body {
 }
 #TextSection p img,#helpviewDiv p img {
     margin: auto;
-display:block;
+    display:block;
 }
 .number {
     text-align: center;
@@ -100,7 +114,7 @@ display:block;
     position: absolute;
     color: #FFF;
     text-decoration: none;
-     top: 10px;
+    top: 10px;
 }
 .HelpIcons:hover{
     color: #FFF;

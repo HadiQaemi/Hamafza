@@ -17,6 +17,8 @@ return [
     'calendar.save'=>'ذخیره',
     'calendar.action'=>'عملیات ',
     'task_timming'=>'تخصیص وقت',
+    'calendar_setTime_Task'=>'تخصیص وقت به فعالیت',
+    'success_operarion'=>'با موفقیت همراه بود',
     /*--------------------------------------------------------------------------------------------------------------------|
     | calendar/helper/index/inlinJS/document_ready.blade.php                                                              |
     ----------------------------------------------------------------------------------------------------------------------*/
@@ -41,8 +43,9 @@ return [
     'calendar_save_calendar_setting_clicked_success_msg1'=>'تنظیمات تقویم ',
     'calendar_save_calendar_setting_clicked_success_msg2'=>' ویرایش شد.',
     'calendar_save_calendar_setting_clicked_success_msg3'=>' ویرایش تنظیمات ',
-    'calendar_year_button_title'=>'سالانه',
+    'calendar_year_button_title'=>'سال',
     'calendar_sixmonth_button_title'=>'۶ ماهه',
+    'calendar_month_row_button_title'=>'ماه سطری',
     'calendar_sesoan_button_title'=>'فصل ',
 
     /*--------------------------------------------------------------------------------------------------------------------|

@@ -113,7 +113,7 @@
                 <ul class="task_items droppable" id="important_and_immediate">
                     <div style="direction: rtl;">
                         @foreach($MyTasksPriorityTime as $task)
-                            <li class="draggable" data-action="task_timing" data-title="{{$task->title}}" data-task_id="{{$task->id}}">
+                            <li class="draggable task_item_{{$task->id}}" data-action="task_timing" data-title="{{$task->title}}" data-task_id="{{$task->id}}">
 
                                 {{--<div class="respite_number {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>--}}
                                 <div class="task_title">

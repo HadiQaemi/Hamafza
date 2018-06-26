@@ -98,9 +98,9 @@
 @elseif($btn_type == 'CreateNewTask')
     <div>
         <input type="radio" name="new_task_save_type" class="new_task_save_public_library" id="new_task_save_public_library" value="2"/>
-        <label for="new_task_save_public_library" id="new_task_save_public_library_l">{{ trans('tasks.library').' '.trans('tasks.public') }}</label>
-        <input type="radio" name="new_task_save_type" class="new_task_save_private_library" id="new_task_save_private_library" value="3"/>
-        <label for="new_task_save_private_library" id="new_task_save_private_library_l">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>
+        <label for="new_task_save_public_library" id="new_task_save_public_library_l">{{ trans('tasks.library') }}</label>
+        {{--<input type="radio" name="new_task_save_type" class="new_task_save_private_library" id="new_task_save_private_library" value="3"/>--}}
+        {{--<label for="new_task_save_private_library" id="new_task_save_private_library_l">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>--}}
 
         <input type="radio" name="new_task_save_type" class="new_task_save_type_draft" id="new_task_save_type_draft" value="0" checked/>
         <label for="new_task_save_type_draft" id="new_task_save_type_draft_l">{{ trans('general.draft') }}</label>

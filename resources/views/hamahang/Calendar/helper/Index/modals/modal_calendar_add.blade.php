@@ -8,15 +8,20 @@
             </a>
         </li>
         <li>
-            <a href="#t2" id="pan_t2" data-toggle="tab">
-                <span>{{trans("calendar.modal_calendar_time_template")}}</span>
+            <a href="#t5" id="pan_t5" data-toggle="tab">
+                <span>تنظیمات</span>
             </a>
         </li>
-        <li>
-            <a href="#t3" id="pan_t3" data-toggle="tab">
-                <span>{{trans("calendar.modal_calendar_new_time_border")}}</span>
-            </a>
-        </li>
+        {{--<li>--}}
+            {{--<a href="#t2" id="pan_t2" data-toggle="tab">--}}
+                {{--<span>{{trans("calendar.modal_calendar_time_template")}}</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
+        {{--<li>--}}
+            {{--<a href="#t3" id="pan_t3" data-toggle="tab">--}}
+                {{--<span>{{trans("calendar.modal_calendar_new_time_border")}}</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
         <li>
             <a href="#t4" id="pan_t4" data-toggle="tab">
                 <span>{{trans("calendar.modal_calendar_edit_monasebat_field_label")}}</span>
@@ -78,6 +83,13 @@
                                 <textarea name="descriotion" class="form-control" id="item_descriotion"></textarea>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="t5"  class="tab-pane fade in">
+                <div class="panel panel-info col-md-12">
+                    <div class="panel-body" id="item_edit" style="overflow: -webkit-paged-x;">
                         <div class="row margin-top-10 line-height-35">
                             <div class="col-xs-2">
                                 <label> {{trans('calendar.modal_calendar_edit_prayer_times_field_label')}}</label>

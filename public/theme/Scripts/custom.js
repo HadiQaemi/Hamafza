@@ -227,13 +227,100 @@ $(document).ready(function () {
         });
     });
     //-------------------------------------
-
-
     // full screen ++++++++++++++++++++++++
+    $(document).on("click", "#fa-angle-double-left", function (e) {
+        $(".fa-angle-double-left").addClass("hidden");
+        $(".fa-angle-double-left").addClass("deactive");
+        $(".fa-angle-double-right").removeClass("hidden");
+        $(".fa-angle-double-right").removeClass("deactive");
+        $("#new-fehrest").removeClass("hidden");
+        $("#new-fehrest li").css("margin-right","8px !important");
+        $("#new-fehrest .jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none !important");
+        $(".jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none !important");
+        $("#mySidenav00").removeClass("hidden");
+        // $("#buttoninfullscreen").addClass("col-xs-3");
+        $(".right-new").addClass("col-xs-2");
+        $(".buttoninfullscreen").css("width","25%");
+        $(".buttoninfullscreen").css("right","0px");
+        $(".buttoninfullscreen").css("top","-15px");
+        $(".buttoninfullscreen").css("height","100v");
+        $(".buttoninfullscreen").css("position","relative");
+        $("#new-content").addClass("col-xs-9");
+        $("#new-content").removeClass("col-xs-12");
+        $('#calendar').removeClass('col-xs-12');
+        $('#calendar').addClass('col-xs-10');
+        $('#calendar_sidebar').addClass('col-xs-2');
+        $('.panel-heading panel-heading-darkblue').addClass('hidden');
+    });
+    $(document).on("click", "#fa-angle-double-right", function (e) {
+        $("#new-fehrest li").css("margin-right","8px !important");
+        $("#new-fehrest .jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none");
+        $(".jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none !important");
+        $(".fa-angle-double-right").addClass("hidden");
+        $(".fa-angle-double-right").addClass("deactive");
+        $(".fa-angle-double-left").removeClass("hidden");
+        $(".fa-angle-double-left").removeClass("deactive");
+        $("#new-fehrest").addClass("hidden");
+//                            $("#new-fehrest").removeClass("col-xs-3");
+        $(".right-new").removeClass("col-xs-2");
+        $(".buttoninfullscreen").css("width","1.5%");
+        $(".buttoninfullscreen").css("position","fixed");
+        $(".buttoninfullscreen").css("right","15px");
+        $(".buttoninfullscreen").css("height","100%");
+        $(".buttoninfullscreen").css("top","2px");
+        $("#buttoninfullscreen").removeClass("col-xs-3");
+        $("#new-content").removeClass("col-xs-9");
+        $("#new-content").addClass("col-xs-12");
+        $('#calendar').addClass('col-xs-12');
+        $('#calendar').removeClass('col-xs-10');
+        $('#calendar_sidebar').removeClass('col-xs-2');
+        $('.panel-heading panel-heading-darkblue').removeClass('hidden');
+    });
     $(document).on("click", ".ful-scrn", function (e) {
         e.preventDefault();
         var rel = $(this).attr('rel');
-        if(rel ==2)
+        if(rel ==3)
+        {
+            $('.first-fix-box').toggleClass('ful-fix');
+            //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
+            if ($(".first-fix-box .ful-scrn span").hasClass("icon-nim-safhe"))
+                $(".first-fix-box .ful-scrn span").removeClass("icon-nim-safhe");
+            else
+                $(".first-fix-box .ful-scrn span").addClass("icon-nim-safhe");
+            //alert($('#pcol_32').html());
+            if ($("#new-fehrest").hasClass("hidden")){
+                $('#new-fehrest').removeClass("hidden");
+            }else{
+                $('#new-fehrest').addClass("hidden");
+            }
+            if ($("#calendar_sidebar").hasClass("hidden")){
+                html = '<div id="TextSection" style="display: inline-block;">' +
+                    '<div class="col-xs-12">'+
+                        '<div id="buttoninfullscreen" class="buttoninfullscreen deactive" style="margin-right: -2.4%">'+
+                            '<div class="right-new">'+
+                                '<i class="fa fa-angle-double-left" aria-hidden="true" id="fa-angle-double-left"></i>'+
+                                '<i class="fa fa-angle-double-right deactive hidden" id="fa-angle-double-right" aria-hidden="true"></i>'+
+                                    '<div id="new-fehrest" class="hidden">'+$('#calendar_datepickar').html() + $('#calendar_myCalendar').html() +
+                                    '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+                $('#calendar_sidebar').html(html);
+                $('#calendar_sidebar').removeClass('hidden');
+                $('#calendar').addClass('padding-right-50');
+            }else{
+                $('#buttoninfullscreen').addClass("hidden");
+
+                $('#calendar').addClass('col-xs-12');
+                $('#calendar').removeClass('col-xs-10');
+                $('#calendar_sidebar').removeClass('col-xs-2');
+                $('#calendar_sidebar').addClass('hidden');
+                $('#calendar').removeClass('padding-right-50');
+            }
+            var str = $('#pcol_32').html();
+            $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
+
+        }else if(rel ==2)
         {
             $('.second-fix-box').toggleClass('ful-fix');
             //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
@@ -278,6 +365,7 @@ $(document).ready(function () {
         }
 
     });
+
     //-------------------------------------
     // full screen2 ++++++++++++++++++++++++
     $(document).on("click", ".ful-scrn2", function (e) {
@@ -1086,19 +1174,41 @@ $(document).ready(function(){
         if ($(".hd-body").scrollTop() > 50) {
             $(".navbar-custom").addClass("hidden");
             $(".dsply-tbl").css("margin-top","-40px");
-            $(".hd-body").css("max-height","85vh");
+            $(".hd-body").css("max-height","95vh");
             $(".row-hd").css("max-height","95vh");
+            $(".row-hd").css("overflow","visible");
             $("#header").addClass("hidden");
-            $("#toolbar .btn-group.mr").addClass("hidden");
-            $("#toolbar .btn-group").addClass("hidden");
+            $(".right-detail").css("margin-right","20px");
+            $("#rSubMenuBtn").css("top","-45px");
+            $(".HelpIcons").css("top","-30px");
+            $(".rightSubMenu").css("top","-40px");
+            $("#toolbar .btn-group.mr").css("height","0px");
+            $("#toolbar .btn-group").css("height","0px");
+            $(".ful-scrn").css("position","fixed");
+            $(".ful-scrn").css("top","70px");
+            $(".ful-scrn").css("left","40px");
+
+            // $("#toolbar .btn-group.mr").addClass("hidden");
+            // $("#toolbar .btn-group").addClass("hidden");
         } else {
+            $(".ful-scrn").css("position","absolute");
+            $(".ful-scrn").css("top","5px");
+            $(".ful-scrn").css("left","5px");
+            $(".icon-nim-safhe").css("top","10px");
+            $(".icon-nim-safhe").css("left","20px");
             $(".navbar-custom").removeClass("hidden");
             $(".dsply-tbl").css("margin-top","0px");
             $(".hd-body").css("max-height","80vh");
             $(".row-hd").css("max-height","85vh");
+            $(".right-detail").css("margin-right","0px");
+            $("#rSubMenuBtn").css("top","0px");
+            $(".HelpIcons").css("top","0px");
+            $(".rightSubMenu").css("top","0px");
+            $("#toolbar .btn-group.mr").css("height","40px");
+            $("#toolbar .btn-group").css("height","40px");
             $("#header").removeClass("hidden");
-            $("#toolbar .btn-group.mr").removeClass("hidden");
-            $("#toolbar .btn-group").removeClass("hidden");
+            // $("#toolbar .btn-group.mr").removeClass("hidden");
+            // $("#toolbar .btn-group").removeClass("hidden");
         }
     });
 

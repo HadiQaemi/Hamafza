@@ -68,6 +68,7 @@
         "loadingRecords": "{{trans('DataTables.LoadingRecords')}}",
         "processing": "{{trans('DataTables.Processing')}}",
         "search": "{{trans('DataTables.Search')}}",
+        "searchPlaceholder": "{{trans('DataTables.placeholder')}}",
         "zeroRecords": "{{trans('DataTables.ZeroRecords')}}",
         "paginate": {
             "first": "{{trans('DataTables.First')}}",

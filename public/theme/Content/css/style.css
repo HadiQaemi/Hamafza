@@ -2586,6 +2586,67 @@ a .navbar-brand{
     outline: 1px solid slategrey;
 }
 
+/*////////*/
+
+
+#vrScroll2 .scrl{
+    direction: rtl;
+}
+#vrScroll2 .scrl::-webkit-scrollbar {
+    width: 5px;
+    direction: rtl;
+}
+
+#vrScroll2 .scrl::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#vrScroll2 .scrl::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+.fix-inr{
+    direction: rtl;
+}
+.fix-inr::-webkit-scrollbar {
+    width: 5px;
+    direction: rtl;
+}
+
+.fix-inr::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.fix-inr::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+.right-new{
+    direction: rtl;
+}
+.right-new::-webkit-scrollbar {
+    width: 5px;
+    direction: rtl;
+}
+
+.right-new::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.right-new::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+.fc-time-grid-container{
+    height: 100% !important;
+    overflow: visible !important;
+    margin-bottom: 50px;
+}
+
+/*/////*/
 .responsive-theme .hd-tree{
     direction: rtl;
 }
@@ -3048,4 +3109,17 @@ a .navbar-brand{
 /*}*/
 .display-inline{
     display: inline !important;
+}
+
+.padding-right-50{
+    padding-right: 50px !important;
+}
+.dataTables_filter input{
+    border: none !important;
+    border-bottom-style: solid !important;
+    border-bottom-width: 1px !important;
+    border-bottom-color: rgba(195, 191, 191, 0.6) !important;
+    width: 100% !important;
+    margin-bottom: 5px !important;
+    box-shadow: none !important;
 }

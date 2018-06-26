@@ -1,8 +1,5 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
-        <li  class="eventTask">
-            <a href="#tab_event" data-toggle="tab">رویداد</a>
-        </li>
         <li class="active" id="define">
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
@@ -31,99 +28,25 @@
     <form action="{{ route('hamahang.tasks.save_task') }}" class="" name="create_new_task" id="create_new_task" method="post"
           enctype="multipart/form-data">
         <div class="tab-content new-task-form">
-            <div class="tab-pane eventTask" style="padding-top: 8px;margin-top:20px" id="tab_event">
-                <div class="no-margin-right">
-                    <div class="col-xs-12 margin-top-20">
-                        <div class="col-xs-2">
-                            <label>
-                                {{trans('calendar_events.ce_modal_events_title_field_lable')}}
-                            </label>
-                        </div>
-                        <div class="col-xs-10">
-                            <input name="event_type" type="hidden" class="form-control" placeholder="">
-                            <input name="event_title" class="form-control" placeholder="">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 margin-top-20">
-                        <div class="col-xs-2">
-                            <label>
-                                {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
-                            </label>
-                        </div>
-                        <div class="col-xs-10">
-                            <select name="event_cid" class="chosen-rtl"></select>
-                        </div>
-                    </div>
-                    <div class="row col-xs-12 margin-top-20">
-                        <div class="col-xs-1">
-                            <label class="line-height-30 pull-right"> {{trans('calendar_events.ce_startdate_label')}}</label>
-                        </div>
-                        <div class="col-xs-11 no-margin-right">
-                            <div class="col-sm-4 col-xs-6">
-                                <div class="input-group pull-right">
-                                    <input type="text" class="form-control DatePicker clsDatePicker col-xs-4" name="event_startdate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
-                                <div class=' input-group date'>
-                                    <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="event_starttime" aria-describedby="starttime">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-xs-12 margin-top-20">
-                        <div class="col-xs-1">
-                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
-                        </div>
-                        <div class="col-xs-11">
-                            <div class="col-sm-4 col-xs-6">
-                                <div class="input-group pull-right">
-                                    <input type="text" class="form-control DatePicker clsDatePicker col-xs-4" name="event_enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="enddate-session">
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-xs-6">
-                                <div class=' input-group date'>
-                                    <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="event_endtime" aria-describedby="endtime">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
             <div class="tab-pane active" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-8">
                         <div class="row">
                             <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('tasks.title') }}"/>
+                            <input name="event_type" id="event_type" type="hidden">
+                            <input name="startdate" id="startdate" type="hidden">
+                            <input name="enddate" id="enddate" type="hidden">
+                            <input name="endtime" id="endtime" type="hidden">
+                            <input name="starttime" id="starttime" type="hidden">
                         </div>
-                        <div class="row">
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" name="type" value="0" id="official" checked/>
-                                <label for="official">{{ trans('app.official') }}</label>
-                                <input type="radio" name="type" value="1" id="unofficial"/>
-                                <label for="unofficial">{{ trans('app.unofficial') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" name="kind" value="1" id="kind_activity"/>
-                                <label for="kind_activity">{{ trans('tasks.activity') }}</label>
-                                <input type="radio" name="kind" value="0" id="kind_event" checked/>
-                                <label for="kind_event">{{ trans('tasks.event')}}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" name="importance" id="importance_yes" value="1"/>
-                                <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                                <input type="radio" name="importance" id="importance_no" value="0" checked/>
-                                <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;">
-                                <input type="radio" name="immediate" id="immediate_yes" value="1"/>
-                                <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                                <input type="radio" name="immediate" id="immediate_no" value="0" checked/>
-                                <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
-                            </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <input type="radio" name="type" value="0" id="official" checked/>
+                            <label for="official">{{ trans('app.official') }}</label>
+                            <input type="radio" name="type" value="1" id="unofficial"/>
+                            <label for="unofficial">{{ trans('app.unofficial') }}</label>
                         </div>
                     </div>
                 </div>
@@ -142,7 +65,30 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control row" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}"/>
+                        <textarea class="form-control row" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}" cols="30" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 line-height-35 pull-right">
+                        <div class="filemanager-buttons-client pull-right">
+                            <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
+                                <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
+                                <span>{{trans('app.add_file')}}</span>
+                            </div>
+                            {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
+                            {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
+                            {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
+                            {{--</div>--}}
+                        </div>
+                        <div class="pull-right filemanager-title-client">
+                            {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
@@ -234,6 +180,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="noRightPadding noLeftPadding">نوع فعالیت</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 line-height-35">
+                        <div class="pull-right">
+                            <input type="radio" name="importance" id="importance_yes" value="1"/>
+                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
+                            <input type="radio" name="importance" id="importance_no" value="0" checked/>
+                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
+                        </div>
+                        <div class="pull-right">
+                            <input type="radio" name="immediate" id="immediate_yes" value="1"/>
+                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
+                            <input type="radio" name="immediate" id="immediate_no" value="0" checked/>
+                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
+                        </div>
+                    </div>
+                </div>
                 {{--<div class="row col-lg-12">--}}
                     {{--<div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">--}}
                         {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 line-height-35">--}}
@@ -263,30 +230,6 @@
                         {{--</div>--}}
                     {{--</div>--}}
                 {{--</div>--}}
-                <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                            <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-10 line-height-35 pull-right">
-                        <div class="filemanager-buttons-client pull-right">
-                            <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
-                                <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
-                                <span>{{trans('app.add_file')}}</span>
-                            </div>
-                            {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
-                            {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
-                            {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
-                            {{--</div>--}}
-                        </div>
-                        <div class="pull-right filemanager-title-client">
-                            {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-
                 {{--<div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">--}}
                     {{--<label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>--}}
                     {{--<div class="row-fluid pull-right">--}}
@@ -474,6 +417,14 @@
                     </div>
                     <div class="col-xs-11">
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>
+                    </div>
+                </div>
+                <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
+                    <div class="pull-right" style="height: 30px;line-height: 30px;">
+                        <input type="radio" name="kind" value="1" id="kind_activity"/>
+                        <label for="kind_activity">{{ trans('tasks.activity') }}</label>
+                        <input type="radio" name="kind" value="0" id="kind_event" checked/>
+                        <label for="kind_event">{{ trans('tasks.event')}}</label>
                     </div>
                 </div>
             </div>

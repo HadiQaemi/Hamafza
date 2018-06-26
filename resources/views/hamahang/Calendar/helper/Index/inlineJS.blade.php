@@ -637,7 +637,6 @@
                     $('#create_new_task input[name="event_type"]').val('task');
                     $('#create_new_task input[name="startdate"]').val(startdate);
                     $('#create_new_task input[name="enddate"]').val(enddate);
-                    $('#create_new_task input[name="starttime"]').val(startdate);
                     $('#create_new_task input[name="endtime"]').val(endtime);
                     $('#create_new_task input[name="starttime"]').val(starttime);
                     $('#create_new_task #task_form_action').val('add_event');
@@ -651,8 +650,6 @@
                     $('#new_task_save_private_library_l').css("display", "none");
                     $('#new_task_save_public_library_l').css("display", "none");
                     $('#new_task_save_type_final_l').css("display", "none");
-                    $('#define').removeClass('active');
-                    $('#create_new_task #tab_t1').removeClass('active');
                     $('.eventTask').addClass('active');
                     $('#save_commit').addClass('save_time_task');
                     $('#save_commit').removeClass('save_task');
