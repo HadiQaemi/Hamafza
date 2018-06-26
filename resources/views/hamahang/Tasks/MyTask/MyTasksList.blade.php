@@ -28,16 +28,16 @@
         <div class="row">
             <fieldset>
                 <div class="col-md-12">
-                    <table id="MyTasksTable" class="table table-striped {{--table-bordered--}} dt-responsive nowrap display" style="text-align: center" width="100%">
+                    <table id="MyTasksTable" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
                         <thead>
                         <tr>
-                            <th class="text-center">شناسه</th>
-                            <th class="text-center">نوع</th>
-                            <th class="text-center">عنوان</th>
-                            <th class="text-center">واگذارنده</th>
-                            <th class="text-center">اولویت</th>
-                            <th class="text-center">مهلت</th>
-                            <th class="text-center">وضعیت</th>
+                            <th style="text-align: right;">شناسه</th>
+                            <th style="text-align: right;">نوع</th>
+                            <th style="text-align: right;">عنوان</th>
+                            <th style="text-align: right;">واگذارنده</th>
+                            <th style="text-align: right;">اولویت</th>
+                            <th style="text-align: right;">مهلت</th>
+                            <th style="text-align: right;">وضعیت</th>
                         </tr>
                         </thead>
                     </table>

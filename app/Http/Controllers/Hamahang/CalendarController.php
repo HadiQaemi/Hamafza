@@ -182,7 +182,12 @@ class CalendarController extends Controller
             'reminder'=>array('checked'=>1 ,'color'=>'#26242d'),
             ))));*/
         $date = date('Y-m-d-D');
+        $date2 = date('Y-m');
+        $gdate['Georgian'] = $date2;
         $date = preg_split('/\-/',$date);
+        $gdate['GeorgianDay'] = $date[2];
+        $gdate['GeorgianMonth'] = $date[1];
+        $gdate['GeorgianYear'] = $date[0];
         $gdate['cal'] = jDateTime::toJalali($date[0],$date[1],$date[2]);
         $gdate['strCal'] = jDateTime::convertNumbers(implode('-',jDateTime::toJalali($date[0],$date[1],$date[2])));
         $gdate['getDayNames'] = jDateTime::getDayNames($date[3]);

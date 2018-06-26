@@ -21,7 +21,7 @@ class TasksLibraryController extends Controller
     {
         $validator = Validator::make(Request::all(), [
             'title' => 'required|string',
-            'users' => 'required|array',
+//            'users' => 'required|array',
         ],[
             'selected_users.required'=>'باید کاربر انتخاب شود'
         ],[

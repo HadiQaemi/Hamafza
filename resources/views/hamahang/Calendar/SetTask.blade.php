@@ -35,10 +35,13 @@
             font-family: Verdana;
         }
         .fix-box{
-            width: 48%;
+            width: 60%;
             font-size: 10px;
             float: right;
             margin-right: 1%;
+        }
+        .second-fix-boxt{
+            width: 28%;
         }
         h2{
             font-size: 11px;
@@ -77,6 +80,12 @@
             padding: 0px;
             margin: 0px;
         }
+        .completed_tasks{
+            display: none;
+        }
+        .done_tasks{
+            display: none;
+        }
     </style>
     @include('hamahang.CalendarEvents.helper.Index.inlineCss.inlineCss')
     @include('hamahang.Calendar.helper.Index.inlineCss.inlineCss')
@@ -89,19 +98,19 @@
                         <div class="col-xs-4">{{$date['getMonthNames'].''.$date['cal'][0]}}</div>
                         <div class="col-xs-4"></div>
                     </div>
-                        <table class="table-bordered" style="padding: 5px">
+                        <table class="table-bordered" id="table_task_time" style="padding: 5px">
                             <tr>
                                 <td style="padding: 5px 3px;width: 4%">روز</td>
-                                @for($d=0;$d<11;$d++)
+                                @for($d=0;$d<12;$d++)
                                     <td style="width: 8%;padding: 5px 3px;text-align: center">{{(2*$d+2).'-'.(2*$d+1)}}</td>
                                 @endfor
                             </tr>
                             <tbody>
                                 @for($d=1;$d<=($date['cal'][1]>6 ? 30 : 31);$d++)
-                                    <tr>
+                                    <tr class="tr_task_list_{{$d}}" gerDate="{{$date['Georgian'].'-'.$d}}" gerYear="{{$date['GeorgianYear']}}" gerMonth="{{$date['GeorgianMonth']}}" gerDay="{{$d}}">
                                         <td style="padding: 5px 3px;width: 4%">{{$date['cal'][1].'/'.$d}}</td>
-                                        @for($dd=0;$dd<11;$dd++)
-                                            <td class="droppable" style="width: 8%;padding: 0px;" class="draggable cursor-pointer" data-task_id="{{$d.'-'.$dd}}" id="{{$d.'-'.$dd}}" hour="{{(2*$dd+2).':00:00-'.(2*$dd+1).':00:00'}}" day="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" data-t_id="{{$d.'-'.$dd}}" title="{{$d.'-'.$dd}}"></td>
+                                        @for($dd=0;$dd<12;$dd++)
+                                            <td class="droppable" style="width: 8%;padding: 0px;" class="draggable cursor-pointer" data-task_id="{{$d.'-'.$dd}}" id="{{$d.'-'.$dd}}" hour="{{(2*$dd+2).':59:59-'.(2*$dd+1).':00:00'}}" day="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" data-t_id="{{$d.'-'.$dd}}" title="{{$d.'-'.$dd}}"></td>
                                         @endfor
                                     </tr>
                                 @endfor
@@ -131,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-light fix-box second-fix-box" style="height: 100%;">
+    <div class="panel panel-light fix-box second-fix-box" style="height: 100%;width: 35% !important;">
         <button class="ful-scrn" rel="2">
             <span class="glyphicon glyphicon-fullscreen"></span>
         </button>
@@ -183,7 +192,75 @@
     <script type="text/javascript">var jQuery_2 = $.noConflict(true);</script>
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
+        var obj = {};
+        obj.cid = 31;
+        var height = {}
+        var table_task_time = $('#table_task_time').width();
+        $.ajax({
+            url: '{{ URL::route('hamahang.calendar_events.get_calendar_events')}}',
+            type: 'POST',
+            data: obj,
+            async: false,
+            success: function (s) {
+                res = JSON.parse(s);
+                for(i=0;i<res.sharing_events.length;i++)
+                {
+                    enddate = res['sharing_events'][i]['enddate'];
+                    enddates = enddate.split(" ");
+                    startdate = res['sharing_events'][i]['startdate'];
+                    startdates = startdate.split(" ");
+                    console.log(res['sharing_events'][i]['title']);
+                    console.log(res['sharing_events'][i]);
+                    if(height[enddates[0]]==undefined)
+                        height[enddates[0]] = 1;
+                    split_date = enddates[0].split('-');
+                    //alert('.tr_task_list_'+split_date[2]);
 
+                    endtime = enddates[1].split(':');
+                    starttime = startdates[1].split(':');
+                    var start_stamo = parseInt(starttime[0]*60)+parseInt(starttime[1]);
+                    var end_stamo = parseInt(endtime[0]*60)+parseInt(endtime[1]);
+                    // g = toGregorian(split_date[0],split_date[1],split_date[2]);
+                    x = $('.tr_task_list_'+split_date[2]).position();
+                    var li = '<li start="'+res['sharing_events'][i]['startdate']+'" end="'+res['sharing_events'][i]['enddate']+'" class="draggable ui-draggable ui-draggable-handle" style="width: '+(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px')+';position: absolute;right: '+ (typeof  x == 'undefined' ? 0 : (Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24)) +'px;top: '+ ((typeof  x == 'undefined' ? 0 : Math.floor(x.top))+ parseInt((height[enddates[0]]-1)*25))+'px" data-action="task_timing" data-title="'+res['sharing_events'][i]['title']+'" data-task_id="">' +
+                    '   <div class="task_title">' +
+                    '       <h5 class="text_ellipsis">' +
+                    '           <a class="task_info cursor-pointer" data-t_id="" title="'+res['sharing_events'][i]['title']+'">'+res['sharing_events'][i]['title']+'</a>' +
+                    '       </h5>' +
+                    '   </div>' +
+                    '   <div class="state">' +
+                    '       <i class="fa fa-cog fa-2x"></i>' +
+                    '   </div>' +
+                    '   <div class="referrer"></div>' +
+                    '</li>';
+
+                    $("[gerdate='"+enddates[0]+"']").append(li);
+                    // sss = res['sharing_events'][i]['enddate'];
+                    // // console.log(res['sharing_events'][i]);
+                    // www = sss.split("27");
+                    // endtime = www[1];
+                    // enddate = www[0];
+                    // startdate = res['sharing_events'][i].startdate.split(" ");
+                    // starttime = startdate[1];
+                    // startdate = startdate[0];
+                    // console.log(res.sharing_events[i].enddate);
+                    // console.log(res.sharing_events[i].www);
+                    // console.log(res.sharing_events[i].endtime);
+                    // console.log(res.sharing_events[i].startdate);
+                    console.log(starttime);
+                    console.log(start_stamo);
+                    console.log(endtime);
+                    console.log(end_stamo);
+                    console.log(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60)));
+                    $("[gerdate='"+enddates[0]+"']").css('height',Math.floor(height[enddates[0]]*24)+'px');
+                    // $("[gerdate='"+enddates[0]+"']").css('width',Math.floor((table_task_time*(end_stamo-start_stamo)/(24*60))+parseInt(((end_block-start_block+1)/(1.10*(end_block-start_block)))*table_task_time/200))+'px');
+                    $("[gerdate='"+enddates[0]+"']").css('width',Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px');
+                    // $('#table_task_time .task_item_'+task_id).css('right',x.right+'px');
+                    $("[gerdate='"+enddates[0]+"']").css('right',Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24+'px');
+                    height[enddates[0]] ++;
+                }
+            }
+        });
         $('#inlineDatepicker').persianDatepicker({
             timePicker: {
                 enabled: true

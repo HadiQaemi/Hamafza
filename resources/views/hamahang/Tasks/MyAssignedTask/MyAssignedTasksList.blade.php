@@ -12,18 +12,16 @@
         {{--<a class="task_info" data-t_id="42">تست</a>--}}
         <fieldset>
             <div class="row">
-                <table id="MyAssignedTasksTable" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                <table id="MyAssignedTasksTable" class="table dt-responsive nowrap display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th class="text-center">شناسه</th>
-                        <th class="text-center">نوع</th>
-                        <th class="text-center">عنوان</th>
-                        <th class="text-center">مسئول انجام</th>
-                        <th class="text-center">اولویت</th>
-                        <th class="text-center">مهلت</th>
-                        <th class="text-center">وضعیت فعلی</th>
-                        <th class="text-center">عملیات</th>
-                        <th class="text-center">کتابخانه</th>
+                        <th style="text-align: right;">مسئول انجام</th>
+                        <th style="text-align: right;">عنوان</th>
+                        <th style="text-align: right;">اولویت</th>
+                        <th style="text-align: right;">مهلت</th>
+                        <th style="text-align: right;">وضعیت</th>
+                        <th style="text-align: right;">عملیات</th>
+                        <th style="text-align: right;">کتابخانه</th>
                     </tr>
                     </thead>
                 </table>

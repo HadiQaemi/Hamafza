@@ -230,6 +230,123 @@ class CalendarEventsController extends Controller
         }
     }
 
+    public function saveMultiTaskEvent()
+    {
+        $uid = Auth::id();
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
+        $validator = \Validator::make(Request::all(), [
+            'task_id' => 'required',
+            'hcid' => 'required|integer',
+            'hstartdate' => 'required',
+            'henddate' => 'required'
+        ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            $tasks = DB::table('hamahang_task')
+                ->select('hamahang_task.title','hamahang_task.id')
+                ->whereIn('hamahang_task.id', Request::input('task_id'))
+                ->get();
+            foreach($tasks as $Atask){
+                $info['uid'] = $uid;
+                $info['htitle'] = $Atask->title;
+                $info['task_id'] = $Atask->id;
+                $info['hstartdate'] = Request::input('hstartdate');
+                $info['henddate'] = Request::input('henddate');
+                $info['event_type'] = "task";
+                $info['hcid'] = Request::input('hcid');
+                $this->saveTaskEvent($info);
+                $allInfo[] = $info;
+            }
+            return json_encode($allInfo);
+
+        }
+
+    }
+    public function saveTaskEvent($info = [])
+    {
+        $uid = Auth::id();
+        $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
+        $validator = \Validator::make(Request::all(), [
+            'htitle' => 'required|string',
+            'hcid' => 'required|integer',
+            'hstartdate' => 'required',
+            'henddate' => 'required'
+        ]);
+        //DB::enableQueryLog();
+        if ($validator->fails() && count($info) == 0)
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            if (Request::input('event_id') && Request::input('mode') == 'edit')
+            {
+                $userEvent = User_Event::find(Request::input('event_id'));
+            }
+            else
+            {
+                $userEvent = new User_Event();
+            }
+
+            $userEvent->uid = isset($info['uid']) ? $info['uid'] : $uid;
+            $userEvent->title = isset($info['htitle']) ? $info['htitle'] : Request::input('htitle');
+            $userEvent->allDay = isset($info['allDay']) ? $info['allDay'] : Request::input('allDay');
+            $userEvent->startdate = isset($info['startdate']) ? $info['startdate'] : Request::input('hstartdate');
+            $userEvent->enddate = isset($info['enddate']) ? $info['enddate'] : Request::input('henddate');
+            $userEvent->description = isset($info['description']) ? $info['description'] : Request::input('description');
+            $userEvent->type = isset($info['type']) ? $info['type'] : Request::input('type') ? Request::input('type') : 0;
+            $userEvent->event_type = isset($info['event_type']) ? $info['event_type'] : $event_type;
+            $userEvent->cid = isset($info['hcid']) ? $info['hcid'] : Request::input('hcid');
+
+            if ($userEvent->save())
+            {
+                if (Request::input('mode') == 'edit')
+                {
+                    $taskObj  = Events_Tasks::where('event_id', '=', $userEvent->event_type)->firstOrFail();
+                }
+                else
+                {
+                    $taskObj = new Events_Tasks();
+                }
+                $taskObj ->uid = $uid;
+                $taskObj->event_id = $userEvent->id;
+                $taskObj->task_id = Request::input('task_id') ? Request::input('task_id') : $info['task_id'];
+                if ($taskObj->save())
+                {
+                    if (Request::input('mode') == 'edit')
+                    {
+                        return json_encode(array('success' => true, 'mode' => 'edit'));
+                    }
+                    else
+                    {
+                        if (Request::input('mode') == 'calendar')
+                        {
+                            $event = $this->getEventById($userEvent->id);
+                            return json_encode(array('success' => true, 'event' => $event, 'mode' => 'calendar'));
+
+                        }
+                        else
+                        {
+                            return json_encode(array('success' => true));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return json_encode(array('success' => false));
+            }
+        }
+    }
+
     public function saveSessionEvent()
     {
         $uid = Auth::id();

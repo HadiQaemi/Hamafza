@@ -4,5 +4,4 @@
     </div>
     </div>
 </div>
-
 @include('modals.basic_data.calendar_settings.helper.user_multi_task_inline_js')

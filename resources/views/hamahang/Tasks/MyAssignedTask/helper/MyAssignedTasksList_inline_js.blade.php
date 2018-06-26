@@ -7,6 +7,8 @@
     var r;
     var editor; // use a global for the submit and return data rendering in the examples
     $(document).ready(function () {
+        alert('dataTables_filter ');
+        $('.dataTables_filter input').attr("placeholder","asdasd");
         var send_info = {
             @if(isset($filter_subject_id))
             subject_id: '{{ $filter_subject_id }}'
@@ -26,8 +28,9 @@
             "language": LangJson_DataTables,
             "processing": true,
             columns: [
-                {"data": "id", "width": "5%"},
-                {"data": "use_type"},
+                // {"data": "id", "width": "5%"},
+                // {"data": "use_type"},
+                {"data": "employee"},
                 {
                     "data": "title",
                     "mRender": function (data, type, full) {
@@ -36,7 +39,7 @@
                         return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
                     }
                 },
-                {"data": "employee"},
+
                 {"data": "immediate"},
                 {"data": "respite"},
                 {"data": "type"},
@@ -46,7 +49,7 @@
                     "bSortable": false,
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i>حذف</i></a>";
+                        return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i class='fa fa-trash'></i></a>";
                     }
                 }
                 , {

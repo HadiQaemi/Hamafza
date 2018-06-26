@@ -58,7 +58,6 @@
             drop: function (event, ui) {
                 $(this).removeClass("border").removeClass("over");
                 var Drag_Destination = $(this).attr('id');
-
                 var hour = $('#'+Drag_Destination).attr('hour');
                 var day = $('#'+Drag_Destination).attr('day');
                 var dropped = ui.draggable;
@@ -67,9 +66,24 @@
                 var title = dropped.data('title');
                 if(Drag_Action=='task_timing')
                 {
-                    showTimeAndTask(title,day,day,hour,hour,droppedOn);
                     var droppedOn = $(this);
-                    $(dropped).detach().appendTo(droppedOn);
+                    showTimeAndTask(title,day,day,hour,hour,droppedOn,task_id);
+                    $('#table_task_time').append(
+                            '<li class="draggable task_item_'+task_id+' ui-draggable ui-draggable-handle" data-action="task_timing" data-title="'+title+'" data-task_id="'+task_id+'">'+
+                                $('.task_item_'+task_id).html()+
+                            '</li>');
+
+                    x = $('#'+Drag_Destination).position();
+                    startdate = day.split('-');
+                    starttime = hour.split(':');
+                    var table_task_time = $('#table_task_time').width();
+                    var start_stamo = parseInt(starttime[0]*60)+parseInt(starttime[1]);
+
+                    $('#table_task_time .task_item_'+task_id).css('position','absolute');
+                    $('#table_task_time .task_item_'+task_id).css('right',Math.floor((table_task_time*start_stamo)/(24*60)-table_task_time/24)+'px');
+                    $('#table_task_time .task_item_'+task_id).css('width',parseInt(table_task_time/12)+'px');
+                    $('#table_task_time .task_item_'+task_id).css('top',x.top+'px');
+
                 }else{
                     submit_change_priority(Drag_Destination, task_id);
                     var droppedOn = $(this);
@@ -91,10 +105,11 @@
         $(".droppable").sortable();
     }
 
-    function showTimeAndTask(title, startdate, enddate, starttime, endtime, droppedOn) {
+    function showTimeAndTask(title, startdate, enddate, starttime, endtime, droppedOn,task_id) {
+        console.log(droppedOn);
         startdate = startdate.split("/");
         starttime = starttime.split("-");
-        endtime = starttime[0]
+        endtime = starttime[0];
         starttime = starttime[1];
 
         newEventModal = $.jsPanel({
@@ -115,7 +130,9 @@
                     $('#form-multi-tasking input[name="endtime"]').val(endtime);
                     $('#form-multi-tasking #take_title').text("{{trans('calendar.modal_calendar_setting_title')}} : " + title);
                     $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
-                    $('#form-multi-tasking form').append('<input type="hidden" name="droppedOn" id="droppedOn" value="'+droppedOn+'"/>');
+                    $('#form-multi-tasking #title_time_task').val(title);
+                    $('#form-multi-tasking #droppedOn').val(droppedOn);
+                    $('#form-multi-tasking #task_id').val(task_id);
                 }
             }
         });

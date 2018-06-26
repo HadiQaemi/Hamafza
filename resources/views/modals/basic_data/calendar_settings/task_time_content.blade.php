@@ -3,11 +3,24 @@
         <div class="col-md-12" id="take_title" style="padding: 20px 10px;">
 
         </div>
+        <input type="hidden" name="title_time_task" id="title_time_task"/>
         <div class="col-md-12" style="overflow-x: auto">
+            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                <div class="col-xs-1 noLeftPadding noRightPadding">
+                    <label>
+                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                    </label>
+                </div>
+                <div class="col-xs-11">
+                    <select name="cid" id="cid" class="chosen-rtl"></select>
+                </div>
+            </div>
             <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-20">
                 <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
                     <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
                         <label class="line-height-30 pull-right"> {{trans('calendar_events.ce_startdate_label')}}</label>
+                        <input type="hidden" name="droppedOn" id="droppedOn" value=""/>
+                        <input type="hidden" name="task_id" id="task_id" value=""/>
                     </div>
                     <div class="col-xs-11 noLeftPadding noRightPadding no-margin-left no-margin-right">
                         <div class="col-sm-6 col-xs-6 noRightPadding no-margin-left no-margin-right">
@@ -84,7 +97,6 @@
         type: 'Post', // Send post dat
         dataType:'json',
         success: function (s) {
-
             var options = '';
             $('select[name="cid"]').empty();
             for (var i = 0; i < s.length; i++) {
@@ -95,10 +107,7 @@
                 else{
                     options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
                 }
-
-
             }
-
             $('select[name="cid"]').append(options);
             $('select[name="cid"]').select2({
                 dir: "rtl",

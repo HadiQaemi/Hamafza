@@ -24,11 +24,11 @@
                     <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
                     <span>{{trans('tasks.status_started')}}</span>
                 </label>
-                <label>
+                <label class="done_tasks">
                     <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks">
                     <span>{{trans('tasks.status_done')}}</span>
                 </label>
-                <label>
+                <label class="completed_tasks">
                     <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks">
                     <span>{{trans('tasks.status_finished')}}</span>
                 </label>

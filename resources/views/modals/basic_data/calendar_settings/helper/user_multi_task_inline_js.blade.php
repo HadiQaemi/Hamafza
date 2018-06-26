@@ -50,48 +50,79 @@
     var instance;
     $(document).ready(function(){
 
-        $("#InsertBtn_task").click(function () {
-            var saveObj = {};
-            saveObj.title = $('#title').val();
-            saveObj.cid = $('#cid').val();
-            saveObj.startdate = $('#startdate').val();
-            saveObj.starttime = $('#starttime').val();
-            saveObj.enddate = $('#enddate').val();
-            saveObj.endtime = $('#endtime').val();
-            saveObj.event_type = 'task';
-            saveObj.multiTaskTime = f;
-            var res = '';
-            $.ajax({
-                url: '{{ URL::route('hamahang.calendar_events.save_selected_task_event')}}',
-                type: 'POST', // Send post dat
-                data: saveObj,
-                async: false,
-                success: function (s) {
-                    res = JSON.parse(s);
-                    if (res.success == false) {
-                        $('#' + errorMsg_id).empty();
-                        errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);
-                        // $('#' + errorMsg_id).html(warning);
-                    } else {
-                        eventInfo = JSON.parse(res.event);
-                        console.log(eventInfo);
-                        console.log(eventInfo.title);
-                        (function ($) {
-                            $("#calendar").fullCalendar('addEventSource', [{
-                                start: eventInfo.startdate,
-                                end: eventInfo.enddate,
-                                title: eventInfo.title,
-                                color: eventInfo.bgColor,
-                                block: true
-                            }]);
-                        })(jQuery_2);
-                        sessionModal.close();
-                        var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
-                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
-                        messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');
+        function showTimeAndMultiTask(startdate, enddate, starttime, endtime, multiTaskTime) {
+            startdate = startdate.split("/");
+            starttime = starttime.split("-");
+            newEventModal.close();
+            newEventModal = $.jsPanel({
+                position: {my: "center-top", at: "center-top", offsetY: 15},
+                contentSize: {width: 800, height: 300},
+                contentAjax: {
+                    url: '{{ URL::route('modals.task_time' )}}',
+                    method: 'POST',
+                    dataType: 'json',
+                    done: function (data, textStatus, jqXHR, panel) {
+                        this.headerTitle(data.header);
+                        this.content.html(data.content);
+                        this.toolbarAdd('footer', [{item: data.footer}]);
+
+                        $('input[name="startdate"]').val(startdate);
+                        $('input[name="enddate"]').val(enddate);
+                        $('#form-multi-tasking input[name="starttime"]').val(starttime);
+                        $('#form-multi-tasking input[name="endtime"]').val(endtime);
+                        $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
+                        $('#form-multi-tasking #title_time_task').val("");
+                        $('#task_id').val(multiTaskTime);
+                        $('#InsertBtn_task_time').attr('act','multiTask');
                     }
                 }
             });
+            newEventModal.content.html('<div class="loader"></div>');
+        }
+
+        $("#InsertBtn_task").click(function () {
+            startdate = $('#startdate').val();
+            starttime = $('#starttime').val();
+            enddate = $('#enddate').val();
+            endtime = $('#endtime').val();
+            multiTaskTime = f;
+
+            {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+            showTimeAndMultiTask(startdate,enddate,starttime,endtime,multiTaskTime);
+
+            {{--alert('InsertBtn_task');--}}
+            {{--var res = '';--}}
+            {{--$.ajax({--}}
+                {{--url: '{{ URL::route('hamahang.calendar_events.save_selected_task_event')}}',--}}
+                {{--type: 'POST', // Send post dat--}}
+                {{--data: saveObj,--}}
+                {{--async: false,--}}
+                {{--success: function (s) {--}}
+                    {{--res = JSON.parse(s);--}}
+                    {{--if (res.success == false) {--}}
+                        {{--$('#' + errorMsg_id).empty();--}}
+                        {{--errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);--}}
+                        {{--// $('#' + errorMsg_id).html(warning);--}}
+                    {{--} else {--}}
+                        {{--eventInfo = JSON.parse(res.event);--}}
+                        {{--console.log(eventInfo);--}}
+                        {{--console.log(eventInfo.title);--}}
+                        {{--(function ($) {--}}
+                            {{--$("#calendar").fullCalendar('addEventSource', [{--}}
+                                {{--start: eventInfo.startdate,--}}
+                                {{--end: eventInfo.enddate,--}}
+                                {{--title: eventInfo.title,--}}
+                                {{--color: eventInfo.bgColor,--}}
+                                {{--block: true--}}
+                            {{--}]);--}}
+                        {{--})(jQuery_2);--}}
+                        {{--sessionModal.close();--}}
+                        {{--var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';--}}
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');--}}
+                    {{--}--}}
+                {{--}--}}
+            {{--});--}}
             // for(var i=0;f[i];i++)
             // {
             //     $('#'+select).append('<option selected="selected" value='+f[i]+'>'+name_array[i]+' '+family_array[i]+'</option>').change();

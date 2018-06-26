@@ -556,7 +556,7 @@ class MyAssignedTaskController extends Controller
     {
         $validator = Validator::make(Request::all(), [
             'task_type' => 'required',
-            'task_id' => 'required',
+//            'task_id' => 'required',
         ]);
         if ($validator->fails())
         {
@@ -1029,14 +1029,18 @@ class MyAssignedTaskController extends Controller
 
     public function save()
     {
-        $validator = Validator::make(Request::all(), [
-            'title' => 'required|string',
-            'users' => 'required|array',
-        ],[
-            'selected_users.required'=>'باید کاربر انتخاب شود'
-        ],[
+        $validator = Validator::make(Request::all(),
+            [
+                'title' => 'required|string'
+//              ,
+//              'users' => 'required|array',
+            ],
+            [
+//                'selected_users.required'=>'باید کاربر انتخاب شود'
+            ],
+            [
                 'title'=>'عنوان وظیفه',
-                'users'=>'کاربر'
+//                'users'=>'کاربر'
             ]
         );
         if ($validator->fails())
@@ -1045,72 +1049,71 @@ class MyAssignedTaskController extends Controller
             $result['success'] = false;
             return json_encode($result);
         }
-
         if (Request::input('event_type') == "task" || Request::input('task_form_action') == "select_task")
         {
-            if (Request::input('event_id') && Request::input('mode') == 'edit')
-            {
-                $userEvent = User_Event::find(Request::input('event_id'));
-            }
-            else
-            {
-                $userEvent = new User_Event();
-            }
-            $uid = Auth::id();
-            $type = Request::input('type') ? Request::input('type') : 0;
-            $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
+//            if (Request::input('event_id') && Request::input('mode') == 'edit')
+//            {
+//                $userEvent = User_Event::find(Request::input('event_id'));
+//            }
+//            else
+//            {
+//                $userEvent = new User_Event();
+//            }
+//            $uid = Auth::id();
+//            $type = Request::input('type') ? Request::input('type') : 0;
+//            $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
 //            dd(Request::all());
-            $jdate = new jDateTime();
-            $userEvent->uid = $uid;
-            $userEvent->title = Request::input('event_title');
-            $userEvent->allDay = Request::input('allDay');
-            $startdate = explode('-', Request::input('event_startdate'));
-//            dd(Request::input('event_startdate'));
-            if (Request::input('allDay') == 1)
-            {
-                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
-            }
-            else
-            {
-                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('event_starttime');
-            }
-
-            //die(dd($startdate));
-
-            $enddate = explode('-', Request::input('event_enddate'));
-            if (Request::input('allDay') == 1)
-            {
-                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
-            }
-            else
-            {
-                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('event_endtime');
-            }
-            $userEvent->description = Request::input('description');
-            $userEvent->type = $type;
-            $userEvent->event_type = $event_type;
-            $userEvent->cid = Request::input('event_cid');
-            //die(dd(DB::getQueryLog()));
-            if ($userEvent->save())
-            {
-                $final_result = ['success' => true, 'event' => $userEvent, 'mode' => 'calendar'];
-            }
-            if (Request::input('task_form_action') == "select_task")
-            {
-
-                dd(Request::input('multiTaskTime'));
-                $eventTask = new Events_Tasks();
-                $eventTask->uid = $uid;
-//                $eventTask->task_id = $task->id;
-                $eventTask->event_id = $userEvent->id;
-                $eventTask->save();
-
-                return json_encode($final_result);
-            }
+//            $jdate = new jDateTime();
+//            $userEvent->uid = $uid;
+//            $userEvent->title = Request::input('event_title');
+//            $userEvent->allDay = Request::input('allDay');
+//            $startdate = explode('-', Request::input('event_startdate'));
+////            dd(Request::input('event_startdate'));
+//            if (Request::input('allDay') == 1)
+//            {
+//                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+//            }
+//            else
+//            {
+//                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('event_starttime');
+//            }
+//
+//            //die(dd($startdate));
+//
+//            $enddate = explode('-', Request::input('event_enddate'));
+//            if (Request::input('allDay') == 1)
+//            {
+//                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+//            }
+//            else
+//            {
+//                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('event_endtime');
+//            }
+//            $userEvent->description = Request::input('description');
+//            $userEvent->type = $type;
+//            $userEvent->event_type = $event_type;
+//            $userEvent->cid = Request::input('event_cid');
+//            //die(dd(DB::getQueryLog()));
+//            if ($userEvent->save())
+//            {
+//                $final_result = ['success' => true, 'event' => $userEvent, 'mode' => 'calendar'];
+//            }
+//            if (Request::input('task_form_action') == "select_task")
+//            {
+//
+//                dd(Request::input('multiTaskTime'));
+//                $eventTask = new Events_Tasks();
+//                $eventTask->uid = $uid;
+////                $eventTask->task_id = $task->id;
+//                $eventTask->event_id = $userEvent->id;
+//                $eventTask->save();
+//
+//                return json_encode($final_result);
+//            }
 
         }
 
-        $result = '';
+        $final_result = ['success' => true];
         if (Request::input('respite_timing_type') == 1)
         {
             $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
@@ -1207,12 +1210,17 @@ class MyAssignedTaskController extends Controller
         }
         if (Request::input('event_type') == "task")
         {
-            $eventTask = new Events_Tasks();
-            $eventTask->uid = $uid;
-            $eventTask->task_id = $task->id;
-            $eventTask->event_id = $userEvent->id;
-            $eventTask->save();
-
+            return json_encode(
+                [
+                    'task_id'=>$task->id,
+                    'startdate'=>Request::input('startdate'),
+                    'enddate'=>Request::input('enddate'),
+                    'endtime'=>Request::input('endtime'),
+                    'starttime'=>Request::input('starttime'),
+                    'title'=>Request::input('title'),
+                    'success'=>true
+                ]
+            );
         }
         return json_encode($final_result);
 //        dd($task);

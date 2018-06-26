@@ -246,7 +246,7 @@
                 headerRemove: true,
                 autoclose: 4000,
                 border: '1px solid gray',
-                contentSize: '150 154',
+                contentSize: '150 120',
                 content: '' +
                 '<div id="modal_fullcalendar_menu" class="list-group">' +
                 '   <div>' +
@@ -254,26 +254,31 @@
                 '           {{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div style="border-bottom:1px solid #aaa">' +
+                '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showTaskModal()" > ' +
                 '           {{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showEvenModal()" > ' +
-                '           {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+
+                '   <div style="border-bottom:1px solid #aaa">' +
+                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '           {{trans('calendar.modal_calendar_new_time_border')}}'+
                 '       </a>' +
                 '   </div>' +
+                {{--'   <div>' +--}}
+                {{--'       <a href="#" class="list-group-item" onclick="showEvenModal()" > ' +--}}
+                {{--'           {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+--}}
+                {{--'       </a>' +--}}
+                {{--'   </div>' +--}}
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showSessionModal();">' +
                 '           {{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showInvitationModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_save_invitation')}}'+
-                '       </a>' +
-                '   </div>' +
+                {{--'   <div>' +--}}
+                {{--'       <a href="#" class="list-group-item" onclick="showInvitationModal();">' +--}}
+                {{--'           {{trans('calendar.modal_fullcalendar_menu_save_invitation')}}'+--}}
+                {{--'       </a>' +--}}
+                {{--'   </div>' +--}}
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
                 '           {{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
@@ -284,14 +289,9 @@
                 '           {{trans('calendar.modal_fullcalendar_menu_presence')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div style="border-bottom:1px solid #aaa">' +
-                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_memo')}}'+
-                '       </a>' +
-                '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_calendar_new_time_border')}}'+
+                '           {{trans('calendar.modal_fullcalendar_menu_memo')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <input type="hidden" name="startdate" value="" >' +
@@ -506,10 +506,16 @@
         })(jQuery_2);
         $('.fc-right .fc-button-group').prepend(
             '<button type="button" class="fc-year-button fc-button fc-state-default fc-corner-left ">{{trans("calendar.calendar_year_button_title")}}  </button>' +
-            '<button type="button" class="fc-6month-button fc-button fc-state-default " >{{trans("calendar.calendar_sixmonth_button_title")}} </button>' +
+{{--            '<button type="button" class="fc-6month-button fc-button fc-state-default " >{{trans("calendar.calendar_sixmonth_button_title")}} </button>' +--}}
             '<button type="button" class="fc-seasonDay-button fc-button fc-state-default  ">{{trans("calendar.calendar_sesoan_button_title")}} </button>'+
-            '<button type="button" class="fc-button fc-state-default calendar-time-task " id="calendar_time_task">{{trans("calendar.new")}} </button>'
+            '<button type="button" class="fc-button fc-state-default calendar-time-task " id="calendar_time_task">{{trans("calendar.calendar_month_row_button_title")}} </button>'
         );
+        $('.fc-right').css('float','left');
+        $('.fc-left').css('float','right');
+        $('.fc-right').css('margin-left','20px');
+        $('h2').css('border: ','20px');
+
+
 
         $('#calendar_time_task').click(function () {
             alert('set_time_task set_time_taskddddddddd set_time_taskddddddddd');
@@ -1224,7 +1230,9 @@
                 dataType: "json",
                 data: form_data,
                 success: function (result) {
-                    console.log(result);
+
+                    newEventModal.close();
+
                     // result = JSON.parse(result);
                     if (result.success == true) {
                         if (again == 1) {
@@ -1233,19 +1241,15 @@
                         else {
                             $('.jsPanel-btn-close').click();
                         }
-                        messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
-                        eventInfo = (result.event);
-                        (function ($) {
-                            $("#calendar").fullCalendar('addEventSource', [{
-                                start: eventInfo.startdate,
-                                end: eventInfo.enddate,
-                                title: eventInfo.title,
-                                color: eventInfo.bgColor,
-                                block: true
-                            }]);
-                        })(jQuery_2);
-                        newEventModal.close();
-                        alert('new alert');
+                        enddate = result.enddate;
+                        endtime = result.endtime;
+                        startdate = result.startdate;
+                        starttime = result.starttime;
+                        task_id = result.task_id;
+                        title = result.title;
+                        {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+                        showTimeAndTask(title,startdate,enddate,starttime,endtime,task_id);
+
                     }
                     else {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -1253,6 +1257,38 @@
                 }
             });
         }
+        function showTimeAndTask(title, startdate, enddate, starttime, endtime, task_id) {
+            startdate = startdate.split("/");
+            starttime = starttime.split("-");
+            newEventModal = $.jsPanel({
+                position: {my: "center-top", at: "center-top", offsetY: 15},
+                contentSize: {width: 800, height: 300},
+                contentAjax: {
+                    url: '{{ URL::route('modals.task_time' )}}',
+                    method: 'POST',
+                    dataType: 'json',
+                    done: function (data, textStatus, jqXHR, panel) {
+                        this.headerTitle(data.header);
+                        this.content.html(data.content);
+                        this.toolbarAdd('footer', [{item: data.footer}]);
+
+                        $('#form-multi-tasking input[name="startdate"]').val(startdate);
+                        $('#form-multi-tasking input[name="enddate"]').val(enddate);
+                        $('#form-multi-tasking input[name="starttime"]').val(starttime);
+                        $('#form-multi-tasking input[name="endtime"]').val(endtime);
+                        $('#form-multi-tasking #take_title').text("{{trans('calendar.modal_calendar_setting_title')}} : " + title);
+                        $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
+                        $('#form-multi-tasking #title_time_task').val(title);
+                        $('#form-multi-tasking #task_id').val(task_id);
+                        $('#InsertBtn_task_time').attr('act','singleTask');
+                    }
+                }
+            });
+
+            newEventModal.content.html('<div class="loader"></div>');
+
+        }
+
         $(document).on('click', '.save_time_task', function () {
             var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :
                 ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
@@ -1287,7 +1323,7 @@
             if (res.success == false) {
             } else {
                 eventInfo = res.event;
-                // console.log(sixMonthEvents[gDateAr[1]][gDateAr[2]]);
+                 console.log(eventInfo);
                 (function ($) {
                     $("#calendar").fullCalendar('addEventSource', [{
                         start: eventInfo.startdate,
