@@ -15,5 +15,6 @@ return [
     'show_task_draft_info'              => ' نمایش اطلاعات پیش نویس وظیفه',
     'incomplete_form'       => 'فرم ناقص',
     'row_number'            => 'ردیف',
+    'no_process_inserted'  => 'تاکنون فرآیندی ثبت نشده است',
     'relation_title'        => 'نام رابطه'
 ];

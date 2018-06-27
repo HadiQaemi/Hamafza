@@ -7,10 +7,10 @@
         <div class="row">
             <div class="space-14"></div>
             <fieldset>
-                <legend>لیست فرایند ها</legend>
+                {{--<legend>لیست فرایند ها</legend>--}}
                 <div class="col-md-12">
 
-                    <table id="ProcessList" class="table table-striped table-bordered dt-responsive nowrap display"
+                    <table id="ProcessList" class="table dt-responsive nowrap display dataTable no-footer"
                            style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
@@ -24,6 +24,9 @@
                     </table>
                 </div>
             </fieldset>
+        </div>
+        <div class="row">
+            <a class="btn btn-primary fa fa-plus jsPanels margin-bottom-30" href="/modals/CreateNewProcess?uid={{Session::get('uid')}}&sid=0" title="{{trans('projects.create_new_project')}}"></a>
         </div>
     </div>
 
@@ -853,6 +856,8 @@
                 subject_id: '{{ $filter_subject_id }}'
                 @endif
             }
+            LangJson_DataTables = window.LangJson_DataTables;
+            LangJson_DataTables.emptyTable = '{{trans('projects.no_process_inserted')}}';
             window.ProcessList = $('#ProcessList').DataTable({
                 "dom": window.CommonDom_DataTables,
                 "ajax": {
