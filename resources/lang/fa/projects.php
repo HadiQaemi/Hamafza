@@ -12,6 +12,7 @@ return [
     'start_date'  => 'تاریخ شروع',
     'end_date'  => 'تاریخ پایان',
     'base_on_start'  => 'براساس تاریخ شروع پروژه',
+    'no_project_inserted'  => 'تاکنون پروژه ای ثبت نشده است',
     'base_on_end'  => 'براساس تاریخ پایان پروژه',
     'base_calendar'  => 'تقویم پایه',
     'create_new_project'  => 'ایجاد پروژه جدید',

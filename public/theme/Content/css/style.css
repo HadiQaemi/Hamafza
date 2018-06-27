@@ -3114,6 +3114,9 @@ a .navbar-brand{
 .padding-right-50{
     padding-right: 50px !important;
 }
+.margin-bottom-30{
+    margin-bottom: 30px !important;
+}
 .dataTables_filter input{
     border: none !important;
     border-bottom-style: solid !important;
