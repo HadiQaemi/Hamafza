@@ -48,6 +48,9 @@ class PageController extends Controller {
         $posts = $subject->posts;
         $Body = $page->body;
         $Tree = $pc->bodyList($Body);
+        foreach ($page_new['Files'] as $file){
+            $file['downloadURL'] = route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode($file->id)]).'/?&fname='. $file->originalName; 
+        }
         $res = [
             'status' => '1',
             'page_title' => $subject->title,
@@ -60,6 +63,12 @@ class PageController extends Controller {
                     'selected' => '1',
                     'type' => '6',
                     'data' => $page_new['content']
+                ],
+                     [
+                    'title' => 'پیوست ها',
+                    'selected' => '1',
+                    'type' => '6',
+                    'data' => $page_new['Files']
                 ],
                      [
                     'title' => 'فهرست',
