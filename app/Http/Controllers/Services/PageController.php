@@ -61,6 +61,12 @@ class PageController extends Controller {
                     'type' => '6',
                     'data' => $page_new['content']
                 ],
+                     [
+                    'title' => 'فهرست',
+                    'selected' => '0',
+                    'type' => '7',
+                    'data' => $Tree
+                ],
                     [
                     'title' => 'بحث',
                     'selected' => '0',
