@@ -134,7 +134,7 @@ class MessageClass
         return $ret;
     }
 
-    function Outbox($uid, $sesid)
+    function Outbox($uid, $sesid, $add_script = true)
     {
         $m = DB::table('tickets AS t')->join('ticket_recieve AS r', 't.id', '=', 'r.tid')
             ->join('ticket_answer AS a', 'a.tid', '=', 't.id')
@@ -159,7 +159,7 @@ class MessageClass
             }
             $string = strip_tags($string);
 
-            $Group->title = $Group->title . ' <span style="color: #000039;font-size: 8pt;">' . $string . '</span>';
+            $Group->title = $Group->title . ($add_script ? (' <span style="color: #000039;font-size: 8pt;">' . $string . '</span>') :'');
             $Group->reg_date = \Morilog\Jalali\jDate::forge($Group->reg_date)->format('%Y/%m/%d');
             $Rec = DB::table('tickets AS t')->join('ticket_recieve AS r', 't.id', '=', 'r.tid')
                 ->leftJoin('user as u', 'u.id', '=', 'r.uid')
@@ -191,7 +191,7 @@ class MessageClass
         return $m;
     }
 
-    function inbox($uid, $sesid, $islocal = 'local')
+    function inbox($uid, $sesid, $islocal = 'local',$add_script = true)
     {
         DB::table('emails')
             ->where('uid', $uid)
@@ -240,7 +240,7 @@ class MessageClass
                 $string = $Group->comment . '...';
             }
             $string = strip_tags($string);
-            $Group->title = $Group->title . ' <span style="color: #000039;font-size: 8pt;">' . $string . '</span>';
+            $Group->title = $Group->title . ($add_script ? (' <span style="color: #000039;font-size: 8pt;">' . $string . '</span>') :'');
             $Group->sortid = $i;
             $Group->Fname = trim($Group->Name) . ' ' . trim($Group->Family);
             $Group->reg_date = \Morilog\Jalali\jDate::forge($Group->reg_date)->format('%Y/%m/%d h:i:s');

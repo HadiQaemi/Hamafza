@@ -74,6 +74,12 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.send_message',
         'uses' => 'PageController@sendMessage'
     ]);
+    Route::post('new_organ', [
+        'as' => 'api.v43.new_organ',
+        'uses' => 'PageController@newOrgan'
+    ]);
+
+
 
     Route::post('get_persons', [
         'as' => 'api.v43.get_persons',
@@ -147,6 +153,26 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         Route::get('get_my_groups', [
             'as' => 'api.v43.user.get_my_groups',
             'uses' => 'UserController@MyGroups'
+        ]);
+
+        Route::get('announces', [
+            'as' => 'api.v43.user.announces',
+            'uses' => 'UserController@announces'
+        ]);
+
+        Route::get('highlights', [
+            'as' => 'api.v43.user.highlights',
+            'uses' => 'UserController@highlights'
+        ]);
+
+        Route::get('inbox', [
+            'as' => 'api.v43.user.inbox',
+            'uses' => 'UserController@inbox'
+        ]);
+
+        Route::get('outbox', [
+            'as' => 'api.v43.user.outbox',
+            'uses' => 'UserController@outbox'
         ]);
 
 

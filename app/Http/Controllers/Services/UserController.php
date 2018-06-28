@@ -516,8 +516,80 @@ class UserController extends Controller {
         }
         $user = Token::where('token', Request::get('token'))->first()->user;
         return \Illuminate\Support\Facades\DB::table('user_group as g')->leftjoin('user_group_member as u', 'u.gid', '=', 'g.id')
-            ->where('u.uid', $user->id)->select('g.id', 'g.name')
-            ->get();
+                        ->where('u.uid', $user->id)->select('g.id', 'g.name')
+                        ->get();
+    }
+
+    function announces() {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $s = new \App\HamafzaServiceClasses\DesktopsClass();
+        $s = $s->Getannounces($uid, 0, 0);
+        $s = json_encode($s);
+        $s = json_decode($s);
+        return
+                    [
+                    'type' => 'announce',
+                    'content' => $s
+        ];
+    }
+
+    function highlights() {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $s = new \App\HamafzaServiceClasses\DesktopsClass();
+        $s = $s->Gethighlights($uid, 0, 0);
+        return [
+            'type' => 'highlight',
+            'content' => $s
+        ];
+    }
+
+    function inbox() {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $M = new \App\HamafzaServiceClasses\MessageClass();
+        $s = $M->inbox($uid, 0,'local',false);
+        return [
+            'type' => 'inbox',
+            'content' => $s
+        ];
+    }
+
+    function outbox() {
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $M = new \App\HamafzaServiceClasses\MessageClass();
+        $s = $M->Outbox($uid, 0,false);
+        
+        return [
+            'type' => 'outbox',
+            'content' => $s
+        ];
     }
 
 }

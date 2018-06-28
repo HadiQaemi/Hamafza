@@ -496,7 +496,7 @@ class PageController extends Controller {
         } else {
             Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $target_id, 'user_id' => $user_id,]);
             $res = [
-                'status' => "1",
+                'status' => "2",
                 'message' => 'چوب الف با موفقیت ثبت شد.'
             ];
             return response()->json($res);
@@ -620,7 +620,7 @@ class PageController extends Controller {
     }
 
     public function sendMessage() {
-//        dd($request->all());
+//        dd(Request::all());
         $validator = Validator::make(Request::all(), [
                     'token' => 'required',
         ]);
@@ -648,13 +648,11 @@ class PageController extends Controller {
         $title = Request::input('title');
         $comment = Request::input('comment');
         $user_edits = explode(",", Request::input('users'));
-        
-//            dd($user_edits);
-//            $files = $request->file('file');
-//            $filetitle = Request::input('ftitle');
-       
-        //$Slides = array();
 
+//            dd($user_edits);
+//            $files = Request::file('file');
+//            $filetitle = Request::input('ftitle');
+        //$Slides = array();
 //            $uploadcount = 0;
 //            if (is_array($files) && count($files) > 0)
 //            {
@@ -693,16 +691,95 @@ class PageController extends Controller {
                 }
             }
         }
-        /*if (is_array($Slides) && count($Slides) > 0) {
-            foreach ($Slides as $value) {
-                DB::table('ticket_file')->insert(array('aid' => $tid, 'name' => $value['name'], 'title' => $value['title']));
-            }
-        }*/
+        /* if (is_array($Slides) && count($Slides) > 0) {
+          foreach ($Slides as $value) {
+          DB::table('ticket_file')->insert(array('aid' => $tid, 'name' => $value['name'], 'title' => $value['title']));
+          }
+          } */
         $res = [
             'status' => "1",
             'message' => trans('labels.SMSSEndOK')
         ];
         return response()->json($res);
+    }
+
+    public function newOrgan() {
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $error = validation_error_to_api_json($validator->errors());
+            $res = [
+                'status' => "-1",
+                'error' => $error
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+
+
+
+        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $group_title = Request::input('group_title');
+        $group_link = Request::input('group_link');
+        $group_summary = Request::input('group_summary');
+        $group_type = Request::input('group_type');
+        $group_limit = Request::input('group_limit');
+        $isorgan = Request::input('ischannel');
+        $Groupkeywords = Request::input('Groupkeywords');
+        $file = Request::file('pic');
+        $tmpFileName = '';
+        /* if ($file)
+          {
+          if ($file->isValid())
+          {
+          $tmpFilePath = 'pics/group/';
+          $extension = $file->getClientOriginalExtension();
+          $tmpFileName = $uid . time() . '.' . $extension; // renameing image
+          $img = Image::make($file->getRealPath());
+          $img->resize(450, null, function ($constraint)
+          {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+          });
+          $img->save('pics/group/' . $tmpFileName)->destroy();
+          $tmpFileName = $tmpFileName;
+          }
+          } */
+//            $SP = new UserClass();
+//            $menu = $SP->newOrgGroup($group_title, $group_link, $group_summary, $group_type, $group_limit, $isorgan, $Groupkeywords, $tmpFileName, $sesid, $uid);
+        $count = DB::table('user_group')->where('link', $group_link)->count();
+        if ($count == 0) {
+            $reg_date = gmdate("Y-m-d H:i:s", time() + 12600);
+            $gid = DB::table('user_group')->insertGetId(array('uid' => $uid, 'name' => $group_title, 'link' => $group_link,
+                'summary' => $group_summary, 'type' => $group_type, 'edit' => $group_limit, 'pic' => $tmpFileName, 'reg_date' => $reg_date, 'isorgan' => $isorgan));
+            DB::table('user_group_member')->insert(array('uid' => $uid, 'gid' => $gid, 'follow' => '1',
+                'admin' => '1', 'relation' => '2', 'reg_date' => $reg_date));
+            $keywords = explode(',', $Groupkeywords);
+            foreach ($keywords as &$value) {
+                DB::table('user_group_key')->insert(array('gid' => $gid, 'kid' => $value));
+            }
+            $menu = $isorgan ? 'کانال' : 'گروه';
+            $res = [
+                'status' => "1",
+                'message' => $menu . ' با موفقیت ثبت شد.'
+            ];
+            return response()->json($res);
+        } else {
+            $menu = 'این آدرس  تکراری است';
+            $res = [
+                'status' => "-1",
+                'message' => $menu
+            ];
+            return response()->json($res);
+        }
     }
 
 }
