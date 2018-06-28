@@ -31,7 +31,7 @@
             <div class="tab-pane active" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div class="row">
                             <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('tasks.title') }}"/>
                             <input name="event_type" id="event_type" type="hidden">
@@ -41,7 +41,7 @@
                             <input name="starttime" id="starttime" type="hidden">
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
                             <input type="radio" name="type" value="0" id="official" checked/>
                             <label for="official">{{ trans('app.official') }}</label>
@@ -94,14 +94,14 @@
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-10">
-                        <div class="col-sm-6 row" style="padding: 0px;">
+                        <div class="col-sm-5 row" style="padding: 0px;">
                             <select id="new_task_users_responsible" name="users[]" class="select2_auto_complete_user col-xs-12"
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple>
                                 <option value=""></option>
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
-                        <div class="col-sm-6 line-height-35" style="padding-right: 5px;">
+                        <div class="col-sm-7 line-height-35" style="padding-right: 5px;">
 
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users_responsible']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
@@ -110,6 +110,8 @@
                             <label class="person_option" for="use_type1" style="margin-left: 0px;">{{ trans('tasks.collective') }}</label>
                             <input type="radio" name="assign_type" id="use_type2" class="person_option" value="2"/>
                             <label class="person_option" for="use_type2" style="margin-left: 0px;">{{ trans('tasks.individual') }}</label>
+                            <input type="radio" name="assign_type" id="use_type3" class="person_option" disabled=""/>
+                            <label class="person_option" for="use_type2" style="margin-left: 0px;margin-right: 5px">{{ trans('tasks.one_person') }}</label>
 
                             <input type="checkbox" name="send_mail" id="send_mail" class="send_message" value="1" checked/>
                             <label class="send_message" for="send_mail" style="margin-left: 0px;">{{ trans('tasks.send-mail') }}</label>
@@ -121,12 +123,12 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
                     <div class="col-lg-10">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
+                        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select id="new_task_transcripts" name="transcripts[]" class="select2_auto_complete_transcripts"
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple></select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
+                        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
@@ -183,7 +185,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                            <label class="noRightPadding noLeftPadding">نوع فعالیت</label>
+                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
                     </div>
                     <div class="col-lg-10 line-height-35">
@@ -201,54 +203,6 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="row col-lg-12">--}}
-                    {{--<div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">--}}
-                        {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 line-height-35">--}}
-                            {{--<label class="">{{ trans('tasks.do_respite') }}</label>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-lg-10 noRightPadding noLeftPadding line-height-35">--}}
-                        {{--<div class="col-xs-3 noRightPadding noLeftPadding">--}}
-                            {{--<input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>--}}
-                            {{--<label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>--}}
-                            {{--<input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>--}}
-                            {{--<label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>--}}
-                        {{--</div>--}}
-                        {{--<div id="normal_task_timing" class="col-xs-5 form-inline noRightPadding noLeftPadding">--}}
-                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>--}}
-                                {{--<label class="pull-right">روز</label>--}}
-                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_hour" id="duration_hour" value="0"/>--}}
-                                {{--<label class="pull-right">ساعت</label>--}}
-                                {{--<input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_min" id="duration_min" value="0"/>--}}
-                                {{--<label class="pull-right">دقیقه</label>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-xs-4 noRightPadding noLeftPadding">--}}
-                            {{--<input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>--}}
-                            {{--<label for="on-time">{{ trans('tasks.on-time') }}</label>--}}
-                            {{--<input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>--}}
-                            {{--<label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">--}}
-                    {{--<label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>--}}
-                    {{--<div class="row-fluid pull-right">--}}
-                        {{--<div class="filemanager-buttons-client">--}}
-                            {{--<div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">--}}
-                                {{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
-                                {{--<span>{{trans('app.add_file')}}</span>--}}
-                            {{--</div>--}}
-                            {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
-                            {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
-                            {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="pull-right filemanager-title-client">--}}
-                            {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
-                        {{--</div>--}}
-                        {{--<div class="clearfix"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
                 <div class="row-fluid">
                     {!! $HFM_CN_Task['ShowResultArea']['CreateNewTask'] !!}
                 </div>
@@ -360,7 +314,7 @@
                                     <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" >
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
-                                    <label for="schedul_end_date_events_">{{ trans('tasks.event') }}</label>
+                                    <label for="schedul_end_date_events_">{{ trans('tasks.repeat') }}</label>
                                 </span>
                         </div>
                         <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">

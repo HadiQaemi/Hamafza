@@ -8,6 +8,13 @@
         document.getElementById('date1').disabled = true;
         document.getElementById('time1').disabled = true;
     }
+    $('input:radio[name="reject_assigner"]').change(function(){
+        if($(this).val() == 0){
+            $("#assigns_new").prop('disabled', true);
+        }else {
+            $("#assigns_new").prop('disabled', false);
+        }
+    });
 
     function change_normal_task_timing_type(id) {
 
