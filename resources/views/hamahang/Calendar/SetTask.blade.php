@@ -93,10 +93,13 @@
 @section('content')
             <div class="row-fluid">
                 <div id='wrap' style="padding: 5px;">
-                    <div class="row" style="margin-bottom: 10px">
+                    <div class="row" style="margin-bottom: 10px;font-size: large">
                         <div class="col-xs-4"></div>
-                        <div class="col-xs-4">{{$date['getMonthNames'].''.$date['cal'][0]}}</div>
-                        <div class="col-xs-4"></div>
+                        <div class="col-xs-5">
+                            <i class="fa fa-arrow-right pointer next-month"></i>
+                            <span style="padding: 0px 14px" class="current-month" year="{{$date['cal'][0]}}" month="{{$date['cal'][1]}}" day="{{$date['cal'][2]}}">{{$date['getMonthNames'].''.$date['cal'][0]}}</span>
+                            <i class="fa fa-arrow-left pointer previous-month"></i></div>
+                        <div class="col-xs-3"></div>
                     </div>
                         <table class="table-bordered" id="table_task_time" style="padding: 5px">
                             <tr>
@@ -105,36 +108,17 @@
                                     <td style="width: 8%;padding: 5px 3px;text-align: center">{{(2*$d+2).'-'.(2*$d+1)}}</td>
                                 @endfor
                             </tr>
-                            <tbody>
+                            <tbody id="tbody_table_task_time">
                                 @for($d=1;$d<=($date['cal'][1]>6 ? 30 : 31);$d++)
-                                    <tr class="tr_task_list_{{$d}}" gerDate="{{$date['Georgian'].'-'.$d}}" gerYear="{{$date['GeorgianYear']}}" gerMonth="{{$date['GeorgianMonth']}}" gerDay="{{$d}}">
+                                    <tr numEvent="0" class="tr_task_list_{{$d}}" jalDate="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" gerYear="{{$date['GeorgianYear']}}" gerMonth="{{$date['GeorgianMonth']}}" gerDay="{{$d}}">
                                         <td style="padding: 5px 3px;width: 4%">{{$date['cal'][1].'/'.$d}}</td>
                                         @for($dd=0;$dd<12;$dd++)
-                                            <td class="droppable" style="width: 8%;padding: 0px;" class="draggable cursor-pointer" data-task_id="{{$d.'-'.$dd}}" id="{{$d.'-'.$dd}}" hour="{{(2*$dd+2).':59:59-'.(2*$dd+1).':00:00'}}" day="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" data-t_id="{{$d.'-'.$dd}}" title="{{$d.'-'.$dd}}"></td>
+                                            <td style="width: 8%;padding: 0px;" class=" droppable cursor-pointer ui-droppable ui-sortable" data-task_id="{{$d.'-'.$dd}}" id="{{$d.'-'.$dd}}" hour="{{(2*$dd+2).':59:59-'.(2*$dd+1).':00:00'}}" day="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" data-t_id="{{$d.'-'.$dd}}" title="{{$d.'-'.$dd}}"></td>
                                         @endfor
                                     </tr>
                                 @endfor
                             </tbody>
                         </table>
-
-
-
-
-                    <!--<div class="col-xs-12">
-                        <div  class="col-sm-4" id="inlineDatepicker"></div>
-                        <div class="col-sm-4" id="inlineDatepicker2"></div>
-                        <div class="col-sm-4"  id="inlineDatepicker3"></div>
-                    </div>-->
-                    {{--<div class="row-fluid">--}}
-                        {{--<div class="col-xs-12 rowv row-fluid calendar-main-setting">--}}
-                            {{--<div class="pull-right"></div>--}}
-                            {{--<input type="hidden" name="lastSelectdCalendar" id="lastSelectdCalendar" value=""/>--}}
-                             {{--<div class="pull-left"></div>--}}
-                        {{--</div>--}}
-                        {{--<hr style="margin: 4px ;	border: 1px solid #8c8b8b;">--}}
-                        {{--<div id='calendar' class="col-xs-12"></div>--}}
-                        {{--<div class="clearfixed"></div>--}}
-                    {{--</div>--}}
                 </div>
                 <div class="clearfixed"></div>
             </div>
@@ -189,78 +173,178 @@
     <script type="text/javascript" src="{{url('assets/js/Jquery/jquery-2.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/Packages/calendar/dist/fullcalendar.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/Packages/calendar/lang/fa.js')}}"></script>
+    <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/jsclender/jalali.js"></script>
     <script type="text/javascript">var jQuery_2 = $.noConflict(true);</script>
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
-        var obj = {};
-        obj.cid = 31;
-        var height = {}
-        var table_task_time = $('#table_task_time').width();
-        $.ajax({
-            url: '{{ URL::route('hamahang.calendar_events.get_calendar_events')}}',
-            type: 'POST',
-            data: obj,
-            async: false,
-            success: function (s) {
-                res = JSON.parse(s);
-                for(i=0;i<res.sharing_events.length;i++)
+        function createTableTaskTime(year,month)
+        {
+            html = '';
+            for (i=1;i<31;i++)
+            {
+                gerDate = JalaliDate.jalaliToGregorian(year,month,i);
+                jDate = year+'-'+month+'-'+i;
+                html += '<tr numEvent="0" class="tr_task_list_'+i+'" jalDate="'+jDate+'" gerYear="'+gerDate[0]+'" gerMonth="'+gerDate[1]+'" gerDay="'+gerDate[2]+'">' +
+                    '                                        <td style="padding: 5px 3px;width: 4%">'+month+'/'+i+'</td>';
+                for(j=0;j<12;j++)
                 {
-                    enddate = res['sharing_events'][i]['enddate'];
-                    enddates = enddate.split(" ");
-                    startdate = res['sharing_events'][i]['startdate'];
-                    startdates = startdate.split(" ");
-                    console.log(res['sharing_events'][i]['title']);
-                    console.log(res['sharing_events'][i]);
-                    if(height[enddates[0]]==undefined)
-                        height[enddates[0]] = 1;
-                    split_date = enddates[0].split('-');
-                    //alert('.tr_task_list_'+split_date[2]);
-
-                    endtime = enddates[1].split(':');
-                    starttime = startdates[1].split(':');
-                    var start_stamo = parseInt(starttime[0]*60)+parseInt(starttime[1]);
-                    var end_stamo = parseInt(endtime[0]*60)+parseInt(endtime[1]);
-                    // g = toGregorian(split_date[0],split_date[1],split_date[2]);
-                    x = $('.tr_task_list_'+split_date[2]).position();
-                    var li = '<li start="'+res['sharing_events'][i]['startdate']+'" end="'+res['sharing_events'][i]['enddate']+'" class="draggable ui-draggable ui-draggable-handle" style="width: '+(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px')+';position: absolute;right: '+ (typeof  x == 'undefined' ? 0 : (Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24)) +'px;top: '+ ((typeof  x == 'undefined' ? 0 : Math.floor(x.top))+ parseInt((height[enddates[0]]-1)*25))+'px" data-action="task_timing" data-title="'+res['sharing_events'][i]['title']+'" data-task_id="">' +
-                    '   <div class="task_title">' +
-                    '       <h5 class="text_ellipsis">' +
-                    '           <a class="task_info cursor-pointer" data-t_id="" title="'+res['sharing_events'][i]['title']+'">'+res['sharing_events'][i]['title']+'</a>' +
-                    '       </h5>' +
-                    '   </div>' +
-                    '   <div class="state">' +
-                    '       <i class="fa fa-cog fa-2x"></i>' +
-                    '   </div>' +
-                    '   <div class="referrer"></div>' +
-                    '</li>';
-
-                    $("[gerdate='"+enddates[0]+"']").append(li);
-                    // sss = res['sharing_events'][i]['enddate'];
-                    // // console.log(res['sharing_events'][i]);
-                    // www = sss.split("27");
-                    // endtime = www[1];
-                    // enddate = www[0];
-                    // startdate = res['sharing_events'][i].startdate.split(" ");
-                    // starttime = startdate[1];
-                    // startdate = startdate[0];
-                    // console.log(res.sharing_events[i].enddate);
-                    // console.log(res.sharing_events[i].www);
-                    // console.log(res.sharing_events[i].endtime);
-                    // console.log(res.sharing_events[i].startdate);
-                    console.log(starttime);
-                    console.log(start_stamo);
-                    console.log(endtime);
-                    console.log(end_stamo);
-                    console.log(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60)));
-                    $("[gerdate='"+enddates[0]+"']").css('height',Math.floor(height[enddates[0]]*24)+'px');
-                    // $("[gerdate='"+enddates[0]+"']").css('width',Math.floor((table_task_time*(end_stamo-start_stamo)/(24*60))+parseInt(((end_block-start_block+1)/(1.10*(end_block-start_block)))*table_task_time/200))+'px');
-                    $("[gerdate='"+enddates[0]+"']").css('width',Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px');
-                    // $('#table_task_time .task_item_'+task_id).css('right',x.right+'px');
-                    $("[gerdate='"+enddates[0]+"']").css('right',Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24+'px');
-                    height[enddates[0]] ++;
+                    html += '<td class="droppable cursor-pointer ui-droppable ui-sortable" style="width: 8%;padding: 0px;" data-task_id="'+i+'-'+j+'" ' +
+                        'id="'+i+'-'+j+'" hour="'+(2*j+2)+':59:59-'+(2*j+1)+':00:00" ' +
+                        'day="'+jDate+'" data-t_id="'+i+'-'+j+'" title="'+i+'-'+j+'"></td>';
                 }
+                html +='</tr>';
             }
+            $('#tbody_table_task_time').html(html);
+        }
+        $('.next-month').click(function () {
+            year = $('.current-month').attr('year');
+            month = $('.current-month').attr('month');
+            day = $('.current-month').attr('day');
+
+            $('.current-month').html(JalaliDate.j_month_name[parseInt(month)]+' '+year);
+            month = (parseInt(month)+1)%12;
+            if(month==0)
+            {
+                year = parseInt(year) + 1;
+                // $('.current-month').html(JalaliDate.j_month_name[month]+' '+year);
+            }
+            $('.current-month').attr('year',parseInt(year));
+            $('.current-month').attr('month',parseInt(month));
+            $('.dynamic-add-task').css('display','none');
+            createTableTaskTime(year,month);
+            load_time_task();
+            initDraggable();
         });
+        $('.previous-month').click(function () {
+            year = $('.current-month').attr('year');
+            month = $('.current-month').attr('month');
+            day = $('.current-month').attr('day');
+
+            month = Math.abs(parseInt(month)-1);
+
+            if(month==0)
+            {
+                year = parseInt(year) - 1;
+                month = 12;
+                // $('.current-month').html(JalaliDate.j_month_name[month]+' '+year);
+            }
+            $('.current-month').attr('year',parseInt(year));
+            $('.current-month').attr('month',parseInt(month));
+            $('.current-month').html(JalaliDate.j_month_name[parseInt(month)-1]+' '+year);
+            $('.dynamic-add-task').css('display','none');
+            createTableTaskTime(year,month);
+            load_time_task();
+            initDraggable();
+        });
+        load_time_task();
+        function load_time_task() {
+            var obj = {};
+            obj.cid = 31;
+            var height = {}
+            var table_task_time = $('#table_task_time').width();
+            top_table_task_time = $('#table_task_time').position();
+            $.ajax({
+                url: '{{ URL::route('hamahang.calendar_events.get_calendar_events')}}',
+                type: 'POST',
+                data: obj,
+                async: false,
+                success: function (s) {
+                    res = JSON.parse(s);
+                    var dayEvents = [[]];
+                    var enddayEvents = [[]];
+                    for(i=0;i<res.sharing_events.length;i++)
+                    {
+                        enddate = res['sharing_events'][i]['enddate'];
+                        enddates = enddate.split(" ");
+                        startdate = res['sharing_events'][i]['startdate'];
+                        startdates = startdate.split(" ");
+                        // console.log(res['sharing_events'][i]['title']);
+                        // console.log(res['sharing_events'][i]);
+                        if(height[enddates[0]]==undefined)
+                            height[enddates[0]] = 1;
+                        split_date = enddates[0].split('-');
+                        split_date = JalaliDate.gregorianToJalali(split_date[0],split_date[1],split_date[2]);
+                        //alert('.tr_task_list_'+split_date[2]);
+
+                        endtime = enddates[1].split(':');
+                        starttime = startdates[1].split(':');
+                        var start_stamo = parseInt(starttime[0]*60)+parseInt(starttime[1]);
+                        var end_stamo = parseInt(endtime[0]*60)+parseInt(endtime[1]);
+                        // g = toGregorian(split_date[0],split_date[1],split_date[2]);
+
+                        x = $('.tr_task_list_'+split_date[2]).position();
+                        subClass = '';
+                        for(sd=1;sd<split_date[2];sd++)
+                        {
+                            subClass += ' subClass'+sd;
+                        }
+                        var li = '<li start="'+res['sharing_events'][i]['startdate']+'" end="'+res['sharing_events'][i]['enddate']+'" class="draggable ui-draggable ui-draggable-handle '+subClass+'" style="border-radius: 5px;padding: 1px 10px;width: '+(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px')+';position: absolute;right: '+ (typeof  x == 'undefined' ? 0 : (Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24)) +'px;top: ____height____px" data-action="task_timing" data-title="'+res['sharing_events'][i]['title']+'" data-task_id="">' +
+                            '   <div class="task_title">' +
+                            '       <h5 class="text_ellipsis">' +
+                            '           <a class="task_info cursor-pointer" data-t_id="" title="'+res['sharing_events'][i]['title']+'">'+res['sharing_events'][i]['title']+'</a>' +
+                            '       </h5>' +
+                            '   </div>' +
+                            '   <div class="state">' +
+                            '       <i class="fa fa-cog fa-2x"></i>' +
+                            '   </div>' +
+                            '   <div class="referrer"></div>' +
+                            '</li>';
+                        if(typeof dayEvents[split_date[2]] == 'undefined')
+                        {
+                            console.log(split_date + ', ' + enddates);
+                            dayEvents[split_date[2]] = [];
+                        }
+                        dayEvents[split_date[2]].push(li);
+
+                        if(typeof enddayEvents[split_date[2]] == 'undefined')
+                        {
+                            enddayEvents[split_date[2]] = split_date[0]+'-'+split_date[1]+'-'+split_date[2];
+                            console.log(split_date[0]+'-'+split_date[1]+'-'+split_date[2]);
+                        }
+                        // sss = res['sharing_events'][i]['enddate'];
+                        // // console.log(res['sharing_events'][i]);
+                        // www = sss.split("27");
+                        // endtime = www[1];
+                        // enddate = www[0];
+                        // startdate = res['sharing_events'][i].startdate.split(" ");
+                        // starttime = startdate[1];
+                        // startdate = startdate[0];
+                        // console.log(res.sharing_events[i].enddate);
+                        // console.log(res.sharing_events[i].www);
+                        // console.log(res.sharing_events[i].endtime);
+                        // console.log(res.sharing_events[i].startdate);
+                        // console.log(starttime);
+                        // console.log(start_stamo);
+                        // console.log(endtime);
+                        // console.log(end_stamo);
+                        // console.log(Math.floor((end_stamo-start_stamo)*table_task_time/(24*60)));
+                        $("[jalDate='"+enddates[0]+"']").css('height',Math.floor(height[enddates[0]]*24)+'px');
+                        // $("[jalDate='"+enddates[0]+"']").css('width',Math.floor((table_task_time*(end_stamo-start_stamo)/(24*60))+parseInt(((end_block-start_block+1)/(1.10*(end_block-start_block)))*table_task_time/200))+'px');
+                        $("[jalDate='"+enddates[0]+"']").css('width',Math.floor((end_stamo-start_stamo)*table_task_time/(24*60))+'px');
+                        // $('#table_task_time .task_item_'+task_id).css('right',x.right+'px');
+                        $("[jalDate='"+enddates[0]+"']").css('right',Math.floor((table_task_time*start_stamo)/(24*60)+table_task_time/12)-table_task_time/24+'px');
+                        height[enddates[0]] ++;
+                    }
+                    console.log(dayEvents);
+                    var cnt_event = 0;
+                    for(i=1;i<dayEvents.length;i++)
+                    {
+                        if(typeof dayEvents[i] !== 'undefined')
+                        {
+                            $("[jalDate='"+enddayEvents[i]+"']").css('height',Math.floor(dayEvents[i].length*24)+'px');
+                            cnt_event += dayEvents[i].length;
+                            xx = $('.tr_task_list_'+i).position();
+                            for(j=0;j<dayEvents[i].length;j++)
+                            {
+                                $('.tr_task_list_'+i).attr("numEvent",parseInt($('.tr_task_list_'+i).attr("numEvent"))+1);
+                                $("[jalDate='"+enddayEvents[i]+"']").append(dayEvents[i][j].replace('____height____',(parseInt(xx.top+j*25))));
+                            }
+                        }
+                    }
+                    // $("[jalDate='"+enddates[0]+"']").append(li);
+                }
+            });
+        }
         $('#inlineDatepicker').persianDatepicker({
             timePicker: {
                 enabled: true

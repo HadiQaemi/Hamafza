@@ -60,6 +60,7 @@
                 var Drag_Destination = $(this).attr('id');
                 var hour = $('#'+Drag_Destination).attr('hour');
                 var day = $('#'+Drag_Destination).attr('day');
+                daySplit = day.split('-');
                 var dropped = ui.draggable;
                 var task_id = dropped.data('task_id');
                 var Drag_Action = dropped.data('action');
@@ -68,8 +69,13 @@
                 {
                     var droppedOn = $(this);
                     showTimeAndTask(title,day,day,hour,hour,droppedOn,task_id);
+                    subClass = '';
+                    for(sd=1;sd<daySplit[2];sd++)
+                    {
+                        subClass += ' subClass'+sd;
+                    }
                     $('#table_task_time').append(
-                            '<li class="draggable task_item_'+task_id+' ui-draggable ui-draggable-handle" data-action="task_timing" data-title="'+title+'" data-task_id="'+task_id+'">'+
+                            '<li class="draggable task_item_'+task_id+' ui-draggable ui-draggable-handle dynamic-add-task '+subClass+'" data-action="task_timing" data-title="'+title+'" data-task_id="'+task_id+'">'+
                                 $('.task_item_'+task_id).html()+
                             '</li>');
 

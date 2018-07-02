@@ -9,6 +9,9 @@
 
 JalaliDate = {
 	g_days_in_month: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+	j_month_name: [
+		'فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'
+	],
 	j_days_in_month: [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29]
 };
 
@@ -68,7 +71,6 @@ JalaliDate.checkDate = function(j_y, j_m, j_d)
 	return !(j_y < 0 || j_y > 32767 || j_m < 1 || j_m > 12 || j_d < 1 || j_d >
 		(JalaliDate.j_days_in_month[j_m-1] + (j_m == 12 && !((j_y-979)%33%4))));
 }
-
 JalaliDate.gregorianToJalali = function(g_y, g_m, g_d)
 {
 	g_y = parseInt(g_y);
