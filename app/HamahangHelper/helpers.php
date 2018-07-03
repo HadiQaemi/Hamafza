@@ -262,6 +262,23 @@ if (!function_exists('RightCol'))
                 array_push($Ret, $res);
             }
         }
+        elseif ($type == 'groups_about')
+        {
+            if (Auth::check())
+            {
+                $res[0] = trans('labels.rhightcol_userwall_title');
+                $res[2] = 'userwall';
+                $PostsClass = new UserClass();
+                $res[1] = $PostsClass->MyGroupAdmin($uid, 50);
+                array_push($Ret, $res);
+            }
+            else
+            {
+                $res[0] = trans('labels.rhightcol_mywall_title');
+                $res[1] = trans('labels.rhightcol_mywall_no_data');
+                array_push($Ret, $res);
+            }
+        }
         else
         {
             if ($type == 'user_about')
@@ -1505,6 +1522,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $RightCol = RightCol($uid, 'userabout');
                     $SN = new \App\HamafzaViewClasses\GroupClass();
                     $res = $SN->about($gname);
+                    $RightCol = RightCol($uid, 'groups_about');
                     $viewname = 'pages.public';
                     $current_tab = 'intro';
                     break;
