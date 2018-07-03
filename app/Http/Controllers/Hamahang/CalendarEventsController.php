@@ -951,6 +951,8 @@ class CalendarEventsController extends Controller
     {
         $jdate = new jDateTime();
         $cid = Request::input('cid');
+        $startDate = Request::input('startDate');
+        $endDate = Request::input('endDate');
 //        echo ($cid);
         if ($cid)
         {
@@ -1056,11 +1058,16 @@ class CalendarEventsController extends Controller
                 ->get();
         }
         $sharing_events = '';
+//        DB::enableQueryLog();
         $sharing_events = DB::table('hamahang_calendar_user_events as eventTable')
             ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay', 'shareTable.calendar_share_of AS sharId')
             ->join('hamahang_calendar_sharing_events as shareTable', 'eventTable.cid', 'shareTable.calendar_share_to')
             ->where('eventTable.cid', '=', $cid)
+            ->where('eventTable.startdate', '>=', $startDate)
+            ->where('eventTable.enddate', '<=', $endDate)
             ->get();
+//        $laQuery = DB::getQueryLog();
+//        print_r($laQuery);
         $sharing_options = null;
         $sharing_ids = null;
         $sharing_ids = DB::table('hamahang_calendar as cal')

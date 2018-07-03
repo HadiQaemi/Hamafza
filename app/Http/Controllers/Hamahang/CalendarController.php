@@ -881,6 +881,10 @@ class CalendarController extends Controller
     public function getUserCalendar()
     {
         $calendar = Calendar::getUserCalendar();
+        Session::put('cal_default',1);
+        foreach($calendar as $Acalendar)
+            if($Acalendar->is_default==1)
+                Session::put('cal_default',$Acalendar->id);
         return json_encode($calendar);
     }
 
