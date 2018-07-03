@@ -9,7 +9,8 @@
     <div class="container-fluid">
         <fieldset>
             <div class="row">
-                <table id="GeneralLiberaryTable" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                {{--<table id="GeneralLiberaryTable" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">--}}
+                <table id="GeneralLiberaryTable" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th class="text-center">عنوان</th>

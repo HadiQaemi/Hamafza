@@ -43,9 +43,9 @@
 @elseif($btn_type == 'ShowTaskForm')
     <div>
         <input type="radio" name="show_task_save_type" class="liberary_task_save_public_library" id="liberary_task_save_public_library" value="2"/>
-        <label for="liberary_task_save_public_library">{{ trans('tasks.library').' '.trans('tasks.public') }}</label>
-        <input type="radio" name="show_task_save_type" class="liberary_task_save_private_library" id="liberary_task_save_private_library" value="3"/>
-        <label for="liberary_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>
+        <label for="liberary_task_save_public_library">{{ trans('tasks.library') }}</label>
+        {{--<input type="radio" name="show_task_save_type" class="liberary_task_save_private_library" id="liberary_task_save_private_library" value="3"/>--}}
+        {{--<label for="liberary_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>--}}
 
         <input type="radio" name="show_task_save_type" class="show_task_save_type_draft" id="show_task_save_type_draft" value="0"/>
         <label for="show_task_save_type_draft">{{ trans('general.draft') }}</label>
@@ -77,21 +77,21 @@
     {{--</a>--}}
 @elseif($btn_type == 'ShowLiberaryTaskForm')
     <div>
-        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_public_library" id="liberary_task_save_public_library" value="2" {{$type == 'public' ? 'checked' : ''}}/>
-        <label for="liberary_task_save_public_library">{{ trans('tasks.library').' '.trans('tasks.public') }}</label>
-        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_private_library" id="liberary_task_save_private_library" value="3" {{$type == 'private' ? 'checked' : ''}}/>
-        <label for="liberary_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>
+        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_public_library liberary_task_save_type" id="liberary_task_save_public_library" value="2" {{$type == 'public' ? 'checked' : ''}}/>
+        <label for="liberary_task_save_public_library">{{ trans('tasks.library') }}</label>
+        {{--<input type="radio" name="liberary_task_save_type" class="liberary_task_save_private_library" id="liberary_task_save_private_library" value="3" {{$type == 'private' ? 'checked' : ''}}/>--}}
+        {{--<label for="liberary_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>--}}
 
-        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_type_draft" id="liberary_task_save_type_draft" value="0"/>
+        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_type_draft liberary_task_save_type" id="liberary_task_save_type_draft" value="0"/>
         <label for="liberary_task_save_type_draft">{{ trans('general.draft') }}</label>
-        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_type_final" id="liberary_task_save_type_final" value="1"/>
+        <input type="radio" name="liberary_task_save_type" class="liberary_task_save_type_final liberary_task_save_type" id="liberary_task_save_type_final" value="1"/>
         <label for="liberary_task_save_type_final">{{ trans('general.final') }}</label>
     </div>
     <a data-form_id = "edit_liberary_new_task" data-again_save = "1" class="btn btn-primary pull-left edit_liberary_new_task" id="">
         <i ></i>
         {{trans('app.edit')}}
     </a>
-    <a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_liberary_new_task">
+    <a class="btn btn-primary pull-left save_task hidden" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_liberary_new_task">
         <i ></i>
         {{trans('tasks.ok')}}
     </a>

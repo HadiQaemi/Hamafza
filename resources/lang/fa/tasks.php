@@ -32,7 +32,7 @@ return [
     'event'             => 'رویداد',
     'create'   => 'ایجاد',
     'create_new_task'   => 'وظیفه جدید',
-    'show_task'   => 'نمایش وظیفه',
+    'show_task'   => 'وظیفه',
     'settings'          => 'تنظیمات',
     'enter_keywords'    => 'کلیدوstoreاژه های خود را وارد نمایید ... ',
     'done'              => 'انتخاب',

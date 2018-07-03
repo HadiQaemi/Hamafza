@@ -3131,5 +3131,8 @@ a .navbar-brand{
     box-shadow: none !important;
 }
 input{
-    border-radius: 5px ;
+    border-radius: 5px !important;
+}
+.border-radius{
+    border-radius: 5px !important;
 }

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'calendar_index_calendar_list_title'=>'تقویم های شخصی',
+    'calendar_index_calendar_list_title'=>'تقویم',
     'calendar_index_calendar_datatable_rowindex'=>'ردیف',
     'calendar_index_calendar_datatable_title'=>'عنوان',
     'calendar_index_calendar_datatable_action'=>'عملیات',

@@ -38,7 +38,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
                     <div class="col-lg-7">
-                        <input type="text" class="form-control" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
+                        <input type="text" class="form-control border-radius" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
                         <input type="hidden" name="tid" id="tid" value="{{$res['task_id']}}"/>
                     </div>
                     <div class="col-lg-3">
@@ -67,7 +67,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
                     <div class="col-lg-10">
-                        <textarea type="text" class="form-control row" {{$edit_able == 1 ? ' name="task_desc" id="desc" ' : 'disabled'}} value="{{$task['task_desc']}}"  cols="30" rows="2"></textarea>
+                        <textarea type="text" class="form-control border-radius row" {{$edit_able == 1 ? ' name="task_desc" id="desc" ' : 'disabled'}} value="{{$task['task_desc']}}"  cols="30" rows="2"></textarea>
                     </div>
                 </div>
                 <div class="row col-lg-12">
@@ -192,11 +192,11 @@
                             </span>
 
                             <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
-                                <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_day" id="duration_day" ' : 'disabled'}} value="{{isset($task['duration_day']) ? $task['duration_day'] : ''}}" />
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_day" id="duration_day" ' : 'disabled'}} value="{{isset($task['duration_day']) ? $task['duration_day'] : ''}}" />
                                 <label class="pull-right">روز</label>
-                                <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_hour" id="duration_hour" ' : 'disabled'}} value="{{isset($task['duration_hour']) ? $task['duration_hour'] : ''}}"/>
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_hour" id="duration_hour" ' : 'disabled'}} value="{{isset($task['duration_hour']) ? $task['duration_hour'] : ''}}"/>
                                 <label class="pull-right">ساعت</label>
-                                <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_min" id="duration_min" ' : 'disabled'}} value="{{isset($task['duration_min']) ? $task['duration_min'] : ''}}"/>
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_min" id="duration_min" ' : 'disabled'}} value="{{isset($task['duration_min']) ? $task['duration_min'] : ''}}"/>
                                 <label class="pull-right">دقیقه</label>
                             </span>
                         </div>
@@ -240,12 +240,12 @@
             </div>
             <div class="tab-pane" style="padding: 8px;margin-top:20px" id="tab_t2">
                 <div class="input-group col-xs-12" style="margin: 0 0 15px 5px;">
-                    <div class="col-xs-1">
+                    <div class="col-xs-1" style="padding-left: 0px;width: 100px;">
                         <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
-                        <input type="text" {{$edit_able == 1 ? ' name="task_schedul_num" id="task_schedul_num" ' : 'disabled'}} class="form-control" style="width: 40px;" value="{{$task['task_schedul_num']}}" >
+                        <input type="text" {{$edit_able == 1 ? ' name="task_schedul_num" id="task_schedul_num" ' : 'disabled'}} class="form-control border-radius" style="width: 30px;" value="{{$task['task_schedul_num']}}" >
                     </div>
                     <div class="col-xs-2">
-                        <select {{$edit_able == 1 ? ' name="task_schedul" id="task_schedul" ' : 'disabled'}} class="form-control line-height-35">
+                        <select {{$edit_able == 1 ? ' name=task_schedul id=task_schedul ' : 'disabled'}} class="form-control border-radius line-height-35">
                             <option value="minute" {{$task['task_schedul'] == 'minute' ? 'selected="selected"' : ''}}>{{trans('tasks.minute')}}</option>
                             <option value="hour" {{$task['task_schedul'] == 'hour' ? 'selected="selected"' : ''}}>{{trans('tasks.hour')}}</option>
                             <option value="daily" {{$task['task_schedul'] == 'daily' ? 'selected="selected"' : ''}}>{{trans('tasks.day')}}</option>
@@ -261,7 +261,7 @@
                         <div class="hour col-xs-12 {{($task['task_schedul'] == 'hour') ? '' : 'hidden'}}">
                         </div>
                         <div class="daily col-xs-12 {{($task['task_schedul'] == 'daily') ? '' : 'hidden'}}">
-                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control TimePicker line-height-35']) !!}--}}
+                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control border-radius TimePicker line-height-35']) !!}--}}
                         </div>
                         <div class="weekly row {{($task['task_schedul'] == 'weekly') ? '' : 'hidden'}}">
                             @for ($i = 0; $i < 7; $i++)
@@ -308,8 +308,8 @@
                         <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}</label>
                     </div>
                     <div class="col-xs-2 noRightPadding noLeftPadding">
-                        {{--<input type="text" value="{{$task['schedul_begin_date']}}" class="form-control DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >--}}
-                        <input type="text" value="{{$task['schedul_begin_date']}}" class="form-control DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >
+                        {{--<input type="text" value="{{$task['schedul_begin_date']}}" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >--}}
+                        <input type="text" value="{{$task['schedul_begin_date']}}" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >
                     </div>
                 </div>
                 <div class="input-group col-xs-12">
@@ -333,7 +333,7 @@
                                     <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text"  {{$edit_able == 1 ? ' name=schedul_end_num_events id=schedul_end_date_events_ ' : 'disabled'}} class="form-control" style="width: 40px;" value="{{isset($task['schedul_end_num_events']) ? $task['schedul_end_num_events'] : ''}}" >
+                                    <input type="text"  {{$edit_able == 1 ? ' name=schedul_end_num_events id=schedul_end_date_events_ ' : 'disabled'}} class="form-control border-radius" style="width: 40px;" value="{{isset($task['schedul_end_num_events']) ? $task['schedul_end_num_events'] : ''}}" >
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
                                     <label for="schedul_end_date_events_">{{ trans('tasks.event') }}</label>
@@ -349,7 +349,7 @@
                         </div>
                         <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
                                 <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text" class="form-control DatePicker" {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_ ' : 'disabled'}} aria-describedby="schedul_end_date_date"  value="{{$task['schedul_end_date']}}"/>
+                                    <input type="text" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_ ' : 'disabled'}} aria-describedby="schedul_end_date_date"  value="{{$task['schedul_end_date']}}"/>
                                 </span>
                         </div>
                     </div>
@@ -418,13 +418,13 @@
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
                         <div class="col-xs-1">
-                            <input type="text" id="new_task_resources_amount" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.amount') }}"/>
+                            <input type="text" id="new_task_resources_amount" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.amount') }}"/>
                         </div>
                         <div class="col-xs-1">
-                            <input type="text" id="new_task_resources_cost" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
+                            <input type="text" id="new_task_resources_cost" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
                         </div>
                         <div class="col-xs-1">
-                            <span class="btn btn-info fa fa-plus" id="add_resource_task"></span>
+                            <span class="btn btn-primary fa fa-plus" id="add_resource_task"></span>
                         </div>
                     </div>
                 @endif
@@ -488,10 +488,10 @@
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
                         <div class="col-xs-1 no-padding-left no-padding-right">
-                            <input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
+                            <input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
                         </div>
                         <div class="col-xs-1">
-                            <span class="btn btn-info fa fa-plus" id="add_rel_task"></span>
+                            <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
                         </div>
                     </div>
                 @endif
@@ -526,24 +526,24 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <select class="form-control" {{$edit_able == 1 ? ' name="new_task_relation[]"  ' : 'disabled'}}>
-                                            <option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>
-                                            <option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>
-                                            <option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>
-                                            <option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>
+                                        <select class="form-control border-radius" {{$edit_able == 1 ? ' name="new_task_relation[]"  ' : 'disabled'}}>
+                                            {{--<option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>--}}
+                                            {{--<option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>--}}
+                                            {{--<option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>--}}
+                                            {{--<option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>--}}
                                             <option value="up" {{$res['task']['new_task_relation'][$k] == 'up' ? 'selected="selected"' :''}}>بالادستی</option>
                                             <option value="down" {{$res['task']['new_task_relation'][$k] == 'down' ? 'selected="selected"' :''}}>پایین دستی</option>
-                                            <option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>
-                                            <option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>
+                                            {{--<option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>--}}
+                                            {{--<option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>--}}
                                         </select>
                                     </td>
                                     <td>
                                         <label class="input-group pull-right">
                                             <div class="col-xs-6">
-                                                <input {{$edit_able == 1 ? ' name="new_task_delay_num[]"  ' : 'disabled'}} value="{{$res['task']['new_task_delay_num'][$k]}}" type="text" class="form-control" placeholder="وقفه"/>
+                                                <input {{$edit_able == 1 ? ' name="new_task_delay_num[]"  ' : 'disabled'}} value="{{$res['task']['new_task_delay_num'][$k]}}" type="text" class="form-control border-radius" placeholder="وقفه"/>
                                             </div>
                                             <div class="col-xs-6">
-                                                <select {{$edit_able == 1 ? ' name="new_task_delay_type[]"  ' : 'disabled'}} class="form-control" >
+                                                <select {{$edit_able == 1 ? ' name="new_task_delay_type[]"  ' : 'disabled'}} class="form-control border-radius" >
                                                     <option value="day" {{$res['task']['new_task_delay_type'][$k] == 'day' ? 'selected="selected"' :''}}>روز</option>
                                                     <option value="week" {{$res['task']['new_task_delay_type'][$k] == 'week' ? 'selected="selected"' :''}}>هفته</option>
                                                     <option value="month" {{$res['task']['new_task_delay_type'][$k] == 'month' ? 'selected="selected"' :''}}>ماه</option>
@@ -594,7 +594,7 @@
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                                 <label for="quality-not_determined">{{ trans('tasks.score') }}</label>
-                                <input type="text" name="quality_score" id="quality-score" value="" class="form-control display-inline" style="display: inline;width: 40px;"/>
+                                <input type="text" name="quality_score" id="quality-score" value="" class="form-control border-radius display-inline" style="display: inline;width: 40px;"/>
                             </div>
                         </div>
                     </div>
@@ -603,7 +603,7 @@
                             <label class="line-height-35">{{ trans('tasks.description') }}</label>
                         </div>
                         <div class="col-lg-10">
-                            <input type="text" class="rejected_options form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
+                            <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
                         </div>
                     </div>
                 @endif
@@ -613,10 +613,10 @@
                     </div>
                     <div class="col-lg-10">
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="text" class="form-control display-inline" name="action_duration" id="action_duration" value="1"/>
+                            <input type="text" class="form-control border-radius display-inline" name="action_duration" id="action_duration" value="1"/>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <select id="action_time_type" name="action_time_type" class="form-control">
+                            <select id="action_time_type" name="action_time_type" class="form-control border-radius">
                                 <option value="1">{{trans('tasks.hour')}}</option>
                                 <option value="24">{{trans('tasks.day')}}</option>
                                 <option value="168">{{trans('tasks.week')}}</option>
@@ -637,7 +637,7 @@
                             <label for="to_end">{{ trans('tasks.to_end') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
-                            <select id="task_schedul_" name="to_end" class="form-control">
+                            <select id="task_schedul_" name="to_end" class="form-control border-radius">
                                 <option value="daily">{{trans('tasks.this')}} {{trans('tasks.day')}}</option>
                                 <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
                                 <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
@@ -646,9 +646,9 @@
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
                             <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
                             <label for="determined-time">{{ trans('tasks.in') }}</label>
-                            <input type="text" class="form-control DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                            <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
                             <label for="determined-time">{{ trans('tasks.hour') }}</label>
-                            <input type="text" class="form-control TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
+                            <input type="text" class="form-control border-radius TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
                             <input type="radio" name="done_time" id="not-determine" value="not-determine"/>
@@ -720,7 +720,7 @@
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
                     <div class="col-lg-10">
-                        <input type="text" class="rejected_options form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
+                        <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
                     </div>
                 </div>
                 <div class="row col-lg-12" style="margin-top: 20px;">
@@ -735,7 +735,7 @@
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                             <input type="radio" name="task_status" id="on_done" value="1"/>
                             <label for="on_done">{{ trans('tasks.on_done')}}</label>
-                            <input type="text" id="num_event" class="form-control" style="width: 40px;display: inline" name="progress" value="" >
+                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="" >
                             <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
@@ -758,7 +758,7 @@
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
                     <div class="col-lg-10">
-                        <input type="text" name="action_explain" id="explain" class="form-control" placeholder="{{trans('tasks.description')}}"/>
+                        <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
                     </div>
                 </div>
             </div>
@@ -768,11 +768,11 @@
                         <label class="line-height-3">بحث و پیگیری</label>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" id="message" class="form-control" placeholder="پیام"/>
-                        <input type="hidden" id="user" class="form-control" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
+                        <input type="text" id="message" class="form-control border-radius" placeholder="پیام"/>
+                        <input type="hidden" id="user" class="form-control border-radius" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
                     <div class="col-xs-1">
-                        <span class="btn btn-info fa fa-plus" id="add_message_task"></span>
+                        <span class="btn btn-primary fa fa-plus" id="add_message_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">

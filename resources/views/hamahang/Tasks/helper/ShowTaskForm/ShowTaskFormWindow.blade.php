@@ -406,7 +406,7 @@
                             <input type="text" id="new_task_resources_cost" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
                         </div>
                         <div class="col-xs-1">
-                            <span class="btn btn-info fa fa-plus" id="add_resource_task"></span>
+                            <span class="btn btn-primary fa fa-plus" id="add_resource_task"></span>
                         </div>
                     </div>
                 @endif
@@ -473,7 +473,7 @@
                             <input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
                         </div>
                         <div class="col-xs-1">
-                            <span class="btn btn-info fa fa-plus" id="add_rel_task"></span>
+                            <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
                         </div>
                     </div>
                 @endif
@@ -509,14 +509,14 @@
                                     </td>
                                     <td>
                                         <select class="form-control" {{$edit_able == 1 ? ' name="new_task_relation[]" id="" ' : 'disabled'}}>
-                                            <option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>
-                                            <option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>
-                                            <option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>
-                                            <option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>
+                                            {{--<option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>--}}
+                                            {{--<option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>--}}
+                                            {{--<option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>--}}
+                                            {{--<option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>--}}
                                             <option value="up" {{$res['task']['new_task_relation'][$k] == 'up' ? 'selected="selected"' :''}}>بالادستی</option>
                                             <option value="down" {{$res['task']['new_task_relation'][$k] == 'down' ? 'selected="selected"' :''}}>پایین دستی</option>
-                                            <option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>
-                                            <option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>
+                                            {{--<option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>--}}
+                                            {{--<option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>--}}
                                         </select>
                                     </td>
                                     <td>
@@ -534,7 +534,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <span class="fa fa-remove btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -870,7 +870,7 @@
                         <input type="hidden" id="user" class="form-control" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
                     <div class="col-xs-1">
-                        <span class="btn btn-info fa fa-plus" id="add_message_task"></span>
+                        <span class="btn btn-primary fa fa-plus" id="add_message_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">

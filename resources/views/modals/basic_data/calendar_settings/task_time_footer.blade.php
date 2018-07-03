@@ -151,7 +151,6 @@
             numEvent = $('.tr_task_list_'+startdate[2]).attr("numEvent");
             $('#table_task_time .task_item_'+task_id).css('top',parseInt(x.top)+parseInt(numEvent*25)+'px');
             $('.tr_task_list_'+startdate[2]).attr('numEvent',parseInt(numEvent)+1);
-            alert(numEvent);
             $('.tr_task_list_'+startdate[2]).css('height',parseInt((numEvent)*25+25)+'px');
             if(numEvent>1)
             {
@@ -195,15 +194,6 @@
                     } else {
                         var html = '{{trans("calendar.calendar_setTime_Task")}} <strong>' + saveObj.htitle + ' </strong> {{trans("calendar.success_operarion")}}';
                         messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);
-                        // (function ($) {
-                        //     $("#calendar").fullCalendar('addEventSource', [{
-                        //         start: startdate,
-                        //         end: enddate,
-                        //         title: title,
-                        //         color: '#841f1f',
-                        //         block: true,
-                        //     },]);
-                        // })(jQuery_2);
                         newEventModal.close();
                     }
 

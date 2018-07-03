@@ -493,6 +493,10 @@ class MyAssignedTaskController extends Controller
             {
                 return GetTaskStatusName($data->type);
             })
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
             ->editColumn('use_type', function ($data)
             {
                 return hamahang_get_task_use_type_name($data->use_type);

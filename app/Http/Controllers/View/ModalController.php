@@ -920,6 +920,8 @@ class ModalController extends Controller
         $task = array();
         if ($res['tid'])
         {
+            $res['tid'] = deCode($res['tid']);
+
             $task = DB::table('hamahang_task_assignments as t')
                 ->leftJoin('hamahang_task', 'hamahang_task.id', '=', 't.task_id')
                 ->select('hamahang_task.*')
@@ -954,6 +956,7 @@ class ModalController extends Controller
         $task = array();
         if ($res['tid'])
         {
+            $res['tid'] = deCode($res['tid']);
             $task = tasks::DraftTaskInfo($res['tid']);
         }
 
