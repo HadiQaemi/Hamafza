@@ -8,38 +8,8 @@
     $(document).ready(function () {
 
         initDraggable();
-        $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
-            filter_tasks_priority();
-        });
         $('#form_filter_priority_time').on('keyup change', 'input, select, textarea', 'checkbox', function () {
             filter_tasks_priority_time();
-        });
-        $("#states-multi-select-users").select2({
-            minimumInputLength: 1,
-            tags: false,
-            dir: "rtl",
-            width: '100%',
-            ajax: {
-                url: "{{ route('auto_complete.users') }}",
-                dataType: 'json',
-                type: "POST",
-                quietMillis: 50,
-                data: function (term) {
-                    return {
-                        term: term
-                    };
-                },
-                results: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.text,
-                                id: item.id
-                            }
-                        })
-                    };
-                }
-            }
         });
     });
 </script>
@@ -146,32 +116,14 @@
         newEventModal.content.html('<div class="loader"></div>');
 
     }
-    function filter_tasks_priority(data) {
-        console.log(data);
-        $.ajax({
-            url: '{{ route('hamahang.tasks.priority.filter') }}',
-            method: 'POST',
-            dataType: "json",
-            data: $("#form_filter_priority").serialize(),
-            success: function (res) {
-                //console.log(res.success);
-                if (res.success == true) {
-                    $('#priority_content_area').html(res.data);
-                    initDraggable();
-                    //messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'});
-                } else if (res.success == false) {
-                    messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);
-                }
-            }
-        });
-    }
+
     function filter_tasks_priority_time(data) {
         console.log(data);
         $.ajax({
             url: '{{ route('hamahang.tasks.priority.filter_time') }}',
             method: 'POST',
             dataType: "json",
-            data: $("#form_filter_priority").serialize(),
+            data: $("#form_filter_priority_time").serialize(),
             success: function (res) {
                 //console.log(res.success);
                 if (res.success == true) {

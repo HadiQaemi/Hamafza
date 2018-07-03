@@ -42,13 +42,13 @@
             <div class="panel-body new-list">
                 <div class="row event_result_holder ">
                     <table id="personalCalendarGrid" class="table_td_padding_5px">
-                        <thead>
-                        <tr>
+                        {{--<thead>--}}
+                        {{--<tr>--}}
                             {{--<th data-column-id="rowIndex">{{trans('calendar.calendar_index_calendar_datatable_rowindex')}}</th>--}}
-                            <th data-column-id="title">{{trans('calendar.calendar_index_calendar_datatable_title')}}</th>
-                            <th>{{trans('calendar.calendar_index_calendar_datatable_action')}}</th>
-                        </tr>
-                        </thead>
+                            {{--<th data-column-id="title">{{trans('calendar.calendar_index_calendar_datatable_title')}}</th>--}}
+                            {{--<th>{{trans('calendar.calendar_index_calendar_datatable_action')}}</th>--}}
+                        {{--</tr>--}}
+                        {{--</thead>--}}
                     </table>
                     <div class="clearfixed"></div>
                 </div>

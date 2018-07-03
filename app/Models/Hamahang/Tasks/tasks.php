@@ -769,7 +769,7 @@ class tasks extends Model
         {
             $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query)
             {
-                $query->whereIn('type', [0, 1, 2, 3, 4]);
+                $query->whereIn('type', [0, 1]);
             });
         }
 
@@ -784,7 +784,9 @@ class tasks extends Model
         }
 
         $tasks_immediate_importance = $tasks_immediate_importance->get();
-
+//        $tasks_immediate_importance->toSql();
+//        $tasks_immediate_importance = $tasks_immediate_importance->getBindings();
+//        print_r($tasks_immediate_importance);
         if ($respite_filter)
         {
             $tasks_immediate_importance = $tasks_immediate_importance->filter(function ($item) use ($respite_filter)

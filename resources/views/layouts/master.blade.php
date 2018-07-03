@@ -363,6 +363,18 @@
 						    alert('{{ trans('tasks.the_save_type_is_not_selected') }}');
 					}
 				});
+                $(document).on('change', '.liberary_task_save_type',function() {
+                    if($("input[name='liberary_task_save_type']:checked").val()==2)
+                    {
+                        $('.edit_liberary_new_task').removeClass('hidden');
+                        $('.save_task').addClass('hidden');
+                    }else{
+                        $('.edit_liberary_new_task').addClass('hidden');
+                        $('.save_task').removeClass('hidden');
+                    }
+
+                });
+
                 $(document).on('click', '.edit_liberary_new_task', function () {
                     var save_type = $("input[name='liberary_task_save_type']:checked").val();
                     var $this = $(this);
@@ -376,10 +388,14 @@
                         //save_as_draft(form_id, save_again);
                     }
                     else if (save_type == 2) {
-                        UpdateLibraryTask(form_id, save_again,'public');
-                    }
-                    else if (save_type == 3) {
-                        UpdateLibraryTask(form_id, save_again,'private');
+                        if($("input[name='type']:checked").val()==1)
+                        {
+                            SaveInLibraryTask(form_id, save_again,'private');
+                            // $('#PrivateLiberaryTable').DataTable().ajax.reload();
+                        }else{
+                            SaveInLibraryTask(form_id, save_again,'public');
+                            // $('#GeneralLiberaryTable').DataTable().ajax.reload();
+                        }
                     }
                     else
                     {

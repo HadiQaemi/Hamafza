@@ -15,7 +15,11 @@
             $("#assigns_new").prop('disabled', false);
         }
     });
-
+    $('#task_schedul').on('change', function() {
+        var schedul = $(this).val();
+        $('.div-schedul div').addClass('hidden');
+        $('.'+schedul).removeClass('hidden');
+    });
     function change_normal_task_timing_type(id) {
 
         if (id == 1) {
@@ -359,14 +363,14 @@
 			'       </td>\n' +
 			'       <td>\n' +
 			'       	<select name="new_task_relation[]" class="form-control" >\n' +
-			'				<option value="end_start">پایان به شروع</option>\n' +
-			'				<option value="start_start">شروع به شروع</option>\n' +
-			'				<option value="start_end">شروع به پایان</option>\n' +
-			'				<option value="end_end">پایان به پایان</option>\n' +
+			// '				<option value="end_start">پایان به شروع</option>\n' +
+			// '				<option value="start_start">شروع به شروع</option>\n' +
+			// '				<option value="start_end">شروع به پایان</option>\n' +
+			// '				<option value="end_end">پایان به پایان</option>\n' +
 			'				<option value="up">بالادستی</option>\n' +
 			'				<option value="down">پایین دستی</option>\n' +
-			'				<option value="after">گردش کار - بعدی</option>\n' +
-			'				<option value="previous">گردش کار - قبلی</option>\n' +
+			// '				<option value="after">گردش کار - بعدی</option>\n' +
+			// '				<option value="previous">گردش کار - قبلی</option>\n' +
 			'			</select>\n' +
 			'       </td>\n' +
 			'		<td>\n' +
@@ -380,7 +384,7 @@
 			'           </label>\n' +
 			'       </td>\n' +
 			'       <td>\n' +
-			'       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+			'       	<span class="fa fa-remove btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
 			'       </td>\n' +
 			'    </tr>\n';
         $('#rel_task_list').append(project_span);

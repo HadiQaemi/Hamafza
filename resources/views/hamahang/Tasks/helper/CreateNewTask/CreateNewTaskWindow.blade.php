@@ -402,7 +402,7 @@
                         <input type="text" id="new_task_resources_cost" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
                     </div>
                     <div class="col-xs-1">
-                        <span class="btn btn-info fa fa-plus" id="add_resource_task"></span>
+                        <span class="btn btn-primary fa fa-plus" id="add_resource_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">
@@ -439,7 +439,7 @@
                         <input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
                     </div>
                     <div class="col-xs-1">
-                        <span class="btn btn-info fa fa-plus" id="add_rel_task"></span>
+                        <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">
@@ -787,7 +787,7 @@
                         <input type="hidden" id="user" class="form-control" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
                     <div class="col-xs-1">
-                        <span class="btn btn-info fa fa-plus" id="add_message_task"></span>
+                        <span class="btn btn-primary fa fa-plus" id="add_message_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">

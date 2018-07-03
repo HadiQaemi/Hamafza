@@ -93,13 +93,17 @@
 @section('content')
             <div class="row-fluid">
                 <div id='wrap' style="padding: 5px;">
+
                     <div class="row" style="margin-bottom: 10px;font-size: large">
-                        <div class="col-xs-4"></div>
-                        <div class="col-xs-5">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-4" style="height: 34px;">
                             <i class="fa fa-arrow-right pointer next-month"></i>
                             <span style="padding: 0px 14px" class="current-month" year="{{$date['cal'][0]}}" month="{{$date['cal'][1]}}" day="{{$date['cal'][2]}}">{{$date['getMonthNames'].''.$date['cal'][0]}}</span>
                             <i class="fa fa-arrow-left pointer previous-month"></i></div>
-                        <div class="col-xs-3"></div>
+                        <div class="col-xs-4">
+                            <select name="cid" id="cid" class="chosen-rtl"></select>
+                        </div>
+                        <div class="col-xs-2"></div>
                     </div>
                         <table class="table-bordered" id="table_task_time" style="padding: 5px">
                             <tr>
@@ -131,24 +135,29 @@
         <div class="fix-inr" style="height: 100%;">
             <div class="row-fluid">
                 <div id='wrap'>
-                    <style> #related_links {
+                    <style>
+                        #related_links {
                             padding: 1px;
                             left: 15px;
                             position: absolute;
                             top: -15px !important;
                             left:27px;
                             z-index:11;
-                        }</style>
+                        }
+                    </style>
                     <div style="position: relative;height: 100%;width: 100%;">
                         <div class="header_task">
                             <div class="space-4"></div>
                             <div class="row" style="position: relative;">
-{{--                                @include('hamahang.Tasks.MyTask.helper.task_related_pages')--}}
+                                {{--                                @include('hamahang.Tasks.MyTask.helper.task_related_pages')--}}
                                 @include('hamahang.Tasks.helper.priority.priority_filter_time')
                             </div>
                         </div>
                     </div>
-                    @include('hamahang.Tasks.helper.priority.content')
+                    <div id="priority_content_area">
+                        @include('hamahang.Tasks.helper.priority.content')
+                    </div>
+
 
                     {{--@include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['function'=>'filter_tasks_priority'])--}}
 
@@ -159,7 +168,7 @@
     </div>
 @stop
 @section('inline_scripts')
-    @include('hamahang.Tasks.helper.priority.priority_js')
+    @include('hamahang.Tasks.helper.priority.time_task_priority_js')
 @stop
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{url('assets/Packages/bootstrap/js/bootstrap-filestyle.js')}}"></script>
@@ -177,6 +186,35 @@
     <script type="text/javascript">var jQuery_2 = $.noConflict(true);</script>
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
+        $('#cid').on('change', function() {
+            load_time_task( this.value );
+        });
+        var def_cid = 0;
+        $.ajax({
+            url: '{{ URL::route('auto_complete.get_user_calendar')}}',
+            type: 'Post', // Send post dat
+            dataType:'json',
+            success: function (s) {
+                def_cid = s;
+                var options = '';
+                $('select[name="cid"]').empty();
+                for (var i = 0; i < s.length; i++) {
+                    if(s[i].is_default ==1)
+                    {
+                        options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                        alert(s[i].id);
+                    }
+                    else{
+                        options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                    }
+                }
+                $('select[name="cid"]').append(options);
+                $('select[name="cid"]').select2({
+                    dir: "rtl",
+                    width: '100%',
+                });
+            }
+        });
         function createTableTaskTime(year,month)
         {
             html = '';
@@ -237,9 +275,22 @@
             initDraggable();
         });
         load_time_task();
-        function load_time_task() {
+        function load_time_task(cid) {
             var obj = {};
-            obj.cid = 31;
+            if(cid>0)
+                obj.cid = cid;
+            else
+                obj.cid = {{Session::get('cal_default')}};
+                // obj.cid = 24;
+            year = $('.current-month').attr('year');
+            month = $('.current-month').attr('month');
+            day = $('.current-month').attr('day');
+            gregorianDateStart = JalaliDate.jalaliToGregorian(year,month,1);
+            gregorianDateEnd = JalaliDate.jalaliToGregorian(year,month,(month>6 ? 30 : 31));
+            obj.startDate = gregorianDateStart[0]+'-'+gregorianDateStart[1]+'-'+gregorianDateStart[2];
+            obj.endDate = gregorianDateEnd[0]+'-'+gregorianDateEnd[1]+'-'+gregorianDateEnd[2];
+
+            createTableTaskTime(year,month);
             var height = {}
             var table_task_time = $('#table_task_time').width();
             top_table_task_time = $('#table_task_time').position();

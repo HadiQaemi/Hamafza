@@ -7,8 +7,8 @@
     var r;
     var editor; // use a global for the submit and return data rendering in the examples
     $(document).ready(function () {
-        alert('dataTables_filter ');
-        $('.dataTables_filter input').attr("placeholder","asdasd");
+        // alert('dataTables_filter ');
+        // $('.dataTables_filter input').attr("placeholder","asdasd");
         var send_info = {
             @if(isset($filter_subject_id))
             subject_id: '{{ $filter_subject_id }}'
