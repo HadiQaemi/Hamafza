@@ -1506,6 +1506,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $SN = new \App\HamafzaViewClasses\GroupClass();
                     $res = $SN->about($gname);
                     $viewname = 'pages.public';
+                    $current_tab = 'intro';
                     break;
                 }
                 case 'Persons':
@@ -1522,6 +1523,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res = $SN->Group_Contents($item);
                     $RightCol = RightCol($uid, 'userwall');
                     $viewname = 'pages.contents';
+                    $current_tab = 'contents';
                     break;
                 }
                 case 'edit':
@@ -1584,6 +1586,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'tabs' => PageTabs('group', $Group->id),
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
                     'tools_menu' => toolsGenerator([6 => ['uid' => Auth::id(), 'sid' => $Group->id]], 1, 5),
+                    'current_tab' => $current_tab,
                     'RightCol' => $RightCol
                 ], $res
             );
