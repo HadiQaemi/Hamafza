@@ -495,6 +495,25 @@ class UserController extends Controller
             abort(404);
         }
     }
+    
+    public function DefaultTab($username)
+    {
+        $Type = $this->IsUoG($username);
+        if ($Type == 'USER')
+        {
+            $res = variable_generator('user', 'About', $username);
+            return view($res['viewname'], $res);
+        }
+        elseif ($Type == 'GROUP')
+        {
+            $res = variable_generator('group', 'Content', $username);
+            return view($res['viewname'], $res);
+        }
+        else
+        {
+            abort(404);
+        }
+    }
 
     public function UserContents($username)
     {
