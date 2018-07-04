@@ -1515,6 +1515,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
             $tabparam['uid'] = $uid;
             $viewname = 'pages.Desktop';
             $res = array();
+            $current_tab = '';
             switch ($sub_type)
             {
                 case 'About':
@@ -1533,6 +1534,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res = $SN->Group_Persons($gname);
                     $RightCol = RightCol($uid, 'userwall');
                     $viewname = 'pages.groupperson';
+                     $current_tab = 'persons';
                     break;
                 }
                 case 'Content':
