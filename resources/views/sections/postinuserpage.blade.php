@@ -96,7 +96,7 @@
                                         <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 rewardC">
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
                                         <small>پاداش</small>
                                     </div>
@@ -104,7 +104,7 @@
                                         <input type="text" class="rewardW form-control" name="rewardW" id="rewardW" style="width: 100%;"/>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 rewardC">
                                     (امتیاز شما: <div style="direction: ltr; display: inline-block;">{!! get_user_sumscores() !!}</div>)
                                 </div>
                             </td>
@@ -143,6 +143,7 @@
                         {
                             portal_idW = $('.portal_idW');
                             rewardW = $('.rewardW');
+                            $(".rewardC").css("display","none")
                             $.ajax
                             ({
                                 type: 'post',
@@ -254,6 +255,14 @@
             type = $("#post_typeW").val();
         });
         $("#post_typeW").change(function () {
+            var val = $('#post_typeW option:selected').val();
+            if (val == 2)
+            {
+                $(".rewardC").css("display","");
+            } else
+            {
+                $(".rewardC").css("display","none");
+            }
             if ($('#post_typeW option:selected').text() == 'سایر')
                 text = "مطلب خود را بنویسید";
             else
