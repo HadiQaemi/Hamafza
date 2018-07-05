@@ -1605,7 +1605,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'SiteTitle' => config('constants.SiteTitle'),
                     'tabs' => PageTabs('group', $Group->id),
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
-                    'tools_menu' => toolsGenerator([6 => ['uid' => Auth::id(), 'sid' => $Group->id]], 1, 5),
+                    'tools_menu' => toolsGenerator([7 => []], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
                     'current_tab' => $current_tab,
                     'RightCol' => $RightCol
                 ], $res
