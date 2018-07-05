@@ -180,11 +180,11 @@ tinymce.init({
                     <td>
                         <select  class="form-control" data-placeholder="انتخاب کنید" id="group_type" name="group_type">
                             <option value="1" @if($group_edit['type']=='1')selected @endif>کانون تفکر</option>
-                            <option value="2" @if($group_edit['type']=='3')selected @endif>اجتماع یادگیری</option>
-                            <option value="3" @if($group_edit['type']=='4')selected @endif>اجتماع عمل</option>
-                            <option value="4" @if($group_edit['type']=='5')selected @endif>مدیریت پروژه</option>
-                            <option value="5" @if($group_edit['type']=='6')selected @endif>هم دوره ای ها</option>
-                            <option value="6" @if($group_edit['type']=='7')selected @endif >سایر</option>
+                            <option value="2" @if($group_edit['type']=='2')selected @endif>اجتماع یادگیری</option>
+                            <option value="3" @if($group_edit['type']=='3')selected @endif>اجتماع عمل</option>
+                            <option value="4" @if($group_edit['type']=='4')selected @endif>مدیریت پروژه</option>
+                            <option value="5" @if($group_edit['type']=='5')selected @endif>هم دوره ای ها</option>
+                            <option value="6" @if($group_edit['type']=='6')selected @endif >سایر</option>
                         </select>
 
 

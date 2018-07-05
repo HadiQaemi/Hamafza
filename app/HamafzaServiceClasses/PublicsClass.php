@@ -1138,10 +1138,13 @@ class PublicsClass
                         $res[1] = Alerts::GetAlerts($uid);
                         array_push($Ret, $res);
 
-                        $res[0] = trans('labels.rhightcol_userwall_title');
+                        $res[0] = trans('labels.rhightcol_mygroup_title');
                         $res[2] = 'userwall';
                         $PostsClass = new UserClass();
-                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50);
+                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 1);
+                        array_push($Ret, $res);
+                        $res[0] = trans('labels.rhightcol_mychannel_title');
+                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 2);
                         array_push($Ret, $res);
                     }
                     else

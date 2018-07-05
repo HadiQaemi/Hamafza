@@ -562,15 +562,18 @@ class UserClass
         return $groups;
     }
 
-    public function MyGroupAdmin($uid, $num)
+    public function MyGroupAdmin($uid, $num, $isOrgan = 0)
     {
 
         $groups = DB::table('user_group_member as ugm')
             ->join('user_group as ug', 'ugm.gid', '=', 'ug.id')
-            ->where('ugm.uid', $uid)
-            ->where('ug.relation', '0')
+            
+            ->where('ugm.relation', 3)
             ->select('ug.id as id', 'ug.pic as Pic', 'ug.name as name', 'ug.summary as summary', 'ug.link as link', 'ug.isorgan as isorgan')
-            ->groupBy('ug.id')->orderBy('ug.isorgan')->take($num)->get();
+            ->where('isorgan',$isOrgan)
+            ->where('ugm.uid', $uid)
+            ->groupBy('ug.id')->orderBy('ug.id','desc')->take($num)->get();
+        //dd($groups);
 
         return $groups;
     }
