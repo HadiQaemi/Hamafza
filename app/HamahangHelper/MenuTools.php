@@ -179,7 +179,6 @@ if (!function_exists('toolsGenerator'))
             $get_url_str .= $more_nv . $nv_key . '=' . $nv_value;
             $i++;
         }
-        DB::enableQueryLog();
         $groups = \App\Models\Hamahang\Tools\ToolsGroup::where('visible', '=', "1")
             ->with(
                 [
@@ -203,20 +202,6 @@ if (!function_exists('toolsGenerator'))
                 })->where('visible', "1");
             })
             ->get();
-//            ->get()->toArray();
-        $bindings = DB::getQueryLog();
-//        echo '<pre>';
-//        echo '<hr/>$groups<br/>';
-//        print_r($groups);
-//        echo '<hr/>$position<br/>';
-//        print_r($position);
-//        echo '<hr/>$get_url_str<br/>';
-//        print_r($get_url_str);
-//        echo '<hr/>$option_ids<br/>';
-//        print_r($option_ids);
-//        echo '<hr/>$bindings<br/>';
-//        print_r($bindings);
-//        die();
         return view('hamahang.Tools.helper.tools_generator')
             ->with('groups', $groups)
             ->with('get_url_str', $get_url_str)
@@ -234,8 +219,6 @@ if (!function_exists('policy_CanView'))
      */
     function policy_CanView($id = '', $Model, $ModelPolicy, $PolicyMethod = 'canView', $abort = false)
     {
-        if('\App\Models\Hamahang\Tools\Tools'==$Model && $id==5)
-            dd($id,$Model,$ModelPolicy,$PolicyMethod);
         $item = '';
         if ($id != '')
         {

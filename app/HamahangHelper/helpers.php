@@ -883,7 +883,24 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             $keywords_relations[$res_keyword->id] = $res_keyword->title;
                             $res['keywords'][$res_keyword_key]->keyword_and_relations_json = json_encode($keywords_relations);
                         }
-                        $tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
+                        $options[1] = ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title];
+                        $Subjects =
+                            DB::table('hamahang_user_policies as hup')
+                                ->leftJoin('user as u', 'hup.user_id', '=', 'u.id')
+                                ->where('u.id', Auth::id())
+                                ->where('hup.target_id', $sid)
+                                ->select('hup.*')->take(50)->get()->count();
+                        if($Subjects==0)
+                        {
+                            $Subjects =
+                            DB::table('subjects as s')
+                                ->where('s.admin', Auth::id())
+                                ->where('s.id', $sid)
+                                ->select('s.*')->take(50)->get()->count();
+                        }
+                        if($Subjects==1)
+                            $options[13] = [];
+                        $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
                             case '20':
