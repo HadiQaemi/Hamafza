@@ -534,7 +534,7 @@
                     </div>
                     <div class="col-xs-9">
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" class="form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
+                            <input type="text" class="form-control" placeholder="{{ trans('tasks.description') }} ..." name="explain_reject" id="explain_reject" value=""/>
                         </span>
                     </div>
                 </div>
@@ -780,10 +780,10 @@
             <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
                     <div class="col-xs-3">
-                        <label class="line-height-3">بحث و پیگیری</label>
+                        <label class="line-height-3">{{ trans('tasks.discuss') }}</label>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" id="message" class="form-control" placeholder="پیام"/>
+                        <input type="text" id="message" class="form-control" placeholder="{{ trans('tasks.message') }}"/>
                         <input type="hidden" id="user" class="form-control" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
                     <div class="col-xs-1">
@@ -795,8 +795,8 @@
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                            <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-10">پیام</th>
+                            <th class="col-xs-2">{{ trans('tasks.user') }}</th>
+                            <th class="col-xs-10">{{ trans('tasks.message') }}</th>
                         </tr>
                         </thead>
                         <tbody id="message_task_list">
@@ -811,9 +811,9 @@
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                            <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-5">اقدام</th>
-                            <th class="col-xs-5">زمان</th>
+                            <th class="col-xs-2">{{ trans('tasks.user') }}</th>
+                            <th class="col-xs-5">{{ trans('tasks.action') }}</th>
+                            <th class="col-xs-5">{{ trans('tasks.time') }}</th>
                         </tr>
                         </thead>
                         <tbody id="message_task_list">

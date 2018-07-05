@@ -846,6 +846,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $pid = $item;
                         $sid = $pageM->sid;
                         $subject = Subject::findOrFail($pageM->sid);
+                        Session::put('subject_id',$subject->id);
                         $canView = policy_CanView($subject->id, '\App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView', 403);
                         if(!$canView){
                             return 403;
