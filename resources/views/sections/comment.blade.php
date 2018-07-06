@@ -162,7 +162,8 @@
                                     minimumInputLength: 3,
                                     dir: "rtl",
                                     width: "100%",
-                                    tags: true,
+                                    // tags: true,
+                                    tags: false,
                                     ajax: {
                                         url: "{{ route('auto_complete.keywords') }}",
                                         dataType: "json",
