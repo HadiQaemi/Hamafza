@@ -280,7 +280,7 @@
             if(cid>0)
                 obj.cid = cid;
             else
-                obj.cid = {{Session::get('cal_default')}};
+                obj.cid = {{trim(Session::get('cal_default'))!='' ? Session::get('cal_default') : 1}};
                 // obj.cid = 24;
             year = $('.current-month').attr('year');
             month = $('.current-month').attr('month');
