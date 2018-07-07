@@ -1171,9 +1171,9 @@ function GeminiScrollbar_make(e) {
 
 $(document).ready(function(){
     $(".hd-body").scroll(function() {
-        // var window_height = $(window).height();
-        //  if (parseInt(window_height)>parseInt(2*$('#new-content').height())) {
-        if ($(".hd-body").scrollTop() > 40) {
+        var window_height = $(window).height();
+         // if (parseInt(window_height)>parseInt(2*$('#new-content').height())) {
+        if ($(".hd-body").scrollTop() > 40 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
             $(".navbar-custom").addClass("hidden");
             $(".dsply-tbl").css("margin-top","-40px");
             $(".hd-body").css("max-height","95vh");
