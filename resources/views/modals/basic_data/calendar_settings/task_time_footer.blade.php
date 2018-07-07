@@ -67,6 +67,7 @@
             saveObj.henddate = enddate[0] + '-' + enddate[1] + '-' + enddate[2] + " " + $('#endtime').val();
             saveObj.htitle = "";
             saveObj.hcid = $('#cid').val();
+            return false;
             saveObj.event_type = "task";
             task_id = $('#task_id').val();
             saveObj.task_id = task_id.split(',');
@@ -177,7 +178,8 @@
             saveObj.hstartdate = startdate;
             saveObj.henddate = enddate;
             saveObj.htitle = title;
-            saveObj.hcid = $('#cid').val();
+            // saveObj.hcid = $('#cid').val();
+            saveObj.hcid = 26;
             saveObj.event_type = "task";
             saveObj.task_id = task_id;
             $.ajax({

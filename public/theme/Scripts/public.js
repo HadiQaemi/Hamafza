@@ -32,7 +32,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#LikePage").click(function () {
+    $("#LikePage,.LikePage").click(function () {
         valu = $(this).attr('val');
         uid = $(this).attr('uid');
         sid = $(this).attr('sid');
@@ -47,18 +47,20 @@ $(document).ready(function () {
                 dataType: 'html',
                 data: ({tar_val: valu, tar_uid: uid, tar_sid: sid, type: type, userid: userid, token: token}),
                 success: function (theResponse) {
-                    if (valu == '1') {
-                        $("#LikePage").removeClass('btn');
-                        $("#LikePage").addClass('btnActive');
-                        $("#LikePage").attr('val', '0');
-                    }
-                    else {
+                    theResponse = jQuery.parseJSON(theResponse);
+                    if (theResponse.val == 0) {
                         $("#LikePage").removeClass('btnActive');
                         $("#LikePage").addClass('btn');
                         $("#LikePage").attr('val', '1');
                     }
+                    else {
+                        $("#LikePage").removeClass('btn');
+                        $("#LikePage").addClass('btnActive');
+                        $("#LikePage").attr('val', '0');
+
+                    }
                     jQuery.noticeAdd({
-                        text: theResponse,
+                        text: theResponse.message,
                         stay: false,
                         type: 'success'
                     });
@@ -66,7 +68,7 @@ $(document).ready(function () {
             });
         }
     });
-    $("#FollowPage").click(function () {
+    $("#FollowPage,.FollowPage").click(function () {
         valu = $(this).attr('val');
         uid = $(this).attr('uid');
         sid = $(this).attr('sid');
@@ -80,18 +82,20 @@ $(document).ready(function () {
                 dataType: 'html',
                 data: ({tar_val: valu, tar_uid: uid, tar_sid: sid, userid: userid, type: type}),
                 success: function (theResponse) {
-                    if (valu == '1') {
-                        $("#FollowPage").removeClass('btn');
-                        $("#FollowPage").addClass('btnActive');
-                        $("#FollowPage").attr('val', '0');
-                    }
-                    else {
+                    theResponse = jQuery.parseJSON(theResponse);
+                    if (theResponse.val == 0) {
                         $("#FollowPage").removeClass('btnActive');
                         $("#FollowPage").addClass('btn');
                         $("#FollowPage").attr('val', '1');
                     }
+                    else {
+                        $("#FollowPage").removeClass('btn');
+                        $("#FollowPage").addClass('btnActive');
+                        $("#FollowPage").attr('val', '0');
+
+                    }
                     jQuery.noticeAdd({
-                        text: theResponse,
+                        text: theResponse.message,
                         stay: false,
                         type: 'success'
                     });

@@ -17,8 +17,26 @@ class PageClassExtend1
         switch ($type)
         {
             case 'subject':
+                $like = DB::table('subject_member')
+                    ->where('uid', '=', $uid)
+                    ->where('sid', '=', $sid)
+                    ->get()->toArray();
                 $PageClass = new PageClass();
-                return $PageClass->LikeADD($uid, $sid);
+                if(!isset($like[0]))
+                {
+                    return $PageClass->LikeADD($user_id, $sid);
+                }
+                else
+                {
+                    if($like[0]->like)
+                    {
+                        return $PageClass->LikeRemove($user_id, $sid);
+                    }
+                    else
+                    {
+                        return $PageClass->LikeADD($user_id, $sid);
+                    }
+                }
                 break;
             case 'User':
                 $UC = new UserClass();
@@ -36,8 +54,26 @@ class PageClassExtend1
         switch ($type)
         {
             case 'subject':
+                $like = DB::table('subject_member')
+                    ->where('uid', '=', $uid)
+                    ->where('sid', '=', $sid)
+                    ->first();
                 $PageClass = new PageClass();
-                return $PageClass->LikeRemove($uid, $sid);
+                if(!isset($like))
+                {
+                    return $PageClass->LikeADD($userid, $sid);
+                }
+                else
+                {
+                    if($like->like)
+                    {
+                        return $PageClass->LikeRemove($userid, $sid);
+                    }
+                    else
+                    {
+                        return $PageClass->LikeADD($userid, $sid);
+                    }
+                }
                 break;
             case 'User':
                 $UC = new UserClass();
@@ -55,8 +91,26 @@ class PageClassExtend1
         switch ($type)
         {
             case 'subject':
+                $follow = DB::table('subject_member')
+                    ->where('uid', '=', $uid)
+                    ->where('sid', '=', $sid)
+                    ->first();
                 $PageClass = new PageClass();
-                return $PageClass->FollowADD($uid, $sid);
+                if(!isset($follow))
+                {
+                    return $PageClass->FollowADD($userid, $sid);
+                }
+                else
+                {
+                    if($follow->follow)
+                    {
+                        return $PageClass->FollowRemove($uid, $sid);
+                    }
+                    else
+                    {
+                        return $PageClass->FollowADD($uid, $sid);
+                    }
+                }
                 break;
             case 'button':
                 $PageClass = new PageClass();
@@ -78,8 +132,26 @@ class PageClassExtend1
         switch ($type)
         {
             case 'subject':
+                $follow = DB::table('subject_member')
+                    ->where('uid', '=', $uid)
+                    ->where('sid', '=', $sid)
+                    ->first();
                 $PageClass = new PageClass();
-                return $PageClass->FollowRemove($uid, $sid);
+                if(!isset($follow))
+                {
+                    return $PageClass->FollowADD($userid, $sid);
+                }
+                else
+                {
+                    if($follow->follow)
+                    {
+                        return $PageClass->FollowRemove($uid, $sid);
+                    }
+                    else
+                    {
+                        return $PageClass->FollowADD($uid, $sid);
+                    }
+                }
                 break;
             case 'button':
                 $PageClass = new PageClass();
@@ -2301,7 +2373,7 @@ class PageClassExtend1
             DB::table('subject_member')->insert(['uid' => $user, 'sid' => $sid, 'like' => '1']);
         }
         DB::table('subjects')->where('id', '=', $sid)->increment('like');
-        $message = trans('labels.LikeOK');
+        $message = array('val'=>'1','message'=>trans('labels.LikeOK'));
         return $message;
     }
 
@@ -2359,7 +2431,8 @@ class PageClassExtend1
         DB::table('subjects')
             ->where('id', '=', $sid)
             ->increment('follow');
-        $message = trans('labels.followOK');
+
+        $message = array('val'=>'1','message'=>trans('labels.followOK'));
         return $message;
     }
 
@@ -2389,7 +2462,7 @@ class PageClassExtend1
                     ->where('id', '=', $sid)
                     ->decrement('follow');
             }
-            $message = trans('labels.followRemove');
+            $message = array('val'=>'0','message'=>trans('labels.followRemove'));
         }
         return $message;
     }
@@ -2422,7 +2495,7 @@ class PageClassExtend1
                     ->decrement('like');
             }
 
-            $message = trans('labels.LikeRemove');
+            $message = array('val'=>'0','message'=>trans('labels.LikeRemove'));
         }
         return $message;
     }

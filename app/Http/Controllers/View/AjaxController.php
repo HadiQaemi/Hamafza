@@ -1991,11 +1991,13 @@ preventDuplicates: true,
             $type = $request->input('type');
             if (session('uid') != '')
             {
+                $userid = (session('uid') != '' && session('uid') != '') ? session('uid') : $userid;
                 $tar_uid = session('uid');
                 $sesid = session('SessionID');
             }
             else
             {
+                $userid = (session('uid') != '' && session('uid') != '') ? session('uid') : $userid;
                 $tar_uid = '0';
                 $sesid = '0';
             }
