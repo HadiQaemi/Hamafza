@@ -14,26 +14,26 @@
                                     </div>
                                 </td>
                                 <td>
+                                    @php($username = auth()->check()?auth()->user()->Uname:'NotLogin')
                                     @if(isset($tool->available->description))
                                         @if(trim($tool->available->description)!=='' && $tool->url_type==2)
                                             <a
-                                                    type="subject"
-                                                    val="1"
-                                                    uid="{{$username}}"
-                                                    sessid="0"
-                                                    sid="{{$option['subject_id']}}"
-                                                    data-href="{{url( $tool->url)}}"
-                                                    class="{{$tool->available->description}}"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    title=""
-                                                    aria-describedby="ui-id-9">
+                                                type="subject"
+                                                val="1"
+                                                uid="{{$username}}"
+                                                sessid="0"
+                                                sid="{{$option['subject_id']}}"
+                                                data-href="{{url( $tool->url)}}"
+                                                class="{{$tool->available->description}}"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title=""
+                                                aria-describedby="ui-id-9">
                                                 {{ $tool->title }}
                                             </a>
                                         @else
                                             <a style="float: right;"
                                                @if($tool->url_type==2)
-                                               @php($username = auth()->check()?auth()->user()->Uname:'NotLogin')
                                                class=""
                                                href="{{url( str_replace(['[username]','[subject_id]','[page_id]'],[$username,$option['subject_id'],$option['page_id']],$tool->url)) . (5 == $tool->id ? null : $get_url_str) }}"
                                                @elseif($tool->url_type == 1 && $tool->available->modal==0)
