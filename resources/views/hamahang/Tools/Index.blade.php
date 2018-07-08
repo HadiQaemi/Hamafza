@@ -54,11 +54,11 @@
                         </thead>
                     </table>
                     <div class="space-20"></div>
-                    <div class="row">
-                        <div class="col-xs-8 pull-right">
-                            <a href="{{ route('modals.add_tool_group') }}" class="jsPanels btn btn-primary fa fa-plus" title="افزودن دسته"></a>
-                        </div>
-                    </div>
+                    {{--<div class="row">--}}
+                        {{--<div class="col-xs-8 pull-right">--}}
+                            {{--<a href="{{ route('modals.add_tool_group') }}" class="jsPanels btn btn-primary fa fa-plus" title="افزودن دسته"></a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="col-xs-12 tab-pane fade in  default-options" id="toolsItems">
                     {{--<div class="space-4"></div>--}}

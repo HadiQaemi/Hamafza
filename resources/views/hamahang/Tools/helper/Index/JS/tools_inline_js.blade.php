@@ -13,22 +13,22 @@
             ' <"row" <"col-xs-5"<"col-xs-6"i><"col-xs-6"l>><"col-xs-7 pull-left text-left"p> <"clearfixed">>',
             "language": window.LangJson_DataTables,
             initComplete: function () {
-                {{--$("div.toolbar")--}}
-                    {{--.html('' +--}}
-                        {{--'<div class="col-xs-8 pull-left">' +--}}
-                        {{--'<input type="text" class="form-control" placeholder="عنوان دسته" id="new_tools_group_name" name="new_tools_group_name"> ' +--}}
-                        {{--'<input type="text" id="add_edit_tools_group" hidden> ' +--}}
-                        {{--'<input type="text" id="edit_tools_group_id" hidden> ' +--}}
-                        {{--'<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +--}}
-                        {{--'   <i ></i> ' +--}}
-                        {{--'   {{ trans('app.register')}}' +--}}
-                        {{--'</button>' +--}}
-                        {{--'<button class="btn btn-default btn_grid_add_new_tools_group_cancel hide" type="button">' +--}}
-                        {{--'   <i ></i> ' +--}}
-                        {{--'   {{ trans('app.cancel')}}' +--}}
-                        {{--'</button>' +--}}
-                        {{--'</div>'--}}
-                    {{--);--}}
+                $("div.toolbar")
+                    .html('' +
+                        '<div class="col-xs-8 pull-left">' +
+                        '<input type="text" class="form-control" placeholder="عنوان دسته" id="new_tools_group_name" name="new_tools_group_name"> ' +
+                        '<input type="text" id="add_edit_tools_group" hidden> ' +
+                        '<input type="text" id="edit_tools_group_id" hidden> ' +
+                        '<button class="btn btn-primary btn_grid_add_new_tools_group" type="button">' +
+                        '   <i ></i> ' +
+                        '   {{ trans('app.register')}}' +
+                        '</button>' +
+                        '<button class="btn btn-default btn_grid_add_new_tools_group_cancel hide" type="button">' +
+                        '   <i ></i> ' +
+                        '   {{ trans('app.cancel')}}' +
+                        '</button>' +
+                        '</div>'
+                    );
             },
             "columnDefs": [
                 {

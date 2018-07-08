@@ -37,12 +37,27 @@
             data: {!! $all_tools !!}
         });
 
-        $('#new_tools_user_users_list').select2({
+        $("#new_tools_user_users_list").select2({
+            minimumInputLength: 2,
             dir: "rtl",
             width: '100%',
-            placeholder: "{{ trans('tools.choose') }}",
-            allowClear: true,
-            data: {!! $roles !!}
+            ajax: {
+                url: "{{ route('auto_complete.users') }}",
+                dataType: 'json',
+                type: "POST",
+                quietMillis: 50,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
         });
 
     });
