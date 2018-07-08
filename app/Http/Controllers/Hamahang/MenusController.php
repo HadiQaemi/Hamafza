@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 
 use App\Models\Hamahang\Menus\MenuItem;
 use App\Role;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Models\Hamahang\Menus\Menus;
@@ -641,9 +642,19 @@ class MenusController extends Controller
 
     public function menusList($menutype = 1, $subject_id = false)
     {
-        $menuObj = Menus::with('items')->find($menutype);
-        $menus = $menuObj->items()->where('status', '1')->get()->toArray();
-        $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
+
+        $treeMenu = \Session::get('treeMenu');
+        if(!is_array($treeMenu) || count($treeMenu)==0)
+        {
+            $menuObj = Menus::with('items')->find($menutype);
+            $menus = $menuObj->items()->where('status', '1')->get()->toArray();
+            $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
+            \Session::put('treeMenu',$treeMenu);
+        }else{
+            $treeMenu = $treeMenu;
+        }
+
+
         return \Response::json($treeMenu);
     }
 
