@@ -1170,6 +1170,11 @@ function GeminiScrollbar_make(e) {
 }
 
 $(document).ready(function(){
+    var pos = $(".ful-scrn").offset();
+    var master_inner_rtl_div = $("#toolbar").offset();
+    $(".ful-scrn").css("position","fixed");
+    $(".ful-scrn").css("top",parseInt(master_inner_rtl_div.top)+parseInt(110));
+    $(".ful-scrn").css("left",parseInt(pos.left)+10);
     $(".hd-body").scroll(function() {
         var window_height = $(window).height();
          // if (parseInt(window_height)>parseInt(2*$('#new-content').height())) {
@@ -1193,6 +1198,7 @@ $(document).ready(function(){
             // $("#toolbar .btn-group.mr").addClass("hidden");
             // $("#toolbar .btn-group").addClass("hidden");
         } else {
+
             $(".ful-scrn").css("position","absolute");
             $(".ful-scrn").css("top","5px");
             $(".ful-scrn").css("left","5px");
@@ -1209,6 +1215,11 @@ $(document).ready(function(){
             $("#toolbar .btn-group.mr").css("height","40px");
             $("#toolbar .btn-group").css("height","40px");
             $("#header").removeClass("hidden");
+            var pos = $(".ful-scrn").offset();
+            var master_inner_rtl_div = $("#toolbar").offset();
+            $(".ful-scrn").css("position","fixed");
+            $(".ful-scrn").css("top",parseInt(master_inner_rtl_div.top)+parseInt(110));
+            $(".ful-scrn").css("left",parseInt(pos.left)+10);
             // $("#toolbar .btn-group.mr").removeClass("hidden");
             // $("#toolbar .btn-group").removeClass("hidden");
         }
