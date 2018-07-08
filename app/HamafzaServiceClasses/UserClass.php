@@ -568,7 +568,7 @@ class UserClass
         $groups = DB::table('user_group_member as ugm')
             ->join('user_group as ug', 'ugm.gid', '=', 'ug.id')
             
-            ->where('ugm.relation', 3)
+            ->where('ugm.relation', 2)
             ->select('ug.id as id', 'ug.pic as Pic', 'ug.name as name', 'ug.summary as summary', 'ug.link as link', 'ug.isorgan as isorgan')
             ->where('isorgan',$isOrgan)
             ->where('ugm.uid', $uid)

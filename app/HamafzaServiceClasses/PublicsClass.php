@@ -1141,10 +1141,10 @@ class PublicsClass
                         $res[0] = trans('labels.rhightcol_mygroup_title');
                         $res[2] = 'userwall';
                         $PostsClass = new UserClass();
-                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 1);
+                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 0);
                         array_push($Ret, $res);
                         $res[0] = trans('labels.rhightcol_mychannel_title');
-                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 2);
+                        $res[1] = $PostsClass->MyGroupAdmin($uid, 50, 1);
                         array_push($Ret, $res);
                     }
                     else
