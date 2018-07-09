@@ -229,6 +229,7 @@
             },
             complete: function (data) {
                 load_time_task(cid);
+                initDraggable();
             }
         });
         function createTableTaskTime(year,month)
