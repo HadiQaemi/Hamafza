@@ -228,7 +228,7 @@ class GroupsClass
             $menutools = DB::table('tools_group')->orderBy('orders')->get();
             foreach ($menutools as $value)
             {
-                if ($type == 'group-my' || $type == 'organ-my')
+                if ($type == 'group-my' || $type == 'chanel-my')
                 {
                     $tools = DB::table('tools')->where('group-my', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal')->orderBy('orders')->get();
                 }
@@ -316,12 +316,12 @@ class GroupsClass
             $menutools = DB::table('tools_group')->orderBy('orders')->get();
             foreach ($menutools as $value)
             {
-                if (($type == 'group-my' || $type == 'Organ-my') && $subtype == 'intro')
+                if (($type == 'group-my' || $type == 'chanel-my') && $subtype == 'intro')
                 {
                     $toolsc = DB::table('tools')->where('group-my', '1')->where('menuid', $value->id)->select('id')->count();
                     $tools = DB::table('tools')->where('group-my', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                 }
-                elseif (($type == 'group-my' || $type == 'Organ-my') && $subtype != 'intro')
+                elseif (($type == 'group-my' || $type == 'chanel-my') && $subtype != 'intro')
                 {
                     $toolsc = DB::table('tools')->where('group-my-others', '1')->where('menuid', $value->id)->select('id')->count();
                     $tools = DB::table('tools')->where('group-my-others', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();

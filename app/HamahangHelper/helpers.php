@@ -1533,7 +1533,17 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
         {
             $gname = $item;
             $uid = Auth::id();
-            $Group = \App\Models\hamafza\Groups::where('link', $item)->first();
+            if ($sub_type != "edit"){
+                $Group = \App\Models\hamafza\Groups::where('link', $item)->first();
+            } else {
+                $Group = \App\Models\hamafza\Groups::find($item);
+            }
+            if ($Group->isorgan == "1"){
+                $option = 10;
+            } else {
+                $option = 7;
+            }
+            
             $PageType = 'group';
             $tabparam['uid'] = $uid;
             $viewname = 'pages.Desktop';
@@ -1571,7 +1581,6 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 case 'edit':
                 {
-                    $Group = \App\Models\hamafza\Groups::find($item);
                     $SP = new \App\HamafzaServiceClasses\GroupsClass;
                     $json_a = $SP->about('', $uid, $item);
                     $GroupJSon = $json_a;
@@ -1628,7 +1637,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'SiteTitle' => config('constants.SiteTitle'),
                     'tabs' => PageTabs('group', $Group->id),
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
-                    'tools_menu' => toolsGenerator([7 => []], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
+                    'tools_menu' => toolsGenerator([$option => []], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
                     'current_tab' => $current_tab,
                     'RightCol' => $RightCol
                 ], $res
