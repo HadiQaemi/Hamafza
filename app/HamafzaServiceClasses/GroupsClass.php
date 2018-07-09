@@ -136,6 +136,8 @@ class GroupsClass
         if ($allow == 0)
         {
             $allow = 2;
+        } else {
+            $allow = 1;
         }
         if ($user)
         {

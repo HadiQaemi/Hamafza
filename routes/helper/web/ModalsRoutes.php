@@ -74,7 +74,6 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     /* ??? */Route::post('seluser', ['as' => 'sel_user', 'uses' => 'View\ModalController@seluser', 'middleware' => ['dynamic_permission:modals.sel_user']]);
     Route::post('setting', ['as' => 'setting', 'uses' => 'View\ModalController@setting', 'middleware' => ['dynamic_permission:modals.setting']]);
     Route::post('keyword_addedit_form', ['as' => 'modals.keyword_add_edit_form', 'uses' => 'View\ModalController@keyword_addedit_form', 'middleware' => ['dynamic_permission:modals.keyword_addedit_form']]);
-    Route::post('add2group', ['as' => 'modals.keyword_add_edit_form', 'uses' => 'View\ModalController@keyword_addedit_form', 'middleware' => ['dynamic_permission:modals.keyword_addedit_form']]);
     /* ??? */Route::post('keyword_addedit', ['as' => 'modals.keyword_add_edit', 'uses' => 'View\ModalController@keyword_addedit', 'middleware' => ['dynamic_permission:modals.keyword_addedit']]);
     /* ??? */Route::post('newgroup', ['as' => 'new_group', 'uses' => 'View\ModalController@newGroup', 'middleware' => ['dynamic_permission:modals.new_group']]);
     Route::post('viewmessage', ['as' => 'modals.view_message', 'uses' => 'View\ModalController@viewMessage', 'middleware' => ['dynamic_permission:modals.view_message']]);

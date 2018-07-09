@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('specific_plugin_scripts')
+    <script type="text/javascript" src="{{url('/theme/Scripts/snetwork.js')}}"></script>
+@stop
 @section('content')
     
     <div class="row" style="background-color:#eee; ">

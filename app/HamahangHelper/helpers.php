@@ -1551,7 +1551,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
             }
             $isMember = isGroupMemeber($Group->id);
             $isAdmin = (auth()->id() == $Group->uid);
-            $option = 0;
+            $option = 6;
             if ($isAdmin){
                 if ($Group->isorgan == "1"){
                     $option = 10;
@@ -1680,7 +1680,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                 'active' => '1',
                                                 'title' => 'اعضا',
                                                 'new' => '-1',
-                                                'value' => '0' . "",
+                                                'value' => DB::table('user_group_member')->where('gid', $Group->id)->count() . "",
                                                 'icon' => 'fa-bookmark-o',
                                                 'url' => route('ugc.persons', ['$username' => $gname])
                                             ],
@@ -1707,7 +1707,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'SiteTitle' => config('constants.SiteTitle'),
                     'tabs' => PageTabs('group', $Group->id),
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
-                    'tools_menu' => toolsGenerator([$option => []], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
+                    'tools_menu' => toolsGenerator([$option => ['gid'=> $Group->id]], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
                     'current_tab' => $current_tab,
                     'RightCol' => $RightCol
                 ], $res
