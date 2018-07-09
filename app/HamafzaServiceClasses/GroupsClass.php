@@ -609,7 +609,7 @@ class GroupsClass
         $groups['tabs']['name']['1'] = 'مطالب';
         $groups['tabs']['link']['1'] = 'contents';
         $groups['tabs']['name']['5'] = 'میزکار';
-        $groups['tabs']['link']['5'] = 'persons';
+        $groups['tabs']['link']['5'] = 'desktop';
         $groups['tabs']['name']['6'] = 'گروه‌ها';
         $groups['tabs']['link']['6'] = 'groups';
         $groups['tabs']['name']['8'] = 'دیوار';

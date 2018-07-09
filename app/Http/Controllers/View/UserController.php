@@ -65,6 +65,11 @@ class UserController extends Controller
             if(in_array($res,[403,404]))
                 return view('errors.'.$res);
             return view($res['viewname'], $res);
+        } else if ($Type == 'GROUP'){
+            $res = variable_generator('group', 'desktop', $name);
+            if(in_array($res,[403,404]))
+                return view('errors.'.$res);
+            return view($res['viewname'], $res);
         }
     }
 

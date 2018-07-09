@@ -26,6 +26,16 @@ if (!function_exists('MyOrganGroups'))
     }
 
 }
+if (!function_exists('isGroupMemeber'))
+{
+
+    function isGroupMemeber($gid)
+    {
+        return DB::table('user_group_member')->where('uid', Auth::id())->where('gid', $gid)->whereRaw("(relation='1' or relation='2')")->count();
+    }
+
+}
+
 if (!function_exists('PageTabs'))
 {
 
@@ -103,7 +113,7 @@ if (!function_exists('PageTabs'))
                 $groups['tabs']['name']['1'] = 'مطالب';
                 $groups['tabs']['link']['1'] = 'contents';
                 $groups['tabs']['name']['5'] = 'میزکار';
-                $groups['tabs']['link']['5'] = 'persons';
+                $groups['tabs']['link']['5'] = 'desktop';
                 $groups['tabs']['name']['6'] = 'گروه‌ها';
                 $groups['tabs']['link']['6'] = 'groups';
                 $groups['tabs']['name']['8'] = 'دیوار';
@@ -1538,10 +1548,23 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
             } else {
                 $Group = \App\Models\hamafza\Groups::find($item);
             }
-            if ($Group->isorgan == "1"){
-                $option = 10;
-            } else {
-                $option = 7;
+            $isMember = isGroupMemeber($Group->id);
+            $isAdmin = (auth()->id() == $Group->admin);
+            $option = 0;
+            if ($isAdmin){
+                if ($Group->isorgan == "1"){
+                    $option = 10;
+                } else {
+                    $option = 7;
+                }
+            }
+            else if ($isMember  == 0)
+            {
+                 if ($Group->isorgan == "1"){
+                    $option = 12;
+                } else {
+                    $option = 9;
+                }
             }
             
             $PageType = 'group';
@@ -1567,7 +1590,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res = $SN->Group_Persons($gname);
                     $RightCol = RightCol($uid, 'userwall');
                     $viewname = 'pages.groupperson';
-                     $current_tab = 'persons';
+                    $current_tab = 'desktop';
                     break;
                 }
                 case 'Content':
@@ -1581,12 +1604,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 case 'edit':
                 {
-                    $SP = new \App\HamafzaServiceClasses\GroupsClass;
-                    $json_a = $SP->about('', $uid, $item);
-                    $GroupJSon = $json_a;
-                    $Preview = $GroupJSon['preview'];
-                    $admin = $Preview['adminid'];
-                    $Title = 'ویرایش ' . $Preview['PreTitle'] . ' ' . $Preview['name'];
+                    
                     $isorgan = $Preview['isorgan'];
                     $gname = $Preview['link'];
                     $id = $Preview['id'];
@@ -1621,6 +1639,57 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         'content' => $content,
                         'sid' => $id,
                     ];
+                    break;
+                }
+                case 'desktop':
+                {
+                   
+                    $SN = new \App\HamafzaServiceClasses\GroupsClass();
+                    $Preview = $SN->Group_Title($Group);
+                    $Title = $Preview['PreTitle'] . ' ' . $Preview['name'];
+                    $RightCol = RightCol($uid, 'userabout');
+                    $viewname  = 'pages.page_desktop_dashboard';
+                    $res = [
+                        'Title' => $Title,
+                        'desktop_sections' =>
+                            [
+                                [
+                                    'type' => 'tasks',
+                                    'title' => 'وظایف',
+                                    'order' => '1',
+                                    'data' =>
+                                        [
+                                            [
+                                                'active' => '1',
+                                                'title' => 'وظایف',
+                                                'new' => '-1',
+                                                'value' => '0 '. "",
+                                                'icon' => 'fa-tasks',
+                                                'url' =>'' //route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
+                                            ],
+                                            [
+                                                'active' => '1',
+                                                'title' => 'یادداشت ها',
+                                                'new' => '-1',
+                                                'value' =>' 0'. "",
+                                                'icon' => 'fa-pencil',
+                                                'url' =>''// route('page.desktop.announces', ['sid' => $sid])
+                                            ],
+                                            [
+                                                'active' => '1',
+                                                'title' => 'اعضا',
+                                                'new' => '-1',
+                                                'value' => '0' . "",
+                                                'icon' => 'fa-bookmark-o',
+                                                'url' => route('ugc.persons', ['$username' => $gname])
+                                            ],
+                                        ]
+                                ],
+                            ],
+
+                        'current_tab' => 'desktop',
+                    ];
+                    
                     break;
                 }
             }

@@ -2943,9 +2943,6 @@ a .navbar-brand{
 .modal-content{
     direction: rtl;
 }
-.fix-inr{
-    min-height: 200px;
-}
 .container-fluid .row fieldset{
     direction: rtl;
 }
