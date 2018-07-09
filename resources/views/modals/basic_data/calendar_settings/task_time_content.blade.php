@@ -5,16 +5,17 @@
         </div>
         <input type="hidden" name="title_time_task" id="title_time_task"/>
         <div class="col-md-12" style="overflow-x: auto">
-            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                <div class="col-xs-1 noLeftPadding noRightPadding">
-                    <label>
-                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
-                    </label>
-                </div>
-                <div class="col-xs-11">
-                    <select name="cid" id="cid" class="chosen-rtl"></select>
-                </div>
-            </div>
+            {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
+                {{--<div class="col-xs-1 noLeftPadding noRightPadding">--}}
+                    {{--<label>--}}
+                        {{--{{trans('calendar_events.ce_modal_events_cid_field_lable')}}--}}
+                    {{--</label>--}}
+                {{--</div>--}}
+                {{--<div class="col-xs-11">--}}
+                    {{--<select name="cid" id="cid" class="chosen-rtl"></select>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            <input name="cid" id="cid" type="hidden" value="{{Session::get('default_calendar')}}" class="chosen-rtl"></input>
             <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-20">
                 <div class="col-xs-6 noLeftPadding noRightPadding no-margin-left no-margin-right">
                     <div class="col-xs-1 noLeftPadding noRightPadding no-margin-left no-margin-right">
@@ -77,6 +78,10 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $(".jsPanel-content").css("height", "180px");
+        $(".jsPanel").css("height", "270px");
+    });
     $(".DatePicker").persianDatepicker({
 
         autoClose: true,
@@ -92,27 +97,27 @@
         onlyTimePicker: true
     });
     $(".TimePicker").val('');
-    $.ajax({
-        url: '{{ URL::route('auto_complete.get_user_calendar')}}',
-        type: 'Post', // Send post dat
-        dataType:'json',
-        success: function (s) {
-            var options = '';
-            $('select[name="cid"]').empty();
-            for (var i = 0; i < s.length; i++) {
-                if(s[i].is_default ==1)
-                {
-                    options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
-                }
-                else{
-                    options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
-                }
-            }
-            $('select[name="cid"]').append(options);
-            $('select[name="cid"]').select2({
-                dir: "rtl",
-                width: '100%',
-            });
-        }
-    });
+    {{--$.ajax({--}}
+        {{--url: '{{ URL::route('auto_complete.get_user_calendar')}}',--}}
+        {{--type: 'Post', // Send post dat--}}
+        {{--dataType:'json',--}}
+        {{--success: function (s) {--}}
+            {{--var options = '';--}}
+            {{--$('select[name="cid"]').empty();--}}
+            {{--for (var i = 0; i < s.length; i++) {--}}
+                {{--if(s[i].is_default ==1)--}}
+                {{--{--}}
+                    {{--options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';--}}
+                {{--}--}}
+                {{--else{--}}
+                    {{--options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';--}}
+                {{--}--}}
+            {{--}--}}
+            {{--$('select[name="cid"]').append(options);--}}
+            {{--$('select[name="cid"]').select2({--}}
+                {{--dir: "rtl",--}}
+                {{--width: '100%',--}}
+            {{--});--}}
+        {{--}--}}
+    {{--});--}}
 </script>

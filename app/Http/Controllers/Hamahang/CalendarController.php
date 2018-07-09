@@ -878,10 +878,29 @@ class CalendarController extends Controller
         }
     }
 
+    public function getDefaultCalendar()
+    {
+
+        $list = DB::table("hamahang_calendar")
+            ->select('id', 'title', 'is_default')
+            ->where('user_id', '=', \Auth::id())
+            ->where('is_default', '=', 1)
+            ->first();
+        if(count($list)==0)
+        {
+            $list = DB::table("hamahang_calendar")
+                ->select('id', 'title', 'is_default')
+                ->where('user_id', '=', \Auth::id())
+                ->first();
+        }
+        \Session::put('default_calendar',$list->id);
+        return json_encode($list);
+    }
+
     public function getUserCalendar()
     {
+        $this->getDefaultCalendar();
         $calendar = Calendar::getUserCalendar();
-        Session::put('cal_default',1);
         foreach($calendar as $Acalendar)
             if($Acalendar->is_default==1)
                 Session::put('cal_default',$Acalendar->id);

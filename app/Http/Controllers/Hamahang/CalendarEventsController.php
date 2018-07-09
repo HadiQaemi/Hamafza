@@ -271,6 +271,7 @@ class CalendarEventsController extends Controller
     public function saveTaskEvent($info = [])
     {
         $uid = Auth::id();
+//        dd(Request::all());
         $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         $validator = \Validator::make(Request::all(), [
             'htitle' => 'required|string',
@@ -953,7 +954,12 @@ class CalendarEventsController extends Controller
         $cid = Request::input('cid');
         $startDate = Request::input('startDate');
         $endDate = Request::input('endDate');
-//        echo ($cid);
+        \Session::put('default_calendar',$cid);
+//        dd(Request::all());
+//        $cid = trim(Request::input('cid')) !== '' ? Request::input('cid') : '31';
+//        $startDate = trim(Request::input('startDate')) !== '' ? Request::input('startDate') : '2018-6-22';
+//        $endDate = trim(Request::input('endDate')) !== '' ? Request::input('endDate') : '2018-7-22';
+//        dd($cid,$startDate,$endDate);
         if ($cid)
         {
             $calendar = Calendar::select('id', 'title', 'default_options', 'sharing_options')
@@ -970,6 +976,7 @@ class CalendarEventsController extends Controller
                 ->toArray();
             $cid = $calendar['id'];
         }
+
         $defaultoption = '';
         // dd($calendar['sharing_options']);
         if ($calendar['default_options'] != '')
@@ -1095,15 +1102,18 @@ class CalendarEventsController extends Controller
         {
             $sharing_options = null;
         }
-        $events = User_Event::select('id', 'title', 'startdate AS start', 'enddate AS end','allDay')
-            ->where('cid', '=', $cid)
-            ->get()
-            ->toArray();
+        $events = DB::table('hamahang_calendar_user_events as eventTable')
+            ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay')
+            ->where('eventTable.cid', '=', $cid)
+            ->where('eventTable.startdate', '>=', $startDate)
+            ->where('eventTable.enddate', '<=', $endDate)
+            ->get();
 
         return json_encode(array('historical_events' => isset($historical_events) ? $historical_events : '',
             'vacation_events' => isset($vacation_events) ? $vacation_events : '',
             'type_events' => isset($type_events) ? $type_events : '',
-            'sharing_events' => isset($sharing_events) ? $sharing_events : '',
+//            'sharing_events' => isset($sharing_events) ? $sharing_events : '',
+            'sharing_events' => isset($events) ? $events : '',
             'calendarInfo' => isset($calendar) ? $calendar : '',
             'defaultoptions' => json_encode($defaultoption),
             'sharing_options' => json_encode($sharing_options),

@@ -93,19 +93,25 @@
 @section('content')
             <div class="row-fluid">
                 <div id='wrap' style="padding: 5px;">
-
                     <div class="row" style="margin-bottom: 10px;font-size: large">
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-4" style="height: 34px;">
-                            <i class="fa fa-arrow-right pointer next-month"></i>
-                            <span style="padding: 0px 14px" class="current-month" year="{{$date['cal'][0]}}" month="{{$date['cal'][1]}}" day="{{$date['cal'][2]}}">{{$date['getMonthNames'].''.$date['cal'][0]}}</span>
-                            <i class="fa fa-arrow-left pointer previous-month"></i></div>
-                        <div class="col-xs-4">
-                            <select name="cid" id="cid" class="chosen-rtl"></select>
+                        <div class="col-xs-4"><select name="cid" id="cid" class="chosen-rtl"></select></div>
+                        <div class="col-xs-1" style="height: 30px;padding: 0px">
+                            <div class="fc-button-group right" style="height: 30px;">
+                                <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-right" style="height: 25px;line-height: 30px;padding: 0px;float: right;">
+                                    <span class="fc-icon fc-icon-left-single-arrow next-month" style="color: #999;"></span>
+                                </button>
+                                <button type="button" class="fc-next-button fc-button fc-state-default fc-corner-left" style="height: 25px;line-height: 30px;padding: 0px;float: right;">
+                                    <span class="fc-icon fc-icon-right-single-arrow previous-month" style="color: #999;"></span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-xs-2"></div>
+                        <div class="col-xs-4">
+                            <span style="padding: 0px 14px" class="current-month" year="{{$date['cal'][0]}}" month="{{$date['cal'][1]}}" day="{{$date['cal'][2]}}">{{$date['getMonthNames'].''.$date['cal'][0]}}</span>
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
                     </div>
-                        <table class="table-bordered" id="table_task_time" style="padding: 5px">
+                        <table class="table-bordered" id="table_task_time" style="padding: 5px;width: 100%">
                             <tr>
                                 <td style="padding: 5px 3px;width: 4%">روز</td>
                                 @for($d=0;$d<12;$d++)
@@ -115,7 +121,7 @@
                             <tbody id="tbody_table_task_time">
                                 @for($d=1;$d<=($date['cal'][1]>6 ? 30 : 31);$d++)
                                     <tr numEvent="0" class="tr_task_list_{{$d}}" jalDate="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" gerYear="{{$date['GeorgianYear']}}" gerMonth="{{$date['GeorgianMonth']}}" gerDay="{{$d}}">
-                                        <td style="padding: 5px 3px;width: 4%">{{$date['cal'][1].'/'.$d}}</td>
+                                        <td style="padding: 5px 3px;width: 4%">{{$d}}</td>
                                         @for($dd=0;$dd<12;$dd++)
                                             <td style="width: 8%;padding: 0px;" class=" droppable cursor-pointer ui-droppable ui-sortable" data-task_id="{{$d.'-'.$dd}}" id="{{$d.'-'.$dd}}" hour="{{(2*$dd+2).':59:59-'.(2*$dd+1).':00:00'}}" day="{{$date['cal'][0].'-'.$date['cal'][1].'-'.$d}}" data-t_id="{{$d.'-'.$dd}}" title="{{$d.'-'.$dd}}"></td>
                                         @endfor
@@ -163,6 +169,7 @@
 
                 </div>
                 <div class="clearfixed"></div>
+                <input id="sample_test" type="hidden">
             </div>
         </div>
     </div>
@@ -187,32 +194,41 @@
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
         $('#cid').on('change', function() {
-            load_time_task( this.value );
+            createTableTaskTime(year,month);
+            load_time_task(this.value);
+            initDraggable();
         });
         var def_cid = 0;
+        var last_cid = 0;
         $.ajax({
             url: '{{ URL::route('auto_complete.get_user_calendar')}}',
             type: 'Post', // Send post dat
             dataType:'json',
             success: function (s) {
-                def_cid = s;
                 var options = '';
                 $('select[name="cid"]').empty();
                 for (var i = 0; i < s.length; i++) {
                     if(s[i].is_default ==1)
                     {
                         options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
-                        alert(s[i].id);
+                        def_cid = s[i].id;
+
                     }
                     else{
                         options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
                     }
+                    last_cid = s[i].id;
                 }
+                if(def_cid ==0)
+                    def_cid = last_cid;
                 $('select[name="cid"]').append(options);
                 $('select[name="cid"]').select2({
                     dir: "rtl",
                     width: '100%',
                 });
+            },
+            complete: function (data) {
+                load_time_task(cid);
             }
         });
         function createTableTaskTime(year,month)
@@ -223,7 +239,7 @@
                 gerDate = JalaliDate.jalaliToGregorian(year,month,i);
                 jDate = year+'-'+month+'-'+i;
                 html += '<tr numEvent="0" class="tr_task_list_'+i+'" jalDate="'+jDate+'" gerYear="'+gerDate[0]+'" gerMonth="'+gerDate[1]+'" gerDay="'+gerDate[2]+'">' +
-                    '                                        <td style="padding: 5px 3px;width: 4%">'+month+'/'+i+'</td>';
+                    '                                        <td style="padding: 5px 3px;width: 4%">'+i+'</td>';
                 for(j=0;j<12;j++)
                 {
                     html += '<td class="droppable cursor-pointer ui-droppable ui-sortable" style="width: 8%;padding: 0px;" data-task_id="'+i+'-'+j+'" ' +
@@ -274,7 +290,6 @@
             load_time_task();
             initDraggable();
         });
-        load_time_task();
         function load_time_task(cid) {
             var obj = {};
             if(cid>0)

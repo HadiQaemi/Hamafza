@@ -333,9 +333,29 @@ class AutoCompleteController extends Controller
         return \App\Models\Hamahang\TemplatePosition::getList();
     }
 
+    public function getDefaultCalendar()
+    {
+
+        $list = DB::table("hamahang_calendar")
+            ->select('id', 'title', 'is_default')
+            ->where('user_id', '=', \Auth::id())
+            ->where('is_default', '=', 1)
+            ->first();
+        if(count($list)==0)
+        {
+            $list = DB::table("hamahang_calendar")
+                ->select('id', 'title', 'is_default')
+                ->where('user_id', '=', \Auth::id())
+                ->first();
+        }
+        \Session::put('default_calendar',$list->id);
+        return json_encode($list);
+    }
+
     public function getUserCalendar()
     {
-        $list = DB::table("hamahang_calendar")->select('id', 'title')->where('user_id', '=', \Auth::id())->get();
+        $this->getDefaultCalendar();
+        $list = DB::table("hamahang_calendar")->select('id', 'title', 'is_default')->where('user_id', '=', \Auth::id())->get();
         return json_encode($list);
     }
 

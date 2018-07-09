@@ -178,8 +178,8 @@
             saveObj.hstartdate = startdate;
             saveObj.henddate = enddate;
             saveObj.htitle = title;
-            // saveObj.hcid = $('#cid').val();
-            saveObj.hcid = 26;
+            saveObj.hcid = $('#cid').val();
+            // saveObj.hcid = 26;
             saveObj.event_type = "task";
             saveObj.task_id = task_id;
             $.ajax({
@@ -195,7 +195,7 @@
                         errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
                     } else {
                         var html = '{{trans("calendar.calendar_setTime_Task")}} <strong>' + saveObj.htitle + ' </strong> {{trans("calendar.success_operarion")}}';
-                        messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);--}}
                         newEventModal.close();
                     }
 

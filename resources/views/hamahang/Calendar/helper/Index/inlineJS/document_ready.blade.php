@@ -306,6 +306,7 @@
         (function ($) {
             $('#calendar').fullCalendar();
             $('#calendar').fullCalendar('destroy');
+            var cid = $('.calendar-main-setting input[name="lastSelectdCalendar"]').val();
             globalCalendar = $('#calendar').fullCalendar({
                 lang: 'fa',
                 isJalaali: true,
