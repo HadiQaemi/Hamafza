@@ -132,13 +132,14 @@ if (!function_exists('PageTabs'))
                         $href = $Uname . '/' . $groups['tabs']['link'][$key];
                         $distance = ($key == 1 || $key == 5 || $key == 8) ? 1 : '';
                         $view = true;
-                        if (($key == 5) && ($group->owner == 1))
+                        $group->owner  = ($group->uid == auth()->id());
+                        if (($key == 5) && ($group->owner))
                         {
                             $view = true;
                         }
                         else
                         {
-                            if (($key == 5) && ($group->owner == 0))
+                            if (($key == 5) && (!$group->owner))
                             {
                                 $view = false;
                             }
@@ -1549,7 +1550,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 $Group = \App\Models\hamafza\Groups::find($item);
             }
             $isMember = isGroupMemeber($Group->id);
-            $isAdmin = (auth()->id() == $Group->admin);
+            $isAdmin = (auth()->id() == $Group->uid);
             $option = 0;
             if ($isAdmin){
                 if ($Group->isorgan == "1"){
