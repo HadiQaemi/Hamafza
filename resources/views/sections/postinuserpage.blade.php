@@ -48,7 +48,7 @@
             @endif
             <div class="commenTxtHolders">
                 <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
-                    <div class="col-xs-12 col-sm-5 col-sm-5 col-lg-5">
+                    <div class="col-xs-12 col-sm-2 col-lg-2">
                         <select name="post_typeW" id="post_typeW" class="form-control">
                             <option value="1" selected="">نظر</option>
                             <option value="2">پرسش</option>
@@ -58,7 +58,7 @@
                             {{--<option value="13">مرور</option>--}}
                         </select>
                     </div>
-                    <div class="col-xs-12 col-sm-5 col-sm-5 col-lg-5">
+                    <div class="col-xs-12 col-sm-8 col-lg-8">
                         <input type="text" id="commentTitleWW" class="form-control" placeholder="عنوان">
                     </div>
                     <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2">
