@@ -15,18 +15,10 @@
                                 </span>
                             </div>
                             <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}">
-                                @php
-                                if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else
-                                    $title = $task->title;
-                                //echo $title;
-                                @endphp
-                                <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
+                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                        {{$task->title}}
+                                    </a>
                                 </span>
                             </div>
                              <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -54,16 +46,9 @@
                             </div>
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    @php if (strlen($task->title) > 16)
-                                    {
-                                        $title = substr($task->title, 0, 16);
-                                        $title .= '...';
-                                    }
-                                    else
-                                        $title = $task->title;
-                                    //echo ;
-                                    @endphp
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
+                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                        {{$task->title}}
+                                    </a>
                                 </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -90,18 +75,10 @@
                                 </span>
                             </div>
                             <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}">
-                                @php
-                                if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else
-                                    $title = $task->title;
-                                //echo $title;
-                                @endphp
-                                <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
+                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                        {{$task->title}}
+                                    </a>
                                 </span>
                             </div>
                              <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -129,20 +106,9 @@
                             </div>
                             <div class="span_title" >
                             <span data-toggle="tooltip" title="{{$task->title}}">
-                                {{--<pre>--}}
-                                @php
-                                //print_r($task->toArray());
-                                if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else
-                                    $title = $task->title;
-                                //var_dump($title);
-                                @endphp
-                                <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
-                            {{--</pre>--}}
+                                <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    {{$task->title}}
+                                </a>
                             </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
