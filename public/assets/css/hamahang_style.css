@@ -877,6 +877,7 @@ hr.style-four {
 
 .text_ellipsis {
     text-overflow: ellipsis;
+    text-align: right !important;
     /* Required for text-overflow to do anything */
     white-space: nowrap;
     overflow: hidden;

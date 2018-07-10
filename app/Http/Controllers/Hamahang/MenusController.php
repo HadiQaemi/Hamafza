@@ -6,6 +6,7 @@ use App\Models\Hamahang\Menus\MenuItem;
 use App\Role;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use App\Models\Hamahang\Menus\Menus;
 use Illuminate\Http\Request;
@@ -649,12 +650,20 @@ class MenusController extends Controller
             $menuObj = Menus::with('items')->find($menutype);
             $menus = $menuObj->items()->where('status', '1')->get()->toArray();
 
-            \Session::put('treeMenu',$menus);
+//            \Session::put('treeMenu',$menus);
         }else{
             $menus = $menus;
         }
-
+//        $redis = Redis::connection();
+//        Redis::set('asdasd','asdasd');
+//        $DB = \Session::all();
+//        $mem = memory_get_peak_usage();
+//        $DB_tmp = unserialize(serialize($DB));
+////        $mem = memory_get_peak_usage() - $mem;
+//        dd(($mem/1024/1024),$DB);
         $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
+//        dd($treeMenu);
+
         return \Response::json($treeMenu);
     }
 

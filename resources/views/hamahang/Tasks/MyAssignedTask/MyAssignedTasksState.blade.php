@@ -36,6 +36,7 @@
             position: relative;
             width: 100%;
             top: 35px;
+            padding-top: 20px;
         }
         .state_container {
         }
@@ -44,6 +45,9 @@
         }
         .panel-light{
             height: 450px;
+        }
+        .row{
+            height: 46px !important;
         }
     </style>
 @stop

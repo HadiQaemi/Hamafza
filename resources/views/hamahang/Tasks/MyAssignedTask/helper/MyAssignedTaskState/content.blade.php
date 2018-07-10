@@ -1,3 +1,6 @@
+<script>
+    $('.first-fix-box').removeClass('height-100');
+</script>
 <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
    <div class="text-center div_title_not_started"><h6>{{trans('tasks.status_not_started')}}</h6></div>
     <div class="div_groups_task state_container droppable" id="task_notstarted" >
@@ -13,13 +16,7 @@
                             </div>
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <?php if (strlen($task->title) > 16)
-                                        {
-                                            $title = substr($task->title, 0, 16);
-                                            $title .= '...';
-                                        }
-                                        else
-                                            $title = $task->title; echo $title; ?>
+                                    <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
                                 </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -43,12 +40,8 @@
                                       title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
                             </div>
                             <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}"><?php if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else $title = $task->title; echo $title; ?>
+                            <span data-toggle="tooltip" title="{{$task->title}}">
+                                <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
                                 </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -72,12 +65,8 @@
                                   title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
                             </div>
                             <div class="span_title" >
-                        <span data-toggle="tooltip" title="{{$task->title}}"><?php if (strlen($task->title) > 16)
-                            {
-                                $title = substr($task->title, 0, 16);
-                                $title .= '...';
-                            }
-                            else $title = $task->title; echo $title; ?>
+                        <span data-toggle="tooltip" title="{{$task->title}}">
+                            <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
                             </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
@@ -101,12 +90,8 @@
                                       title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
                             </div>
                             <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}"><?php if (strlen($task->title) > 16)
-                                {
-                                    $title = substr($task->title, 0, 16);
-                                    $title .= '...';
-                                }
-                                else $title = $task->title; echo $title; ?>
+                            <span data-toggle="tooltip" title="{{$task->title}}">
+                                <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->id)}}'>{{$task->title}}</a>
                                 </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>

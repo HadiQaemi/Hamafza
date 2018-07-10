@@ -2,7 +2,7 @@
     <form id="form_filter_priority">
         <div class="form-inline">
             <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.task_title_placeholder')}}" name="task_title" id="task_title">
-            <input type="number" placeholder="مهلت" class="form-control " style="width: 80px;" name="respite" id="respite">
+            {{--<input type="number" placeholder="مهلت" class="form-control " style="width: 80px;" name="respite" id="respite">--}}
             <div class="checkbox">
                 <label>
                     <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>

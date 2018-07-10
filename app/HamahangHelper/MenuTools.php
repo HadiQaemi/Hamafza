@@ -66,7 +66,16 @@ if (!function_exists('buildMenuTree'))
                 $sub['state']['opened'] = true;
                 $sub['state']['selected'] = true;
             }
-            $menu_item = \App\Models\Hamahang\Menus\MenuItem::find($sub['id']);
+            $menu_items = \Session::get('menu_items');
+            if(isset($menu_items[$sub['id']]))
+            {
+                $menu_item = $menu_items[$sub['id']];
+            }else{
+                $menu_item = \App\Models\Hamahang\Menus\MenuItem::find($sub['id']);
+                $menu_items[$sub['id']] = $menu_item;
+//                \Session::put('menu_items',$menu_items);
+            }
+
             $policyObj = new \App\Policies\MenuPolicy();
             if (Auth::check())
             {
@@ -76,8 +85,17 @@ if (!function_exists('buildMenuTree'))
             {
                 $user = new \App\User();
             }
+            $menu_canView = \Session::get('menu_canView');
+            $menu_item_enCode = enCode($menu_item);
+            if(isset($menu_canView[$menu_item_enCode]))
+            {
+                $access = $menu_canView[$menu_item_enCode];
+            }else{
 
-            $access = $policyObj->canView($user, $menu_item);
+                $access = $policyObj->canView($user, $menu_item);
+                $menu_canView[$menu_item_enCode] = $access;
+//                \Session::put('menu_canView',$menu_canView);
+            }
 
             if ($access)
             {

@@ -2,21 +2,21 @@
     <form id="form_filter_priority">
         <div class="form-inline" style="padding-right: 5px;" >
             <div class="checkbox">
-            <div class="form-inline">
-                <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.task_title_placeholder')}}" name="task_title" id="task_title">
+                <div class="form-inline">
+                    <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.task_title_placeholder')}}" name="task_title" id="task_title">
 
-                <input type="number" class="form-control " placeholder="مهلت" style="width: 80px;" name="respite" id="respite">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
-                        <span>{{trans('tasks.official')}}</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>
-                        <span>{{trans('tasks.unofficial')}}</span>
-                    </label>
+                    {{--<input type="number" class="form-control " placeholder="مهلت" style="width: 80px;" name="respite" id="respite">--}}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
+                            <span>{{trans('tasks.official')}}</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>
+                            <span>{{trans('tasks.unofficial')}}</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="checkbox" style="margin-right: 20px;">
                 <label>

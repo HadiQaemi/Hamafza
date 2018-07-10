@@ -8,6 +8,71 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
         @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
     </div>
+    <form id="form_filter_priority" style="position: relative;top: 50px;right: 200px;z-index: 50;">
+        <div class="form-inline" style="padding-right: 5px;" >
+            <div class="checkbox">
+                <div class="form-inline">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
+                            <span>{{trans('tasks.official')}}</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>
+                            <span>{{trans('tasks.unofficial')}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox" style="margin-right: 30px;">
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_important[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="1" name="task_important[]" checked>
+                    <span>{{trans('tasks.important')}}</span>
+                </label>
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_important[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="0" name="task_important[]" checked>
+                    <span>{{trans('tasks.non-important')}}</span>
+                </label>
+            </div>
+            <div class="checkbox" style="margin-right: 30px;">
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" checked>
+                    <span>{{trans('tasks.immediate')}}</span>
+                </label>
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
+                    <span>{{trans('tasks.non-immediate')}}</span>
+                </label>
+            </div>
+            <div class="checkbox" style="margin-right: 35px;">
+                <label>
+                    <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>
+                    <span>{{trans('tasks.status_not_started')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
+                    <span>{{trans('tasks.status_started')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks" checked>
+                    <span>{{trans('tasks.status_done')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks" checked>
+                    <span>{{trans('tasks.status_finished')}}</span>
+                </label>
+                {{--   <label>
+                      <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
+                      <span>{{trans('tasks.status_suspended')}}</span>
+                  </label>
+              </div>--}}
+            </div>
+        </div>
+    </form>
     <div class="container-fluid">
         {{--<a class="task_info" data-t_id="42">تست</a>--}}
         <fieldset>
@@ -15,13 +80,13 @@
                 <table id="MyAssignedTasksTable" class="table dt-responsive nowrap display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th style="text-align: right;">مسئول انجام</th>
                         <th style="text-align: right;">عنوان</th>
+                        <th style="text-align: right;">مسئول انجام</th>
                         <th style="text-align: right;">اولویت</th>
                         <th style="text-align: right;">مهلت</th>
                         <th style="text-align: right;">وضعیت</th>
-                        <th style="text-align: right;">عملیات</th>
-                        <th style="text-align: right;">کتابخانه</th>
+                        {{--<th style="text-align: right;">عملیات</th>--}}
+                        {{--<th style="text-align: right;">کتابخانه</th>--}}
                     </tr>
                     </thead>
                 </table>

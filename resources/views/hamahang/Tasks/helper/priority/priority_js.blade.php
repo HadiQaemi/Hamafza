@@ -60,13 +60,14 @@
                 var Drag_Destination = $(this).attr('id');
                 var hour = $('#'+Drag_Destination).attr('hour');
                 var day = $('#'+Drag_Destination).attr('day');
-                daySplit = day.split('-');
+
                 var dropped = ui.draggable;
                 var task_id = dropped.data('task_id');
                 var Drag_Action = dropped.data('action');
                 var title = dropped.data('title');
                 if(Drag_Action=='task_timing')
                 {
+                    daySplit = day.split('-');
                     var droppedOn = $(this);
                     showTimeAndTask(title,day,day,hour,hour,droppedOn,task_id);
                     subClass = '';

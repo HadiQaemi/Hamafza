@@ -1,4 +1,145 @@
 <script>
+    (function($){
+        $.fn.serializeObject = function(){
+
+            var self = this,
+                json = {},
+                push_counters = {},
+                patterns = {
+                    "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                    "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                    "push":     /^$/,
+                    "fixed":    /^\d+$/,
+                    "named":    /^[a-zA-Z0-9_]+$/
+                };
+
+
+            this.build = function(base, key, value){
+                base[key] = value;
+                return base;
+            };
+
+            this.push_counter = function(key){
+                if(push_counters[key] === undefined){
+                    push_counters[key] = 0;
+                }
+                return push_counters[key]++;
+            };
+
+            $.each($(this).serializeArray(), function(){
+
+                // skip invalid keys
+                if(!patterns.validate.test(this.name)){
+                    return;
+                }
+
+                var k,
+                    keys = this.name.match(patterns.key),
+                    merge = this.value,
+                    reverse_key = this.name;
+
+                while((k = keys.pop()) !== undefined){
+
+                    // adjust reverse_key
+                    reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                    // push
+                    if(k.match(patterns.push)){
+                        merge = self.build([], self.push_counter(reverse_key), merge);
+                    }
+
+                    // fixed
+                    else if(k.match(patterns.fixed)){
+                        merge = self.build([], k, merge);
+                    }
+
+                    // named
+                    else if(k.match(patterns.named)){
+                        merge = self.build({}, k, merge);
+                    }
+                }
+
+                json = $.extend(true, json, merge);
+            });
+
+            return json;
+        };
+    })(jQuery);
+    $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        filter_tasks_priority();
+    });
+    function filter_tasks_priority(data) {
+        window.table_chart_grid3.destroy();
+        readTable($("#form_filter_priority").serializeObject());
+        {{--$.ajax({--}}
+        {{--url: '{{ route('hamahang.tasks.my_tasks.fetch') }}',--}}
+        {{--method: 'POST',--}}
+        {{--dataType: "json",--}}
+        {{--data: $("#form_filter_priority").serialize(),--}}
+        {{--success: function (res) {--}}
+        {{--//console.log(res.success);--}}
+        {{--if (res.success == true) {--}}
+        {{--$('#priority_content_area').html(res.data);--}}
+        {{--//messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'});--}}
+        {{--} else if (res.success == false) {--}}
+        {{--messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);--}}
+        {{--}--}}
+        {{--}--}}
+        {{--});--}}
+
+    }
+    readTable($("#form_filter_priority").serializeObject());
+    function  readTable(send_info) {
+
+        window.table_chart_grid3 = $('#MyAssignedTasksTable').DataTable({
+            "dom": window.CommonDom_DataTables,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ route('hamahang.tasks.my_assigned_tasks.fetch') }}",
+                "type": "POST",
+                "data": send_info,
+
+            },
+            "autoWidth": false,
+            "language": LangJson_DataTables,
+            "processing": true,
+            columns: [
+                // {"data": "id", "width": "5%"},
+                // {"data": "use_type", "width": "5%"},
+                {
+                    "data": "title",
+                    "mRender": function (data, type, full) {
+                        var id = full.id;
+                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
+                    }
+                },
+                {"data": "employee"},
+                {"data": "immediate"},
+                {"data": "respite"},
+                {"data": "type"}
+                // ,
+                // {
+                //     "data": "id", "width": "8%",
+                //     "bSearchable": false,
+                //     "bSortable": false,
+                //     "mRender": function (data, type, full) {
+                //         var id = full.id;
+                //         return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i class='fa fa-trash'></i></a>";
+                //     }
+                // }
+                // , {
+                //     "data": "id",
+                //     "bSearchable": false,
+                //     "bSortable": false,
+                //     "mRender": function (data, type, full) {
+                //         var id = full.id;
+                //         return "<a class='cls3' style='margin: 2px' onclick='save_as_library_task(" + full.id + ")' href=\"#\">افزودن به کتابخانه</a>";
+                //     }
+                // }
+            ]
+        });
+    }
 
     var t2_default;
     var current_tab = '';
@@ -15,54 +156,7 @@
             @endif
 
         }
-        $('#MyAssignedTasksTable').DataTable({
-            "dom": window.CommonDom_DataTables,
-            "serverSide": true,
-            "ajax": {
-                "url": "{{ route('hamahang.tasks.my_assigned_tasks.fetch') }}",
-                "type": "POST",
-                "data": send_info,
 
-            },
-            "autoWidth": false,
-            "language": LangJson_DataTables,
-            "processing": true,
-            columns: [
-                // {"data": "id", "width": "5%"},
-                // {"data": "use_type"},
-                {"data": "employee"},
-                {
-                    "data": "title",
-                    "mRender": function (data, type, full) {
-                        var id = full.id;
-                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"'>"+full.title+"</a>";
-                    }
-                },
-
-                {"data": "immediate"},
-                {"data": "respite"},
-                {"data": "type"},
-                {
-                    "data": "id", "width": "8%",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "mRender": function (data, type, full) {
-                        var id = full.id;
-                        return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i class='fa fa-trash'></i></a>";
-                    }
-                }
-                , {
-                    "data": "id",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "mRender": function (data, type, full) {
-                        var id = full.id;
-                        return "<a class='cls3' style='margin: 2px' onclick='save_as_library_task(" + full.id + ")' href=\"#\">افزودن به کتابخانه</a>";
-                    }
-                }
-            ]
-        });
         window.table_chart_grid = $('#ChildsGrid').DataTable();
         window.table_chart_grid2 = $('#files_grid').DataTable();
         //editor = new $.fn.dataTables.Editor({});

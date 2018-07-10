@@ -2,13 +2,18 @@
 @section('csrf_token')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
-
-
 @section('specific_plugin_style')
 	<link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css')}}">
 	<link type="text/css" rel="stylesheet" href="{{URL::to('assets/css/one-page-wonder.css')}}">
+	<style>
+		#related_links{
+			position: absolute !important;
+			top: 5px !important;
+			width: 250px !important;
+			left: 34px !important;
+		}
+	</style>
 @stop
-
 @section('content')
 
 	<div class="container-fluid">

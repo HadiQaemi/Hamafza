@@ -172,7 +172,7 @@
                                                             {{--<div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
                                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: ltr;">
                                                                 <div style="direction: rtl;" id="master_inner_rtl_div" >
-                                                                    <div class="panel panel-light fix-box first-fix-box" style="height: 100%;margin-bottom: 50px;">
+                                                                    <div class="panel panel-light fix-box first-fix-box height-100" style="margin-bottom: 50px;">
                                                                         <button class="ful-scrn">
                                                                             <span class="glyphicon glyphicon-fullscreen"></span>
                                                                         </button>

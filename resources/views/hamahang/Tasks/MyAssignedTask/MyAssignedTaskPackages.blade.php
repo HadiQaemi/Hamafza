@@ -62,6 +62,12 @@
             padding: 3px;
             text-align: center;
         }
+        #related_links{
+            position: absolute !important;
+            top: 5px !important;
+            width: 250px !important;
+            left: 34px !important;
+        }
     </style>
 @stop
 

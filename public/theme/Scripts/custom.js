@@ -1185,7 +1185,7 @@ $(document).ready(function(){
     var master_inner_rtl_div = $("#toolbar").offset();
     $(".ful-scrn").css("position","fixed");
     $(".ful-scrn").css("top",parseInt(master_inner_rtl_div.top)+parseInt(110));
-    $(".ful-scrn").css("left",parseInt(pos.left)+10);
+    $(".ful-scrn").css("left",parseInt(pos.left)-5);
     $(".hd-body").scroll(function() {
         var window_height = $(window).height();
          // if (parseInt(window_height)>parseInt(2*$('#new-content').height())) {
