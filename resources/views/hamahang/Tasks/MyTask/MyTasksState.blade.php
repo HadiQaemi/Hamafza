@@ -59,7 +59,7 @@
             </div>
             <hr>
         </div>
-        <div class="content_task">
+        <div class="content_task" style="padding-top: 20px">
             <div class="base_list_task">
                 <div id="base_items" style="direction: rtl;">
                     {!! $MyTasksInState !!}
