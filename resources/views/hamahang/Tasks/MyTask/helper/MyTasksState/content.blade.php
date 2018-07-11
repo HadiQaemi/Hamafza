@@ -17,7 +17,15 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $title = $task->title;
+                                            $words = str_word_count($task->title, 2);
+                                            $pos = array_keys($words);
+                                            $min = min(count($words),3);
+                                            if(isset($pos[$min]))
+                                                $title = substr($words, 1, $pos[1]) . '...';
+                                        @endphp
+                                        {{$title}}
                                     </a>
                                 </span>
                             </div>
@@ -47,7 +55,15 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $title = $task->title;
+                                            $words = str_word_count($task->title, 2);
+                                            $pos = array_keys($words);
+                                            $min = min(count($words),3);
+                                            if(isset($pos[$min]))
+                                                $title = substr($words, 1, $pos[1]) . '...';
+                                        @endphp
+                                        {{$title}}
                                     </a>
                                 </span>
                             </div>
@@ -77,7 +93,15 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $title = $task->title;
+                                            $words = str_word_count($task->title, 2);
+                                            $pos = array_keys($words);
+                                            $min = min(count($words),3);
+                                            if(isset($pos[$min]))
+                                                $title = substr($words, 1, $pos[1]) . '...';
+                                        @endphp
+                                        {{$title}}
                                     </a>
                                 </span>
                             </div>
@@ -107,7 +131,15 @@
                             <div class="span_title" >
                             <span data-toggle="tooltip" title="{{$task->title}}">
                                 <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                    {{$task->title}}
+                                    @php
+                                        $title = $task->title;
+                                        $words = str_word_count($task->title, 2);
+                                        $pos = array_keys($words);
+                                        $min = min(count($words),3);
+                                        if(isset($pos[$min]))
+                                            $title = substr($words, 1, $pos[1]) . '...';
+                                    @endphp
+                                    {{$title}}
                                 </a>
                             </span>
                             </div>

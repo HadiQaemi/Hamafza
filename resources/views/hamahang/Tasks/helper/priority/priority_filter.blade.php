@@ -3,7 +3,7 @@
         <div class="form-inline" style="padding-right: 5px;" >
             <div class="checkbox">
                 <div class="form-inline">
-                    <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.task_title_placeholder')}}" name="task_title" id="task_title">
+                    <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.search_in_task_title_placeholder')}}" name="task_title" id="task_title">
 
                     {{--<input type="number" class="form-control " placeholder="مهلت" style="width: 80px;" name="respite" id="respite">--}}
                     <div class="checkbox">

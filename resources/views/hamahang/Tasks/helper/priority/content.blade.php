@@ -12,7 +12,15 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            {{$task->title}}
+                                            @php
+                                                $title = $task->title;
+                                                $words = str_word_count($task->title, 2);
+                                                $pos = array_keys($words);
+                                                $min = min(count($words),3);
+                                                if(isset($pos[$min]))
+                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                            @endphp
+                                            {{$title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -39,7 +47,15 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            {{$task->title}}
+                                            @php
+                                                $title = $task->title;
+                                                $words = str_word_count($task->title, 2);
+                                                $pos = array_keys($words);
+                                                $min = min(count($words),3);
+                                                if(isset($pos[$min]))
+                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                            @endphp
+                                            {{$title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -68,7 +84,15 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            {{$task->title}}
+                                            @php
+                                                $title = $task->title;
+                                                $words = str_word_count($task->title, 2);
+                                                $pos = array_keys($words);
+                                                $min = min(count($words),3);
+                                                if(isset($pos[$min]))
+                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                            @endphp
+                                            {{$title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -96,7 +120,15 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            {{$task->title}}
+                                            @php
+                                                $title = $task->title;
+                                                $words = str_word_count($task->title, 2);
+                                                $pos = array_keys($words);
+                                                $min = min(count($words),3);
+                                                if(isset($pos[$min]))
+                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                            @endphp
+                                            {{$title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -122,22 +154,32 @@
                         @foreach($MyTasksPriorityTime as $task)
                             <li class="draggable task_item_{{$task->id}}" data-action="task_timing" data-title="{{$task->title}}" data-task_id="{{$task->id}}">
 
-                                <div class="respite_number {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                                {{--<div class="respite_number {{$task->RespiteRemain['bg_color_class']}}">--}}
+                                    {{--{{$task->RespiteRemain['days']}}--}}
+                                {{--</div>--}}
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            {{$task->title}}
+                                            @php
+                                                $title = $task->title;
+                                                $words = str_word_count($task->title, 2);
+                                                $pos = array_keys($words);
+                                                $min = min(count($words),3);
+                                                if(isset($pos[$min]))
+                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                            @endphp
+                                            {{$title}}
                                         </a>
                                     </h5>
                                 </div>
-                                <div class="state">
-                                    {!! $task->Status->StatusIcon !!}
-                                </div>
-                                <div class="referrer" style="top: 1px;">
-                                    <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
-                                        <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
-                                    </a>
-                                </div>
+                                {{--<div class="state">--}}
+                                    {{--{!! $task->Status->StatusIcon !!}--}}
+                                {{--</div>--}}
+                                {{--<div class="referrer" style="top: 1px;">--}}
+                                    {{--<a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">--}}
+                                        {{--<i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
                             </li>
                         @endforeach
                     </div>

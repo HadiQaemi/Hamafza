@@ -64,29 +64,29 @@
                     <span>{{trans('tasks.non-immediate')}}</span>
                 </label>
             </div>
-            <div class="checkbox" style="margin-right: 35px;">
-                <label>
-                    <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>
-                    <span>{{trans('tasks.status_not_started')}}</span>
-                </label>
-                <label>
-                    <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
-                    <span>{{trans('tasks.status_started')}}</span>
-                </label>
-                <label>
-                    <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks" checked>
-                    <span>{{trans('tasks.status_done')}}</span>
-                </label>
-                <label>
-                    <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks" checked>
-                    <span>{{trans('tasks.status_finished')}}</span>
-                </label>
-                {{--   <label>
-                      <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
-                      <span>{{trans('tasks.status_suspended')}}</span>
-                  </label>
-              </div>--}}
-            </div>
+            {{--<div class="checkbox" style="margin-right: 35px;">--}}
+                {{--<label>--}}
+                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>--}}
+                    {{--<span>{{trans('tasks.status_not_started')}}</span>--}}
+                {{--</label>--}}
+                {{--<label>--}}
+                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>--}}
+                    {{--<span>{{trans('tasks.status_started')}}</span>--}}
+                {{--</label>--}}
+                {{--<label>--}}
+                    {{--<input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks" checked>--}}
+                    {{--<span>{{trans('tasks.status_done')}}</span>--}}
+                {{--</label>--}}
+                {{--<label>--}}
+                    {{--<input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks" checked>--}}
+                    {{--<span>{{trans('tasks.status_finished')}}</span>--}}
+                {{--</label>--}}
+                {{--   <label>--}}
+                      {{--<input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">--}}
+                      {{--<span>{{trans('tasks.status_suspended')}}</span>--}}
+                  {{--</label>--}}
+              {{--</div>--}}
+            {{--</div>--}}
         </div>
     </form>
     <div class="container-fluid">

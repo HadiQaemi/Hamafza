@@ -189,5 +189,6 @@ return [
     'official'=>'رسمی',
     'unofficial'=>'شخصی',
     'task_title_placeholder'=>'عنوان وظیفه ...',
+    'search_in_task_title_placeholder'=>'جستجو در عنوان ...',
     'selecet_user'=>'انتخاب کاربر',
 ];

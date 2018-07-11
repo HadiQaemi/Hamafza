@@ -1,7 +1,7 @@
 <div class="col-xs-12">
     <form id="form_filter_priority">
         <div class="form-inline">
-            <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.task_title_placeholder')}}" name="task_title" id="task_title">
+            <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.search_in_task_title_placeholder')}}" name="task_title" id="task_title">
             {{--<input type="number" placeholder="مهلت" class="form-control " style="width: 80px;" name="respite" id="respite">--}}
             <div class="checkbox">
                 <label>

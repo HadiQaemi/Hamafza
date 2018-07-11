@@ -124,7 +124,8 @@
     };
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
-
+        LangJson_DataTables = window.LangJson_DataTables;
+        LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "ajax": {
@@ -133,7 +134,7 @@
                 "data": send_info
             },
             "autoWidth": false,
-            "language": window.LangJson_DataTables,
+            "language": LangJson_DataTables,
             "processing": true,
             columns: [
                 {
