@@ -1,13 +1,12 @@
 <?php
 
-/* Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
-  Route::post('GetsubjectFields', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetSubjectFields']);
-  Route::post('GetMyPortal', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetMyPortal']);
-  Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
-  Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
-  Route::post('GetTreeNode', ['as' => 'GetTreeNode', 'uses' => 'View\AjaxController@GetTreeNode']);
-  Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxController@GetTreeNodes']);
- */
+Route::post('GetMyBookmark', ['as' => 'hamafza.get_my_bookmark', 'uses' => 'View\AjaxController@GetMyBookmark']);
+Route::post('GetsubjectFields', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetSubjectFields']);
+Route::post('GetMyPortal', ['as' => 'GetMyPortal', 'uses' => 'View\AjaxController@GetMyPortal']);
+Route::post('search', ['as' => 'search', 'uses' => 'View\AjaxController@search']);
+Route::post('SearchTags', ['as' => 'SearchTags', 'uses' => 'View\AjaxController@SearchTags']);
+Route::post('GetTreeNode', ['as' => 'GetTreeNode', 'uses' => 'View\AjaxController@GetTreeNode']);
+Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxController@GetTreeNodes']);
 
 
 Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
