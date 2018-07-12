@@ -9,3 +9,4 @@ node_modules
 /storage/app/geoip.mmdb
 /SQL
 /hamafza.zip
+/public/pics
