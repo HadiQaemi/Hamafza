@@ -28,6 +28,7 @@ return [
     'permission_edited_successfully' => 'مجوز با موفقیت ویرایش شد.',
     'role_edited_successfully' => 'نقش با موفقیت ویرایش شد.',
     'password_edited_successfully' => 'کلمه عبور با موفقیت ویرایش شد',
+    'no_match_username_password' => 'نام کاربری و رمز عبور وارد شده معتبر نمی باشند',
     'manage_role_permissions' => 'مدیریت دسترسی نقش‌ها',
     'find_user' => 'یافتن کاربر',
     'set_user_permissions_success' => 'عملیات ثبت مجوزهای کاربر با موفقیت انجام شد.',

