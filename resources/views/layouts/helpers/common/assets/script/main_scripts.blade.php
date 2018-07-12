@@ -61,7 +61,7 @@
         "emptyTable": "{{trans('DataTables.EmptyTable')}}",
         "info": "{{trans('DataTables.Info')}}",
         "infoEmpty": "{{trans('DataTables.InfoEmpty')}}",
-        "infoFiltered": "{{trans('DataTables.InfoFiltered')}}",
+        "infoFiltered": "<br/>{{trans('DataTables.InfoFiltered')}}",
         "infoPostFix": "{{trans('DataTables.InfoPostFix')}}",
         "thousands": "{{trans('DataTables.InfoThousands')}}",
         "lengthMenu": "{{trans('DataTables.LengthMenu')}}",
