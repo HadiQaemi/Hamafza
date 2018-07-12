@@ -32,6 +32,19 @@
             direction: ltr;
             font-family: Verdana;
         }
+        #vrScroll2{
+            padding-right: 10px !important;
+        }
+        #vrScroll2 .scrl{
+            direction: ltr !important;
+            padding-right: 0px !important;
+        }
+        #vrScroll2 .hd-tree{
+            padding-right: 7px !important;
+        }
+        #pcol_32{
+            overflow-y: visible !important;
+        }
     </style>
     @include('hamahang.CalendarEvents.helper.Index.inlineCss.inlineCss')
     @include('hamahang.Calendar.helper.Index.inlineCss.inlineCss')

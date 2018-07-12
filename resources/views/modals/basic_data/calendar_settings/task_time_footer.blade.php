@@ -4,8 +4,9 @@
     </div>
     </div>
 </div>
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/jsclender/jalali.js"></script>
 <script>
-        $('#InsertBtn_task_time').click(function(){
+    $('#InsertBtn_task_time').click(function(){
         if($(this).attr('act')=='singleTask')
         {
             var saveObj = {};
@@ -39,7 +40,7 @@
                         errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
                     } else {
                         var html = '{{trans("calendar.calendar_setTime_Task")}} <strong>' + saveObj.htitle + ' </strong> {{trans("calendar.success_operarion")}}';
-                        messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);--}}
                         (function ($) {
                             $("#calendar").fullCalendar('addEventSource', [{
                                 start: startdate,
@@ -54,9 +55,7 @@
 
                 }
             });
-        }
-        else if($(this).attr('act')=='multiTask')
-        {
+        }else if($(this).attr('act')=='multiTask'){
             var saveObj = {};
             startdate = $('#startdate').val().split('-');
             enddate = $('#enddate').val().split('-');
@@ -82,7 +81,7 @@
                         errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
                     } else {
                         var html = '{{trans("calendar.calendar_setTime_Task")}} {{trans("calendar.success_operarion")}}';
-                        messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveEvent_clicked_success_msg_header")}}', html);--}}
                         for (i = 0; i < res.length; i++) {
                             (function ($) {
                                 $("#calendar").fullCalendar('addEventSource', [{
@@ -127,8 +126,7 @@
             //         block: true,
             //     },]);
             // })(jQuery_2);
-        }
-        else{
+        }else{
             var droppedOn = $('#droppedOn').val();
             var task_id = $('#task_id').val();
             startdate = $('#startdate').val().split('-');
@@ -202,6 +200,5 @@
                 }
             });
         }
-
     });
 </script>

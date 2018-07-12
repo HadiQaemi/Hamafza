@@ -1066,13 +1066,26 @@ class CalendarEventsController extends Controller
         }
         $sharing_events = '';
 //        DB::enableQueryLog();
+        if(trim($startDate)=='' || trim($endDate)=='')
+        {
+            $gdate = explode('-',date('Y-m-d'));
+            $jdate_now = $jdate->Gregorian_to_Jalali($gdate[0],$gdate[1],$gdate[2]);
+            $gdate2_first_month = $jdate->Jalali_to_Gregorian($jdate_now[0],$jdate_now[1],1);
+            $gdate2_last_month = $jdate->Jalali_to_Gregorian($jdate_now[0],$jdate_now[1],($jdate_now[1]<7 ? 31 : 30));
+            if(trim($startDate)=='')
+                $startDate = implode('-',$gdate2_first_month);
+            if(trim($endDate)=='')
+                $endDate = implode('-',$gdate2_last_month);
+        }
         $sharing_events = DB::table('hamahang_calendar_user_events as eventTable')
             ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay', 'shareTable.calendar_share_of AS sharId')
             ->join('hamahang_calendar_sharing_events as shareTable', 'eventTable.cid', 'shareTable.calendar_share_to')
-            ->where('eventTable.cid', '=', $cid)
-            ->where('eventTable.startdate', '>=', $startDate)
-            ->where('eventTable.enddate', '<=', $endDate)
-            ->get();
+            ->where('eventTable.cid', '=', $cid);
+        if(trim($startDate)=='')
+            $sharing_events->where('eventTable.startdate', '>=', $startDate);
+        if(trim($endDate)!='')
+            $sharing_events->where('eventTable.enddate', '<=', $endDate);
+        $sharing_events = $sharing_events->get();
 //        $laQuery = DB::getQueryLog();
 //        print_r($laQuery);
         $sharing_options = null;
@@ -1104,10 +1117,12 @@ class CalendarEventsController extends Controller
         }
         $events = DB::table('hamahang_calendar_user_events as eventTable')
             ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay')
-            ->where('eventTable.cid', '=', $cid)
-            ->where('eventTable.startdate', '>=', $startDate)
-            ->where('eventTable.enddate', '<=', $endDate)
-            ->get();
+            ->where('eventTable.cid', '=', $cid);
+        if(trim($startDate)!='')
+            $events->where('eventTable.startdate', '>=', $startDate);
+        if(trim($endDate)!='')
+            $events->where('eventTable.enddate', '<=', $endDate);
+        $events = $events->get();
 
         return json_encode(array('historical_events' => isset($historical_events) ? $historical_events : '',
             'vacation_events' => isset($vacation_events) ? $vacation_events : '',

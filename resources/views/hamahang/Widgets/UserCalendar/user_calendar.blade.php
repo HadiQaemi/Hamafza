@@ -9,6 +9,9 @@
         border-bottom-right-radius: 0px;
         box-shadow: none;
     }
+    .datepicker-plot-area{
+        border-bottom: none !important;
+    }
 </style>
 <div id="calendar_datepickar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;">
     <div style="direction: rtl">
@@ -25,14 +28,14 @@
     <div style="direction: rtl">
         <div class="panel-heading panel-heading-darkblue">
             <div class="row">
-                <h6 class="noPadding noMargin">
-                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>
-                    <a href="#" onclick="addPersonalCalendar();"
-                       class="btn btn-default fa fa-plus pull-left"
-                       alt="{{ trans('calendar.modal_calendar_ header_title') }} "
-                       title="{{ trans('calendar.modal_calendar_ header_title') }}">
+                {{--<h6 class="noPadding noMargin">--}}
+{{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+                    {{--<a href="#" onclick="addPersonalCalendar();"--}}
+                       {{--class="btn btn-default fa fa-plus pull-left"--}}
+                       {{--alt="{{ trans('calendar.modal_calendar_ header_title') }} "--}}
+                       {{--title="{{ trans('calendar.modal_calendar_ header_title') }}">--}}
                         {{--{{ trans('app.add') }} --}}
-                    </a>
+                    {{--</a>--}}
                 </h6>
                 <div class="clearfixed"></div>
             </div>
@@ -50,6 +53,18 @@
                         {{--</tr>--}}
                         {{--</thead>--}}
                     </table>
+                    <div class="clearfixed"></div>
+                </div>
+                <div class="row">
+                    <h6 class="noPadding noMargin">
+                        {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+                        <a href="#" onclick="addPersonalCalendar();"
+                           class="btn btn-primary fa fa-plus pull-left"
+                           alt="{{ trans('calendar.modal_calendar_ header_title') }} "
+                           title="{{ trans('calendar.modal_calendar_ header_title') }}">
+                            {{--{{ trans('app.add') }} --}}
+                        </a>
+                    </h6>
                     <div class="clearfixed"></div>
                 </div>
             </div>

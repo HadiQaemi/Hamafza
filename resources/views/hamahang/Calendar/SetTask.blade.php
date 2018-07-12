@@ -86,6 +86,19 @@
         .done_tasks{
             display: none;
         }
+        #vrScroll2{
+            padding-right: 10px !important;
+        }
+        #vrScroll2 .scrl{
+            direction: ltr !important;
+            padding-right: 0px !important;
+        }
+        #vrScroll2 .hd-tree{
+            padding-right: 7px !important;
+        }
+        #pcol_32{
+            overflow-y: visible !important;
+        }
     </style>
     @include('hamahang.CalendarEvents.helper.Index.inlineCss.inlineCss')
     @include('hamahang.Calendar.helper.Index.inlineCss.inlineCss')
@@ -94,8 +107,10 @@
             <div class="row-fluid">
                 <div id='wrap' style="padding: 5px;">
                     <div class="row" style="margin-bottom: 10px;font-size: large">
-                        <div class="col-xs-4"><select name="cid" id="cid" class="chosen-rtl"></select></div>
-                        <div class="col-xs-1" style="height: 30px;padding: 0px">
+                        <div class="col-xs-4 hidden">
+                            <select name="cid" id="cid" class="chosen-rtl"></select>
+                        </div>
+                        <div class="col-xs-5" style="height: 30px;padding: 0px">
                             <div class="fc-button-group right" style="height: 30px;">
                                 <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-right" style="height: 25px;line-height: 30px;padding: 0px;float: right;">
                                     <span class="fc-icon fc-icon-left-single-arrow next-month" style="color: #999;"></span>
@@ -194,9 +209,7 @@
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
         $('#cid').on('change', function() {
-            createTableTaskTime(year,month);
-            load_time_task(this.value);
-            initDraggable();
+
         });
         var def_cid = 0;
         var last_cid = 0;
@@ -228,10 +241,18 @@
                 });
             },
             complete: function (data) {
-                load_time_task(cid);
+                load_time_task(def_cid);
                 initDraggable();
             }
         });
+        function showEvent(cid) {
+            year = $('.current-month').attr('year');
+            month = $('.current-month').attr('month');
+            createTableTaskTime(year,month);
+            load_time_task(cid);
+            initDraggable();
+        }
+
         function createTableTaskTime(year,month)
         {
             html = '';
@@ -451,7 +472,7 @@
 @stop
 @include('sections.tabs')
 @section('position_right_col_3')
-    {{--{!!userCalendarsWidget()!!}--}}
+    {!!userCalendarsWidget()!!}
     @include('sections.desktop_menu')
 @stop
 

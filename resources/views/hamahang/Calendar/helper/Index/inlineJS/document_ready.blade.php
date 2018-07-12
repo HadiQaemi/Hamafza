@@ -244,24 +244,24 @@
                 dragit: false,
                 resizeit: false,
                 headerRemove: true,
-                autoclose: 4000,
+                autoclose: 400000,
                 border: '1px solid gray',
                 contentSize: '150 120',
                 content: '' +
                 '<div id="modal_fullcalendar_menu" class="list-group">' +
                 '   <div>' +
                 '		<a href="#" class="list-group-item" onclick="showMultiTaskingModal()">'+
-                '           {{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
+                '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showTaskModal()" > ' +
-                '           {{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
+                '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div style="border-bottom:1px solid #aaa">' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_calendar_new_time_border')}}'+
+                '           <i  class="fa fa fa-calendar "></i>{{trans('calendar.modal_calendar_new_time_border')}}'+
                 '       </a>' +
                 '   </div>' +
                 {{--'   <div>' +--}}
@@ -271,7 +271,7 @@
                 {{--'   </div>' +--}}
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showSessionModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
+                '           <i  class="fa fa fa-envelope "></i>{{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
                 '       </a>' +
                 '   </div>' +
                 {{--'   <div>' +--}}
@@ -281,17 +281,17 @@
                 {{--'   </div>' +--}}
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
+                '           <i  class="fa fa fa-bell "></i>{{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_presence')}}'+
+                '           <i  class="fa fa fa-check "></i>{{trans('calendar.modal_fullcalendar_menu_presence')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <div>' +
                 '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           {{trans('calendar.modal_fullcalendar_menu_memo')}}'+
+                '           <i  class="fa fa fa-address-card "></i>{{trans('calendar.modal_fullcalendar_menu_memo')}}'+
                 '       </a>' +
                 '   </div>' +
                 '   <input type="hidden" name="startdate" value="" >' +
@@ -1295,6 +1295,8 @@
                 ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
                     ($("input[name='show_task_save_type_final']:checked").val() != undefined ? $("input[name='show_task_save_type_final']:checked").val() : '') );
             var $this = $(this);
+            // alert('adasd');
+            // return false;
             var form_id = $this.data('form_id');
             var save_again = $this.data('again_save');
             if (save_type == 1) {
