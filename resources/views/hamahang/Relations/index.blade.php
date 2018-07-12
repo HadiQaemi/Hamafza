@@ -119,15 +119,15 @@
                                     <input type="text" id="edit_form_dariche_inver" class="form-control" name="dariche_inver">
                                 </td>
                             </tr>
-                            <tr>
-                                <td style="text-align: right;border:none;" class="table-active">حالت نمایش</td>
-                                <td style="text-align: right;border:none;">
-                                    <select class="form-control col-xs-4" name="direction">
-                                        <option value="0" id="edit_form_direct" selected="true">مستقیم</option>
-                                        <option value="1" id="edit_form_indirect">معکوس</option>
-                                    </select>
-                                </td>
-                            </tr>
+                            {{--<tr>--}}
+                                {{--<td style="text-align: right;border:none;" class="table-active">حالت نمایش</td>--}}
+                                {{--<td style="text-align: right;border:none;">--}}
+                                    {{--<select class="form-control col-xs-4" name="direction">--}}
+                                        {{--<option value="0" id="edit_form_direct" selected="true">مستقیم</option>--}}
+                                        {{--<option value="1" id="edit_form_indirect">معکوس</option>--}}
+                                    {{--</select>--}}
+                                {{--</td>--}}
+                            {{--</tr>--}}
                             <tr>
                                 <td>
                                 </td>
