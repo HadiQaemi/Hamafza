@@ -895,20 +895,24 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             $res['keywords'][$res_keyword_key]->keyword_and_relations_json = json_encode($keywords_relations);
                         }
                         $options[1] = ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title];
-
-                        $access_edit_in_user = in_array(Auth::id(), array_column($subject->user_policies_edit->toArray(), 'id'));
-                        $user = User::where('id', Auth::id())->first();
-                        $roles = $user->_roles->toArray();
-
-                        foreach($roles as $Arole)
+                        if(Auth::id())
                         {
-                            $access_edit_in_role = in_array($Arole['id'], array_column($subject->role_policies_edit->toArray(), 'id'));
-                            if($access_edit_in_role)
-                                break;
-                        }
+                            $access_edit_in_user = in_array(Auth::id(), array_column($subject->user_policies_edit->toArray(), 'id'));
+                            $user = User::where('id', Auth::id())->first();
+                            $roles = $user->_roles->toArray();
 
-                        if($access_edit_in_user || $access_edit_in_role)
-                            $options[13] = [];
+                            foreach($roles as $Arole)
+                            {
+                                $access_edit_in_role = in_array($Arole['id'], array_column($subject->role_policies_edit->toArray(), 'id'));
+                                if($access_edit_in_role)
+                                    break;
+                            }
+
+                            if($access_edit_in_user || $access_edit_in_role)
+                                $options[13] = [];
+
+                        }
+                        
                         $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
