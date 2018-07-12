@@ -49,14 +49,13 @@ $(document).ready(function() {
     });
 
 
-    @if (is_array($group_edit['keywords']))
-            @foreach($group_edit['keywords'] as $item)
-            var keyname = "{{$item['keyword']}}";
-    var keyid = "{{$item['id']}}";
+   var keywords = <?php echo $group_edit['keywords'] ?>;
+   for (i=0;i<keywords.length;i++){
+        var keyname = keywords[i].title;
+        var keyid = keywords[i].id;
 
-    $("#Groupkeywords").tokenInput("add", {id: keyid, name: keyname });
-            @endforeach
-            @endif
+        $("#Groupkeywords").tokenInput("add", {id: keyid, name: keyname });
+      };
 
 
 });</script>

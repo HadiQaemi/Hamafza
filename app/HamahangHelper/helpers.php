@@ -1606,6 +1606,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 case 'edit':
                 {
                     
+                    $SP = new \App\HamafzaServiceClasses\GroupsClass; 
+                    $json_a = $SP->about('', $uid, $item); 
+                    $GroupJSon = $json_a; 
+                    $Preview = $GroupJSon['preview']; 
+                    $admin = $Preview['adminid']; 
+                    $Title = 'ویرایش ' . $Preview['PreTitle'] . ' ' . $Preview['name']; 
                     $isorgan = $Preview['isorgan'];
                     $gname = $Preview['link'];
                     $id = $Preview['id'];
