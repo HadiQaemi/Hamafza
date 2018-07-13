@@ -19,7 +19,7 @@
     @if(session('uid') !='')
         <div class="col-md-10 col-md-push-1">
             <h1 id="TitleHeads" class="pull-right" style="margin: 10px 2px;font-size: 1.1em;display: none"></h1>
-            <span class="pull-left fa fa-close icon-bastan" style=" font-size: 10pt;height: 10px !important;margin-top: 10px;"></span>
+            <span class="pull-left fa fa-close sicon-bastan" style=" font-size: 10pt;height: 10px !important;margin-top: 10px;"></span>
         </div>
         <div class="clearfix"></div>
         <div class="commenTxtHolder col-md-10 col-md-push-1">
@@ -351,7 +351,7 @@
             }
         });
 
-        $(".icon-bastan").click();
+        // $(".icon-bastan").click();
 
         window.setTimeout(function ()
         {

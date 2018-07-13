@@ -121,7 +121,7 @@
 @endforelse
 <script>
     $(document).ready(function(){
-        $(".tab-content").css("background","#e9e9e9");
+        //$(".tab-content").css("background","#e9e9e9");
         $(".tab-content").css("overflow","hidden");
     });
 </script>

@@ -5,16 +5,20 @@
     keyword_search.val('');
     function show_comment_box(sub_kind)
     {
-		$('.sendComment').css('display','block');
+        // $('.sendComment').css('display','block');
+        $('.ful-scrn').css('position','absolute');
+        $('.ful-scrn').css('left','5px');
+        $('.ful-scrn').css('top','5px');
         $('#CommentPage').click();
         $('#post_type').val(sub_kind).change();
         $('#portal_id').val(<?php echo $sid; ?>).change();
         $('#commentTitleW').focus();
     }
 	$('.icon-bastan').click( function () {
-		$('.sendComment').css('display','none');
-        $('#CommentPage').click();
-        $('#commentTitleW').focus();
+		// $('.sendComment').css('display','none');
+        // $('#CommentPage').click();
+        $('#add_querstion_to').click();
+        // $('#commentTitleW').focus();
 	});
     function keyword_search_do()
     {

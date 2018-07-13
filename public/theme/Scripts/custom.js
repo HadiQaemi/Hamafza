@@ -1100,9 +1100,9 @@ function h_sidenav_open(thic) {
 function h_sidenav_close() {
     var pos = $(".ful-scrn").offset();
     var master_inner_rtl_div = $("#toolbar").offset();
-    $(".ful-scrn").css("position","fixed");
-    $(".ful-scrn").css("top",parseInt(master_inner_rtl_div.top)+parseInt(110));
-    $(".ful-scrn").css("left",parseInt(pos.left)+10);
+    $('.ful-scrn').css('position','absolute');
+    $('.ful-scrn').css('left','5px');
+    $('.ful-scrn').css('top','5px');
    $('.h_sidenav_client').fadeOut('fast', function () {
         $('.h_sidenav').width(0);
         $('.h_sidenav_main').css({'margin-left': 0});
