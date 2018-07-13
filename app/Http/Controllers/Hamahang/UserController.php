@@ -470,7 +470,7 @@ class UserController extends Controller
         [
             'captcha_code' => $captcha,
             //'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
-            'username' => 'required|unique:user,Uname|valid_username',
+            'username' => 'required|unique:user,Uname|unique:user_group,link|valid_username|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
             'email' => 'required|email|min:6|max:255|unique:user,Email',
             'password' => 'required|confirmed|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
             'name' => 'required',
@@ -479,7 +479,7 @@ class UserController extends Controller
         [
             'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
             'valid_username' => 'نام کاربری معتبر نمی‌باشد.',
-            //'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
+            'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
         ]);
 
         if ($validator->fails())

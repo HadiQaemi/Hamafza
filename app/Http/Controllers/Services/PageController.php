@@ -771,7 +771,15 @@ class PageController extends Controller {
 //            $SP = new UserClass();
 //            $menu = $SP->newOrgGroup($group_title, $group_link, $group_summary, $group_type, $group_limit, $isorgan, $Groupkeywords, $tmpFileName, $sesid, $uid);
         $count = DB::table('user_group')->where('link', $group_link)->count();
-        if ($count == 0) {
+        $count += DB::table('user')->where('Uname', $group_link)->count();
+        $menu = $isorgan ? 'کانال' : 'گروه';
+        if (ctype_digit($group_link)){
+            $message = 'نام'. $menu. 'نبایستی عدد باشد';
+            $res = [
+                'status' => "-1",
+                'message' => $message
+            ];
+        } else if ($count == 0) {
             $reg_date = gmdate("Y-m-d H:i:s", time() + 12600);
             $gid = DB::table('user_group')->insertGetId(array('uid' => $uid, 'name' => $group_title, 'link' => $group_link,
                 'summary' => $group_summary, 'type' => $group_type, 'edit' => $group_limit, 'pic' => $tmpFileName, 'reg_date' => $reg_date, 'isorgan' => $isorgan));
@@ -781,7 +789,7 @@ class PageController extends Controller {
             foreach ($keywords as &$value) {
                 DB::table('user_group_key')->insert(array('gid' => $gid, 'kid' => $value));
             }
-            $menu = $isorgan ? 'کانال' : 'گروه';
+            
             $res = [
                 'status' => "1",
                 'message' => $menu . ' با موفقیت ثبت شد.'
