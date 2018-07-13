@@ -650,15 +650,13 @@ class PostsClass {
         //$res['Tabs'] = $UserTabs;
         $sr = PostsClass::postSelect('user', 'wall', $User->id, 1, $User->id);
         // $sr .= ' OR p.id = 1';
-        config('app.temp', $cuid);
         $table = DB::table('posts as p')
                 ->distinct()
                 ->leftjoin('post_view as v', 'v.pid', '=', 'p.id')
                 ->leftjoin('user as u', 'p.uid', '=', 'u.id')
                 ->leftjoin('post_like as pl', function ($join) {
-                    $value = config('app.temp');
                     $join->on('pl.pid', '=', 'p.id')
-                    ->where('pl.uid', '=', $value);
+                    ->where('pl.uid', '=', session('uid'));
                 })
                 ->whereRaw($sr)
                 ->orderBy('p.id', 'desc')
