@@ -900,7 +900,6 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             $access_edit_in_user = in_array(Auth::id(), array_column($subject->user_policies_edit->toArray(), 'id'));
                             $user = User::where('id', Auth::id())->first();
                             $roles = $user->_roles->toArray();
-
                             foreach($roles as $Arole)
                             {
                                 $access_edit_in_role = in_array($Arole['id'], array_column($subject->role_policies_edit->toArray(), 'id'));
@@ -909,6 +908,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             }
 
                             if($access_edit_in_user || $access_edit_in_role)
+                                $options[13] = [];
+                            elseif($subject->toArray()['admin']==Auth::id())
                                 $options[13] = [];
 
                         }
