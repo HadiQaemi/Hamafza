@@ -590,12 +590,10 @@ preventDuplicates: true,
         $Cuid = $request->input('uid');
         $Gid = $request->input('gid');
         $e = $request->input('e');
-        $SP = new service();
-        $menu = $SP->ServicePost('AcceptUser2Group', 'uid=' . $uid . '&sesid=' . $sesid . '&gid=' . $Gid . '&cuid=' . $Cuid . '&add=' . $e);
+        $SP = new \App\HamafzaServiceClasses\GroupsClass();
+        $menu = $SP->AcceptUser2Group($uid, $sesid, $Gid, $Cuid, $e);
         //echo 'AcceptUser2Group', 'uid=' . $uid . '&sesid=' . $sesid . '&gid=' . $Gid.'&cuid='.$Cuid.'&add=1';
-        $json_a = json_decode($menu, true);
-        $s = $json_a['data'];
-        return $s;
+        return $menu;
     }
 
     public function addGroup(Request $request)

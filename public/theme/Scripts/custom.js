@@ -36,67 +36,8 @@ $(document).click(function (event) {
 
 $(document).ready(function () {
     var slider;
-    $(".add2Group").click(function () {
-        if (Gid == '')
-            alert("ایراد  در کارکرد");
-        else {
-            $.ajax({
-                type: "POST",
-                url: Baseurl + "addGroup",
-                dataType: 'html',
-                data: ({gid: Gid}),
-                success: function (theResponse) {
-                    jQuery.noticeAdd({
-                        text: theResponse,
-                        stay: false,
-                        type: 'success'
-                    });
-                }
-            });
-        }
-    });
-    $(".AcceptUser2Group").click(function () {
-        var uid = $(this).attr('uid');
-        if (Gid == '')
-            alert("ایراد  در کارکرد");
-        else {
-            $.ajax({
-                type: "POST",
-                url: Baseurl + "AcceptUser2Group",
-                dataType: 'html',
-                data: ({gid: Gid, uid: uid, e: '1'}),
-                success: function (theResponse) {
-                    jQuery.noticeAdd({
-                        text: theResponse,
-                        stay: false,
-                        type: 'success'
-                    });
-                }
-            });
-            $(this).parent().parent().parent().parent().parent().remove();
-        }
-    });
-    $(".RemoveUser2Group").click(function () {
-        var uid = $(this).attr('uid');
-        if (Gid == '')
-            alert("ایراد در کارکرد");
-        else {
-            $.ajax({
-                type: "POST",
-                url: Baseurl + "AcceptUser2Group",
-                dataType: 'html',
-                data: ({gid: Gid, uid: uid, e: '0'}),
-                success: function (theResponse) {
-                    jQuery.noticeAdd({
-                        text: theResponse,
-                        stay: false,
-                        type: 'success'
-                    });
-                }
-            });
-            $(this).parent().parent().parent().parent().parent().remove();
-        }
-    });
+  
+    
     $("#scrollReset").stop(true, true).fadeOut();
 
     $(window).resize(function () {

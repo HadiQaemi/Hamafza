@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('inline_scripts')
+    @include('pages.helper.toolbar_inline_js')
+@stop
 @section('content')
     <link href="{{App::make('url')->to('/')}}/theme/Content/css/textassist.css" rel="stylesheet" type="text/css"/>
     <script src="{{App::make('url')->to('/')}}/theme/Scripts/textassist.js" type="text/javascript"></script>
@@ -23,7 +26,7 @@
                                     </td>
                                     <td style="text-align: right;width:15px;">
                                         @if(session('uid') !=$item->id)
-                                            <div class="icon icon-minus-square RemoveUser2Group" uid="{{$item->id}}" style="height: 10px"></div>
+                                            <div class="icon icon-minus-square RemoveUser2Group" uid="{{$item->id}}" style="font-size: 150%"></div>
                                         @endif
                                     </td>
                                 </tr>
@@ -50,10 +53,10 @@
                                         <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}">{{$item->Name}} {{$item->Family}}  </a>
                                     </td>
                                     <td style="text-align: right;width:15px;">
-                                        <div class="icon icon-minus-square RemoveUser2Group" uid="{{$item->id}}" style="height: 10px"></div>
+                                        <div class="icon icon-minus-square RemoveUser2Group" uid="{{$item->id}}" style="font-size: 150%"></div>
                                     </td>
                                     <td style="text-align: right;width:15px;">
-                                        <div class="icon icon-plus-square AcceptUser2Group" uid="{{$item->id}}" style="height: 10px"></div>
+                                        <div class="icon icon-plus-square AcceptUser2Group" uid="{{$item->id}}" style="font-size: 150%"></div>
                                     </td>
                                 </tr>
                                 </tbody>
