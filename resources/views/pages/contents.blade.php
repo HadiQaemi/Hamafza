@@ -5,7 +5,9 @@
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{url('theme/Scripts/snetwork.js')}}"></script>
 @stop
-
+@section('inline_scripts')
+    @include('pages.helper.toolbar_inline_js')
+@stop
 @section('content')
     <input id="PageCounter" value="1" type="hidden">
     <div class="panel-body text-decoration ContentSec">

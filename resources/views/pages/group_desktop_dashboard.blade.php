@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('inline_scripts')
+    @include('pages.helper.toolbar_inline_js')
+@stop
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{url('/theme/Scripts/snetwork.js')}}"></script>
 @stop

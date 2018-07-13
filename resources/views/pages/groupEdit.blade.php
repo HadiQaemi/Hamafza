@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('inline_scripts')
+    @include('pages.helper.toolbar_inline_js')
+@stop
 @section('content')
 
 @if(is_array($content))

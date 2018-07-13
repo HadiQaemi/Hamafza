@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('inline_scripts')
+    @include('pages.helper.toolbar_inline_js')
+@stop
 @section('content')
     <link href="{{App::make('url')->to('/')}}/theme/Content/css/textassist.css" rel="stylesheet" type="text/css"/>
     <script src="{{App::make('url')->to('/')}}/theme/Scripts/textassist.js" type="text/javascript"></script>

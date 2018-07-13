@@ -611,15 +611,16 @@ preventDuplicates: true,
             $sesid = '0';
         }
         $Gid = $request->input('gid');
-        $SP = new service();
-        $menu = $SP->ServicePost('AddtoGroup', 'uid=' . $uid . '&sesid=' . $sesid . '&gid=' . $Gid);
+        $SP = new \App\HamafzaServiceClasses\GroupsClass();
+        $menu = $SP->AddtoGroup($uid, $sesid, $Gid);
         //   echo 'AddtoGroup'. 'uid=' . $uid . '&sesid=' . $sesid . '&gid=' . $Gid;
-        $json_a = json_decode($menu, true);
-        $s = $json_a['data'];
-        $menu = $SP->ServicePost('GetMyOrganGroups', 'uid=' . $uid . '&sesid=' . $sesid);
-        $json_a = json_decode($menu, true);
-        session('MyOrganGroups', $json_a['data']);
-        return $s;
+        
+        
+       /* $UP = new UserClass();
+          $menu = $UP->GetMyOrganGroups($uid, '');
+        
+        session('MyOrganGroups', $json_a['data']);*/
+        return $menu;
     }
 
     public function changepageview(Request $request)

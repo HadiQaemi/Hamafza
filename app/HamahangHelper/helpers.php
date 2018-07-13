@@ -1561,7 +1561,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $option = 7;
                 }
             }
-            else if ($isMember  == 0)
+            else 
             {
                  if ($Group->isorgan == "1"){
                     $option = 12;
@@ -1715,7 +1715,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'SiteTitle' => config('constants.SiteTitle'),
                     'tabs' => PageTabs('group', $Group->id),
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
-                    'tools_menu' => toolsGenerator([$option => ['gid'=> $Group->id]], 1, 5,['subject_id' => $Group->id, 'page_id' => '']),
+                    'tools_menu' => toolsGenerator([$option => ['gid'=> $Group->id]], 1, 5,['subject_id' => $Group->id, 'page_id' => '','member'=>$isMember]),
                     'current_tab' => $current_tab,
                     'RightCol' => $RightCol
                 ], $res
