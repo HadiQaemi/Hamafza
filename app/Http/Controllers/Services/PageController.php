@@ -244,6 +244,8 @@ class PageController extends Controller {
                 $UC = new GroupsClass();
                 return $UC->LikeADD($uid, $sid);
                 break;
+            case 'Post':
+                return \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 1);
         }
     }
 
@@ -286,6 +288,8 @@ class PageController extends Controller {
                 $UC = new GroupsClass();
                 return $UC->LikeRemove($uid, $sid);
                 break;
+            case 'Post':
+                return \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 0);
         }
     }
 
@@ -803,6 +807,42 @@ class PageController extends Controller {
             ];
             return response()->json($res);
         }
+    }
+
+    public function post_comment() {
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $error = validation_error_to_api_json($validator->errors());
+            $res = [
+                'status' => "-1",
+                'error' => $error
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "-1",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+
+        $user = Token::where('token', Request::input('token'))->first()->user;
+        $postid = Request::input('postid');
+        $uid = $user->id;
+        $comment = Request::input('comment');
+        $comment = json_encode($comment);
+        $comment = str_replace("&", "[and]", $comment);
+        $menu = \App\HamafzaServiceClasses\PostsClass::PostComment($uid, $postid, 0, $comment);
+
+        $res = [
+            'status' => "1",
+            'message' => $menu
+        ];
+        return response()->json($res);
     }
 
 }

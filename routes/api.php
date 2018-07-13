@@ -77,6 +77,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.new_organ',
         'uses' => 'PageController@newOrgan'
     ]);
+    Route::post('post_comment', [
+        'as' => 'api.v43.post_comment',
+        'uses' => 'PageController@post_comment'
+    ]);
 
 
 
