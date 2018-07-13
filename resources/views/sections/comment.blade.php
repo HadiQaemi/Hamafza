@@ -1,5 +1,6 @@
 @php
     $file = HFM_GenerateUploadForm([['comment_file', ['gif', 'jpg', 'jpeg', 'png', ], 'Single' ]]);
+    $MyPortals = MyPortals();
 @endphp
 @if (isset($sid))
     @php
@@ -90,8 +91,18 @@
                                 <td class="col-xs-1 showW_on_type_2_2">
                                     <small>درج در درگاه</small>
                                 </td>
-                                <td class="col-xs-4 showW_on_type_2_2"><select class="portal_id no-padding form-control" name="portal_id" id="portal_id"
-                                                                               style="display: inline-block;"{!! $hide_type ? ' disabled="disabled"' : null !!}></select></td>
+                                {{--<td class="col-xs-4 showW_on_type_2_2">--}}
+                                <td class="col-xs-2 showW_on_type_2_2">
+                                    <select class="portal_id no-padding form-control" name="portal_id" id="portal_id"
+                                                                               style="display: inline-block;"{!! $hide_type ? ' disabled="disabled"' : null !!}>
+                                        @foreach($MyPortals["private"] as $item)
+                                            <option value="{{$item->id}}" class="CheckedGroup" name="CheckedGroup">{{$item->title}}</option>
+                                        @endforeach
+                                        @foreach($MyPortals["public"] as $item)
+                                            <option value="{{$item->id}}" class="CheckedGroup" name="CheckedGroup">{{$item->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
                                 <td class="col-xs-2 hideW_on_type_2_2">
                                     <small>درج در گروه ها و کانال ها</small>
                                 </td>
@@ -145,7 +156,7 @@
                                         dataType: 'json',
                                         success: function (data) {
                                             if (data.success) {
-                                                portal_id.empty();
+                                                // portal_id.empty();
                                                 json_data = JSON.parse(data.result[0]);
                                                 $.each(json_data, function (id, record) {
                                                     portal_id.append('<option value="' + record.id + '">' + record.title + '</option>');
@@ -186,7 +197,8 @@
                                         }
                                     }
                                 });
-                                $('.portal_id, .darjdar').select2({'width': '100%', 'dir': 'rtl'});
+                                // $('.portal_id, .darjdar').select2({'width': '100%', 'dir': 'rtl'});
+                                $('.darjdar').select2({'width': '100%', 'dir': 'rtl'});
                                 post_type.change();
                             });
                         </script>
@@ -425,3 +437,10 @@
         });
     </script>
 @endif
+<script>
+    $(document).ready(function () {
+        $('.ful-scrn').css('position','absolute');
+        $('.ful-scrn').css('left','5px');
+        $('.ful-scrn').css('top','5px');
+    });
+</script>

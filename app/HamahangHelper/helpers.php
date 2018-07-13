@@ -15,6 +15,20 @@ use App\User;
 use App\Models\Hamahang\KeywordRelation;
 
 //----------------Begin-------------- hlper / Hamafza variable generator / helper -------------------Begin---------------//
+if (!function_exists('MyPortals'))
+{
+
+    function MyPortals()
+    {
+        $subjects['public'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '1')->where('list', '1')->where('archive', '0');
+        $subjects['private'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '0')->where('admin', auth()->id());
+        $subjects['public'] = $subjects['public']->select('id','title')->get();
+        $subjects['private'] = $subjects['private']->select('id','title')->get();
+//        dd($subjects);
+        return $subjects;
+    }
+}
+//----------------Begin-------------- hlper / Hamafza variable generator / helper -------------------Begin---------------//
 if (!function_exists('MyOrganGroups'))
 {
 
