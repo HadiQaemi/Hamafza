@@ -6,16 +6,16 @@
                 <span>{{trans("calendar.modal_calendar_define")}}</span>
             </a>
         </li>
-        <li>
-            <a href="#t2" id="pan_t2" data-toggle="tab">
-                <span>{{trans("calendar.modal_calendar_time_template")}}</span>
-            </a>
-        </li>
-        <li>
-            <a href="#t3" id="pan_t3" data-toggle="tab">
-                <span>{{trans("calendar.modal_calendar_new_time_border")}}</span>
-            </a>
-        </li>
+        {{--<li>--}}
+            {{--<a href="#t2" id="pan_t2" data-toggle="tab">--}}
+                {{--<span>{{trans("calendar.modal_calendar_time_template")}}</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
+        {{--<li>--}}
+            {{--<a href="#t3" id="pan_t3" data-toggle="tab">--}}
+                {{--<span>{{trans("calendar.modal_calendar_new_time_border")}}</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
         <li>
             <a href="#t4" id="pan_t4" data-toggle="tab">
                 <span>{{trans("calendar.modal_calendar_edit_monasebat_field_label")}}</span>

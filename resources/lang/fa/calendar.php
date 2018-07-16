@@ -15,6 +15,7 @@ return [
     'calendar_to'=>'تا',
     'calendar_select_user'=>' انتخاب کاربران ',
     'calendar.save'=>'ذخیره',
+    'new_calendar'=>'تقویم جدید',
     'calendar.action'=>'عملیات ',
     'task_timming'=>'تخصیص وقت',
     'calendar_setTime_Task'=>'تخصیص وقت به فعالیت',
