@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use Datatables;
 use DB;
 use Auth;
 use Request;
@@ -757,7 +758,10 @@ class ProjectController extends Controller
         $projects = DB::table('hamahang_project')
             ->where('hamahang_project.uid', '=', Auth::id())
             ->whereNull('hamahang_project.deleted_at')
-            ->select('hamahang_project.title', 'hamahang_project.id');
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.end_date')
+            ->join('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+            ->join('user','user.id','=','hamahang_project_responsible.user_id')
+        ;
         //die(var_dump($projects));
         if (Request::exists('subject_id'))
         {
@@ -766,12 +770,20 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects = $projects->get();
+        $projects = $projects->get()->toArray();
 
         $dd = collect($projects)->map(function ($x)
         {
             return (array)$x;
         })->toArray();
+//        $dd = Datatables::of($projects)
+//            ->addColumn('fa_start_date', function ($data)
+//            {
+//                return date('Y-m-d',$data->start_date);
+//            })
+//            ->rawColumns(['fa_start_date'])
+//            ->make(true);
+////        dd($dd);
         $result['data'] = $dd;
         return json_encode($result);
     }
@@ -800,13 +812,14 @@ class ProjectController extends Controller
     {
         $result = '';
         $validator = Validator::make(Request::all(), [
-            'p_title' => 'required|string',
-            'p_type' => 'required|in:0,1',
-            'page_id' => 'integer',
-            'p_schedule_on' => 'required|in:1,2',
-            'start_date' => 'required_if:p_schedule_on,1',
-            'end_date' => 'required_if:p_schedule_on,2',
-            'p_responsible' => 'required'
+            'p_title' => 'required|string'
+//            ,
+//            'p_type' => 'required|in:0,1',
+//            'page_id' => 'integer',
+//            'p_schedule_on' => 'required|in:1,2',
+//            'start_date' => 'required_if:p_schedule_on,1',
+//            'end_date' => 'required_if:p_schedule_on,2',
+//            'p_responsible' => 'required'
 
         ]);
         if ($validator->fails())

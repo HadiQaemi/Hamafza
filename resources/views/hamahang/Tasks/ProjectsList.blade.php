@@ -6,7 +6,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <fieldset>
+
+            <fieldset id="fieldset_noData">
+
+            </fieldset>
+            <fieldset id="fieldset">
                 {{--<legend>لیست پروژه ها</legend>--}}
 {{--                {{dd(Session::get('uid'))}}--}}
                 <div class="col-md-12">
@@ -14,9 +18,13 @@
                            style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>شناسه</th>
-                            <th>عنوان</th>
-                            <th>عملیات</th>
+                            <th>{{trans('projects.title')}}</th>
+                            <th>{{trans('projects.project_manager')}}</th>
+                            <th>{{trans('projects.start_date')}}</th>
+                            <th>{{trans('projects.end_date')}}</th>
+                            <th>{{trans('projects.progress')}}</th>
+                            <th>{{trans('projects.status')}}</th>
+                            {{--<th>عملیات</th>--}}
                         </tr>
                         </thead>
                     </table>
@@ -56,7 +64,7 @@
                 "language": window.LangJson_DataTables,
                 "serverside": true,
                 columns: [
-                    {"data": "id"},
+                    // {"data": "id"},
 //                    {"data": "title"},
                     {
                         "data": "title",
@@ -64,13 +72,29 @@
                             return "<a class='project_info cursor-pointer' data-p_id= '"+ full.id +"' >"+ full.title +"</a>";
                         }
                     },
+                    {"data": "full_name"},
                     {
-                        "data": "project_id",
+                        "data": "start_date",
                         "mRender": function (data, type, full) {
-                            return "<a class='cls3' style='margin: 2px' onclick='show_select_tasks_window_modal(1," + full.id + ",0)' href=\"#\"><i class=''></i>افزودن وظیفه جدید به پروژه</a>";
+                            return "<a class='project_info cursor-pointer' data-p_id= '"+  +"' >"+ full.start_date +"</a>";
                         }
+                    },
+                    {"data": "end_date"},
+                    {"data": "end_date"},
+                    {"data": "end_date"}
+                    // {
+                    //     "data": "project_id",
+                    //     "mRender": function (data, type, full) {
+                    //         return "<a class='cls3' style='margin: 2px' onclick='show_select_tasks_window_modal(1," + full.id + ",0)' href=\"#\"><i class=''></i>افزودن وظیفه جدید به پروژه</a>";
+                    //     }
+                    // }
+                ],
+                fnInitComplete : function() {
+                    if ($(this).find('tbody tr').length==0) {
+                        $('#fieldset').hide();
+                        $('#fieldset_noData').text(LangJson_DataTables.emptyTable);
                     }
-                ]
+                }
             });
             window.table_hirerical_view = $('#hirerical_view').DataTable();
             $('#hirerical_view').on('click', 'td.details-control', function () {

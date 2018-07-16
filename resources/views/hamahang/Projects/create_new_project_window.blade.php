@@ -6,154 +6,126 @@
             <div id="tab" class="table-bordered">
                 <ul class="nav nav-tabs">
                     <li>
-                           <a href="#t1" data-toggle="tab" class="active">تعریف</a>
+                           <a href="#t1" data-toggle="tab" class="active">{{trans('projects.define')}}</a>
                     </li>
                 </ul>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="col-xs-12 table table-striped">
-                            <tr>
-                                <td class="width-120">عنوان</td>
-                                <td>
-                                    <input type="text" class="col-xs-4 form-control" id="p_title"/>
-                                    <input type="radio" class="" name="p_type" value="0"/><label>رسمی</label>
-                                    <input type="radio" class="" name="p_type" value="1"/><label>غیر رسمی</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width-120">اهداف بالادستی</td>
-                                <td><input type="text" class="form-control" id="p_top_goals"/></td>
-                            </tr>
-                            <tr>
-                                <td class="width-120">صفحه</td>
-                                <td>
-                                    <div class="col-sm-12 row">
-                                        <span id="pages">
-                                            <div class="col-sm-12 row">
-                                                <select class="js-data-example-ajax form-control" id="page_id" name="page_id" multiple></select>
-                                                <span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width-120">توضیح</td>
-                                <td><input type="text" class="form-control" id="p_desc"/></td>
-                            </tr>
-                            <tr>
-                                <td>مدیر پروژه</td>
-                                <td>
-                                    <div class="col-xs-5">
-                                        <div class="col-sm-12 row">
-                                            <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
-                                                <option value=""></option>
-                                            </select>
-                                            <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2">واحد سازمانی</div>
-                                    <div>
-                                        <div class="col-sm-5 row">
-
-                                            <select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
-                                                <option value=""></option>
-                                            </select>
-                                            <span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>زمانبندی بر اساس</td>
-                                <td>
-                                    <select id="p_schedule_on" class="form-control col-xs-4">
-                                        <optgroup label="انتخاب کنید">
-                                            <option value="1">تاریخ شروع پروژه</option>
-                                            <option value="2">تاریخ پایان پروژه</option>
-                                        </optgroup>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="t1">
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.title')}}</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="col-xs-4 form-control" id="p_title"/>
+                                <input type="radio" class="" name="p_type" value="0"/><label>{{trans('projects.official')}}</label>
+                                <input type="radio" class="" name="p_type" value="1"/><label>{{trans('projects.unofficial')}}</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.top_purpose')}}</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="p_top_goals"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20">
+                            <div class="col-xs-2 line-height-35">{{trans('projects.page')}}</div>
+                            <div class="col-xs-10">
+                                <select class="js-data-example-ajax form-control" id="page_id" name="page_id" multiple></select>
+                                <span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.describe')}}</div>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="p_desc"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20">
+                            <div class="col-xs-2 line-height-35">{{trans('projects.project_manager')}}</div>
+                            <div class="col-xs-10">
+                                <div class="col-xs-5 noPadding">
+                                    <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                        <option value=""></option>
                                     </select>
-                                    <span id="schedule_massage" style="color-rendering: gray"></span>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="col-xs-12 table table-striped">
-                            <tr>
-                                <td class="width-120">تاریخ آغاز</td>
-                                <td>
-                                    <div>
-                                        <div class="input-group pull-right">
-                                            <span class="input-group-addon" id="respite_date">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
-                                            <input type="text" class="form-control DatePicker" id="start_date" name="start_date" aria-describedby="respite_date">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="width-120">تاریخ پایان</td>
-                                <td>
-                                    <div class="input-group pull-right">
-                                        <span class="input-group-addon" id="respite_date">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        <input type="text" class="form-control DatePicker" name="end_date" id="end_date" aria-describedby="respite_date">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width-120">تاریخ جاری</td>
-                                <td>
-                                    <div class="input-group pull-right">
-                                <span class="input-group-addon" id="respite_date">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                                        <input type="text" class="form-control DatePicker" name="current_date" id="current_date" aria-describedby="respite_date">
-                                    </div>
-                                </td>
-                                <td class="width-120">تاریخ وضعیت</td>
-                                <td>
-                                    <div class="input-group pull-right">
-                                <span class="input-group-addon" id="respite_date">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                                        <input type="text" class="form-control DatePicker" name="state_date" id="state_date" aria-describedby="respite_date">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="width-120"><h6>تقویم پایه</h6></td>
-                                <td>
-                                    <select class="form-control" id="base_calendar">
-                                        <option value="">انتخاب کنید ...</option>
-                                        @foreach($calendars as $calendar)
-                                            <option value="{{ $calendar->id }}">{{ $calendar->title }}</option>
-                                        @endforeach
-
+                                    <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
+                                </div>
+                                <div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>
+                                <div class="col-sm-5 noPadding">
+                                    <select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                        <option value=""></option>
                                     </select>
-                                </td>
-                                <td class="width-120">اولویت</td>
-                                <td><input type="text" class="form-control col-xs-4" id="p_priority"/></td>
-                            </tr>
-                            <tr>
-                                <td class="width-120">
-                                    <label class="line-height-35">کلیدواژه ها</label>
-                                </td>
-                                <td colspan="7">
-                                    <div class="row-fluid">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-25">
-                                            <div class="form-inline">
-                                                <div class="col-xs-12 row">
-                                                    <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
-                                                    <span class="Chosen-LeftIcon"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    <span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.schedule_base')}}</div>
+                            <div class="col-xs-10">
+                                <select id="p_schedule_on" class="form-control col-xs-4">
+                                    <optgroup label="{{trans('projects.choose')}}">
+                                        <option value="1">{{trans('projects.start_date')}}</option>
+                                        <option value="2">{{trans('projects.end_date')}}</option>
+                                    </optgroup>
+                                </select>
+                                <span id="schedule_massage" style="color-rendering: gray"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.end_date')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                {{--<span class="input-group-addon" id="respite_date">--}}
+                                    {{--<i class="fa fa-calendar"></i>--}}
+                                {{--</span>--}}
+                                <input type="text" class="form-control DatePicker" id="start_date" name="start_date" aria-describedby="respite_date">
+                            </div>
+                            <div class="col-xs-2">{{trans('projects.final_date')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                {{--<span class="input-group-addon" id="respite_date">--}}
+                                    {{--<i class="fa fa-calendar"></i>--}}
+                                {{--</span>--}}
+                                <input type="text" class="form-control DatePicker" name="end_date" id="end_date" aria-describedby="respite_date">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.current_date')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                {{--<span class="input-group-addon" id="respite_date">--}}
+                                {{--<i class="fa fa-calendar"></i>--}}
+                                {{--</span>--}}
+                                <input type="text" class="form-control DatePicker" name="current_date" id="current_date" aria-describedby="respite_date">
+                            </div>
+                            <div class="col-xs-2">{{trans('projects.status_date')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                {{--<span class="input-group-addon" id="respite_date">--}}
+                                {{--<i class="fa fa-calendar"></i>--}}
+                                {{--</span>--}}
+                                <input type="text" class="form-control DatePicker" name="state_date" id="state_date" aria-describedby="respite_date">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20">
+                            <div class="col-xs-2">{{trans('projects.base_calendar')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                <select class="form-control" id="base_calendar">
+                                    <option value="">{{trans('projects.choose')}}</option>
+                                    @foreach($calendars as $calendar)
+                                        <option value="{{ $calendar->id }}">{{ $calendar->title }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-xs-2">{{trans('projects.priority')}}</div>
+                            <div class="col-xs-2 nput-group pull-right">
+                                <input type="text" class="form-control col-xs-4" id="p_priority"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20">
+                            <div class="col-xs-2 line-height-35">{{trans('projects.keywords')}}</div>
+                            <div class="col-xs-10 nput-group pull-right">
+                                <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
+                                <span class="Chosen-LeftIcon"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="clearfixed"></div>
+                </div>
+                <div class="clearfixed"></div>
                 </div>
             </div>
         </div>

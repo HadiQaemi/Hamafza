@@ -3152,3 +3152,9 @@ input{
     border-right: 2px solid red !important;;
     background: #fff !important;
 }
+#fieldset_noData{
+    height: 50px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: large;
+}
