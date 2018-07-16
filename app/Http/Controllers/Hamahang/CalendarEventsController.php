@@ -60,7 +60,7 @@ class CalendarEventsController extends Controller
              }
 
          }*/
-        return view('hamahang.calendarEvents.Index', $arr);
+        return view('hamahang.calendarEvents.index', $arr);
     }
 
     public function saveSelectedTaskEvent()

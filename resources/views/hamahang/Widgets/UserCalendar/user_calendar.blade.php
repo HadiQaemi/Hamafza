@@ -56,15 +56,17 @@
                     <div class="clearfixed"></div>
                 </div>
                 <div class="row">
-                    <h6 class="noPadding noMargin">
-                        {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+                    <div class="col-xs-1 pull-right">
                         <a href="#" onclick="addPersonalCalendar();"
-                           class="btn btn-primary fa fa-plus pull-left"
-                           alt="{{ trans('calendar.modal_calendar_ header_title') }} "
-                           title="{{ trans('calendar.modal_calendar_ header_title') }}">
-                            {{--{{ trans('app.add') }} --}}
+                           class="btn btn-primary "
+                           alt="{{ trans('calendar.modal_calendar_header_title') }} "
+                           title="{{ trans('calendar.modal_calendar_header_title') }}">
+                            {{ trans('calendar.new_calendar') }}
                         </a>
-                    </h6>
+                    </div>
+                    <div class="col-xs-11"></div>
+                        {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+
                     <div class="clearfixed"></div>
                 </div>
             </div>
