@@ -1142,7 +1142,7 @@ class CalendarEventsController extends Controller
     {
         $arr = variable_generator('user','desktop',$username);
         $arr['HFM_Session'] = HFM_GenerateUploadForm([['CalendarEvent_session', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
-        return view('hamahang.calendarEvents.sessions', $arr);
+        return view('hamahang.CalendarEvents.sessions', $arr);
     }
 
     public function deleteReminder()
