@@ -145,7 +145,7 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
                     <div class="col-lg-10">
                         <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                data-placeholder="{{trans('tasks.select_some_keywords')}}"
                                 multiple="multiple"></select>
                         <span class=" Chosen-LeftIcon"></span>
                     </div>
@@ -158,19 +158,19 @@
                     </div>
                     <div class="col-lg-10 line-height-35">
                         <div class="col-xs-12 noRightPadding noLeftPadding">
-                            <span class="pull-right;">
-                                <input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>
-                                <label for="on-time" style="margin-left: 0px;">{{ trans('tasks.on-time') }}</label>
-                                <input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>
-                                <label for="no-detemine" style="margin-left: 0px;">{{ trans('tasks.no-detemine') }}</label>
-                            </span>
+
                             <span class="pull-right;">
                                 <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>
                                 <label for="determination_doing_duration" style="margin-left: 0px;">{{ trans('tasks.determination_doing_duration') }}</label>
                                 <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>
                                 <label for="determination_end_date" style="margin-left: 0px;">{{ trans('tasks.determination_end_date') }}</label>
                             </span>
-
+                            <span class="pull-right;">
+                                <input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>
+                                <label for="on-time" style="margin-left: 0px;">{{ trans('tasks.on-time') }}</label>
+                                <input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>
+                                <label for="no-detemine" style="margin-left: 0px;">{{ trans('tasks.no-detemine') }}</label>
+                            </span>
                             <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>
                                 <label class="pull-right" style="margin-left: 0px;">روز</label>
@@ -234,13 +234,18 @@
                             <option value="yearly">{{trans('tasks.year')}}</option>
                         </select>
                     </div>
-                    <div class="col-xs-9 div-schedul">
+                </div>
+                <div class="input-group col-xs-12 " style="margin: 0 15px 15px 5px;">
+                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding lbl_repeat_in">
+                        <label for="r2" class="line-height-35">{{ trans('tasks.repeat_in') }}</label>
+                    </div>
+                    <div class="col-xs-11 div-schedul">
                         <div class="minute col-xs-12 hidden">
                         </div>
                         <div class="hour col-xs-12 hidden">
                         </div>
                         <div class="daily col-xs-12 hidden">
-{{--                            {!! Form::text('daily_value', null, ['class' => 'form-control TimePicker line-height-35']) !!}--}}
+                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control TimePicker line-height-35']) !!}--}}
                         </div>
                         <div class="weekly row">
                             @for ($i = 0; $i < 7; $i++)
@@ -423,16 +428,43 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_t4" style="padding-top: 8px;margin-top:20px">
+                <div class="row hidden">
+                    <div class="col-xs-12" id="project_in_task">
+                        <div class="col-xs-1">
+                            <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                        </div>
+                        <div class="col-xs-11">
+                            <select name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
+                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
+                                    data-placeholder="{{trans('tasks.select_some_options')}}">
+                                <option value=""></option>
+                            </select>
+                            <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12">
                     <div class="col-xs-1">
-                        <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                        <label class="line-height-35">{{ trans('tasks.project') }}</label>
                     </div>
                     <div class="col-xs-9">
-                        <select id="new_task_tasks" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
-                        {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                data-placeholder="{{trans('tasks.select_some_options')}}">
-                            <option value=""></option>
-                        </select>
+                        <div class="col-xs-6">
+                            <select id="new_task_projects" name="rel_tasks[]" class="select2_auto_complete_projects col-xs-12"
+                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
+                                    data-placeholder="{{trans('tasks.enter_project_name')}}">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1">
+                            <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                        </div>
+                        <div class="col-xs-5">
+                            <select id="new_task_tasks" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
+                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
+                                    data-placeholder="{{trans('tasks.select_some_options')}}">
+                                <option value=""></option>
+                            </select>
+                        </div>
                         <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                     </div>
                     <div class="col-xs-1 no-padding-left no-padding-right">
@@ -447,7 +479,7 @@
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                            <th class="col-xs-5">{{ trans('tasks.name-task') }}</th>
+                            <th class="col-xs-5">{{ trans('tasks.project').'---'.trans('tasks.task') }}</th>
                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                             <th class="col-xs-2">{{ trans('tasks.relation') }}</th>
                             <th class="col-xs-3">{{ trans('tasks.delay') }}</th>

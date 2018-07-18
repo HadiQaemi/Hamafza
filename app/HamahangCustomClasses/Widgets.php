@@ -15,4 +15,8 @@ class Widgets
      {
          return view('hamahang.Widgets.UserCalendar.user_calendar');
      }
+     public function userProjectsWidget()
+     {
+         return view('hamahang.Widgets.UserProject.user_project');
+     }
 }

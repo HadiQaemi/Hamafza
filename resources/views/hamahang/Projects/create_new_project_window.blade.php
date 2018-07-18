@@ -4,12 +4,12 @@
         <div class="space-14"></div>
         <div class="col-xs-12">
             <div id="tab" class="table-bordered">
-                <ul class="nav nav-tabs">
-                    <li>
-                           <a href="#t1" data-toggle="tab" class="active">{{trans('projects.define')}}</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
+                {{--<ul class="nav nav-tabs">--}}
+                    {{--<li>--}}
+                           {{--<a href="#t1" data-toggle="tab" class="active">{{trans('projects.define')}}</a>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
+                {{--<div class="tab-content">--}}
                     <div class="tab-pane active" id="t1">
                         <div class="col-xs-12 line-height-35 margin-top-20">
                             <div class="col-xs-2">{{trans('projects.title')}}</div>
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                {{--</div>--}}
                 <div class="clearfixed"></div>
                 </div>
             </div>

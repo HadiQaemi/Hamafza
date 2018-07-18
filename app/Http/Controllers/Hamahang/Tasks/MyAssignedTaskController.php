@@ -7,6 +7,7 @@ use App\Http\Controllers\Hamahang\UserController;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
+use App\Models\Hamahang\Tasks\task_priority_assigner;
 use App\Models\Hamahang\Tasks\task_resources;
 use App\Models\Hamahang\Tasks\task_relations;
 use App\Models\Hamahang\Tasks\task_schedule;
@@ -1211,7 +1212,7 @@ class MyAssignedTaskController extends Controller
                 }
             }
             task_history::create_task_history($task->id, 'create', serialize(Request::all()));
-
+            task_priority_assigner::create_task_priority_assigner($task->id, Request::input('immediate') ,Request::input('importance'));
         }
         if (Request::input('event_type') == "task")
         {

@@ -688,7 +688,7 @@
                     </div>
                     <div class="col-lg-11">
                         <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
-                                data-placeholder="{{trans('tasks.select_some_options')}}"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
                                 multiple="multiple"></select>
                         <span class=" Chosen-LeftIcon"></span>
                     </div>

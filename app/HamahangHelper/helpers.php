@@ -346,6 +346,17 @@ if (!function_exists('userCalendarsWidget'))
 
 }
 
+if (!function_exists('userProjectsWidget'))
+{
+
+    function userProjectsWidget()
+    {
+        $wObj = new Widgets();
+        return $wObj->userProjectsWidget();
+    }
+
+}
+
 //-------------Begin-------------- ACL -------------------Begin---------------//
 
 if (!function_exists('tree_permissions_categories'))

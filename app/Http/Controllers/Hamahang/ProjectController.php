@@ -758,7 +758,7 @@ class ProjectController extends Controller
         $projects = DB::table('hamahang_project')
             ->where('hamahang_project.uid', '=', Auth::id())
             ->whereNull('hamahang_project.deleted_at')
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.end_date')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date')
             ->join('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
             ->join('user','user.id','=','hamahang_project_responsible.user_id')
         ;

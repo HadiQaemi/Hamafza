@@ -31,9 +31,9 @@
                 </div>
             </fieldset>
         </div>
-        <div class="row">
-            <a class="btn btn-primary fa fa-plus jsPanels margin-bottom-30" href="/modals/CreateNewProject?uid={{Session::get('uid')}}&sid=0" title="{{trans('projects.create_new_project')}}"></a>
-        </div>
+        {{--<div class="row">--}}
+            {{--<a class="btn btn-primary fa fa-plus jsPanels margin-bottom-30" href="/modals/CreateNewProject?uid={{Session::get('uid')}}&sid=0" title="{{trans('projects.create_new_project')}}"></a>--}}
+        {{--</div>--}}
     </div>
 
 @stop
@@ -76,10 +76,14 @@
                     {
                         "data": "start_date",
                         "mRender": function (data, type, full) {
-                            return "<a class='project_info cursor-pointer' data-p_id= '"+  +"' >"+ full.start_date +"</a>";
+                            return full.end_date;
                         }
                     },
-                    {"data": "end_date"},
+                    {
+                        "data": "end_date",
+                        "mRender": function (data, type, full) {
+                            return full.end_date;
+                        }},
                     {"data": "end_date"},
                     {"data": "end_date"}
                     // {
@@ -90,10 +94,11 @@
                     // }
                 ],
                 fnInitComplete : function() {
-                    if ($(this).find('tbody tr').length==0) {
-                        $('#fieldset').hide();
-                        $('#fieldset_noData').text(LangJson_DataTables.emptyTable);
-                    }
+                    // alert($(this).find('tbody tr').length);
+                    // if ($(this).find('tbody tr').length<=1) {
+                    //     $('#fieldset').hide();
+                    //     $('#fieldset_noData').text(LangJson_DataTables.emptyTable);
+                    // }
                 }
             });
             window.table_hirerical_view = $('#hirerical_view').DataTable();
@@ -169,5 +174,6 @@
 @include('sections.tabs')
 
 @section('position_right_col_3')
+    {!!userProjectsWidget()!!}
     @include('sections.desktop_menu')
 @stop

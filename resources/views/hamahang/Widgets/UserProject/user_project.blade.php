@@ -1,5 +1,5 @@
-@include('hamahang.Widgets.UserCalendar.JS.calendars_grid')
-    </div>
+@include('hamahang.Widgets.UserProject.JS.projects_grid')
+</div>
 </div>
 <style>
     .datepicker-plot-area{
@@ -29,13 +29,13 @@
         <div class="panel-heading panel-heading-darkblue">
             <div class="row">
                 {{--<h6 class="noPadding noMargin">--}}
-{{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
-                    {{--<a href="#" onclick="addPersonalCalendar();"--}}
-                       {{--class="btn btn-default fa fa-plus pull-left"--}}
-                       {{--alt="{{ trans('calendar.modal_calendar_ header_title') }} "--}}
-                       {{--title="{{ trans('calendar.modal_calendar_ header_title') }}">--}}
-                        {{--{{ trans('app.add') }} --}}
-                    {{--</a>--}}
+                {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+                {{--<a href="#" onclick="addPersonalCalendar();"--}}
+                {{--class="btn btn-default fa fa-plus pull-left"--}}
+                {{--alt="{{ trans('calendar.modal_calendar_ header_title') }} "--}}
+                {{--title="{{ trans('calendar.modal_calendar_ header_title') }}">--}}
+                {{--{{ trans('app.add') }} --}}
+                {{--</a>--}}
                 </h6>
                 <div class="clearfixed"></div>
             </div>
@@ -47,9 +47,9 @@
                     <table id="personalCalendarGrid" class="table_td_padding_5px">
                         {{--<thead>--}}
                         {{--<tr>--}}
-                            {{--<th data-column-id="rowIndex">{{trans('calendar.calendar_index_calendar_datatable_rowindex')}}</th>--}}
-                            {{--<th data-column-id="title">{{trans('calendar.calendar_index_calendar_datatable_title')}}</th>--}}
-                            {{--<th>{{trans('calendar.calendar_index_calendar_datatable_action')}}</th>--}}
+                        {{--<th data-column-id="rowIndex">{{trans('calendar.calendar_index_calendar_datatable_rowindex')}}</th>--}}
+                        {{--<th data-column-id="title">{{trans('calendar.calendar_index_calendar_datatable_title')}}</th>--}}
+                        {{--<th>{{trans('calendar.calendar_index_calendar_datatable_action')}}</th>--}}
                         {{--</tr>--}}
                         {{--</thead>--}}
                     </table>
@@ -58,14 +58,14 @@
                 <div class="row">
                     <div class="col-xs-1 pull-right">
                         {{--<a href="#" onclick="addPersonalCalendar();"--}}
-                           {{--class="btn btn-primary "--}}
-                           {{--alt="{{ trans('calendar.modal_calendar_header_title') }} "--}}
-                           {{--title="{{ trans('calendar.modal_calendar_header_title') }}">--}}
-                            {{--{{ trans('calendar.new_calendar') }}--}}
+                        {{--class="btn btn-primary "--}}
+                        {{--alt="{{ trans('calendar.modal_calendar_header_title') }} "--}}
+                        {{--title="{{ trans('calendar.modal_calendar_header_title') }}">--}}
+                        {{--{{ trans('calendar.new_calendar') }}--}}
                         {{--</a>--}}
                     </div>
                     <div class="col-xs-11"></div>
-                        {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
+                    {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
 
                     <div class="clearfixed"></div>
                 </div>

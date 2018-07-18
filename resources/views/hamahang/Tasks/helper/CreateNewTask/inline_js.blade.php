@@ -321,7 +321,10 @@
 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
 //			'       </td>\n' +
 			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
+			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+			'       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+			'       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+			'       	<label class="pull-right" for="r2"> --- '+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
 			'       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
 			'       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_tasks-container').attr('title')+ '"/>' +
 			'       </td>\n' +
@@ -333,10 +336,10 @@
 			'       </td>\n' +
 			'       <td>\n' +
 			'       	<select name="new_task_relation[]" class="form-control" >\n' +
-			// '				<option value="end_start">پایان به شروع</option>\n' +
-			// '				<option value="start_start">شروع به شروع</option>\n' +
-			// '				<option value="start_end">شروع به پایان</option>\n' +
-			// '				<option value="end_end">پایان به پایان</option>\n' +
+			'				<option value="end_start">پایان به شروع</option>\n' +
+			'				<option value="start_start">شروع به شروع</option>\n' +
+			'				<option value="start_end">شروع به پایان</option>\n' +
+			'				<option value="end_end">پایان به پایان</option>\n' +
 			'				<option value="up">بالادستی</option>\n' +
 			'				<option value="down">پایین دستی</option>\n' +
 			// '				<option value="after">گردش کار - بعدی</option>\n' +
@@ -463,7 +466,34 @@
             }
         }
     });
-	$(".select2_auto_complete_tasks").select2({
+	$(".select2_auto_complete_projects").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.projects')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    $(".select2_auto_complete_tasks").select2({
         minimumInputLength: 3,
         dir: "rtl",
         width: "100%",
@@ -661,6 +691,10 @@
 	
 	$('#task_schedul').on('change', function() {
         var schedul = $(this).val();
+        if(schedul=='minute' || schedul=='hour' || schedul=='daily')
+            $('.lbl_repeat_in').addClass('hidden');
+        else
+            $('.lbl_repeat_in').removeClass('hidden');
 		$('.div-schedul div').addClass('hidden');
 		$('.'+schedul).removeClass('hidden');
     });
