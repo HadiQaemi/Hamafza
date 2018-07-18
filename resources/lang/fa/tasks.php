@@ -115,7 +115,7 @@ return [
     'time'=>'زمان',
     'important'=>'مهم',
     'non-important'=>'غیر مهم',
-    'send-mail'=>'ارسال ایمیل',
+    'send-mail'=>'ارسال رایانامه',
     'send-sms'=>'ارسال پیامک',
     'report_on_responsible'=>'اطلاع به مسئولان',
     'unimportant'=>'غیر مهم',
