@@ -136,6 +136,8 @@
 
                 $('#normal_task_timing').html(txt);
 
+            }else if (id == -1){
+                $('#normal_task_timing').html('');
             }
         }
 

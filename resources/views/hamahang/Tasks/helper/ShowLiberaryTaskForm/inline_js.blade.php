@@ -53,8 +53,7 @@
                 autoClose: true,
                 format: 'YYYY-MM-DD',
             });
-        }
-        if (id == 0) {
+        }else if (id == 0) {
             var txt = '' +
                 // '<div class="row-fluid">\n' +
                 // '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
@@ -75,6 +74,8 @@
 
             $('#normal_task_timing').html(txt);
 
+        }else if (id == -1){
+            $('#normal_task_timing').html('');
         }
     }
     function change_respite_type(id) {
@@ -347,7 +348,7 @@
 			'       <td>\n' +
 			'           <label class="input-group pull-right">\n' +
 							$('#new_task_weight').val() +
-			'       		<input name="new_task_weight[]" type="hidden" value="' +$('#new_task_weight').val()+ '"/>' +
+			'       		<input name="new_task_weight[]" type="text" value="0"/>' +
 			'           </label>\n' +
 			'       </td>\n' +
 			'       <td>\n' +
@@ -373,7 +374,7 @@
 			'           </label>\n' +
 			'       </td>\n' +
 			'       <td>\n' +
-			'       	<span class="fa fa-remove btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+			'       	<span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
 			'       </td>\n' +
 			'    </tr>\n';
         $('#rel_task_list').append(project_span);
@@ -402,7 +403,7 @@
 			'           </label>\n' +
 			'       </td>\n' +
 			'       <td>\n' +
-			'       	<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
+			'       	<span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
 			'       </td>\n' +
 			'    </tr>\n';
         $('#resources_task_list').append(project_span);

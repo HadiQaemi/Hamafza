@@ -166,9 +166,9 @@
                                 <label for="determination_end_date" style="margin-left: 0px;">{{ trans('tasks.determination_end_date') }}</label>
                             </span>
                             <span class="pull-right;">
-                                <input type="radio" name="respite_timing_type" id="on-time" onclick="" value="2"/>
+                                <input type="radio" name="respite_timing_type" id="on-time" onclick="change_normal_task_timing_type(-1)" value="2"/>
                                 <label for="on-time" style="margin-left: 0px;">{{ trans('tasks.on-time') }}</label>
-                                <input type="radio" name="respite_timing_type" id="no-detemine" onclick="" value="3"/>
+                                <input type="radio" name="respite_timing_type" id="no-detemine" onclick="change_normal_task_timing_type(-1)" value="3"/>
                                 <label for="no-detemine" style="margin-left: 0px;">{{ trans('tasks.no-detemine') }}</label>
                             </span>
                             <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
@@ -467,11 +467,11 @@
                         </div>
                         <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                     </div>
-                    <div class="col-xs-1 no-padding-left no-padding-right">
-                        <input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
-                    </div>
+                    {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
+                        {{--<input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
+                    {{--</div>--}}
                     <div class="col-xs-1">
-                        <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
+                        <span class="btn btn-primary" id="add_rel_task">{{ trans('app.add') }}</span>
                     </div>
                 </div>
                 <div class="col-xs-12">

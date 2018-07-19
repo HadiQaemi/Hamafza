@@ -487,11 +487,11 @@
                             </select>
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
-                        <div class="col-xs-1 no-padding-left no-padding-right">
-                            <input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
-                        </div>
+                        {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
+                            {{--<input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
+                        {{--</div>--}}
                         <div class="col-xs-1">
-                            <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
+                            <span class="btn btn-primary" id="add_rel_task">{{ trans('app.add') }}</span>
                         </div>
                     </div>
                 @endif

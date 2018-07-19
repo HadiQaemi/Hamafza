@@ -254,16 +254,16 @@
                 '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div>' +
+                '   <div style="border-bottom:1px solid #aaa">' +
                 '       <a href="#" class="list-group-item" onclick="showTaskModal()" > ' +
                 '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div style="border-bottom:1px solid #aaa">' +
-                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
-                '           <i  class="fa fa fa-calendar "></i>{{trans('calendar.modal_calendar_new_time_border')}}'+
-                '       </a>' +
-                '   </div>' +
+                {{--'   <div style="border-bottom:1px solid #aaa">' +--}}
+                {{--'       <a href="#" class="list-group-item" onclick="showReminderModal();">' +--}}
+                {{--'           <i  class="fa fa fa-calendar "></i>{{trans('calendar.modal_calendar_new_time_border')}}'+--}}
+                {{--'       </a>' +--}}
+                {{--'   </div>' +--}}
                 {{--'   <div>' +--}}
                 {{--'       <a href="#" class="list-group-item" onclick="showEvenModal()" > ' +--}}
                 {{--'           {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+--}}
@@ -337,7 +337,7 @@
                     for (var i = 0; i < pstarttime.length; i++) {
                         pstarttime[i] = persianToEngilshDigit(pstarttime[i])
                     }
-                    realPstarttime = (parseInt(pstarttime[0]) * 60 * 60 + parseInt(pstarttime[1]) * 60 + parseInt(pstarttime[2])) - 12600;
+                    realPstarttime = (parseInt(pstarttime[0]) * 60 * 60 + parseInt(pstarttime[1]) * 60 + parseInt(pstarttime[2])) - 12600 - 3600;
                     realPstarttime = secondToTime(realPstarttime);
                     pEnd = pEnd.split(' ');
                     pendtime = pEnd[1];
@@ -345,7 +345,7 @@
                     for (var i = 0; i < pendtime.length; i++) {
                         pendtime[i] = persianToEngilshDigit(pendtime[i])
                     }
-                    realPendttime = (parseInt(pendtime[0]) * 60 * 60 + parseInt(pendtime[1]) * 60 + parseInt(pendtime[2])) - 12600;
+                    realPendttime = (parseInt(pendtime[0]) * 60 * 60 + parseInt(pendtime[1]) * 60 + parseInt(pendtime[2])) - 12600 - 3600;
                     realPendtime = secondToTime(realPendttime);
                     //$('#modal_start_date').text(pStart[0]);
                     // $('#modal_end_date').text(pEnd[0]);
@@ -363,7 +363,7 @@
                     $('#modal_fullcalendar_menu input[name="enddate"]').val(pEnd[0]);
                     $('#modal_fullcalendar_menu input[name="starttime"]').val(realPstarttime);
                     $('#modal_fullcalendar_menu input[name="endtime"]').val(realPendtime);
-                    $("#calendar").fullCalendar("unselect");
+                    // $("#calendar").fullCalendar("unselect");
                 },
                 events: function (start, end, timezone, callback) {
                     loading({id: 'calendar'}, 1);
@@ -519,7 +519,7 @@
 
 
         $('#calendar_time_task').click(function () {
-            alert('set_time_task set_time_taskddddddddd set_time_taskddddddddd');
+            // alert('set_time_task set_time_taskddddddddd set_time_taskddddddddd');
             loading({id: 'calendar'}, 1);
             $('.fc-right .fc-button-group button').removeClass('fc-state-active');
             $(this).addClass('fc-state-active');

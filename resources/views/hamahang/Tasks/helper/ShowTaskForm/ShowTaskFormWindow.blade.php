@@ -446,7 +446,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -469,11 +469,11 @@
                             </select>
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
-                        <div class="col-xs-1 no-padding-left no-padding-right">
-                            <input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />
-                        </div>
+                        {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
+                            {{--<input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
+                        {{--</div>--}}
                         <div class="col-xs-1">
-                            <span class="btn btn-primary fa fa-plus" id="add_rel_task"></span>
+                            <span class="btn btn-primary" id="add_rel_task">{{ trans('app.add') }}</span>
                         </div>
                     </div>
                 @endif
@@ -534,7 +534,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <span class="fa fa-remove btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
                                     </td>
                                 </tr>
                             @endforeach
