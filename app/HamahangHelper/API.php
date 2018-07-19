@@ -26,6 +26,34 @@ if (!function_exists('CheckToken')) {
     }
 
 }
+
+if (!function_exists('getUser')) {
+
+    function getUser() {
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $error = validation_error_to_api_json($validator->errors());
+            $res = [
+                'status' => "-1",
+                'error' => $error
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        if (!CheckToken(Request::input('token'))) {
+            $res = [
+                'status' => "401",
+                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+        return Token::where('token', Request::input('token'))->first()->user;
+       
+        
+    }
+
+}
 if (!function_exists('CheckTokenGustMode')) {
 
     function CheckTokenGustMode($token) {

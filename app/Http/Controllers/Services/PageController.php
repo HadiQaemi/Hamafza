@@ -18,24 +18,9 @@ use App\HamafzaServiceClasses\UserClass;
 class PageController extends Controller {
 
     public function PageDetail() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-                    'page_id' => 'required'
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        if (!CheckToken(Request::input('token')) && !CheckTokenGustMode(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => ['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
 
         $pid = Request::input('page_id');
@@ -175,23 +160,9 @@ class PageController extends Controller {
     }
 
     public function PageLike() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
         if ($tar_val == '1') {
             $SP = new \App\HamafzaServiceClasses\PageClass();
@@ -206,26 +177,11 @@ class PageController extends Controller {
 
     public function like() {
 
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        $type = Request::input('type');
-        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $uid = $user->id;
         $sid = Request::input('sid');
         switch ($type) {
             case 'subject':
@@ -250,26 +206,11 @@ class PageController extends Controller {
     }
 
     public function disLike() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        $type = Request::input('type');
-        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $uid = $user->id;
         $sid = Request::input('sid');
         switch ($type) {
             case 'subject':
@@ -295,26 +236,11 @@ class PageController extends Controller {
 
     public function follow() {
 
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        $type = Request::input('type');
-        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $uid = $user->id;
         $sid = Request::input('sid');
         switch ($type) {
             case 'subject':
@@ -337,26 +263,11 @@ class PageController extends Controller {
     }
 
     public function unFollow() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        $type = Request::input('type');
-        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $uid = $user->id;
         $sid = Request::input('sid');
         switch ($type) {
             case 'subject':
@@ -386,27 +297,10 @@ class PageController extends Controller {
     }
 
     public function newpost(Request $request) {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
-
         $uid = $user->id;
 
         $pid = Request::input('pid');
@@ -450,27 +344,10 @@ class PageController extends Controller {
     }
 
     public function bookmark_toggle() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
-
         $target_table = Request::input('type');
         $target_id = Request::input('id');
         $user_id = $user->id;
@@ -523,27 +400,11 @@ class PageController extends Controller {
     }
 
     public function bookmark_delete() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
         $id = Request::input('id');
 
         $bookmark = Bookmark::where('id', $id)->where('user_id', $user->id)->get()->first();
@@ -565,27 +426,11 @@ class PageController extends Controller {
     }
 
     public function announce_add(Request $request) {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
         $uid = $user->id;
         $title = Request::input('title');
 
@@ -640,29 +485,12 @@ class PageController extends Controller {
 
     public function sendMessage() {
 //        dd(Request::all());
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
         $uid = $user->id;
-
+        
         //$sesid =  0;
         $title = Request::input('title');
         $comment = Request::input('comment');
@@ -723,29 +551,11 @@ class PageController extends Controller {
     }
 
     public function newOrgan() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-
-
-        $uid = Token::where('token', Request::input('token'))->first()->user->id;
+        $uid = $user->id;
         $group_title = Request::input('group_title');
         $group_link = Request::input('group_link');
         $group_summary = Request::input('group_summary');
@@ -810,27 +620,10 @@ class PageController extends Controller {
     }
 
     public function post_comment() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-
-        $user = Token::where('token', Request::input('token'))->first()->user;
         $postid = Request::input('postid');
         $uid = $user->id;
         $comment = Request::input('comment');

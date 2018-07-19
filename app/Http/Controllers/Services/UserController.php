@@ -24,26 +24,10 @@ class UserController extends Controller {
     }
 
     public function desktop() {
-        $validator = Validator::make(Request::all(), [
-                    'token' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $error = validation_error_to_api_json($validator->errors());
-            $res = [
-                'status' => "-1",
-                'error' => $error
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $auth_user = getUser();
+        if (!isset($auth_user->id)){
+            return $auth_user;
         }
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
-        }
-        $auth_user = Token::where('token', Request::get('token'))->first()->user;
-
         $res ['desktop_sections'] =
                         [
                             [
@@ -280,14 +264,10 @@ class UserController extends Controller {
     }
 
     public function get_my_posts() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+           return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         $posts = $user->ApiPosts;
         $res = [
             'status' => "1",
@@ -301,15 +281,10 @@ class UserController extends Controller {
     }
 
     public function get_my_wall() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
-
         $res = [
             'status' => "1",
             'main' =>
@@ -322,14 +297,10 @@ class UserController extends Controller {
     }
 
     public function get_about_me() {
-        if (!CheckToken(Request::get('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         $posts_count = $user->posts->count();
         $follower_persons_count = $user->follower_persons->count();
         $followed_persons_count = $user->followed_persons->count();
@@ -418,14 +389,10 @@ class UserController extends Controller {
     }
 
     public function get_my_notes() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         $res = [
             'status' => "1",
             'main' =>
@@ -438,14 +405,10 @@ class UserController extends Controller {
     }
 
     public function get_my_groups() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         $res = [
             'status' => "1",
             'main' =>
@@ -458,14 +421,10 @@ class UserController extends Controller {
     }
 
     public function get_bookmarks() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         $data = $user->getApiBookmarksAttribute(Request::get('term'), $user->id);
         $res = [
             'status' => "1",
@@ -479,16 +438,10 @@ class UserController extends Controller {
     }
 
     public function portals() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-
-
-
         $subject_types = ['public' => 'رسمی', 'private' => 'شخصی',];
         $term = trim(Request::input('term'));
         $subjects['public'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '1')->where('list', '1')->where('archive', '0');
@@ -507,28 +460,21 @@ class UserController extends Controller {
     
     function MyGroups()
     {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $user = Token::where('token', Request::get('token'))->first()->user;
         return \Illuminate\Support\Facades\DB::table('user_group as g')->leftjoin('user_group_member as u', 'u.gid', '=', 'g.id')
                         ->where('u.uid', $user->id)->select('g.id', 'g.name')
                         ->get();
     }
 
     function announces() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $uid = $user->id;
         $s = new \App\HamafzaServiceClasses\DesktopsClass();
         $s = $s->Getannounces($uid, 0, 0);
         $s = json_encode($s);
@@ -541,14 +487,11 @@ class UserController extends Controller {
     }
 
     function highlights() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
-        $uid = Token::where('token', Request::get('token'))->first()->user->id;
+        $uid = $user->id;
         $s = new \App\HamafzaServiceClasses\DesktopsClass();
         $s = $s->Gethighlights($uid, 0, 0);
         return [
@@ -558,12 +501,9 @@ class UserController extends Controller {
     }
 
     function inbox() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
         $uid = Token::where('token', Request::get('token'))->first()->user->id;
         $M = new \App\HamafzaServiceClasses\MessageClass();
@@ -575,12 +515,9 @@ class UserController extends Controller {
     }
 
     function outbox() {
-        if (!CheckToken(Request::input('token'))) {
-            $res = [
-                'status' => "-1",
-                'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
-            ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        $user = getUser();
+        if (!isset($user->id)){
+            return $user;
         }
         $uid = Token::where('token', Request::get('token'))->first()->user->id;
         $M = new \App\HamafzaServiceClasses\MessageClass();
