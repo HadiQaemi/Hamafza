@@ -45,7 +45,19 @@ class AjaxController extends Controller
             $error = false;
             $redirect_to_home = 0;
             $users = DB::table('subjects')->where('id', $sid)->select('manager', 'supporter', 'supervisor', 'admin')->first();
-            if ($users && ($users->manager == $uid || $users->supporter == $uid || $users->supervisor == $uid || $users->admin == $uid || '1' == UserClass::permission('DelSubjects', $uid)))
+
+            $subject = Subject::findOrFail($sid);
+            $access_edit_in_user = in_array(Auth::id(), array_column($subject->user_policies_edit->toArray(), 'id'));
+            $user = User::where('id', Auth::id())->first();
+            $roles = $user->_roles->toArray();
+            foreach($roles as $Arole)
+            {
+                $access_edit_in_role = in_array($Arole['id'], array_column($subject->role_policies_edit->toArray(), 'id'));
+                if($access_edit_in_role)
+                    break;
+            }
+            if(($access_edit_in_user || $access_edit_in_role) || $subject->toArray()['admin']==Auth::id())
+//            if ($users && ($users->manager == $uid || $users->supporter == $uid || $users->supervisor == $uid || $users->admin == $uid || '1' == UserClass::permission('DelSubjects', $uid)))
             {
                 if ($type == 'recycle')
                 {
