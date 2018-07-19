@@ -76,7 +76,7 @@
                     {
                         "data": "start_date",
                         "mRender": function (data, type, full) {
-                            return full.end_date;
+                            return full.start_date;
                         }
                     },
                     {

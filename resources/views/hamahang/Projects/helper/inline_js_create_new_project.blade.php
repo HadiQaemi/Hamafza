@@ -166,10 +166,10 @@
             ObservationPermissionUsers: $('#ObservationPermissionUsers').val(),
             save_type: $('input[name=save_type]:checked').val(),
         };
-        confirmModal({
-            title: '{{trans('projects.create_new_project')}}',
-            message: '{{trans('projects.are_you_sure_to_create_new_project')}}',
-            onConfirm: function () {
+        {{--confirmModal({--}}
+            {{--title: '{{trans('projects.create_new_project')}}',--}}
+            {{--message: '{{trans('projects.are_you_sure_to_create_new_project')}}',--}}
+            {{--onConfirm: function () {--}}
                 $.ajax({
                     url: '{!! route('hamahang.project.save_new_project')!!}',
                     type: 'POST', // Send post dat
@@ -178,14 +178,14 @@
                     success: function (s) {
                         res = JSON.parse(s);
                         if (res.success == true) {
-                            messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});
+                            {{--messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});--}}
                             //location.reload();
                         }
                     }
                 });
-            },
-            afterConfirm: 'close'
-        });
+        //     },
+        //     afterConfirm: 'close'
+        // });
 
         {{--$.ajaxSetup({--}}
         {{--headers: {--}}

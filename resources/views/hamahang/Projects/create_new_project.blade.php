@@ -29,8 +29,8 @@
                                             <td class="width-120">عنوان</td>
                                             <td>
                                                 <input type="text" class="col-xs-4 form-control" id="p_title"/>
-                                                <input type="radio" class="" name="p_type" value="0"/><label>رسمی</label>
-                                                <input type="radio" class="" name="p_type" value="1"/><label>غیر رسمی</label>
+                                                <label for="p_type0">رسمی</label><input type="radio" class="" name="p_type" id="p_type0" value="0"/>
+                                                <label for="p_type1">غیر رسمی</label><input type="radio" class="" name="p_type" id="p_type1" value="1"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -156,7 +156,7 @@
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-25">
                                                         <div class="form-inline">
                                                             <div class="col-xs-12 row">
-                                                                <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
+                                                                <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('tasks.select_some_keywords')}}" multiple="multiple"></select>
                                                                 <span class="Chosen-LeftIcon"></span>
                                                             </div>
                                                         </div>

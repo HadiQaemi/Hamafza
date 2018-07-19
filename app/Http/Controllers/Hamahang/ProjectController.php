@@ -770,22 +770,19 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects = $projects->get()->toArray();
+        $projects2 = $projects->get();
 
-        $dd = collect($projects)->map(function ($x)
-        {
-            return (array)$x;
-        })->toArray();
-//        $dd = Datatables::of($projects)
-//            ->addColumn('fa_start_date', function ($data)
-//            {
-//                return date('Y-m-d',$data->start_date);
-//            })
-//            ->rawColumns(['fa_start_date'])
-//            ->make(true);
-////        dd($dd);
-        $result['data'] = $dd;
-        return json_encode($result);
+
+        return $dd2 = Datatables::of($projects2)
+            ->editColumn('start_date', function ($data)
+            {
+                return jDateTime::date('Y-m-d',$data->start_date,1,1);
+            })
+            ->editColumn('end_date', function ($data)
+            {
+                return jDateTime::date('Y-m-d',$data->end_date,1,1);
+            })
+            ->make(true);
     }
 
     public function ProjectsList($uname)
