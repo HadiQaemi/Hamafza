@@ -173,12 +173,13 @@ if (!function_exists('Get_User_Wall')) {
 if (!function_exists('Get_User_Info')) {
 
     function Get_User_Info($username) {
-        $user = User::where("Uname", $username)->select(DB::Raw('CAST(id AS CHAR(12)) as uid ,Name, Family, Summary, Email, Pic'))->first();
+        $user = User::where("Uname", $username)->select(DB::Raw('CAST(id AS CHAR(12)) as uid ,Name, Family, Summary, Email, Pic, avatar'))->first();
         if (isset($user->Pic) && !empty($user->Pic)) {
             $user->Pic = config('constants.SiteAddress') . 'userpic/' . $user->Pic;
         } else {
             $user->Pic = "";
         }
+        $user->avatar_link = $user->avatar_link;
         $user->wall_count = "0";
         $user->desktop_count = "0";
         return $user;
