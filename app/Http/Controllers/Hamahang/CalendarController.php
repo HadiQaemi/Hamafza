@@ -213,7 +213,7 @@ class CalendarController extends Controller
 
         $arr['filter_subject_id'] = $Uname;
         $arr['date'] = $gdate;
-        $arr = array_merge($arr, tasks::MyTasksPriorityTime());
+        $arr = array_merge($arr, tasks::MyTasksPriorityTime([0,1],false,false,[0,1]));
         return view('hamahang.Calendar.SetTask', $arr);
     }
 
