@@ -99,6 +99,9 @@
         #pcol_32{
             overflow-y: visible !important;
         }
+        .rightSubMenu{
+            top: 88px !important;
+        }
     </style>
     @include('hamahang.CalendarEvents.helper.Index.inlineCss.inlineCss')
     @include('hamahang.Calendar.helper.Index.inlineCss.inlineCss')
