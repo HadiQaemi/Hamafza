@@ -32,7 +32,10 @@ class ChartsController extends Controller
             $data = [];
             foreach ($citis as $city)
             {
-                $data[] = [$city->city, $city->total];
+                $cus_city = $city->city;
+                if($city->city == 'Ahvaz')
+                    $cus_city= 'Khuzestan';
+                $data[] = [$cus_city, $city->total];
 
             }
             $arr['city'][] = array('name' => $country->country_name, 'id' => $country->country_name, 'data' => $data);
