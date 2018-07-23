@@ -519,13 +519,29 @@ class UserController extends Controller
             $user->Family = $request->family;
             $user->is_new = '1';
             $user->save();
+            if ('kmkz' == config('constants.DefIndexView'))
+            {
+                $profile = new UserProfile();
+                $profile->uid = $user->id;
+                $profile->Province = $request->province;
+                $profile->City = $request->city;
+                $profile->Mobile = $request->mobile;
+                $profile->Tel_number = $request->phone;
+                $profile->relevant_organization = $request->input('relevant_organization', null);
+                $profile->save();
+
+                $user_education = new UserEducation();
+                $user_education->uid = $user->id;
+                $user_education->grade = $request->education;
+                $user_education->save();
+            }
 
             $user_profile_columns = Schema::getColumnListing('user_profile');
             if (in_array('relevant_organization', $user_profile_columns))
             {
-                $user_profile = new UserProfile();
-                $user_profile->uid = $user->id;
-                $user_profile->relevant_organization = $request->input('relevant_organization', null);
+//                $user_profile = new UserProfile();
+//                $user_profile->uid = $user->id;
+//                $user_profile-> = $request->input('relevant_organization', null);
             }
 
             $registered_role = Role::find(config('constants.APP_REGISTERED_ROLE_ID'));

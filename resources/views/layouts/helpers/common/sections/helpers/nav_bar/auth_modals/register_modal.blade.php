@@ -1,6 +1,6 @@
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="height: 750px;">
             <div class="modal-header modal-header-darkblue">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title">ثبت نام</h3>
@@ -47,11 +47,62 @@
                             </div>
                             <div id="reg_family_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
                             @if ('kmkz' == config('constants.DefIndexView'))
-                            <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
-                                <span class="input-group-addon"> سازمان مربوطه </span>
-                                <input type="text" class="form-control" id="modal_relevant_organization_input" name="relevant_organization">
-                                <span class="input-group-addon icon-a-b"></span>
-                            </div>
+                                <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon"> سازمان مربوطه </span>
+                                    <input type="text" class="form-control" id="modal_relevant_organization_input" name="relevant_organization">
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
+                                <div class="form-group input-group col-xs-12" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon ">استان</span>
+                                    <select id="modal_province_input" name="province" class='col-xs-6 select2 province form-control js-example-basic-single jsp_user_detail_province'>
+                                        @php
+                                            $cities = \Session::get('cities');
+                                            $provinces = \Session::get('provinces');
+                                        @endphp
+                                        @if($provinces)
+                                            @foreach($provinces as $province)
+                                                @if(trim($province->id)!='' && trim($province->name)!='')
+                                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
+                                <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon ">شهر</span>
+                                    <select id="modal_city_input" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
+                                        @if($cities)
+                                            @foreach($cities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
+                                <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon ">شماره همراه</span>
+                                    <input type="text" class="form-control" id="modal_mobile_input" name="mobile">
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
+                                <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon ">تلفن ثابت</span>
+                                    <input type="text" class="form-control" id="modal_phone_input" name="phone">
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
+                                <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
+                                    <span class="input-group-addon ">تحصیلات</span>
+                                    <select class="form-control user_education_grade" id="modal_education_input" name="education">
+                                        <option value="1">دیپلم</option>
+                                        <option value="2">فوق دیپلم</option>
+                                        <option value="3">کارشناسی</option>
+                                        <option value="4">کارشناسی ارشد</option>
+                                        <option value="5">دکترا</option>
+                                        <option value="6">دکترای حرفه ای</option>
+                                        <option value="7">فوق دکتری</option>
+                                    </select>
+                                    <span class="input-group-addon icon-a-b"></span>
+                                </div>
                             @endif
                             <div id="reg_relevant_organization_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
                             @if (!config('app.debug'))
@@ -97,3 +148,25 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal_province_input').select2();
+    $('#modal_city_input').select2();
+    $(document).on("change", '#modal_province_input', function () {
+        var province_id = $(this).val();
+        // var form_data = $('#user_detail_edit_form').serialize();
+        $.ajax({
+            type: "POST",
+            url: '{{ route('hamahang.users.cities')}}',
+            dataType: "json",
+            data: {province_id:province_id},
+            success: function (results) {
+                $('#modal_city_input').html('');
+                $.each(results,function (key,value) {
+                    $('#modal_city_input').append('<option value="'+value['id']+'">'+value['text']+'</option>');
+                });
+
+            }
+        });
+    });
+    $('.select2-container').css('width','430px');
+</script>

@@ -8,6 +8,8 @@ use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectType;
 use App\Models\Hamahang\Basicdata;
 use App\Models\Hamahang\BasicdataValue;
+use App\Models\Hamahang\ProvinceCity\City;
+use App\Models\Hamahang\ProvinceCity\Province;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -67,6 +69,8 @@ class HomeController extends Controller
         }
         $Portals = '';
         //$keywordTab = KeywordClass::GetPublicKeyword();
+        $provinces = Province::all();
+        $cities = City::all();
         $news = '';
         $index = (config('constants.IndexView') != '') ? config('constants.IndexView') : 'index';
 
@@ -224,6 +228,8 @@ class HomeController extends Controller
                 return view($index_view, array(
                     'SiteLogo' => $SiteLogo,
                     'PageType' => 'home',
+                    'provinces' => $provinces,
+                    'cities' => $cities,
                     'news_tabs' => $news_tabs,
                     'paya' => $paya,
                     'tarh' => $tarh,
@@ -305,7 +311,11 @@ class HomeController extends Controller
             //'keywordTab' => $keywordTab,
             'client_ip' => $request->ip(),
             'data' => $data,
+            'provinces' => $provinces,
+            'cities' => $cities
         ];
+        \Session::put('provinces',$provinces);
+        \Session::put('cities',$cities);
         $r = view($index_view, $with);
         return $r;
     }
