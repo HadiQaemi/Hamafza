@@ -183,6 +183,7 @@ class PageController extends Controller {
         }
         $uid = $user->id;
         $sid = Request::input('sid');
+        $type = Request::input('type'); 
         switch ($type) {
             case 'subject':
                 $PageClass = new PageClass();
@@ -201,7 +202,11 @@ class PageController extends Controller {
                 return $UC->LikeADD($uid, $sid);
                 break;
             case 'Post':
-                return \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 1);
+                 \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 1);
+                return [
+                    'status' => "1",
+                    'e_text' => 'به پسندیده ها اضافه گشت.'
+                ];
         }
     }
 
@@ -212,6 +217,7 @@ class PageController extends Controller {
         }
         $uid = $user->id;
         $sid = Request::input('sid');
+        $type = Request::input('type'); 
         switch ($type) {
             case 'subject':
                 $PageClass = new PageClass();
@@ -230,7 +236,11 @@ class PageController extends Controller {
                 return $UC->LikeRemove($uid, $sid);
                 break;
             case 'Post':
-                return \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 0);
+                \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 0);
+                return [
+                    'status' => "1",
+                    'e_text' => 'از پسندیده شده ها حذف گردید.'
+                ];
         }
     }
 

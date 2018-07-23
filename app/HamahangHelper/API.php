@@ -46,7 +46,7 @@ if (!function_exists('getUser')) {
                 'status' => "401",
                 'error' => [['e_key' => 'token', 'e_values' => [['e_text' => 'عبارت امنیتی معتبر نمی باشد.']]]]
             ];
-            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+            return response()->json($res, 401)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
         return Token::where('token', Request::input('token'))->first()->user;
        

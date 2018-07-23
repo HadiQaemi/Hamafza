@@ -1427,6 +1427,7 @@ class PostsClass {
     public static function PostLike($uid, $postid, $sesid, $like) {
         $user = UserClass::CheckLogin($uid, $sesid);
         $user = ($user == TRUE) ? 'true' : 'false';
+        $message='';
         if ($user) {
             if ($like == 1) {
                 $nums = DB::table('post_like')->where('pid', $postid)->where('uid', $uid)
