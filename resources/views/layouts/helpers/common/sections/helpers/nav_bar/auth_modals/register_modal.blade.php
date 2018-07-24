@@ -42,7 +42,7 @@
                             <div id="reg_name_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
                             <div class="form-group input-group" style="margin-bottom: 0; margin-top: 12px;">
                                 <span class="input-group-addon"> نام خانوادگی </span>
-                                <input type="text" class="form-control" id="modal_family_input" name="family" value="{{config('constants.DefIndexView')}}">
+                                <input type="text" class="form-control" id="modal_family_input" name="family" value="">
                                 <span class="input-group-addon icon-a-b"></span>
                             </div>
                             <div id="reg_family_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
