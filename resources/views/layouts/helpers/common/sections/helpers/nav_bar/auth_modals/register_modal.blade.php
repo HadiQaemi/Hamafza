@@ -1,6 +1,6 @@
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="">
     <div class="modal-dialog">
-        <div class="modal-content" style="height: 750px;">
+        <div class="modal-content" style="{{'kmkz' == config('constants.DefIndexView') ? 'height: 750px;' : ''}}">
             <div class="modal-header modal-header-darkblue">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title">ثبت نام</h3>
