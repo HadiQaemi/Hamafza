@@ -2207,38 +2207,56 @@ preventDuplicates: true,
         $r = null;
         $keyword_types = ['special' => 'تخصص&zwnj;ها', 'subject' => 'صفحات', 'enquiry_pages' => 'صفحات دیگر', ];
         $request_keywords = $request->exists('keywords') ? $request->keywords : [];
-        $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords)
-        {
-            return $q->whereIn('keywords.id', $request_keywords);
-        });
-        $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keywords)
-        {
-            return $q->whereIn('keywords.id', $request_keywords);
-        });
-        $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keywords)
-        {
-            return $q->whereIn('post_keys.kid', $request_keywords);
-        })->with('subject');
+
         if ($request->keywords_and_or)
         {
-            foreach ($request_keywords as $request_keyword)
+            $where_clause_id = [];
+            $where_clause_kid = [];
+            $subject_key = DB::table('subject_key as s');
+            foreach ($request_keywords as $k=>$request_keyword)
             {
-                $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keyword)
-                {
-                    return $q->where('keywords.id', $request_keyword);
-                });
-                $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keyword)
-                {
-                    return $q->where('keywords.id', $request_keyword);
-                });
-                $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keyword)
-                {
-                    return $q->where('post_keys.kid', $request_keyword);
-                })->with('subject');
+                $subject_key->leftjoin('subject_key as s'.$k, 's.sid', '=', 's'.$k.'.sid')
+                    ->where('s'.$k.'.kid',$request_keyword);
+                $where_clause_id[]=['keywords.id','=',$request_keyword];
+                $where_clause_kid[]=['post_keys.kid','=',$request_keyword];
             }
+            $sids = $subject_key->select('s.sid')->get();
+            $whSid = [];
+            foreach($sids as $sid)
+                $whSid[] = $sid->sid;
+            $subjects = Subject::whereIn('id',$whSid);
+            $keywords['special'] = User::whereHas('specials', function ($q) use ($where_clause_id)
+            {
+                return $q->where($where_clause_id);
+            });
+//            $keywords['subject'] = $subjects;
+            $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($where_clause_id)
+            {
+                return $q->where($where_clause_id);
+            });
+            $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($where_clause_kid)
+            {
+                return $q->where($where_clause_kid);
+            })->with('subject');
+        }else{
+            $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords)
+            {
+                return $q->whereIn('keywords.id', $request_keywords);
+            });
+            $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keywords)
+            {
+                return $q->whereIn('keywords.id', $request_keywords);
+            });
+            $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keywords)
+            {
+                return $q->whereIn('post_keys.kid', $request_keywords);
+            })->with('subject');
         }
         $keywords['special'] = $keywords['special']->get();
-        $keywords['subject'] = $keywords['subject']->get();
+//        $keywords['subject'] = $keywords['subject']->get();
+        $keywords['subject'] = $subjects->get();
+//        $keywords['subject'] = $keywords['subject']->toSql();
+//        dd($keywords);
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_searchTags')->with
         ([
