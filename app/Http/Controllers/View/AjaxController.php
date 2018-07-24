@@ -2225,15 +2225,15 @@ preventDuplicates: true,
             foreach($sids as $sid)
                 $whSid[] = $sid->sid;
             $subjects = Subject::whereIn('id',$whSid);
+            $keywords['subject'] = $subjects;
             $keywords['special'] = User::whereHas('specials', function ($q) use ($where_clause_id)
             {
                 return $q->where($where_clause_id);
             });
-//            $keywords['subject'] = $subjects;
-            $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($where_clause_id)
-            {
-                return $q->where($where_clause_id);
-            });
+//            $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($where_clause_id)
+//            {
+//                return $q->where($where_clause_id);
+//            });
             $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($where_clause_kid)
             {
                 return $q->where($where_clause_kid);
@@ -2253,10 +2253,7 @@ preventDuplicates: true,
             })->with('subject');
         }
         $keywords['special'] = $keywords['special']->get();
-//        $keywords['subject'] = $keywords['subject']->get();
-        $keywords['subject'] = $subjects->get();
-//        $keywords['subject'] = $keywords['subject']->toSql();
-//        dd($keywords);
+        $keywords['subject'] = $keywords['subject']->get();
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_searchTags')->with
         ([
