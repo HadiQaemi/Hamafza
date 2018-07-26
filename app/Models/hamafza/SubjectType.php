@@ -2,6 +2,9 @@
 
 namespace App\Models\hamafza;
 
+use App\User;
+use Auth;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -61,6 +64,32 @@ class SubjectType extends Model
 
     public static function PermittedPersonalSubjectTypes()
     {
+        $user = User::where('id', Auth::id())->first();
+        $roles = array_column($user->_roles()->select('id')->get()->toArray(),'id');
+        $roles_ids = [];
+        foreach($roles as $Arole)
+            $roles_ids[] = $Arole;
+
+        $SubjectType = new SubjectType();
+        $roles = $SubjectType->role_policies_personal()->whereIn('role_id',$roles)->get();
+        $sub_ids = DB::table('hamahang_role_policies')->where('target_type','like','%SubjectType')->where('type','=',2)->whereIn('role_id',$roles_ids)->select('target_id')->get()->toArray();
+        $SubjectTypes = [];
+        foreach($sub_ids as $ASubjectType)
+            $SubjectTypes[] = $ASubjectType->target_id;
+
+        $SubjectType = SubjectType::whereIn('id',$SubjectTypes)->get();
+
+        $sub_ids = DB::table('hamahang_user_policies')->where('target_type','like','%SubjectType')->where('type','=',2)->where('user_id','=',Auth::id())->select('target_id')->get()->toArray();
+        $SubjectTypes = [];
+        foreach($sub_ids as $ASubjectType)
+            $SubjectTypes[] = $ASubjectType->target_id;
+        $UserSubjectType = SubjectType::whereIn('id',$SubjectTypes)->get();
+
+        foreach($UserSubjectType as $AUserSubjectType)
+            $SubjectType[] = $AUserSubjectType;
+
+        return $SubjectType;
+        
         $allSubjectTypes = self::all();
         $res = [];
         foreach ($allSubjectTypes as $item)
@@ -74,6 +103,37 @@ class SubjectType extends Model
     }
     public static function PermittedOfficialSubjectTypes()
     {
+//        DB::enableQueryLog();
+        $user = User::where('id', Auth::id())->first();
+        $roles = array_column($user->_roles()->select('id')->get()->toArray(),'id');
+        $roles_ids = [];
+        foreach($roles as $Arole)
+            $roles_ids[] = $Arole;
+
+        $SubjectType = new SubjectType();
+        $roles = $SubjectType->role_policies_personal()->whereIn('role_id',$roles)->get();
+        $sub_ids = DB::table('hamahang_role_policies')->where('target_type','like','%SubjectType')->where('type','=',1)->whereIn('role_id',$roles_ids)->select('target_id')->get()->toArray();
+        $SubjectTypes = [];
+        foreach($sub_ids as $ASubjectType)
+            $SubjectTypes[] = $ASubjectType->target_id;
+
+        $SubjectType = SubjectType::whereIn('id',$SubjectTypes)->get();
+
+        $sub_ids = DB::table('hamahang_user_policies')->where('target_type','like','%SubjectType')->where('type','=',1)->where('user_id','=',Auth::id())->select('target_id')->get()->toArray();
+        $SubjectTypes = [];
+        foreach($sub_ids as $ASubjectType)
+            $SubjectTypes[] = $ASubjectType->target_id;
+        $UserSubjectType = SubjectType::whereIn('id',$SubjectTypes)->get();
+
+        foreach($UserSubjectType as $AUserSubjectType)
+            $SubjectType[] = $AUserSubjectType;
+
+        return $SubjectType;
+
+//        dd($SubjectType);
+////        dd($SubjectTypes,DB::getQueryLog(),$SubjectTypes);
+//        dd($roles);
+
         $allSubjectTypes = self::all();
         $res = [];
         foreach ($allSubjectTypes as $item)
@@ -83,6 +143,25 @@ class SubjectType extends Model
                 $res[]= $item;
             }
         }
+        dd($res);
+        return $res;
+    }
+
+    public static function UserPermittedOfficialSubjectTypes()
+    {
+        $user = User::where('id', Auth::id())->first();
+        $roles = $user->_roles();
+        dd($roles);
+        $allSubjectTypes = self::all();
+        $res = [];
+        foreach ($allSubjectTypes as $item)
+        {
+            if (policy_CanView($item->id, 'App\Models\hamafza\SubjectType', '\App\Policies\SubjectPolicy', 'canAddOfficial'))
+            {
+                $res[]= $item;
+            }
+        }
+        dd('asdasd');
         return $res;
     }
 
