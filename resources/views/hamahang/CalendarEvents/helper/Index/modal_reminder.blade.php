@@ -36,7 +36,7 @@
                     <a href="#step1" data-toggle="tab">{{trans('calendar_events.ce_modal_session_navbar_define')}}</a>
                 </li>
                 <li>
-                    <a href="#addR" data-toggle="tab">{{trans('calendar_events.ce_modal_session_navbar_setting')}}</a>
+                    <a href="#" data-toggle="tab">{{trans('calendar_events.ce_modal_session_navbar_setting')}}</a>
                 </li>
                 <li>
                     <a href="#" data-toggle="">{{trans('calendar_events.ce_modal_session_navbar_note')}}</a>
@@ -66,54 +66,6 @@
                                     <textarea name="descriotion" class="form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
-                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class="input-group pull-right">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                            <input type="text" class="form-control DatePicker  clsDatePicker col-xs-3" name="startdate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-xs-2"></div>
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class=' input-group date'>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" aria-describedby="starttime">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
-                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class="input-group pull-right">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                            <input type="text" class="form-control DatePicker  clsDatePicker col-xs-3" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="enddate-session">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-xs-2"></div>
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class=' input-group date'>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="endtime" aria-describedby="endtime">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="row col-lg-2 line-height-35">
                                     <label class="form-radio-label" >{{trans('calendar_events.ce_modal_reminder_added')}}</label>
@@ -121,20 +73,18 @@
                                 <div class="row col-lg-10 noLeftPadding noRightPadding">
                                     <span class="pull-right col-lg-3 noLeftPadding noRightPadding line-height-35">
                                         <input name="reminderType" id="reminderType" type="radio" class="form-radio-input" value="1" checked/>
-                                        <label class="form-radio-label" for="reminderType" >{{trans('calendar_events.ce_modal_reminder_first_type')}}</label>
+                                        <label class="form-radio-label" for="reminderType" >{{trans('calendar_events.ce_modal_reminder_in_time')}}</label>
                                         <input name="reminderType" id="reminderType" type="radio" class="form-radio-input" value="2" disabled/>
-                                        <label class="form-radio-label" for="reminderType">{{trans('calendar_events.ce_modal_reminder_second_type')}}</label>
+                                        <label class="form-radio-label" for="reminderType">{{trans('calendar_events.ce_modal_reminder_before')}}</label>
                                     </span>
                                     <span class="add-reminder-row-firstType pull-right line-height-35 col-lg-8 noLeftPadding noRightPadding" style="display: inline-flex;">
                                         <label class="pull-right" style="height: 33px;line-height: 35px">{{trans('calendar_events.ce_modal_reminder_in_day')}}</label>
                                         <span class="input-group pull-right clsDatePicker pull-right">
-                                             <span class="input-group-addon pull-right" style="height: 35px;width: 40px;"><i class="fa fa-calendar"></i></span>
                                             <input type="text" class="form-control DatePicker clsDatePicker pull-right" value=" " name="in_day[]" aria-describedby="in_day[]">
                                         </span>
                                         <label class="pull-right" style="height: 33px;line-height: 35px">{{trans('calendar_events.ce_hour_label')}}</label>
                                         <span class="input-group pull-right clsDatePicker pull-right">
-                                            <span class="input-group-addon" style="height: 33px;width: 40px;"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control DatePicker clsDatePicker" value=" " name="firstTyp_term[]" aria-describedby="term">
+                                            <input type="text" class="form-control TimePicker clsDatePicker" style="width: 150px" value=" " name="firstTyp_term[]" aria-describedby="term">
                                         </span>
                                     </span>
                                     <span class="add-reminder-row-secondType pull-right line-height-35 col-lg-8 noLeftPadding noRightPadding" style="display: inline-flex;">
@@ -157,7 +107,6 @@
                                         </select>
                                         <label class="pull-right" style="height: 35px;line-height: 35px;white-space:nowrap">{{trans('calendar_events.ce_modal_reminderin_hour')}}</label>
                                         <span class="input-group pull-right clsDatePicker pull-right">
-                                            <span class="input-group-addon" style="height: 35px;width: 40px;"><i class="fa fa-calendar"></i></span>
                                             <input type="text" class="form-control TimePicker clsDatePicker" style="width: 150px" value=" " name="secondType_term[]" aria-describedby="term">
                                         </span>
                                     </span>

@@ -1,6 +1,30 @@
 <div class="row">
     <form id="form_filter_priority">
         <div class="form-inline" style="padding-right: 5px;" >
+            <div class="checkbox hidden" style="margin-right: 30px;">
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_important[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="1" name="task_important[]" checked>
+                    <span>{{trans('tasks.important')}}</span>
+                </label>
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_important[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="0" name="task_important[]" checked>
+                    <span>{{trans('tasks.non-important')}}</span>
+                </label>
+            </div>
+            <div class="checkbox hidden" style="margin-right: 30px;">
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" checked>
+                    <span>{{trans('tasks.immediate')}}</span>
+                </label>
+                <label>
+                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
+                    <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
+                    <span>{{trans('tasks.non-immediate')}}</span>
+                </label>
+            </div>
             <div class="checkbox">
                 <div class="form-inline">
                     <input type="text" class="form-control mx-sm-3" placeholder="{{trans('tasks.search_in_task_title_placeholder')}}" name="task_title" id="task_title">

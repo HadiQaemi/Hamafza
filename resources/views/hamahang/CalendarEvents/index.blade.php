@@ -54,14 +54,16 @@
     <div class="clearfixed"></div>
     <br/>
     <div class="row">
-        <table id="gridDtataTable" class="table table-striped table-bordered dt-responsive nowrap display">
+        {{--<table id="gridDtataTable" class="table table-striped table-bordered dt-responsive nowrap display">--}}
+        <table id="gridDtataTable" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
+
             <thead>
             <tr>
                 <th data-column-id="id"> {{trans('calendar_events.ce_rowindex_label')}}</th>
                 <th data-column-id="title">{{trans('calendar_events.ce_title')}}</th>
                 <th data-column-id="startdate" data-formatter="startdate">{{trans('calendar_events.ce_startdate_label')}}</th>
                 <th data-column-id="enddate" data-formatter="enddate">{{trans('calendar_events.ce_enddate_label')}}</th>
-                <th data-column-id="allDay" data-formatter="allDay">{{trans('calendar_events.ce_allday_label')}}</th>
+{{--                <th data-column-id="allDay" data-formatter="allDay">{{trans('calendar_events.ce_allday_label')}}</th>--}}
                 <th data-column-id="type">{{trans('calendar_events.ce_type_label')}}</th>
                 <th data-column-id="type">{{trans('calendar_events.ce_action_label')}}</th>
             </tr>

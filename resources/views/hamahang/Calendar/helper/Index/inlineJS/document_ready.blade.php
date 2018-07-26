@@ -1373,18 +1373,25 @@
             //console.log($('#' + form_id + ' select[name="cid"]').val());
             saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
             saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
-            saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
+            saveObj.session_pages = $('select[name="new_session_pages[]"]').select().val().toString();
+            saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
             saveObj.hstartdate = $('#' + form_id + ' input[name="startdate"]').val();
             saveObj.starttime = $('#' + form_id + ' input[name="starttime"]').val();
             saveObj.henddate = $('#' + form_id + ' input[name="enddate"]').val();
             saveObj.endtime = $('#' + form_id + ' input[name="endtime"]').val();
-            saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
+            saveObj.term = $('input[name="term"]').val();
+            saveObj.hlocation = $('textarea[name="location"]').val();
+            saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
+
+
+            ///////////////////////////////////////////////
             if ($('#' + form_id + ' input[type="checkbox"][name="allDay"]').is(':checked')) {
                 saveObj.allDay = 1;
             }
             else {
                 saveObj.allDay = 0;
             }
+
             if ($('#' + form_id + ' input[name="event_id"]').length && $('#' + form_id + ' input[name="event_id"]').val() > 0) {
                 saveObj.mode = 'edit';
                 saveObj.event_id = $('#' + form_id + ' input[name="event_id"]').val();
@@ -1392,6 +1399,7 @@
             }
             saveObj.mode = 'calendar';
             var errorMsg_id = 'sessionMsgBox';
+            ///////////////////////////////////////////////
             // Session Data
             // sessionObj = {};
             saveObj.hagenda = $('#agenda').val();
@@ -1401,8 +1409,6 @@
             saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
             saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
             saveObj.session_notvoting_users = $('select[name="session_notvoting_users[]"]').select().val().toString();
-            saveObj.term = $('input[name="term"]').val();
-            saveObj.hlocation = $('textarea[name="location"]').val();
             saveObj.long = $('input[name="long"]').val();
             saveObj.lat = $('input[name="lat"]').val();
             saveObj.type = $('input[name="session_type"]:checked').val();
@@ -1459,7 +1465,7 @@
                         sessionModal.close();
                         var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
                         {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
-                        messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');--}}
                     }
                 }
             });

@@ -92,18 +92,19 @@ class MyTaskController extends Controller
 
     public function MyTasksPriority($uname)
     {
+//        asd
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr = array_merge($arr, tasks::MyTasksPriority());
+                $arr = array_merge($arr, tasks::MyTasksPriority([0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyTasksPriority());
+                $arr = array_merge($arr, tasks::MyTasksPriority([0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;

@@ -670,7 +670,7 @@ class tasks extends Model
         }
         else
         {
-            $result->whereIn('hamahang_task.type', [0,1]);
+            $result->whereIn('hamahang_task.type', [11]);
         }
 
         if ($status_filter)
@@ -680,7 +680,7 @@ class tasks extends Model
         }
         else
         {
-            $result->whereIn('hamahang_task_status.type', [0,1,2,3]);
+            $result->whereIn('hamahang_task_status.type', [11]);
         }
 
         if ($immediate)
@@ -691,7 +691,7 @@ class tasks extends Model
         }
         else
         {
-            $result->whereIn('hamahang_task_priority.immediate', [0,1]);
+            $result->whereIn('hamahang_task_priority.immediate', [11]);
         }
 
         if ($important)
@@ -702,7 +702,7 @@ class tasks extends Model
         }
         else
         {
-            $result->whereIn('hamahang_task_priority.importance', [0,1]);
+            $result->whereIn('hamahang_task_priority.importance', [11]);
         }
 
         $result = $result->get();
@@ -931,7 +931,7 @@ class tasks extends Model
         {
             $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query)
             {
-                $query->whereIn('type', [0, 1, 2, 3, 4]);
+                $query->whereIn('type', [11]);
             });
         }
 
@@ -943,7 +943,8 @@ class tasks extends Model
         if ($official_type)
         {
             $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', $official_type);
-        }
+        }else
+            $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', [11]);
 
         $tasks_immediate_importance = $tasks_immediate_importance->get();
 
@@ -987,18 +988,18 @@ class tasks extends Model
         else $title='';
         if(empty($official_type))
         {
-           $official_type[0]=0;
-           $official_type[1]=1;
+           $official_type[0]=11;
+           $official_type[1]=12;
         }
         if(empty($importance))
         {
-            $importance[0]=0;
-            $importance[1]=1;
+            $importance[0]=11;
+            $importance[1]=12;
         }
         if(empty($immediate))
         {
-            $immediate[0]=0;
-            $immediate[1]=1;
+            $immediate[0]=11;
+            $immediate[1]=12;
         }
             $myTasks['not_started'] = $user->MyTasks()->where('title','like','%'.$title.'%')->whereIn('type', $official_type)->whereHas('Status', function ($q)
             {
@@ -1066,18 +1067,18 @@ class tasks extends Model
         else $title='';
         if(empty($official_type))
         {
-            $official_type[0]=0;
-            $official_type[1]=1;
+            $official_type[0]=11;
+            $official_type[1]=12;
         }
         if(empty($importance))
         {
-            $importance[0]=0;
-            $importance[1]=1;
+            $importance[0]=11;
+            $importance[1]=12;
         }
         if(empty($immediate))
         {
-            $immediate[0]=0;
-            $immediate[1]=1;
+            $immediate[0]=11;
+            $immediate[1]=12;
         }
             $myTasks['not_started'] = $user->MyAssignedTasks()->where('title','like','%'.$title.'%')->whereIn('type', $official_type)->whereHas('Status', function ($q)
             {

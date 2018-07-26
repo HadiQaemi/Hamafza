@@ -22,7 +22,16 @@
                 {
                     data: 'title',
                     name: 'title',
-                    width: '30%'
+                    width: '30%',
+                    mRender: function (data, type, full) {
+
+                        return '<table><tr>' +
+                            // '<td class="fa fa-calendar"></td>' +
+                            '<td class="c"> <spane>' + data + '</span></td>' +
+                            // '<td class=" glyphicon glyphicon-time"> </td> ' +
+                            // '<td class=""> <span> ' + startdate[1] + '</span></td>' +
+                            '</tr></table>';
+                    }
                 },
                 {
                     data: 'startdate',
@@ -34,9 +43,9 @@
                             startdate[1] = '------';
                         }
                         return '<table><tr>' +
-                                '<td class="fa fa-calendar"></td>' +
+                                // '<td class="fa fa-calendar"></td>' +
                                 '<td class="c"> <spane>' + startdate[0] + '</span></td>' +
-                                '<td class=" glyphicon glyphicon-time"> </td> ' +
+                                // '<td class=" glyphicon glyphicon-time"> </td> ' +
                                 '<td class=""> <span> ' + startdate[1] + '</span></td>' +
                                 '</tr></table>';
                     }
@@ -51,28 +60,28 @@
                             enddate[1] = '------';
                         }
                         return '<table class=""><tr>' +
-                                '<td class=" fa fa-calendar"></td>' +
+                                // '<td class=" fa fa-calendar"></td>' +
                                 '<td class=""> <spane>' + enddate[0] + '</span></td>' +
-                                '<td class=" glyphicon glyphicon-time"> </td> ' +
+                                // '<td class=" glyphicon glyphicon-time"> </td> ' +
                                 '<td class=""><span> ' + enddate[1] + '</span></td>' +
                                 '</tr></table>';
                         ;
                     }
                 },
-                {
-                    data: 'allDay',
-                    name: 'allDaay',
-                    width: '2%',
-                    mRender: function (data, type, full) {
-                        //console.log(data);
-                        if (full.allDay == 1) {
-                            return '<i class="fa fa-check"></i>';
-                        }
-                        else {
-                            return '<i class=" fa fa-close"></i>';
-                        }
-                    }
-                },
+                // {
+                //     data: 'allDay',
+                //     name: 'allDaay',
+                //     width: '2%',
+                //     mRender: function (data, type, full) {
+                //         //console.log(data);
+                //         if (full.allDay == 1) {
+                //             return '<i class="fa fa-check"></i>';
+                //         }
+                //         else {
+                //             return '<i class=" fa fa-close"></i>';
+                //         }
+                //     }
+                // },
                 {
                     data: 'type'
                     , name: 'type',

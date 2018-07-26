@@ -88,13 +88,13 @@ class MyAssignedTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority([0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority([0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;

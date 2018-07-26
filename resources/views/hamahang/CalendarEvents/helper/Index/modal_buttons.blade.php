@@ -18,7 +18,7 @@
         <input type="radio" name="new_session_save_type" class="new_session_save_type_final" id="new_session_save_type_final" value="1"/>
         <label for="new_session_save_type_final" id="new_session_save_type_final_l">{{ trans('general.final') }}</label>
     </div>
-    <a data-form_id = "create_new_event" data-again_save = "1" class="btn btn-primary pull-left save_session" id="">
+    <a data-form_id = "create_new_event" data-again_save = "1" class="btn btn-primary pull-left save_session" id="saveSessionWithEmptyForm">
         <i ></i>
         {{trans('calendar_events.ce_modal_session_save_and_create_new')}}
     </a>

@@ -156,9 +156,9 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'users_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'users_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
                         </td>
                     </tr>
 
@@ -172,9 +172,9 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'roles_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'roles_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
                         </td>
                     </tr>
 
@@ -194,9 +194,9 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'access_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'access_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
                         </td>
                     </tr>
 
@@ -210,9 +210,9 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'add_roles_list_setting_view']) !!}" title="انتخاب کاربران" class="jsPanels">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'add_roles_list_setting_view']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
                         </td>
                     </tr>
 

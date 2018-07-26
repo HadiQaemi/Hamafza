@@ -71,8 +71,8 @@
                                     <input name="event_type" type="hidden" class="form-control" placeholder="">
                                 </div>
                                 <div class="col-xs-5">
-                                    <label> {{trans('calendar_events.ce_modal_session_personal')}}<input type="radio" checked name="session_type" value="1"/> </label>
-                                    <label> {{trans('calendar_events.ce_moda_session_modal_administrative')}}<input type="radio" name="session_type" value="2"/> </label>
+                                    <input type="radio" checked name="session_type" id="session_type" value="2"/><label for="session_type"> {{trans('tasks.official')}}</label>
+                                    <input type="radio" name="session_type" id="session_type1" value="1"/><label for="session_type1"> {{trans('calendar_events.ce_modal_session_personal')}}</label>
                                 </div>
                             </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
@@ -82,7 +82,7 @@
                                     </label>
                                 </div>
                                 <div class="col-lg-10">
-                                    <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]"
+                                    <select id="new_session_pages" class="select2_auto_complete_page " name="pages[]"
                                             data-placeholder="{{trans('tasks.can_select_some_options')}}"
                                             multiple="multiple">
                                     </select>
@@ -119,13 +119,46 @@
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-2">
+                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <div class="col-sm-5 col-xs-5">
+                                        <div class="input-group pull-right">
+                                            <input type="text" class="form-control DatePicker  clsDatePicker col-xs-3" name="startdate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-2"></div>
+                                    <div class="col-sm-5 col-xs-5">
+                                        <div class=' input-group date'>
+                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" aria-describedby="starttime">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-2">
+                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <div class="col-sm-5 col-xs-5">
+                                        <div class="input-group pull-right">
+                                            <input type="text" class="form-control DatePicker  clsDatePicker col-xs-3" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="enddate-session">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-2"></div>
+                                    <div class="col-sm-5 col-xs-5">
+                                        <div class=' input-group date'>
+                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="endtime" aria-describedby="endtime">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-2">
                                     <label> {{trans('calendar_events.ce_term_of_session')}} </label>
                                 </div>
                                 <div class="col-xs-10">
                                     <div class='col-md-4 form-horizontal input-group date'>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
                                         <input type="text" class="form-control TimePicker" placeholder="" name="term" aria-describedby="term">
                                     </div>
                                 </div>

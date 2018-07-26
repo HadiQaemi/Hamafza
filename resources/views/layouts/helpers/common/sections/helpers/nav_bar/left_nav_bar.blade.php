@@ -197,7 +197,7 @@
                             });
                         </script>
                     </div>
-                    <div id="Results" class="tab-pane fade" @if(session('TagSearch')=='') style="display: none;" @endif>
+                    <div id="Results" class="tab-pane fade"  style="@if(session('TagSearch')=='')display: none;@endif height: 72vh !important;" >
                         <div class="innerpane">
                             <div class="panel-group accordion" id="Bookmarkaccordion2" style="margin-right: 15pt; margin-top: 15px;">
                                 <div id="KeywordSearch">

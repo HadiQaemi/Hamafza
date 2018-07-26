@@ -26,16 +26,17 @@
 @section('content')
     <div id="MsgBox"></div>
     <div class="row-fluid">
-        <div class="col-xs-12">
-            <div class="col-xs-3">
-                <button class="btn btn-default btn-xs" id="sessionEventSave">{{trans('calendar_events.ce_session_button_label')}}</button>
-            </div>
-            <div class="clearfixed"></div>
-        </div>
+        {{--<div class="col-xs-12">--}}
+            {{--<div class="col-xs-3">--}}
+                {{--<button class="btn btn-default btn-xs" id="sessionEventSave">{{trans('calendar_events.ce_session_button_label')}}</button>--}}
+            {{--</div>--}}
+            {{--<div class="clearfixed"></div>--}}
+        {{--</div>--}}
         <div class="clearfixed"></div>
         <br/>
         <div class="row">
-            <table id="sessionsGrid" class="table table-striped table-bordered dt-responsive nowrap display">
+            {{--<table id="sessionsGrid" class="table table-striped table-bordered dt-responsive nowrap display">--}}
+            <table id="sessionsGrid" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
                 <thead>
                 <tr>
                     <th data-column-id="id"> {{trans('calendar_events.ce_rowindex_label')}}</th>

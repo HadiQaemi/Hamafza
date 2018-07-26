@@ -22,7 +22,8 @@
 			<legend>{{trans('tasks.show_drafts_draft_lists')}}</legend>
 			<div class="row">
 				<div class="col-md-12 ">
-					<table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+					{{--<table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">--}}
+					<table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
 						<thead>
 						<tr>
 							<th class="text-center">{{trans('tasks.id')}}</th>

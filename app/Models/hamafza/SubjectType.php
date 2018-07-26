@@ -89,7 +89,7 @@ class SubjectType extends Model
             $SubjectType[] = $AUserSubjectType;
 
         return $SubjectType;
-        
+
         $allSubjectTypes = self::all();
         $res = [];
         foreach ($allSubjectTypes as $item)
