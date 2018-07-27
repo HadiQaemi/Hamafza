@@ -59,6 +59,11 @@
                     <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks">
                     <span>{{trans('tasks.status_finished')}}</span>
                 </label>
+                    @if(Route::currentRouteName()=='ugc.desktop.hamahang.tasks.my_assigned_tasks.priority')
+                        <input type="hidden" class="form-check-input" name="source" id="source" value="my_assigned">
+                    @else
+                        <input type="hidden" class="form-check-input" name="source" id="source" value="my_tasks">
+                    @endif
               {{--   <label>
                     <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
                     <span>{{trans('tasks.status_suspended')}}</span>
