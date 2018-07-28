@@ -92,7 +92,8 @@
                     $('#table_task_time .task_item_'+task_id).css('top',x.top+'px');
 
                 }else{
-                    submit_change_priority(Drag_Destination, task_id);
+                    var action = $('#source').val();
+                    submit_change_priority(Drag_Destination, task_id,action);
                     var droppedOn = $(this);
                     $(dropped).detach().appendTo(droppedOn);
                 }
@@ -185,12 +186,12 @@
             }
         });
     }
-    function submit_change_priority(type, task_id) {
+    function submit_change_priority(type, task_id, action) {
         $.ajax({
             url: '{{ route('hamahang.tasks.priority.change') }}',
             method: 'POST',
             dataType: "json",
-            data: {type: type, task_id: task_id},
+            data: {type: type, task_id: task_id, action: action},
             success: function (res) {
                 console.log(res.success);
                 if (res.success == true) {

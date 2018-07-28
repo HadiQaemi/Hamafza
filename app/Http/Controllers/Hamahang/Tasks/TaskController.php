@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Models\Hamahang\Tasks\task_priority;
 use DB;
 use Auth;
 use Request;
+use Route;
 use Validator;
 use App\Models\Hamahang\Tasks\tasks;
 use App\Models\Hamahang\Tasks\task_packages;
@@ -1133,6 +1135,7 @@ class TaskController extends Controller
     }*/
     public function change_task_priority()
     {
+//        dd(Request::all(),Route::currentRouteName(),Route::getCurrentRoute()->getActionName());
         $validator = Validator::make(Request::all(),
             [
             'type' => 'required|in:important_and_immediate,important_and_not_immediate,not_important_and_immediate,not_important_and_not_immediate',
@@ -1148,55 +1151,32 @@ class TaskController extends Controller
         {
             $task_id = Request::get('task_id');
             $task = tasks::find($task_id);
-            $task->Priorities()->delete();
+//            $task->Priorities()->delete();
+            task_priority::delete_priority($task_id,1,auth()->id());
+            $action = Request::get('action');
+            $is_assigner[] = 0;
+            if($action=='my_assigned' || $task->uid==auth()->id())
+                $is_assigner[] = 1;
             switch (Request::get('type'))
             {
                 case 'important_and_immediate':
                 {
-                    $task->Priorities()->create([
-                        'uid' => auth()->id(),
-                        'user_id' => auth()->id(),
-                        'task_id' => $task_id,
-                        'importance' => 1,
-                        'immediate' => 1,
-                        'timestamp' => time(),
-                    ]);
+                    task_priority::create_task_priority($task_id, 1, 1, $is_assigner, auth()->id(), auth()->id(), time());
                     break;
                 }
                 case 'important_and_not_immediate':
                 {
-                    $task->Priorities()->create([
-                        'uid' => auth()->id(),
-                        'user_id' => auth()->id(),
-                        'task_id' => $task_id,
-                        'importance' => 1,
-                        'immediate' => 0,
-                        'timestamp' => time(),
-                    ]);
+                    task_priority::create_task_priority($task_id, 0, 1, $is_assigner, auth()->id(), auth()->id(), time());
                     break;
                 }
                 case 'not_important_and_immediate':
                 {
-                    $task->Priorities()->create([
-                        'uid' => auth()->id(),
-                        'user_id' => auth()->id(),
-                        'task_id' => $task_id,
-                        'importance' => 0,
-                        'immediate' => 1,
-                        'timestamp' => time(),
-                    ]);
+                    task_priority::create_task_priority($task_id, 1, 0, $is_assigner, auth()->id(), auth()->id(), time());
                     break;
                 }
                 case 'not_important_and_not_immediate':
                 {
-                    $task->Priorities()->create([
-                        'uid' => auth()->id(),
-                        'user_id' => auth()->id(),
-                        'task_id' => $task_id,
-                        'importance' => 0,
-                        'immediate' => 0,
-                        'timestamp' => time(),
-                    ]);
+                    task_priority::create_task_priority($task_id, 0, 0, $is_assigner, auth()->id(), auth()->id(), time());
                     break;
                 }
                 default :

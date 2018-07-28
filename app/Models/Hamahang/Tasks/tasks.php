@@ -918,7 +918,7 @@ class tasks extends Model
 //        dd($tasks_immediate_importance);
         $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Priority', function ($query) use ($immediate, $importance)
         {
-            $query->where('immediate', $immediate)->where('importance', $importance);
+            $query->where('immediate', $immediate)->where('importance', $importance)->where('is_assigner',0);
         });
         if ($status_filter)
         {
