@@ -15,17 +15,30 @@ class task_priority extends Model
 
     public static function create_task_priority($task_id, $immediate = 0, $importance = 0, $is_assigner = [0], $user_id = -1, $uid = -1, $timestamp = -1)
     {
-        foreach($is_assigner as $Ais_assigner)
+        if(!is_array($is_assigner))
         {
             $priority = new task_priority;
             $priority->uid = ($uid == -1) ? Auth::id() : $uid;
             $priority->user_id = ($user_id == -1) ? Auth::id() : $user_id;
             $priority->task_id = $task_id;
-            $priority->is_assigner = $Ais_assigner;
+            $priority->is_assigner = $is_assigner;
             $priority->importance = $importance;
             $priority->immediate = $immediate;
             $priority->timestamp = ($timestamp == -1) ? time() : $timestamp;
             $priority->save();
+        }else{
+            foreach($is_assigner as $Ais_assigner)
+            {
+                $priority = new task_priority;
+                $priority->uid = ($uid == -1) ? Auth::id() : $uid;
+                $priority->user_id = ($user_id == -1) ? Auth::id() : $user_id;
+                $priority->task_id = $task_id;
+                $priority->is_assigner = $Ais_assigner;
+                $priority->importance = $importance;
+                $priority->immediate = $immediate;
+                $priority->timestamp = ($timestamp == -1) ? time() : $timestamp;
+                $priority->save();
+            }
         }
         return $priority;
     }
