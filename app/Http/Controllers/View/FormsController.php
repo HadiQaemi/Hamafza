@@ -491,7 +491,7 @@ class FormsController extends Controller
             $uid = (session('uid') != '') ? session('uid') : 0;
             $sesid = (session('sesid') != '') ? session('sesid') : 0;
             $group_title = $request->input('group_title');
-            $group_link = $request->input('group_link');
+            $group_link = preg_replace('/ /','_',$request->input('group_link'));
             $group_summary = $request->input('group_summary');
             $group_type = $request->input('group_type');
             $group_limit = $request->input('group_limit');

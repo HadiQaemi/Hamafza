@@ -193,13 +193,13 @@ class UserClass
         }
         if ($type == 2)
         {
-            $Groups = DB::table('user_group')->whereRaw("link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%' and isorgan='0'")
+            $Groups = DB::table('user_group')->whereRaw("(link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%') and isorgan='0'")
                 ->select('id', 'name', 'link', 'summary', 'pic')->get();
             return $Groups;
         }
         if ($type == 3)
         {
-            $Organs = DB::table('user_group')->whereRaw("link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%' and isorgan='0'")
+            $Organs = DB::table('user_group')->whereRaw("(link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%') and isorgan='1'")
                 ->select('id', 'name', 'link', 'summary', 'pic')->get();
             return $Organs;
         }
