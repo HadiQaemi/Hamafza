@@ -460,14 +460,18 @@ class PostsClass {
     public function UserWall($uid, $num, $offset = 0,$fromAPI = false) {
         $sr = PostsClass::postSelect('user', 'wall', $uid, 1, $uid);
         // $sr .= ' OR p.id = 1';
-        config('app.temp', $uid);
+        app('config')->set('app.temp', $uid);
 
         $table = DB::table('posts as p')
                 ->distinct()->leftjoin('post_view as v', 'v.pid', '=', 'p.id')
                 ->leftjoin('user as u', 'p.uid', '=', 'u.id')
+                ->leftjoin('post_like as pl', function ($join) {
+                    $join->on('pl.pid', '=', 'p.id')
+                    ->where('pl.uid', '=', config('app.temp'));
+                })
                 ->whereRaw($sr)
                 ->orderBy('p.id', 'desc')
-                ->select('p.title', 'v.gid', 'p.id', 'p.shid', 'p.uid', 'p.sid', 'p.type', 'p.likes', 'p.coms', 'p.shares', 'p.desc', 'p.pic', 'p.video', 'p.reg_date', 'u.id as uid', 'u.Uname', 'u.Name', 'u.Family', 'u.Pic AS '.($fromAPI ? 'uPic' :'Pic'), 'u.avatar')
+                ->select('p.title', 'v.gid','pl.id as islike', 'p.id', 'p.shid', 'p.uid', 'p.sid', 'p.type', 'p.likes', 'p.coms', 'p.shares', 'p.desc', 'p.pic', 'p.video', 'p.reg_date', 'u.id as uid', 'u.Uname', 'u.Name', 'u.Family', 'u.Pic AS '.($fromAPI ? 'uPic' :'Pic'), 'u.avatar')
                 ->take($num)
                 ->skip($offset)
                 ->get();

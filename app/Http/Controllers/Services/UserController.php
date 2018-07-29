@@ -360,6 +360,12 @@ class UserController extends Controller {
                         'data' => $user->ApiEducations
                     ],
                         [
+                        'section' => 'avatar',
+                      //  'title' => 'دنبال شوندگان',
+                       // 'type' => '0',
+                        'data' => $user->avatar_link
+                    ],
+                        [
                         'section' => 'effects',
                         'title' => 'آثار',
                         'type' => '4',
