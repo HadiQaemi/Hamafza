@@ -64,7 +64,30 @@
                 $("#searchtext").attr("placeholder", "نام یا معرفی اجمالی کانال مورد نظر را بنویسید")
                 $("#but").html('کانال ها' + '<span class="caret"></span>');
             }
+            text = $("#but").html().replace('<span class="caret"></span>', '').trim();
+            if (id == 1)
+                type = '1';
+            else if (id == 3)
+                type = '3';
+            else
+                type = '2';
+            keyword = "";
+            $("#response").html('<span class="sui-loading-back"></span> <div class="contentDiv"><div class="mainDiv"><div class="logoDiv"></div><div class="textDiv"></div></div><div class="loaderDiv"><img src="img/loading.gif"></div></div>');
+            currentRequest = jQuery.ajax({
+                type: 'POST',
+                data: ({type: type, key: keyword}),
+                url: '{{ route('hamafza.search_person') }}',
+                beforeSend: function () {
+                    if (currentRequest != null) {
+                        currentRequest.abort();
+                    }
+                },
+                success: function (data) {
+                    $("#response").html(data);
+                }
+            });
         });
+
         $("#searchtext").keyup(function () {
             keyword = $(this).val();
             text = $("#but").html().replace('<span class="caret"></span>', '').trim();
