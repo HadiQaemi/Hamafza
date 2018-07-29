@@ -722,13 +722,23 @@ preventDuplicates: true,
                         }
                     }
                 }
-                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->link . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->link . '">' . $value->name . '</a></div><div class="person-moredetail">' . $value->summary . '</div><div class="person-relation"></div></div></li>';
+                $subWord = $this->substr_word($value->summary,100);
+//                $subWord = ($value->summary);
+                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->link . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->link . '">' . $value->name . '</a></div><div class="person-moredetail text-align-right text-justify">' . $subWord . '</div><div class="person-relation"></div></div></li>';
             }
         }
         return $res . '</ul>';
         return $mes;
     }
-
+    public function substr_word($body,$maxlength){
+        if (strlen($body)<$maxlength)
+            return $body;
+        $body = substr($body, 0, $maxlength);
+        $rpos = strrpos($body,' ');
+        if ($rpos>0)
+            $body = substr($body, 0, $rpos);
+        return $body.'...';
+    }
     public function searchUser(Request $request)
     {
         $keyword = $request->input('query');

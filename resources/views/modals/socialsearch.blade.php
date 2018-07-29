@@ -4,11 +4,12 @@
         border: 1px solid #dbdbdb;
         box-shadow: 0 4px 7px rgba(162, 162, 162, 0.54);
         float: right;
-        height: 80px;
+        height: 120px;
         margin: 14px;
         padding: 0;
         position: relative;
-        width: 240px;
+        width: 250px;
+        padding-left: 10px;
     }
     .person-list .person-avatar {
         float: right;
@@ -36,7 +37,7 @@
                             </ul>
                         </div><!-- /btn-group -->
 
-                        <input id="searchtext" type="text" class="form-control" style="border-left-style: solid;height: 34px;padding-right: 10px;" placeholder="نام، نام خانوادگی یا عنوان فرد مورد نظر را بنویسید">
+                        <input id="searchtext" type="text" class="form-control" autocomplete="off" style="border-left-style: solid;height: 34px;padding-right: 10px;" placeholder="نام، نام خانوادگی یا عنوان فرد مورد نظر را بنویسید">
                     </div><!-- /input-group -->
                 </div>
             </center>
