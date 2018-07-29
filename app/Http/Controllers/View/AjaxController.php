@@ -700,7 +700,7 @@ preventDuplicates: true,
                         }
                     }
                 }
-                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->Uname . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->Uname . '">' . $value->Name . ' ' . $value->Family . '</a></div><div class="person-moredetail">' . $value->Summary . '</div><div class="person-relation"></div></div></li>';
+                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->Uname . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->Uname . '">' . $value->Name . ' ' . $value->Family . '</a></div><div class="ssperson-moredetail text-align-right text-justify">' . $this->substr_word($value->Summary,100) . '</div><div class="person-relation"></div></div></li>';
             }
         }
         else
