@@ -564,11 +564,25 @@ class ConfigurationClass
         return $ST;
     }
 
-    public static function GetAdminGroups()
+    public static function GetAdminGroups($request)
     {
         $i = 1;
-        DB::table('user_group')->where('new', '0')->where('isorgan', '0')->update(array("new" => '1'));
-        $ST = DB::table('user_group')->select('id', 'name', 'link', 'summary', 'pic', 'reg_date')->where('isorgan', '0')->orderBy('id', 'DESC')->get();
+        DB::table('user_group')->where('new', '0')->update(array("new" => '1'));
+        $ST = \DB::table('user_group')->select('id', 'name', 'link', 'reg_date')->orderBy('id', 'DESC');
+        
+        $type = $request->get('types');
+        //dd($type);
+        if ($type)
+        {
+            $ST->whereIn('user_group.isorgan', $type);
+               
+        }
+        else
+        {
+            $ST->whereIn('user_group.isorgan', [11]);
+        }
+        $ST = $ST->get();
+     
         foreach ($ST as $value)
         {
             $value->reg_date = \Morilog\Jalali\jDate::forge($value->reg_date)->format('%Y/%m/%d');
@@ -582,6 +596,9 @@ class ConfigurationClass
             $value->del = '';
             $i++;
         }
+        return \Datatables::of($ST)
+           ->make(true);
+        //dd($ST);
         return $ST;
     }
 

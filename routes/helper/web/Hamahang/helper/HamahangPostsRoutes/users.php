@@ -23,5 +23,6 @@ Route::post('updateUserEducation', ['as' => 'hamahang.users.update_user_educatio
 Route::post('deleteUserEducation', ['as' => 'hamahang.users.delete_user_education', 'uses' => 'UserController@deleteUserEducation', 'middleware' => ['dynamic_permission:posts.hamahang.users.delete_user_education']]);
 Route::post('userSpecialEndorse', ['as' => 'hamahang.users.user_special_endorse', 'uses' => 'UserController@userSpecialEndorse', 'middleware' => ['dynamic_permission:posts.hamahang.users.user_special_endorse']]);
 Route::post('userEndorse', ['as' => 'hamahang.users.user_endorse', 'uses' => 'UserController@userEndorse', 'middleware' => ['dynamic_permission:posts.hamahang.users.user_endorse']]);
+Route::get('fetchGroups', ['as' => 'hamahang.users.fetchGroups', 'uses' => 'UserController@fetchGroups']);
 Route::post('removeUserNew', ['as' => 'hamahang.users.remove_user_new', 'uses' => 'UserController@removeUserNew', 'middleware' => ['dynamic_permission:posts.hamahang.users.remove_user_new']]);
 Route::post('cities', ['as' => 'hamahang.users.cities', 'uses' => 'UserController@cities', 'middleware' => ['dynamic_permission:posts.hamahang.users.cities']]);

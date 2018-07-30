@@ -1305,6 +1305,15 @@ class UserController extends Controller
         $cities = City::select('id', 'name as text')->where('province_id', $request->province_id)->get();
         return json_encode($cities);
     }
+    
+    public function fetchGroups(Request $request)
+    {
+        $C = new \App\HamafzaServiceClasses\ConfigurationClass();
+        return $C->GetAdminGroups($request);
+        
+        
+    }
+
 
 ///////////////////////////////////////////////////////////////////
 //*****************************************************************

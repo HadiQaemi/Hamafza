@@ -281,10 +281,11 @@ class UserController extends Controller
         $res = variable_generator('user', 'user_list_add', $name);
     }
 
-    public function showgroups($name)
+    public function showgroups($uname)
     {
-        $res = variable_generator('user', 'showgroups', $name);
-        return view($res['viewname'], $res);
+        
+        $arr = variable_generator('user', 'desktop', $uname);
+        return view('hamahang.Users.groups', $arr);
     }
 
     public function relationSave(Request $request)

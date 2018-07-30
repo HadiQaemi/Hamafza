@@ -1467,8 +1467,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $res = \App\HamafzaViewClasses\UsersClass::GetUserDetail($item);;
                     break;
                 case 'showgroups':
-                    $viewname = 'pages.Desktop';
-                    $res = \App\HamafzaViewClasses\UsersClass::showgroupsList($item);
+                    $viewname = 'hamahang.Users.groups';
+                    //$res = \App\HamafzaViewClasses\UsersClass::showgroupsList();
                     break;
                 case 'notifications':
                     $viewname = 'pages.Desktop';

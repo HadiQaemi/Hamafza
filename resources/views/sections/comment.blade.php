@@ -1,10 +1,12 @@
 @php
     $file = HFM_GenerateUploadForm([['comment_file', ['gif', 'jpg', 'jpeg', 'png', ], 'Single' ]]);
     $MyPortals = MyPortals();
-@endphp
+$hide_type = false;
+    @endphp
+
 @if (isset($sid))
     @php
-        $hide_type = false;
+        
         $subject = App\Models\hamafza\Subject::find($sid);
         if ($subject)
         {
