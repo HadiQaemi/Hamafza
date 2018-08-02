@@ -74,7 +74,8 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany('App\Models\hamafza\Post', 'uid');
+       
+        return $this->hasMany('App\Models\hamafza\Post', 'uid')->orderby('id','desc');
     }
 
     public function getApiPostsAttribute()
@@ -98,7 +99,9 @@ class User extends Authenticatable
                     'full_name' => "$user->FullName",
                     'post' => "$post->desc",
                     'comment_count' => "$comments_count",
-                    'like_count' => "$liks_count"
+                    'comments' => "$comments",
+                    'like_count' => "$liks_count",
+                    'title'=>"$post->title"
                 ];
         }
         return $res;
