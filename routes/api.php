@@ -104,7 +104,7 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'uses' => 'UserController@get_about_me'
     ]);
     Route::group(array('prefix' => 'tasks'), function () {
-        Route::post('get_my_tasks', [
+        Route::get('get_my_tasks', [
             'as' => 'api.v43.tasks.get_my_tasks',
             'uses' => 'TaskController@get_my_tasks'
         ]);
