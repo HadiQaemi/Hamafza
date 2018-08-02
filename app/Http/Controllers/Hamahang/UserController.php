@@ -1308,8 +1308,24 @@ class UserController extends Controller
     
     public function fetchGroups(Request $request)
     {
-        $C = new \App\HamafzaServiceClasses\ConfigurationClass();
+        $C = new \App\HamafzaServiceClasses\GroupsClass();
         return $C->GetAdminGroups($request);
+        
+        
+    }
+    
+    public function removeGroup(Request $request)
+    {
+        //dd($request->input("groupid"));
+        $C = new \App\HamafzaServiceClasses\GroupsClass();
+        $h =  $C->removeGroup($request->input("groupid"));
+        if ($h == 1){
+            $result['success'] = true;
+            $result['message'] = array("'رکورد مورد نظر با موفقیت حذف شد");
+            
+            return json_encode($result);
+        }
+        
         
         
     }

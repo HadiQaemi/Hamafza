@@ -711,5 +711,52 @@ class GroupsClass
             return '';
         }
     }
+    
+    public static function GetAdminGroups($request)
+    {
+        $i = 1;
+        DB::table('user_group')->where('new', '0')->update(array("new" => '1'));
+        $ST = \DB::table('user_group')->select('id', 'name', 'link', 'reg_date')
+                ->whereNull('user_group.deleted_at')
+                ->orderBy('id', 'DESC');
+        
+        $type = $request->get('types');
+        //dd($type);
+        if ($type)
+        {
+            $ST->whereIn('user_group.isorgan', $type);
+               
+        }
+        else
+        {
+            $ST->whereIn('user_group.isorgan', [11]);
+        }
+        $ST = $ST->get();
+     
+        foreach ($ST as $value)
+        {
+            $value->reg_date = \Morilog\Jalali\jDate::forge($value->reg_date)->format('%Y/%m/%d');
+
+            $memcount = DB::table('user_group_member')->where('gid', $value->id)->count();
+            $value->memcount = $memcount;
+            $postcount = DB::table('post_view')->where('gid', $value->id)->count();
+            $value->postcount = $postcount;
+            $value->sortid = $i;
+            $value->edit = '';
+            $value->del = '';
+            $i++;
+        }
+        return \Datatables::of($ST)
+           ->make(true);
+        //dd($ST);
+        return $ST;
+    }
+    
+    public static function removeGroup($groupid)
+    {
+     
+       return DB::table('user_group')->delete($groupid);
+        
+    }
 
 }

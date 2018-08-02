@@ -54,7 +54,7 @@
                             <th style="text-align: right;">تاریخ ایجاد</th>
                             <th style="text-align: right;">تعداد اعضا</th>
                             <th style="text-align: right;">تعداد پست ها</th>
-                      <!--      <th style="text-align: right;">حذف</th> -->
+                            <th style="text-align: right;">حذف</th> 
                         </tr>
                     </thead>
                 </table>
