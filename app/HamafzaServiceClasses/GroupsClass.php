@@ -755,7 +755,14 @@ class GroupsClass
     public static function removeGroup($groupid)
     {
      
-       return DB::table('user_group')->delete($groupid);
+        DB::table('post_group')->where('gid','=',$groupid)->update(array('gid'=>0));
+        DB::table('post_view')->where('gid','=',$groupid)->update(array('gid'=>0));
+        DB::table('user_group_key')->where('gid','=',$groupid)->delete();
+        DB::table('user_group_like')->where('gid','=',$groupid)->delete();
+        DB::table('user_group_member')->where('gid','=',$groupid)->delete();
+        DB::table('user_group_response')->where('gid','=',$groupid)->delete();
+        
+        return DB::table('user_group')->delete($groupid);
         
     }
 
