@@ -109,6 +109,12 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'uses' => 'TaskController@get_my_tasks'
         ]);
     });
+    Route::group(array('prefix' => 'tasks'), function () {
+        Route::post('rapid_new_task', [
+            'as' => 'api.v43.tasks.rapid_new_task',
+            'uses' => 'TaskController@rapid_new_task'
+        ]);
+    });
     Route::group(array('prefix' => 'message'), function () {
         Route::post('get_inbox_messages', [
             'as' => 'api.v43.message.get_inbox_messages',
