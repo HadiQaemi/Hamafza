@@ -99,7 +99,7 @@ class User extends Authenticatable
                     'full_name' => "$user->FullName",
                     'post' => "$post->desc",
                     'comment_count' => "$comments_count",
-                    'comments' => "$comments",
+                    'comments' => json_decode($comments),
                     'like_count' => "$liks_count",
                     'title'=>"$post->title"
                 ];
