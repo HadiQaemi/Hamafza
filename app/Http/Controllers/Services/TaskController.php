@@ -12,43 +12,44 @@ class TaskController extends Controller {
 
     public function get_my_tasks() {
         $user = getUser();
-        $tasks = tasks::MyTasksSummary($user->id);
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $tasks = tasks::MyTasksSummary($user->id, \Request::input('time'));
         foreach ($tasks as $key => $value) {
             $value->respite = strtotime($value->schedule_time) + $value->duration_timestamp;
         }
         $res = [
-                    'status' => "1",
-                    'data' => $tasks
+            'status' => "1",
+            'data' => $tasks
         ];
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
-    
-    public function rapid_new_task()
-    {
+
+    public function rapid_new_task() {
         $validator = \Validator::make(Request::all(), [
-            'immediacy' => 'required|in:0,1',
-            'importance' => 'required|in:0,1',
-            'task_title' => 'required|string',
-            'respite_date' => 'required|jalali_date:-',
-            'selected_users' => 'required',
-        ],[
-            'selected_users.required'=>'باید کاربر انتخاب شود'
-        ],[
-                'task_title'=>'عنوان وظیفه',
-                'selected_users'=>'کاربر'
-            ]
-            );
-        if ($validator->fails())
-        {
+                    'immediacy' => 'required|in:0,1',
+                    'importance' => 'required|in:0,1',
+                    'task_title' => 'required|string',
+                    'respite_date' => 'required|jalali_date:-',
+                    'selected_users' => 'required',
+                        ], [
+                    'selected_users.required' => 'باید کاربر انتخاب شود'
+                        ], [
+                    'task_title' => 'عنوان وظیفه',
+                    'selected_users' => 'کاربر'
+                        ]
+        );
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
-           
-            \DB::transaction(function () use (&$task, &$employee, &$respite_date, &$status)
-            {
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            \DB::transaction(function () use (&$task, &$employee, &$respite_date, &$status) {
                 $user = getUser();
                 $immediacy = Request::input('immediacy');
                 $importance = Request::input('importance');
@@ -56,7 +57,7 @@ class TaskController extends Controller {
                 $respite_date = Request::input('respite_date');
                 $selected_users = explode(",", Request::input('selected_users'));
                 $respite_duration_timestamp = hamahang_make_task_respite($respite_date, '08:00:00');
-                
+
                 $task = new tasks;
                 $task->title = $task_title;
                 $task->duration_timestamp = $respite_duration_timestamp;
@@ -68,12 +69,9 @@ class TaskController extends Controller {
 
                 $x = 0;
                 $staff = '';
-                if (sizeof($selected_users) > 0)
-                {
-                    foreach ($selected_users as $u)
-                    {
-                        if ($x == 0)
-                        {
+                if (sizeof($selected_users) > 0) {
+                    foreach ($selected_users as $u) {
+                        if ($x == 0) {
                             ///////نفر اول بعنوان مسوول ثبت می شود
 //                            $assign = task_assignments::create_task_assignment($u, $task->id);
                             $staff = $u;
@@ -84,31 +82,27 @@ class TaskController extends Controller {
 //                            /////////// ثبت سایر افراد وظیفه
 //                            task_staffs::create_task_staff($assign->id, $u);
 //                        }
-                        task_assignments::create_task_assignment($u ,$staff ,$task->id,0,null,$user->id);
+                        task_assignments::create_task_assignment($u, $staff, $task->id, 0, null, $user->id);
                     }
                 }
 
-                $status = task_status::create_task_status($task->id,0,0,$user->id,-1,$user->id);
+                $status = task_status::create_task_status($task->id, 0, 0, $user->id, -1, $user->id);
                 //$priority = task_priority::create_task_priority($task->id, $immediacy, $importance);
                 $employee = \App\User::find($staff);
 
                 $respite_date = hamahang_respite_remain(strtotime($task->schedule_time), $task->duration_timestamp);
-                if ($respite_date[0]['delayed'] == 1)
-                {
+                if ($respite_date[0]['delayed'] == 1) {
                     $task->respite_days = ($respite_date[0]['day_no']) * (-1);
-                }
-                else
-                {
+                } else {
                     $task->respite_days = $respite_date[0]['day_no'];
                 }
             });
 
-            $res =
-                [
-                    'success' => 'success',
-                    'status' => 1
-                ];
-             return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+            $res = [
+                'success' => 'success',
+                'status' => 1
+            ];
+            return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
     }
 
