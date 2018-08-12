@@ -3123,6 +3123,9 @@ a .navbar-brand{
 .padding-left-10{
     padding-left: 10px !important;
 }
+.padding-left-20{
+    padding-left: 20px !important;
+}
 .text-justify{
     text-align: justify !important;
 }
