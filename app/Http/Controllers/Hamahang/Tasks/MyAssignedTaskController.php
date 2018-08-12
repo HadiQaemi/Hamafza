@@ -88,13 +88,13 @@ class MyAssignedTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority([0,1],false,false,[0,1]));
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority([0,1],false,false,[0,1]));
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
@@ -1032,8 +1032,45 @@ class MyAssignedTaskController extends Controller
         return json_encode($result);
 
     }
-
-    public function save()
+    public static function SaveTaskCopy($OrigTask, $schedule_time = 0)
+    {
+        if ($OrigTask)
+        {
+            $Orig_Task = unserialize($OrigTask->form_data);
+            $task = tasks::CreateNewTask($OrigTask->form_data, $OrigTask->title, $OrigTask->is_save, $OrigTask->desc, $OrigTask->type, $OrigTask->kind, $OrigTask->task_status, $OrigTask->duration_timestamp, $OrigTask->use_type, $OrigTask->end_on_assigner_accept, $OrigTask->transferable, $OrigTask->report_on_create_point, $OrigTask->report_on_completion_point, $OrigTask->report_to_managers, $OrigTask->respite_timing_type, $OrigTask->id, $schedule_time);
+            $assignment = task_assignments::create_task_assignment($Orig_Task['users'][0], $task->id);
+            $staff = '';
+            if (Request::exists('users'))
+            {
+                foreach (Request::input('users') as $key => $value_employee_id)
+                {
+                    if(Request::input('assign_type') == 1 )
+                    {
+                        if($key == 0)
+                        {
+                            $staff = Request::input('users')[0];
+                            task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
+                        }
+                        else
+                        {
+                            task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
+                        }
+                    }
+                    elseif(Request::input('assign_type') == 2)
+                    {
+                        task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
+                    }
+                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'), $value_employee_id);
+                    task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
+                }
+            }
+            $status = task_status::create_task_status($task->id, 0, 0);
+            $priority = task_priority::create_task_priority($task->id, $Orig_Task['immediate'], $Orig_Task['importance']);
+            return $task->id;
+        }
+        return false;
+    }
+    public function save($OrigTask=0, $schedule_time = 0)
     {
         $validator = Validator::make(Request::all(),
             [
@@ -1136,7 +1173,156 @@ class MyAssignedTaskController extends Controller
             $sec_no = 0;//Request::input('duration_sec');
             $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
         }
-        $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_form_action'), Request::input('task_desc'), Request::input('type'), Request::input('kind'), Request::input('task_status'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'), Request::input('respite_timing_type'));
+        $jDateObj = new jDateTime();
+        $task = tasks::CreateNewTask(serialize(Request::all()), Request::input('title'), Request::input('task_form_action'), Request::input('task_desc'), Request::input('type'), Request::input('kind'), Request::input('task_status'), $respite_duration_timestamp, Request::input('use_type'), Request::input('end_on_assigner_accept'), Request::input('transferable'), Request::input('report_on_cr'), Request::input('report_on_co'), Request::input('report_to_manager'), Request::input('respite_timing_type'),$OrigTask, $schedule_time);
+
+        if(Request::input('task_schedul_num') && !$OrigTask && !$schedule_time)
+        {
+            $end_type = Request::input('schedul_end_date');
+            if($end_type=='schedul_end_date_none') // never end
+            {
+
+            }elseif($end_type=='schedul_end_date_events') // never end
+            {
+
+            }elseif($end_type=='schedul_end_date_date') // never end
+            {
+                $start_date = new \DateTime(Request::input('schedul_begin_date'));
+                $end_date = new \DateTime(Request::input('schedul_end_date_date'));
+                $get_date_diff = get_date_diff(Request::input('schedul_begin_date'), Request::input('schedul_end_date_date'));
+                $weeks = intval($get_date_diff->days / 7);
+                $schedul_type = Request::input('task_schedul');
+                $schedule = [];
+                $schedule_id = [];
+                switch ($schedul_type)
+                {
+                    case 'daily': //daily
+                        {
+                            for ($i = 0; $i < $get_date_diff->days / Request::input('task_schedul_num'); $i++)
+                            {
+                                $datetime = new \DateTime(Request::input('schedul_begin_date'));
+                                $datetime->add(new \DateInterval('P' . (Request::input('task_schedul_num') * $i) . 'D'));
+                                $d = preg_split('/-/',$datetime->format("Y-m-d"));
+                                $r = $jDateObj->jalali_to_gregorian($d[0],$d[1],$d[2]);
+                                $schedul_date = $r[0].'-'.($r[1]>9 ? $r[1] : '0'.$r[1]).'-'.($r[2]>9 ? $r[2] : '0'.$r[2]).' '.str_ireplace(' AM','',str_ireplace(' PM','',Request::input('schedul_begin_time')));
+                                $this->save($task, $schedul_date);
+                            }
+                            break;
+                        }
+                    case 'weekly': //weekly
+                        {
+                            $d = 0;
+
+                            while ($d < $get_date_diff->days)
+                            {
+                                for ($wd = 0; $wd < 7; $wd++)
+                                {
+                                    $purpose_date = new \DateTime(Request::input('schedul_begin_date'));
+                                    $purpose_date->add(new \DateInterval("P{$d}D"));
+                                    if ((in_array(get_persian_weekday($purpose_date->format('w')), Request::input('weekly_value'))) && ($start_date <= $purpose_date) && ($purpose_date <= $end_date))
+                                    {
+                                        $s_d = preg_split('/-/',$purpose_date->format('Y-m-d'));
+                                        $r = $jDateObj->jalali_to_gregorian($s_d[0],$s_d[1],$s_d[2]);
+                                        $schedul_date = $r[0].'-'.($r[1]>9 ? $r[1] : '0'.$r[1]).'-'.($r[2]>9 ? $r[2] : '0'.$r[2]).' '.str_ireplace(' AM','',str_ireplace(' PM','',Request::input('schedul_begin_time')));
+                                        $this->save($task, $schedul_date);
+                                    }
+                                    $d++;
+                                }
+                                $d += 7 * (Request::input('task_schedul_num') - 1);
+                            }
+                            break;
+                        }
+                    case 'monthly': //monthly
+                        {
+                            $weeknums = Request::input('monthly_value');
+                            $om = 0;
+                            $wn = 1;
+                            for ($d = 0; $d <= $get_date_diff->days; $d++)
+                            {
+                                $purpose_date = new \DateTime(Request::input('schedul_begin_date'));
+                                $purpose_date->add(new \DateInterval("P{$d}D"));
+                                $cm = $purpose_date->format('m');
+                                if ($om !== $cm)
+                                {
+                                    $wn = 1;
+                                    $om = $cm;
+                                }
+                                $wd = ($purpose_date->format('w'));
+                                if (in_array($wn, $weeknums))
+                                {
+                                    $s_d = preg_split('/-/',$purpose_date->format('Y-m-d'));
+                                    $r = $jDateObj->jalali_to_gregorian($s_d[0],$s_d[1],$s_d[2]);
+                                    $schedul_date = $r[0].'-'.($r[1]>9 ? $r[1] : '0'.$r[1]).'-'.($r[2]>9 ? $r[2] : '0'.$r[2]).' '.str_ireplace(' AM','',str_ireplace(' PM','',Request::input('schedul_begin_time')));
+                                    $this->save($task, $schedul_date);
+                                }
+                                $wn += 6 == $wd ? 1 : 0;
+                            }
+                            break;
+                        }
+                    case 'seasonly': //seasonly
+                        {
+                            $seasons = Request::input('seasonly_value');
+                            $diff = get_date_diff($start_date->format('Y-m'), $end_date->format('Y-m'));
+                            $ms = get_date_diff_mounts($diff);
+                            $season = 0;
+                            for ($m = 0; $m < $ms; $m++)
+                            {
+                                $purpose_date = new \DateTime(Request::input('schedul_begin_date'));
+                                $purpose_date->add(new \DateInterval("P{$m}M"));
+                                if($purpose_date->format('m')<4)
+                                    $season = 0;
+                                else if($purpose_date->format('m')<7)
+                                    $season = 1;
+                                else if($purpose_date->format('m')<10)
+                                    $season = 2;
+                                else if($purpose_date->format('m')<=12)
+                                    $season = 3;
+                                if (in_array($season, $seasons))
+                                {
+                                    for ($d = 1; $d < ($season<2 ? 32 : 31); $d++)
+                                    {
+                                        $purpose_date->add(new \DateInterval("P{$d}D"));
+                                        $recur_date = $purpose_date->format('Y-m-d');
+                                        if((!($start_date <= $purpose_date) && ($purpose_date <= $end_date)))
+                                            continue;
+                                        $s_d = preg_split('/-/',$recur_date);
+                                        $r = $jDateObj->jalali_to_gregorian($s_d[0],$s_d[1],$s_d[2]);
+                                        $schedul_date = $r[0].'-'.($r[1]>9 ? $r[1] : '0'.$r[1]).'-'.($r[2]>9 ? $r[2] : '0'.$r[2]).' '.str_ireplace(' AM','',str_ireplace(' PM','',Request::input('schedul_begin_time')));
+                                        $this->save($task, $schedul_date);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    case 'yearly': //yearly
+                        {
+                            $months = Request::input('yearly_num');
+                            $diff = get_date_diff($start_date->format('Y-m'), $end_date->format('Y-m'));
+                            $ms = get_date_diff_mounts($diff);
+                            for ($m = 0; $m < $ms; $m++)
+                            {
+                                $purpose_date = new \DateTime(Request::input('schedul_begin_date'));
+                                $purpose_date->add(new \DateInterval("P{$m}M"));
+                                if (in_array($purpose_date->format('m'), $months))
+                                {
+
+                                    for ($d = 1; $d < 32; $d++)
+                                    {
+                                        $recur_date = $purpose_date->format('Y-m') . "-$d";
+                                        if((!($start_date <= $recur_date) && ($recur_date <= $end_date)))
+                                            continue;
+                                        $s_d = preg_split('/-/',$recur_date);
+                                        $r = $jDateObj->jalali_to_gregorian($s_d[0],$s_d[1],$s_d[2]);
+                                        $schedul_date = $r[0].'-'.($r[1]>9 ? $r[1] : '0'.$r[1]).'-'.($r[2]>9 ? $r[2] : '0'.$r[2]).' '.str_ireplace(' AM','',str_ireplace(' PM','',Request::input('schedul_begin_time')));
+                                        $this->save($task, $schedul_date);
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+        }
+
 
         if(Request::exists('task_form_action')==1)
         {
