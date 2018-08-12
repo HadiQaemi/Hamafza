@@ -1164,16 +1164,16 @@ $(document).ready(function(){
             $("#rSubMenuBtn").css("top","0px");
             $(".HelpIcons").css("top","0px");
             $(".rightSubMenu").css("top","0px");
-            $("#toolbar .btn-group.mr").css("height","40px");
-            $("#toolbar .btn-group").css("height","40px");
+            // $("#toolbar .btn-group.mr").css("height","40px");
+            // $("#toolbar .btn-group").css("height","40px");
             $("#header").removeClass("hidden");
             var pos = $(".ful-scrn").offset();
             var master_inner_rtl_div = $("#toolbar").offset();
             $(".ful-scrn").css("position","fixed");
             $(".ful-scrn").css("top",parseInt(master_inner_rtl_div.top)+parseInt(110));
             $(".ful-scrn").css("left",parseInt(pos.left)+10);
-            // $("#toolbar .btn-group.mr").removeClass("hidden");
-            // $("#toolbar .btn-group").removeClass("hidden");
+            $("#toolbar .btn-group.mr").removeClass("hidden");
+            $("#toolbar .btn-group").removeClass("hidden");
         }
     });
 
