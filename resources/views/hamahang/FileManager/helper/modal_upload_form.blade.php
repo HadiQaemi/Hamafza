@@ -18,8 +18,8 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-xs-12" >
-                                        <form id="HFM_Form_GridMyFile">
-                                            <table id="HFM_GridMyFile" class="display table table-bordered " cellspacing="0" width="100%" >
+                                        <form class="HFM_Form_GridMyFile">
+                                            <table class="HFM_GridMyFile display table table-bordered " cellspacing="0" width="100%" >
                                                 <thead>
                                                 <tr>
                                                     <th><input name="select_all" value="1" type="checkbox"></th>
@@ -52,15 +52,15 @@
                     </div>
                     <div id="HFM_UploadNewFiles" class="tab-pane fade">
                         <fieldset style="margin-top:25px;">
-                            <form method="post" id="HFM_UploadForm" enctype="multipart/form-data">
+                            <form method="post" class="HFM_UploadForm" enctype="multipart/form-data">
                                 <div class="col-xs-12">
                                     {{
                                         Form::file(
                                             'Attachments[]',
                                             array(
                                                 'multiple'              => true,
-                                                'id'                    => 'id_input_files',
-                                                'class'                 => 'filestyle',
+                                                //'id'                    => 'id_input_files',
+                                                'class'                 => 'filestyle id_input_files',
                                                 'data-buttonText'       => trans('filemanager.select_file'),
                                                 //'data-iconName'         => 'fa fa-inbox',
                                                 'data-buttonName'       => 'btn btn-primary',
