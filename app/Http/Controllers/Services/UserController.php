@@ -25,172 +25,171 @@ class UserController extends Controller {
 
     public function desktop() {
         $auth_user = getUser();
-        if (!isset($auth_user->id)){
+        if (!isset($auth_user->id)) {
             return $auth_user;
         }
-        $res ['desktop_sections'] =
+        $res ['desktop_sections'] = [
+                [
+                'type' => 'tasks',
+                'title' => 'وظایف',
+                'order' => '1',
+                'data' =>
+                    [
                         [
-                            [
-                                'type' => 'tasks',
-                                'title' => 'وظایف',
-                                'order' => '1',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'وظایف من',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyTasksCount",
-                                            //'icon' => 'fa-tasks',
-                                            //'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'واگذاری های من',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyAssignedTasksCount",
-                                           // 'icon' => 'fa-list-alt',
-                                            //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'پیشنویس ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyDraftTasksCount",
-                                          ///  'icon' => 'fa-pencil-square ',
-                                            //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
-                                        ]
-                                    ]
-                            ],
-                            [
-                                'type' => 'persons',
-                                'title' => 'اشخاص',
-                                'order' => '2',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'افراد',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->UserPersonsCount",
-                                            //'icon' => 'fa-user',
-                                            //'url' => '#'
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'گروه ها و کانال ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->ApiUserGroupsCount",
-                                           /// 'icon' => 'fa-users',
-                                            //'url' => '#'
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'title' => 'شاید بشناسید',
-                                            'new' => '-1',
-                                            'value' => '0',
-                                           // 'icon' => 'fa-user-o',
-                                           // 'url' => '#'
-                                        ]
-                                    ]
-                            ],
-                            [
-                                'type' => 'messages',
-                                'title' => 'پیغام',
-                                'order' => '3',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'دریافتی ها',
-                                            'new' => "$auth_user->NewRecieveTicketsCount",
-                                            'value' => "$auth_user->RecieveTicketsCount",
-                                          //  'icon' => 'fa-inbox',
-                                            //'url' => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'ارسالی ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->SendTicketsCount",
-                                         //   'icon' => 'fa-paper-plane-o',
-                                            //'url' => route('ugc.desktop.hamahang.tickets.outbox', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'title' => 'مکالمه ها',
-                                            'new' => '-1',
-                                            'value' => '---',
-                                         //   'icon' => 'fa-commenting ',
-                                            //'url' => '#'
-                                        ],
-                                    ]
-                            ],
-                            [
-                                'type' => 'announces_and_forms_and_marked',
-                                'title' => 'یادداشت ها، فرم ها',
-                                'order' => '4',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'یادداشت ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->AnnouncesCount",
-                                            //'icon' => 'fa-pencil',
-                                            //'url' => route('ugc.desktop.announces', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'علامت گذاری ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->HighlightsCount",
-                                          //  'icon' => 'fa-bookmark-o',
-                                           /// 'url' => route('ugc.desktop.highlights', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'فرم ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->FormsCount",
-                                           // 'icon' => 'fa-wpforms',
-                                           // 'url' => route('ugc.desktop.form_list.me', ['username' => $auth_user->Uname])
-                                        ],
-                                    ]
-                            ],
-                            [
-                                'type' => 'user_account',
-                                'title' => 'حساب کاربری',
-                                'order' => '5',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'هشدار ها',
-                                            'new' => "$auth_user->NewEmailsCount",
-                                            'value' => "$auth_user->EmailsCount",
-                                          //  'icon' => 'fa-clock-o',
-                                           // 'url' => route('ugc.desktop.notifications', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'امتیاز ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->TotalScores",
-                                          //  'icon' => 'fa-certificate ',
-                                           // 'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'title' => 'خرید ها',
-                                            'new' => '-1',
-                                            'value' => '---',
-                                          //  'icon' => 'fa-shopping-basket',
-                                           // 'url' => '#'
-                                        ],
-                                    ]
-                            ],
-                        ];
+                        'active' => '1',
+                        'title' => 'وظایف من',
+                        'new' => '-1',
+                        'value' => "$auth_user->MyTasksCount",
+                    //'icon' => 'fa-tasks',
+                    //'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'واگذاری های من',
+                        'new' => '-1',
+                        'value' => "$auth_user->MyAssignedTasksCount",
+                    // 'icon' => 'fa-list-alt',
+                    //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'پیشنویس ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->MyDraftTasksCount",
+                    ///  'icon' => 'fa-pencil-square ',
+                    //'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
+                    ]
+                ]
+            ],
+                [
+                'type' => 'persons',
+                'title' => 'اشخاص',
+                'order' => '2',
+                'data' =>
+                    [
+                        [
+                        'active' => '1',
+                        'title' => 'افراد',
+                        'new' => '-1',
+                        'value' => "$auth_user->UserPersonsCount",
+                    //'icon' => 'fa-user',
+                    //'url' => '#'
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'گروه ها و کانال ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->ApiUserGroupsCount",
+                    /// 'icon' => 'fa-users',
+                    //'url' => '#'
+                    ],
+                        [
+                        'active' => '0',
+                        'title' => 'شاید بشناسید',
+                        'new' => '-1',
+                        'value' => '0',
+                    // 'icon' => 'fa-user-o',
+                    // 'url' => '#'
+                    ]
+                ]
+            ],
+                [
+                'type' => 'messages',
+                'title' => 'پیغام',
+                'order' => '3',
+                'data' =>
+                    [
+                        [
+                        'active' => '1',
+                        'title' => 'دریافتی ها',
+                        'new' => "$auth_user->NewRecieveTicketsCount",
+                        'value' => "$auth_user->RecieveTicketsCount",
+                    //  'icon' => 'fa-inbox',
+                    //'url' => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'ارسالی ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->SendTicketsCount",
+                    //   'icon' => 'fa-paper-plane-o',
+                    //'url' => route('ugc.desktop.hamahang.tickets.outbox', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '0',
+                        'title' => 'مکالمه ها',
+                        'new' => '-1',
+                        'value' => '---',
+                    //   'icon' => 'fa-commenting ',
+                    //'url' => '#'
+                    ],
+                ]
+            ],
+                [
+                'type' => 'announces_and_forms_and_marked',
+                'title' => 'یادداشت ها، فرم ها',
+                'order' => '4',
+                'data' =>
+                    [
+                        [
+                        'active' => '1',
+                        'title' => 'یادداشت ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->AnnouncesCount",
+                    //'icon' => 'fa-pencil',
+                    //'url' => route('ugc.desktop.announces', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'علامت گذاری ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->HighlightsCount",
+                    //  'icon' => 'fa-bookmark-o',
+                    /// 'url' => route('ugc.desktop.highlights', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'فرم ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->FormsCount",
+                    // 'icon' => 'fa-wpforms',
+                    // 'url' => route('ugc.desktop.form_list.me', ['username' => $auth_user->Uname])
+                    ],
+                ]
+            ],
+                [
+                'type' => 'user_account',
+                'title' => 'حساب کاربری',
+                'order' => '5',
+                'data' =>
+                    [
+                        [
+                        'active' => '1',
+                        'title' => 'هشدار ها',
+                        'new' => "$auth_user->NewEmailsCount",
+                        'value' => "$auth_user->EmailsCount",
+                    //  'icon' => 'fa-clock-o',
+                    // 'url' => route('ugc.desktop.notifications', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '1',
+                        'title' => 'امتیاز ها',
+                        'new' => '-1',
+                        'value' => "$auth_user->TotalScores",
+                    //  'icon' => 'fa-certificate ',
+                    // 'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
+                    ],
+                        [
+                        'active' => '0',
+                        'title' => 'خرید ها',
+                        'new' => '-1',
+                        'value' => '---',
+                    //  'icon' => 'fa-shopping-basket',
+                    // 'url' => '#'
+                    ],
+                ]
+            ],
+        ];
         return $res;
     }
 
@@ -265,8 +264,8 @@ class UserController extends Controller {
 
     public function get_my_posts() {
         $user = getUser();
-        if (!isset($user->id)){
-           return $user;
+        if (!isset($user->id)) {
+            return $user;
         }
         $posts = $user->ApiPosts;
         $res = [
@@ -282,14 +281,13 @@ class UserController extends Controller {
 
     public function get_my_wall() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $res = [
             'status' => "1",
             'main' =>
                 [
-                
                 'data' => Get_User_Wall($user->id, Request::input('limit'), Request::input('offset'))
             ]
         ];
@@ -298,7 +296,7 @@ class UserController extends Controller {
 
     public function get_about_me() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $posts_count = $user->posts->count();
@@ -361,8 +359,8 @@ class UserController extends Controller {
                     ],
                         [
                         'section' => 'avatar',
-                      //  'title' => 'دنبال شوندگان',
-                       // 'type' => '0',
+                        //  'title' => 'دنبال شوندگان',
+                        // 'type' => '0',
                         'data' => $user->avatar_link
                     ],
                         [
@@ -396,7 +394,7 @@ class UserController extends Controller {
 
     public function get_my_notes() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $res = [
@@ -412,7 +410,7 @@ class UserController extends Controller {
 
     public function get_my_groups() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $res = [
@@ -428,7 +426,7 @@ class UserController extends Controller {
 
     public function get_bookmarks() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $data = $user->getApiBookmarksAttribute(Request::get('term'), $user->id);
@@ -445,7 +443,7 @@ class UserController extends Controller {
 
     public function portals() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $subject_types = ['public' => 'رسمی', 'private' => 'شخصی',];
@@ -463,11 +461,10 @@ class UserController extends Controller {
         ];
         return $r;
     }
-    
-    function MyGroups()
-    {
+
+    function MyGroups() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         return \Illuminate\Support\Facades\DB::table('user_group as g')->leftjoin('user_group_member as u', 'u.gid', '=', 'g.id')
@@ -477,7 +474,7 @@ class UserController extends Controller {
 
     function announces() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -494,7 +491,7 @@ class UserController extends Controller {
 
     function highlights() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -508,12 +505,12 @@ class UserController extends Controller {
 
     function inbox() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = Token::where('token', Request::get('token'))->first()->user->id;
         $M = new \App\HamafzaServiceClasses\MessageClass();
-        $s = $M->inbox($uid, 0,'local',false);
+        $s = $M->inbox($uid, 0, 'local', false);
         return [
             'type' => 'inbox',
             'content' => $s
@@ -522,17 +519,217 @@ class UserController extends Controller {
 
     function outbox() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = Token::where('token', Request::get('token'))->first()->user->id;
         $M = new \App\HamafzaServiceClasses\MessageClass();
-        $s = $M->Outbox($uid, 0,false);
-        
+        $s = $M->Outbox($uid, 0, false);
+
         return [
             'type' => 'outbox',
             'content' => $s
         ];
+    }
+
+    public function updateUserSpecials() {
+//        dd(Request::all());
+
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $special_array = array_filter(explode(",", Request::input("user_specials")), function($value) {
+            return $value !== '';
+        });
+        if (count($special_array)) {
+            foreach ($special_array as $special) {
+                if (!is_numeric($special)) {
+                    $keyword = Keyword::where('title', $special)->first();
+                    if (!$keyword) {
+                        $keyword = new Keyword();
+                        $keyword->title = $special;
+                        $keyword->save();
+                    }
+                    $array_keyword_ids[] = $keyword->id;
+                } else {
+                    $array_keyword_ids[] = $special;
+                }
+            }
+            $user->specials()->sync($array_keyword_ids);
+        } else {
+            $user->specials()->sync([]);
+        }
+
+
+        $result['message'][] = trans('acl.role_edited_successfully');
+        $result['success'] = true;
+        return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+    }
+
+    public function addUserWork() {
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+                    'post' => 'required|string|min:3|max:250',
+                    'company' => 'required|string|min:3|max:250'
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            $user_work = new \App\Models\hamafza\UserWork();
+            $user_work->uid = $user->id;
+            $user_work->company = Request::input('company');
+            $user_work->post = Request::input('post');
+            $user_work->save();
+
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+    }
+
+    public function updateUserWork() {
+//        dd(Request::all());
+        $validator = Validator::make(Request::all(), [
+                    'item_id' => 'required',
+                    'token' => 'required',
+                    'company' => 'required|string|min:3|max:250',
+                    'post' => 'required|string|min:3|max:250'
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            $user_work = \App\Models\hamafza\UserWork::find(Request::input('item_id'));
+            $user_work->uid = $user->id;
+            $user_work->company = Request::input('company');
+            $user_work->post = Request::input('post');
+            $user_work->save();
+
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+    }
+
+    public function deleteUserWork() {
+        $validator = Validator::make(Request::all(), [
+                    'item_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            \App\Models\hamafza\UserWork::find(Request::input('item_id'))->delete();
+
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+    }
+
+    public function addUserEducation() {
+//        dd(Request::all());
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+                    'major' => 'required|string|min:3|max:250',
+                    'grade' => 'required|string',
+                    'university' => 'string|min:3|max:64'
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            $user_education = new \App\Models\hamafza\UserEducation();
+            $user_education->uid = $user->id;
+            $user_education->major = Request::input('major');
+            $user_education->grade = Request::input('grade');
+            $user_education->university = Request::input('university');
+            $user_education->save();
+
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+    }
+
+    public function updateUserEducation() {
+//        dd(Request::all());
+        $validator = Validator::make(Request::all(), [
+                    'token' => 'required',
+                    'item_id' => 'required',
+                    'major' => 'required|string|min:3|max:250',
+                    'grade' => 'required|string',
+                    'university' => 'string|min:3|max:64'
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            $user_education = \App\Models\hamafza\UserEducation::find(Request::input('item_id'));
+            $user_education->uid = $user->id;
+            $user_education->major = Request::input('major');
+            $user_education->grade = Request::input('grade');
+            $user_education->university = Request::input('university');
+            $user_education->province_id = Request::input('province');
+            $user_education->save();
+
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
+    }
+
+    public function deleteUserEducation() {
+        $validator = Validator::make(Request::all(), [
+                    'item_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            \App\Models\hamafza\UserEducation::find(Request::input('item_id'))->delete();
+
+            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['success'] = true;
+            return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        }
     }
 
 }

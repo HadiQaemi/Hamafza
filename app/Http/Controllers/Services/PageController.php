@@ -19,7 +19,7 @@ class PageController extends Controller {
 
     public function PageDetail() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
 
@@ -33,8 +33,8 @@ class PageController extends Controller {
         $posts = $subject->posts;
         $Body = $page->body;
         $Tree = $pc->bodyList($Body);
-        foreach ($page_new['Files'] as $file){
-            $file['downloadURL'] = route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode($file->id)]).'/?&fname='. $file->originalName; 
+        foreach ($page_new['Files'] as $file) {
+            $file['downloadURL'] = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => enCode($file->id)]) . '/?&fname=' . $file->originalName;
         }
         $res = [
             'status' => '1',
@@ -49,13 +49,13 @@ class PageController extends Controller {
                     'type' => '6',
                     'data' => $page_new['content']
                 ],
-                     [
+                    [
                     'title' => 'پیوست ها',
                     'selected' => '1',
                     'type' => '6',
                     'data' => $page_new['Files']
                 ],
-                     [
+                    [
                     'title' => 'فهرست',
                     'selected' => '0',
                     'type' => '7',
@@ -161,7 +161,7 @@ class PageController extends Controller {
 
     public function PageLike() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         if ($tar_val == '1') {
@@ -178,12 +178,12 @@ class PageController extends Controller {
     public function like() {
 
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
         $sid = Request::input('sid');
-        $type = Request::input('type'); 
+        $type = Request::input('type');
         switch ($type) {
             case 'subject':
                 $PageClass = new PageClass();
@@ -202,7 +202,7 @@ class PageController extends Controller {
                 return $UC->LikeADD($uid, $sid);
                 break;
             case 'Post':
-                 \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 1);
+                \App\HamafzaServiceClasses\PostsClass::PostLike($uid, $sid, 0, 1);
                 return [
                     'status' => "1",
                     'e_text' => 'به پسندیده ها اضافه گشت.'
@@ -212,12 +212,12 @@ class PageController extends Controller {
 
     public function disLike() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
         $sid = Request::input('sid');
-        $type = Request::input('type'); 
+        $type = Request::input('type');
         switch ($type) {
             case 'subject':
                 $PageClass = new PageClass();
@@ -247,7 +247,7 @@ class PageController extends Controller {
     public function follow() {
 
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -274,7 +274,7 @@ class PageController extends Controller {
 
     public function unFollow() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -308,7 +308,7 @@ class PageController extends Controller {
 
     public function newpost(Request $request) {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -355,7 +355,7 @@ class PageController extends Controller {
 
     public function bookmark_toggle() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $target_table = Request::input('type');
@@ -410,9 +410,9 @@ class PageController extends Controller {
     }
 
     public function bookmark_delete() {
-        
+
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $id = Request::input('id');
@@ -436,9 +436,9 @@ class PageController extends Controller {
     }
 
     public function announce_add(Request $request) {
-        
+
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -496,11 +496,11 @@ class PageController extends Controller {
     public function sendMessage() {
 //        dd(Request::all());
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
-        
+
         //$sesid =  0;
         $title = Request::input('title');
         $comment = Request::input('comment');
@@ -562,7 +562,7 @@ class PageController extends Controller {
 
     public function newOrgan() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $uid = $user->id;
@@ -597,8 +597,8 @@ class PageController extends Controller {
         $count = DB::table('user_group')->where('link', $group_link)->count();
         $count += DB::table('user')->where('Uname', $group_link)->count();
         $menu = $isorgan ? 'کانال' : 'گروه';
-        if (ctype_digit($group_link)){
-            $message = 'نام'. $menu. 'نبایستی عدد باشد';
+        if (ctype_digit($group_link)) {
+            $message = 'نام' . $menu . 'نبایستی عدد باشد';
             $res = [
                 'status' => "-1",
                 'message' => $message
@@ -613,7 +613,7 @@ class PageController extends Controller {
             foreach ($keywords as &$value) {
                 DB::table('user_group_key')->insert(array('gid' => $gid, 'kid' => $value));
             }
-            
+
             $res = [
                 'status' => "1",
                 'message' => $menu . ' با موفقیت ثبت شد.'
@@ -631,7 +631,7 @@ class PageController extends Controller {
 
     public function post_comment() {
         $user = getUser();
-        if (!isset($user->id)){
+        if (!isset($user->id)) {
             return $user;
         }
         $postid = Request::input('postid');
@@ -644,6 +644,28 @@ class PageController extends Controller {
         $res = [
             'status' => "1",
             'message' => $menu
+        ];
+        return response()->json($res);
+    }
+
+    public function Sharepost() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $ShareGroup = Request::input("groups");
+        $users =Request::input("users");
+        $inmypage = Request::input('inmypage');
+        $descr = Request::input('desc');
+        $post_id = Request::input('post_id');
+        $SP = new \App\HamafzaServiceClasses\PostsClass();
+        $menu = $SP->Sharepost($user->id, 0, $ShareGroup, $users, '', $inmypage, $descr, $post_id, '');
+//        return $menu;
+//
+//        $mes = AJAX::Sharepost($uid, $sesid, $ShareGroup, $users, $emails, $inmypage, $descr, $post_id, '');
+        $res = [
+            'status' => "1",
+            'message' => 'بازنشر انجام شد'
         ];
         return response()->json($res);
     }

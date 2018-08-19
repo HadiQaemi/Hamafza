@@ -10,7 +10,7 @@ Route::post('GetTreeNodes', ['as' => 'GetTreeNodes', 'uses' => 'View\AjaxControl
 
 
 Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
-    Route::post('get_sites', [
+    Route::get('get_sites', [
         'uses' => 'PublicController@GetSites'
     ]);
     /* Route::post('get_portals', [
@@ -80,6 +80,11 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
     Route::post('post_comment', [
         'as' => 'api.v43.post_comment',
         'uses' => 'PageController@post_comment'
+    ]);
+    
+     Route::post('post_share', [
+        'as' => 'api.v43.post_share',
+        'uses' => 'PageController@Sharepost'
     ]);
 
 
@@ -183,6 +188,42 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'as' => 'api.v43.user.outbox',
             'uses' => 'UserController@outbox'
         ]);
+
+        Route::post('update_user_specials', [
+            'as' => 'api.v43.user.update_user_specials',
+            'uses' => 'UserController@updateUserSpecials',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.update_user_specials']
+        ]);
+        Route::post('add_user_work', [
+            'as' => 'api.v43.user.add_user_work',
+            'uses' => 'UserController@addUserWork',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.add_user_work']
+        ]);
+        Route::post('update_user_work', [
+            'as' => 'api.v43.user.update_user_work',
+            'uses' => 'UserController@updateUserWork',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.update_user_work']
+        ]);
+        Route::post('delete_user_work', [
+            'as' => 'api.v43.user.delete_user_work',
+            'uses' => 'UserController@deleteUserWork',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.delete_user_work']
+            ]);
+        Route::post('add_user_education', [
+            'as' => 'api.v43.user.add_user_education',
+            'uses' => 'UserController@addUserEducation',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.add_user_education']]);
+        Route::post('update_user_education', [
+            'as' => 'api.v43.user.update_user_education',
+            'uses' => 'UserController@updateUserEducation',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.update_user_education']
+        ]);
+        Route::post('delete_user_education', [
+            'as' => 'api.v43.user.delete_user_education',
+            'uses' => 'UserController@deleteUserEducation',
+            'middleware' => ['dynamic_permission:posts.hamahang.users.delete_user_education']
+        ]);
+
 
 
 
