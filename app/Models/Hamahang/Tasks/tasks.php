@@ -713,7 +713,7 @@ class tasks extends Model
     {
                
         $result = DB::table('hamahang_task')
-            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_status.type as task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+            ->select("hamahang_task_status.type as task_status","hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance","hamahang_task.duration_timestamp","hamahang_task.schedule_time")
             ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
             ->join('user', 'user.id', '=', 'hamahang_task_assignments.uid')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
@@ -723,7 +723,7 @@ class tasks extends Model
           
             ->where('hamahang_task_assignments.employee_id', '=', $uid)
             ->where('hamahang_task_assignments.status', '=', 0)
-            ->whereRaw('UNIX_TIMESTAMP(hamahang_calendar_user_events.startdate) <'.$time + 86399)
+            ->whereRaw('UNIX_TIMESTAMP(hamahang_calendar_user_events.startdate) <'.($time + 86399))
            ->whereRaw('UNIX_TIMESTAMP(hamahang_calendar_user_events.enddate) >'.$time)
           
             ->whereNull('hamahang_task_assignments.reject_description')
