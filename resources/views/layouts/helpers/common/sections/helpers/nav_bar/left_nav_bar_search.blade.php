@@ -1,3 +1,18 @@
+<style>
+    ::-webkit-scrollbar {width: 8px}
+    ::-webkit-scrollbar-track {background: #ccc;}
+    ::-webkit-scrollbar-thumb {background: #999;}
+</style>
+<style>
+    #page4_pane2_content{
+        overflow-y: scroll !important;
+        height: 520px !important;
+    }
+    .thumb{
+        display: none !important;
+    }
+
+</style>
 @php
     $r = null;
     if ($in_pages && ($for_title || $for_content))

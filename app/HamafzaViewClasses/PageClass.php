@@ -282,10 +282,34 @@ class PageClass
                             </div>
                         </div>
                         '.
-                        '<div class="col-xs-12" id="new-content" style="direction: rtl">'.$page['content'] . '</div>'.
+                        '<div class="col-xs-12" id="new-content" style="direction: rtl">
+                            <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-circle-down" id="BtnScrollTop"></a>
+                            <div class="mixed-scroll hidden">
+                                <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-circle-up"></a>
+                                <br/>
+                                <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-circle-down"></a>
+                            </div>
+                                '.$page['content'] . '
+                            <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-circle-up" id="BtnScrollBottom"></a>
+                        </div>'.
                     '</div>
                             
                     <script>
+                        if($("#new-content").height()<1000){
+                            $(".btn-scroll").css("display","none");
+                        }
+                         $(".btn-scroll").on("click", function(event) {
+                            
+                            var target = $(this.getAttribute("href"));
+                        
+                            if( target.length ) {
+//                                event.preventDefault();
+                                $("html, body").stop().animate({
+                                    scrollTop: target.offset().top
+                                }, 1000);
+                            }
+                        
+                        });
                         function openNav00() {
                             $(".fa-angle-double-left").addClass("hidden");
                             $(".fa-angle-double-left").addClass("deactive");

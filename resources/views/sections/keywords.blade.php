@@ -14,25 +14,51 @@
             padding: 5px;
         }
     </style>
+    @php
+        $relations = '';
+    @endphp
     @if (isset($keywords))
         @if ($keywords)
             <div class="text-content bottom_keywords_client">
                 @foreach ($keywords as $item)
-                    <span class="bottom_keywords" data-id="{!! $item->id !!}" data-title="{!! $item->title !!}" data-relations='{!! $item->keyword_and_relations_json !!}'><i class="fa fa-tag{!! $item->keyword_has_relation ? 's' : null !!}"></i> <span style="color: #6391C5;">{!! $item->title !!}</span></span>
+                    <span class="bottom_keywords one_keyword" data-id="{!! $item->id !!}" data-title="{!! $item->title !!}" data-relations='{!! $item->keyword_and_relations_json !!}'><i class="fa fa-tag{!! $item->keyword_has_relation ? 's' : null !!}"></i> <span style="color: #6391C5;">{!! $item->title !!}</span></span>
+                    @php
+                        $relations = $item->keyword_and_relations_json ;
+                    @endphp
                 @endforeach
+                <span class="bottom_keywords all_keywords" data-relations='{!! $relations !!}'><i class="fa fa-tags"></i> <span style="color: #6391C5;">همه موارد</span></span>
             </div>
         @endif
     @endif
     <script>
-        $(document).on('click', '.bottom_keywords', function()
+        $(document).on('click', '.all_keywords', function()
         {
             thic = $(this);
             $.each(JSON.parse(thic.attr('data-relations')), function(id, text)
             {
                 $("#Navigatekeywords").select2('trigger', 'select', {data: {id: id, text: text}});
+                $('#TagBut').click();
             });
             $('[href="#tab3"]').click();
             $('#TagBut').click();
+            $('.gm-scroll-view').css('width','350px');
+            $('.ful-scrn').css('left','420px');
+            $('#h_sidenav').css('z-index','1000000');
+        });
+        var btn = 0;
+        $(document).on('click', '.one_keyword', function()
+        {
+            $("#Navigatekeywords").html('');
+            thic = $(this);
+            $('[href="#tab3"]').click();
+            $('#TagBut').click();
+            $("#Navigatekeywords").select2('trigger', 'select', {data: {id: thic.attr('data-id'), text: thic.attr('data-title')}});
+            $('#TagBut').click();
+            $("#Navigatekeywords").select2('trigger', 'select', {data: {id: thic.attr('data-id'), text: thic.attr('data-title')}});
+            if((btn++)==1)
+                $(this).click();
+            $('.gm-scroll-view').css('width','350px');
+            $('#h_sidenav').css('z-index','1000000');
         });
     </script>
 @stop

@@ -1610,6 +1610,7 @@ th{
 .gm-scroll-view{
     padding-right: 15px!important;
     padding-bottom: 150px !important;
+    overflow: visible !important;
     /*width: 100%!important;*/
     /*height: 100%!important;*/
 }

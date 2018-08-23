@@ -1077,6 +1077,7 @@ $(document).ready(function () {
 
 function h_sidenav_open(thic) {
     var w = 400;
+    $('.mixed-scroll').css('right','27%');
     $(".ful-scrn").css("position","absolute");
     $(".ful-scrn").css("top","5px");
     $(".ful-scrn").css("left","5px");
@@ -1098,6 +1099,7 @@ function h_sidenav_open(thic) {
 }
 
 function h_sidenav_close() {
+    $('.mixed-scroll').css('right','34%');
     var pos = $(".ful-scrn").offset();
     var master_inner_rtl_div = $("#toolbar").offset();
     $('.ful-scrn').css('position','absolute');
@@ -1147,6 +1149,7 @@ $(document).ready(function(){
             $(".ful-scrn").css("top","70px");
             $(".ful-scrn").css("left","40px");
 
+
             // $("#toolbar .btn-group.mr").addClass("hidden");
             // $("#toolbar .btn-group").addClass("hidden");
         } else {
@@ -1164,8 +1167,8 @@ $(document).ready(function(){
             $("#rSubMenuBtn").css("top","0px");
             $(".HelpIcons").css("top","0px");
             $(".rightSubMenu").css("top","0px");
-            // $("#toolbar .btn-group.mr").css("height","40px");
-            // $("#toolbar .btn-group").css("height","40px");
+            $("#toolbar .btn-group.mr").css("height","40px");
+            $("#toolbar .btn-group").css("height","40px");
             $("#header").removeClass("hidden");
             var pos = $(".ful-scrn").offset();
             var master_inner_rtl_div = $("#toolbar").offset();
@@ -1174,6 +1177,13 @@ $(document).ready(function(){
             $(".ful-scrn").css("left",parseInt(pos.left)+10);
             $("#toolbar .btn-group.mr").removeClass("hidden");
             $("#toolbar .btn-group").removeClass("hidden");
+
+        }
+        if ($(".hd-body").scrollTop() > 80 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
+            $(".mixed-scroll").removeClass('hidden');
+        }
+        if ($(".hd-body").scrollTop() < 80 || $(".hd-body").scrollTop()>(parseInt($('#new-content').height())-1000)) {
+            $(".mixed-scroll").addClass('hidden');
         }
     });
 

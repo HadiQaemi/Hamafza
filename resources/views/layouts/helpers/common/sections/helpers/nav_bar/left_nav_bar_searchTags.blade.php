@@ -1,7 +1,7 @@
 @forelse ($keywords as $keyword_type => $keyword_items)
     @if ($keyword_items->count())
-        <div id="keyword_' . $keyword_type . '" style="color: lightgrey; font-size: 11pt; margin-bottom: 5px;">{!! $keyword_types[$keyword_type] !!}</div>
-        <ul class="keyword_' . $keyword_type . '">
+        <div id="keyword_{{$keyword_type}}" style="color: lightgrey; font-size: 11pt; margin-bottom: 5px;">{!! $keyword_types[$keyword_type] !!}</div>
+        <ul class="keyword_{{$keyword_type}}">
             @php ($r = null)
             @foreach ($keyword_items as $keyword_item)
                 @php

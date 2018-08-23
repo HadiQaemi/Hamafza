@@ -2598,6 +2598,9 @@ a .navbar-brand{
 /*////////*/
 
 
+/*////////*/
+
+
 #vrScroll2 .scrl{
     direction: rtl;
 }
@@ -3162,7 +3165,7 @@ input{
     line-height: 25px;
 }
 #table_task_time li{
-    border-right: 2px solid red !important;;
+    border-right: 2px solid red !important;
     background: #fff !important;
 }
 #fieldset_noData{
@@ -3170,4 +3173,50 @@ input{
     text-align: center;
     padding-top: 20px;
     font-size: large;
+}
+.tab-view{
+    padding: 8px !important;
+    margin-top:20px !important;
+    overflow-y: hidden !important;
+}
+.disable-tab{
+    background: #fff !important;
+    padding: 14px !important;
+    margin-right: 2px !important;
+    border: none !important;
+    color: #ddd;
+}
+.height-30{
+    height: 32px !important;
+}
+.top-80{
+    top: 80px !important;
+}
+.top-40{
+    top: 40px !important;
+}
+.height-500{
+    height: 500px !important;
+}
+.height-400{
+    height: 400px !important;
+}
+.width-100-pre{
+    width: 100% !important;
+}
+.margin-right-10{
+    margin-right: 10px !important;
+}
+.btn-scroll{
+    position: relative;
+    right: -30px;
+    top: 30px;
+    font-size: x-large;
+    color: #111111;
+    text-decoration: none;
+}
+.mixed-scroll{
+    position: fixed;
+    right: 34%;
+    top: 80%;
 }
