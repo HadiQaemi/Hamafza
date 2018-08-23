@@ -300,6 +300,11 @@
         autoClose: true,
         format: 'YYYY-MM-DD'
     });
+    $(".DatePicker_").persianDatepicker({
+        observer: true,
+        autoClose: true,
+        format: 'YYYY-MM-DD'
+    });
     $(".DatePicker_begin_date").persianDatepicker({
         observer: true,
         autoClose: true,

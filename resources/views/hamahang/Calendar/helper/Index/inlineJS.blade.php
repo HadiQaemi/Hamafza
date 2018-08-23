@@ -478,6 +478,31 @@
             afterConfirm: 'close'
         });
     }
+    /*########################################################################################*/
+    /*----------------------------------------------------------------------------------------*/
+    /*-------------------------------------save even addReminderTimeBtn ---------------------------------------*/
+    /*----------------------------------------------------------------------------------------*/
+    $(document).on('click', '.addReminderTimeBtn', function () {
+        $('.reminderTimeList').removeClass('hidden');
+        var test = "در زمان";
+        if($('input[name="reminderType"]').select().val()!=1)
+            var test = "قبل از";
+        $('.reminderTimeList').append(
+            "<div class='row col-xs-12'>"+
+                "<span class='pull-right col-lg-1 noLeftPadding noRightPadding'></span>" +
+                "<span class='pull-right line-height-35 col-lg-4 noLeftPadding noRightPadding margin-right-10'>"+
+                    "<label class='pull-right noLeftPadding noRightPadding margin-right-10'>"+test+"</label>" +
+                    "<input type='hidden' value='"+$('#in_day').val()+"' name='in_day[]'/><input type='hidden' value='"+$('#firstTyp_term').val()+"' name='firstTyp_term[]'/>"+
+                    "<label class='pull-right pull-right margin-right-10'>"+$('#in_day').val()+ "</label>" +
+                    "<label class='pull-right pull-right margin-right-10'>"+$('#firstTyp_term').val()+ "</label>" +
+                "</span>"+
+                "<span class='pull-right col-lg-1 margin-right-10 removeReminderTimeBtn'><i class='fa fa-remove pointer'></i></span>"+
+            "</div>"
+        );
+    });
+    $(document).on('click', '.removeReminderTimeBtn', function () {
+        $(this).parent().remove();
+    });
     /*####################################################################################################################*/
     /*-------------------------------------------------------------------------------------*/
     /*------------------------------save event  from all modal by form_id -------------------*/
@@ -490,12 +515,15 @@
         //console.log(document.forms[form_id].getElementsByTagName("cid"));
         // console.log('#' + form_id + ' select[name="cid"]');
         //console.log($('#' + form_id + ' select[name="cid"]').val());
+        saveObj.save_type = $('input[name="new_reminder_save_type"]:checked').val();
+        saveObj.in_day = $('input[name="in_day[]"]').serializeArray();
+        saveObj.firstTyp_term = $('input[name="firstTyp_term[]"]').serializeArray();
+
         saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
         saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
-        saveObj.hstartdate = $('#' + form_id + ' input[name="startdate"]').val();
-        saveObj.starttime = $('#' + form_id + ' input[name="starttime"]').val();
-        saveObj.henddate = $('#' + form_id + ' input[name="enddate"]').val();
-        saveObj.endtime = $('#' + form_id + ' input[name="endtime"]').val();
+        saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
+        saveObj.hstartdate = $('#' + form_id + ' input[name="in_day[]"]').val();
+        saveObj.hstarttime = $('#' + form_id + ' input[name="firstTyp_term[]"]').val();
         saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
         if ($('#' + form_id + ' input[type="checkbox"][name="allDay"]').is(':checked')) {
             saveObj.allDay = 1;
@@ -503,12 +531,12 @@
         else {
             saveObj.allDay = 0;
         }
+        saveObj.mode = 'insert';
         if ($('#' + form_id + ' input[name="event_id"]').length && $('#' + form_id + ' input[name="event_id"]').val() > 0) {
             saveObj.mode = 'edit';
             saveObj.event_id = $('#' + form_id + ' input[name="event_id"]').val();
             saveObj.type = $('#' + form_id + ' input[name="type"]').val();
         }
-        saveObj.mode = 'calendar';
         //console.log(saveObj);
         var res = '';
         $.ajax({
@@ -557,8 +585,8 @@
         enddate = enddate.join('-');
         startdate = startdate.join('-');
         newEventModal = $.jsPanel({
-            position: {my: "center-top", at: "center-top", offsetY: 15},
-            contentSize: {width: 800, height: 300},
+            position: {my: "center-top", at: "center-top", offsetY: 120},
+            contentSize: {width: 1000, height: 400},
             contentAjax: {
                 url: '{{ URL::route('modals.multi_task' )}}',
                 method: 'POST',
@@ -624,8 +652,8 @@
         enddate = enddate.join('-');
         startdate = startdate.join('-');
         newEventModal = $.jsPanel({
-            position: {my: "center-top", at: "center-top", offsetY: 15},
-            contentSize: {width: 800, height: 400},
+            position: {my: "center-top", at: "center-top", offsetY: 120},
+            contentSize: {width: 1000, height: 400},
             contentAjax: {
                 url: '{{ URL::route('modals.create_new_task' )}}',
                 method: 'POST',
@@ -769,8 +797,8 @@
             enddate[i] = persianToEngilshDigit(enddate[i]);
         }
         sessionModal = $.jsPanel({
-            position: {my: "center-top", at: "center-top", offsetY: 15},
-            contentSize: {width: 800, height: 400},
+            position: {my: "center-top", at: "center-top", offsetY: 120},
+            contentSize: {width: 1000, height: 400},
             contentAjax: {
                 url: '{{ URL::route('hamahang.calendar_events.session_modal' )}}',
                 method: 'POST',
@@ -830,7 +858,7 @@
                 method: 'POST',
                 dataType: 'json',
                 done: function (data, textStatus, jqXHR, panel) {
-                    console.log(data.content);
+                    // console.log(data.content);
                     this.headerTitle(data.header);
                     this.content.html(data.content);
                     this.toolbarAdd('footer', [{item: data.footer}]);
@@ -867,8 +895,8 @@
             enddate[i] = persianToEngilshDigit(enddate[i]);
         }
         reminderModdal = $.jsPanel({
-            position: {my: "center-top", at: "center-top", offsetY: 15},
-            contentSize: {width: 900, height: 400},
+            position: {my: "center-top", at: "center-top", offsetY: 120},
+            contentSize: {width: 1000, height: 400},
             contentAjax: {
                 url: '{{ URL::route('hamahang.calendar_events.reminder_modal' )}}',
                 method: 'POST',

@@ -33,16 +33,35 @@
             {{--<div class="clearfixed"></div>--}}
         {{--</div>--}}
         <div class="clearfixed"></div>
-        <br/>
+        <form id="form_filter_sessions" style="position: relative;top: 50px;right: 200px;z-index: 50;">
+            <div class="form-inline" style="padding-right: 5px;" >
+                <div class="checkbox">
+                    <div class="form-inline">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="form-check-input" name="types[]" value="0" id="draft" checked>
+                                <span>{{ trans('general.draft') }}</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="form-check-input" name="types[]" value="1" id="final" checked>
+                                <span>{{ trans('general.final') }}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                {{--</div>--}}
+            </div>
+        </form>
         <div class="row">
             {{--<table id="sessionsGrid" class="table table-striped table-bordered dt-responsive nowrap display">--}}
-            <table id="sessionsGrid" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
+            {{--<table id="sessionsGrid" class="--}}{{--table-bordered--}}{{-- table dt-responsive nowrap display" style="width:100%">--}}
+                <table id="sessionsGrid" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
                 <thead>
                 <tr>
-                    <th data-column-id="id"> {{trans('calendar_events.ce_rowindex_label')}}</th>
-                    <th data-column-id="title"> {{trans('calendar_events.ce_agenda_label')}}</th>
-                    <th data-column-id="startdate" data-formatter="startdate">{{trans('calendar_events.ce_startdate_label')}}</th>
-                    <th data-column-id="enddate" data-formatter="enddate">{{trans('calendar_events.ce_enddate_label')}}</th>
+                    <th> {{trans('calendar_events.ce_rowindex_label')}}</th>
+                    <th> {{trans('calendar_events.ce_agenda_label')}}</th>
+                    <th>{{trans('calendar_events.ce_startdate_label')}}</th>
+                    <th>{{trans('calendar_events.ce_enddate_label')}}</th>
                     <th>{{trans('calendar_events.ce_calendar_label')}}</th>
                     <th>{{trans('calendar_events.ce_action_label')}}</th>
                 </tr>

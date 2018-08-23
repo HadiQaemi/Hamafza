@@ -249,13 +249,13 @@
                 contentSize: '150 120',
                 content: '' +
                 '<div id="modal_fullcalendar_menu" class="list-group">' +
-                '   <div>' +
-                '		<a href="#" class="list-group-item" onclick="showMultiTaskingModal()">'+
+                '   <div style="margin-bottom: 4px;">' +
+                '		<a href="#" class="list-group-item line-height-30 height-30" onclick="showMultiTaskingModal()">'+
                 '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_defined_task')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div style="border-bottom:1px solid #aaa">' +
-                '       <a href="#" class="list-group-item" onclick="showTaskModal()" > ' +
+                '   <div style="border-bottom:1px solid #aaa;">' +
+                '       <a href="#" class="list-group-item line-height-30 height-30" onclick="showTaskModal()" > ' +
                 '           <i  class="fa fa-tasks "></i>{{trans('calendar.modal_fullcalendar_menu_new_task')}}'+
                 '       </a>' +
                 '   </div>' +
@@ -269,8 +269,8 @@
                 {{--'           {{trans('calendar.modal_fullcalendar_menu_save_event')}}'+--}}
                 {{--'       </a>' +--}}
                 {{--'   </div>' +--}}
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showSessionModal();">' +
+                '   <div style="margin-bottom: 4px;">' +
+                '       <a href="#" class="list-group-item line-height-30 height-30" onclick="showSessionModal();">' +
                 '           <i  class="fa fa fa-envelope "></i>{{trans('calendar.modal_fullcalendar_menu_save_session')}}'+
                 '       </a>' +
                 '   </div>' +
@@ -279,18 +279,18 @@
                 {{--'           {{trans('calendar.modal_fullcalendar_menu_save_invitation')}}'+--}}
                 {{--'       </a>' +--}}
                 {{--'   </div>' +--}}
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '   <div style="margin-bottom: 4px;">' +
+                '       <a href="#" class="list-group-item line-height-30 height-30" onclick="showReminderModal();">' +
                 '           <i  class="fa fa fa-bell "></i>{{trans('calendar.modal_fullcalendar_menu_save_reminder')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '   <div style="margin-bottom: 4px;">' +
+                '       <a class="list-group-item line-height-30 height-30" >' +
                 '           <i  class="fa fa fa-check "></i>{{trans('calendar.modal_fullcalendar_menu_presence')}}'+
                 '       </a>' +
                 '   </div>' +
-                '   <div>' +
-                '       <a href="#" class="list-group-item" onclick="showReminderModal();">' +
+                '   <div style="margin-bottom: 4px;">' +
+                '       <a class="list-group-item line-height-30 height-30" >' +
                 '           <i  class="fa fa fa-address-card "></i>{{trans('calendar.modal_fullcalendar_menu_memo')}}'+
                 '       </a>' +
                 '   </div>' +
@@ -363,7 +363,7 @@
                     $('#modal_fullcalendar_menu input[name="enddate"]').val(pEnd[0]);
                     $('#modal_fullcalendar_menu input[name="starttime"]').val(realPstarttime);
                     $('#modal_fullcalendar_menu input[name="endtime"]').val(realPendtime);
-                    // $("#calendar").fullCalendar("unselect");
+                    $("#calendar").fullCalendar("unselect");
                 },
                 events: function (start, end, timezone, callback) {
                     loading({id: 'calendar'}, 1);
@@ -506,10 +506,10 @@
             });
         })(jQuery_2);
         $('.fc-right .fc-button-group').prepend(
-            '<button type="button" class="fc-year-button fc-button fc-state-default fc-corner-left ">{{trans("calendar.calendar_year_button_title")}}  </button>' +
+            {{--'<button type="button" class="fc-year-button fc-button fc-state-default fc-corner-left ">{{trans("calendar.calendar_year_button_title")}}  </button>' +--}}
 {{--            '<button type="button" class="fc-6month-button fc-button fc-state-default " >{{trans("calendar.calendar_sixmonth_button_title")}} </button>' +--}}
-            '<button type="button" class="fc-seasonDay-button fc-button fc-state-default  ">{{trans("calendar.calendar_sesoan_button_title")}} </button>'+
-            '<button type="button" class="fc-button fc-state-default calendar-time-task " id="calendar_time_task">{{trans("calendar.calendar_month_row_button_title")}} </button>'
+            {{--'<button type="button" class="fc-seasonDay-button fc-button fc-state-default  ">{{trans("calendar.calendar_sesoan_button_title")}} </button>'+--}}
+            {{--'<button type="button" class="fc-button fc-state-default calendar-time-task " id="calendar_time_task">{{trans("calendar.calendar_month_row_button_title")}} </button>'--}}
         );
         $('.fc-right').css('float','left');
         $('.fc-left').css('float','right');
@@ -1363,8 +1363,9 @@
         /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save  event of session modal---------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
-        $(document).on('click', '#saveSessionUserEvent', function () {
+        $(document).on('click', '.saveSessionUserEvent', function () {
             //alert('ffffffffffffffff');
+            var do_again = $(this).attr('do_type');
             var saveObj = {};
             var cid = 0;
             var form_id = 'sessionForm';
@@ -1406,9 +1407,10 @@
             saveObj.session_chief = $('select[name="session_chief"]').select().val();
             saveObj.session_secretary = $('select[name="session_secretary"]').select().val();
             saveObj.session_facilitator = $('select[name="session_facilitator"]').select().val();
-            saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
+            saveObj.session_voting_users = $('select[name="new_session_save_type[]"]').select().val();
             saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
             saveObj.session_notvoting_users = $('select[name="session_notvoting_users[]"]').select().val().toString();
+            saveObj.save_type = $('input[name="new_session_save_type"]:checked').val();
             saveObj.long = $('input[name="long"]').val();
             saveObj.lat = $('input[name="lat"]').val();
             saveObj.type = $('input[name="session_type"]:checked').val();
@@ -1436,7 +1438,8 @@
             else {
                 saveObj.allow_inform_invitees = 0;
             }
-            //console.log(saveObj);
+            // console.log(saveObj);
+
             var res = '';
             $.ajax({
                 url: '{{ URL::route('hamahang.calendar_events.save_session_event')}}',
@@ -1450,9 +1453,10 @@
                         errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);
                         // $('#' + errorMsg_id).html(warning);
                     } else {
-                        eventInfo = JSON.parse(res.event);
-                        console.log(eventInfo);
-                        console.log(eventInfo.title);
+                        console.log(res);
+                        console.log(res.event);
+                        // eventInfo = JSON.parse(res.event);
+                        eventInfo = res.event;
                         (function ($) {
                             $("#calendar").fullCalendar('addEventSource', [{
                                 start: eventInfo.startdate,
@@ -1462,7 +1466,15 @@
                                 block: true
                             }]);
                         })(jQuery_2);
-                        sessionModal.close();
+                        if(do_again=='close-form')
+                        {
+                            sessionModal.close();
+                        }else{
+                            $('.sessionForm input').val('');
+                            var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
+                            messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);
+                        }
+
                         var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
                         {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
                         {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');--}}
@@ -1711,17 +1723,68 @@
         /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save even reminder ---------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
-        $(document).on('click', '#saveReminderUserEvent', function () {
-            var result = saveEvent('reminder_form', 'reminder_errorMsg');
-            if (result.success == true) {
-                $('#saveReminderUserEvent').remove();
-                navigationWizard();
-                $('.reminder_errorMsg').html('');
-                $('#form-user-event-reminder').hide();
-                $('#form-reminder-content').show();
-                $('#form-user-event-reminder').append('<input type="hidden" name="event_id" value="' + result.event.id + '">');
-                $('#form-user-event-reminder').append('<input type="hidden" name="mode" value="calendar">');
+        $(document).on('click', '.saveReminderUserEvent', function () {
+            // var result = saveEvent('reminder_form', 'reminder_errorMsg');
+            var $this = $(this);
+            form_id = 'reminder_form';
+            var myForm = document.getElementById('reminder_form');
+            //Extract Each Element Value
+            var saveObj = {};
+            var cid = 0;
+            //console.log(document.forms[form_id].getElementsByTagName("cid"));
+            // console.log('#' + form_id + ' select[name="cid"]');
+            //console.log($('#' + form_id + ' select[name="cid"]').val());
+            saveObj.save_type = $('input[name="new_reminder_save_type"]:checked').val();
+            saveObj.in_day = $('input[name="in_day[]"]').serializeArray();
+            saveObj.firstTyp_term = $('input[name="firstTyp_term[]"]').serializeArray();
+            var save_again = $this.data('again_save');
+            saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
+            saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
+            saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
+            saveObj.hstartdate = $('#' + form_id + ' input[name="in_day[]"]').val();
+            saveObj.hstarttime = $('#' + form_id + ' input[name="firstTyp_term[]"]').val();
+            saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
+            if ($('#' + form_id + ' input[type="checkbox"][name="allDay"]').is(':checked')) {
+                saveObj.allDay = 1;
             }
+            else {
+                saveObj.allDay = 0;
+            }
+            saveObj.mode = 'insert';
+            if ($('#' + form_id + ' input[name="event_id"]').length && $('#' + form_id + ' input[name="event_id"]').val() > 0) {
+                saveObj.mode = 'edit';
+                saveObj.event_id = $('#' + form_id + ' input[name="event_id"]').val();
+                saveObj.type = $('#' + form_id + ' input[name="type"]').val();
+            }
+            //console.log(saveObj);
+            var res = '';
+            $.ajax({
+                url: '{{ URL::route('hamahang.calendar_events.save_user_event')}}',
+                type: 'POST', // Send post dat
+                data: saveObj,
+                async: false,
+                success: function (s) {
+                    res = JSON.parse(s);
+                    if (res.success == false) {
+                        $('#' + errorMsg_id).empty();
+                        errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);
+                        // $('#' + errorMsg_id).html(warning);
+                        reminderModdal.close();
+                    } else {
+                        if ($('#' + form_id + ' input[name="event_id"]').length) {
+                            $('#' + form_id + ' input[name="event_id"]').val(res.event_id);
+                        } else {
+                            $('#' + form_id).append('<input type="hidden" name="event_id" value="' + res.event_id + '"/>');
+
+                        }
+                        var html = '{{trans("calendar.calendar_saveReminder_clicked_success_msg1").' '.trans("calendar.calendar_saved_success_msg2")}}';
+                        messageModal('success', '{{trans("calendar.calendar_saveReminder_clicked_success_msg_header")}}', html);
+                        if(save_again==0)
+                            reminderModdal.close();
+                    }
+                }
+            });
+
         });
         /*########################################################################################*/
         /*----------------------------------------------------------------------------------------*/

@@ -178,153 +178,291 @@
         /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save  event of session modal------------------------*/
         /*----------------------------------------------------------------------------------------*/
-        $(document).on('click', '#saveSessionUserEvent', function () {
-            var result = saveEvent('sessionForm', 'sessionMsgBox');
-            if (result.success == true) {
-                if (result.mode == 'edit') {
-                    var modal_btn = [
-                        {
-                            item: '<div >' +
-                            '<button type="button" name="saveSession" id="saveSession" value="save"' +
-                            'class="btn btn-warning"' +
-                            'type="button">' +
-                            '<i class="glyphicon  glyphicon-save-file bigger-125"></i>' +
-                            '<span>{{trans('app.edit')}}</span>' +
-                            '</button>' +
-                            '</div>'
-                        }
-                    ];
-                } else{
-                    var modal_btn = [
-                        {
-                            item: '<div >' +
-                            '<button type="button" name="saveSession" id="saveSession" value="save"' +
-                            'class="btn btn-info"' +
-                            'type="button">' +
-                            '<i class="glyphicon  glyphicon-save-file bigger-125"></i>' +
-                            '<span>{{trans('app.save')}}</span>' +
-                            '</button>' +
-                            '</div>'
-                        }
-                    ];
-                }
-                $('#saveSessionUserEvent').remove();
-                sessionModal.toolbarAdd("footer", modal_btn);
-                navigationWizard();
-                $('#sessionMsgBox').html('');
-                if (result.mode == 'edit') {
-                    //console.log('kkkkkkkkkkkkkkk');
-                    var obj = {};
-                    obj.event_id = result.event_id;
-                    $.ajax({
-                        url: '{{ URL::route('hamahang.calendar_events.session_data' )}}',
-                        type: 'POST', // Send post dat
-                        data: obj,
-                        async: false,
-                        success: function (s) {
-                            res = JSON.parse(s);
-                            $('#agenda').val(res.agenda);
-                            for (var i = 0; i < res.invitees.length; i++) {
-                                if (res.invitees[i].user_type == 1) {
-                                    $('select[name="session_voting_users[]"]').select2("trigger", "select", {
-                                        data: {id: res.invitees[i].id.toString(), text: res.invitees[i].text}
-                                    });
-                                } else if (res.invitees[i].user_type == 2) {
-                                    $('select[name="session_notvoting_users[]"]').select2("trigger", "select", {
-                                        data: {id: res.invitees[i].id.toString(), text: res.invitees[i].text}
-                                    });
-                                }
-                            }
-                            if (res.chief != null) {
-                                $('select[name="session_chief"]').select2("trigger", "select", {
-                                    data: {id: res.chief.id.toString(), text: res.chief.Name + ' ' + res.chief.Family}
-                                });
-                            }
-                            if (res.secretary != null) {
-                                $('select[name="session_secretary"]').select2("trigger", "select", {
-                                    data: {id: res.secretary.id.toString(), text: res.secretary.Name + ' ' + res.secretary.Family}
-                                });
-                            }
-                            if (res.facilitator != null) {
-                                $('select[name="session_facilitator"]').select2("trigger", "select", {
-                                    data: {id: res.facilitator.id.toString(), text: res.facilitator.Name + ' ' + res.facilitator.Family}
-                                });
-                            }
-                            $('input[name="term"]').val(res.term);
-                            $('textarea[name="location"]').val(res.location);
-                            $('input[name="location_phone"]').val(res.location_phone);
-                            $('input[name="coordination_phone"]').val(res.coordination_phone);
-                            $('input[name="long"]').val(res.long);
-                            $('input[name="lat"]').val(res.lat);
-                            if (res.send_Invitation) {
-                                $('input[type="checkbox"][name="send_Invitation"]').attr('checked', true)
-                            }
-                            if (res.create_session_page) {
-                                $('input[type="checkbox"][name="create_session_page"]').attr('checked', true)
-                            }
-                            if (res.allow_inform_invitees) {
-                                $('input[type="checkbox"][name="allow_inform_invitees"]').attr('checked', true)
-                            }
-                            $(' input[type="radio"][name="session_type"][value="' + res.type + '"]').prop('checked', true);
-                            $('textarea[name="location"]').append('<input type="hidden" name="event_id" value="' + res.event_id + '">');
-                            $('textarea[name="location"]').append('<input type="hidden" name="mode" value="edit">');
-                        }
-                    });
-                    $('#sessionFilesGrid').DataTable({
-                        "dom": window.CommonDom_DataTables,
-                        "language": LangJson_DataTables,
-                        processing: true,
-                        serverSide: true,
-                        ajax: {
-                            url: '{!! route('hamahang.calendar_events.file_list' )!!}',
-                            type: 'POST',
-                            data: obj
-                        },
-                        columns: [
-                            {
-                                data: 'rowIndex',
-                                name: 'rowIndex',
-                                width: '1%'
-                            },
-                            {
-                                data: 'originalName',
-                                name: 'originalName',
-                                width: '30%'
-                            },
-                            {
-                                data: 'extension',
-                                name: 'extension',
-                                width: '20%'
-                            },
-                            {
-                                data: 'size',
-                                name: 'size',
-                                width: '20%'
-                            },
-                            {
-                                data: 'action',
-                                name: 'action',
-                                orderable: false,
-                                searchable: false,
-                                width: '10%',
-                                mRender: function (data, type, full) {
-                                    // console.log(full);
-                                    return '' +
-                                        '<a class="cls3"   alt="حذف" title="حذف" style="margin: 2px" onclick="deleteEvent(' + full.id + ')" href="#">' +
-                                        '   <i class="fa fa-close"></i>' +
-                                        '</a>' +
-                                        '<a class="cls3" target="_self" style="margin: 2px"  href="{{ route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']) }}' + full.ID_N + '">'+
-                                        '   <i ></i>'+
-                                        '</a>';
-                                }
-                            }
-                        ]
-                    });
-                }
-                $('#form-event-content').hide();
-                $('#form-session-content').show();
+        //add by hadi
+        $(document).on('click', '.saveSessionUserEvent', function () {
+            //alert('ffffffffffffffff');
+            var do_again = $(this).attr('do_type');
+            var saveObj = {};
+            var cid = 0;
+            var form_id = 'sessionForm';
+            //console.log(document.forms[form_id].getElementsByTagName("cid"));
+            // console.log('#' + form_id + ' select[name="cid"]');
+            //console.log($('#' + form_id + ' select[name="cid"]').val());
+            saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
+            saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
+            saveObj.session_pages = $('select[name="new_session_pages[]"]').select().val().toString();
+            saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
+            saveObj.hstartdate = $('#' + form_id + ' input[name="startdate"]').val();
+            saveObj.starttime = $('#' + form_id + ' input[name="starttime"]').val();
+            saveObj.henddate = $('#' + form_id + ' input[name="enddate"]').val();
+            saveObj.endtime = $('#' + form_id + ' input[name="endtime"]').val();
+            saveObj.term = $('input[name="term"]').val();
+            saveObj.hlocation = $('textarea[name="location"]').val();
+            saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
+
+
+            ///////////////////////////////////////////////
+            if ($('#' + form_id + ' input[type="checkbox"][name="allDay"]').is(':checked')) {
+                saveObj.allDay = 1;
             }
+            else {
+                saveObj.allDay = 0;
+            }
+
+            if ($('#' + form_id + ' input[name="event_id"]').length && $('#' + form_id + ' input[name="event_id"]').val() > 0) {
+                saveObj.mode = 'edit';
+                saveObj.event_id = $('#' + form_id + ' input[name="event_id"]').val();
+                saveObj.type = $('#' + form_id + ' input[name="type"]').val();
+            }
+            saveObj.mode = 'calendar';
+            var errorMsg_id = 'sessionMsgBox';
+            ///////////////////////////////////////////////
+            // Session Data
+            // sessionObj = {};
+            saveObj.hagenda = $('#agenda').val();
+            saveObj.session_chief = $('select[name="session_chief"]').select().val();
+            saveObj.session_secretary = $('select[name="session_secretary"]').select().val();
+            saveObj.session_facilitator = $('select[name="session_facilitator"]').select().val();
+            saveObj.session_voting_users = $('select[name="new_session_save_type[]"]').select().val();
+            saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
+            saveObj.session_notvoting_users = $('select[name="session_notvoting_users[]"]').select().val().toString();
+            saveObj.save_type = $('input[name="new_session_save_type"]').val();
+            saveObj.long = $('input[name="long"]').val();
+            saveObj.lat = $('input[name="lat"]').val();
+            saveObj.type = $('input[name="session_type"]:checked').val();
+            saveObj.location_phone = $('input[name="location_phone"]').val();
+            saveObj.coordination_phone = $('input[name="coordination_phone"]').val();
+            // saveObj.hevent_id = result.event.id;
+            saveObj.mode = 'edit';
+            if ($('input[name="mode"]').length) {
+            }
+            if ($('input[type="checkbox"][name="send_Invitation"]').is(':checked')) {
+                saveObj.send_Invitation = 1;
+            }
+            else {
+                saveObj.send_Invitation = 0;
+            }
+            if ($('input[type="checkbox"][name="create_session_page"]').is(':checked')) {
+                saveObj.create_session_page = 1;
+            }
+            else {
+                saveObj.create_session_page = 0;
+            }
+            if ($('input[type="checkbox"][name="allow_inform_invitees"]').is(':checked')) {
+                saveObj.allow_inform_invitees = 1;
+            }
+            else {
+                saveObj.allow_inform_invitees = 0;
+            }
+            // console.log(saveObj);
+
+            var res = '';
+            $.ajax({
+                url: '{{ URL::route('hamahang.calendar_events.save_session_event')}}',
+                type: 'POST', // Send post dat
+                data: saveObj,
+                async: false,
+                success: function (s) {
+                    res = JSON.parse(s);
+                    if (res.success == false) {
+                        $('#' + errorMsg_id).empty();
+                        errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, {id: errorMsg_id}, form_id);
+                        // $('#' + errorMsg_id).html(warning);
+                    } else {
+                        // console.log(res);
+                        //eventInfo = JSON.parse(res.event);
+                        eventInfo = res.event;
+
+                        if(do_again=='close-form')
+                        {
+                            sessionModal.close();
+
+                        }else{
+                            $('.sessionForm input').val('');
+                        }
+
+                        var html = '{{trans("calendar.calendar_saveSession_clicked_success_msg1")}}' + eventInfo.title + '{{trans("calendar.calendar_saved_success_msg2")}}';
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', html);--}}
+                        {{--messageModal('success', '{{trans("calendar.calendar_saveSession_clicked_success_msg_header")}}', '{!! trans("calendar.calendar_saveSession_success") !!}');--}}
+                    }
+                }
+            });
+            // return res;
+            //  console.log(result);return;
+            // if (result.success == true) {
+            /*
+            by hadi
+            var result = saveEvent('sessionForm', 'sessionMsgBox');
+            var modal_btn = [
+                {
+                    item: '' +
+                    '<div >' +
+                    '   <button type="button" name="saveSession" id="saveSession" value="save" class="btn btn-info" type="button">' +
+                    '       <i class="glyphicon  glyphicon-save-file bigger-125"></i>' +
+                    '       <span>{trans('app.save')}}</span>' +
+                    '   </button>' +
+                    '</div>'
+                }
+            ];
+            sessionModal.toolbarAdd("footer", modal_btn);
+            $('#saveSessionUserEvent').remove();
+            navigationWizard();
+            $('#sessionMsgBox').html('');
+            $('textarea[name="location"]').append('<input type="hidden" name="event_id" value="' + result.event.id + '">');
+            $('textarea[name="location"]').append('<input type="hidden" name="mode" value="calendar">');
+            $('#form-event-content').hide();
+            $('#form-session-content').show();
+            */
+            // }
         });
+        //comment by hadi
+        {{--$(document).on('click', '#saveSessionUserEvent', function () {--}}
+            {{--var result = saveEvent('sessionForm', 'sessionMsgBox');--}}
+            {{--if (result.success == true) {--}}
+                {{--if (result.mode == 'edit') {--}}
+                    {{--var modal_btn = [--}}
+                        {{--{--}}
+                            {{--item: '<div >' +--}}
+                            {{--'<button type="button" name="saveSession" id="saveSession" value="save"' +--}}
+                            {{--'class="btn btn-warning"' +--}}
+                            {{--'type="button">' +--}}
+                            {{--'<i class="glyphicon  glyphicon-save-file bigger-125"></i>' +--}}
+                            {{--'<span>{{trans('app.edit')}}</span>' +--}}
+                            {{--'</button>' +--}}
+                            {{--'</div>'--}}
+                        {{--}--}}
+                    {{--];--}}
+                {{--} else{--}}
+                    {{--var modal_btn = [--}}
+                        {{--{--}}
+                            {{--item: '<div >' +--}}
+                            {{--'<button type="button" name="saveSession" id="saveSession" value="save"' +--}}
+                            {{--'class="btn btn-info"' +--}}
+                            {{--'type="button">' +--}}
+                            {{--'<i class="glyphicon  glyphicon-save-file bigger-125"></i>' +--}}
+                            {{--'<span>{{trans('app.save')}}</span>' +--}}
+                            {{--'</button>' +--}}
+                            {{--'</div>'--}}
+                        {{--}--}}
+                    {{--];--}}
+                {{--}--}}
+                {{--$('#saveSessionUserEvent').remove();--}}
+                {{--sessionModal.toolbarAdd("footer", modal_btn);--}}
+                {{--navigationWizard();--}}
+                {{--$('#sessionMsgBox').html('');--}}
+                {{--if (result.mode == 'edit') {--}}
+                    {{--//console.log('kkkkkkkkkkkkkkk');--}}
+                    {{--var obj = {};--}}
+                    {{--obj.event_id = result.event_id;--}}
+                    {{--$.ajax({--}}
+                        {{--url: '{{ URL::route('hamahang.calendar_events.session_data' )}}',--}}
+                        {{--type: 'POST', // Send post dat--}}
+                        {{--data: obj,--}}
+                        {{--async: false,--}}
+                        {{--success: function (s) {--}}
+                            {{--res = JSON.parse(s);--}}
+                            {{--$('#agenda').val(res.agenda);--}}
+                            {{--for (var i = 0; i < res.invitees.length; i++) {--}}
+                                {{--if (res.invitees[i].user_type == 1) {--}}
+                                    {{--$('select[name="session_voting_users[]"]').select2("trigger", "select", {--}}
+                                        {{--data: {id: res.invitees[i].id.toString(), text: res.invitees[i].text}--}}
+                                    {{--});--}}
+                                {{--} else if (res.invitees[i].user_type == 2) {--}}
+                                    {{--$('select[name="session_notvoting_users[]"]').select2("trigger", "select", {--}}
+                                        {{--data: {id: res.invitees[i].id.toString(), text: res.invitees[i].text}--}}
+                                    {{--});--}}
+                                {{--}--}}
+                            {{--}--}}
+                            {{--if (res.chief != null) {--}}
+                                {{--$('select[name="session_chief"]').select2("trigger", "select", {--}}
+                                    {{--data: {id: res.chief.id.toString(), text: res.chief.Name + ' ' + res.chief.Family}--}}
+                                {{--});--}}
+                            {{--}--}}
+                            {{--if (res.secretary != null) {--}}
+                                {{--$('select[name="session_secretary"]').select2("trigger", "select", {--}}
+                                    {{--data: {id: res.secretary.id.toString(), text: res.secretary.Name + ' ' + res.secretary.Family}--}}
+                                {{--});--}}
+                            {{--}--}}
+                            {{--if (res.facilitator != null) {--}}
+                                {{--$('select[name="session_facilitator"]').select2("trigger", "select", {--}}
+                                    {{--data: {id: res.facilitator.id.toString(), text: res.facilitator.Name + ' ' + res.facilitator.Family}--}}
+                                {{--});--}}
+                            {{--}--}}
+                            {{--$('input[name="term"]').val(res.term);--}}
+                            {{--$('textarea[name="location"]').val(res.location);--}}
+                            {{--$('input[name="location_phone"]').val(res.location_phone);--}}
+                            {{--$('input[name="coordination_phone"]').val(res.coordination_phone);--}}
+                            {{--$('input[name="long"]').val(res.long);--}}
+                            {{--$('input[name="lat"]').val(res.lat);--}}
+                            {{--if (res.send_Invitation) {--}}
+                                {{--$('input[type="checkbox"][name="send_Invitation"]').attr('checked', true)--}}
+                            {{--}--}}
+                            {{--if (res.create_session_page) {--}}
+                                {{--$('input[type="checkbox"][name="create_session_page"]').attr('checked', true)--}}
+                            {{--}--}}
+                            {{--if (res.allow_inform_invitees) {--}}
+                                {{--$('input[type="checkbox"][name="allow_inform_invitees"]').attr('checked', true)--}}
+                            {{--}--}}
+                            {{--$(' input[type="radio"][name="session_type"][value="' + res.type + '"]').prop('checked', true);--}}
+                            {{--$('textarea[name="location"]').append('<input type="hidden" name="event_id" value="' + res.event_id + '">');--}}
+                            {{--$('textarea[name="location"]').append('<input type="hidden" name="mode" value="edit">');--}}
+                        {{--}--}}
+                    {{--});--}}
+                    {{--$('#sessionFilesGrid').DataTable({--}}
+                        {{--"dom": window.CommonDom_DataTables,--}}
+                        {{--"language": LangJson_DataTables,--}}
+                        {{--processing: true,--}}
+                        {{--serverSide: true,--}}
+                        {{--ajax: {--}}
+                            {{--url: '{!! route('hamahang.calendar_events.file_list' )!!}',--}}
+                            {{--type: 'POST',--}}
+                            {{--data: obj--}}
+                        {{--},--}}
+                        {{--columns: [--}}
+                            {{--{--}}
+                                {{--data: 'rowIndex',--}}
+                                {{--name: 'rowIndex',--}}
+                                {{--width: '1%'--}}
+                            {{--},--}}
+                            {{--{--}}
+                                {{--data: 'originalName',--}}
+                                {{--name: 'originalName',--}}
+                                {{--width: '30%'--}}
+                            {{--},--}}
+                            {{--{--}}
+                                {{--data: 'extension',--}}
+                                {{--name: 'extension',--}}
+                                {{--width: '20%'--}}
+                            {{--},--}}
+                            {{--{--}}
+                                {{--data: 'size',--}}
+                                {{--name: 'size',--}}
+                                {{--width: '20%'--}}
+                            {{--},--}}
+                            {{--{--}}
+                                {{--data: 'action',--}}
+                                {{--name: 'action',--}}
+                                {{--orderable: false,--}}
+                                {{--searchable: false,--}}
+                                {{--width: '10%',--}}
+                                {{--mRender: function (data, type, full) {--}}
+                                    {{--// console.log(full);--}}
+                                    {{--return '' +--}}
+                                        {{--'<a class="cls3"   alt="حذف" title="حذف" style="margin: 2px" onclick="deleteEvent(' + full.id + ')" href="#">' +--}}
+                                        {{--'   <i class="fa fa-close"></i>' +--}}
+                                        {{--'</a>' +--}}
+                                        {{--'<a class="cls3" target="_self" style="margin: 2px"  href="{{ route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']) }}' + full.ID_N + '">'+--}}
+                                        {{--'   <i ></i>'+--}}
+                                        {{--'</a>';--}}
+                                {{--}--}}
+                            {{--}--}}
+                        {{--]--}}
+                    {{--});--}}
+                {{--}--}}
+                {{--$('#form-event-content').hide();--}}
+                {{--$('#form-session-content').show();--}}
+            {{--}--}}
+        {{--});--}}
         /*########################################################################################*/
         /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save session value ---------------------------------------*/

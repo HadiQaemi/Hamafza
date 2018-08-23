@@ -66,7 +66,8 @@
 
 
                         var actions =      '<a class="cls3"   alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteDecisions(' + full.id +')" href="#"><i class="fa fa-close"></i></a>';
-                         actions +=      '<a class="cls3"  alt='+'{{trans('calendar_events.ce_helper_session_inlinejs_desicion_task')}}'+' title='+'{{trans('calendar_events.ce_helper_session_inlinejs_desicion_task')}}'+' style="margin: 2px" onclick="addTasks(' + full.id +','+ full.event_id+',\''+full.title+'\')" href="#"><i class="fa fa-tasks"></i></a>';
+                         {{--actions +=      '<a class="cls3"  alt='+'{{trans('calendar_events.ce_helper_session_inlinejs_desicion_task')}}'+' title='+'{{trans('calendar_events.ce_helper_session_inlinejs_desicion_task')}}'+' style="margin: 2px" onclick="addTasks(' + full.id +','+ full.event_id+',\''+full.title+'\')" href="#"><i class="fa fa-tasks"></i></a>'--}}
+                         ;
 
                         return actions;
 
@@ -103,32 +104,28 @@
                 for (var i=0; i< res.length ;i++)
                 {
                     html += '<tr>';
-                    html += '<td>'+res[i].rowIndex+'</td>';
-                    html += '<td>'+res[i].Uname+'</td>';
+                    html += '<td class="text-center">'+res[i].rowIndex+'</td>';
+                    html += '<td class="text-center">'+res[i].Uname+'</td>';
                     if(res[i].present==1)
                     {
-                        html += '<td>' +
-                                        '<lable>حاضر<input name="users['+res[i].id+']" type="radio" class="sUserList" data_id="'+res[i].id+'" value="1" checked="true"/></lable>'+
-                                '<lable>غايب <input name="users['+res[i].id+']" type="radio"  class="sUserList" data_id="'+res[i].id+'" value="0" /></lable>'+
+                        html += '<td class="text-center">' +
+                                    '<lable>{{trans("app.present")}}<input name="users['+res[i].id+']" type="radio" class="sUserList" data_id="'+res[i].id+'" value="1" checked="true"/></lable>'+
+                                    '<lable>{{trans("app.absent")}}<input name="users['+res[i].id+']" type="radio"  class="sUserList" data_id="'+res[i].id+'" value="0" /></lable>'+
                                 '</td>';
                     }
                     else
                     {
-                        html += '<td>' +
-                                '<lable>حاضر <input name="users['+res[i].id+']" type="radio" class="sUserList" data_id="'+res[i].id+'"  value="1" /></lable>'+
-                                '<lable>غايب <input name="users['+res[i].id+']" type="radio"  class="sUserList"  data_id="'+res[i].id+'" value="0" checked="true" /></lable>'+
+                        html += '<td class="text-center">' +
+                                    '<lable>{{trans("app.present")}}<input name="users['+res[i].id+']" type="radio" class="sUserList" data_id="'+res[i].id+'"  value="1" /></lable>'+
+                                    '<lable>{{trans("app.absent")}}<input name="users['+res[i].id+']" type="radio"  class="sUserList"  data_id="'+res[i].id+'" value="0" checked="true" /></lable>'+
                                 '</td>';
-
                     }
-
                     html += '</tr>';
                     html +='<input type="hidden" name="event_id" value="'+id+'" />';
                 }
                 $('#sessionUserList tbody').html(html);
-
             }
         });
-        //})
     }
     /*##################################################################################################*/
     /*-----------------------------------------------------------------------------------------------*/
@@ -476,7 +473,7 @@ function deleteDecisions(id)
     function savePersentUsers()
     {
         var event_id =$('#sessionUserList input[name="event_id"]').val();
-         var sessionUsersAr = new Array();
+        var sessionUsersAr = new Array();
         var selectId= 0;
         $.each($('#sessionUserList .sUserList'),function(index,rec) {
             if($(rec).attr('data_id') != selectId)
@@ -484,13 +481,10 @@ function deleteDecisions(id)
                 var selectId =$(rec).attr('data_id');
                 sessionUsersAr[selectId]=$('#sessionUserList input[name="users['+selectId+']"]:checked').val();
             }
-
-
         });
         var obj = {};
         obj.event_id = event_id;
         obj.users = sessionUsersAr;
-        console.log(obj);
         //return;
         $.ajax({
             type: "POST",
@@ -533,37 +527,25 @@ function deleteDecisions(id)
                     data: 'rowIndex',
                     name: 'rowIndex',
                     width: '1%'
-
-
-                },
-
-                {
+                },{
                     data: 'username',
                     name: 'username',
                     width: '89%'
-
-                },
-
-                {
+                },{
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false,
                     width: '10%',
                     mRender: function (data, type, full) {
-
-
                         var actions = '<a class="cls3"   alt="حذف" title="حذف" style="margin: 2px" onclick="deleteGuest(' + full.id + ',\'' + full.username + '\')" href="#"><i class="fa fa-close"></i></a>';
-
                         return actions;
-
-
                     }
                 },
-
-
-
-            ]
+            ],
+            "drawCallback": function( settings ) {
+                $('td').addClass('text-center');
+            }
         });
 
         $("select[name='user']").select2({

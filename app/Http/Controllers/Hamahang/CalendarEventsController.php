@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Hamahang;
 
+use App\Models\hamafza\Pages;
 use DB;
 use Auth;
 use Request;
@@ -65,6 +66,7 @@ class CalendarEventsController extends Controller
 
     public function saveSelectedTaskEvent()
     {
+        dd('asdad');
         $validator = \Validator::make(Request::all(), [
             'title' => 'required|string',
             'cid' => 'required|integer',
@@ -142,16 +144,18 @@ class CalendarEventsController extends Controller
     public function saveUserEvent()
     {
         $uid = Auth::id();
-        //dd(Request::input('mode'));
+//        dd(Request::all());
         $type = Request::input('type') ? Request::input('type') : 0;
         $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         // die(dd(Request::input('type')));
         $jdate = new jDateTime();
         $validator = \Validator::make(Request::all(), [
             'htitle' => 'required|string',
-            'hcid' => 'required|integer',
-            'hstartdate' => 'required',
-            'henddate' => 'required'
+            'hcid' => 'required|integer'
+//            ,
+//            'hstartdate' => 'required'
+//            ,
+//            'henddate' => 'required'
         ]);
         //DB::enableQueryLog();
         if ($validator->fails())
@@ -171,62 +175,152 @@ class CalendarEventsController extends Controller
             {
                 $userEvent = new User_Event();
             }
+            if(Request::input('save_type')==0){
+                $userEvent->uid = $uid;
+                $userEvent->title = Request::input('htitle');
+                $userEvent->allDay = Request::input('allDay');
+                $userEvent->form_data = serialize(Request::all());
+                $userEvent->description = Request::input('description');
+                $userEvent->type = $type;
+                $userEvent->is_draft = 1;
+                $userEvent->event_type = $event_type;
+                $userEvent->cid = Request::input('hcid');
+                $in_day = Request::input('in_day');
+                $firstTyp_term = Request::input('firstTyp_term');
+                $startdate = explode('-', $in_day[0]['value']);
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . $firstTyp_term[0]['value'].':00';
+                $enddate = explode('-', $in_day[0]['value']);
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . $firstTyp_term[0]['value'].':00';
 
-            $userEvent->uid = $uid;
-            $userEvent->title = Request::input('htitle');
-            $userEvent->allDay = Request::input('allDay');
-            $startdate = explode('-', Request::input('hstartdate'));
-            if (Request::input('allDay') == 1)
-            {
-                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
-            }
-            else
-            {
-                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
-            }
-
-            //die(dd($startdate));
-
-            $enddate = explode('-', Request::input('henddate'));
-            if (Request::input('allDay') == 1)
-            {
-                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
-            }
-            else
-            {
-                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
-            }
-            $userEvent->description = Request::input('description');
-            $userEvent->type = $type;
-            $userEvent->event_type = $event_type;
-            $userEvent->cid = Request::input('hcid');
-
-            //die(dd(DB::getQueryLog()));
-            if ($userEvent->save())
-            {
-                //die(dd(Request::input('mode')));
-                if (Request::input('mode') == 'edit')
+                if ($userEvent->save())
                 {
-                    return json_encode(array('success' => true, 'event_id' => $userEvent->id, 'mode' => 'edit', 'type' => $userEvent->type));
-                }
-                else
-                {
-                    if (Request::input('mode') == 'calendar')
+                    //die(dd(Request::input('mode')));
+                    if (Request::input('mode') == 'edit')
                     {
-                        return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
-
+                        return json_encode(array('success' => true, 'event_id' => $userEvent->id, 'mode' => 'edit', 'type' => $userEvent->type));
                     }
                     else
                     {
-                        return json_encode(array('success' => true, 'event_id' => $userEvent->id));
+                        if (Request::input('mode') == 'calendar')
+                        {
+                            return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
+
+                        }
+                        else
+                        {
+                            return json_encode(array('success' => true, 'event_id' => $userEvent->id));
+                        }
                     }
+
+                }
+                else
+                {
+                    return json_encode(array('success' => false));
+                }
+            }else{
+                if (Request::input('event_id') && Request::input('mode') == 'edit')
+                {
+                    $userEvent = User_Event::find(Request::input('event_id'));
+                }
+                else
+                {
+                    $userEvent = new User_Event();
+                }
+                $userEvent->uid = $uid;
+                $userEvent->title = Request::input('htitle');
+                $userEvent->allDay = Request::input('allDay');
+                $userEvent->form_data = serialize(Request::all());
+                $userEvent->description = Request::input('description');
+                $userEvent->type = $type;
+                $userEvent->event_type = $event_type;
+                $userEvent->is_draft = 0;
+                $userEvent->cid = Request::input('hcid');
+                $in_day = Request::input('in_day');
+                $firstTyp_term = Request::input('firstTyp_term');
+                $startdate = explode('-', $in_day[0]['value']);
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . $firstTyp_term[0]['value'].':00';
+                $enddate = explode('-', $in_day[0]['value']);
+                $userEvent->startdate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . $firstTyp_term[0]['value'].':00';
+                if($userEvent->save()){
+                    foreach(Request::input('in_day') as $key=>$Ain_day)
+                    {
+                        $reminderObj = new Event_Reminder();
+                        $startdate = explode('-', $Ain_day['value']);
+                        $reminderObj->remind_time = strtotime($jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-'). ' ' . $firstTyp_term[0]['value'].':00');
+                        $reminderObj->remind_date = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . $firstTyp_term[$key]['value'].':00';
+                        $reminderObj->form_data = serialize(Request::all());
+                        $reminderObj->event_id = $userEvent->id;
+                        $reminderObj->time = $firstTyp_term[$key]['value'].':00';
+//                    $reminderObj->type = $ft['type'];
+//                    $reminderObj->notification = $ft['notification'];
+//                    $reminderObj->in_events = $ft['in_event'];
+//                    $reminderObj->sms = $ft['sms'];
+//                    $reminderObj->email = $ft['email'];
+
+                        if(!$reminderObj->save())
+                            return json_encode(array('success' => false));
+                    }
+                    return json_encode(array('success' => true, 'event_id' => $userEvent->id));
+                }else{
+                    return json_encode(array('success' => false));
                 }
 
             }
-            else
-            {
-                return json_encode(array('success' => false));
-            }
+//            $userEvent->uid = $uid;
+//            $userEvent->title = Request::input('htitle');
+//            $userEvent->allDay = Request::input('allDay');
+//            $startdate = explode('-', Request::input('hstartdate'));
+//            if (Request::input('allDay') == 1)
+//            {
+//                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+//            }
+//            else
+//            {
+//                $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
+//            }
+//
+//            //die(dd($startdate));
+//
+//            $enddate = explode('-', Request::input('henddate'));
+//            if (Request::input('allDay') == 1)
+//            {
+//                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+//            }
+//            else
+//            {
+//                $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
+//            }
+//            $userEvent->description = Request::input('description');
+//            $userEvent->type = $type;
+//            $userEvent->event_type = $event_type;
+//            $userEvent->cid = Request::input('hcid');
+//
+//            //die(dd(DB::getQueryLog()));
+//            if ($userEvent->save())
+//            {
+//                //die(dd(Request::input('mode')));
+//                if (Request::input('mode') == 'edit')
+//                {
+//                    return json_encode(array('success' => true, 'event_id' => $userEvent->id, 'mode' => 'edit', 'type' => $userEvent->type));
+//                }
+//                else
+//                {
+//                    if (Request::input('mode') == 'calendar')
+//                    {
+//                        return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
+//
+//                    }
+//                    else
+//                    {
+//                        return json_encode(array('success' => true, 'event_id' => $userEvent->id));
+//                    }
+//                }
+//
+//            }
+//            else
+//            {
+//                return json_encode(array('success' => false));
+//            }
         }
     }
 
@@ -351,7 +445,7 @@ class CalendarEventsController extends Controller
     public function saveSessionEvent()
     {
         $uid = Auth::id();
-//        dd(Request::input('event_type'));
+//        dd(Request::all());
         $type = Request::input('type') ? Request::input('type') : 0;
         $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         // die(dd(Request::input('type')));
@@ -377,10 +471,74 @@ class CalendarEventsController extends Controller
         }
         else
         {
+            if(Request::input('save_type')==0)
+            {
+                $userEvent = new User_Event();
+                $userEvent->uid = $uid;
+                $userEvent->title = Request::input('htitle');
+                $userEvent->allDay = Request::input('allDay');
+                $startdate = explode('-', Request::input('hstartdate'));
+                if (Request::input('allDay') == 1)
+                {
+                    $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' 00:00:00';
+                }
+                else
+                {
+                    $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' ' . Request::input('starttime');
+                }
+
+
+                $enddate = explode('-', Request::input('henddate'));
+                if (Request::input('allDay') == 1)
+                {
+                    $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' 00:00:00';
+                }
+                else
+                {
+                    $userEvent->enddate = $jdate->Jalali_to_Gregorian($enddate[0], $enddate[1], $enddate[2], '-') . ' ' . Request::input('endtime');
+                }
+                $userEvent->description = Request::input('description');
+                $userEvent->type = $type;
+                $userEvent->event_type = $event_type;
+                $userEvent->cid = Request::input('hcid');
+
+                if (Request::input('mode') == 'edit')
+                {
+                    $sessionObj = Session_Events::where('id', '=', Request::input('event_id'))->firstOrFail();
+                }
+                else
+                {
+                    $sessionObj = new Session_Events();
+                }
+
+//                $sessionObj = new Session_Events();
+                $sessionObj->form_data = serialize(Request::all());
+                $sessionObj->agenda = Request::input('htitle');
+                $sessionObj->uid = $uid;
+                $sessionObj->session_type = 0;
+                if ($sessionObj->save())
+                {
+                    if (Request::input('mode') == 'edit')
+                    {
+                        return json_encode(array('success' => true, 'mode' => 'edit'));
+                    }
+                    else
+                    {
+                        if (Request::input('mode') == 'calendar')
+                        {
+                            return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
+                        }
+                        else
+                        {
+                            return json_encode(array('success' => true));
+                        }
+                    }
+
+                }
+            }
             if (Request::input('event_id') && Request::input('mode') == 'edit')
             {
                 $userEvent = User_Event::find(Request::input('event_id'));
-
             }
             else
             {
@@ -435,10 +593,12 @@ class CalendarEventsController extends Controller
                 $users_notvoting = explode(',', Request::input('session_notvoting_users'));
                 //    die(dd($uid));
                 $sessionObj->uid = $uid;
+                $sessionObj->session_type = 1;
 
 //                $sessionObj->event_id = Request::input('hevent_id');
                 $sessionObj->event_id = $userEvent->id;
-                $sessionObj->agenda = Request::input('hagenda');
+                $sessionObj->form_data = serialize(Request::all());
+                $sessionObj->agenda = Request::input('htitle');
                 $sessionObj->term = Request::input('term');
                 $sessionObj->type = Request::input('type');
                 $sessionObj->location = Request::input('hlocation');
@@ -506,12 +666,12 @@ class CalendarEventsController extends Controller
                         if (Request::input('mode') == 'calendar')
                         {
                             $event = $this->getEventById($userEvent->id);
-                            return json_encode(array('success' => true, 'event' => $event, 'mode' => 'calendar'));
+                            return json_encode(array('success' => true, 'event' => $userEvent, 'mode' => 'calendar'));
 
                         }
                         else
                         {
-                            return json_encode(array('success' => true));
+                            return json_encode(array('success' => true, 'event' => $userEvent));
                         }
                     }
 
@@ -811,15 +971,20 @@ class CalendarEventsController extends Controller
     {
         $jdate = new jDateTime();
         $event = User_Event::find(Request::input('id'));
-        $startDate = explode(' ', $event['startdate']);
-        $jStartDate = explode('-', $startDate[0]);
-        $event['startdate'] = $jdate->Gregorian_to_Jalali($jStartDate[0], $jStartDate[1], $jStartDate[2], '-');
-        $event['starttime'] = $startDate[1];
-        $endDate = explode(' ', $event['enddate']);
-        $jEndDate = explode('-', $endDate[0]);
-        $event['enddate'] = $jdate->Gregorian_to_Jalali($jEndDate[0], $jEndDate[1], $jEndDate[2], '-');
-        $event['endtime'] = $endDate[1];
-        return json_encode($event);
+        if($event!=null)
+        {
+            $startDate = explode(' ', $event['startdate']);
+            $jStartDate = explode('-', $startDate[0]);
+            $event['startdate'] = $jdate->Gregorian_to_Jalali($jStartDate[0], $jStartDate[1], $jStartDate[2], '-');
+            $event['starttime'] = $startDate[1];
+            $endDate = explode(' ', $event['enddate']);
+            $jEndDate = explode('-', $endDate[0]);
+            $event['enddate'] = $jdate->Gregorian_to_Jalali($jEndDate[0], $jEndDate[1], $jEndDate[2], '-');
+            $event['endtime'] = $endDate[1];
+            return json_encode($event);
+        }else{
+            return json_encode(array());
+        }
     }
 
     public function sessionData()
@@ -1349,27 +1514,36 @@ class CalendarEventsController extends Controller
     }
     public function fetchEvents()
     {
+        $types = [12];
+        if(count(Request::input('types'))> 0)
+        {
+            $types = Request::input('types');
+        }
         $uid = (session('uid') != '' && session('uid') != '') ? session('uid') : 0;
         $jdate = new jDateTime();
-        $events = User_Event::select('id', 'title', 'startdate', 'enddate', 'type', 'allDay')
+        $events = User_Event::select('id', 'title', 'startdate', 'enddate', 'type', 'event_type', 'allDay')
             ->where('uid', '=', $uid)
+            ->where('event_type', '=', 'reminder')
+            ->whereIn('is_draft', $types)
             ->orderBy('id', 'desc')
             ->get();
         //die(dd(DB::getQueryLog()));
         foreach ($events as $index => $event)
         {
             $startdate = explode(' ', $event['startdate']);
-            //die(dd($event['startdate']));
-            $jstartdate = explode('-', $startdate[0]);
-            $events[$index]['startdate'] = $jdate->Gregorian_to_Jalali($jstartdate[0], $jstartdate[1], $jstartdate[2], '-') . ' ' . $startdate[1];
             $enddate = explode(' ', $event['enddate']);
-            //die(dd($enddate ));
-            $jenddate = explode('-', $enddate[0]);
-            $events[$index]['enddate'] = $jdate->Gregorian_to_Jalali($jenddate[0], $jenddate[1], $jenddate[2], '-') . ' ' . $enddate[1];
+            if($startdate[0]!='0000-00-00' && $startdate[1]!='00:00:00')
+            {
+                $jstartdate = explode('-', $startdate[0]);
+                $events[$index]['startdate'] = $jdate->Gregorian_to_Jalali($jstartdate[0], $jstartdate[1], $jstartdate[2], '-') . ' ' . $startdate[1];
+            }
+            if($enddate[0]!='0000-00-00' && $enddate[1]!='00:00:00')
+            {
+                $jenddate = explode('-', $enddate[0]);
+                $events[$index]['enddate'] = $jdate->Gregorian_to_Jalali($jenddate[0], $jenddate[1], $jenddate[2], '-') . ' ' . $enddate[1];
+            }
             $events[$index]['rowIndex'] = $index + 1;
             $now = date('Y-m-d');
-
-            $enddate = explode(' ', $event->enddate);
             if ($enddate[0] < $now)
             {
                 $event->showMinutesDailog = true;
@@ -1379,6 +1553,7 @@ class CalendarEventsController extends Controller
                 $event->showMinutesDailog = false;
             }
         }
+//        dd($events);
         return Datatables::of($events)->addColumn('access_list', function ($data)
         {
             $res['delete'] = apiCan('calendar_events_manager_delete');
@@ -1411,42 +1586,63 @@ class CalendarEventsController extends Controller
     }
     public function fetchSessionData()
     {
+        if(Request::input('types'))
+        {
+            $types = Request::input('types');
+        }else{
+            $types[] = 12;
+        }
+
         $jdate = new jDateTime();
         $sessions = DB::table('hamahang_calendar_sessions_events')
-            ->select('hamahang_calendar_user_events.id',
+            ->select(
+//                'hamahang_calendar_user_events.id',
                 'hamahang_calendar_user_events.startdate',
                 'hamahang_calendar_user_events.enddate',
+                'hamahang_calendar_sessions_events.id',
                 'hamahang_calendar_sessions_events.agenda',
                 'hamahang_calendar_sessions_events.type',
-                'hamahang_calendar.title')
-            ->join('hamahang_calendar_user_events', 'hamahang_calendar_sessions_events.event_id', 'hamahang_calendar_user_events.id')
-            ->join('hamahang_calendar', 'hamahang_calendar_user_events.cid', 'hamahang_calendar.id')
+                'hamahang_calendar_sessions_events.session_type',
+                'hamahang_calendar_sessions_events.form_data',
+                'hamahang_calendar.title'
+            )
+            ->leftJoin('hamahang_calendar_user_events', 'hamahang_calendar_sessions_events.event_id', 'hamahang_calendar_user_events.id')
+            ->leftJoin('hamahang_calendar', 'hamahang_calendar_user_events.cid', 'hamahang_calendar.id')
             ->where('hamahang_calendar_sessions_events.uid', '=', Auth::id())
+            ->whereIn('hamahang_calendar_sessions_events.session_type', $types)
             ->whereNull('hamahang_calendar_sessions_events.deleted_at')
             ->get();
         foreach ($sessions as $index => $s)
-        { //die(dd($s));
-            $startdate = explode(' ', $s->startdate);
+        {
+            if($s->session_type){
+                $startdate = explode(' ', $s->startdate);
+                $jstartdate = explode('-', $startdate[0]);
+                $s->startdate = $jdate->Gregorian_to_Jalali($jstartdate[0], $jstartdate[1], $jstartdate[2], '-') . ' ' . $startdate[1];
+                $now = date('Y-m-d');
 
-            $jstartdate = explode('-', $startdate[0]);
-            $s->startdate = $jdate->Gregorian_to_Jalali($jstartdate[0], $jstartdate[1], $jstartdate[2], '-') . ' ' . $startdate[1];
-            $now = date('Y-m-d');
-
-            $enddate = explode(' ', $s->enddate);
-            //die(dd($enddate[0]));
-            if ($enddate[0] < $now)
-            {
-                $s->showMinutesDailog = true;
-            }
-            else
-            {
+                $enddate = explode(' ', $s->enddate);
+                //die(dd($enddate[0]));
+                if ($enddate[0] < $now)
+                {
+                    $s->showMinutesDailog = true;
+                }
+                else
+                {
+                    $s->showMinutesDailog = false;
+                }
+                $jenddate = explode('-', $enddate[0]);
+                $s->enddate = $jdate->Gregorian_to_Jalali($jenddate[0], $jenddate[1], $jenddate[2], '-') . ' ' . $enddate[1];
+            }else{
+                $form_data = unserialize($s->form_data);
+//                dd($form_data,$form_data["htitle"]);
+                $s->startdate = $form_data["hstartdate"] . ' ' . $form_data['starttime'];
                 $s->showMinutesDailog = false;
+                $s->enddate = $form_data["henddate"] . ' ' . $form_data['endtime'];
             }
-            $jenddate = explode('-', $enddate[0]);
-            $s->enddate = $jdate->Gregorian_to_Jalali($jenddate[0], $jenddate[1], $jenddate[2], '-') . ' ' . $enddate[1];
 
             $s->rowIndex = $index + 1;
         }
+
         return Datatables::of($sessions)->make(true);
     }
 
@@ -1582,11 +1778,65 @@ class CalendarEventsController extends Controller
     }
     public function sessionModal()
     {
-
+        $form_data = '';
         if(Request::input('mode')=='editSession')
         {
             $btn= 'editSession';
+            $session = Session_Events::where('hamahang_calendar_sessions_events.id', '=', Request::input('id'))->first();
+            Session::put('id_session_edit_form',Request::input('id'));
+            $form_data = unserialize($session->form_data);
+            $form_data["session_id"] = Request::input('id');
             $title = trans('calendar_events.ce_modal_session_header_edit_title');
+            $session_pages = preg_split('/,/',$form_data['session_pages']);
+
+            if($form_data['session_pages']){
+                $data = DB::table('pages')
+                    ->join('subjects', 'subjects.id', '=', 'pages.sid')
+                    ->whereIn('pages.id', $session_pages)
+                    ->select('subjects.title as title', 'pages.id')
+                    ->get()->toArray();
+                $form_data['session_pages'] = $data;
+            }
+            if($form_data['hcid']){
+                $list = DB::table("hamahang_calendar")
+                    ->select('id', 'title', 'is_default')
+                    ->where('hamahang_calendar.id', '=', $form_data['hcid'])
+                    ->get()->toArray();
+                $form_data['hcid'] = $list;
+            }
+            if($form_data['session_chief']){
+                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                    ->where("id", "=", $form_data['session_chief'])
+                    ->get()->toArray();
+                $form_data['session_chief'] = $usermodel;
+            }
+            if($form_data['session_secretary']){
+                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                    ->where("id", "=", $form_data['session_secretary'])
+                    ->get()->toArray();
+                $form_data['session_secretary'] = $usermodel;
+            }
+            if($form_data['session_facilitator']){
+                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                    ->where("id", "=", $form_data['session_facilitator'])
+                    ->get()->toArray();
+                $form_data['session_facilitator'] = $usermodel;
+            }
+            $session_voting_users = preg_split('/,/',$form_data['session_voting_users']);
+            if($form_data['session_voting_users']){
+                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                    ->whereIn("id", $session_voting_users)
+                    ->get()->toArray();
+                $form_data['session_voting_users'] = $usermodel;
+            }
+            $session_notvoting_users = preg_split('/,/',$form_data['session_notvoting_users']);
+            if($form_data['session_notvoting_users']){
+                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                    ->whereIn("id", $session_notvoting_users)
+                    ->get()->toArray();
+                $form_data['session_notvoting_users'] = $usermodel;
+            }
+//            dd($form_data);
         }else{
             $btn='session';
             $title = trans("calendar_events.ce_modal_session_header_title");
@@ -1594,8 +1844,8 @@ class CalendarEventsController extends Controller
         $HFM_CalendarEvent = HFM_GenerateUploadForm([['CalendarEvent', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
         return json_encode([
             'header'=>$title,
-            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_session')->with('HFM_CalendarEvent',$HFM_CalendarEvent)->render(),
-            'footer'=>view('hamahang.CalendarEvents.helper.Index.modal_buttons')->with('btn_type',$btn)->render()
+            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_session')->with('HFM_CalendarEvent',$HFM_CalendarEvent)->with('form_data',$form_data)->render(),
+            'footer'=>view('hamahang.CalendarEvents.helper.Index.modal_buttons')->with('btn_type',$btn)->with('form_data',$form_data)->render()
         ]);
 
     }
@@ -1618,18 +1868,36 @@ class CalendarEventsController extends Controller
     }
     public function reminderModal()
     {
+        $form_data = '';
         if(Request::input('mode')=='editReminder')
         {
-
+            Session::put('id_reminder_edit_form',Request::input('id'));
+            $jdate = new jDateTime();
             $btn= 'editReminder';
             $title = trans('calendar_events.ce_modal_reminder_navbarـ_edit_nav2');
+            $reminder = User_Event::where('id', '=', Request::input('id'))->first();
+            $form_data = unserialize($reminder->form_data);
+            $form_data['id'] = Request::input('id');
+            $form_data['end_id'] = enCode(Request::input('id'));
+
+            foreach ($form_data['in_day'] as $key => $Ain_day){
+                $startdate = explode('-', $Ain_day['value']);
+                $form_data['in_day'][$key]['gregorian'] = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-');
+            }
+            if($form_data['hcid']){
+                $list = DB::table("hamahang_calendar")
+                    ->select('id', 'title', 'is_default')
+                    ->where('hamahang_calendar.id', '=', $form_data['hcid'])
+                    ->get()->toArray();
+                $form_data['hcid'] = $list;
+            }
         }else{
             $btn='reminder';
             $title = trans('calendar_events.ce_modal_reminder_header_title');
         }
         return json_encode([
             'header'=>$title,
-            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_reminder')->render(),
+            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_reminder')->with('form_data',$form_data)->render(),
             'footer'=>view('hamahang.CalendarEvents.helper.Index.modal_buttons')->with('btn_type',$btn)->render()
         ]);
 

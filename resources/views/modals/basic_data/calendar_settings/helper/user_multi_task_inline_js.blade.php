@@ -55,7 +55,7 @@
             starttime = starttime.split("-");
             newEventModal.close();
             newEventModal = $.jsPanel({
-                position: {my: "center-top", at: "center-top", offsetY: 15},
+                position: {my: "center-top", at: "center-top", offsetY: 120},
                 contentSize: {width: 800, height: 300},
                 contentAjax: {
                     url: '{{ URL::route('modals.task_time' )}}',

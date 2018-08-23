@@ -5,7 +5,25 @@
 @stop
 
 @section('content')
-
+    <form id="form_filter_type" style="position: relative;top: 50px;right: 200px;z-index: 50;">
+        <div class="form-inline" style="padding-right: 5px;" >
+            <div class="checkbox">
+                <div class="form-inline">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="types[]" value="private" id="private" checked>
+                            <span>{{trans('tasks.private')}}</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="types[]" value="public" id="public" checked>
+                            <span>{{trans('tasks.public')}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            {{--</div>--}}
+        </div>
+    </form>
     <div class="container-fluid">
         <fieldset>
             <div class="row">

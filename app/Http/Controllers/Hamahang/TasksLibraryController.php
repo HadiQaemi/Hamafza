@@ -79,16 +79,25 @@ class TasksLibraryController extends Controller
 
     public function GeneralFetch()
     {
+        if(is_array(Request::input('types')))
+        {
+            $fetchArray = Request::input('types');
+        }else{
+            $fetchArray[] = 'all';
+        }
+
+
+
         $GeneralLiberary = DB::table('hamahang_task_library')
             ->select("hamahang_task_library.*", "user.Name", "user.Family")
             ->join('user', 'user.id', '=', 'hamahang_task_library.uid')
             ->where('hamahang_task_library.status','=',1)
 //                ->whereNull('hamahang_task_assignments.transmitter_id')
-            ->where('hamahang_task_library.type','=','public')
+            ->whereIn('hamahang_task_library.type',$fetchArray)
         ;
 
         $GeneralLiberary = $GeneralLiberary->get();
-
+//dd($GeneralLiberary,$fetchArray);
         return Datatables::of($GeneralLiberary)
             ->addColumn('created_at', function ($data)
             {

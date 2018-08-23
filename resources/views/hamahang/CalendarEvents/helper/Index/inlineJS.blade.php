@@ -414,36 +414,57 @@
     /*-------------------------------------------------------------------------------------*/
     /*--------------------------------edit event ---------------- -------------------------*/
     /*-------------------------------------------------------------------------------------*/
-    function editEvent(id, type) {
+    function editEvent(id, type=4) {
         var i = 0;
         switch (type) {
             case 0: {
-                form_id = 'form-event';
+                {{--form_id = 'form-event';--}}
 
-                //$('#add_event_dialog .modal-title span:first-child').html('{{trans("calendar_events.ce_inlinejs_event_edited")}}');
-                // $('#add_event_dialog .modal-title span').empty();
-                //   console.log(++i);
-                //$('#add_event_dialog').modal('show');
+                {{--//$('#add_event_dialog .modal-title span:first-child').html('{{trans("calendar_events.ce_inlinejs_event_edited")}}');--}}
+                {{--// $('#add_event_dialog .modal-title span').empty();--}}
+                {{--//   console.log(++i);--}}
+                {{--//$('#add_event_dialog').modal('show');--}}
 
-                        //console.log(data);
-                        newEventModal = $.jsPanel({
-                            position: {my: "center-top", at: "center-top", offsetY: 15},
-                            contentSize: {width: 800, height: 300},
-                            contentAjax: {
-                                url: '{{ URL::route('hamahang.calendar_events.new_event_modal' )}}',
-                                method: 'POST',
-                                dataType: 'json',
-                                data :'mode=editEvent',
-                                done: function (data, textStatus, jqXHR, panel) {
-                                    console.log(data.content);
-                                    this.headerTitle(data.header);
-                                    this.content.html(data.content);
-                                    this.toolbarAdd('footer', [{item: data.footer}]);
+                        {{--//console.log(data);--}}
+                        {{--newEventModal = $.jsPanel({--}}
+                            {{--position: {my: "center-top", at: "center-top", offsetY: 15},--}}
+                            {{--contentSize: {width: 800, height: 300},--}}
+                            {{--contentAjax: {--}}
+                                {{--url: '{{ URL::route('hamahang.calendar_events.new_event_modal' )}}',--}}
+                                {{--method: 'POST',--}}
+                                {{--dataType: 'json',--}}
+                                {{--data :'mode=editEvent',--}}
+                                {{--done: function (data, textStatus, jqXHR, panel) {--}}
+                                    {{--console.log(data.content);--}}
+                                    {{--this.headerTitle(data.header);--}}
+                                    {{--this.content.html(data.content);--}}
+                                    {{--this.toolbarAdd('footer', [{item: data.footer}]);--}}
 
+                        {{--}--}}
+                    {{--}--}}
+                {{--});--}}
+                {{--newEventModal.content.html('<div class="loader"></div>');--}}
+                sessionModal = $.jsPanel({
+                    position: {my: "center-top", at: "center-top", offsetY: 120},
+                    contentSize: {width: 1000, height: 400},
+                    contentAjax: {
+                        url: '{{ URL::route('hamahang.calendar_events.reminder_modal' )}}',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: 'mode=editReminder&id=' + id,
+                        done: function (data, textStatus, jqXHR, panel) {
+                            this.headerTitle(data.header);
+                            this.content.html(data.content);
+                            this.toolbarAdd('footer', [{item: data.footer}]);
+                            // $('#sessionForm input[name="event_type"]').val('session');
+                            // $('#sessionForm input[name="startdate"]').val(startdate.join('-'));
+                            // $('#sessionForm input[name="starttime"]').val(starttime);
+                            // $('#sessionForm input[name="enddate"]').val(enddate.join('-'));
+                            // $('#sessionForm input[name="endtime"]').val(endtime);
+                            $('#sessionForm form').append('<input type="hidden" name="mode" value="'+id+'"/>');
                         }
                     }
                 });
-                newEventModal.content.html('<div class="loader"></div>');
 
 
             }
@@ -525,39 +546,64 @@
 
             }
                 break;
-        }
-        var obj = {};
-        obj.id = id;
-        $.ajax({
-            url: '{{ URL::route('hamahang.calendar_events.event_data',['uname'=>$uname] )}}',
-            type: 'POST', // Send post dat
-            data: obj,
-            success: function (s) {
-                res = JSON.parse(s);
-                //console.log('#' + form_id + ' input[name="title"]');
-                $('#' + form_id + ' input[name="title"]').val(res.title);
-                $('#' + form_id + ' select[name="cid"]').val(res.cid);
-                $('#' + form_id + ' select[name="cid"]').trigger("updated");
-                $('#' + form_id + ' input[name="startdate"]').val(res.startdate);
-                $('#' + form_id + ' input[name="starttime"]').val(res.starttime);
-                $('#' + form_id + ' input[name="enddate"]').val(res.enddate);
-                $('#' + form_id + ' input[name="endtime"]').val(res.endtime);
-                $('#' + form_id + ' textarea[name="descriotion"]').val(res.descriotion);
-                $('.jsPanel-title').append(': ' + res.title);
-                if (res.allDay == 1) {
-                    $('#' + form_id + ' input[type="checkbox"][name="allDay"]').prop('checked', true);
-                }
-                if ($('#' + form_id + ' input[name="event_id"]').length == 0) {
-                    $('#' + form_id).append('<input type="hidden" name="event_id" value="' + res.id + '"/>');
-                    $('#' + form_id).append('<input type="hidden" name="type" value="' + res.type + '"/>');
-                }
-                else {
-                    $('#' + form_id + ' input[name="event_id"]').val(res.id);
-                }
-
+            case 4: {
+                sessionModal = $.jsPanel({
+                    position: {my: "center-top", at: "center-top", offsetY: 120},
+                    contentSize: {width: 1000, height: 400},
+                    contentAjax: {
+                        url: '{{ URL::route('hamahang.calendar_events.session_modal' )}}',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: 'mode=editSession&id=' + id,
+                        done: function (data, textStatus, jqXHR, panel) {
+                            this.headerTitle(data.header);
+                            this.content.html(data.content);
+                            this.toolbarAdd('footer', [{item: data.footer}]);
+                            // $('#sessionForm input[name="event_type"]').val('session');
+                            // $('#sessionForm input[name="startdate"]').val(startdate.join('-'));
+                            // $('#sessionForm input[name="starttime"]').val(starttime);
+                            // $('#sessionForm input[name="enddate"]').val(enddate.join('-'));
+                            // $('#sessionForm input[name="endtime"]').val(endtime);
+                            $('#sessionForm form').append('<input type="hidden" name="mode" value="'+id+'"/>');
+                        }
+                    }
+                });
 
             }
-        });
+                break;
+        }
+        {{--var obj = {};--}}
+        {{--obj.id = id;--}}
+        {{--$.ajax({--}}
+            {{--url: '{{ URL::route('hamahang.calendar_events.event_data',['uname'=>$uname] )}}',--}}
+            {{--type: 'POST', // Send post dat--}}
+            {{--data: obj,--}}
+            {{--success: function (s) {--}}
+                {{--res = JSON.parse(s);--}}
+                {{--//console.log('#' + form_id + ' input[name="title"]');--}}
+                {{--$('#' + form_id + ' input[name="title"]').val(res.title);--}}
+                {{--$('#' + form_id + ' select[name="cid"]').val(res.cid);--}}
+                {{--$('#' + form_id + ' select[name="cid"]').trigger("updated");--}}
+                {{--$('#' + form_id + ' input[name="startdate"]').val(res.startdate);--}}
+                {{--$('#' + form_id + ' input[name="starttime"]').val(res.starttime);--}}
+                {{--$('#' + form_id + ' input[name="enddate"]').val(res.enddate);--}}
+                {{--$('#' + form_id + ' input[name="endtime"]').val(res.endtime);--}}
+                {{--$('#' + form_id + ' textarea[name="descriotion"]').val(res.descriotion);--}}
+                {{--$('.jsPanel-title').append(': ' + res.title);--}}
+                {{--if (res.allDay == 1) {--}}
+                    {{--$('#' + form_id + ' input[type="checkbox"][name="allDay"]').prop('checked', true);--}}
+                {{--}--}}
+                {{--if ($('#' + form_id + ' input[name="event_id"]').length == 0) {--}}
+                    {{--$('#' + form_id).append('<input type="hidden" name="event_id" value="' + res.id + '"/>');--}}
+                    {{--$('#' + form_id).append('<input type="hidden" name="type" value="' + res.type + '"/>');--}}
+                {{--}--}}
+                {{--else {--}}
+                    {{--$('#' + form_id + ' input[name="event_id"]').val(res.id);--}}
+                {{--}--}}
+
+
+            {{--}--}}
+        {{--});--}}
 
     }
     /*#####################################################################################*/

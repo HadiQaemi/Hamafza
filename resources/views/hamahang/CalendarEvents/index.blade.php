@@ -26,6 +26,25 @@
 @stop
 @section('content')
     <div id="MsgBox"></div>
+    <form id="form_filter_reminders" style="position: relative;top: 50px;right: 200px;z-index: 50;">
+        <div class="form-inline" style="padding-right: 5px;" >
+            <div class="checkbox">
+                <div class="form-inline">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="types[]" value="0" id="draft" checked>
+                            <span>{{ trans('general.draft') }}</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" class="form-check-input" name="types[]" value="1" id="final" checked>
+                            <span>{{ trans('general.final') }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            {{--</div>--}}
+        </div>
+    </form>
     <div class="row-fluid">
         <div class="col-xs-12">
             <div class="col-xs-3">
@@ -62,7 +81,7 @@
                 <th data-column-id="id"> {{trans('calendar_events.ce_rowindex_label')}}</th>
                 <th data-column-id="title">{{trans('calendar_events.ce_title')}}</th>
                 <th data-column-id="startdate" data-formatter="startdate">{{trans('calendar_events.ce_startdate_label')}}</th>
-                <th data-column-id="enddate" data-formatter="enddate">{{trans('calendar_events.ce_enddate_label')}}</th>
+                {{--<th data-column-id="enddate" data-formatter="enddate">{{trans('calendar_events.ce_enddate_label')}}</th>--}}
 {{--                <th data-column-id="allDay" data-formatter="allDay">{{trans('calendar_events.ce_allday_label')}}</th>--}}
                 <th data-column-id="type">{{trans('calendar_events.ce_type_label')}}</th>
                 <th data-column-id="type">{{trans('calendar_events.ce_action_label')}}</th>

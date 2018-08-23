@@ -36,10 +36,10 @@
                     <a href="#step1" data-toggle="tab">{{trans('calendar_events.ce_modal_session_navbar_define')}}</a>
                 </li>
                 <li>
-                    <a href="#" data-toggle="tab">{{trans('calendar_events.ce_modal_session_navbar_setting')}}</a>
+                    <a class="disable-tab" style="background: #fff !important;padding: 14px;margin-right: 2px;border: none !important;">{{trans('calendar_events.ce_modal_session_navbar_setting')}}</a>
                 </li>
                 <li>
-                    <a href="#" data-toggle="">{{trans('calendar_events.ce_modal_session_navbar_note')}}</a>
+                    <a class="disable-tab" style="background: #fff !important;padding: 14px;margin-right: 2px;border: none !important;">{{trans('calendar_events.ce_modal_session_navbar_note')}}</a>
                 </li>
             </ul>
             <div class="tab-content" style="overflow: auto;height: 50vh;padding-bottom: 10vh;">
@@ -54,8 +54,27 @@
                                     </label>
                                 </div>
                                 <div class="col-xs-10">
-                                    <input name="title" class="form-control"
-                                           placeholder="">
+                                    <input name="title" class="form-control" placeholder="" value="{{isset($form_data['htitle']) ? $form_data['htitle'] : ''}}">
+{{--                                    <input type="hidden" {{isset($form_data['htitle']) ? 'name=event_id value='.$form_data["id"].'' : ''}}>--}}
+                                    <input name="event_type" type="hidden" value="reminder">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-2">
+                                    <label>
+                                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                                    </label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <select name="cid" class="chosen-rtl">
+                                        @if(!empty($form_data['hcid']))
+                                            @if(!empty($form_data['hcid']))
+                                                @foreach($form_data['hcid'] as $hcid)
+                                                    <option selected="selected" value="{{ $hcid->id }}">{{ $hcid->title }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
@@ -63,31 +82,31 @@
                                     <label>{{trans('calendar_events.ce_description_label')}}</label>
                                 </div>
                                 <div class="col-xs-10">
-                                    <textarea name="descriotion" class="form-control"></textarea>
+                                    <textarea name="descriotion" class="form-control">{{isset($form_data['description']) ? $form_data['description'] : ''}}</textarea>
                                 </div>
                             </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="row col-lg-2 line-height-35">
                                     <label class="form-radio-label" >{{trans('calendar_events.ce_modal_reminder_added')}}</label>
                                 </div>
-                                <div class="row col-lg-10 noLeftPadding noRightPadding">
+                                <div class="row col-lg-9 noLeftPadding noRightPadding">
                                     <span class="pull-right col-lg-3 noLeftPadding noRightPadding line-height-35">
-                                        <input name="reminderType" id="reminderType" type="radio" class="form-radio-input" value="1" checked/>
-                                        <label class="form-radio-label" for="reminderType" >{{trans('calendar_events.ce_modal_reminder_in_time')}}</label>
-                                        <input name="reminderType" id="reminderType" type="radio" class="form-radio-input" value="2" disabled/>
-                                        <label class="form-radio-label" for="reminderType">{{trans('calendar_events.ce_modal_reminder_before')}}</label>
+                                        <input name="reminderType" id="reminderType1" type="radio" class="form-radio-input" value="1" checked/>
+                                        <label class="form-radio-label" for="reminderType1" >{{trans('calendar_events.ce_modal_reminder_in_time')}}</label>
+                                        <input name="reminderType" id="reminderType2" type="radio" class="form-radio-input" value="2" disabled/>
+                                        <label class="form-radio-label" for="reminderType2">{{trans('calendar_events.ce_modal_reminder_before')}}</label>
                                     </span>
-                                    <span class="add-reminder-row-firstType pull-right line-height-35 col-lg-8 noLeftPadding noRightPadding" style="display: inline-flex;">
+                                    <span class="add-reminder-row-firstType pull-right line-height-35 col-lg-6 noLeftPadding noRightPadding" style="display: inline-flex;">
                                         <label class="pull-right" style="height: 33px;line-height: 35px">{{trans('calendar_events.ce_modal_reminder_in_day')}}</label>
                                         <span class="input-group pull-right clsDatePicker pull-right">
-                                            <input type="text" class="form-control DatePicker clsDatePicker pull-right" value=" " name="in_day[]" aria-describedby="in_day[]">
+                                            <input type="text" class="form-control DatePicker clsDatePicker pull-right" value="{{isset($form_data['in_day'][0]['gregorian']) ? $form_data['in_day'][0]['gregorian'] : ''}}" autocomplete="off" id="in_day"  name="in_day[]" aria-describedby="in_day[]"/>
                                         </span>
                                         <label class="pull-right" style="height: 33px;line-height: 35px">{{trans('calendar_events.ce_hour_label')}}</label>
                                         <span class="input-group pull-right clsDatePicker pull-right">
-                                            <input type="text" class="form-control TimePicker clsDatePicker" style="width: 150px" value=" " name="firstTyp_term[]" aria-describedby="term">
+                                            <input type="text" class="form-control TimePicker clsDatePicker" style="width: 150px" value="{{isset($form_data['firstTyp_term']) ? $form_data['firstTyp_term'][0]['value'] : ''}}" autocomplete="off" id="firstTyp_term" name="firstTyp_term[]" aria-describedby="term">
                                         </span>
                                     </span>
-                                    <span class="add-reminder-row-secondType pull-right line-height-35 col-lg-8 noLeftPadding noRightPadding" style="display: inline-flex;">
+                                    <span class="add-reminder-row-secondType pull-right line-height-35 col-lg-7 noLeftPadding noRightPadding" style="display: inline-flex;">
                                         <label class="pull-right" style="height: 33px;line-height: 35px;white-space:nowrap">{{trans('calendar_events.ce_modal_reminder_befor_of')}}</label>
                                         <select name="befordays[]" class="form-control pull-right">
                                             <option value="0">{{trans('calendar_events.ce_selected')}}</option>
@@ -110,6 +129,29 @@
                                             <input type="text" class="form-control TimePicker clsDatePicker" style="width: 150px" value=" " name="secondType_term[]" aria-describedby="term">
                                         </span>
                                     </span>
+                                    <span class="pull-right col-lg-1 noLeftPadding noRightPadding line-height-35">
+                                        <i class="btn btn-primary fa fa-plus addReminderTimeBtn"></i>
+                                    </span>
+                                    <div class="row col-xs-12 noLeftPadding noRightPadding line-height-35">
+                                        <div class="row col-xs-12 reminderTimeList noLeftPadding noRightPadding line-height-35 {{isset($form_data['in_day']) ? (count($form_data['in_day'])>1 ? '' : 'hidden') : ''}}">
+                                            <div class="row col-xs-12 noLeftPadding noRightPadding line-height-35 margin-top-10">{{trans('calendar_events.ce_modal_reminder_time_list')}}:</div>
+                                            @if(isset($form_data['in_day']))
+                                                @for($i=1;$i<=(count($form_data['in_day'])-1);$i++)
+                                                    <div class='row col-xs-12'>
+                                                        <span class='pull-right col-lg-1 noLeftPadding noRightPadding'></span>
+                                                        <span class='pull-right line-height-35 col-lg-4 noLeftPadding noRightPadding margin-right-10'>
+                                                            <label class='pull-right noLeftPadding noRightPadding margin-right-10'>{{trans('calendar_events.ce_modal_reminder_in_time')}}</label>
+                                                            <input type='hidden' value='{{$form_data['in_day'][$i]['value']}}' name='in_day[]'/>
+                                                            <input type='hidden' value='{{$form_data['firstTyp_term'][$i]['value']}}' name='firstTyp_term[]'/>
+                                                            <label class='pull-right pull-right margin-right-10'>{{$form_data['in_day'][$i]['value']}}</label>
+                                                            <label class='pull-right pull-right margin-right-10'>{{$form_data['firstTyp_term'][$i]['value']}}</label>
+                                                        </span>
+                                                        <span class='pull-right col-lg-1 margin-right-10 removeReminderTimeBtn'><i class='fa fa-remove pointer'></i></span>
+                                                    </div>
+                                                @endfor
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
@@ -188,18 +230,23 @@
             </div>
             <input name="event_id" type="hidden" value=""/>
         </div>
+    </form>
+</div>
         {{-- </div>
         </div>
         </div>
         </div>--}}
         <script>
+            $(document).on('click', '.removeReminderTimeBtn', function () {
+                $(this).parent().remove();
+            });
             $(".DatePicker").persianDatepicker({
 
                 autoClose: true,
                 format: 'YYYY-MM-DD',
 
             });
-            $(".DatePicker").val('');
+            // $(".DatePicker").val('');
             $(".TimePicker").persianDatepicker({
                 format: "HH:mm",
                 timePicker: {
@@ -207,7 +254,7 @@
                 },
                 onlyTimePicker: true
             });
-            $(".TimePicker").val('');
+            // $(".TimePicker").val('');
             $.ajax({
                 url: '{{ URL::route('auto_complete.get_user_calendar')}}',
                 type: 'Post', // Send post dat
@@ -234,7 +281,6 @@
                     });
                 }
             });
-
             /*############################################################################################*/
             /*---------------------------------------------------------------------------------------------*/
             /*---------------------------------clone of reminder type2--------------------------------------*/

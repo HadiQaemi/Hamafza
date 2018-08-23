@@ -1,5 +1,70 @@
 <script>
+    (function($){
+        $.fn.serializeObject = function(){
 
+            var self = this,
+                json = {},
+                push_counters = {},
+                patterns = {
+                    "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                    "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                    "push":     /^$/,
+                    "fixed":    /^\d+$/,
+                    "named":    /^[a-zA-Z0-9_]+$/
+                };
+
+
+            this.build = function(base, key, value){
+                base[key] = value;
+                return base;
+            };
+
+            this.push_counter = function(key){
+                if(push_counters[key] === undefined){
+                    push_counters[key] = 0;
+                }
+                return push_counters[key]++;
+            };
+
+            $.each($(this).serializeArray(), function(){
+
+                // skip invalid keys
+                if(!patterns.validate.test(this.name)){
+                    return;
+                }
+
+                var k,
+                    keys = this.name.match(patterns.key),
+                    merge = this.value,
+                    reverse_key = this.name;
+
+                while((k = keys.pop()) !== undefined){
+
+                    // adjust reverse_key
+                    reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                    // push
+                    if(k.match(patterns.push)){
+                        merge = self.build([], self.push_counter(reverse_key), merge);
+                    }
+
+                    // fixed
+                    else if(k.match(patterns.fixed)){
+                        merge = self.build([], k, merge);
+                    }
+
+                    // named
+                    else if(k.match(patterns.named)){
+                        merge = self.build({}, k, merge);
+                    }
+                }
+
+                json = $.extend(true, json, merge);
+            });
+
+            return json;
+        };
+    })(jQuery);
     var t2_default;
     var current_tab = '';
     var current_id = '';
@@ -11,10 +76,19 @@
             @if(isset($filter_subject_id))
             subject_id: '{{ $filter_subject_id }}'
             @endif
-
         }
+        $('#GeneralLiberaryTable').destroy();
+        read_table($("#form_filter_type").serializeObject());
+
+    });
+    $('#form_filter_type').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        $('#GeneralLiberaryTable').destroy();
+        read_table($("#form_filter_type").serializeObject());
+    });
+    function read_table(send_info) {
         $('#GeneralLiberaryTable').DataTable({
             "dom": window.CommonDom_DataTables,
+            "destroy": true,
             "serverSide": true,
             "ajax": {
                 "url": "{{ route('hamahang.library.GeneralFetch') }}",
@@ -56,7 +130,7 @@
             autoClose: true,
             format: 'YYYY-MM-DD'
         });
-    });
+    }
     function save_as_library_task(id) {
         var sendInfo = {
             task_id: id,

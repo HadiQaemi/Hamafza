@@ -28,7 +28,7 @@
     <form action="{{ route('hamahang.tasks.save_task') }}" class="" name="create_new_task" id="create_new_task" method="post"
           enctype="multipart/form-data">
         <div class="tab-content new-task-form">
-            <div class="tab-pane active" style="padding-top: 8px;margin-top:20px" id="tab_t1">
+            <div class="tab-pane active tab-view" id="tab_t1">
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
                     <div class="col-lg-7">
@@ -53,9 +53,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2"><label class="line-height-35">{{ trans('app.about') }}</label></div>
                     <div class="col-lg-10">
-                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple">
+                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
                             @if($sid)
                                 <option value="{{$sid}}" selected>{{$subject->title}}</option>
                             @endif
@@ -159,19 +157,23 @@
                     <div class="col-lg-10 line-height-35">
                         <div class="col-xs-12 noRightPadding noLeftPadding">
 
-                            <span class="pull-right;">
+                            <span class="pull-right padding-left-20">
                                 <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>
                                 <label for="determination_doing_duration" style="margin-left: 0px;">{{ trans('tasks.determination_doing_duration') }}</label>
+                            </span>
+                            <span class="pull-right padding-left-20">
                                 <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>
                                 <label for="determination_end_date" style="margin-left: 0px;">{{ trans('tasks.determination_end_date') }}</label>
                             </span>
-                            <span class="pull-right;">
+                            <span class="pull-right padding-left-20">
                                 <input type="radio" name="respite_timing_type" id="on-time" onclick="change_normal_task_timing_type(-1)" value="2"/>
                                 <label for="on-time" style="margin-left: 0px;">{{ trans('tasks.on-time') }}</label>
+                            </span>
+                            <span class="pull-right padding-left-20">
                                 <input type="radio" name="respite_timing_type" id="no-detemine" onclick="change_normal_task_timing_type(-1)" value="3"/>
                                 <label for="no-detemine" style="margin-left: 0px;">{{ trans('tasks.no-detemine') }}</label>
                             </span>
-                            <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
+                            <span id="normal_task_timing" class="pull-right line-height-35" style="display: inline-flex">
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>
                                 <label class="pull-right" style="margin-left: 0px;">روز</label>
                                 <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_hour" id="duration_hour" value="0"/>
@@ -217,16 +219,18 @@
             {!! $HFM_CN_Task['UploadForm'] !!}
 
             </div>
-            <div class="tab-pane" style="padding: 8px;margin-top:20px" id="tab_t2">
+            <div class="tab-pane tab-view" id="tab_t2">
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
+                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding">
                         <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
-                        <input type="text" id="task_schedul_num" class="form-control" style="width: 25px;padding: 0px;margin: 0px;padding-right: 4px;" name="task_schedul_num" value="" >
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="text" id="task_schedul_num" class="form-control" style="" name="task_schedul_num" value="" >
                     </div>
                     <div class="col-xs-2 noRightPadding noLeftPadding">
-                        <select id="task_schedul" name="task_schedul" class="form-control line-height-35">
-                            <option value="minute">{{trans('tasks.minute')}}</option>
-                            <option value="hour">{{trans('tasks.hour')}}</option>
+                        <select id="task_schedul" name="task_schedul" class="form-control line-height-35 border-radius">
+                            {{--<option value="minute">{{trans('tasks.minute')}}</option>--}}
+                            {{--<option value="hour">{{trans('tasks.hour')}}</option>--}}
                             <option value="daily">{{trans('tasks.day')}}</option>
                             <option value="weekly" selected="selected">{{trans('tasks.week')}}</option>
                             <option value="monthly">{{trans('tasks.month')}}</option>
@@ -291,50 +295,56 @@
                     <div class="col-xs-1 pull-right noRightPadding noLeftPadding">
                         <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}</label>
                     </div>
-                    <div class="col-xs-2 noRightPadding noLeftPadding">
-                        <input type="text" class="form-control DatePicker_begin_date" name="schedul_begin_date" aria-describedby="schedul_begin_date" id="schedul_begin_date">
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control DatePicker_begin_date pull-right" name="schedul_begin_date" aria-describedby="schedul_begin_date" id="schedul_begin_date">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control TimePicker pull-right" name="schedul_begin_time" id="schedul_begin_time" aria-describedby="schedul_begin_time">
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-10 noRightPadding noLeftPadding">
-                        <div class="daily col-xs-1 noRightPadding noLeftPadding">
-                            <label for="r2" class=" line-height-35">{{ trans('tasks.end') }}</label>
-                        </div>
-                        <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
-                                <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                    <input type="radio" name="schedul_end_date" value="schedul_end_date_none" id="schedul_end_date_none"/>
-                                </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <label for="schedul_end_date_none">{{ trans('tasks.none') }}</label>
-                                </span>
-                        </div>
-                        <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
-                                <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="radio" name="schedul_end_date" value="schedul_end_date_events" id="schedul_end_date_events"/>
-                                </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
-                                    <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
-                                </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" >
-                                </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
-                                    <label for="schedul_end_date_events_">{{ trans('tasks.repeat') }}</label>
-                                </span>
-                        </div>
-                        <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
-                                <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
-                                    <input type="radio" name="schedul_end_date" value="schedul_end_date_date" id="schedul_end_date_date" checked/>
-                                </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
-                                    <label for="schedul_end_date_date">{{ trans('tasks.in-date') }}</label>
-                                </span>
-                        </div>
-                        <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
-                                <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text" class="form-control DatePicker_end_date_date" name="schedul_end_date_date" aria-describedby="schedul_end_date_date" id="schedul_end_date_">
-                                </span>
-                        </div>
+                    <div class="daily col-xs-1 noLeftPadding line-height-35">
+                        <label for="r2" class="line-height-35">{{ trans('tasks.end') }}</label>
+                    </div>
+                    <div class="daily col-xs-5 noLeftPadding line-height-35" style="margin: 0 0 5px 5px;">
+                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_none" id="schedul_end_date_none"/>
+                        </span>
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                            <label for="schedul_end_date_none">{{ trans('tasks.none') }}</label>
+                        </span>
+                    {{--</div>--}}
+                    {{--<div class="daily col-xs-2" style="margin: 0 0 5px 5px;">--}}
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_events" id="schedul_end_date_events"/>
+                        </span>
+                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
+                            <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
+                        </span>
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                            <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" >
+                        </span>
+                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
+                            <label for="schedul_end_date_events_">{{ trans('tasks.repeat') }}</label>
+                        </span>
+                    {{--</div>--}}
+                    {{--<div class="daily col-xs-1" style="margin: 0 0 5px 5px;">--}}
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_date" id="schedul_end_date_date" checked/>
+                        </span>
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
+                            <label for="schedul_end_date_date">{{ trans('tasks.in-date') }}</label>
+                        </span>
+                    </div>
+                    <div class="daily col-xs-2 noRightPadding" style="margin: 0 0 5px 5px;">
+                        <span class="input-group-addon edited-addon noRightPadding" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                            <input type="text" class="form-control DatePicker_end_date_date" name="schedul_end_date_date" aria-describedby="schedul_end_date_date" id="schedul_end_date_">
+                        </span>
+                    </div>
+                    <div class="daily col-xs-2 noRightPadding" style="margin: 0 0 5px 5px;">
+                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
+                            <input type="text" class="form-control TimePicker" name="schedul_end_date_time" aria-describedby="schedul_end_date_time" id="schedul_end_date_time">
+                        </span>
                     </div>
                 </div>
 
@@ -387,7 +397,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t3" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane tab-view" id="tab_t3">
                 <div class="col-xs-12">
                     <div class="col-xs-1">
                         <label class="line-height-35">{{ trans('tasks.resource') }}</label>
@@ -427,7 +437,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t4" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane tab-view" id="tab_t4">
                 <div class="row hidden">
                     <div class="col-xs-12" id="project_in_task">
                         <div class="col-xs-1">
@@ -492,7 +502,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t5" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane tab-view" id="tab_t5">
                 <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
                     <div class="col-xs-1">
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
@@ -710,7 +720,7 @@
                         </div>
                         <div class="col-xs-5">
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <input type="text" class="form-control DatePicker" name="action_date" aria-describedby="respite_date">
+                                <input type="text" class="form-control DatePicker_" name="action_date" aria-describedby="respite_date">
                             </span>
                         </div>
                         <div class="col-xs-1">
@@ -809,7 +819,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane tab-view" id="tab_t6">
                 <div class="col-xs-12">
                     <div class="col-xs-3">
                         <label class="line-height-3">{{ trans('tasks.discuss') }}</label>
@@ -837,7 +847,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane tab-view" id="tab_t7">
                 <div class="col-xs-12">
                     <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
