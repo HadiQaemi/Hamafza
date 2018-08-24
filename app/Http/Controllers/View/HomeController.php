@@ -124,6 +124,14 @@ class HomeController extends Controller
                 }
                 break;
             }
+            case 'general':
+            {
+                if (config('constants.DefIndexView') == 'general')
+                {
+                    $index_view = 'layouts.homepages.general';
+                }
+                break;
+            }
             case 'banader':
             {
                 $index_view = 'layouts.homepages.banader';

@@ -10,7 +10,8 @@
 </head>
 <body class="mstr-clr" dir="rtl" style="overflow: auto;">
 <div hmfz-main-header="">
-    <nav id="header" class="navbar navbar-default" style="position: fixed;z-index: 10000;width: 100%;">
+    {{--<nav id="header" class="navbar navbar-default" style="position: fixed;z-index: 10000;width: 100%;">--}}
+    <nav id="header" class="navbar navbar-default">
         <div class="container-fluid">
             @include('sections.menu')
             @include('sections.loginregister_bandar')

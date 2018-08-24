@@ -37,9 +37,9 @@
             history.pushState("", document.title, window.location.pathname + window.location.search);
         });
     $(document).on('shown.bs.modal', function() {
-        $("#header").attr('style','position: fixed;width: 100%;z-index: 1;');
+        // $("#header").attr('style','position: fixed;width: 100%;z-index: 1;');
     });
     $(document).on('hide.bs.modal', function() {
-        $("#header").attr('style','position: fixed;z-index: 10000;width: 100%;');
+        // $("#header").attr('style','position: fixed;z-index: 10000;width: 100%;');
     });
 </script>

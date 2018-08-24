@@ -1990,6 +1990,12 @@ pres {
     padding: 5px;
     width: 33px;
 }
+.icons3 {
+    display: inline-block;
+    height: 33px;
+    padding: 5px;
+    width: 33px;
+}
 .Delicn{
     color: red;
 }
@@ -2547,6 +2553,9 @@ a .navbar-brand{
     border-right: 1px solid rgba(255, 255, 255, 0.50);
     height: 28px;
     margin-top: 10px;
+}
+.responsive-theme #header .quick-links-res li:first-child {
+    border-right: none;
 }
 .responsive-theme #header .quick-links-res a {
     font-size: 12px;
@@ -3219,4 +3228,108 @@ input{
     position: fixed;
     right: 34%;
     top: 80%;
+}
+.background-white{
+    background-color: #FFF;
+}
+.margin-left-10{
+    margin-left:10px;
+}
+.right-div {
+    position: absolute;
+    background: #fff;
+    margin-top: 3.2%;
+    margin-right: 13%;
+    width: 22%;
+    padding-bottom: 7.5%;
+}
+.right-div p {
+    font-size: 1.5em;
+    padding-top: 9%;
+}
+#main form {
+    padding: 3%;
+    padding-bottom: 9%;
+}
+.right-div .btn {
+    float: left;
+    border-radius: 0;
+    width: 40%;
+    font-size: 1.2em;
+    margin-left: 8.5%;
+    line-height: 1em;
+}
+.right-div .blue-text {
+    font-size: 1em;
+    display: inline;
+    float: left;
+    padding: 2%;
+    margin-left: 4%;
+}
+.blue-text {
+    color: #03A9F4;
+}
+.left-div {
+    background-color: #2293D5;
+}
+.left-div img {
+    padding: 20px 20px 10px;
+}
+.left-div .first-p {
+    background-color: #000;
+    padding: 10px;
+    width: 200px;
+}
+.left-div p {
+    color: #fff;
+}
+#footer li {
+    display: inline;
+    line-height: 4em;
+}
+li {
+    list-style: none;
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+.general-footer{
+    bottom: 0px;
+    margin-top: 15px;
+    padding: 0;
+    background-color: rgba(245, 245, 245, 0.31);
+    position: fixed;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.login-input {
+    border-radius: 0px;
+    padding-top: 3.7% !important;
+    padding-bottom: 3.7% !important;
+    z-index: 0;
+}
+input {
+    font-family: "Iransharp";
+}
+button, input {
+    line-height: normal;
+}
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+}
+.general-list{
+    background: linear-gradient(45deg, rgba(73,155,234,0.74) 0%, rgba(73,155,234,0.75) 0%, rgba(8,245,8,0.75) 100%);
+    /* background-color: white; */
+    border-radius: 10px;
+    padding: 22px;
+    color: #fff;
 }

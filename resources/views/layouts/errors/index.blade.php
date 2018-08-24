@@ -22,7 +22,8 @@
 <body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style="overflow: auto;">
 <div hmfz-main-header="">
     {{--    @if($index == 'index')--}}
-    <nav id="header" class="navbar navbar-default" style="position: fixed;z-index: 10000;width: 100%;">
+    {{--<nav id="header" class="navbar navbar-default" style="position: fixed;z-index: 10000;width: 100%;">--}}
+    <nav id="header" class="navbar navbar-default">
         {{--    @elseif($index == 'index.banader')--}}
         {{--<nav id="header" class="navbar navbar-default" style="background-color: #4C99BF; position: fixed;z-index: 10000;width: 100%;">--}}
         {{--@endif--}}
