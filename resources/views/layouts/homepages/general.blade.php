@@ -8,19 +8,19 @@
 
     <!---------------**Main Style**-------------->
     @include('layouts.helpers.common.assets.style.main_style')
-    @include('layouts.homepages.helpers.hamafza_1.assets.style.after_main_style')
+    @include('layouts.homepages.helpers.general.assets.style.after_main_style')
 
     <!---------------**Specific Plugin Style**-------------->
-    @include('layouts.homepages.helpers.hamafza_1.assets.style.specific_plugin_style')
+    @include('layouts.homepages.helpers.general.assets.style.specific_plugin_style')
 
     <!---------------**Inline Style**-------------->
-    @include('layouts.homepages.helpers.hamafza_1.assets.style.inline_style')
+    @include('layouts.homepages.helpers.general.assets.style.inline_style')
 
     <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
     @include('hamahang.master.alert')
     @include('hamahang.master.confirm')
-    @include('layouts.homepages.helpers.hamafza_1.assets.script.after_main_scripts')
+    @include('layouts.homepages.helpers.general.assets.script.after_main_scripts')
         <style>
             /* width */
             ::-webkit-scrollbar {
@@ -100,6 +100,7 @@
                 </div>
             </div>
         </nav>
+        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
         {{--<nav id="header" class="navbar navbar-default">--}}
         {{--<div class="container-fluid">--}}
         {{--@include('layouts.helpers.common.sections.helpers.nav_bar.menu')--}}
@@ -118,7 +119,7 @@
         <div hmfz-ui-view="">
             <!-- start of Main Template -->
 
-        {{--@include('layouts.homepages.helpers.hamafza_1.index_content')--}}
+        {{--@include('layouts.homepages.helpers.general.index_content')--}}
     {{--    @include('layouts.homepages.helpers.hamafza.index_content')--}}
         <!-- end of Main Template -->
             {{--@include('layouts.helpers.common.sections.footer_helper')--}}
@@ -240,8 +241,6 @@
 
         </div>
         <footer class="general-footer col-xs-12 text-center navbar-fixed-bottom">
-
-
             <ul id="footer" style="border-top: 1px solid #0bbb0b">
                 <li>
                     <a href="http://www.hamafza.ir/ms">درباره هم افزا</a>
@@ -263,10 +262,10 @@
     </div>
 
     <!---------------**Specific Plugin Scripts**-------------->
-    @include('layouts.homepages.helpers.hamafza_1.assets.script.specific_plugin_scripts')
+    @include('layouts.homepages.helpers.general.assets.script.specific_plugin_scripts')
 
     <!---------------**Inline Scripts**-------------->
-    @include('layouts.homepages.helpers.hamafza_1.assets.script.inline_scripts')
+    @include('layouts.homepages.helpers.general.assets.script.inline_scripts')
 
     @if(session('message')!='')
         <script>
@@ -278,7 +277,7 @@
         </script>
     @endif
 
-    @include('layouts.homepages.helpers.hamafza_1.assets.script.inline_scripts')
+    @include('layouts.homepages.helpers.general.assets.script.inline_scripts')
     @include('layouts.helpers.common.sections.helpers.nav_bar.auth_modals')
 </div>
 </body>

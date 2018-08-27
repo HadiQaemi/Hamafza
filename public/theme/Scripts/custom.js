@@ -1137,6 +1137,11 @@ $(document).ready(function(){
             $(".right-detail").css("margin-right","20px");
             $("#rSubMenuBtn").css("top","-45px");
             $(".HelpIcons").css("top","-30px");
+            $(".h_sidenav_help").css("top","10px");
+            $(".HelpSearch").css("top","10px");
+            $(".HelpBookmarks").css("top","10px");
+            $(".HelpPortals").css("top","10px");
+            $(".HelpKeywords").css("top","10px");
             $(".rightSubMenu").css("top","-40px");
             $("#toolbar .btn-group.mr").css("height","0px");
             $("#toolbar .btn-group").css("height","0px");
@@ -1161,6 +1166,11 @@ $(document).ready(function(){
             $(".right-detail").css("margin-right","0px");
             $("#rSubMenuBtn").css("top","0px");
             $(".HelpIcons").css("top","0px");
+            $(".h_sidenav_help").css("top","10px");
+            $(".HelpKeywords").css("top","10px");
+            $(".HelpSearch").css("top","10px");
+            $(".HelpBookmarks").css("top","10px");
+            $(".HelpPortals").css("top","10px");
             $(".rightSubMenu").css("top","0px");
             $("#toolbar .btn-group.mr").css("height","40px");
             $("#toolbar .btn-group").css("height","40px");

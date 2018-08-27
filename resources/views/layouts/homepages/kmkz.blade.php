@@ -38,6 +38,7 @@
                 @include('layouts.helpers.common.sections.nav_bar')
             </div>
         </nav>
+        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
     </div>
     <div id="main">
         <div id="scrollReset">

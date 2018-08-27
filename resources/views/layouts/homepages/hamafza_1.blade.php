@@ -99,6 +99,7 @@
                 </div>
             </div>
         </nav>
+        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
         {{--<nav id="header" class="navbar navbar-default">--}}
         {{--<div class="container-fluid">--}}
         {{--@include('layouts.helpers.common.sections.helpers.nav_bar.menu')--}}

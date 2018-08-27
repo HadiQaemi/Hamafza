@@ -25,6 +25,7 @@
         GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
         GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
         GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
+        $(".select2-search__field").attr("placeholder", "Type a name (Lastname, Firstname)").blur();
     });
 </script>
 @php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)
@@ -32,8 +33,8 @@
 @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')
 <div id="h_sidenav" class="h_sidenav" style="overflow: hidden;">
     <div id="h_sidenav_client" class="h_sidenav_client">
-        <i class="fa fa-close h_sidenav_close" onclick="h_sidenav_close();"></i>
-        <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpBookmarks" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=x_k4R_cmY34') !!}"></a>
+        <i class="fa fa-angle-double-left h_sidenav_close" onclick="h_sidenav_close();"></i>
+        <a class="jsPanels icon icon-help h_sidenav_help HelpIcons HelpBookmarks" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=x_k4R_cmY34') !!}"></a>
         <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpPortals" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=WU99UI5IUgw') !!}"></a>
         <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpKeywords" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=UPjv2yJSc80') !!}"></a>
         <a style="margin: -1px 0 0 20px; padding: 0; font-size: 11pt;" class="jsPanels icon icon-help HelpIcons HelpSearch" title="راهنمای اینجا" href="{!! url('/modals/helpview?code=A4MfrJnJ3DI') !!}"></a>
@@ -43,7 +44,7 @@
             <li {!! $unstyle !!}><a class="new_sidebar" data-toggle="tab" id="tab3" href="#page3">کلیدواژه&zwnj;ها</a></li>
             <li {!! $unstyle !!}><a class="new_sidebar" data-toggle="tab" id="tab4" href="#page4">جستجو</a></li>
         </ul>
-        <div class="tab-content" style="padding-top: 20px;">@if ($logged_in)
+        <div class="tab-content" style="width:390px;padding-top: 20px;">@if ($logged_in)
                 <div id="page1" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-11 txtsearch">
@@ -66,18 +67,18 @@
                     </div>
                 </div>
             </div>
-            <div id="page3" class="tab-pane fade">
+            <div id="page3" class="tab-pane fade margin-top--5">
                 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 Navigatekeywords">
                         {{--@include('sections.tagNavigat')--}}
-                        <select type="text" name="Navigatekeywords" id="Navigatekeywords" multiple="multiple" onchange="$('.keywords_and_or_client').css({'visibility': $(this).find(':selected').length > 1 ? 'visible' : 'hidden'});"></select>
-                        <div style="margin-top: 10px; visibility: hidden;" class="keywords_and_or_client">
+                        <select type="text" name="Navigatekeywords" id="Navigatekeywords" multiple="multiple" onchange="$('.keywords_and_or_client').css({'display': $(this).find(':selected').length > 1 ? 'inline' : 'none'});"></select>
+                        <div style="margin-top: 10px; display: none;color:#FFF" class="keywords_and_or_client">
                             <input type="radio" id="keywords_and_or_0" value="0" name="keywords_and_or" class="keywords_and_or" checked="checked" /><label for="keywords_and_or_0" style="font-weight: normal;">حداقل یکی</label>
                             <input type="radio" id="keywords_and_or_1" value="1" name="keywords_and_or" class="keywords_and_or" /><label for="keywords_and_or_1" style="font-weight: normal;">همه</label>
                         </div>
                     </div>
                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                        <input type="button" value="بیاب" title="Searchpost" class="btn btn-primary" id="TagBut" style="padding:6px;">
+                        <input type="button" value="{{trans('app.find')}}" title="Searchpost" class="btn btn-primary" id="TagBut" style="height: 34px;">
                         <img id="Tagloding" src="{{App::make('url')->to('/')}}/img/loader.gif" style="display: none;"/>
                         <div id="TagRefBut" style="cursor:pointer;display:none;cursor: pointer;height: 15px;overflow: hidden;">
                             <a onclick="RefreshTags();" href="#">
@@ -90,7 +91,7 @@
                     <li style="width: 49%;" class="active"><a id="tab3_1" class="new_sidebar" data-toggle="tab" href="#keyWords" style="height: 50px;">گزینه‌ها</a></li>
                     <li style="width: 49%;"><a class="new_sidebar" data-toggle="tab" id="ShowResKey" href="#Results" style="height: 50px;">یافته‌ها</a></li>
                 </ul>
-                <div class="tab-content" style="width: 430px; height: 1000px; overflow: hidden;">
+                <div class="tab-content" style="width: 390px; height: 1000px; overflow: hidden;">
                     <div id="keyWords" class="tab-pane active in" style="height: 100px;">
                         <div accordion="" class="panel-group accordion" id="Bookmarkaccordion">
                             <div id="KeywordFehresrt" style="margin-top: 5px;"></div>
@@ -162,7 +163,7 @@
             </div>
             <div id="page4" class="tab-pane fade" style="margin: 0 15px 0 15px;">
                 <div class="row">
-                    <input type="text" name="search_term" id="search_term" class="form-control pull-right" style="width: 80%;" />
+                    <input type="text" name="search_term" id="search_term" class="form-control pull-right" placeholder="{{trans('app.search')}}..." style="width: 80%;background: #787979 !important;" />
                     <input type="button" name="search_submit" id="search_submit" class="btn btn-primary pull-left" value="بیاب" style="height: 34px;  width: 15%;" />
                 </div>
                 <div class="row">

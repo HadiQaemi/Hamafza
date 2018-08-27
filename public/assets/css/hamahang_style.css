@@ -1468,12 +1468,20 @@ th{
 {
     color: white;
     cursor: pointer;
-    float: left;
+    float: right;
     font-size: 20px;
-    text-align: left;
+    text-align: right;
     margin: 0;
     padding: 0 5px 0 5px;
     width: 100%;
+}
+
+.h_sidenav_help{
+    margin: -1px 0 0 20px;
+    padding: 0;
+    font-size: 11pt;
+    text-align: left;
+    float: left;
 }
 
 .navbar-navtabs
@@ -1574,6 +1582,67 @@ th{
 {
     border-color: #585d5e;
     background-color: #787979;
+    border-radius: 0px !important;
+}
+.GharbalSearchNavbar::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+.Navigatekeywords{
+    padding: 0px !important;
+}
+.Navigatekeywords .select2-selection{
+    background: #787979;
+    border: none;
+    border-bottom: 1px solid #585d5e;
+    border-radius: 0px;
+}
+.Navigatekeywords .select2-container--focus{
+    background: #787979;
+    border: none;
+    border-bottom: 1px solid #585d5e;
+    border-radius: 0px;
+}
+.gm-scroll-view{
+    width: 100% !important;
+    color: #fff;
+}
+#KeywordFehresrt .jstree-icon{
+    width: 1px !important;
+}
+.Navigatekeywords .select2-search__field{
+    color: #fff;
+}
+.Navigatekeywords .select2-search__field::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+.Navigatekeywords .select2-container--default.select2-container--focus .select2-selection--multiple{
+    border: none !important;
+}
+#page4_pane1{
+    color:#fff;
+}
+#portallist-search{
+    height: 34px !important;
+}
+#bookmarklist-search{
+    height: 34px !important;
+}
+#page4 #search_term{
+    background: #787979 !important;
+    border: none !important;
+    border-bottom: 1px solid #585d5e !important;
+    border-radius: 0px !important;
+    background: #fff !important;
+}
+#page4 #search_term::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+#page4 #search_term:focus{
+    border:none !important;
+    box-shadow: none !important;
 }
 .mce-menu-item:hover .mce-text{
     background-color: transparent !important;
@@ -1613,6 +1682,9 @@ th{
     overflow: visible !important;
     /*width: 100%!important;*/
     /*height: 100%!important;*/
+}
+#search_term{
+    color: #FFF;
 }
 #keyWords .gm-scroll-view{
   opacity: 0;

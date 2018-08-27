@@ -22,8 +22,8 @@
             @include('sections.menu')
             @include('sections.loginregister')
         </div>
-
     </nav>
+    @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
 </div>
 <div id="main">
     <!-- New HTMl -->

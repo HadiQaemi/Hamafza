@@ -26,7 +26,9 @@
                         $relations = $item->keyword_and_relations_json ;
                     @endphp
                 @endforeach
-                <span class="bottom_keywords all_keywords" data-relations='{!! $relations !!}'><i class="fa fa-tags"></i> <span style="color: #6391C5;">همه موارد</span></span>
+                @if(count($keywords)>1)
+                    <span class="bottom_keywords all_keywords" data-relations='{!! $relations !!}'><i class="fa fa-tags"></i> <span style="color: #6391C5;">همه موارد</span></span>
+                @endif
             </div>
         @endif
     @endif

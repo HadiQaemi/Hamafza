@@ -17,6 +17,7 @@
             @include('sections.loginregister_bandar')
         </div>
     </nav>
+    @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
 </div>
 
 <div id="main">

@@ -66,6 +66,7 @@
                 </div>
             </div>
         </nav>
+        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
         {{--<nav id="header" class="navbar navbar-default" style="position: fixed;z-index: 10000;width: 100%;">--}}
         {{--<div class="container-fluid">--}}
         {{--@include('layouts.helpers.common.sections.helpers.nav_bar.menu')--}}

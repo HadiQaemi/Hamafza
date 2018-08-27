@@ -2,7 +2,6 @@
 <html ng-app="hamafza">
 <head lang="en">
     @include('sections.header')
-
 </head>
 <body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style="overflow: auto;">
 <div hmfz-main-header="">
@@ -13,6 +12,7 @@
             @include('sections.loginregister')
         </div>
     </nav>
+    @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
 </div>
 <div id="main">
     <!-- New HTMl -->

@@ -14,10 +14,11 @@
 
 </style>
 @php
-    $r = null;
+    $r = '';
     if ($in_pages && ($for_title || $for_content))
     {
         $r .= '<div id="search_page_" style="color: lightgrey; font-size: 11pt; margin-bottom: 5px;">صفحات</div>';
+        $r2 = '<div id="search_page_" style="color: lightgrey; font-size: 11pt; margin-bottom: 5px;">صفحات</div>';
         if ($in_pages && $for_title && $searchs['pages']['title']->count())
         {
             $r .= '<ul class="search_page_">';
@@ -62,6 +63,6 @@
         }
         $r .= '</ul>';
     }
-    $r = $r ? $r : 'موردی جهت نمایش موجود نیست.<br />';
+    $r = trim($r)!=$r2 ? $r : 'موردی جهت نمایش موجود نیست.<br />';
     echo ($r);
 @endphp
