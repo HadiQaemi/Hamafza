@@ -5,48 +5,55 @@
             @php ($r = null)
             @foreach ($keyword_items as $keyword_item)
                 @php
-                switch ($keyword_type)
-                {
-                    case 'special':
+                    if($keyword_type != 'special')
                     {
-                        $r .=
-                        '
-                        <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                            <a rel="canonical" href="' . url($keyword_item->Uname) . '" target="_blank">' . $keyword_item->FullName . '</a>
-                        </li>
-                        ';
-                        break;
+                        $title = $keyword_item->title;
+                        preg_match('/^.{1,60}\s/s', $keyword_item->title, $match);
+                        if(isset($match[0]))
+                            $title = trim($match[0])== $keyword_item->title ? $match[0] : $match[0].'... ';
                     }
-                    case 'subject':
+                    switch ($keyword_type)
                     {
-                        if (isset($keyword_item->pages[0]))
+                        case 'special':
                         {
                             $r .=
                             '
                             <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                <a rel="canonical" href="' . url($keyword_item->pages[0]->id) . '" target="_blank">' . $keyword_item->title . '</a>
+                                <a rel="canonical" href="' . url($keyword_item->Uname) . '" target="_blank">' . $keyword_item->FullName . '</a>
                             </li>
                             ';
+                            break;
                         }
-                        break;
-                    }
-                    case 'enquiry_pages':
-                    {
-                        if ($keyword_item->subject)
+                        case 'subject':
                         {
-                            if (20 == $keyword_item->subject->kind)
+                            if (isset($keyword_item->pages[0]))
                             {
                                 $r .=
                                 '
                                 <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                    <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" target="_blank">' . $keyword_item->title . '</a>
+                                    <a rel="canonical" href="' . url($keyword_item->pages[0]->id) . '" target="_blank" title="'. $keyword_item->title .'">' . $title . '</a>
                                 </li>
                                 ';
                             }
+                            break;
                         }
-                        break;
+                        case 'enquiry_pages':
+                        {
+                            if ($keyword_item->subject)
+                            {
+                                if (20 == $keyword_item->subject->kind)
+                                {
+                                    $r .=
+                                    '
+                                    <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
+                                        <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" title="'. $keyword_item->title .'">' . $title . '</a>
+                                    </li>
+                                    ';
+                                }
+                            }
+                            break;
+                        }
                     }
-                }
                 @endphp
             @endforeach
             {!! $r !!}

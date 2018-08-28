@@ -2403,7 +2403,7 @@ li.token-input-token span{position:absolute;right:5px}*/
     margin :2px 0 5px 0;
 }
 #PrtalFehresrt {
-    margin-right: 20px
+    /*margin-right: 20px*/
 }
 
 .mce-container-body iframe body{
@@ -3244,4 +3244,7 @@ input{
     border-radius: 10px;
     padding: 22px;
     color: #fff;
+}
+#KeywordSearch li{
+    padding-right:10px;
 }
