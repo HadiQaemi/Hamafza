@@ -933,6 +933,7 @@ li {
 }
 
 #mainContainer .next-container {
+    padding-top: 5px !important;
     margin-right: 0;
     margin-left: 0;
     padding-top: 15px;
@@ -2588,6 +2589,9 @@ a .navbar-brand{
 }
 .responsive-theme .hd-body{
     direction: rtl;
+    padding: 0;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 .responsive-theme .hd-body::-webkit-scrollbar {
     width: 5px;
@@ -2669,6 +2673,12 @@ a .navbar-brand{
 /*/////*/
 .responsive-theme .hd-tree{
     direction: rtl;
+    padding-right: 5px !important;
+    padding-left: 0px !important;
+}
+
+#Tdxcre2{
+    padding: 0px !important;
 }
 
 .responsive-theme .hd-tree::-webkit-scrollbar {
@@ -3247,4 +3257,15 @@ input{
 }
 #KeywordSearch li{
     padding-right:10px;
+}
+.rapid-task{
+    position: fixed;
+    background: #fff;
+    margin-left: 5px !important;
+    height: 60px !important;
+    bottom: 0px;
+}
+#master_inner_rtl_div .container-fluid{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }

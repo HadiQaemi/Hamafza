@@ -44,7 +44,7 @@
             overflow-y: hidden !important;
         }
         .panel-light{
-            height: 450px;
+            height: 73.4vh;
         }
         .row{
             height: 46px !important;
@@ -68,9 +68,9 @@
                 </div>
             </div>
         </div>
-        <div class="footer_task">
+        {{--<div class="footer_task">--}}
             @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask')
-        </div>
+        {{--</div>--}}
 
     </div>
 @stop

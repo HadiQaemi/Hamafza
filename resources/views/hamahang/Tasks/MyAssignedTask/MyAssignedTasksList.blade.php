@@ -73,7 +73,7 @@
             {{--</div>--}}
         </div>
     </form>
-    <div class="container-fluid">
+    <div class="container-fluid noLeftPadding noRightPadding" style="height: 68vh;">
         {{--<a class="task_info" data-t_id="42">تست</a>--}}
         <fieldset>
             <div class="row">
@@ -93,6 +93,7 @@
             </div>
         </fieldset>
     </div>
+    @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask')
     <div class="modal fade" id="task_details" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

@@ -94,11 +94,11 @@
                     </div>
                 </div>
                 <div class="clearfixed"></div>
-                @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask')
+
         </fieldset>
     </div>
     <div class="clearfixed"></div>
-
+    @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask')
 @stop
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-date.js')}}"></script>

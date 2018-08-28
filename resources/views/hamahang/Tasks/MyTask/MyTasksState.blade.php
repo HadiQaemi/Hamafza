@@ -35,7 +35,8 @@
             position: relative;
             width: 100%;
             top: 35px;
-            height: 430px;
+            /*height: 430px;*/
+            height: 71vh;
         }
 
         .scrlbig {
@@ -66,9 +67,9 @@
                 </div>
             </div>
         </div>
-        <div class="footer_task">
+        {{--<div class="footer_task">--}}
             @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask')
-        </div>
+        {{--</div>--}}
     </div>
 @stop
 

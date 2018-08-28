@@ -1253,7 +1253,8 @@ strong.ui-state-error {
     overflow-x: hidden;
     direction: ltr;
     background-color: #eee;
-    height: 300px;
+    /*height: 300px;*/
+    height: 55vh;
 }
 
 .div_groups_task ul {

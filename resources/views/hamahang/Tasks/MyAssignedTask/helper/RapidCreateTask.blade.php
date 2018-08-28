@@ -1,10 +1,10 @@
-<div class="row row_height">
+<div class="row row_height rapid-task">
     <hr class="hr-4"/>
     <form method="POST" id="form_create_rapid_task">
         <div class="col-xs-4" dir="rtl">
-            <input type="text" class="form-control " placeholder="عنوان وظیفه" name='task_title' id="create_rapid_task_title"/>
+            <input type="text" class="form-control" autocomplete="off" placeholder="عنوان وظیفه" name='task_title' id="create_rapid_task_title"/>
         </div>
-        <div class="col-xs-4" style="padding: 0">
+        <div class="col-xs-5" style="padding: 0">
             <div class="input-group">
                 <span class="input-group-addon">
                     <i class="">
@@ -16,7 +16,7 @@
                 <select id="create_rapid_task_multi_selected_users" name="selected_users[]" multiple="multiple"></select>
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-2">
             <div class="input-group">
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>

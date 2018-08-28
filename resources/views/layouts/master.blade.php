@@ -154,7 +154,7 @@
                                     {{--<div class="scrl-bx" id="vrScroll" style="height: 90vh;width: 100%;overflow: scroll;">--}}
                                     <div class="" id="vrScroll2">
                                         @if(View::hasSection('position_right_col_3') || View::hasSection('Tree'))
-                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 scrl">
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 scrl noPadding">
                                                 {{--<div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
                                                 <div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr;">
                                                     <div style="direction: rtl">
