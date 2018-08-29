@@ -29,7 +29,7 @@
                 </legend>
                 <div class="row-fluid">
                     <div class="col-lg-12">
-                        <table id="OrgOrgansGrid" class="table table-striped table-bordered dt-responsive nowrap display" cellspacing="0" width="100%" style="font-size: 10px;">
+                        <table id="OrgOrgansGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%" style="font-size: 10px;">
                             <thead>
                             <tr>
                                 <th>{{ trans('app.id') }}</th>

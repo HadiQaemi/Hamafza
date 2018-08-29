@@ -42,7 +42,7 @@
                     <div id="menTypeMsg"></div>
                     <div class="clearfixed"></div>
                     {{--<hr class="hr-4" style="margin-bottom: 20px;">--}}
-                    <table id="toolsGroupGrid" width="100%" class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                    <table id="toolsGroupGrid" width="100%" class="table dt-responsive nowrap display text-center">
                         <thead>
                         <tr>
                             <th>{{trans('tools.row_id')}}</th>
@@ -66,7 +66,7 @@
                     {{--<i class="fa  fa-plus-circle bigger-125"></i>--}}
                     {{--<span>{{trans('tools.new_tools')}}</span>--}}
                     {{--</button>--}}
-                    <table id="toolsGrid" style="width: 100%;" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align">
+                    <table id="toolsGrid" style="width: 100%;" class="col-xs-12 table dt-responsive nowrap display text-center">
                         <thead>
                         <tr>
                             <th>{{trans('tools.row_id')}}</th>
@@ -89,7 +89,7 @@
                 <div class="col-xs-12 tab-pane fade in  default-options" id="groupsRoles">
                     <div class="space-4"></div>
                     <form id="group-roles-form">
-                        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-md-1">
                                     <label>{{trans('tools.group')}}</label>
@@ -117,7 +117,7 @@
                     </form>
                     <div class="clearfixed"></div>
                     <hr class="hr-4" style="margin-bottom: 20px;">
-                    <table id="groupsRolesGrid" style="width: 100%;" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align">
+                    <table id="groupsRolesGrid" style="width: 100%;" class="col-xs-12 table dt-responsive nowrap display text-center">
                         <thead>
                         <th>{{trans('tools.row_id')}}</th>
                         <th>{{trans('tools.group')}}</th>
@@ -155,7 +155,7 @@
                     {{--</form>--}}
                     {{--<hr class="hr-4" style="margin-bottom: 20px;">--}}
                     <form id="tools_roles_filter_form" style="width: 75.2%;position: absolute;right: 23%;top: 12px;">
-                        <table class="td-center-align">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-md-1">
                                     <label><i class="fa fa-filter"></i> {{trans('tools.tool')}}</label>
@@ -173,7 +173,7 @@
                         </table>
                     </form>
                     <div class="clearfixed"></div>
-                    <table id="toolsRolesGrid" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align" style="width: 100%;">
+                    <table id="toolsRolesGrid" class="col-xs-12 table dt-responsive nowrap display text-center" style="width: 100%;">
                         <thead>
                         <th>{{trans('tools.row_id')}}</th>
                         <th>{{trans('tools.tools')}}</th>
@@ -218,7 +218,7 @@
                     {{--</form>--}}
                     {{--<hr class="hr-4" style="margin-bottom: 20px;">--}}
                     <form id="tools_users_form" style="width: 75.2%;position: absolute;right: 23%;top: 12px;">
-                        <table class="td-center-align">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-md-1">
                                     <label><i class="fa fa-filter"></i> {{trans('tools.tool')}}</label>
@@ -237,7 +237,7 @@
                         <input type="hidden" name="edit_id" value=""/>
                     </form>
                     <div class="clearfixed"></div>
-                    <table id="toolsUserGrid" class="col-xs-12 table table-condensed table-bordered table-striped table-hover td-center-align" style="width: 100%;">
+                    <table id="toolsUserGrid" class="col-xs-12 table dt-responsive nowrap display text-center" style="width: 100%;">
                         <thead>
                         <th>{{trans('tools.row_id')}}</th>
                         <th>{{trans('tools.tools')}}</th>

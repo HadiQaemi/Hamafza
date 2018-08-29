@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="space-10"></div>
                 <div id="alert_subject"></div>
-                <table id="fileCreated_ME_RecieveGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="width: 100%;">
+                <table id="fileCreated_ME_RecieveGrid"  class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>شناسه</th>

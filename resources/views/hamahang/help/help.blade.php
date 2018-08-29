@@ -6,7 +6,7 @@
     <div class="row-fluid">
         <div class="col-xs-12">
             <div class="tab-content">
-                <table id="help_grid" width="100%" class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                <table id="help_grid" width="100%" class="table dt-responsive nowrap display text-center">
                     <thead>
                     <tr>
                         <th>{{trans('help.row')}}</th>

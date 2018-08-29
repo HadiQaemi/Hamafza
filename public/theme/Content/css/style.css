@@ -2236,6 +2236,7 @@ input[type="checkbox"], input[type="radio"]{
     cursor: pointer;
     bottom: 20px;
     opacity: .8;
+    display: none;
 }
 
     #scrollReset a {
@@ -2590,8 +2591,9 @@ a .navbar-brand{
 .responsive-theme .hd-body{
     direction: rtl;
     padding: 0;
-    padding-right: 5px;
     padding-left: 5px;
+    padding-right: 0px;
+    margin-right: 5px;
 }
 .responsive-theme .hd-body::-webkit-scrollbar {
     width: 5px;
@@ -2603,7 +2605,7 @@ a .navbar-brand{
 }
 
 .responsive-theme .hd-body::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #555;
     outline: 1px solid slategrey;
 }
 
@@ -2673,8 +2675,9 @@ a .navbar-brand{
 /*/////*/
 .responsive-theme .hd-tree{
     direction: rtl;
-    padding-right: 5px !important;
-    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-right: 5px !important;
+    padding-left: 5px !important;
 }
 
 #Tdxcre2{
@@ -2690,7 +2693,7 @@ a .navbar-brand{
 }
 
 .responsive-theme .hd-tree::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #555;
     outline: 1px solid slategrey;
 }
 .responsive-theme .row-hd{
@@ -3233,12 +3236,12 @@ input{
     right: -30px;
     top: 30px;
     font-size: x-large;
-    color: #111111;
+    color: #a0a0a0;
     text-decoration: none;
 }
 .mixed-scroll{
     position: fixed;
-    right: 34%;
+    right: 32%;
     top: 80%;
 }
 .background-white{
@@ -3268,4 +3271,53 @@ input{
 #master_inner_rtl_div .container-fluid{
     padding-left: 0px !important;
     padding-right: 0px !important;
+}
+#new-fehrest .panel-light .panel-heading {
+    border-bottom: 1px solid #7dca75;
+    border-top: none;
+}
+.sendComment{
+    padding: 5px 0px !important;;
+    height: 270px !important;
+}
+#TitleHeads{
+    margin: 10px 2px !important;
+    font-size: 1.1em;
+    display: none !important;
+}
+.TitleHeads{
+    background: #fff !important;
+}
+.TitleHeads .sicon-bastan{
+    font-size: 10pt;
+    height: 15px !important;
+    margin-top: 5px !important;
+    color: #000 !important;
+}
+.sendComment .commenTxtHolder {
+    background-color: #fff !important;
+    border: none !important;
+    font-size: 13px !important;
+    padding: 0px !important;
+    margin-top: 0px !important;
+}
+#TextSection div{
+    background: #fff !important;
+}
+#TextSection .mixed-scroll{
+    background: transparent !important;
+}
+#new-content h2{
+    font-size: 23px;
+    font-weight: 800;
+    padding-bottom: 5px;
+}
+#new-content h3{
+    font-size: 19px;
+    font-weight: 500;
+    padding-bottom: 5px;
+}
+
+.jstree-anchor{
+    color: #337ab7 !important;
 }

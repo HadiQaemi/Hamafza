@@ -11,7 +11,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="col-xs-12 tab-pane fade in active default-options" id="pages">
-                        <table id="fileCreated_ME_RecieveGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="width: 100%;">
+                        <table id="fileCreated_ME_RecieveGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>شناسه</th>
@@ -31,7 +31,7 @@
                         <div class="space-10"></div>
                         <div class="attach_loader"></div>
                         <form id="subjects_roles_form">
-                            <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                            <table class="table dt-responsive nowrap display text-center">
                                 <tr>
                                     <td class="col-md-1">
                                         <label>{{trans('page_access.add_role')}}</label>
@@ -53,7 +53,7 @@
                         <div class="space-10"></div>
                         <div class="detach_loader"></div>
                         <form id="subjects_roles_form_detach">
-                            <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+                            <table class="table dt-responsive nowrap display text-center">
                                 <tr>
                                     <td class="col-md-1">
                                         <label>{{trans('page_access.remove_role')}}</label>

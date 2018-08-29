@@ -11,7 +11,7 @@
         <fieldset>
             <div class="row">
                 <div class="col-xs-12">
-                    <table id="KeywordsListTableID" class="table table-striped display" cellspacing="0" width="100%" style="text-align: center;">
+                    <table id="KeywordsListTableID" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th style="display: none;">شناسه</th>

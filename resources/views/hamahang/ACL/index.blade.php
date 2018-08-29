@@ -19,8 +19,8 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="form_add_role" class="form-horizontal" action="#" method="post">
-                        <table class="table">
+                    <form id="table dt-responsive nowrap display text-center" class="form-horizontal" action="#" method="post">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-xs-2">{{trans('auth.name')}}</span>
@@ -68,7 +68,7 @@
 
                 <div class="modal-body">
                     <form id="form_add_permission" class="form-horizontal" action="#" method="post">
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-xs-2">{{trans('auth.name')}}</span>
@@ -116,7 +116,7 @@
                 <div class="modal-body">
                     <form id="form_add_category" class="form-horizontal" action="#" method="post">
                         <div class="row">
-                            <table class="table">
+                            <table class="table dt-responsive nowrap display text-center">
                                 <tr>
                                     <td class="col-xs-2">
                                         <span class="col-lg-3 control-label">{{trans('acl.parent')}}</span>
@@ -170,7 +170,7 @@
                 <div class="modal-body">
                     <form id="form_edit_role" class="form-horizontal" action="#" method="post">
                         <input id="edit_form_role_id" type="hidden" name="item_id" value="">
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-lg-3 control-label">{{trans('auth.name')}}</span>
@@ -218,7 +218,7 @@
                 <div class="modal-body">
                     <form id="form_edit_permission" class="form-horizontal" action="#" method="post">
                         <input id="edit_form_permission_id" type="hidden" name="item_id" value="">
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-lg-3 control-label">{{trans('auth.name')}}</span>
@@ -266,7 +266,7 @@
                 <div class="modal-body">
                     <form id="form_edit_cat_item" class="form-horizontal" action="#" method="post">
                         <input id="edit_cat_id" type="hidden" name="item_id" value="">
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="col-xs-2">
                                     <span class="col-lg-3 control-label">{{trans('acl.parent')}}</span>
@@ -336,7 +336,7 @@
                             <div class="tab-pane fade active in" id="users_list_tab">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <table id="roleUserGrid" class="table" width="100%">
+                                        <table id="roleUserGrid" class="table dt-responsive nowrap display text-center" width="100%">
                                             <thead>
                                             <tr>
                                                 <th>ردیف</th>
@@ -359,7 +359,7 @@
                                     <div class="col-xs-12">
                                         <form id="form_add_role_user" class="form-horizontal" action="#" method="post">
                                             <input id="attach_role_users" type="hidden" name="item_id" value="">
-                                            <table class="table">
+                                            <table class="table dt-responsive nowrap display text-center">
 
                                                 <tr>
                                                     <td class="col-xs-2">
@@ -432,7 +432,7 @@
                             <div class="tab-pane fade active in" id="roles_tab">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <table id="Roles_Grid" class="table table-bordered table-striped" cellspacing="0" width="100%">
+                                        <table id="Roles_Grid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                                             <thead>
                                             <tr>
                                                 <th>{{trans('access.row')}}</th>
@@ -451,7 +451,7 @@
                             <div class="tab-pane fade" id="permissions_tab">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <table id="Permissions_Grid" class="table table-bordered table-striped" width="100%">
+                                        <table id="Permissions_Grid" class="table dt-responsive nowrap display text-center" width="100%">
                                             <thead>
                                             <tr>
                                                 <th>{{trans('access.row')}}</th>
@@ -467,7 +467,7 @@
                             <div class="tab-pane fade" id="acl_cats_tab">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <table id="Categories_Grid" class="table table-bordered table-striped" width="100%">
+                                        <table id="Categories_Grid" class="table dt-responsive nowrap display text-center" width="100%">
                                             <thead>
                                             <tr>
                                                 <th>{{trans('access.row')}}</th>
@@ -520,7 +520,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-12 hide" id="UsersPermissions_Grid_Row">
-                                                    <table id="UsersPermissions_Grid" class="table table-bordered table-striped" cellspacing="0" width="100%">
+                                                    <table id="UsersPermissions_Grid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                                                         <thead>
                                                         <tr>
                                                             <th>{{trans('access.row')}}</th>

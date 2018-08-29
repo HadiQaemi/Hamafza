@@ -12,7 +12,7 @@
             <div class="tab-content">
                 <div class="col-xs-12 tab-pane fade in active default-options" id="substs_list">
                     <div class="clearfixed"></div>
-                    <table id="SubstsGrid" width="100%" class="table table-condensed {{--table-bordered--}} table-striped table-hover td-center-align">
+                    <table id="SubstsGrid" width="100%" class="table dt-responsive nowrap display text-center">
                         <thead>
                         <tr>
                             <th>{{trans('subst.row_id')}}</th>

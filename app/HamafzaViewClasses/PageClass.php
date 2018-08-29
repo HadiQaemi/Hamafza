@@ -268,7 +268,14 @@ class PageClass
                     '<div id="report-loading" class="loading">' .
                     '   <img src="/Content/images/ajax-loader.gif" width="32" height="32" /><br />' .
                     '   <strong>Loading</strong>' .
-                    '</div>' .
+                    '</div>
+                        <style>
+                            #new-fehrest .panel-heading {
+                                border-bottom: 1px solid #7dca75 !important;
+                                border-top: none !important;
+                                background: #FFF !important;
+                            }
+                        </style>' .
                     '<div id="TextSection" style="display: inline-block;">' .
                     '<div class="col-xs-12">'.
                         '<div id="buttoninfullscreen" class="buttoninfullscreen deactive hidden" style="margin-right: -2.4%">
@@ -283,14 +290,14 @@ class PageClass
                         </div>
                         '.
                         '<div class="col-xs-12" id="new-content" style="direction: rtl">
-                            <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-circle-down" id="BtnScrollTop"></a>
+                            <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-down" id="BtnScrollTop"></a>
                             <div class="mixed-scroll hidden">
-                                <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-circle-up"></a>
+                                <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-up"></a>
                                 <br/>
-                                <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-circle-down"></a>
+                                <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-down"></a>
                             </div>
                                 '.$page['content'] . '
-                            <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-circle-up" id="BtnScrollBottom"></a>
+                            <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-up" id="BtnScrollBottom"></a>
                         </div>'.
                     '</div>
                             

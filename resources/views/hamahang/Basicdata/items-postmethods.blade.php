@@ -5,7 +5,7 @@
 <div class="panel panel-default" style="margin: 10px;">
     @include('hamahang.Basicdata.items-panel-heading')
     <div class="panel-body">
-        <table id="grid" width="100%" class="table table-condensed table-bordered table-striped table-hover td-center-align">
+        <table id="grid" width="100%" class="table dt-responsive nowrap display text-center">
             <thead>
             <th style="text-align: center;">{{ trans('tools.rowIndex') }}</th>
             <th style="text-align: center;">{{ trans('tools.title') }}</th>

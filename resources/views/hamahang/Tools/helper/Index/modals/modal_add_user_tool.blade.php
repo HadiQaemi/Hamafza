@@ -1,7 +1,7 @@
 <div>
     <div class="space-4"></div>
     <form id="new_tools_users_form">
-        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+        <table class="table dt-responsive nowrap display text-center">
             <tr>
                 <td class="col-md-1">
                     <label>{{trans('tools.tools')}}</label>

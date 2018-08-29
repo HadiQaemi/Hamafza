@@ -11,6 +11,13 @@
         {
             display: none;
         }
+        #pcol_32{
+            padding-right: 0px !important;
+            direction: rtl !important;
+        }
+        .scrl{
+            margin-top: -5px !important;
+        }
     </style>
     <div class="row" style="background-color:#eee; ">
         @foreach($desktop_sections as $section)

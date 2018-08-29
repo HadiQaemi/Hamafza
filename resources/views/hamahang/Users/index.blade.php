@@ -55,20 +55,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <table class=" table table-condensed table-bordered table-striped table-hover GridDataUser" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>ردیف</th>
-                                            <th>نام و نام خانوادگی</th>
-                                            <th>نام کاربری</th>
-                                            <th>نقش</th>
-                                            <th>تاریخ عضویت</th>
-                                            <th>امتیاز</th>
-                                            <th>وضعیت</th>
-                                            <th>عملیات</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                                        <table  class="table dt-responsive nowrap display text-center table-condensed GridDataUser" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ردیف</th>
+                                                    <th>نام و نام خانوادگی</th>
+                                                    <th>نام کاربری</th>
+                                                    <th>نقش</th>
+                                                    <th>تاریخ عضویت</th>
+                                                    <th>امتیاز</th>
+                                                    <th>وضعیت</th>
+                                                    <th>عملیات</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

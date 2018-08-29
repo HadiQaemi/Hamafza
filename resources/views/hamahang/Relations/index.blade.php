@@ -12,7 +12,7 @@
             <div class="tab-content">
                 <div class="col-xs-12 tab-pane fade in active default-options" id="relations_list">
                     <div class="clearfixed"></div>
-                    <table id="RelationsGrid" width="100%" class="table table-condensed table-hover">
+                    <table id="RelationsGrid" width="100%" class="table dt-responsive nowrap display text-center">
                         <thead>
                         <tr>
                             <th style="text-align: right;">{{trans('relations.row_id')}}</th>
@@ -29,7 +29,7 @@
                 <div class="col-xs-12 tab-pane fade in default-options" id="add_new_relation">
                     <div class="clearfixed"></div>
                     <form id="create_new_relation" method="Post">
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="table-active" style="width: 200px;">نام</td>
                                 <td>
@@ -88,7 +88,7 @@
                     <div class="clearfixed"></div>
                     <form id="edit_form_relation" method="Post">
                         <input id="edit_form_relation_id" name="relation_id" value="" hidden>
-                        <table class="table">
+                        <table class="table dt-responsive nowrap display text-center">
                             <tr>
                                 <td class="table-active">نام</td>
                                 <td>

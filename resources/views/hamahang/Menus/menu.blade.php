@@ -34,7 +34,7 @@
                                 <div class="tab-pane fade active in" id="menus_tab">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <table id="MenusGridData" class="table table-bordered table-striped" width="100%">
+                                            <table id="MenusGridData" class="table dt-responsive nowrap display text-center" width="100%">
                                                 <thead>
                                                 <tr>
                                                     <th>{{trans('menu_types.row')}}</th>
@@ -144,7 +144,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <table id="MenuItemsGridData" class=" table table-condensed table-bordered table-striped table-hover" width="100%">
+                                    <table id="MenuItemsGridData" class="table dt-responsive nowrap display text-center" width="100%">
                                         <thead>
                                         <tr>
                                             <th>{{trans('access.row')}}</th>

@@ -2,7 +2,7 @@
     <div class="space-4"></div>
     <form id="tools_new_roles_form">
 
-        <table class="table table-condensed table-bordered table-striped table-hover td-center-align">
+        <table class="table dt-responsive nowrap display text-center">
             <tr>
                 <td class="col-md-1">
                     <label>{{trans('tools.tools')}}</label>

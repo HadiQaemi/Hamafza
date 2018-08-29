@@ -35,10 +35,10 @@
     </div>
     <div id="main">
         <!-- New HTMl -->
-        <div id="scrollReset">
-            <a href="#" class="up glyphicon glyphicon-chevron-up"></a>
-            <a href="#" class="down glyphicon glyphicon-chevron-down"></a>
-        </div>
+        {{--<div id="scrollReset">--}}
+            {{--<a href="#" class="up glyphicon glyphicon-chevron-up"></a>--}}
+            {{--<a href="#" class="down glyphicon glyphicon-chevron-down"></a>--}}
+        {{--</div>--}}
         <!--End New HTMl -->
 
         <div hmfz-ui-view="">

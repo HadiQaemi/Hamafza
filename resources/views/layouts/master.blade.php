@@ -25,7 +25,7 @@
             margin-bottom: 50px;
         }
         #vrScroll2 .scrl{
-            direction: rtl;
+            direction: ltr;
         }
         #vrScroll2 .scrl::-webkit-scrollbar {
             width: 5px;

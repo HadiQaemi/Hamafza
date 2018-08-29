@@ -44,6 +44,8 @@
                         $("#NewPost").val(text);
                         //$("#SelectedComment").val(text);
                         //$(".text-content").highlight(text);
+                        $('.ful-scrn').css('display','none');
+                        $(".sendComment").css('height','270px');
                         $("#post_type").val('1').change();
                         $(".textassist").hide();
                         return false;

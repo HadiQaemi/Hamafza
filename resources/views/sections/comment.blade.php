@@ -20,9 +20,9 @@ $hide_type = false;
 @endif
 <div class="sendComment">
     @if(session('uid') !='')
-        <div class="col-md-10 col-md-push-1">
-            <h1 id="TitleHeads" class="pull-right" style="margin: 10px 2px;font-size: 1.1em;display: none"></h1>
-            <span class="pull-left fa fa-close sicon-bastan" style=" font-size: 10pt;height: 10px !important;margin-top: 10px;"></span>
+        <div class="col-md-10 col-md-push-1 TitleHeads">
+            <h1 id="TitleHeads" class="pull-right"></h1>
+            <span class="pull-left fa fa-close sicon-bastan"></span>
         </div>
         <div class="clearfix"></div>
         <div class="commenTxtHolder col-md-10 col-md-push-1">
@@ -66,7 +66,7 @@ $hide_type = false;
                                 border: 0 !important;
                             }
                         </style>--}}
-                        <table class="table">
+                        <table class="">
                             <tr>
                                 <td colspan="3">
                                     <textarea class="col-md-12 col-sm-12 col-xs-12 form-control" id="NewPost" type="text" placeholder="نظرتان را بنویسید" style="margin-bottom: 5px;"></textarea>
@@ -88,7 +88,7 @@ $hide_type = false;
                                 </td>
                             </tr>
                         </table>
-                        <table class="table">
+                        <table class="">
                             <tr>
                                 <td class="col-xs-1 showW_on_type_2_2">
                                     <small>درج در درگاه</small>
@@ -434,7 +434,8 @@ $hide_type = false;
         {
             window.setInterval(function()
             {
-                $('.sendComment').height($('.commenTxtHolders').height() + 73);
+                // $('.sendComment').height($('.commenTxtHolders').height() + 73);
+                $('.sendComment').css('height','270px');
             }, 1000);
         });
     </script>

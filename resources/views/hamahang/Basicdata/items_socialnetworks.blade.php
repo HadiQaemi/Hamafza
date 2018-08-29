@@ -2,7 +2,7 @@
     @include('hamahang.Basicdata.items-panel-heading')
     <div class="panel-body">
         <table id="grid_social" width="100%"
-               class="table table-condensed table-bordered table-striped table-hover td-center-align">
+               class="table dt-responsive nowrap display text-center">
             <thead>
             <th style="text-align: center;">{{ trans('tools.rowIndex') }}</th>
             <th style="text-align: center;">{{ trans('tools.head_pic') }}</th>
