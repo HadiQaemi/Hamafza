@@ -34,8 +34,8 @@ if (!function_exists('MyOrganGroups'))
 
     function MyOrganGroups()
     {
-        return DB::table('user_group as g')->leftjoin('user_group_member as u', 'u.gid', '=', 'g.id')
-            ->where('u.uid', Auth::id())->select('g.id', 'g.name')
+        return DB::table('user_group as g')->join('user_group_member as u', 'u.gid', '=', 'g.id')
+            ->where('u.uid', Auth::id())->groupBy('g.id')->select('g.id', 'g.name')
             ->get();
     }
 

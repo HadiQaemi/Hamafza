@@ -350,7 +350,7 @@ $hide_type = false;
                         messageModal('fail', 'خطا', ['میزان پاداش نمی تواند بیشتر از میزان موجودی امتیاز شما باشد.']);
                     }
                 }
-                HFM_RemoveAllFFS('{{ $file['ShowResultArea']['comment_file']['section'] }}', true);
+                //HFM_RemoveAllFFS('{{ $file['ShowResultArea']['comment_file']['section'] }}', true);
                 $("#commentTitleWW").val("");
                 $("#NewPostW").val("");
                 jQuery.noticeAdd({text: 'انجام شد', stay: false, type: 'success'});
@@ -362,6 +362,7 @@ $hide_type = false;
                 newcom = newcom + '<div class="firstRow"><span postid="469" like="1" class="PostLike">پسند </span>- <span class="Comment_Foc" postid="Comment_469">اظهار نظر</span> - <span>بازنشر</span><div class="pull-left left-detail">';
                 newcom = newcom + ' 0 ثانیه قبل</div></div></div></div>';
                 $(newcom).insertBefore(".comment-contain:first");
+                $("div.sendComment .fa-close").click();  
             }
         });
 
