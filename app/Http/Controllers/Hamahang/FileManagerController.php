@@ -330,17 +330,22 @@ class FileManagerController extends Controller
                 'image' => 'فرمت فایل باید یکی از mimes:png,jpg,jpeg,gif,bmp,zip,rar,pdf,doc,docx,xls,xlsx,ppt,pptx باشد.'
             ]
         );
-
+        $folder = 'pages';
+        $form = Request::all();
+        if(isset($form['form_type'])){
+            $folder = 'tasks';
+            $form['pid'] = md5($form['pid']).time().rand(1,100).rand(1,100);
+        }
         if ($validator->fails())
         {
             return response()->json(['success' => false, 'result' => $validator->errors()]);
         }
 
-        $upload = HFM_Upload(Request::file('image'), 'pages/' . Request::input('pid') . '/');
+        $upload = HFM_Upload(Request::file('image'), $folder.'/' . $form['pid'] . '/');
 
         $r = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => enCode($upload['ID'])]);
 
-        return response()->json(['success' => true, 'result' => [$r]]);
+        return response()->json(['success' => true, 'result' => [$r], 'FileName' => $upload['FileName'], 'FileID' => enCode($upload['ID'])]);
     }
 
 }

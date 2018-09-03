@@ -1,3 +1,8 @@
+<style>
+    .HFM_ModalOpenBtn{
+        border: none !important;
+    }
+</style>
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
@@ -63,32 +68,50 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
                     <div class="col-lg-10">
-                        <textarea class="form-control row" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}" cols="30" rows="2"></textarea>
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                            <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
+                        <div id="for-desc">
+                            <div class="row col-lg-12 header">
+                                <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                            </div>
+                            <div class="row main-desc">
+                                <textarea class="form-control row content_tab_text content_tab" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4"></textarea>
+                                <div class="content_tab_view content_tab hidden"></div>
+                            </div>
+                            <div class="filemanager-buttons-client pull-right bottom-desc">
+                                <label for="fileToUpload" class="pointer">
+                                    <input type="file" class="fileToUpload form-control" style="display: none;" id="fileToUpload"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                    </svg>
+                                    <div class="display-inline">{{trans('app.add_file')}}</div>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-10 line-height-35 pull-right">
-                        <div class="filemanager-buttons-client pull-right">
-                            <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
-                                <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
-                                <span>{{trans('app.add_file')}}</span>
-                            </div>
+                </div>
+                {{--<div class="row col-lg-12">--}}
+                    {{--<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">--}}
+                        {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">--}}
+                            {{--<label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-lg-10 line-height-35 pull-right">--}}
+                        {{--<div class="filemanager-buttons-client pull-right">--}}
+                            {{--<div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">--}}
+                                {{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
+                                {{--<span>{{trans('app.add_file')}}</span>--}}
+                            {{--</div>--}}
                             {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
                             {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
                             {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
                             {{--</div>--}}
-                        </div>
-                        <div class="pull-right filemanager-title-client">
+                        {{--</div>--}}
+                        {{--<div class="pull-right filemanager-title-client">--}}
                             {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+                        {{--</div>--}}
+                        {{--<div class="clearfix"></div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-10">
@@ -1189,6 +1212,49 @@
                 width: '100%',
             });
         }
+    });
+    $(document).ready(function()
+    {
+        $(".fileToUpload").on('change', function() {
+            var formElement = $( '.fileToUpload' )[0].files[0];
+            var data = new FormData();
+            data.append('image',formElement);
+            data.append('pid','{{rand(1,100).rand(1,100)}}');
+            data.append('form_type','form');
+            $.ajax
+            ({
+                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data)
+                {
+                    console.log(data);
+                    if (data.success)
+                    {
+                        $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
+                        $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                    } else
+                    {
+                        messageModal('fail', 'خطا', data.result);
+                    }
+                }
+            });
+        });
+        //tab_text tab_view
+        $(".tab_desc").on('click', function() {
+            $(".tab_desc").removeClass('active');
+            $(".content_tab").addClass('hidden');
+            $("#for-desc .header").css('height','30px !important');
+            $(this).addClass('active');
+            $(".content_"+$(this).attr('rel')).removeClass('hidden');
+        });
+        $(document).on('click', '#form_tinymce_upload .form-submit', function()
+        {
+
+        });
     });
 </script>
 
