@@ -2676,7 +2676,6 @@ a .navbar-brand{
 .responsive-theme .hd-tree{
     direction: rtl;
     padding-right: 0px !important;
-    margin-right: 5px !important;
     padding-left: 5px !important;
 }
 
@@ -3125,7 +3124,7 @@ a .navbar-brand{
     border:none !important;
 }
 
-.new-task-form div{
+.new-task-form .row div{
     margin: 3px 0px;
 }
 .select2-search__field .select2-search--inline{
@@ -3256,6 +3255,8 @@ input{
     /* background-color: white; */
     border-radius: 10px;
     padding: 22px;
+    padding-right: 5px;
+    padding-left: 5px;
     color: #fff;
 }
 #KeywordSearch li{
@@ -3318,6 +3319,53 @@ input{
     padding-bottom: 5px;
 }
 
-.jstree-anchor{
-    color: #337ab7 !important;
+#for-desc{
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 2px;
+    padding-bottom: 32px;
+}
+#for-desc textarea,.content_tab_view{
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #999;
+    padding-top: 5px;
+    resize: none;
+    height: 99px;
+}
+#for-desc span{
+    text-align: center;
+    width: 35px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+    display: inline-block;
+    color: #aaa;
+}
+#for-desc .header{
+    padding-top: 8px;
+    height: 30px;
+}
+#for-desc div{
+    margin-bottom: 0px !important;
+}
+#for-desc .active{
+    color: #444;
+    border-bottom: 1px solid #444 !important;
+}
+.bottom-desc{
+    padding-right: 15px;
+}
+.main-desc{
+    height: 133px;
+    padding-top: 27px;
+}
+.content_tab_view{
+    overflow: auto;
+}
+.datepicker-plot-area {
+    position: relative !important;
+    top: 40% !important;
+    left: -80% !important;
 }
