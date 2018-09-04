@@ -781,13 +781,7 @@ class tasks extends Model
                 ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
                 ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)', [Auth::id()]);
-            if ($subject_id)
-            {
-                $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-                    ->whereNull('hamahang_subject_ables.deleted_at')
-                    ->where('hamahang_subject_ables.subject_id', '=', $subject_id)
-                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks');
-            }
+
 //            $result = $result->tosql();
 //            dd($result);
 
@@ -795,7 +789,20 @@ class tasks extends Model
             $official_type = Request::get('official_type');
             $important = Request::get('task_important');
             $immediate = Request::get('task_immediate');
+            $filter_subject_id = Request::get('filter_subject_id');
 //            dd(Request::all());
+            if (isset($filter_subject_id))
+            {
+                if (trim($filter_subject_id)!='')
+                {
+                    $result = $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                        ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                        ->whereNull('hamahang_subject_ables.deleted_at');
+                }
+//            $tasks_immediate_importance->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+//                ->whereNull('hamahang_subject_ables.deleted_at');
+            }
             if ($official_type)
             {
                 $result->whereIn('hamahang_task.type', $official_type)
@@ -977,8 +984,8 @@ class tasks extends Model
         {
             if (trim($arr['filter_subject_id'])!='')
             {
-                $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Subjects', function ($query) use ($arr) {
-                    $query->where('subject_id', '=', $arr['filter_subject_id']);
+                $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Pages', function ($query) use ($arr) {
+                    $query->where('Pages.id', '=', $arr['filter_subject_id']);
                 });
             }
 //            $tasks_immediate_importance->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
@@ -1423,6 +1430,11 @@ class tasks extends Model
     public function Subjects()
     {
         return $this->morphToMany('App\Models\hamafza\Subject', 'target','hamahang_subject_ables','target_id','subject_id');
+    }
+
+    public function Pages()
+    {
+        return $this->morphToMany('App\Models\hamafza\Pages', 'target','hamahang_subject_ables','target_id','subject_id');
     }
     /* public function getPriorityAttribute()
      {

@@ -48,6 +48,9 @@
                     <span>{{trans('tasks.non-immediate')}}</span>
                 </label>
             </div>
+            @if(isset($filter_subject_id))
+                <input type="hidden" value="{{$filter_subject_id}}" name="filter_subject_id" id="filter_subject_id"/>
+            @endif
             {{--<div class="checkbox" style="margin-right: 35px;">--}}
                 {{--<label>--}}
                     {{--<input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>--}}

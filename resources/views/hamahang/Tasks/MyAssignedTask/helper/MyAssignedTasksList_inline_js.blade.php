@@ -891,7 +891,7 @@
     }
     $('#transfer').click(function () {
 
-    })
+    });
     (function () {
 
         $("#tags").select2({
