@@ -1159,12 +1159,12 @@ class TaskController extends Controller
 //            $task->Priorities()->delete();
 
             $action = Request::get('action');
-            $is_assigner[] = 0;
             if($action=='my_assigned' || $task->uid==auth()->id())
             {
                 $is_assigner[] = 1;
                 task_priority::delete_priority($task_id,1,auth()->id());
             }else{
+                $is_assigner[] = 0;
                 task_priority::delete_priority($task_id,0,auth()->id());
             }
 

@@ -51,30 +51,62 @@ use App\Models\Hamahang\keywords;
 
 class MyAssignedTaskController extends Controller
 {
-    private function my_assigned_task_in_status($user = false)
+    private function my_assigned_task_in_status($arr =[],$user = false)
     {
         if (!$user)
         {
             $user = auth()->user();
         }
+        $filter_subject_id = isset($arr['filter_subject_id']) ? $arr['filter_subject_id'] : '';
+        $official_type = [0,1];
+        $importance = [0,1];
+        $immediate = [0,1];
+
         $myTasks=[];
         $myTasks['not_started'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 0);
-        })->get();
-
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['not_started'] = $myTasks['not_started']->get();
         $myTasks['started'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 1);
-        })->get();
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['started'] =  $myTasks['started']->get();
         $myTasks['done'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 2);
-        })->get();
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['done'] = $myTasks['done']->get();
         $myTasks['ended'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 3);
-        })->get();
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['ended'] = $myTasks['ended']->get();
         $user = auth()->user();
 
 
@@ -111,13 +143,13 @@ class MyAssignedTaskController extends Controller
                 $arr = variable_generator('page', 'desktop', $uname);
                 //$arr['tasks'] = tasks::FetchTasksForMyAssignedTasksState($uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr['MyTasksInState'] = $this->my_assigned_task_in_status()->render();
+                $arr['MyTasksInState'] = $this->my_assigned_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.state':
                 $arr = variable_generator('user', 'desktop', $uname);
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
-                $arr['MyTasksInState'] = $this->my_assigned_task_in_status()->render();
+                $arr['MyTasksInState'] = $this->my_assigned_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
                 break;
         }
@@ -233,7 +265,8 @@ class MyAssignedTaskController extends Controller
             $task_important = Request::get('task_important');
             $task_immediate = Request::get('task_immediate');
             $official_type = Request::get('official_type');
-            $myTasks= tasks::MyAssignerTasksStatus($task_important,$task_immediate, $task_title, $respite, $official_type);
+            $filter_subject_id = Request::input('filter_subject_id');
+            $myTasks= tasks::MyAssignerTasksStatus($filter_subject_id,$task_important,$task_immediate, $task_title, $respite, $official_type);
             $result['success'] = true;
             $result['data'] = view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTaskState.content', compact('user', 'myTasks'))->render();
             $result['success'] = true;
@@ -1356,6 +1389,7 @@ class MyAssignedTaskController extends Controller
                     hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
                 }
             }
+
             if (Request::exists('transcripts'))
             {
                 if(Request::input('report_on_cr')==1)
@@ -1366,7 +1400,6 @@ class MyAssignedTaskController extends Controller
                     }
                 }
             }
-
             if (Request::exists('keywords'))
             {
                 foreach (Request::input('keywords') as $kw)
@@ -1400,7 +1433,8 @@ class MyAssignedTaskController extends Controller
                 }
             }
             task_history::create_task_history($task->id, 'create', serialize(Request::all()));
-            task_priority_assigner::create_task_priority_assigner($task->id, Request::input('immediate') ,Request::input('importance'));
+            task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[1]);
+//            task_priority_assigner::create_task_priority_assigner($task->id, Request::input('immediate') ,Request::input('importance'));
         }
         if (Request::input('event_type') == "task")
         {

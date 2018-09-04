@@ -59,11 +59,12 @@
 
     }
     function filter_mytask(data) {
+        var form_filter_priority = $("#form_filter_priority").serialize()+'&filter_subject_id='+$('#filter_subject_id').val();
         $.ajax({
             url: '{{ route('hamahang.tasks.my_tasks_assigner.filter_my_assigned_task') }}',
             method: 'POST',
             dataType: "json",
-            data: $("#form_filter_priority").serialize(),
+            data: form_filter_priority,
             success: function (res) {
                 if (res.success == true) {
                     $('#base_items').html(res.data);
