@@ -3333,7 +3333,7 @@ input{
     border-top: 1px solid #999;
     padding-top: 5px;
     resize: none;
-    height: 99px;
+    height: 250px;
 }
 #for-desc span{
     text-align: center;
@@ -3368,4 +3368,7 @@ input{
     position: relative !important;
     top: 40% !important;
     left: -80% !important;
+}
+.content_tab_view img{
+    height: 200px !important;
 }
