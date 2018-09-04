@@ -578,6 +578,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 ],
                             'PageType' => $PageType,
                             'sid' => $sid,
+                            'pid' => $pid,
                             'current_tab' => $current_tab,
                             'uname' => $sid,
                             'keywords' => [],

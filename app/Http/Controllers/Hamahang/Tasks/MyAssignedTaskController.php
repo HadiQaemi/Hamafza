@@ -119,7 +119,7 @@ class MyAssignedTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $uname;
+                $arr['filter_subject_id'] = $arr["pid"];
                 $arr = array_merge($arr, tasks::MyAssignedTasksPriority($arr,[0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
@@ -142,7 +142,7 @@ class MyAssignedTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 //$arr['tasks'] = tasks::FetchTasksForMyAssignedTasksState($uname);
-                $arr['filter_subject_id'] = $uname;
+                $arr['filter_subject_id'] = $arr["pid"];
                 $arr['MyTasksInState'] = $this->my_assigned_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
                 break;
@@ -495,7 +495,7 @@ class MyAssignedTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.list':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $uname;
+                $arr['filter_subject_id'] = $arr["pid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',

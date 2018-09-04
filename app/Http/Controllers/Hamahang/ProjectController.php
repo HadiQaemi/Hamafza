@@ -792,7 +792,7 @@ class ProjectController extends Controller
             case 'pgs.desktop.hamahang.project.list':
             {
                 $arr = variable_generator('page', 'desktop',$uname);
-                $arr['filter_subject_id'] = $uname;
+                $arr['filter_subject_id'] = $arr["pid"];
                 return view('hamahang.Tasks.ProjectsList', $arr);
                 break;
             }

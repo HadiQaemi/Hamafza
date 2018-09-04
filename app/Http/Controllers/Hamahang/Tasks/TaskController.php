@@ -1206,7 +1206,7 @@ class TaskController extends Controller
         {
             case 'pgs.desktop.hamahang.process.list':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr['filter_subject_id'] = $uname;
+                $arr['filter_subject_id'] = $arr["pid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
