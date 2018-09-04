@@ -266,7 +266,9 @@ class MyAssignedTaskController extends Controller
             $task_immediate = Request::get('task_immediate');
             $official_type = Request::get('official_type');
             $filter_subject_id = Request::input('filter_subject_id');
+//            DB::enableQueryLog();
             $myTasks= tasks::MyAssignerTasksStatus($filter_subject_id,$task_important,$task_immediate, $task_title, $respite, $official_type);
+//            dd(DB::getQueryLog());
             $result['success'] = true;
             $result['data'] = view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTaskState.content', compact('user', 'myTasks'))->render();
             $result['success'] = true;

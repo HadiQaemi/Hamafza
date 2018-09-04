@@ -16,24 +16,24 @@
             <div class="checkbox" style="margin-right: 15px;">
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="0" name="task_important[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="0" name="task_important[]" checked>
+                <input type="checkbox" class="form-check-input" value="1" name="task_important[]" checked>
                 <span>{{trans('tasks.important')}}</span>
             </label>
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="1" name="task_important[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="1" name="task_important[]" checked>
+                <input type="checkbox" class="form-check-input" value="0" name="task_important[]" checked>
                 <span>{{trans('tasks.non-important')}}</span>
             </label>
             </div>
             <div class="checkbox" style="margin-right: 15px;">
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
+                <input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" checked>
                 <span>{{trans('tasks.immediate')}}</span>
             </label>
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" checked>
+                <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
                 <span>{{trans('tasks.non-immediate')}}</span>
             </label>
             </div>

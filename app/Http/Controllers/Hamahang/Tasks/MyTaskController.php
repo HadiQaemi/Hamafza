@@ -73,7 +73,7 @@ class MyTaskController extends Controller
         })->whereHas('Status', function ($q){
             $q->where('type', 0);
         });
-        if (trim($filter_subject_id)!='')
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
             $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
@@ -88,7 +88,7 @@ class MyTaskController extends Controller
         })->whereHas('Status', function ($q){
             $q->where('type', 1);
         });
-        if (trim($filter_subject_id)!='')
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
             $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
@@ -103,7 +103,7 @@ class MyTaskController extends Controller
         })->whereHas('Status', function ($q){
             $q->where('type', 2);
         });
-        if (trim($filter_subject_id)!='')
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
             $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
@@ -118,7 +118,7 @@ class MyTaskController extends Controller
         })->whereHas('Status', function ($q){
             $q->where('type', 3);
         });
-        if (trim($filter_subject_id)!='')
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
             $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
@@ -128,61 +128,61 @@ class MyTaskController extends Controller
 
         $user = auth()->user();
         return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
-//        if (!$user)
-//        {
-//            $user = auth()->user();
-//        }
-//        $myTasks=[];
-//
-//        $myTasks['not_started'] = $user->MyTasks()->whereHas('Status', function ($q)
-//        {
-//            $q->where('type', 0);
-//        });
-//        if (isset($arr['filter_subject_id']))
-//        {
-//            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
-//                ->whereNull('hamahang_subject_ables.deleted_at');
-//        }
-//        $myTasks['not_started'] = $myTasks['not_started']->get();
-//
-//        $myTasks['started'] = $user->MyTasks()->whereHas('Status', function ($q)
-//        {
-//            $q->where('type', 1);
-//        });
-//        if (isset($arr['filter_subject_id']))
-//        {
-//            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
-//                ->whereNull('hamahang_subject_ables.deleted_at');
-//        }
-//        $myTasks['started'] = $myTasks['started']->get();
-//
-//        $myTasks['done'] = $user->MyTasks()->whereHas('Status', function ($q)
-//        {
-//            $q->where('type', 2);
-//        });
-//        if (isset($arr['filter_subject_id']))
-//        {
-//            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
-//                ->whereNull('hamahang_subject_ables.deleted_at');
-//        }
-//        $myTasks['done'] = $myTasks['done']->get();
-//
-//        $myTasks['ended'] = $user->MyTasks()->whereHas('Status', function ($q)
-//        {
-//            $q->where('type', 3);
-//        });
-//        if (isset($arr['filter_subject_id']))
-//        {
-//            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
-//                ->whereNull('hamahang_subject_ables.deleted_at');
-//        }
-//        $myTasks['ended'] = $myTasks['ended']->get();
-//        $user = auth()->user();
-//        return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
+        if (!$user)
+        {
+            $user = auth()->user();
+        }
+        $myTasks=[];
+
+        $myTasks['not_started'] = $user->MyTasks()->whereHas('Status', function ($q)
+        {
+            $q->where('type', 0);
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['not_started'] = $myTasks['not_started']->get();
+
+        $myTasks['started'] = $user->MyTasks()->whereHas('Status', function ($q)
+        {
+            $q->where('type', 1);
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['started'] = $myTasks['started']->get();
+
+        $myTasks['done'] = $user->MyTasks()->whereHas('Status', function ($q)
+        {
+            $q->where('type', 2);
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['done'] = $myTasks['done']->get();
+
+        $myTasks['ended'] = $user->MyTasks()->whereHas('Status', function ($q)
+        {
+            $q->where('type', 3);
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['ended'] = $myTasks['ended']->get();
+        $user = auth()->user();
+        return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
     }
 
     public function MyTasksState($uname)
@@ -192,6 +192,7 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
+                Session::put('filter_subject_id',$uname);
                 $arr['MyTasksInState'] = $this->my_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.MyTasksState', $arr);
                 break;

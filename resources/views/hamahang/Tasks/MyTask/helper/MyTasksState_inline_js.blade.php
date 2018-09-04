@@ -67,6 +67,7 @@
         });
     }
     function filter_mytask(data) {
+        filter_subject_id = '';
         if($('#filter_subject_id').val() != undefined)
             filter_subject_id = $('#filter_subject_id').val();
         var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + filter_subject_id;

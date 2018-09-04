@@ -3371,4 +3371,5 @@ input{
 }
 .content_tab_view img{
     height: 200px !important;
+    max-height: 200px !important;
 }
