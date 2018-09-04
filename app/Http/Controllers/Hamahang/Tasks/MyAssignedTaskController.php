@@ -88,13 +88,15 @@ class MyAssignedTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority($arr,[0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyAssignedTasksPriority());
+//                DB::enableQueryLog();dd(DB::getQueryLog());
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority($arr,[0,1],false,false,[0,1]));
+//                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
@@ -975,7 +977,7 @@ class MyAssignedTaskController extends Controller
                 {
                     task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
                 }
-                task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'], $value_employee_id);
+                task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'] ,[0] ,$value_employee_id);
                 task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
             }
             $UserController = new UserController();
@@ -1060,12 +1062,12 @@ class MyAssignedTaskController extends Controller
                     {
                         task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
                     }
-                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'), $value_employee_id);
+                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[0] , $value_employee_id);
                     task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
                 }
             }
             $status = task_status::create_task_status($task->id, 0, 0);
-            $priority = task_priority::create_task_priority($task->id, $Orig_Task['immediate'], $Orig_Task['importance']);
+            $priority = task_priority::create_task_priority($task->id, $Orig_Task['immediate'], $Orig_Task['importance'],[0] );
             return $task->id;
         }
         return false;
@@ -1393,7 +1395,7 @@ class MyAssignedTaskController extends Controller
                     {
                         task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
                     }
-                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'), $value_employee_id);
+                    task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[0] , $value_employee_id);
                     task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
                 }
             }

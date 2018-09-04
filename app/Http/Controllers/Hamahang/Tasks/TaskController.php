@@ -1042,7 +1042,7 @@ class TaskController extends Controller
 
     public function filter_task_priority()
     {
-        //dd(Request::all());
+        $Request = Request::all();
         $validator = Validator::make(Request::all(), [
             'task_title' => 'string',
             'respite' => 'integer',
@@ -1057,11 +1057,16 @@ class TaskController extends Controller
         }
         else
         {
+//            dd(\Route::currentRouteName(),Request::all());
             $respite = Request::get('respite');
             $task_title = Request::get('task_title');
             $task_status = Request::get('task_status');
             $official_type = Request::get('official_type');
-            $with_array = tasks::MyTasksPriority($task_status, $task_title, $respite, $official_type);
+            $source = Request::get('act');
+            $filter_subject_id = Request::input('filter_subject_id') != "undefined" ? Request::input('filter_subject_id') : '';
+//            DB::enableQueryLog();
+            $with_array = tasks::MyTasksPriority(['filter_subject_id'=>$filter_subject_id],$task_status, $task_title, $respite, $official_type,$source);
+//            dd(DB::getQueryLog());
             $result['data'] = view('hamahang.Tasks.helper.priority.content')->with($with_array)->render();
             $result['success'] = true;
             return json_encode($result);
@@ -1152,11 +1157,17 @@ class TaskController extends Controller
             $task_id = Request::get('task_id');
             $task = tasks::find($task_id);
 //            $task->Priorities()->delete();
-            task_priority::delete_priority($task_id,1,auth()->id());
+
             $action = Request::get('action');
             $is_assigner[] = 0;
             if($action=='my_assigned' || $task->uid==auth()->id())
+            {
                 $is_assigner[] = 1;
+                task_priority::delete_priority($task_id,1,auth()->id());
+            }else{
+                task_priority::delete_priority($task_id,0,auth()->id());
+            }
+
             switch (Request::get('type'))
             {
                 case 'important_and_immediate':

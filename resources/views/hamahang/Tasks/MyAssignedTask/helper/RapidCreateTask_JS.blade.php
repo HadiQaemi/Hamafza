@@ -87,5 +87,21 @@
             }
         });
     });
+    $(".DatePickersss").persianDatepicker({
+
+        autoClose: true,
+        format: 'YYYY-MM-DD',
+        onShow: function () {
+            var txtBoxOffset = $('#create_rapid_task_respite_date').position();
+            var top = txtBoxOffset.top;
+            var left = txtBoxOffset.left;
+            console.log(txtBoxOffset);
+            console.log('top: ' + top + 'left: ' + left);
+            $('.datepicker-plot-area').css('position','relative !important');
+            $('.datepicker-plot-area').css('top','-100px !important');
+            $('.datepicker-plot-area').css('left','100px !important');
+        }
+
+    });
 
 </script>

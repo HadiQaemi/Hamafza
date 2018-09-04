@@ -124,6 +124,10 @@
     };
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
+        @if(isset($filter_subject_id))
+            send_info["subject_id"]= '{{ $filter_subject_id }}'
+        @endif
+
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({

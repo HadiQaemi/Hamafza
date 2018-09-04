@@ -149,12 +149,13 @@
 
     }
     function filter_tasks_priority(data) {
+        var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + $('#filter_subject_id').val() + '&act=' + $('#act_form').val();
         console.log(data);
         $.ajax({
             url: '{{ route('hamahang.tasks.priority.filter') }}',
             method: 'POST',
             dataType: "json",
-            data: $("#form_filter_priority").serialize(),
+            data: form_filter_priority,
             success: function (res) {
                 //console.log(res.success);
                 if (res.success == true) {

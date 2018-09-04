@@ -42,33 +42,146 @@ use App\Models\Hamahang\keywords;
 
 class MyTaskController extends Controller
 {
-    private function my_task_in_status($user = false)
+    private function my_task_in_status($arr = false, $user = false)
     {
+
+        $official_type = [0,1];
+        $importance = [0,1];
+        $immediate = [0,1];
+
         if (!$user)
         {
             $user = auth()->user();
         }
         $myTasks=[];
+        $filter_subject_id = isset($arr['filter_subject_id']) ? $arr['filter_subject_id'] : '';
+
+//        $myTasks['not_started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('Status', function ($q)
+//        {
+//            $q->where('type', 0);
+//        })->whereHas('priority', function ($p)use($importance){$p->whereIn('importance',$importance);})
+//            ->whereHas('priority', function ($p)use($immediate){$p->whereIn('immediate',$immediate);});
+//        if(trim($title)!='')
+//        {
+//            $myTasks['not_started']->where('title','like','%'.$title.'%');
+//        }
+
+        $myTasks['not_started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
+            $p->whereIn('importance',$importance)->whereIn('importance',$importance);
+        })->whereHas('priority', function ($p)use($immediate){
+            $p->whereIn('immediate',$immediate);
+        })->whereHas('Status', function ($q){
+            $q->where('type', 0);
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['not_started'] = $myTasks['not_started']->get();
+
+        $myTasks['started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
+            $p->whereIn('importance',$importance)->whereIn('importance',$importance);
+        })->whereHas('priority', function ($p)use($immediate){
+            $p->whereIn('immediate',$immediate);
+        })->whereHas('Status', function ($q){
+            $q->where('type', 1);
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['started'] = $myTasks['started']->get();
+
+        $myTasks['done'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
+            $p->whereIn('importance',$importance);
+        })->whereHas('priority', function ($p)use($immediate){
+            $p->whereIn('immediate',$immediate);
+        })->whereHas('Status', function ($q){
+            $q->where('type', 2);
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['done'] = $myTasks['done']->get();
+
+        $myTasks['ended'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
+            $p->whereIn('importance',$importance);
+        })->whereHas('priority', function ($p)use($immediate){
+            $p->whereIn('immediate',$immediate);
+        })->whereHas('Status', function ($q){
+            $q->where('type', 3);
+        });
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['ended'] = $myTasks['ended']->get();
+
+        $user = auth()->user();
+        return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
+        if (!$user)
+        {
+            $user = auth()->user();
+        }
+        $myTasks=[];
+
         $myTasks['not_started'] = $user->MyTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 0);
-        })->get();
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['not_started'] = $myTasks['not_started']->get();
 
         $myTasks['started'] = $user->MyTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 1);
-        })->get();
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['started'] = $myTasks['started']->get();
+
         $myTasks['done'] = $user->MyTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 2);
-        })->get();
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['done'] = $myTasks['done']->get();
+
         $myTasks['ended'] = $user->MyTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 3);
-        })->get();
+        });
+        if (isset($arr['filter_subject_id']))
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks['ended'] = $myTasks['ended']->get();
         $user = auth()->user();
-
-
         return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
     }
 
@@ -79,12 +192,13 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr['MyTasksInState'] = $this->my_task_in_status()->render();
+                Session::put('filter_subject_id',$uname);
+                $arr['MyTasksInState'] = $this->my_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.MyTasksState', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.state':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr['MyTasksInState'] = $this->my_task_in_status()->render();
+                $arr['MyTasksInState'] = $this->my_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.MyTasksState',$arr);
                 break;
         }
@@ -98,13 +212,15 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $uname;
-                $arr = array_merge($arr, tasks::MyTasksPriority([0,1],false,false,[0,1]));
+//                DB::enableQueryLog();
+                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
+//                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyTasksPriority([0,1],false,false,[0,1]));
+                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
@@ -409,8 +525,8 @@ class MyTaskController extends Controller
                     break;
                 }
             }
-
-            $result['data']=$this->my_task_in_status()->render();
+            $arr['filter_subject_id'] = Request::input('filter_subject_id');
+            $result['data']=$this->my_task_in_status($arr)->render();
             return $result;
 
         }
@@ -442,12 +558,13 @@ class MyTaskController extends Controller
         }
         else
         {
+            $filter_subject_id = Request::input('filter_subject_id');
             $respite = Request::get('respite');
             $task_title = Request::get('task_title');
             $task_important = Request::get('task_important');
             $task_immediate = Request::get('task_immediate');
             $official_type = Request::get('official_type');
-            $myTasks= tasks::MyTasksStatus($task_important,$task_immediate, $task_title, $respite, $official_type);
+            $myTasks= tasks::MyTasksStatus($filter_subject_id, $task_important,$task_immediate, $task_title, $respite, $official_type);
             $result['success'] = true;
             $result['data'] = view('hamahang.Tasks.MyTask.helper.MyTasksState.content', compact('user', 'myTasks'))->render();
             $result['success'] = true;

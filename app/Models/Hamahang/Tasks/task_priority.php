@@ -45,7 +45,7 @@ class task_priority extends Model
     public static function delete_priority($task_id, $is_assigner = 0, $user_id = -1)
     {
         $user_id = ($user_id == -1) ? Auth::id() : $user_id;
-        \DB::table('hamahang_task_priority')->where('is_assigner','=',$is_assigner)->where('task_id','=',$task_id)->where('uid','=',$user_id)->update(['deleted_at'=>time()]);
+        \DB::table('hamahang_task_priority')->where('is_assigner','=',$is_assigner)->where('task_id','=',$task_id)->where('user_id','=',$user_id)->update(['deleted_at'=>date('Y-m-d H:i:s')]);
     }
     public static function full_create_priority($task_id, $immediate = 0, $importance = 0, $employee_id = -1, $assigner_id = -1, $uid = -1, $timestamp = -1)
     {

@@ -21,7 +21,7 @@
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
-                <input type="text" class="DatePicker form-control col-xs-2" placeholder="مهلت..." dir="rtl" id="create_rapid_task_respite_date" name='respite_date'/>
+                <input type="text" class="DatePickersss form-control col-xs-2" autocomplete="off" placeholder="مهلت..." dir="rtl" id="create_rapid_task_respite_date" name='respite_date'/>
             </div>
         </div>
         <div class="col-xs-5 form-inline" id="create_rapid_task_priority" style="display: none">

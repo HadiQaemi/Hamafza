@@ -48,11 +48,14 @@
     }
 
     function submit_change_type_task(type, task_id) {
+        filter_subject_id = 0;
+        if($('#filter_subject_id').val() != undefined)
+            filter_subject_id = $('#filter_subject_id').val();
         $.ajax({
             url: '{{ route('hamahang.tasks.my_tasks.change_type_task') }}',
             method: 'POST',
             dataType: "json",
-            data: {type: type, task_id: task_id},
+            data: {type: type, task_id: task_id, filter_subject_id: filter_subject_id},
             success: function (res) {
                 if (!res.success) {
                     messageModal('fail', 'خطا', ['شما مجوز لازم را ندارید']);
@@ -64,12 +67,17 @@
         });
     }
     function filter_mytask(data) {
+        if($('#filter_subject_id').val() != undefined)
+            filter_subject_id = $('#filter_subject_id').val();
+        var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + filter_subject_id;
+        console.log($("#form_filter_priority").serialize());
         $.ajax({
             url: '{{ route('hamahang.tasks.my_tasks.filter_my_task') }}',
             method: 'POST',
             dataType: "json",
-            data: $("#form_filter_priority").serialize(),
+            data: form_filter_priority,
             success: function (res) {
+                console.log(res);
                 if (res.success == true) {
                     $('#base_items').html(res.data);
                     initDraggable();

@@ -55,6 +55,9 @@
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">
+                @if(isset($filter_subject_id))
+                    <input type="hidden" value="{{$filter_subject_id}}" name="filter_subject_id" id="filter_subject_id"/>
+                @endif
                 @include('hamahang.Tasks.MyTask.helper.task_related_pages')
                 @include('hamahang.Tasks.MyTask.helper.MyTasksState.task_filter')
             </div>
