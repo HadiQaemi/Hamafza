@@ -219,7 +219,8 @@ class User extends Authenticatable
                     [
                         'field' => 'title',
                         'title' => 'عنوان',
-                        'value' => "$special->title"
+                        'value' => "$special->title",
+                        'id'=>"$special->id"
                     ]
                 ];
         }
@@ -239,6 +240,11 @@ class User extends Authenticatable
         {
             $res[] =
                 [
+                    [
+                        'field' => 'id',
+                        'title' => 'شناسه',
+                        'value' => "$work->id"
+                    ],
                     [
                         'field' => 'post',
                         'title' => 'مسئولیت',
@@ -297,6 +303,11 @@ class User extends Authenticatable
         {
             $res[] =
                 [
+                    [
+                        'field' => 'id',
+                        'title' => 'شناسه',
+                        'value' => "$education->id"
+                    ],
                     [
                         'field' => 'field',
                         'title' => 'رشته تحصیلی',
