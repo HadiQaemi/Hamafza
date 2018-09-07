@@ -313,7 +313,6 @@ $(document).ready(function () {
     //-------------------------------------
     // full screen2 ++++++++++++++++++++++++
     $(document).on("click", ".ful-scrn2", function (e) {
-        alert('asdasd');
         e.preventDefault();
         $('.fix-box2').toggleClass('ful-fix2');
         //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});

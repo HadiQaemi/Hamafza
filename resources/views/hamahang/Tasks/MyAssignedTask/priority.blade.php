@@ -20,7 +20,7 @@
                 @endif
                 <input type="hidden" value="MyAssignedTasks" name="act_form" id="act_form"/>
                 @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
-                @include('hamahang.Tasks.helper.priority.priority_filter')
+                @include('hamahang.Tasks.helper.priority.my_assigned_priority_filter')
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
 
 @section('content')
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
-        @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
+        {{--@include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')--}}
     </div>
     <form id="form_filter_priority" style="position: relative;top: 50px;right: 200px;z-index: 50;">
         <div class="form-inline" style="padding-right: 5px;" >
@@ -46,18 +46,6 @@
                     {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
                     <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
                     <span>{{trans('tasks.non-immediate')}}</span>
-                </label>
-            </div>
-            <div class="checkbox" style="margin-right: 30px;">
-                <label>
-                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                    <input type="checkbox" class="form-check-input" value="1" name="task_fianl[]" checked>
-                    <span>{{trans('tasks.final')}}</span>
-                </label>
-                <label>
-                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                    <input type="checkbox" class="form-check-input" value="0" name="task_fianl[]" checked>
-                    <span>{{trans('tasks.draft')}}</span>
                 </label>
             </div>
             @if(isset($filter_subject_id))
@@ -337,7 +325,7 @@
 @stop
 
 @section('inline_scripts')
-    @include('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksList_inline_js')
+    @include('hamahang.Tasks.MyAssignedTask.helper.MyTranscriptsTasksList_inline_js')
 @stop
 @include('sections.tabs')
 @section('position_right_col_3')

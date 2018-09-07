@@ -36,8 +36,8 @@
         <div class="tab-content new-task-form">
             <div class="tab-pane" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
+                    <div class="col-lg-8">
                         <input type="text" class="form-control border-radius" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
                         <input type="hidden" name="tid" id="tid" value="{{$res['task_id']}}"/>
                     </div>
@@ -51,22 +51,8 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2"><label class="line-height-35">{{ trans('app.about') }}</label></div>
-                    <div class="col-lg-10">
-                        <select class="select2_auto_complete_page"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple" {{$edit_able == 1 ? ' name="pages[]" id="new_task_pages" ' : 'disabled'}} >
-                            @if(!empty($res['task_pages']))
-                                @foreach($res['task_pages'] as $page)
-                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
+                    <div class="col-lg-11">
                         <div id="for-desc">
                             <div class="row col-lg-12 header">
                                 <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
@@ -92,10 +78,23 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('app.about') }}</label></div>
+                    <div class="col-lg-11">
+                        <select class="select2_auto_complete_page"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple" {{$edit_able == 1 ? ' name="pages[]" id="new_task_pages" ' : 'disabled'}} >
+                            @if(!empty($res['task_pages']))
+                                @foreach($res['task_pages'] as $page)
+                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
+                    <div class="col-lg-11">
                         <div class="col-sm-4 row" style="padding: 0px;">
                             <select class="select2_auto_complete_user col-xs-12"
                                     data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="users[]" id="new_task_users_responsible" ' : 'disabled'}} >
@@ -128,8 +127,8 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
+                    <div class="col-lg-11">
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select class="select2_auto_complete_transcripts"
                                     data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="transcripts[]" id="new_task_transcripts" ' : 'disabled'}} >
@@ -154,8 +153,8 @@
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
+                    <div class="col-lg-11">
                         <select class="select2_auto_complete_keywords"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
                                 multiple="multiple"
@@ -170,12 +169,12 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 line-height-35">
+                    <div class="col-lg-11 line-height-35">
 
                         <div class="col-xs-12 noRightPadding noLeftPadding">
                             <span class="pull-right;">
@@ -204,12 +203,12 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 line-height-35">
+                    <div class="col-lg-11 line-height-35">
                         <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
                             <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>

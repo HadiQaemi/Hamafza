@@ -35,8 +35,8 @@
         <div class="tab-content new-task-form">
             <div class="tab-pane active tab-view" id="tab_t1">
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
+                    <div class="col-lg-8">
                         <div class="row">
                             <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('tasks.title') }}"/>
                             <input name="event_type" id="event_type" type="hidden">
@@ -56,18 +56,8 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2"><label class="line-height-35">{{ trans('app.about') }}</label></div>
-                    <div class="col-lg-10">
-                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
-                            @if($pid)
-                                <option value="{{$pid}}" selected>{{$subject->title}}</option>
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
+                    <div class="col-lg-11">
                         <div id="for-desc">
                             <div class="row col-lg-12 header">
                                 <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
@@ -87,6 +77,16 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('app.about') }}</label></div>
+                    <div class="col-lg-11">
+                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
+                            @if($pid)
+                                <option value="{{$pid}}" selected>{{$subject->title}}</option>
+                            @endif
+                        </select>
                     </div>
                 </div>
                 {{--<div class="row col-lg-12">--}}
@@ -113,8 +113,8 @@
                     {{--</div>--}}
                 {{--</div>--}}
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
+                    <div class="col-lg-11">
                         <div class="col-sm-5 row" style="padding: 0px;">
                             <select id="new_task_users_responsible" name="users[]" class="select2_auto_complete_user col-xs-12"
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple>
@@ -142,8 +142,8 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
+                    <div class="col-lg-11">
                         <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select id="new_task_transcripts" name="transcripts[]" class="select2_auto_complete_transcripts"
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple></select>
@@ -153,7 +153,7 @@
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
-                            <input type="checkbox" name="report_on_cr" id="report-type1" class="transcript_option" value="1"/>
+                            <input type="checkbox" name="report_on_cr" id="report-type1" class="transcript_option" value="1" checked/>
                             <label for="report-type1" class="transcript_option">{{ trans('tasks.report_on_task_creation') }}</label>
                             <input type="checkbox" name="report_on_co" id="report-type2" class="transcript_option" value="1"/>
                             <label for="report-type2" class="transcript_option">{{ trans('tasks.report_on_task_completion') }}</label>
@@ -162,9 +162,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
-                    <div class="col-lg-10">
+                <div class="row col-lg-12 noRightPadding " style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding "><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
+                    <div class="col-lg-11">
                         <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                 data-placeholder="{{trans('tasks.select_some_keywords')}}"
                                 multiple="multiple"></select>
@@ -172,12 +172,12 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 line-height-35">
+                    <div class="col-lg-11 line-height-35">
                         <div class="col-xs-12 noRightPadding noLeftPadding">
 
                             <span class="pull-right padding-left-20">
@@ -208,12 +208,12 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 line-height-35">
+                    <div class="col-lg-11 line-height-35">
                         <div class="pull-right">
                             <input type="radio" name="importance" id="importance_yes" value="1"/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>

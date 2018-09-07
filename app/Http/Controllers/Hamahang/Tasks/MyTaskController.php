@@ -42,6 +42,113 @@ use App\Models\Hamahang\keywords;
 
 class MyTaskController extends Controller
 {
+    public function FetchAllTaskList(){
+
+//        dd(Request::all());
+//        db::enableQueryLog();
+        $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
+//        dd(db::getQueryLog());
+        return Datatables::of($Tasks)
+            ->editColumn('type', function ($data)
+            {
+                return GetTaskStatusName($data->type);
+            })
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('use_type', function ($data)
+            {
+                return hamahang_get_task_use_type_name($data->use_type);
+            })
+            ->addColumn('respite', function ($data)
+            {
+                $date = new jDateTime;
+                $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+            })
+            ->editColumn('immediate', function ($data)
+            {
+                if ($data->immediate == 1)
+                {
+                    $output = 'فوری';
+                }
+                else
+                {
+                    $output = 'غیرفوری';
+                }
+                if ($data->importance == 1)
+                {
+                    $output .= ' و مهم';
+                }
+                else
+                {
+                    $output .= ' و غیرمهم ';
+                }
+                return $output;
+            })
+            ->addColumn('employee', function ($data)
+            {
+//                return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>" . $data->Name . " " . $data->Family . "</a>";
+                return $data->Name . " " . $data->Family;
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
+    }
+
+    public function get_transcripts($uname)
+    {
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.tasks.my_tasks.transcripts_list':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['HFM_CNT'] = HFM_GenerateUploadForm(
+                    [
+                        ['AddNewFiles',
+                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            'Multi'
+                        ]
+                    ]
+                );
+                return view('hamahang.Tasks.MyAssignedTask.MyTranscriptsTasksList', $arr);
+                break;
+            case 'ugc.desktop.hamahang.tasks.my_tasks.transcripts':
+                $arr['HFM_CNT'] = HFM_GenerateUploadForm(
+                    [
+                        ['AddNewFiles',
+                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            'Multi'
+                        ]
+                    ]
+                );
+                $arr = variable_generator('user', 'desktop', $uname);
+                return view('hamahang.Tasks.MyAssignedTask.MyTranscriptsTasksList', $arr);
+                break;
+        }
+    }
+
+    public function ListAllTask($uname){
+
+        $packages = task_packages::where('uid', Auth::id())->get();
+//        dd(\Route::currentRouteName());
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.tasks.my_tasks.list':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['packages'] = $packages;
+                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
+                return view('hamahang.Tasks.MyTask.AllTasksList', $arr);
+                break;
+            case 'ugc.desktop.hamahang.tasks.my_tasks.list':
+                $arr = variable_generator('user', 'desktop', $uname);
+                $arr['packages'] = $packages;
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
+                return view('hamahang.Tasks.MyTask.MyTasksList', $arr);
+                break;
+        }
+    }
     private function my_task_in_status($arr = false, $user = false)
     {
 

@@ -180,7 +180,7 @@
 
 </script>
 
-@if(isset($pid,$sid,$content) && $pid=='1' && $sid=='1' && $content=='1')
+@if(isset($pid,$sid,$content) && $pid=='1' && $sid=='1' && $content=='1' && Config::get('constants')['IndexView']!='general')
     <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jssor.core.js"></script>
     <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jssor.slider.min.js"></script>
     <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jssor.utils.js"></script>

@@ -12,7 +12,6 @@
         });
         var username=$("#input_Uname").val();
     $("#btn_insert_chart").click(function () {
-        alert('asdasd');
         $.ajax({
             type: "POST",
             url: '{{ route('hamahang.charts.insert_chart')}}',
