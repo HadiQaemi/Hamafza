@@ -3370,6 +3370,7 @@ input{
     left: -80% !important;
 }
 .content_tab_view img{
-    height: 200px !important;
-    max-height: 200px !important;
+    margin: 10px 0px;
+    height: 400px !important;
+    max-height: 400px !important;
 }
