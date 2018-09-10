@@ -454,6 +454,20 @@ class UserController extends Controller {
         $subjects['private'] = $term ? $subjects['private']->where('title', 'like', "%$term%") : $subjects['private'];
         $subjects['public'] = $subjects['public']->get();
         $subjects['private'] = $subjects['private']->get();
+        foreach ($subjects as $subject_type => $subject_items){
+            foreach ($subject_items as $subject_item){
+                    if ('public' == $subject_type)
+                        $can_view = policy_CanView($subject_item->id, 'App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView');
+                    else
+                         $can_view = true;
+
+                    if ($can_view)
+                        if (isset($subject_item->pages[0])){
+                            $subject_item->pageid = $subject_item->pages[0]->id;
+                        }
+            }
+        }
+            
         $r = [
             'subject_types' => $subject_types,
             'term' => $term,
