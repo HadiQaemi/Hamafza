@@ -641,7 +641,7 @@ class UserController extends Controller {
             \App\Models\hamafza\UserWork::find(Request::input('item_id'))->delete();
 
 
-            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['message'][] = trans('acl.work_deleted_successfully');
             $result['success'] = true;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
@@ -726,7 +726,7 @@ class UserController extends Controller {
             }
             \App\Models\hamafza\UserEducation::find(Request::input('item_id'))->delete();
 
-            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['message'][] = trans('acl.education_deleted_successfully');
             $result['success'] = true;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }

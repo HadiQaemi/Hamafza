@@ -258,7 +258,7 @@ class User extends Authenticatable
                     [
                         'field' => 'unit',
                         'title' => 'واحد سازمانی',
-                        'value' => "$work->vahed"
+                        'value' => "$work->section"
                     ],
                     [
                         'field' => 'province',
@@ -273,12 +273,12 @@ class User extends Authenticatable
                     [
                         'field' => 'start_date',
                         'title' => 'زمان شروع',
-                        'value' => "$work->s_year"
+                        'value' => HDate_GtoJ($work->start_year, 'Y/m/d')
                     ],
                     [
                         'field' => 'end_date',
                         'title' => 'زمان پایان',
-                        'value' => "$work->e_year"
+                        'value' => HDate_GtoJ($work->end_year, 'Y/m/d')
                     ],
                     [
                         'field' => 'description',
@@ -309,20 +309,16 @@ class User extends Authenticatable
                         'value' => "$education->id"
                     ],
                     [
-                        'field' => 'field',
+                        'field' => 'major',
                         'title' => 'رشته تحصیلی',
-                        'value' => "$education->location"
+                        'value' => "$education->major"
                     ],
                     [
-                        'field' => 'tendency',
+                        'field' => 'grade',
                         'title' => 'گرایش',
-                        'value' => "$education->trend"
+                        'value' => "$education->grade"
                     ],
-                    [
-                        'field' => 'level',
-                        'title' => 'مقطع تحصیلی',
-                        'value' => "$education->level"
-                    ],
+                   
                     [
                         'field' => 'university',
                         'title' => 'دانشگاه',
@@ -330,13 +326,13 @@ class User extends Authenticatable
                     ],
                     [
                         'field' => 'start_date',
-                        'title' => 'تاریخ شروع',
-                        'value' => "$education->s_year"
+                        'title' => 'زمان شروع',
+                        'value' => HDate_GtoJ($education->start_year, 'Y/m/d')
                     ],
                     [
                         'field' => 'end_date',
-                        'title' => 'تاریخ پایان',
-                        'value' => "$education->e_year"
+                        'title' => 'زمان پایان',
+                        'value' => HDate_GtoJ($education->end_year, 'Y/m/d')
                     ],
                     [
                         'field' => 'description',
