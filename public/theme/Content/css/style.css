@@ -3384,6 +3384,10 @@ input{
 .task-list-height{
     height: 67vh;
 }
+.task-list-height fieldset{
+    background: #fff;
+    margin-bottom: 30px;
+}
 .search-task-keywords{
     position: relative;
     top: 50px;
