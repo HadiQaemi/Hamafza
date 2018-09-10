@@ -70,15 +70,7 @@
                         </td>
                     </tr>
                     @endif
-
-
-
-
-
-
-
                     <tr>
-
                         <td>کلیدواژه ها</td>
                         <td>
                             {{--@include('sections.page_setting_tags')--}}
@@ -131,10 +123,45 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <table width="100%" style="direction:rtl"  id="contactform">
                     <tbody>
-
                     <tr>
                         <td colspan="2" class="col-xs-12">
-                            <span style=" font-size: 14px;">مجوز مشاهده و ویرایش</span>
+                            <span style=" font-size: 14px;">مجوز مشاهده </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-2">کاربر</td>
+                        <td class="col-xs-10">
+                            <select name="users_list_setting_view[]" id="access_list_setting_edit" multiple="multiple" class="form-control users_list_setting_view">
+                                @if(!empty($subjects->user_policies_view))
+                                    @foreach($subjects->user_policies_view as $subject)
+                                        <option selected="selected" value="{{ $subject->id }}">{{ $subject->Name.' '.$subject->Family }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'access_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                            {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-2">نقش</td>
+                        <td class="col-xs-10">
+                            <select name="roles_list_setting_view[]" id="add_roles_list_setting_view" multiple="multiple" class="form-control roles_list_setting_view" >
+                                @if(!empty($subjects->role_policies_view))
+                                    @foreach($subjects->role_policies_view as $subject)
+                                        <option selected="selected" value="{{ $subject->id }}">{{ $subject->name.' '.$subject->display_name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'add_roles_list_setting_view']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
+                            {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
+                            {{--</a>--}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="col-xs-12">
+                            <hr/>
+                            <span style=" font-size: 14px;">مجوز ویرایش و مشاهده</span>
                             {{--<a href="{!! route('modals.add_user_view') !!}" class="btn btn_primary jsPanels">test</a>--}}
                         </td>
                     </tr>
@@ -161,7 +188,6 @@
                             {{--</a>--}}
                         </td>
                     </tr>
-
                     <tr>
                         <td class="col-xs-2">نقش</td>
                         <td class="col-xs-10">
@@ -177,48 +203,14 @@
                             {{--</a>--}}
                         </td>
                     </tr>
-
                     <tr>
-                        <td colspan="2" class="col-xs-12">
+                        <td class="col-xs-12" colspan="2">
                             <hr/>
-                            <span style=" font-size: 14px;">مجوز مشاهده </span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="col-xs-2">کاربر</td>
+                        <td class="col-xs-2">نمایش زبانه‌ها</td>
                         <td class="col-xs-10">
-                            <select name="users_list_setting_view[]" id="access_list_setting_edit" multiple="multiple" class="form-control users_list_setting_view">
-                                @if(!empty($subjects->user_policies_view))
-                                    @foreach($subjects->user_policies_view as $subject)
-                                        <option selected="selected" value="{{ $subject->id }}">{{ $subject->Name.' '.$subject->Family }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'access_list_setting_edit']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
-                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
-                            {{--</a>--}}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col-xs-2">نقش</td>
-                        <td class="col-xs-10">
-                            <select name="roles_list_setting_view[]" id="add_roles_list_setting_view" multiple="multiple" class="form-control roles_list_setting_view" >
-                                @if(!empty($subjects->role_policies_view))
-                                    @foreach($subjects->role_policies_view as $subject)
-                                        <option selected="selected" value="{{ $subject->id }}">{{ $subject->name.' '.$subject->display_name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                            {{--<a href="{!! route('modals.setting_user_view',['id_select'=>'add_roles_list_setting_view']) !!}" title="انتخاب کاربران" class="jsPanels">--}}
-                                {{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
-                            {{--</a>--}}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="width:100px;">نمایش زبانه‌ها</td>
-                        <td>
                             زبانه&zwnj;ها:
                             @if(is_array($Access->tabs))
                                 @foreach($Access->tabs as $tab)
