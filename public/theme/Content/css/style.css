@@ -3268,6 +3268,7 @@ input{
     margin-left: 5px !important;
     height: 60px !important;
     bottom: 0px;
+    z-index: 100;
 }
 #master_inner_rtl_div .container-fluid{
     padding-left: 0px !important;
