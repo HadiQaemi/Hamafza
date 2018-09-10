@@ -3374,3 +3374,33 @@ input{
     height: 400px !important;
     max-height: 400px !important;
 }
+.bottom_keywords {
+    background-color: #E8E8E8;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 5px;
+}
+.task-list-height{
+    height: 67vh;
+}
+.search-task-keywords{
+    position: relative;
+    top: 50px;
+    right: 175px;
+    z-index: 100;
+    margin-right: 2px;
+    margin-left: 10px;
+    width: 300px;
+}
+.priority-part{
+    margin-right: 10px;
+}
+.my-task-list-priority{
+    position: relative;
+    top: 50px;
+    right: 160px;
+    z-index: 50;
+    height: 30px;
+    line-height: 30px;
+}

@@ -13,6 +13,7 @@ return [
     'select_tasks_window' => 'پنجره انتخاب وظایف',
     'enter_project_name' => 'نام پروژه را وارد نمایید',
     'can_select_some_options' => 'اگر این وظیفه مرتبط با صفحه‌هایی است نام آن صفحات را بنویسید',
+    'search_keyword_task'         => 'جستجو براساس کلیدواژه',
     'task_info'         => 'اطلاعات وظیفه',
     'duration'          => 'مدت',
     'duration'          => 'بحث و پیگیری',

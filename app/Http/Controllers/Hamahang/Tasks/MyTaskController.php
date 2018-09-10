@@ -400,6 +400,15 @@ class MyTaskController extends Controller
                 $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                 return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
             })
+            ->addColumn('keywords', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = [];
+                foreach($r as $Ar)
+                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
+                return json_encode($rr);
+            })
             ->editColumn('immediate', function ($data)
             {
                 if ($data->immediate == 1)

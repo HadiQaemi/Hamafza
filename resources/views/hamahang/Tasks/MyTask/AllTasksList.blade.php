@@ -89,7 +89,7 @@
             {{--</div>--}}
         </div>
     </form>
-    <div class="container-fluid noLeftPadding noRightPadding" style="height: 68vh;">
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height">
         <div class="row">
             <fieldset>
                 <div class="col-md-12">

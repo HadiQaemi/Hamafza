@@ -68,6 +68,9 @@
     $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
         filter_tasks_priority();
     });
+    $('#new_task_keywords').on('change', function () {
+        filter_tasks_priority();
+    });
     function filter_tasks_priority(data) {
         window.table_chart_grid2.destroy();
         readTable($("#form_filter_priority").serializeObject());
@@ -127,7 +130,10 @@
         @if(isset($filter_subject_id))
             send_info["subject_id"]= '{{ $filter_subject_id }}'
         @endif
-
+        if($('#new_task_keywords').val())
+        {
+            send_info["search_task_keywords"]= $('#new_task_keywords').val();
+        }
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
@@ -149,7 +155,17 @@
                         return "<a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
                     }
                 },
-                {"data": "employee"},
+                {
+                    "data": "employee",
+                    "mRender": function (data, type, full) {
+                        var keywords = full.keywords.replace(/&quot;/g,'"');
+                        keywords = JSON.parse(keywords);
+                        data2 = "";
+                        $.each(keywords, function(index) {
+                            data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
+                        });
+                        return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
+                    }},
                 {"data": "immediate"},
                 {"data": "respite"},
                 {"data": "type"}

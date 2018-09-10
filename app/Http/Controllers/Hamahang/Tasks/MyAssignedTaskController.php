@@ -94,6 +94,15 @@ class MyAssignedTaskController extends Controller
                 }
                 return $output;
             })
+            ->addColumn('keywords', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = [];
+                foreach($r as $Ar)
+                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
+                return json_encode($rr);
+            })
             ->addColumn('employee', function ($data)
             {
                 return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>" . $data->Name . " " . $data->Family . "</a>";
@@ -626,6 +635,15 @@ class MyAssignedTaskController extends Controller
                 $date = new jDateTime;
                 $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                 return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+            })
+            ->addColumn('keywords', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = [];
+                foreach($r as $Ar)
+                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
+                return json_encode($rr);
             })
             ->editColumn('immediate', function ($data)
             {

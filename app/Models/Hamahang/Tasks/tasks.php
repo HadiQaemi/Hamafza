@@ -3,6 +3,7 @@
 namespace App\Models\Hamahang\Tasks;
 
 use App\HamafzaViewClasses\TaskClass;
+use App\Models\Hamahang\keywords;
 use DB;
 use Auth;
 use Request;
@@ -704,6 +705,20 @@ class tasks extends Model
             $result->whereIn('hamahang_task_priority.importance', [11]);
         }
 
+        if(Request::exists('search_task_keywords'))
+        {
+            $search_task_keywords = [];
+            foreach(Request::input('search_task_keywords') as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $result->join('hamahang_task_keywords', 'hamahang_task_keywords.task_id', '=', 'hamahang_task.id')
+                    ->whereIn('hamahang_task_keywords.keyword_id', $search_task_keywords);
+            }
+        }
+
         $result = $result->get();
         return $result;
     }
@@ -960,7 +975,19 @@ class tasks extends Model
         {
             $result->whereIn('hamahang_task_priority.importance', [11]);
         }
-
+        if(Request::exists('search_task_keywords'))
+        {
+            $search_task_keywords = [];
+            foreach(Request::input('search_task_keywords') as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $result->join('hamahang_task_keywords', 'hamahang_task_keywords.task_id', '=', 'hamahang_task.id')
+                    ->whereIn('hamahang_task_keywords.keyword_id', $search_task_keywords);
+            }
+        }
 
         $result = $result->get();
         return $result;
@@ -1002,6 +1029,7 @@ class tasks extends Model
         }
         else
         {
+            db::enableQueryLog();
             $task_fianl = Request::get('task_fianl');
             $result = DB::table('hamahang_task')
                 ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
@@ -1013,14 +1041,20 @@ class tasks extends Model
 //                ->where('hamahang_task_assignments.status','=',0)
 //                ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->where('hamahang_task.uid', '=', $uid);
-            if(count($task_fianl)>1)
-                $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0)', [Auth::id()]);
-            else if(in_array(0,$task_fianl))
-                $result->whereRaw('is_save in (0)');
-            else
-                $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) ', [Auth::id()]);
-//            $result = $result->tosql();
-//            dd($result);
+            if(Request::exists('search_task_keywords'))
+            {
+                $search_task_keywords = [];
+                foreach(Request::input('search_task_keywords') as $keyword)
+                {
+                    $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+                }
+                if ($search_task_keywords)
+                {
+                    $result->join('hamahang_task_keywords', 'hamahang_task_keywords.task_id', '=', 'hamahang_task.id')
+                        ->whereIn('hamahang_task_keywords.keyword_id', $search_task_keywords);
+                }
+            }
+
 
             $status_filter = Request::get('task_status');
             $official_type = Request::get('official_type');
@@ -1093,9 +1127,18 @@ class tasks extends Model
             {
                 $result->whereIn('hamahang_task_priority.importance', [11]);
             }
+            if(count($task_fianl)>1)
+                $result->whereRaw('(( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0))', [Auth::id()]);
+            else if(in_array(0,$task_fianl))
+                $result->whereRaw('is_save in (0)');
+            else
+                $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) ', [Auth::id()]);
+//            $result = $result->tosql();
+//            dd($result);
 
 
             $result = $result->get();
+//            dd(db::getQueryLog());
         }
         return $result;
     }
@@ -1647,7 +1690,22 @@ class tasks extends Model
             'tasks_not_immediate_not_importance' => self::tasks_immediate_importance($arr, 0, 0, 'MyAssignedTasks',$status_filter, $title_filter, $respite_filter, $official_type)
         ];
     }
+
+    public static function TakKeywords($tid)
+    {
+        $keywords = keywords::select('keywords.title', 'keywords.id')
+            ->join('hamahang_task_keywords', 'hamahang_task_keywords.keyword_id', '=', 'keywords.id')
+            ->where('hamahang_task_keywords.task_id', '=', $tid)
+            ->get();
+        return $keywords;
+    }
+
     /*---------------------------------------------- relations --------------------------------------------*/
+    public function Keywords()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_keywords', 'task_id', 'id');
+    }
+
     public function Assignments()
     {
         return $this->hasMany('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id');
