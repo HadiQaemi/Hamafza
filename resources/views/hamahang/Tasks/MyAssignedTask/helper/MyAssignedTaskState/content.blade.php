@@ -19,8 +19,9 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
                                             $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
                                         {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
@@ -51,8 +52,9 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
                                             $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
                                         {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
@@ -83,8 +85,9 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
                                             $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
                                         {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
@@ -115,8 +118,9 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
                                             $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
                                         {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}

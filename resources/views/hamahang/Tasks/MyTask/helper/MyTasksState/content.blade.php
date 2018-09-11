@@ -18,14 +18,12 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $title = $task->title;
-                                            $words = str_word_count($task->title, 2);
-                                            $pos = array_keys($words);
-                                            $min = min(count($words),3);
-                                            if(isset($pos[$min]))
-                                                $title = substr($words, 1, $pos[1]) . '...';
+                                            $msgTrimmed = mb_substr($task->title,0,25);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
-                                        {{$title}}
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -56,14 +54,12 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $title = $task->title;
-                                            $words = str_word_count($task->title, 2);
-                                            $pos = array_keys($words);
-                                            $min = min(count($words),3);
-                                            if(isset($pos[$min]))
-                                                $title = substr($words, 1, $pos[1]) . '...';
+                                            $msgTrimmed = mb_substr($task->title,0,25);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
-                                        {{$title}}
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -94,14 +90,12 @@
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $title = $task->title;
-                                            $words = str_word_count($task->title, 2);
-                                            $pos = array_keys($words);
-                                            $min = min(count($words),3);
-                                            if(isset($pos[$min]))
-                                                $title = substr($words, 1, $pos[1]) . '...';
+                                            $msgTrimmed = mb_substr($task->title,0,25);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
                                         @endphp
-                                        {{$title}}
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -132,14 +126,12 @@
                             <span data-toggle="tooltip" title="{{$task->title}}">
                                 <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                     @php
-                                        $title = $task->title;
-                                        $words = str_word_count($task->title, 2);
-                                        $pos = array_keys($words);
-                                        $min = min(count($words),3);
-                                        if(isset($pos[$min]))
-                                            $title = substr($words, 1, $pos[1]) . '...';
+                                        $msgTrimmed = mb_substr($task->title,0,25);
+                                        $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                        $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
+                                        $title = mb_substr($msgTrimmed,0,$lastSpace);
                                     @endphp
-                                    {{$title}}
+                                    {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                 </a>
                             </span>
                             </div>
