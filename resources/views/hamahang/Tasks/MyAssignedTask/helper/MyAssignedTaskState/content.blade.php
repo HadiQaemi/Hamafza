@@ -18,7 +18,12 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                        @endphp
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -45,7 +50,12 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                        @endphp
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -72,7 +82,12 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                        @endphp
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
@@ -99,7 +114,12 @@
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
                                     <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        {{$task->title}}
+                                        @php
+                                            $msgTrimmed = mb_substr($task->title,0,30);
+                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
+                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                        @endphp
+                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
                                     </a>
                                 </span>
                             </div>
