@@ -264,11 +264,11 @@ class MyAssignedTaskController extends Controller
 
             $task_id = Request::get('task_id');
             $task = tasks::find($task_id);
-            $task->Status()->delete();
             switch (Request::get('type'))
             {
                 case 'task_notstarted':
                 {
+                    $task->Status()->delete();
                     $task->Statuses()->create([
                         'uid' => auth()->id(),
                         'user_id' => auth()->id(),
@@ -282,6 +282,7 @@ class MyAssignedTaskController extends Controller
                 }
                 case 'task_done':
                 {
+                    $task->Status()->delete();
                     $task->Statuses()->create([
                         'uid' => auth()->id(),
                         'user_id' => auth()->id(),
@@ -295,6 +296,7 @@ class MyAssignedTaskController extends Controller
                 }
                 case 'task_started':
                 {
+                    $task->Status()->delete();
                     $task->Statuses()->create([
                         'uid' => auth()->id(),
                         'user_id' => auth()->id(),
@@ -308,6 +310,13 @@ class MyAssignedTaskController extends Controller
                 }
                 case 'task_ended':
                 {
+                    if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
+                        $result['success'] = false;
+                        $result['error']= trans('tasks.cant_end_this_task');
+                        return $result;
+                    }
+                    else{
+                        $task->Status()->delete();
                         $task->Statuses()->create([
                             'uid' => auth()->id(),
                             'user_id' => auth()->id(),
@@ -317,7 +326,7 @@ class MyAssignedTaskController extends Controller
                             'timestamp' => time(),
                         ]);
                         $result['success'] = true;
-
+                    }
                     break;
                 }
                 default :
@@ -1070,7 +1079,6 @@ class MyAssignedTaskController extends Controller
 
     public function SetActToTask()
     {
-//        dd(Request::all());
         $task_all = Session::get('TaskForm_task_all');
         $task_id = Session::get('TaskForm_tid');
         $assign_id = Session::get('TaskForm_aid');
@@ -1084,42 +1092,46 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
+//        dd(Request::all());
 //        dd($task_id);
         //
         $action = "";
-        if(Request::exists('reject_assigner'))
+        if(Request::exists('assign_object'))
         {
-            $action = 'rejection';
-            DB::table('hamahang_task_assignments')
-                ->where('id', (int) $assign_id)
-                ->update(['status' => 1,'reject_description'=>Request::input('explain_reject')]);
-            task_assignments::create_task_assignment($task_assignment['uid'] ,$task_assignment['uid'] ,$task_id,$assign_id);
-            task_history::create_task_history($task_id, 'reject', serialize(Request::all()),$task_assignment['uid']);
-            task_status::create_task_status($task_id, 0, 0, $task_assignment['uid'], time());
-
-        }else if (Request::exists('assigns_new'))
-        {
-            $action = 'assignmention';
-            $staff = '';
-            foreach (Request::input('assigns_new') as $key => $value_employee_id)
+            if(Request::exists('reject_assigner'))
             {
-                if($key == 0)
+                $action = 'rejection';
+                DB::table('hamahang_task_assignments')
+                    ->where('id', (int) $assign_id)
+                    ->update(['status' => 1,'reject_description'=>Request::input('explain_reject')]);
+                task_assignments::create_task_assignment($task_assignment['uid'] ,$task_assignment['uid'] ,$task_id,$assign_id);
+                task_history::create_task_history($task_id, 'reject', serialize(Request::all()),$task_assignment['uid']);
+                task_status::create_task_status($task_id, 0, 0, $task_assignment['uid'], time());
+
+            }else if (Request::exists('assigns_new'))
+            {
+                $action = 'assignmention';
+                $staff = '';
+                foreach (Request::input('assigns_new') as $key => $value_employee_id)
                 {
-                    $staff = Request::input('assigns_new')[$key];
-                    task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
+                    if($key == 0)
+                    {
+                        $staff = Request::input('assigns_new')[$key];
+                        task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
+                    }
+                    else
+                    {
+                        task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
+                    }
+                    task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'] ,[0] ,$value_employee_id);
+                    task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
                 }
-                else
-                {
-                    task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
-                }
-                task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'] ,[0] ,$value_employee_id);
-                task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
+                $UserController = new UserController();
+                task_history::create_task_history($task_id, 'assign', serialize(Request::all()), $UserController->getUser(Request::input('assigns_new')));
+                DB::table('hamahang_task_assignments')
+                    ->where('id', (int) $assign_id)
+                    ->update(['status' => 1]);
             }
-            $UserController = new UserController();
-            task_history::create_task_history($task_id, 'assign', serialize(Request::all()), $UserController->getUser(Request::input('assigns_new')));
-            DB::table('hamahang_task_assignments')
-                ->where('id', (int) $assign_id)
-                ->update(['status' => 1]);
         }
         //task_status
         $reject_description = "";
@@ -1155,6 +1167,11 @@ class MyAssignedTaskController extends Controller
         }
         task_action::create_task_action($task_id, Request::input('task_status'), Request::input('progress'), $action,$reject_description,
             $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
+        task_status::where('uid', '=', Auth::id())
+            ->where('task_id', '=', $task_id)
+            ->delete();
+        task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
+        task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), trans('tasks.action').': '.task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : ''));
 
         if (Request::exists('keywords'))
         {

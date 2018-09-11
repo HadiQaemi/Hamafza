@@ -694,14 +694,15 @@
                 </div>
 
                 <div class="row col-lg-12" style="margin-bottom: 20px;margin-top: 20px">
-                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
                         <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" checked/>
+                        <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
                         <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline"/>
+                        <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
                         <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
                     </div>
-                    <div class="col-lg-9" style="height: 20px;line-height: 20px;">
+                    <div class="col-lg-8" style="height: 20px;line-height: 20px;">
                         <div class="col-lg-10">
                             <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
                                     data-placeholder="{{trans('tasks.select_some_options')}}" multiple disabled=""></select>
@@ -746,7 +747,7 @@
                             <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$res['task_status'] ==3 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$res['task_status'] ==4 ? 'checked' : ''}}/>
                             <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
                         </div>
                     </div>
@@ -864,7 +865,8 @@
                     if (data.success)
                     {
                         $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
-                        $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                        if($('#desc').val() != undefined)
+                            $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
                     } else
                     {
                         messageModal('fail', 'خطا', data.result);

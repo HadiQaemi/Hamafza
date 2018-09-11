@@ -50,8 +50,14 @@
             dataType: "json",
             data: {type: type, task_id: task_id},
             success: function (res) {
-               $("#base_items").html(res.data);
-                filter_mytask();
+                if (res.success == true) {
+                    $("#base_items").html(res.data);
+                    filter_mytask();
+                } else if (res.success == false) {
+                    var reserror = [res.error];
+                    messageModal('no_li_error', '{{trans('app.operation_is_failed')}}', reserror);
+                    filter_mytask();
+                }
                 //initDraggable();
             }
         });

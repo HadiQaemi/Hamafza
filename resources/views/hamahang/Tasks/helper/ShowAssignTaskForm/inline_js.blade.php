@@ -610,6 +610,13 @@
     });
 
     $(document).ready(function () {
+        $('#assign_object').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('input:radio[name="reject_assigner"]').prop('disabled', false);
+            }else{
+                $('input:radio[name="reject_assigner"]').prop('disabled', true);
+            }
+        });
         @if($task['respite_timing_type']==0 || $task['respite_timing_type']==1)
             change_normal_task_timing_type({{$task['respite_timing_type']}});
         @endif

@@ -620,17 +620,17 @@ class MyTaskController extends Controller
                 }
                 case 'task_ended':
                 {
-                    if($task->end_on_assigner_accept==0)
+                    if($task->end_on_assigner_accept!=0)
                     {
                         $task->Status()->delete();
                         $task->Statuses()->create([
-                        'uid' => auth()->id(),
-                        'user_id' => auth()->id(),
-                        'task_id' => $task_id,
-                        'percent' => 0,
-                        'type' => 3,
-                        'timestamp' => time(),
-                    ]);
+                            'uid' => auth()->id(),
+                            'user_id' => auth()->id(),
+                            'task_id' => $task_id,
+                            'percent' => 0,
+                            'type' => 3,
+                            'timestamp' => time(),
+                        ]);
                         $result['success'] = true;
                     } else{
                         $result['success'] = false;

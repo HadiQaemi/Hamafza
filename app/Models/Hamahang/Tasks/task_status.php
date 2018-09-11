@@ -63,6 +63,41 @@ class task_status extends Model
          }
     }
 
+    public static function getTaskStatusTitleAttribute($type)
+    {
+
+        switch ($type)
+        {
+            case '0':
+                {
+                    return trans('tasks.status_not_started');
+                    break;
+                }
+            case '1':
+                {
+                    return trans('tasks.status_started');
+                    break;
+                }
+            case '2':
+                {
+                    return trans('tasks.status_done');
+                    break;
+                }
+            case '3':
+                {
+                    return trans('tasks.status_finished');
+                    break;
+                }
+            case '4':
+                {
+                    return trans('tasks.status_suspended');
+                    break;
+                }
+            default :
+                return '';
+        }
+    }
+
     public function getStatusIconAttribute()
     {
 

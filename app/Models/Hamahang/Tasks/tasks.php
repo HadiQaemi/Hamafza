@@ -1377,10 +1377,7 @@ class tasks extends Model
 //            $q->where('type', 0);
 //        })->whereHas('priority', function ($p)use($importance){$p->whereIn('importance',$importance);})
 //            ->whereHas('priority', function ($p)use($immediate){$p->whereIn('immediate',$immediate);});
-//        if(trim($title)!='')
-//        {
-//            $myTasks['not_started']->where('title','like','%'.$title.'%');
-//        }
+
         $myTasks['not_started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance)->whereIn('importance',$importance);
         })->whereHas('priority', function ($p)use($immediate){
@@ -1393,6 +1390,10 @@ class tasks extends Model
             $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!='')
+        {
+            $myTasks['not_started']->where('title','like','%'.$title.'%');
         }
         $myTasks['not_started'] = $myTasks['not_started']->get();
 
@@ -1409,6 +1410,10 @@ class tasks extends Model
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
+        if(trim($title)!='')
+        {
+            $myTasks['started']->where('title','like','%'.$title.'%');
+        }
         $myTasks['started'] = $myTasks['started']->get();
 
         $myTasks['done'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
@@ -1424,6 +1429,10 @@ class tasks extends Model
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
+        if(trim($title)!='')
+        {
+            $myTasks['done']->where('title','like','%'.$title.'%');
+        }
         $myTasks['done'] = $myTasks['done']->get();
 
         $myTasks['ended'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
@@ -1438,6 +1447,10 @@ class tasks extends Model
             $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!='')
+        {
+            $myTasks['ended']->where('title','like','%'.$title.'%');
         }
         $myTasks['ended'] = $myTasks['ended']->get();
 
