@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang\Tasks;
 
 
 use App\Http\Controllers\Hamahang\UserController;
+use App\Models\hamafza\Pages;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
@@ -625,7 +626,6 @@ class MyAssignedTaskController extends Controller
     public function MyAssignedTasksFetch()
     {
         $Tasks = tasks::MyAssignedTasks(Auth::id(), Request::input('subject_id'));
-
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
@@ -1025,7 +1025,6 @@ class MyAssignedTaskController extends Controller
                 'users'=>'کاربر'
             ]
         );
-
         if ($validator->fails())
         {
             $result['error'] = $validator->errors();
@@ -1050,9 +1049,108 @@ class MyAssignedTaskController extends Controller
                 $sec_no = 0;//Request::input('duration_sec');
                 $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
             }
-            $task = tasks::where('id','=',(\Session::get('TaskForm_tid')))->first();
-//                ->update(['title' => Request::input('title'), 'type' => Request::input('task_form_action'),
-//                    'task_attributes' => serialize(Request::all())]);
+            $task = tasks::where('id','=',deCode(Request::input('tid')))->first();
+
+            if(Request::exists('task_form_action')==1)
+            {
+                if (Request::exists('new_task_resources_h'))
+                {
+                    DB::table('hamahang_task_resources')
+                        ->where('hamahang_task_resources.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+
+                    $new_task_resources_amount = Request::input('new_task_resources_amount');
+                    $new_task_resources_cost = Request::input('new_task_resources_cost');
+                    foreach (Request::input('new_task_resources_h') as $k => $kw)
+                    {
+                        //$task_id, $amount, $cost, $resource_id
+                        task_resources::create_task_resource($task->id, $new_task_resources_amount[$k],$new_task_resources_cost[$k],new_hamafza_add_resource($kw));
+                    }
+                }
+                if (Request::exists('task_schedul'))
+                {
+                    DB::table('hamahang_task_schedule')
+                        ->where('hamahang_task_schedule.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    $schedul = array(
+                        'task_schedul' => Request::input('task_schedul'),
+                        'task_schedul_num' => Request::input(Request::input('task_schedul').'_num'),
+                        'task_schedul_value' => Request::input(Request::input('task_schedul').'_value')
+                    );
+
+                    task_schedule::create_task_schedule($task->id, Request::input('task_schedul'),serialize($schedul),
+                        Request::input('schedul_begin_date'), Request::input('schedul_end_date'), Request::input('schedul_end_date_date'), Request::input('schedul_end_num_events'));
+                }
+                if (Request::exists('pages'))
+                {
+                    DB::table('hamahang_subject_ables')
+                        ->where('hamahang_subject_ables.target_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    foreach (Request::input('pages') as $page_id)
+                    {
+                        hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
+                    }
+                }
+
+                if (Request::exists('transcripts'))
+                {
+                    DB::table('hamahang_task_transcript')
+                        ->where('hamahang_task_transcript.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    if(Request::input('report_on_cr')==1)
+                    {
+                        foreach (Request::input('transcripts') as $transcript)
+                        {
+                            task_transcripts::create_task_transcript($task->id, $transcript);
+                        }
+                    }
+                }
+                if (Request::exists('keywords'))
+                {
+                    DB::table('hamahang_task_keywords')
+                        ->where('hamahang_task_keywords.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    foreach (Request::input('keywords') as $kw)
+                    {
+                        task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
+                    }
+                }
+                $staff = '';
+                if (Request::exists('users'))
+                {
+                    DB::table('hamahang_task_assignments')
+                        ->where('hamahang_task_assignments.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    foreach (Request::input('users') as $key => $value_employee_id)
+                    {
+                        if(Request::input('assign_type') == 1 )
+                        {
+                            if($key == 0)
+                            {
+                                $staff = Request::input('users')[0];
+                                task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
+                            }
+                            else
+                            {
+                                task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
+                            }
+                        }
+                        elseif(Request::input('assign_type') == 2)
+                        {
+                            task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
+                        }
+                        task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[0] , $value_employee_id);
+                        task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
+                    }
+                }
+            }
+
             $task->form_data = serialize(Request::all());
             $task->task_attributes = serialize(Request::all());
             $task->uid = Auth::id();
@@ -1060,7 +1158,7 @@ class MyAssignedTaskController extends Controller
             $task->desc = Request::input('task_desc');
             $task->type = Request::input('type');
             $task->kind = Request::input('kind');
-            $task->is_save = 0;
+            $task->is_save = Request::input('save_type');
             $task->task_status = Request::input('task_status');
             $task->duration_timestamp = $respite_duration_timestamp;
             $task->use_type = Request::input('use_type');
@@ -1071,6 +1169,8 @@ class MyAssignedTaskController extends Controller
             $task->report_to_managers = Request::input('report_to_manager');
             $task->respite_timing_type = Request::input('respite_timing_type');
             $task->save();
+            task_history::create_task_history($task->id, 'edit_task', serialize(Request::all()), '');
+
         }
         $result['success'] = true;
         return json_encode($result);

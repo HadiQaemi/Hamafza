@@ -47,16 +47,16 @@
         {{--<input type="radio" name="show_task_save_type" class="liberary_task_save_private_library" id="liberary_task_save_private_library" value="3"/>--}}
         {{--<label for="liberary_task_save_private_library">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>--}}
 
-        <input type="radio" name="show_task_save_type" class="show_task_save_type_draft" id="show_task_save_type_draft" value="0"/>
+        <input type="radio" name="show_task_save_type" class="show_task_save_type_draft" id="show_task_save_type_draft" value="0" {{$is_save==0 ? 'checked' : ''}}/>
         <label for="show_task_save_type_draft">{{ trans('general.draft') }}</label>
-        <input type="radio" name="show_task_save_type" class="show_task_save_type_final" id="show_task_save_type_final" value="1"/>
+        <input type="radio" name="show_task_save_type" class="show_task_save_type_final" id="show_task_save_type_final" value="1" {{$is_save==1 ? 'checked' : ''}}/>
         <label for="show_task_save_type_final">{{ trans('general.final') }}</label>
     </div>
-    <a data-form_id = "edit_liberary_new_task" data-again_save = "1" class="btn btn-primary pull-left update_task" id="">
+    <a data-form_id = "edit_task_form" data-again_save = "1" class="btn btn-primary pull-left update_task" id="">
         <i ></i>
         {{trans('app.edit')}}
     </a>
-    <a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_liberary_new_task">
+    <a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_task_form">
         <i ></i>
         {{trans('tasks.ok')}}
     </a>

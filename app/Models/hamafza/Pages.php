@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Pages extends Model
 {
     use softdeletes;
+    public $timestamps = false;
     protected  $table = 'pages';
     
     public function subject()

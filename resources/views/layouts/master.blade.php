@@ -243,7 +243,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+								{{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                                 eventInfo = (result.event);
                                 (function ($) {
                                     $("#calendar").fullCalendar('addEventSource', [{
@@ -261,9 +261,10 @@
 						}
 					});
 				}
-                function UpdateTask(form_id, again,action) {
+                function UpdateTask(form_id, again,action,save_type) {
                     //console.log(form_id);
                     $('#task_form_action').val(action);
+                    $('#save_type').val(save_type);
                     var form_data = $('#' + form_id).serialize();
                     $.ajax({
                         type: "POST",
@@ -273,7 +274,7 @@
                         success: function (result) {
                             if (result.success == true) {
                                 $('.jsPanel-btn-close').click();
-                                messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                                {{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                             }
                             else {
                                 messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -298,7 +299,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+								{{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
 							}
 							else {
 								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -336,7 +337,10 @@
                     var $this = $(this);
                     var form_id = $this.data('form_id');
                     var save_again = $this.data('again_save');
-                    UpdateTask(form_id, save_again,1);
+                    var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :
+                        ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
+                            ($("input[name='show_task_save_type_final']:checked").val() != undefined ? $("input[name='show_task_save_type_final']:checked").val() : '') );
+                    UpdateTask(form_id, save_again,1,save_type);
                 });
 				$(document).on('click', '.save_task', function () {
 					var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :

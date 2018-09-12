@@ -153,7 +153,7 @@
                                                 <span class="glyphicon glyphicon-time"></span>
                                             </span>
                                         <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar.calendar_to')}}" name="hidden_to[]" id="hidden_to" aria-describedby="respite_time">
-                                    </div>modals.basic_data.user_settings.jsp_user_setting_content
+                                    </div>
                                     <div class="col-xs-2">
                                         <a class="btn btn-default btn-xs fa fa-clone" href="#" onclick="addNewHideTime();"></a>
                                         <a class="btn btn-default btn-xs fa fa-close" href="#" onclick="removeAllHiddenTime();"></a>

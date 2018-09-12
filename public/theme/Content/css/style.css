@@ -3365,11 +3365,7 @@ input{
 .content_tab_view{
     overflow: auto;
 }
-.datepicker-plot-area {
-    position: relative !important;
-    top: 40% !important;
-    left: -80% !important;
-}
+
 .content_tab_view img{
     margin: 10px 0px;
     height: 400px !important;

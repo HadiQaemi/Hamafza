@@ -681,7 +681,9 @@ class MyTaskController extends Controller
             $task_important = Request::get('task_important');
             $task_immediate = Request::get('task_immediate');
             $official_type = Request::get('official_type');
+//            db::enableQueryLog();
             $myTasks= tasks::MyTasksStatus($filter_subject_id, $task_important,$task_immediate, $task_title, $respite, $official_type);
+//            dd(db::getQueryLog());
             $result['success'] = true;
             $result['data'] = view('hamahang.Tasks.MyTask.helper.MyTasksState.content', compact('user', 'myTasks'))->render();
             $result['success'] = true;

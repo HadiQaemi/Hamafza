@@ -1016,6 +1016,7 @@ class tasks extends Model
 //                ->whereNull('hamahang_task_assignments.transmitter_id')
 //                ->where('hamahang_task_assignments.status','=',0)
                 ->where('hamahang_task_assignments.uid', '=', $uid)
+                ->whereNull('hamahang_task_assignments.deleted_at')
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
                 ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()]);
             if ($subject_id)
@@ -1029,7 +1030,7 @@ class tasks extends Model
         }
         else
         {
-            db::enableQueryLog();
+//            db::enableQueryLog();
             $task_fianl = Request::get('task_fianl');
             $result = DB::table('hamahang_task')
                 ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
@@ -1040,6 +1041,8 @@ class tasks extends Model
 //                ->whereNull('hamahang_task_assignments.transmitter_id')
 //                ->where('hamahang_task_assignments.status','=',0)
 //                ->where('hamahang_task_assignments.uid', '=', $uid)
+                ->whereNull('hamahang_task_assignments.deleted_at')
+                ->where('hamahang_task_priority.is_assigner', '=', 1)
                 ->where('hamahang_task.uid', '=', $uid);
             if(Request::exists('search_task_keywords'))
             {
@@ -1370,13 +1373,6 @@ class tasks extends Model
             $user = auth()->user();
         }
         $myTasks=[];
-
-
-//        $myTasks['not_started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('Status', function ($q)
-//        {
-//            $q->where('type', 0);
-//        })->whereHas('priority', function ($p)use($importance){$p->whereIn('importance',$importance);})
-//            ->whereHas('priority', function ($p)use($immediate){$p->whereIn('immediate',$immediate);});
 
         $myTasks['not_started'] = $user->MyTasks()->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance)->whereIn('importance',$importance);
@@ -1709,6 +1705,7 @@ class tasks extends Model
         $keywords = keywords::select('keywords.title', 'keywords.id')
             ->join('hamahang_task_keywords', 'hamahang_task_keywords.keyword_id', '=', 'keywords.id')
             ->where('hamahang_task_keywords.task_id', '=', $tid)
+            ->whereNull('hamahang_task_keywords.deleted_at')
             ->get();
         return $keywords;
     }

@@ -1,3 +1,10 @@
+<style>
+    .datepicker-plot-area {
+        position: relative !important;
+        top: 40% !important;
+        left: -80% !important;
+    }
+</style>
 <div class="row row_height rapid-task">
     <hr class="hr-4"/>
     <form method="POST" id="form_create_rapid_task">

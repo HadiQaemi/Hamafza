@@ -119,7 +119,7 @@
                     "mRender": function (data, type, full) {
                         var id = full.id;
                         // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
                     }
                 },
                 {
