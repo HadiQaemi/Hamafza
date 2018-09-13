@@ -21,9 +21,9 @@
 @stop
 
 @section('content')
-    {{--<div style="position: absolute;top:10px; width: 250px;left:0px;">--}}
-    {{--@include('hamahang.Tasks.MyTask.helper.task_related_pages')--}}
-    {{--</div>--}}
+    <div style="position: absolute;top:10px; width: 250px;left:0px;">
+    @include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')
+    </div>
     <form id="form_filter_priority" style="position: relative;top: 50px;right: 200px;z-index: 50;">
         <div class="form-inline" style="padding-right: 5px;" >
             <div class="checkbox">

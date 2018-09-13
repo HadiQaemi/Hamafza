@@ -134,14 +134,14 @@ class MyTaskController extends Controller
 //        dd(\Route::currentRouteName());
         switch (\Route::currentRouteName())
         {
-            case 'pgs.desktop.hamahang.tasks.my_tasks.list':
+            case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_list':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['packages'] = $packages;
                 $arr['filter_subject_id'] = $arr["pid"];
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.MyTask.AllTasksList', $arr);
                 break;
-            case 'ugc.desktop.hamahang.tasks.my_tasks.list':
+            case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_list':
                 $arr = variable_generator('user', 'desktop', $uname);
                 $arr['packages'] = $packages;
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
