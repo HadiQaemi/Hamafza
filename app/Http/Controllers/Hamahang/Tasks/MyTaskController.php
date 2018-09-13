@@ -314,15 +314,15 @@ class MyTaskController extends Controller
 
     public function MyTasksPriority($uname)
     {
-        dd(\Route::currentRouteName());
+//        asd
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $arr["pid"];
-//                DB::enableQueryLog();
+                DB::enableQueryLog();
                 $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
-//                dd(DB::getQueryLog());
+                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
