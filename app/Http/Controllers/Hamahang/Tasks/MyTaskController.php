@@ -314,7 +314,7 @@ class MyTaskController extends Controller
 
     public function MyTasksPriority($uname)
     {
-        dd('asdasd');
+        dd(\Route::currentRouteName());
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
