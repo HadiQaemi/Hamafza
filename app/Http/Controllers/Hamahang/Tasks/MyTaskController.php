@@ -324,7 +324,7 @@ class MyTaskController extends Controller
 //                DB::enableQueryLog();
 
                 $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
-                dd('priority',$arr);
+//                dd('priority',$arr);
 
 //                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.priority', $arr);
