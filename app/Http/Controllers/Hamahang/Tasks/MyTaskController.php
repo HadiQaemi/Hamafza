@@ -323,9 +323,9 @@ class MyTaskController extends Controller
                 $arr['filter_subject_id'] = $arr["pid"];
 //                DB::enableQueryLog();
 
-                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
-                dd('priority',$arr);
 
+                dd('priority',$arr);
+                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
 //                dd(DB::getQueryLog());
 //                return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
