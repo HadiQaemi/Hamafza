@@ -12,6 +12,7 @@
             z-index:11;
         }</style>
     <div style="position: relative;height: 100%;width: 100%;">
+        {{dd('asdasd')}}
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">

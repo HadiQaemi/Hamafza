@@ -327,7 +327,7 @@ class MyTaskController extends Controller
 //                dd('priority',$arr);
 
 //                dd(DB::getQueryLog());
-                return view('hamahang.Tasks.priority', $arr);
+//                return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.priority':
