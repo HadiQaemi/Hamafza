@@ -319,12 +319,9 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
-
                 $arr['filter_subject_id'] = $arr["pid"];
 //                DB::enableQueryLog();
-
-                $tasks = tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]);
-                $arr = array_merge($arr, $tasks);
+                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
 //                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);

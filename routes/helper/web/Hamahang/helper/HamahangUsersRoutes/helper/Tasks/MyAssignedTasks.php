@@ -1,5 +1,5 @@
 <?php
-Route::get('AllList', ['as' => 'pgs.desktop.hamahang.tasks.my_assigned_tasks.list', 'uses' => 'MyAssignedTaskController@ListAllTask', 'middleware' => ['dynamic_permission:pgs.desktop.hamahang.tasks.my_assigned_tasks.list']]);
+Route::get('AllList', ['as' => 'pgs.desktop.hamahang.tasks.my_assigned_tasks.all_task_list', 'uses' => 'MyAssignedTaskController@ListAllTask', 'middleware' => ['dynamic_permission:pgs.desktop.hamahang.tasks.my_assigned_tasks.list']]);
 Route::get('list', ['as' => 'ugc.desktop.hamahang.tasks.my_assigned_tasks.list', 'uses' => 'MyAssignedTaskController@MyAssignedTasksList', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.my_assigned_tasks.list']]);
 Route::get('transcripts', ['as' => 'ugc.desktop.hamahang.tasks.my_assigned_tasks.transcripts', 'uses' => 'MyAssignedTaskController@get_transcripts', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.my_assigned_tasks.list']]);
 Route::get('state', ['as' => 'ugc.desktop.hamahang.tasks.my_assigned_tasks.state', 'uses' => 'MyAssignedTaskController@MyAssignedTasksState', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.tasks.my_assigned_tasks.state']]); ////// user tasks state

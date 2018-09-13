@@ -1279,7 +1279,7 @@ class tasks extends Model
             if (trim($arr['filter_subject_id'])!='')
             {
                 $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Pages', function ($query) use ($arr) {
-                    $query->where('Pages.id', '=', $arr['filter_subject_id']);
+                    $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id']);
                 });
             }
 //            $tasks_immediate_importance->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
@@ -1299,6 +1299,7 @@ class tasks extends Model
         {
             $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', [11]);
         }
+
         if (Request::exists('task_fianl'))
         {
             $task_fianl = Request::input('task_fianl');
@@ -1313,6 +1314,7 @@ class tasks extends Model
             }
         }
 
+
         $tasks_immediate_importance = $tasks_immediate_importance->get();
 //        $tasks_immediate_importance->get();
         if ($respite_filter)
@@ -1323,11 +1325,11 @@ class tasks extends Model
             });
         }
 
+
         return $tasks_immediate_importance;
     }
     public static function MyTasksPriority($arr,$status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false, $source='MyTasks')
     {
-        dd('MyTasksPriority');
         return [
             'tasks_immediate_importance' => self::tasks_immediate_importance($arr,1, 1, $source, $status_filter, $title_filter, $respite_filter, $official_type),
             'tasks_not_immediate_importance' => self::tasks_immediate_importance($arr,0, 1, $source,$status_filter, $title_filter, $respite_filter, $official_type),
