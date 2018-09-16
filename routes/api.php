@@ -223,6 +223,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'uses' => 'UserController@deleteUserEducation',
             'middleware' => ['dynamic_permission:posts.hamahang.users.delete_user_education']
         ]);
+        Route::get('get_avatar', [
+            'as' => 'api.v43.user.get_avatar',
+            'uses' => 'UserController@getAvatar'
+        ]);
 
 
 

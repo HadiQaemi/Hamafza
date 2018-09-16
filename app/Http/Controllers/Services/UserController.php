@@ -356,36 +356,7 @@ class UserController extends Controller {
                         'title' => 'تحصیلات ها',
                         'type' => '3',
                         'data' => $user->ApiEducations
-                    ],
-                        [
-                        'section' => 'avatar',
-                        //  'title' => 'دنبال شوندگان',
-                        // 'type' => '0',
-                        'data' => $user->avatar_link
-                    ],
-                        [
-                        'section' => 'effects',
-                        'title' => 'آثار',
-                        'type' => '4',
-                        'data' =>
-                            [
-                                [
-                                'field' => 'title',
-                                'title' => 'عنوان',
-                                'value' => 'اثر یک',
-                            ],
-                                [
-                                'field' => 'title',
-                                'title' => 'عنوان',
-                                'value' => 'اثر دو',
-                            ],
-                                [
-                                'field' => 'title',
-                                'title' => 'عنوان',
-                                'value' => 'اثر سه',
-                            ],
-                        ]
-                    ],
+                    ]
                 ]
             ]
         ];
@@ -744,6 +715,38 @@ class UserController extends Controller {
             $result['success'] = true;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
+    }
+
+    public function getAvatar() {
+        
+        
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+            $file = \App\Models\Hamahang\FileManager\FileManager::find($user->avatar);
+            if ($file) {
+                $file_EXT = \App\Models\Hamahang\FileManager\FileMimeTypes::where('mimeType', '=', $file->mimeType)->firstOrFail()->ext;
+                $headers = array("Content-Type:{$file->mimeType}");
+           
+                if (\Storage::disk('FileManager')->has($file->path . $file->filename)) {
+                        
+                    $file_path = storage_path() . '/app/FileManager' . $file->path . 'mobile_' . $file->filename;
+                    if (!\Storage::disk('FileManager')->has($file->path . 'mobile_' . $file->filename)) {
+                      
+                        $img = \Intervention\Image\Facades\Image::make(storage_path() . '/app/FileManager' . $file->path . $file->filename);
+                        $img->resize(100, 100);
+                        $img->save($file_path);
+                    }
+                    
+                    return response()->download($file_path, $file->originalName . $file_EXT, $headers);
+                } else {
+                    return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
+                }
+            } else {
+                return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
+            }
+        
     }
 
 }
