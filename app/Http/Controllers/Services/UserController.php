@@ -576,6 +576,7 @@ class UserController extends Controller {
 
             $result['message'][] = trans('acl.role_edited_successfully');
             $result['success'] = true;
+            $result['id'] = $user_work->id;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
     }
@@ -657,8 +658,9 @@ class UserController extends Controller {
             $user_education->save();
 
 
-            $result['message'][] = trans('acl.role_edited_successfully');
+            $result['message'] = trans('acl.role_edited_successfully');
             $result['success'] = true;
+            $result['id'] = $user_education->id;
             return response()->json($result, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
     }
