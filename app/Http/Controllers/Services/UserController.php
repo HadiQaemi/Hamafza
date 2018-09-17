@@ -723,6 +723,7 @@ class UserController extends Controller {
         
         
             $user = getUser();
+            $not_found_img = 'user_avatar.png';
             if (!isset($user->id)) {
                 return $user;
             }
