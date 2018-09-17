@@ -7,7 +7,7 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
 <link rel="stylesheet" type="text/css" href="{{$base_url.'/theme/Content/css/jquery.ui.datepicker1.8-all.css'}}" />
 <link rel="stylesheet" type="text/css" href="{{$base_url.'/assets/Packages/bootstrap/css/bootstrap.css'}}"/>
 <link rel="stylesheet" type="text/css" href="{{$base_url.'/assets/Packages/bootstrap/css/bootstrap-rtl.css'}}"/>
-<link rel="stylesheet" type="text/css" href="{{$base_url.'/theme/Content/css/contents.css'}}"/>
+<link rel="stylesheet" type="text/css" href="{{$base_url.'/theme/Content/css/content.css'}}"/>
 <link rel="stylesheet" type="text/css" href="{{$base_url.'/theme/Content/css/public.css'}}"/>
 <link href='http://www.fontonline.ir/css/BZar.css' rel='stylesheet' type='text/css'>
 
@@ -15,7 +15,7 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
     body {
         overflow: auto;
         background:  #fff;
-        font-size: 1.2em;
+        font-size: 1.4em;
         font-family: BZar,'BZar',tahoma;;
         margin: 10px 20px 10px 20px;
     }
@@ -23,5 +23,5 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
 @stop
 
 @section('content')
-<div>{!! $content_main !!}</div>
+<div id = "TextSection">{!! $content_main !!}</div>
 @stop
