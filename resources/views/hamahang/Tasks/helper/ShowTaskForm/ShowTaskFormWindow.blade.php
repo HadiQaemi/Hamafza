@@ -16,7 +16,7 @@
         <a href="#tab_t5" data-toggle="tab">اقدام</a>
         </li>
         <li>
-        <a href="#tab_t6" data-toggle="tab">بحث و پیگیری</a>
+        <a href="#tab_t6" data-toggle="tab">گفتگو</a>
         </li>
         <li>
         <a href="#tab_t7" data-toggle="tab">سابقه</a>
@@ -863,7 +863,7 @@
             <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
                     <div class="col-xs-3">
-                        <label class="line-height-3">بحث و پیگیری</label>
+                        <label class="line-height-3">گفتگو</label>
                     </div>
                     <div class="col-xs-8">
                         <input type="text" id="message" class="form-control" placeholder="پیام"/>

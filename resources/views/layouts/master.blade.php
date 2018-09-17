@@ -243,7 +243,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								{{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
                                 eventInfo = (result.event);
                                 (function ($) {
                                     $("#calendar").fullCalendar('addEventSource', [{
@@ -261,11 +261,13 @@
 						}
 					});
 				}
-                function UpdateTask(form_id, again,action,save_type) {
+                function UpdateTask(form_id, again,action) {
                     //console.log(form_id);
                     $('#task_form_action').val(action);
-                    $('#save_type').val(save_type);
+                    $('#save_type').val(1);
                     var form_data = $('#' + form_id).serialize();
+                    console.log(form_data);
+                    alert($('input[name="show_task_save_type"]').val());
                     $.ajax({
                         type: "POST",
                         url: '{{ route('hamahang.tasks.update_task')}}',
@@ -299,7 +301,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								{{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+								messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
 							}
 							else {
 								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -336,11 +338,10 @@
                     $('#task_of_action').val('fffffffffffffff');
                     var $this = $(this);
                     var form_id = $this.data('form_id');
+                    var form_id = $this.data('form_id');
                     var save_again = $this.data('again_save');
-                    var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :
-                        ($("input[name='show_task_save_type']:checked").val() != undefined ? $("input[name='show_task_save_type']:checked").val() :
-                            ($("input[name='show_task_save_type_final']:checked").val() != undefined ? $("input[name='show_task_save_type_final']:checked").val() : '') );
-                    UpdateTask(form_id, save_again,1,save_type);
+
+                    UpdateTask(form_id, save_again,1);
                 });
 				$(document).on('click', '.save_task', function () {
 					var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :

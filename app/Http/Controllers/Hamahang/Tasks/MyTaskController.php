@@ -43,11 +43,7 @@ use App\Models\Hamahang\keywords;
 class MyTaskController extends Controller
 {
     public function FetchAllTaskList(){
-
-//        dd(Request::all());
-//        db::enableQueryLog();
         $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
-//        dd(db::getQueryLog());
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
@@ -89,10 +85,13 @@ class MyTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-//                return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>" . $data->Name . " " . $data->Family . "</a>";
-                return $data->Name . " " . $data->Family;
+                return $data->f_name . " " . $data->f_family;
+            })->addColumn('assigner', function ($data)
+            {
+                return $data->t_name . " " . $data->t_family;
             })
             ->rawColumns(['employee'])
+            ->rawColumns(['assigner'])
             ->make(true);
     }
 
@@ -149,6 +148,80 @@ class MyTaskController extends Controller
                 break;
         }
     }
+    public function ListAllTaskState($uname){
+        $packages = task_packages::where('uid', Auth::id())->get();
+//        dd(\Route::currentRouteName());
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_state':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
+                return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
+                break;
+            case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_state':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
+                return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
+                break;
+        }
+    }
+
+    public function filter_all_task_priority()
+    {
+        $Request = Request::all();
+        $validator = Validator::make(Request::all(), [
+            'task_title' => 'string',
+            'respite' => 'integer',
+            'official_type' => 'array',
+            'task_status' => 'array',
+        ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+//            dd(\Route::currentRouteName(),Request::all());
+            $respite = Request::get('respite');
+            $task_title = Request::get('task_title');
+            $task_status = Request::get('task_status');
+            $official_type = Request::get('official_type');
+            $source = Request::get('act');
+            $filter_subject_id = Request::input('filter_subject_id') != "undefined" ? Request::input('filter_subject_id') : '';
+//            DB::enableQueryLog();
+            $with_array = tasks::AllTasksPriority(['filter_subject_id'=>$filter_subject_id],$task_status, $task_title, $respite, $official_type,$source);
+//            dd(DB::getQueryLog());
+            $result['data'] = view('hamahang.Tasks.helper.priority.content')->with($with_array)->render();
+            $result['success'] = true;
+            return json_encode($result);
+        }
+    }
+
+    public function ListAllTaskPriority($uname){
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_priority':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['filter_subject_id'] = $arr["pid"];
+//                DB::enableQueryLog();
+                $arr = array_merge($arr, tasks::AllTasksPriority($arr,[0,1],false,false,[0,1]));
+//                dd(DB::getQueryLog());
+                return view('hamahang.Tasks.PriorityAllTasks', $arr);
+                //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
+                break;
+            case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_priority':
+                $arr = variable_generator('user', 'desktop', $uname);
+                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
+                return view('hamahang.Tasks.priority', $arr);
+                //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
+                break;
+        }
+    }
+
     private function my_task_in_status($arr = false, $user = false)
     {
 

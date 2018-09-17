@@ -133,7 +133,6 @@
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "ajax": {
-                "url": "{{ route('hamahang.tasks.my_tasks.fetch') }}",
                 "url": "{{ route('hamahang.tasks.my_tasks.fetch_all_task') }}",
                 "type": "POST",
                 "data": send_info
@@ -152,6 +151,7 @@
                     }
                 },
                 {"data": "employee"},
+                {"data": "assigner"},
                 {"data": "immediate"},
                 {"data": "respite"},
                 {"data": "type"}
@@ -168,110 +168,6 @@
 //            }
             ]
         })
-    }
-    function call_modal(title, message, callback_function) {
-        $('#confirm_modal_massage').html(message);
-        $('#confirm_modal_title').html(title);
-        $("#confirm_ok").attr("onclick", callback_function + "(1)");
-        $('#confirm_modal').modal({show: true});
-    }
-    function close_modal() {
-
-        $('#confirm_modal').modal('hide');
-
-    }
-    function RemovePackage(id) {
-        $('#new_package').modal('hide');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var sendInfo = {
-            id: id,
-        };
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.tasks.my_tasks.remove_from_package') }}',
-            dataType: "json",
-            data: sendInfo
-        });
-    }
-
-    function RemoveKeyword(id) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var sendInfo = {
-            kid: id,
-            id: current_id
-        };
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.tasks.my_tasks.remove_keyword') }}',
-            dataType: "json",
-            data: sendInfo,
-            success: function (data) {
-                // console.log(data);
-                var cur_kw = '';
-                $.each(data, function (key, value) {
-                    cur_kw += '<a class="btn btn-default"  style="margin-right: 3px"><i class="fa fa-remove" style="margin-left: 5px" onclick="RemoveKeyword(' + value.id + ')"></i>'
-                        + value.keyword + '</a>';
-                })
-                $('#current_kw').html(cur_kw);
-            }
-        });
-    }
-    function RemoveFromPackage(id) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var sendInfo = {
-            pid: id,
-            id: current_id
-
-        };
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.tasks.my_tasks.remove_from_package') }}',
-            dataType: "json",
-            data: sendInfo,
-            success: function (data) {
-                var cur_pkg = '';
-                $.each(data, function (key, value) {
-                    cur_pkg += '<a class="btn btn-default"  style="margin-right: 3px"><i class="fa fa-remove" style="margin-left: 5px" onclick="RemoveFromPackage(' + value.id + ')"></i>' + value.title + '</a>';
-                })
-                $('#current_packages').html(cur_pkg);
-            }
-        });
-    }
-    function AddNewPackage() {
-        $('#new_package').modal('hide');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var sendInfo = {
-            title: $('#packagetitle').val(),
-        };
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.tasks.my_tasks.new_package') }}',
-            dataType: "json",
-            data: sendInfo,
-            success: function (data) {
-                var p = '';
-                for (var i = 0; i < data.length; i++) {
-                    p += '<option id="' + data[i]['id'] + '">' + data[i]['title'] + '</option>';
-                }
-                $('#packages').html(p);
-            }
-        });
     }
 
     var t2_default;

@@ -821,26 +821,23 @@ class tasks extends Model
             ->whereNull('hamahang_task_assignments.reject_description')
             ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
             ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [$uid])
-           //->toSql();
-       
-            ->get();//    
+            ->get();//
         return $result;
     }
 
     public static function ListAllAssignedTasks($user_id = false, $subject_id = false, $api = false)
     {
-
         $status_filter = Request::get('task_status');
         $official_type = Request::get('official_type');
         $important = Request::get('task_important');
         $immediate = Request::get('task_immediate');
         $filter_subject_id = Request::get('subject_id');
-
         $result = DB::table('hamahang_task')
-            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
+            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "to.Uname as t_uname", "to.Name as t_name", "to.Family as t_family", "from.Uname as f_uname", "from.Name as f_name", "from.Family as f_family", "to.Uname", "to.Name", "to.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
             ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
-            ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
+            ->leftjoin('user as to', 'to.id', '=', 'hamahang_task_assignments.employee_id')
+            ->leftjoin('user as from', 'from.id', '=', 'hamahang_task_assignments.uid')
             ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
             ->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
             ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
@@ -848,12 +845,10 @@ class tasks extends Model
         ;
         $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)) ');
 
-
         if ($official_type)
         {
             $result->whereIn('hamahang_task.type', $official_type)
                 ->whereNull('hamahang_task.deleted_at');
-//            dd($immediate);
         }
         else
         {
@@ -864,20 +859,14 @@ class tasks extends Model
         {
             $result->whereIn('hamahang_task_status.type', $status_filter)
                 ->whereNull('hamahang_task_status.deleted_at');
-//            dd($immediate);
         }
-        else
-        {
-//                $result->whereIn('hamahang_task_status.type', [11]);
-        }
+        else{}
 
         if ($immediate)
         {
             $result->whereIn('hamahang_task_priority.immediate', $immediate)
                 ->whereNull('hamahang_task_priority.deleted_at');
-//            dd($immediate);
-        }
-        else
+        }else
         {
             $result->whereIn('hamahang_task_priority.immediate', [11]);
         }
@@ -886,13 +875,11 @@ class tasks extends Model
         {
             $result->whereIn('hamahang_task_priority.importance', $important)
                 ->whereNull('hamahang_task_priority.deleted_at');
-//            dd($important);
         }
         else
         {
             $result->whereIn('hamahang_task_priority.importance', [11]);
         }
-
 
         $result = $result->get();
         return $result;
@@ -1282,9 +1269,6 @@ class tasks extends Model
                     $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id']);
                 });
             }
-//            $tasks_immediate_importance->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
-//                ->whereNull('hamahang_subject_ables.deleted_at');
         }
 
         if ($title_filter)
@@ -1314,18 +1298,122 @@ class tasks extends Model
             }
         }
 
-
         $tasks_immediate_importance = $tasks_immediate_importance->get();
-//        $tasks_immediate_importance->get();
-        if ($respite_filter)
+
+        return $tasks_immediate_importance;
+    }
+
+    public static function all_task_in_status($arr = false, $user = false)
+    {
+
+        $official_type = [0,1];
+        $importance = [0,1];
+        $immediate = [0,1];
+
+        if (!$user)
         {
-            $tasks_immediate_importance = $tasks_immediate_importance->filter(function ($item) use ($respite_filter)
+            $user = auth()->user();
+        }
+        $myTasks=[];
+
+        $tasks_status = self::whereHas('Pages', function ($query) use ($arr) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        $tasks_status = $tasks_status->whereHas('Priority', function ($query) use ($immediate, $importance)
+        {
+            $query->whereIn('immediate', $immediate)->whereIn('importance', $importance)->whereNull('deleted_at');
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
+        }
+
+        $myTasks['not_started'] = $tasks_status->whereHas('Status', function ($q){
+            $q->where('type', 0);
+        });
+        $myTasks['not_started'] = $myTasks['not_started']->get();
+
+        $myTasks['started'] = $tasks_status->whereHas('Status', function ($q){
+            $q->where('type', 1);
+        });
+        $myTasks['started'] = $myTasks['started']->get();
+
+        $myTasks['done'] =$tasks_status->whereHas('Status', function ($q){
+            $q->where('type', 2);
+        });
+        $myTasks['done'] = $myTasks['done']->get();
+
+        $myTasks['ended'] = $tasks_status->whereHas('Status', function ($q){
+            $q->where('type', 3);
+        });
+        $myTasks['ended'] = $myTasks['ended']->get();
+        $user = auth()->user();
+        return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
+    }
+
+    public static function all_tasks_immediate_importance($arr,$immediate = 0, $importance = 0, $type = 'MyTasks', $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
+    {
+//        db::enableQueryLog();
+        $tasks_immediate_importance = self::whereHas('Pages', function ($query) use ($arr) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Priority', function ($query) use ($immediate, $importance)
+        {
+            $query->where('immediate', $immediate)->where('importance', $importance)->whereNull('deleted_at');
+        });
+
+        if ($status_filter)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query) use ($status_filter)
             {
-                return $item->RespiteRemain['days'] >= (int)$respite_filter;
+                $query->whereIn('type', $status_filter);
+            });
+        }
+        else
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Status', function ($query)
+            {
+                $query->whereIn('type', [11]);
             });
         }
 
+        if ($title_filter)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->where('title', 'like', '%' . $title_filter . '%');
+        }
 
+        if ($official_type)
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', [11]);
+        }
+
+        if (Request::exists('task_fianl'))
+        {
+            $task_fianl = Request::input('task_fianl');
+            if ($status_filter)
+            {
+                $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_fianl)
+                    ->whereNull('hamahang_task.deleted_at');
+            }
+            else
+            {
+                $tasks_immediate_importance->whereIn('hamahang_task.is_save', [11]);
+            }
+        }
+
+        $tasks_immediate_importance = $tasks_immediate_importance->get();
+//        dd($tasks_immediate_importance,db::getQueryLog());
         return $tasks_immediate_importance;
     }
     public static function MyTasksPriority($arr,$status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false, $source='MyTasks')
@@ -1335,6 +1423,15 @@ class tasks extends Model
             'tasks_not_immediate_importance' => self::tasks_immediate_importance($arr,0, 1, $source,$status_filter, $title_filter, $respite_filter, $official_type),
             'tasks_immediate_not_importance' => self::tasks_immediate_importance($arr,1, 0,$source, $status_filter, $title_filter, $respite_filter, $official_type),
             'tasks_not_immediate_not_importance' => self::tasks_immediate_importance($arr,0, 0,$source, $status_filter, $title_filter, $respite_filter, $official_type)
+        ];
+    }
+    public static function AllTasksPriority($arr,$status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false, $source='MyTasks')
+    {
+        return [
+            'tasks_immediate_importance' => self::all_tasks_immediate_importance($arr,1, 1, $source, $status_filter, $title_filter, $respite_filter, $official_type),
+            'tasks_not_immediate_importance' => self::all_tasks_immediate_importance($arr,0, 1, $source,$status_filter, $title_filter, $respite_filter, $official_type),
+            'tasks_immediate_not_importance' => self::all_tasks_immediate_importance($arr,1, 0,$source, $status_filter, $title_filter, $respite_filter, $official_type),
+            'tasks_not_immediate_not_importance' => self::all_tasks_immediate_importance($arr,0, 0,$source, $status_filter, $title_filter, $respite_filter, $official_type)
         ];
     }
     public static function MyTasksPriorityTime($status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)

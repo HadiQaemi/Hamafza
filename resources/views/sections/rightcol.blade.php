@@ -1,6 +1,6 @@
 @if (isset($Tree) && $Tree!='' && $Tree!='groupadmin' && $Tree!='ismember')
     <div class="Fehrest">
-        <div class="panel-heading panel-heading-darkblue ">فهرست</div>
+        {{--<div class="panel-heading panel-heading-darkblue ">فهرست</div>--}}
         <div class="panel-body searching-cntnt" style="margin-bottom: 10px">
             <div class="txtsearch">
                 <input type="text" placeholder="غربال..." id="list-search"/>

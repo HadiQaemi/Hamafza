@@ -959,6 +959,50 @@ class ModalController extends Controller
             'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ShowAssignTaskForm')->render()
         ]);
     }
+
+    public function ShowTranscriptTaskForm()
+    {
+        $res = $this->getParams(['tid','sid','aid']);
+        $task = array();
+        if ($res['tid'])
+        {
+            $res['tid'] = deCode($res['tid']);
+
+            $task = DB::table('hamahang_task_assignments as t')
+                ->leftJoin('hamahang_task', 'hamahang_task.id', '=', 't.task_id')
+                ->leftJoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+                ->leftjoin('hamahang_task_transcript', 'hamahang_task_transcript.task_id', '=', 'hamahang_task.id')
+                ->select('hamahang_task.*','hamahang_task_status.type as task_status','hamahang_task_status.percent as percent')
+                ->where('t.task_id','=', $res['tid'])
+                ->where('t.id','=', $res['aid'])
+                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+                ->whereNull('hamahang_task_status.deleted_at')
+                ->where(function($q) {
+                    $q->where('t.assigner_id', Auth::id())
+                        ->orWhere('t.employee_id', Auth::id())
+                        ->orWhere('t.employee_id', Auth::id())
+                        ->orWhere('t.uid', Auth::id());
+                })
+                ->first();
+        }
+        $res = $this->TakeTaskInfo($res,$task);
+        $res['task_status'] = $task->task_status;
+        $res['percent'] = $task->percent;
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowAssignTaskForm.ShowAssignTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', '')->render()
+        ]);
+    }
     public function ShowTaskForm()
     {
         $res = $this->getParams(['tid','sid','aid']);

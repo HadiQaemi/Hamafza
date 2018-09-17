@@ -144,6 +144,7 @@
                 "data": send_info
             },
             "autoWidth": false,
+            "pageLength": 25,
             "language": LangJson_DataTables,
             "processing": true,
             columns: [
