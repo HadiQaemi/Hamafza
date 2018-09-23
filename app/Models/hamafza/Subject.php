@@ -43,21 +43,34 @@ class Subject extends Model
 
     public static function page_tabs($subject_id)
     {
-        //\DB::enableQueryLog();
+//        \DB::enableQueryLog();
+//        $pages =
+//            \DB::table('pages as p')
+//                ->leftJoin('subjects as s', 's.id', '=', 'p.sid')
+//                ->leftJoin('subject_type_tab as stt', 'stt.tid', '=', 'p.type')
+//                ->join('tab_view as tv', 'tv.tabid', '=', 'stt.id')
+//                ->where('p.sid', '=', $subject_id)
+//                ->whereColumn('stt.stid', '=', 's.kind')
+//                ->where('tv.sid', '=', $subject_id)
+//                ->where('stt.view', '=', '1')
+//                ->select('p.id as link', 'p.id as href', 'stt.name as title')
+//                ->groupBy('p.id')
+//                ->orderBy('stt.orders')
+//                ->get();
         $pages =
             \DB::table('pages as p')
                 ->leftJoin('subjects as s', 's.id', '=', 'p.sid')
-                ->leftJoin('subject_type_tab as stt', 'stt.tid', '=', 'p.type')
+                ->leftJoin('subject_type_tab as stt', 'stt.stid', '=', 's.kind')
                 ->join('tab_view as tv', 'tv.tabid', '=', 'stt.id')
                 ->where('p.sid', '=', $subject_id)
                 ->whereColumn('stt.stid', '=', 's.kind')
                 ->where('tv.sid', '=', $subject_id)
                 ->where('stt.view', '=', '1')
                 ->select('p.id as link', 'p.id as href', 'stt.name as title')
-                ->groupBy('p.id')
+                ->groupBy('stt.id')
                 ->orderBy('stt.orders')
                 ->get();
-        //dd($pages,\DB::getQueryLog());
+//        dd($pages,\DB::getQueryLog());
         $pages_tabs = json_decode(json_encode($pages));
         foreach ($pages_tabs as $value)
         {
