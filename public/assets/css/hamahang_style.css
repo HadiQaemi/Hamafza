@@ -1627,6 +1627,10 @@ th{
 #portallist-search{
     height: 34px !important;
 }
+#portallist-search::placeholder {
+    color: #ccc;
+    opacity: 1; /* Firefox */
+}
 #bookmarklist-search{
     height: 34px !important;
 }
@@ -1636,6 +1640,15 @@ th{
     border-bottom: 1px solid #585d5e !important;
     border-radius: 0px !important;
     background: #fff !important;
+    color: #ccc !important;
+}
+#page4 #search_term::placeholder {
+    color: #ccc;
+    opacity: 1; /* Firefox */
+}
+#bookmarklist-search::placeholder {
+    color: #ccc;
+    opacity: 1; /* Firefox */
 }
 #page4 #search_term::placeholder {
     color: #fff;
@@ -1683,9 +1696,6 @@ th{
     overflow: visible !important;
     /*width: 100%!important;*/
     /*height: 100%!important;*/
-}
-#search_term{
-    color: #FFF;
 }
 #keyWords .gm-scroll-view{
   opacity: 0;
@@ -1808,4 +1818,10 @@ th{
 }
 .fc-title{
     color: #FFF0FF !important;
+}
+.jsPanel-btn-smallify{
+    display: none;
+}
+.jsPanel-btn-minimize{
+    display: none;
 }

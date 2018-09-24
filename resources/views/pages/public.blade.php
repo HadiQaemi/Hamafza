@@ -18,6 +18,12 @@
                 <?php  Session::put('NewAlert', '');?>
             @endif
 {{--            {!!$Tree!!}--}}
+
+                @if(isset($_GET['s']))
+                    @php
+                        $content = str_ireplace($_GET['s'],"<span style='background: #9e9b29;padding: 5px;color:#fffefb;border-radius:5px'>".$_GET['s']."</span>",$content);
+                    @endphp
+                @endif
             {!!$content!!}
 {{--            {{$content}}--}}
         </div>

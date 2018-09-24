@@ -86,7 +86,7 @@ if (!function_exists('PageTabs'))
                 $page_tabs = \App\Models\hamafza\Subject::page_tabs((int)$item);
                 $res['link'] = (int)$item . '/forum';
                 $res['href'] = $res['link'];
-                $res['title'] = 'بحث';
+                $res['title'] = 'گفتگو';
                 $res['selected'] = "false";
                 array_push($page_tabs, $res);
                 $res['link'] = (int)$item . '/desktop';
@@ -897,6 +897,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $pre_title = $pageM->subject->subject_type->pretitle;
                         $Title = $pre_title . ' ' . $Title_page;
                         $PC = new \App\HamafzaViewClasses\PageClass();
+
                         $res = $PC->CreatPageView($pid, $params['Type'], $params['PreCode']);
                         $res = array_merge($res, ['keywords' => $pageM->subject->keywords()->with('synonym_relations')->with('synonym_relations_reverse')->get()]);
                         $keywords_relations = [];
@@ -941,6 +942,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         }
                         
                         $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
+
                         switch ($subject->kind)
                         {
                             case '20':

@@ -163,7 +163,7 @@
             </div>
             <div id="page4" class="tab-pane fade" style="margin: 0 15px 0 15px;">
                 <div class="row">
-                    <input type="text" name="search_term" id="search_term" class="form-control pull-right" placeholder="{{trans('app.search')}}..." style="width: 80%;background: #787979 !important;" />
+                    <input type="text" name="search_term" id="search_term" class="form-control pull-right" placeholder="{{trans('app.search_term')}} ..." style="width: 80%;background: #787979 !important;" />
                     <input type="button" name="search_submit" id="search_submit" class="btn btn-primary pull-left" value="بیاب" style="height: 34px;  width: 15%;" />
                 </div>
                 <div class="row">

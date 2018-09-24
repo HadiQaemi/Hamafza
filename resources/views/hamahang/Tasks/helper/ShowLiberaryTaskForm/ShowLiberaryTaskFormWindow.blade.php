@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('app.about') }}</label></div>
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
                     <div class="col-lg-11">
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
                     <div class="col-lg-11">
                         <select class="select2_auto_complete_keywords"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
@@ -689,7 +689,7 @@
                 </div>
                 <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                        <label class="line-height-35">{{ trans('tasks.keyword') }}</label>
                     </div>
                     <div class="col-lg-11">
                         <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"

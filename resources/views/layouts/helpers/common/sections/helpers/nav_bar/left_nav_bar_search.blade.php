@@ -25,13 +25,13 @@
             foreach ($searchs['pages']['title'] as $search_item)
             {
                 $title = $search_item->title;
-                preg_match('/^.{1,60}\s/s', $search_item->title, $match);
+                preg_match('/^.{1,150}\s/s', $search_item->title, $match);
                 if(isset($match[0]))
                     $title = trim($match[0])== $search_item->title ? $match[0] : $match[0].'... ';
                 $r .=
                 '
                 <li id="search_page_' . $search_item->id . '" style="list-style: inside none square;">
-                    <a rel="canonical" href="' . url("/{$search_item->pages[0]->id}") . '" target="_blank" style="color: white;">' . ($title ? : '[بدون عنوان]') . '</a>
+                    <a rel="canonical" href="' . url("/{$search_item->pages[0]->id}") . '?s='.$term.'" target="_blank" style="color: white;">' . ($title ? : '[بدون عنوان]') . '</a>
                 </li>
                 ';
             }
@@ -43,13 +43,13 @@
             foreach ($searchs['pages']['content'] as $search_item)
             {
                 $title = $search_item->subject->title;
-                preg_match('/^.{1,60}\s/s', $search_item->subject->title, $match);
+                preg_match('/^.{1,150}\s/s', $search_item->subject->title, $match);
                 if(isset($match[0]))
                     $title = trim($match[0])== $search_item->subject->title ? $match[0] : $match[0].'... ';
                 $r .=
                 '
                 <li id="search_page_' . $search_item->id . '" style="list-style: inside none square;">
-                    <a rel="canonical" href="' . url("/{$search_item->id}") . '" target="_blank" style="color: white;">' . "{$title} ({$search_item->tab_name})" . '</a>
+                    <a rel="canonical" href="' . url("/{$search_item->id}") . '?s='.$term.'" target="_blank" style="color: white;">' . "{$title} ({$search_item->tab_name})" . '</a>
                 </li>
                 ';
             }
@@ -63,7 +63,7 @@
         foreach ($searchs['posts'] as $search_item)
         {
             $title = $search_item->subject->title;
-            preg_match('/^.{1,60}\s/s', $search_item->subject->title, $match);
+            preg_match('/^.{1,150}\s/s', $search_item->subject->title, $match);
             if(isset($match[0]))
                 $title = trim($match[0])== $search_item->subject->title ? $match[0] : $match[0].'... ';
             $r .=

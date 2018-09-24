@@ -52,6 +52,10 @@
                     data: 'user.melli_code',
                     name: 'user.melli_code'
                 },
+                {
+                    data: 'items[0].subject_title',
+                    name: 'subject_title'
+                },
                 @endif
                 {
                     data: 'invoice_no',

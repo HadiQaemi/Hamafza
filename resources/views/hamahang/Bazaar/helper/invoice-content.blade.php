@@ -11,6 +11,7 @@
             <th style="text-align: center;">{{ trans('bazaar.invoice.customer_family') }}</th>
             <th style="text-align: center;">{{ trans('bazaar.invoice.customer_mellicode') }}</th>
         @endif
+        <th style="text-align: center;">{{ trans('bazaar.invoice.subjects.subject_title') }}</th>
         <th style="text-align: center;">{{ trans('bazaar.invoice.invoice_no') }}</th>
         <th style="text-align: center;">{{ trans('bazaar.invoice.subject_count') }}</th>
         <th style="text-align: center;">{{ trans('bazaar.invoice.date') }}</th>

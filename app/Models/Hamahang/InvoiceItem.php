@@ -32,5 +32,9 @@ class InvoiceItem extends Model
         return $user ? $user->FullName : 'خطا';
     }
 
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Hamahang\Invoice','id','invoice_id');
+    }
 }
 

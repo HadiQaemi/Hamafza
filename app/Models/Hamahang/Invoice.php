@@ -61,7 +61,7 @@ class Invoice extends Model
 
     public function items()
     {
-        return $this->hasMany('App\Models\Hamahang\InvoiceItem','invoice_id');
+        return $this->hasMany('App\Models\Hamahang\InvoiceItem','invoice_id','id');
     }
 
     public function user()

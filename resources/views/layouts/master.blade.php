@@ -159,13 +159,13 @@
                             </div>
 
                             <div hmfz-pg-tb="" class="next-container dsply-tbl-cl" style="overflow: hidden">
-                                <div hmfz-pg-tb-cntnt="" class="row row-hd">
+                                <div hmfz-pg-tb-cntnt="" class="row row-hd margin-top-min-4">
                                     {{--<div class="scrl-bx" id="vrScroll" style="height: 90vh;width: 100%;overflow: scroll;">--}}
                                     <div class="" id="vrScroll2">
                                         @if(View::hasSection('position_right_col_3') || View::hasSection('Tree'))
                                             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 scrl noPadding background-white">
                                                 {{--<div id="pcol_3" class="scrl-22 mCustomScrollbar col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
-                                                <div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr;">
+                                                <div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: rtl;">
                                                     <div style="direction: rtl">
                                                         @yield('position_right_col_3')
                                                         @yield('Tree')
@@ -180,7 +180,7 @@
                                                         <div style="direction: rtl">
                                                             @endif
                                                             {{--<div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
-                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: ltr;">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: rtl;width: 99.5%;padding-left: 0px;overflow-x: hidden;">
                                                                 <div style="direction: rtl;" id="master_inner_rtl_div" >
                                                                     <div class="panel panel-light fix-box first-fix-box height-100" style="margin-bottom: 50px;">
                                                                         <button class="ful-scrn">
@@ -445,7 +445,7 @@
                 if($(document).width() > 1000){
                     $('.hd-body').css('max-height','80vh');
                     $('.hd-body').css('overflow-y','auto');
-                    $('.hd-tree').css('max-height','80vh');
+                    $('.hd-tree').css('max-height','82vh');
                     $('.hd-tree').css('overflow-y','auto');
                     // $('.user-config').css('margin-left','-7px');
                     $('.logo').css('margin-right','20px !important');

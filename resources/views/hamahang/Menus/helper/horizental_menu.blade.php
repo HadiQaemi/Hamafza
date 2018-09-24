@@ -11,15 +11,21 @@
     }
 
 </style>
+@php
+    $menus = html_ordered_menu($menus,0,"nav navbar-nav navbar-right quick-links-res hidden-xs");
+@endphp
+<div class="horizontal-menu">
+    {!! $menus !!}
+</div>
 <ul class="nav navbar-nav navbar-right quick-links-res hidden-xs">
-    @foreach($menus as $menu)
-        <li><a style="color:#FFF !important;" href="{{$menu->href}}">{{$menu->title }}</a></li>
-    @endforeach
+    {{--@foreach($menus as $menu)--}}
+        {{--<li><a style="color:#FFF !important;" href="{{$menu->href}}">{{$menu->title }}</a></li>--}}
+    {{--@endforeach--}}
 </ul>
 <ul class="nav navbar-nav navbar-right quick-links-res hidden-sm hidden-md hidden-lg">
-    @foreach($menus as $menu)
-        <li class="res-li" ><a class="res-a" href="{{$menu->href}}">{{$menu->title }}</a></li>
-    @endforeach
+    {{--@foreach($menus as $menu)--}}
+        {{--<li class="res-li" ><a class="res-a" href="{{$menu->href}}">{{$menu->title }}</a></li>--}}
+    {{--@endforeach--}}
 </ul>
 @php ($logged_in = session('Login') && session('Login') == 'TRUE')
 @php ($style = $logged_in ? null : 'style="display: none;"')

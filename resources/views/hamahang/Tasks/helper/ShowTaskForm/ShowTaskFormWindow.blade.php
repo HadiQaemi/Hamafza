@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
                     <div class="col-lg-10">
                         <select class="select2_auto_complete_keywords"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
@@ -643,7 +643,7 @@
                 <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
                     <div class="col-xs-1">
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                            <label class="line-height-35">{{ trans('tasks.keyword') }}</label>
                         </span>
                     </div>
                     <div class="col-xs-11">

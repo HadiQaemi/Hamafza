@@ -792,7 +792,7 @@ class BazaarController extends Controller
     public function invoice_get_datatable()
     {
         $invoices = Invoice
-            ::with('user')
+            ::with('user')->with('items')
             ->withCount
             ([
                 'items',
@@ -801,6 +801,7 @@ class BazaarController extends Controller
                     $query->select(DB::raw('SUM(subject_count) AS subjects'));
                 }
             ]);
+
         $r = Datatables::eloquent($invoices)
             ->addColumn('invoice_no', function ($data)
             {
@@ -822,12 +823,14 @@ class BazaarController extends Controller
             {
                 return $data->last_status;
             })
+
             ->addColumn('has_coupon_label', function ($data)
             {
                 return trans('bazaar.invoice.has_coupon_' . ($data->has_coupon ? 'yes' : 'no'));
             })
             ->rawColumns(['has_coupon_label'])
             ->make(true);
+
         return $r;
     }
 

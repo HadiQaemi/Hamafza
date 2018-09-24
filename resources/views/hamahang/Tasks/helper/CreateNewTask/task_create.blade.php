@@ -187,7 +187,7 @@
     </tr>
     <tr>
         <td class="width-120">
-            <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+            <label class="line-height-35">{{ trans('tasks.keyword') }}</label>
         </td>
         <td>
             <div class="row-fluid">

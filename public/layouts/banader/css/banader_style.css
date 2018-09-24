@@ -257,9 +257,10 @@ body{
 }
 #header .quick-links-res li {
     float: right;
+    margin-top: 10px;
 }
 #header .quick-links-res a {
-    font-size: 18px;
+    font-size: 15px;
     color: #fff;
     cursor: pointer;
     /*line-height: 28px;*/

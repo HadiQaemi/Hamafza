@@ -1179,7 +1179,7 @@ $(document).ready(function(){
             $("#toolbar .btn-group").css("height","39px");
             $("#toolbar").css("height","87px");
             $(".scrl").css("height","85vh");
-            $("#pcol_32").css("max-height","80vh");
+            $("#pcol_32").css("max-height","82vh");
             $("#header").removeClass("hidden");
             var pos = $(".ful-scrn").offset();
             var master_inner_rtl_div = $("#toolbar").offset();
@@ -1191,13 +1191,14 @@ $(document).ready(function(){
 
         }
 
-
-        if ($(".hd-body").scrollTop() > 80 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
+        if(parseInt($('#new-content').height())>200)
             $(".mixed-scroll").removeClass('hidden');
-        }
-        if ($(".hd-body").scrollTop() < 80 || $(".hd-body").scrollTop()>(parseInt($('#new-content').height())-1000)) {
-            $(".mixed-scroll").addClass('hidden');
-        }
+        // if ($(".hd-body").scrollTop() > 80 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
+        //     $(".mixed-scroll").removeClass('hidden');
+        // }
+        // if ($(".hd-body").scrollTop() < 80 || $(".hd-body").scrollTop()>(parseInt($('#new-content').height())-1000)) {
+        //     $(".mixed-scroll").addClass('hidden');
+        // }
     });
 
 });

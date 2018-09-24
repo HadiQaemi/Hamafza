@@ -113,7 +113,7 @@ return array(
     'user_det_ok' => "اطلاعات بروز گردید.",
     'rhightcol_mywall_title' => "تازه‌های دیوار من ",
     'rhightcol_mywall_no_data' => "برای مشاهده آخرین مطالب دیوار خود، باید وارد سامانه شوید.",
-    'rhightcol_pagewall_title' => " آخرین بحث‌های این صفحه‌ ",
+    'rhightcol_pagewall_title' => " آخرین گفتگوهای این صفحه‌ ",
     'rhightcol_pagewall_no_data' => "مطلبی برای شما وجود ندارد",
     'rhightcol_userwall_no_data' => "مطلبی برای شما وجود ندارد",
     'rhightcol_mygroup_title' => "گروه‌های من ",

@@ -3846,7 +3846,7 @@ var id = data.node.id;
         //dd($posts);
         $ar['link'] = $SID . '/forum';
         $ar['href'] = $ar['link'];
-        $ar['title'] = 'بحث';
+        $ar['title'] = 'گفتگو';
         $ar['selected'] = "false";
 
         array_push($posts, $ar);

@@ -74,5 +74,5 @@
 
     </div>
 </div>
-<div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;">
+<div id="pcol_32" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 82vh; overflow-y: auto;">
     <div style="direction: rtl">

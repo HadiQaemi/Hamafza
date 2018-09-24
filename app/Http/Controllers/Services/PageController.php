@@ -62,7 +62,7 @@ class PageController extends Controller {
                     'data' => $Tree
                 ],
                     [
-                    'title' => 'بحث',
+                    'title' => 'گفتگو',
                     'selected' => '0',
                     'type' => '5',
                     'data' => $subject->ApiPosts

@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('app.about') }}</label></div>
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
                     <div class="col-lg-11">
                         <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
                             @if($pid)
@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12 noRightPadding " style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding "><label class="line-height-35">{{ trans('app.keywords') }}</label></div>
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding "><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
                     <div class="col-lg-11">
                         <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                 data-placeholder="{{trans('tasks.select_some_keywords')}}"
@@ -179,14 +179,13 @@
                     </div>
                     <div class="col-lg-11 line-height-35">
                         <div class="col-xs-12 noRightPadding noLeftPadding">
-
                             <span class="pull-right padding-left-20">
-                                <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0" checked/>
-                                <label for="determination_doing_duration" style="margin-left: 0px;">{{ trans('tasks.determination_doing_duration') }}</label>
+                                <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1" checked/>
+                                <label for="determination_end_date" style="margin-left: 0px;">{{ trans('tasks.determination_end_date') }}</label>
                             </span>
                             <span class="pull-right padding-left-20">
-                                <input type="radio" name="respite_timing_type" id="determination_end_date" onclick="change_normal_task_timing_type(1)" value="1"/>
-                                <label for="determination_end_date" style="margin-left: 0px;">{{ trans('tasks.determination_end_date') }}</label>
+                                <input type="radio" name="respite_timing_type" id="determination_doing_duration" onclick="change_normal_task_timing_type(0)" value="0"/>
+                                <label for="determination_doing_duration" style="margin-left: 0px;">{{ trans('tasks.determination_doing_duration') }}</label>
                             </span>
                             <span class="pull-right padding-left-20">
                                 <input type="radio" name="respite_timing_type" id="on-time" onclick="change_normal_task_timing_type(-1)" value="2"/>
@@ -197,12 +196,10 @@
                                 <label for="no-detemine" style="margin-left: 0px;">{{ trans('tasks.no-detemine') }}</label>
                             </span>
                             <span id="normal_task_timing" class="pull-right line-height-35" style="display: inline-flex">
-                                <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_day" id="duration_day" value="1"/>
-                                <label class="pull-right" style="margin-left: 0px;">روز</label>
-                                <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_hour" id="duration_hour" value="0"/>
-                                <label class="pull-right" style="margin-left: 0px;">ساعت</label>
-                                <input class="form-control col-xs-1 pull-right" style="width: 45px" name="duration_min" id="duration_min" value="0"/>
-                                <label class="pull-right" style="margin-left: 0px;">دقیقه</label>
+                                <label class="line-height-30 pull-right">تاریخ</label>
+                                <input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">
+                                <label class="line-height-30 pull-right">ساعت</label>
+                                <input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">
                             </span>
                         </div>
                     </div>
@@ -625,7 +622,7 @@
                 <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
                     <div class="col-xs-1">
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                            <label class="line-height-35">{{ trans('tasks.keyword') }}</label>
                         </span>
                     </div>
                     <div class="col-xs-11">

@@ -52,6 +52,8 @@ return [
     'ok'                => 'تایید',
     'submit'            => 'ثبت',
     'submit_action'     => 'ثبت اقدام',
+    'page'     => 'صفحه',
+    'keyword'     => 'کلیدواژه',
     'action'     => 'اقدام',
     'add'               => 'افزودن',
     'submit_save'       => 'ثبت و ذخیره سازی',

@@ -128,6 +128,28 @@ if (!function_exists('buildMenuTree'))
     }
 
 }
+if (!function_exists('html_ordered_menu'))
+{
+    function html_ordered_menu($array,$parent_id = 0,$class="")
+    {
+        $menu_html = '<ul '.(trim($class) == '' ? '' : "class='".$class."'").'>';
+        foreach($array as $element)
+        {
+            if($element['parent_id']==$parent_id)
+            {
+                $html_ordered_menu = html_ordered_menu($array,$element['id']);
+                $strlen = strlen(trim($html_ordered_menu));
+                $menu_html .= '<li class="'.($strlen>10 ? 'parent_li li_'.$parent_id : '').'">'.($strlen>10 ? '<span class="fa fa-sort-down display-inline padding-left-10"></span>' : '').'<a href="'.$element['href'].'" class="display-inline">'.$element['title'].'</a>';
+                if($strlen>10)
+                    $menu_html .= $html_ordered_menu;
+
+                $menu_html .= '</li>';
+            }
+        }
+        $menu_html .= '</ul>';
+        return $menu_html;
+    }
+}
 if (!function_exists('menuGenerator'))
 {
     /**

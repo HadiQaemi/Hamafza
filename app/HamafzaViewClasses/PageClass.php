@@ -202,7 +202,13 @@ class PageClass
             $data['sid'] = $sid;
             if ($ISView == 1)
             {
-                $page = $pc->modifyText($Body, $uid, $pid, $sid, $tabtype);
+                //add by hadi
+                //orginal $page = $pc->modifyText($Body, $uid, $pid, $sid, $tabtype);
+                if($subject->kind == 3 && strlen($Body) > 500000)
+                    $page = $Body;
+                else
+                    $page = $pc->modifyText($Body, $uid, $pid, $sid, $tabtype);
+                //
                 $files = $pc->page_files($pid);
                 $slides = $pc->page_slides($pid);
                 $films = $pc->page_films($pid);
@@ -292,9 +298,8 @@ class PageClass
                         '<div class="col-xs-12" id="new-content" style="direction: rtl">
                             <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-down" id="BtnScrollTop"></a>
                             <div class="mixed-scroll hidden">
-                                <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-up"></a>
-                                <br/>
-                                <a href="#BtnScrollBottom" class="btn-scroll fa fa-arrow-down"></a>
+                                <a href="#BtnScrollTop" class="btn-scroll fa fa-chevron-up"></a>
+                                <a href="#BtnScrollBottom" class="btn-scroll fa fa-chevron-down"></a>
                             </div>
                                 '.$page['content'] . '
                             <a href="#BtnScrollTop" class="btn-scroll btn-scroll fa fa-arrow-up" id="BtnScrollBottom"></a>
