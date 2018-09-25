@@ -17,16 +17,16 @@
 <div class="horizontal-menu">
     {!! $menus !!}
 </div>
-<ul class="nav navbar-nav navbar-right quick-links-res hidden-xs">
+{{--<ul class="nav navbar-nav navbar-right quick-links-res hidden-xs">--}}
     {{--@foreach($menus as $menu)--}}
         {{--<li><a style="color:#FFF !important;" href="{{$menu->href}}">{{$menu->title }}</a></li>--}}
     {{--@endforeach--}}
-</ul>
-<ul class="nav navbar-nav navbar-right quick-links-res hidden-sm hidden-md hidden-lg">
+{{--</ul>--}}
+{{--<ul class="nav navbar-nav navbar-right quick-links-res hidden-sm hidden-md hidden-lg">--}}
     {{--@foreach($menus as $menu)--}}
         {{--<li class="res-li" ><a class="res-a" href="{{$menu->href}}">{{$menu->title }}</a></li>--}}
     {{--@endforeach--}}
-</ul>
+{{--</ul>--}}
 @php ($logged_in = session('Login') && session('Login') == 'TRUE')
 @php ($style = $logged_in ? null : 'style="display: none;"')
 @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')

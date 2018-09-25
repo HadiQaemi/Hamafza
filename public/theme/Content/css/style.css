@@ -2532,7 +2532,7 @@ a .navbar-brand{
 }
 .responsive-theme #header .quick-links-res .res-li {
     padding: 0px 10px;
-    border-bottom: 1px solid #FFF;
+    border-bottom: none;
 }
 .responsive-theme #header .quick-links-res .res-a {
     font-size: 15px;
@@ -2709,10 +2709,11 @@ a .navbar-brand{
 
 .responsive-theme .row-hd::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #eee;
 }
 
 .responsive-theme .row-hd::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #999;
     outline: 1px solid slategrey;
 }
 .responsive-theme .logo {
@@ -3550,4 +3551,40 @@ input{
     max-height: 82vh;
     overflow-y: auto;
     padding-bottom: 10px;
+}
+@media screen and (max-width: 700px) {
+    #pcol_32{
+        direction: rtl;
+        max-height: 100%;
+        height: 100%;
+        overflow-y: visible;
+        padding-bottom: 10px;
+    }
+    #vrScroll2 .scrl{
+        overflow: visible !important;
+        height: 100% !important;
+        -webkit-box-ordinal-group: 2;
+        -moz-box-ordinal-group: 2;
+        box-ordinal-group: 2;
+    }
+    .jstree-default .jstree-anchor {
+        max-width: 360px !important;
+    }
+    .responsive-theme #header .quick-links-res {
+         padding-right: 0px;
+    }
+    #vrScroll2 {
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        box-orient: vertical;
+    }
+    #Tdxcre2 {
+        -webkit-box-ordinal-group: 1;
+        -moz-box-ordinal-group: 1;
+        box-ordinal-group: 1;
+    }
 }

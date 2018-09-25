@@ -71,10 +71,10 @@
                     {{--<img src="file:///C:/Users/soft/Desktop/hamafza%20960616/img/logo.png" style="float: right; margin-top: 2%; margin-right: 3px">--}}
                     {{--<a class="navbar-brand" href="#" style="float: right;font-size: 1.9em;height: 48px;color: #FFF !important;">هم افزا</a>--}}
                     <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
-                        @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
+                        @if (auth()->check())<span style="font-size: 10px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
-                            <span class="hidden-lg hidden-md hidden-sm" style="font-size: 10px;">{{mb_substr($Title,0,50, "utf-8").'...'}}</span>
+                            <span class="hidden-lg hidden-md hidden-sm" style="font-size: 8px;">{{mb_substr($Title,0,30, "utf-8").'...'}}</span>
                         @endif
                     </a>
                 </div>
@@ -174,11 +174,11 @@
                                             </div>
                                             {{--<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 scrl" id="Tdxcre">--}}
                                             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="Tdxcre2">
-                                                @else
+                                        @else
                                                     {{--<div class="col-md-12 scrl" id="Tdxcre">--}}
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="Tdxcre2" style="">
                                                         <div style="direction: rtl">
-                                                            @endif
+                                        @endif
                                                             {{--<div class="scrl-2  scrlbig col-md-12" data-mcs-theme="minimal-dark" style="direction: ltr">--}}
                                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-body" data-mcs-theme="minimal-dark2" style="direction: rtl;width: 99.5%;padding-left: 0px;overflow-x: hidden;">
                                                                 <div style="direction: rtl;" id="master_inner_rtl_div" >
