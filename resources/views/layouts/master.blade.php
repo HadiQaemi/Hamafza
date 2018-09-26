@@ -71,7 +71,7 @@
                     {{--<img src="file:///C:/Users/soft/Desktop/hamafza%20960616/img/logo.png" style="float: right; margin-top: 2%; margin-right: 3px">--}}
                     {{--<a class="navbar-brand" href="#" style="float: right;font-size: 1.9em;height: 48px;color: #FFF !important;">هم افزا</a>--}}
                     <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
-                        @if (auth()->check())<span style="font-size: 10px;">{{ config('constants.SiteFullTitle') }}</span>@endif
+                        @if (auth()->check())<span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>@endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
                             <span class="hidden-lg hidden-md hidden-sm" style="font-size: 8px;">{{mb_substr($Title,0,30, "utf-8").'...'}}</span>
