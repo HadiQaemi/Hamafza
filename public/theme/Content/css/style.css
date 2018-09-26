@@ -3458,6 +3458,9 @@ input{
 .horizontal-menu .parent_li li:last-child{
     border: none !important;
 }
+.horizontal-menu .parent_li ul a{
+    font-size: 10px !important;
+}
 .horizontal-menu .li_0{
     height: 40px;
 }
@@ -3543,6 +3546,7 @@ input{
     border-top-right-radius: 0px !important;
     margin-right: -7px;
     padding: 2px;
+    margin-top: 2px !important;
 }
 .horizontal-menu .li_parent a{
     padding-right: 0px;
