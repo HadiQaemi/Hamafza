@@ -3453,6 +3453,10 @@ input{
     margin: 0px !important;
     padding: 10px 0px;
     height: 38px !important;
+    border-bottom: 1px solid #fff !important;
+}
+.horizontal-menu .parent_li li:last-child{
+    border: none !important;
 }
 .horizontal-menu .li_0{
     height: 40px;
@@ -3528,9 +3532,10 @@ input{
     min-width: 100%;
 }
 .horizontal-menu .nav > li li:hover > ul {
-    left: 100%;
+    right: 100%;
     margin-left: 1px;
     top: -1px;
+    width: 200px;
 }
 .horizontal-menu .parent_li ul{
     background: #1b658a;
@@ -3538,6 +3543,9 @@ input{
     border-top-right-radius: 0px !important;
     margin-right: -7px;
     padding: 2px;
+}
+.horizontal-menu .li_parent a{
+    padding-right: 0px;
 }
 .margin-top-min-4{
     margin-top: -4px !important;

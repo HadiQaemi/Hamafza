@@ -173,7 +173,10 @@ class FileController extends Controller
             ->where('archive', 0)
             ->with('subject_type')
             ->with('pages');
+        $subjects = $subjects->get();
+        $Subjects = ['data'=>json_decode($subjects),'recordsTotal'=>count(json_decode($subjects)),'recordsFiltered'=>count(json_decode($subjects))];
 
+        return $Subjects;
         return \Datatables::eloquent($subjects)
             ->addColumn('JalaliRegDate', function ($data)
             {

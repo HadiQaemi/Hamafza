@@ -24,7 +24,10 @@
             },
             {data: 'subject_type.name',
                 mRender: function (data, type, full) {
-                    return full['subject_type']['name'];
+                    // return full['subject_type']['name'];
+                    if(full.subject_type != null)
+                        if(full.subject_type.name != undefined)
+                            return full['subject_type'].name;
                 }
             },
             {
@@ -42,16 +45,16 @@
                 mRender: function (data, type, full) {
                     return full['follow'];
                 }
-            },
-            {
-                mRender: function (data, type, full) {
-                    return full['JalaliRegDate'];
-                }
-            },
-            {
-                mRender: function (data, type, full) {
-                    return full['EditDate'];
-                }
+            // },
+            // {
+            //     mRender: function (data, type, full) {
+            //         return full['JalaliRegDate'];
+            //     }
+            // },
+            // {
+            //     mRender: function (data, type, full) {
+            //         return full['EditDate'];
+            //     }
             }
         ]
     });
