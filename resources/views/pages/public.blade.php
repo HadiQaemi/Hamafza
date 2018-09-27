@@ -7,7 +7,9 @@
     <script src="{{App::make('url')->to('/')}}/theme/Scripts/textassist.js" type="text/javascript"></script>
     @include('scripts.publicpages')
     @include('sections.contextmenu')
-
+    <script>
+        $('#highlight_search').focus();
+    </script>
     <div class="panel-body text-decoration">
         <div class='text-content'>
             @if(!empty($Alert) && $Alert!='')
@@ -21,13 +23,20 @@
 
                 @if(isset($_GET['s']))
                     @php
-                        $content = str_ireplace($_GET['s'],"<span style='background: #9e9b29;padding: 5px;color:#fffefb;border-radius:5px'>".$_GET['s']."</span>",$content);
+                        $content = preg_replace("/".$_GET['s']."/","<span id='h'>".$_GET['s']."</span>",$content,1);
+                        $content = preg_replace("/".$_GET['s']."/","<span class='highlight_search'>".$_GET['s']."</span>",$content);
                     @endphp
                 @endif
             {!!$content!!}
 {{--            {{$content}}--}}
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $("#highlight_search").focus();
+        });
+    </script>
+
 @stop
 @include('sections.keywords')
 @section('Files')

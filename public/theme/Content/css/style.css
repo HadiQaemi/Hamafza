@@ -3600,3 +3600,9 @@ input{
         box-ordinal-group: 1;
     }
 }
+.highlight_search{
+    background: #9e9b29;
+    padding: 5px;
+    color:#fffefb;
+    border-radius:5px;
+}

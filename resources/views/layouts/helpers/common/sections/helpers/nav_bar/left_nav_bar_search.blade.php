@@ -31,7 +31,7 @@
                 $r .=
                 '
                 <li id="search_page_' . $search_item->id . '" style="list-style: inside none square;">
-                    <a rel="canonical" href="' . url("/{$search_item->pages[0]->id}") . '?s='.$term.'" target="_blank" style="color: white;">' . ($title ? : '[بدون عنوان]') . '</a>
+                    <a rel="canonical" href="' . url("/{$search_item->pages[0]->id}") . '?s='.$term.'#h" target="_blank" style="color: white;">' . ($title ? : '[بدون عنوان]') . '</a>
                 </li>
                 ';
             }
@@ -49,7 +49,7 @@
                 $r .=
                 '
                 <li id="search_page_' . $search_item->id . '" style="list-style: inside none square;">
-                    <a rel="canonical" href="' . url("/{$search_item->id}") . '?s='.$term.'" target="_blank" style="color: white;">' . "{$title} ({$search_item->tab_name})" . '</a>
+                    <a rel="canonical" href="' . url("/{$search_item->id}") . '?s='.$term.'#h" target="_blank" style="color: white;">' . "{$title} ({$search_item->tab_name})" . '</a>
                 </li>
                 ';
             }
