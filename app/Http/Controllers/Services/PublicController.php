@@ -68,6 +68,7 @@ class PublicController extends Controller {
                 $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
                 });
+                $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id','subjects.title');
                 $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('post_keys.kid', $request_keyword);
                 })->with('subject');
@@ -103,7 +104,7 @@ class PublicController extends Controller {
         }
 
         if ($in_pages && $for_content) {
-            $searchs['pages']['content'] = Pages::where('body', 'like', "%$term%")
+            $searchs['pages']['content'] = \App\Models\hamafza\Pages::where('body', 'like', "%$term%")
                 ->with('subject', 'subject.tabs')
                 ->get();
         }
