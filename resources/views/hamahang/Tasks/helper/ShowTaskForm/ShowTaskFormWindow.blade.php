@@ -1234,6 +1234,78 @@
 {{--</form>--}}
 {{--{!! $HFM_CN_Task['UploadForm'] !!}--}}
 {{--</div>--}}
+<script>
+    $.ajax({
+        url: '{{ URL::route('auto_complete.get_user_calendar')}}',
+        type: 'Post', // Send post dat
+        dataType:'json',
+        success: function (s) {
+
+            var options = '';
+            $('select[name="event_cid"]').empty();
+            for (var i = 0; i < s.length; i++) {
+                if(s[i].is_default ==1)
+                {
+                    options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+                else{
+                    options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
+                }
+
+
+            }
+
+            $('select[name="event_cid"]').append(options);
+            $('select[name="event_cid"]').select2({
+                dir: "rtl",
+                width: '100%',
+            });
+        }
+    });
+    $(document).ready(function()
+    {
+        $(".fileToUpload").on('change', function() {
+            var formElement = $( '.fileToUpload' )[0].files[0];
+            var data = new FormData();
+            data.append('image',formElement);
+            data.append('pid','{{rand(1,100).rand(1,100)}}');
+            data.append('form_type','form');
+            $.ajax
+            ({
+                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data)
+                {
+                    console.log(data);
+                    if (data.success)
+                    {
+                        $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
+                        $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                    } else
+                    {
+                        messageModal('fail', 'خطا', data.result);
+                    }
+                }
+            });
+        });
+        //tab_text tab_view
+        $(".tab_desc").on('click', function() {
+            $(".tab_desc").removeClass('active');
+            $(".content_tab").addClass('hidden');
+            $("#for-desc .header").css('height','30px !important');
+            $(this).addClass('active');
+            $(".content_"+$(this).attr('rel')).removeClass('hidden');
+        });
+        $(document).on('click', '#form_tinymce_upload .form-submit', function()
+        {
+
+        });
+    });
+</script>
 
 <script type="text/javascript" src="{{URL::to('assets/Packages/DataTables/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/bootstrap/js/bootstrap-filestyle.js')}}"></script>

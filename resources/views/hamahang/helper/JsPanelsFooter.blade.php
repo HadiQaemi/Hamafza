@@ -56,10 +56,10 @@
         <i ></i>
         {{trans('app.edit')}}
     </a>
-    <a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_task_form">
-        <i ></i>
-        {{trans('tasks.ok')}}
-    </a>
+    {{--<a class="btn btn-primary pull-left save_task" id="save_commit" type="button" data-again_save = "2" data-form_id="edit_task_form">--}}
+        {{--<i ></i>--}}
+        {{--{{trans('tasks.ok')}}--}}
+    {{--</a>--}}
 
     {{--<div>--}}
         {{--<input type="radio" name="new_task_save_type" class="new_task_save_type_draft" value="0"/>--}}
