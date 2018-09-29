@@ -68,12 +68,12 @@ class PublicController extends Controller {
                 $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
                 });
-                $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id','subjects.title');
                 $keywords['enquiry_pages'] = Post::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('post_keys.kid', $request_keyword);
                 })->with('subject');
             }
         }
+        $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id','subjects.title');
         $keywords['special'] = $keywords['special']->get();
         $keywords['subject'] = $keywords['subject']->get();
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
