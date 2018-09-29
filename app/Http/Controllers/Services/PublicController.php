@@ -73,7 +73,10 @@ class PublicController extends Controller {
                 })->with('subject');
             }
         }
-        $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id','subjects.title');
+        $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id as pageid','subjects.title');
+        $keywords['enquiry_pages']->Join('pages as p','posts.sid','=','p.sid')->select('p.id as pageid','posts.id as postid', 'posts.title');
+       // $keywords['special']->Join('__users','__users.id','=','user_special.user_id')->select('__users.id as pageid', '__users.firstname', '__users.lastname');
+        
         $keywords['special'] = $keywords['special']->get();
         $keywords['subject'] = $keywords['subject']->get();
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
