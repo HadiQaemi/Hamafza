@@ -3662,21 +3662,27 @@ input{
 }
 @media (min-width: 768px) {
     #vrScroll2{
-        overflow: scroll !important;
-        height: 100vh !important;;
+        overflow-y: scroll !important;
+        height: 100% !important;;
     }
     #pcol_32 {
-        overflow: visible !important;
+        overflow-y: visible !important;
     }
     #Tdxcre2 {
-        overflow: visible !important;
+        overflow-y: visible !important;
     }
     .hd-body{
-        overflow: visible !important;
+        overflow-y: visible !important;
     }
     #vrScroll2 .scrl {
-        overflow: visible !important;
-        height: 110vh !important;
+        overflow-y: auto !important;
+        height: 40vh !important;
         margin-bottom: 50px !important;
+    }
+    .jstree-default .jstree-anchor{
+        max-width: 100% !important;
+    }
+    body{
+        position: fixed !important;
     }
 }
