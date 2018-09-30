@@ -54,7 +54,7 @@
                 },
                 {
                     data: 'items[0].subject_title',
-                    name: 'subject_title'
+                    name: 'items.subject_title'
                 },
                 @endif
                 {

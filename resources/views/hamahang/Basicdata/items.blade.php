@@ -45,8 +45,8 @@
         r  =
         '<div style="padding: 10px;">' +
         '   <div class="row" style="margin-top: 5px;">' +
-        '       <div class="col-sm-9"><label>عنوان:</label> <input type="text" id="title" name="title" class="form-control" value="' + title + '" /></div>' +
-        '       <div class="col-sm-3"><label>مقدار:</label> <input type="text" id="value" name="value" class="form-control" style="direction: ltr;" value="' + (is_link ? atob(value) : value) + '" /></div>' +
+        '       <div class="col-sm-6"><label>عنوان:</label> <input type="text" id="title" name="title" class="form-control" value="' + title + '" /></div>' +
+        '       <div class="col-sm-6"><label>مقدار:</label> <input type="text" id="value" name="value" class="form-control" value="' + (is_link ? atob(value) : value) + '" /></div>' +
         '   </div>' +
         '   <div class="row" style="margin-top: 5px;">' +
         '       <div class="col-sm-12"><label>توضیحات:</label> <textarea id="comment" name="comment" class="form-control">' + comment + '</textarea></div>' +

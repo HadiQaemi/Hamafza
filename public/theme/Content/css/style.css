@@ -3660,7 +3660,7 @@ input{
     border-bottom: 1px solid #bbb;
     border-radius: 0px;
 }
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991px){
     #vrScroll2{
         overflow-y: scroll !important;
         height: 100% !important;;
@@ -3683,6 +3683,6 @@ input{
         max-width: 100% !important;
     }
     body{
-        position: fixed !important;
+        width: 147%;
     }
 }
