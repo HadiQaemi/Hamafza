@@ -3666,18 +3666,10 @@ input{
         height: 100vh !important;;
     }
     #pcol_32 {
-        direction: rtl;
-        width: 99.5%;
-        padding-left: 0px;
         overflow: visible !important;
-        max-height: 80vh;
     }
     #Tdxcre2 {
-        direction: rtl;
-        width: 99.5%;
-        padding-left: 0px;
         overflow: visible !important;
-        max-height: 80vh;
     }
     .hd-body{
         overflow: visible !important;
