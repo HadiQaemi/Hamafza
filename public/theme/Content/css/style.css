@@ -3567,12 +3567,17 @@ input{
 }
 /* submenu positioning*/
 .horizontal-menu .nav ul {
-    position: absolute;
+    position: relative;
+    display: none;
     white-space: nowrap;
     z-index: 1;
     left: -99999em;
     background: #4c99bf;
     padding-top: 10px;
+}
+.horizontal-menu .nav .li_root_hover ul {
+    position: absolute;
+    display: block;
 }
 .horizontal-menu .nav > li:hover > ul {
     left: auto;
@@ -3681,8 +3686,5 @@ input{
     }
     .jstree-default .jstree-anchor{
         max-width: 100% !important;
-    }
-    body{
-        width: 147%;
     }
 }

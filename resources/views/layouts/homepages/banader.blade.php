@@ -92,6 +92,16 @@
             @include('layouts.helpers.common.sections.footer_helper')
         </div>
     </div>
+    <script>
+        $(document).ready(function (){
+            jQuery('.li_root').hover(function () {
+                jQuery(this).addClass('li_root_hover');
+            }, function () {
+                jQuery(this).removeClass('li_root_hover');
+            });
+        });
+
+    </script>
     <!---------------**Specific Plugin Scripts**-------------->
 @include('layouts.homepages.helpers.banader.assets.script.specific_plugin_scripts')
 <!---------------**Inline Scripts**-------------->
