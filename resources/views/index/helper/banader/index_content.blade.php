@@ -259,7 +259,7 @@
     <div class="col-sm-6">
         <div class="panel panel-banader-index">
             <div class="panel-heading text-center" style="font-size: 14px; background-color: #3f39cf">پژوهش</div>
-            <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;">
+            <div class="panel-body no-padding mCustomScrollbar" style="height: 400px;overflow: hidden">
                 <ul class="underlined_menu nav nav-tabs">
                     <li class="active">
                         <a data-toggle="tab" href="#tab_1">پایان نامه</a>

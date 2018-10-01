@@ -3684,9 +3684,4 @@ input{
         height: 40vh !important;
         margin-bottom: 50px !important;
     }
-    .jstree-default .jstree-anchor{
-        max-width: 100% !important;
-    }
-    body{
-    }
 }
