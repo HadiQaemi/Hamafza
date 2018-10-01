@@ -3674,7 +3674,7 @@ input{
         overflow-y: visible !important;
     }
     #Tdxcre2 {
-        overflow-y: visible !important;
+        overflow-y: scroll !important;
     }
     .hd-body{
         overflow-y: visible !important;
@@ -3683,5 +3683,18 @@ input{
         overflow-y: auto !important;
         height: 40vh !important;
         margin-bottom: 50px !important;
+    }
+    @-moz-document url-prefix() {
+        #vrScroll2 .scrl {
+
+            height: 100% !important;
+            overflow: visible;
+            margin-bottom: 50px;
+
+        }
+        #pcol_32 {
+            direction: ltr;
+            overflow-y: visible;
+        }
     }
 }
