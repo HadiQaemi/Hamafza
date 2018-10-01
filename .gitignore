@@ -10,3 +10,5 @@ node_modules
 /SQL
 /hamafza.zip
 /public/pics
+
+*.env

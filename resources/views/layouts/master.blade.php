@@ -243,7 +243,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								{{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+								messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
                                 eventInfo = (result.event);
                                 (function ($) {
                                     $("#calendar").fullCalendar('addEventSource', [{
@@ -266,6 +266,8 @@
                     $('#task_form_action').val(action);
                     $('#save_type').val(1);
                     var form_data = $('#' + form_id).serialize();
+                    console.log(form_data);
+                    alert($('input[name="show_task_save_type"]').val());
                     $.ajax({
                         type: "POST",
                         url: '{{ route('hamahang.tasks.update_task')}}',
@@ -299,7 +301,7 @@
 								else {
 									$('.jsPanel-btn-close').click();
 								}
-								{{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+								messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
 							}
 							else {
 								messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -427,7 +429,7 @@
                             console.log(result);
                             if (result.success == true) {
                                 $('.jsPanel-btn-close').click();
-                                {{--messageModal('success','{{trans('tasks.submit_action')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+                                messageModal('success','{{trans('tasks.submit_action')}}' , {0:'{{trans('app.operation_is_success')}}'});
                             }
                             else {
                                 messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
