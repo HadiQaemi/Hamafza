@@ -51,9 +51,9 @@ class PublicController extends Controller {
 
         //$keyword_types = ['special' => 'تخصص&zwnj;ها', 'subject' => 'صفحات', 'enquiry_pages' => 'صفحات دیگر', ];
         $request_keywords = Request::input('keywords') !== "" ? explode(",", Request::input('keywords')) : [];
-        $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords) {
+        /*$keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords) {
             return $q->whereIn('keywords.id', $request_keywords);
-        });
+        });*/
         $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keywords) {
             return $q->whereIn('keywords.id', $request_keywords);
         });
@@ -62,9 +62,9 @@ class PublicController extends Controller {
         })->with('subject');
         if (Request::input('isAnd') == 1) {
             foreach ($request_keywords as $request_keyword) {
-                $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keyword) {
+                /*$keywords['special'] = User::whereHas('specials', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
-                });
+                });*/
                 $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
                 });
@@ -77,7 +77,7 @@ class PublicController extends Controller {
         $keywords['enquiry_pages']->Join('pages as p','posts.sid','=','p.sid')->select('p.id as pageid','posts.id as postid', 'posts.title');
        // $keywords['special']->Join('__users','__users.id','=','user_special.user_id')->select('__users.id as pageid', '__users.firstname', '__users.lastname');
         
-        $keywords['special'] = $keywords['special']->get();
+        //$keywords['special'] = $keywords['special']->get();
         $keywords['subject'] = $keywords['subject']->get();
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
         $r = [
@@ -102,16 +102,19 @@ class PublicController extends Controller {
                 ->where('list', '1')
                 ->where('archive', '0')
                 ->whereHas('pages')
-                ->with('pages')
+              //  ->with('pages')
+                ->Join('pages as p','subjects.id','=','p.sid')
+                ->select('p.id as pageid','subjects.title')
                 ->get();
         }
 
         if ($in_pages && $for_content) {
             $searchs['pages']['content'] = \App\Models\hamafza\Pages::where('body', 'like', "%$term%")
-                ->with('subject', 'subject.tabs')
+            //    ->with('subject', 'subject.tabs')
+                ->Join('subjects','subjects.id','=','pages.sid')->select('pages.id as pageid','subjects.title')
                 ->get();
         }
-
+        
         if ($in_posts) {
             $searchs['posts'] = Post::where(function ($query) use ($term, $for_title, $for_content) {
                 if ($for_title) {
@@ -120,7 +123,8 @@ class PublicController extends Controller {
                 if ($for_content) {
                     $posts = $query->orWhere('desc', 'like', "%$term%");
                 }
-            })->whereHas('subject')->with('subject')->get();
+            })->whereHas('subject')->with('subject')->
+                    Join('pages as p','posts.sid','=','p.sid')->select('p.id as pageid','posts.id as postid', 'posts.title')->get();
         }
         $r = [
             'searchs' => $searchs,
