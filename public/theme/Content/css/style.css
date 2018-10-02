@@ -3696,5 +3696,24 @@ input{
             direction: ltr;
             overflow-y: visible;
         }
+        .fix-inr{
+            padding-bottom: 500px;
+        }
     }
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    border: transparent;
+    border-bottom: 2px solid #aaa;
+}
+#tab.table-bordered{
+    border: none;
+}
+.tab-content{
+    overflow: auto;
+    max-height: 380px;
+    min-height: 50px;
+}
+.jsPanel-content{
+    overflow: hidden !important;
 }
