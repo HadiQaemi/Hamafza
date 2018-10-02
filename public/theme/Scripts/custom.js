@@ -1193,6 +1193,16 @@ $(document).ready(function(){
 
         if(parseInt($('#new-content').height())>200)
             $(".mixed-scroll").removeClass('hidden');
+        if($(".hd-body").scrollTop() > 40)
+            $('.btn-scroll.fa-chevron-up').css('visibility','inherit');
+        else
+            $('.btn-scroll.fa-chevron-up').css('visibility','hidden');
+
+        if($(".hd-body").scrollTop() > (parseInt($('#new-content').height())-1000))
+            $('.btn-scroll.fa-chevron-down').css('visibility','hidden');
+        else
+            $('.btn-scroll.fa-chevron-down').css('visibility','inherit');
+
         // if ($(".hd-body").scrollTop() > 80 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
         //     $(".mixed-scroll").removeClass('hidden');
         // }

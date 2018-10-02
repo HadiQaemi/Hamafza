@@ -3255,7 +3255,6 @@ input{
     text-decoration: blink;
     display: block;
     text-align: center;
-    border: 2px solid #999;
     padding: 0px 4px 4px;
     border-radius: 5px;
 }
