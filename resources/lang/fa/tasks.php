@@ -185,7 +185,7 @@ return [
     'modal_task_details_transcript'=>'رونوشت به',
     'modal_task_details_in_create_task'=>'در هنگام ایجاد وظیفه',
     'modal_task_details_task_end_report'=>'گزارش پایان وظیفه',
-    'modal_task_details_assignor_accept_or_ended'=>'پایان یافتن با اعلان واگذار کننده',
+    'modal_task_details_assignor_accept_or_ended'=>'پایان یافتن وظیفه با تایید واگذار کننده',
     'modal_task_details_assignor_to_another'=>'امکان واگذاری به فرد دیگر',
     'modal_task_details_add_attachments'=>'افزودن ضمائم',
     'add_attachments'=>'افزودن ضمائم',

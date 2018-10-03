@@ -3238,6 +3238,9 @@ input{
 .width-100-pre{
     width: 100% !important;
 }
+.width-30-pre{
+    width: 30% !important;
+}
 .margin-right-10{
     margin-right: 10px !important;
 }
@@ -3359,7 +3362,7 @@ input{
     border-top: 1px solid #999;
     padding-top: 5px;
     resize: none;
-    height: 250px;
+    height: 100px;
 }
 #for-desc span{
     text-align: center;
@@ -3422,21 +3425,21 @@ input{
 #form_filter_priority .int-icon1{
     z-index: 1;
     position: relative;
-    right: -330px;
+    right: -33%;
     top: 7px;
     color: #bbb;
 }
 #form_filter_priority .int-icon2{
     z-index: 1;
     position: relative;
-    right: -625px;
+    right: -62.4%;
     top: 7px;
     color: #bbb;
 }
 #form_filter_priority .int-icon3{
     z-index: 1;
     position: relative;
-    right: -925px;
+    right: -92%;
     top: 11px;
     color: #bbb;
 }
@@ -3701,17 +3704,20 @@ input{
     }
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.jsPanel-content .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     border: transparent;
     border-bottom: 2px solid #aaa;
 }
-#tab.table-bordered{
+.jsPanel-content #tab.table-bordered{
     border: none;
 }
-.tab-content{
-    overflow: auto;
+.jsPanel-content .tab-content{
+    overflow-y: auto;
     max-height: 380px;
     min-height: 50px;
+}
+.jsPanel-content .new-task-form .tab-view{
+    overflow: hidden !important;
 }
 .jsPanel-content{
     overflow: hidden !important;

@@ -831,6 +831,8 @@ class tasks extends Model
         $official_type = Request::get('official_type');
         $important = Request::get('task_important');
         $immediate = Request::get('task_immediate');
+        $keywords = Request::get('keywords');
+        $title = Request::get('title');
         $filter_subject_id = Request::get('subject_id');
         $result = DB::table('hamahang_task')
             ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "to.Uname as t_uname", "to.Name as t_name", "to.Family as t_family", "from.Uname as f_uname", "from.Name as f_name", "from.Family as f_family", "to.Uname", "to.Name", "to.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
@@ -844,6 +846,11 @@ class tasks extends Model
             ->whereNull('hamahang_subject_ables.deleted_at');
         ;
         $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)) ');
+
+        if ($title)
+        {
+            $result->where('hamahang_task.title', 'like', '%'.$title.'%');
+        }
 
         if ($official_type)
         {
