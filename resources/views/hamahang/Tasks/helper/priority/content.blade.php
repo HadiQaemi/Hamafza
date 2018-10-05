@@ -109,12 +109,12 @@
                     </div>
                 </ul>
             </div>
-            {{--{{dd($tasks_not_immediate_not_importance)}}--}}
             <div class="col-xs-6 priority_state_list">
                 <h5 class="state_title">غیر مهم و غیر فوری</h5>
                 <ul class="task_items droppable" id="not_important_and_not_immediate">
                     <div style="direction: rtl;">
                         @foreach($tasks_not_immediate_not_importance as $task)
+
                             <li class="draggable" data-action="task" data-task_id="{{$task->id}}">
                                 <div class="respite_number {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                                 <div class="task_title">

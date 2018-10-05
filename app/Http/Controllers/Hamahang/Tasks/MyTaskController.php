@@ -194,15 +194,16 @@ class MyTaskController extends Controller
         }
         else
         {
-//            dd(\Route::currentRouteName(),Request::all());
             $respite = Request::get('respite');
-            $task_title = Request::get('task_title');
+            $task_title = Request::get('title');
             $task_status = Request::get('task_status');
             $official_type = Request::get('official_type');
+            $keywords = Request::get('keywords');
+            $users = Request::get('users');
             $source = Request::get('act');
             $filter_subject_id = Request::input('filter_subject_id') != "undefined" ? Request::input('filter_subject_id') : '';
 //            DB::enableQueryLog();
-            $with_array = tasks::AllTasksPriority(['filter_subject_id'=>$filter_subject_id],$task_status, $task_title, $respite, $official_type,$source);
+            $with_array = tasks::AllTasksPriority(['filter_subject_id'=>$filter_subject_id],$task_status, $task_title, $respite, $official_type, $keywords, $users, $source);
 //            dd(DB::getQueryLog());
             $result['data'] = view('hamahang.Tasks.helper.priority.content')->with($with_array)->render();
             $result['success'] = true;
@@ -765,6 +766,40 @@ class MyTaskController extends Controller
             $official_type = Request::get('official_type');
 //            db::enableQueryLog();
             $myTasks= tasks::MyTasksStatus($filter_subject_id, $task_important,$task_immediate, $task_title, $respite, $official_type);
+//            dd(db::getQueryLog());
+            $result['success'] = true;
+            $result['data'] = view('hamahang.Tasks.MyTask.helper.MyTasksState.content', compact('user', 'myTasks'))->render();
+            $result['success'] = true;
+            return $result;
+        }
+    }
+
+    public function filter_all_task_state()
+    {
+        $user=auth()->user();
+        $validator = Validator::make(Request::all(), [
+            'task_title' => 'string',
+            'respite' => 'integer',
+            'official_type' => 'array',
+            'task_important' => 'array',
+            'task_immediate' => 'array',
+        ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            $filter_subject_id = Request::input('filter_subject_id');
+            $respite = Request::get('respite');
+            $task_title = Request::get('task_title');
+            $task_important = Request::get('task_important');
+            $task_immediate = Request::get('task_immediate');
+            $official_type = Request::get('official_type');
+//            db::enableQueryLog();
+            $myTasks= tasks::AllTasksStatus($filter_subject_id, $task_important,$task_immediate, $task_title, $respite, $official_type);
 //            dd(db::getQueryLog());
             $result['success'] = true;
             $result['data'] = view('hamahang.Tasks.MyTask.helper.MyTasksState.content', compact('user', 'myTasks'))->render();

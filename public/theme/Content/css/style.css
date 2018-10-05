@@ -3706,7 +3706,7 @@ input{
 
 .jsPanel-content .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     border: transparent;
-    border-bottom: 2px solid #aaa;
+    border-bottom: 2px solid #1559a5;
 }
 .jsPanel-content #tab.table-bordered{
     border: none;
@@ -3721,4 +3721,7 @@ input{
 }
 .jsPanel-content{
     overflow: hidden !important;
+}
+.form_filter_priority_div{
+    padding-right: 5px;padding-right: 5px;padding-bottom: 10px;border-bottom: 1px solid #d4d1ff;
 }

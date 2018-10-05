@@ -34,9 +34,9 @@
         .content_task {
             position: relative;
             width: 100%;
-            top: 35px;
+            top: 85px;
             /*height: 430px;*/
-            height: 71vh;
+            height: 74vh;
         }
 
         .scrlbig {

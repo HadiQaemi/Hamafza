@@ -87,6 +87,15 @@ class TaskController extends Controller
         }
     }
 
+    public function task_delete()
+    {
+        $id = deCode(Request::input('id'));
+        $task = tasks::where('id', '=', $id)
+            ->delete();
+        $result['success'] = $task ? true : false;
+        return $result;
+
+    }
     public function use_selected_tasks()
     {
         switch (Request::input('type'))

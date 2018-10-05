@@ -92,6 +92,33 @@
 
     }
     readTable($("#form_filter_priority").serializeObject());
+    $(".select2_auto_complete_user").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.users')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
     function  readTable(send_info) {
         if($('#new_task_keywords').val())
         {
@@ -108,6 +135,7 @@
                 "data": send_info,
 
             },
+            "searching": false,
             "autoWidth": false,
             "pageLength": 25,
             "language": LangJson_DataTables,
@@ -137,16 +165,16 @@
                 {"data": "immediate"},
                 {"data": "respite"},
                 {"data": "type"}
-                // ,
-                // {
-                //     "data": "id", "width": "8%",
-                //     "bSearchable": false,
-                //     "bSortable": false,
-                //     "mRender": function (data, type, full) {
-                //         var id = full.id;
-                //         return "<a style='margin:2px;' class='cls3' onclick='del(" + full.id + ")' href=\"#\"><i class='fa fa-trash'></i></a>";
-                //     }
-                // }
+                ,
+                {
+                    "data": "id", "width": "8%",
+                    "bSearchable": false,
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        var id = full.id;
+                        return "<a style='margin:2px;' class='cls3' onclick='del(\"" + full.id + "\")' href=\"#\"><i class='fa fa-trash'></i></a>";
+                    }
+                }
                 // , {
                 //     "data": "id",
                 //     "bSearchable": false,
@@ -567,7 +595,22 @@
 
     }
     function del(id) {
-        confirm("Are you sure?");
+        if(confirm("از حذف اطمینان دارید؟")){
+            var sendInfo = {
+                id: id
+            };
+            $.ajax({
+                type: "POST",
+                url: '{{ URL::route('hamahang.tasks.task_delete') }}',
+                dataType: "json",
+                data: sendInfo,
+                success: function (data) {
+                }
+            });
+            messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});
+        }
+        else{
+        }
     }
     function f(id) {
         show_task_info();

@@ -8,13 +8,27 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
         @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
     </div>
-    <div class="row" style="padding-right: 5px;" >
-        <div class="pull-right search-task-keywords">
-            <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
-                    data-placeholder="{{trans('tasks.search_keyword_task')}}"
-                    multiple="multiple"></select>
-        </div>
-        <form id="form_filter_priority" class="my-task-list-priority">
+    <div class="row form_filter_priority_div">
+        <form id="form_filter_priority">
+            <div class="row padding-bottom-20 opacity-7">
+                <i class="fa fa-calendar-minus-o int-icon3"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="title" name="title" placeholder="{{trans('tasks.search_title')}}" autocomplete="off">
+                </div>
+                <i class="fa fa-tags int-icon2"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
+                            data-placeholder="{{trans('tasks.search_keyword_task')}}"
+                            multiple="multiple"></select>
+                </div>
+                <i class="fa fa-users int-icon1"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="new_task_users_all_tasks" name="users[]" class="select2_auto_complete_user col-xs-12"
+                            data-placeholder="{{trans('tasks.search_some_persons')}}" multiple>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
             <div class="pull-right priority-part">
                 <label>
                     <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
@@ -102,7 +116,7 @@
                         <th style="text-align: right;">اولویت</th>
                         <th style="text-align: right;">مهلت</th>
                         <th style="text-align: right;">وضعیت</th>
-                        {{--<th style="text-align: right;">عملیات</th>--}}
+                        <th style="text-align: right;">عملیات</th>
                         {{--<th style="text-align: right;">کتابخانه</th>--}}
                     </tr>
                     </thead>

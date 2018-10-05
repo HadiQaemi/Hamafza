@@ -24,7 +24,7 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
     @include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')
     </div>
-    <div class="row" style="padding-right: 5px;" >
+    <div class="row form_filter_priority_div">
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
@@ -50,11 +50,11 @@
                         <div class="form-inline">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
+                                    <input type="checkbox" class="form-check-input official_type" name="official_type[]" value="0" id="official" checked>
                                     <span>{{trans('tasks.official')}}</span>
                                 </label>
                                 <label>
-                                    <input type="checkbox" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>
+                                    <input type="checkbox" class="form-check-input official_type" name="official_type[]" value="1" id="unofficial" checked>
                                     <span>{{trans('tasks.unofficial')}}</span>
                                 </label>
                             </div>
@@ -63,46 +63,46 @@
                     <div class="checkbox pull-right margin-right-50">
                         <label>
                             {{--<input type="checkbox" class="form-check-input" value="0" name="task_important[]" id="not_started_tasks" checked>--}}
-                            <input type="checkbox" class="form-check-input" value="1" name="task_important[]" checked>
+                            <input type="checkbox" class="form-check-input task_important" value="1" name="task_important[]" checked>
                             <span>{{trans('tasks.important')}}</span>
                         </label>
                         <label>
                             {{--<input type="checkbox" class="form-check-input" value="1" name="task_important[]" id="not_started_tasks" checked>--}}
-                            <input type="checkbox" class="form-check-input" value="0" name="task_important[]" checked>
+                            <input type="checkbox" class="form-check-input task_important" value="0" name="task_important[]" checked>
                             <span>{{trans('tasks.non-important')}}</span>
                         </label>
                     </div>
                     <div class="checkbox pull-right margin-right-50">
                         <label>
                             {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                            <input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" checked>
+                            <input type="checkbox" class="form-check-input task_immediate" value="1" name="task_immediate[]" checked>
                             <span>{{trans('tasks.immediate')}}</span>
                         </label>
                         <label>
                             {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                            <input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" checked>
+                            <input type="checkbox" class="form-check-input task_immediate" value="0" name="task_immediate[]" checked>
                             <span>{{trans('tasks.non-immediate')}}</span>
                         </label>
                     </div>
                     <div class="checkbox pull-right margin-right-50">
                         <label>
-                            <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>
+                            <input type="checkbox" class="form-check-input task_status" value="0" name="task_status[]" id="not_started_tasks" checked>
                             <span>{{trans('tasks.status_not_started')}}</span>
                         </label>
                         <label>
-                            <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
+                            <input type="checkbox" class="form-check-input task_status" value="1" name="task_status[]" id="started_tasks" checked>
                             <span>{{trans('tasks.status_started')}}</span>
                         </label>
                         <label>
-                            <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks" checked>
+                            <input type="checkbox" class="form-check-input task_status" value="2" name="task_status[]" id="done_tasks" checked>
                             <span>{{trans('tasks.status_done')}}</span>
                         </label>
                         <label>
-                            <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks" checked>
+                            <input type="checkbox" class="form-check-input task_status" value="3" name="task_status[]" id="completed_tasks" checked>
                             <span>{{trans('tasks.status_finished')}}</span>
                         </label>
                         <label>
-                            <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
+                            <input type="checkbox" class="form-check-input task_status" value="4" name="task_status[]" id="stoped_tasks">
                             <span>{{trans('tasks.status_suspended')}}</span>
                         </label>
                     </div>

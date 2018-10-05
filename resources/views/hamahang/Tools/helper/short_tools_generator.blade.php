@@ -307,23 +307,24 @@
         @endif
         <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$params['sid'].'&pid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
     @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
-    @if ('0' == $vals['follow'])
-        <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
-            <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
-        </div>
-        @if ('page.forum' != $route_name)
+        @if ('0' == $vals['follow'])
+            <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
+                <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
+            </div>
+            @if ('page.forum' != $route_name)
+                <div class="btn-group pull-right mr">
+                    <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+                </div>
+            @endif
+        @elseif ('1' == $vals['follow'])
             <div class="btn-group pull-right mr">
-                <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+                <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
             </div>
         @endif
-    @elseif ('1' == $vals['follow'])
-        <div class="btn-group pull-right mr">
-            <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
-        </div>
+        <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
+    @else
+        <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
     @endif
-    <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
-    @endif
-    <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
     @if ('[REMOVE]' != $help_code)
         <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
     @endif

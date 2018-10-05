@@ -13,6 +13,34 @@
     });
 </script>
 <script>
+
+    $(".select2_auto_complete_user").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.users')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
     function initDraggable() {
         $(".draggable").draggable({
             cursor: "all-scroll",
@@ -73,7 +101,7 @@
         var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + filter_subject_id;
         console.log($("#form_filter_priority").serialize());
         $.ajax({
-            url: '{{ route('hamahang.tasks.my_tasks.filter_my_task') }}',
+            url: '{{ route('hamahang.tasks.my_tasks.filter_all_task_state') }}',
             method: 'POST',
             dataType: "json",
             data: form_filter_priority,
