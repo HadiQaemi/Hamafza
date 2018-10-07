@@ -44,8 +44,8 @@
                         }
                     },
                     tooltip: {
-                        headerFormat: '{series.name}<br>',
-                        pointFormat: '{point.name}:  <b>{point.y}</b> of total <br/>'
+                        // headerFormat: '{series.name}<br>',
+                        // pointFormat: '{point.name}:  <b>{point.y}</b> of total <br/>'
                     },
                     series: [
                         {
