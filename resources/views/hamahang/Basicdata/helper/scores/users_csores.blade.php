@@ -1,3 +1,8 @@
+<style>
+    .jsPanel-content{
+        overflow-y: scroll !important;
+    }
+</style>
 <table class="table table-condensed">
     <thead>
     <th>نمایه</th>
@@ -11,13 +16,13 @@
         @endphp
         <tr>
             <td style="vertical-align: middle; text-align: center;">
-                <img src="{{$user->AvatarLink}}" style="width:50px; height: 50px; margin:0 10px;float:right;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; "/>
+                <img src="{{isset($user->AvatarLink) ? $user->AvatarLink : ''}}" style="width:50px; height: 50px; margin:0 10px;float:right;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; "/>
             </td>
             <td style="vertical-align: middle; text-align: center;">
-                <a href="{{App::make('url')->to('/')}}/{{ $user->Uname }}" style="padding-left: 10px;">{{ $user->Name . ' ' . $user->Family .' (' . $user->Uname . ')' }}</a>
+                <a href="{{App::make('url')->to('/')}}/{{ isset($user->Uname) ? $user->Uname : '' }}" style="padding-left: 10px;">{{ (isset($user->Name) ? $user->Name : ''). ' ' . (isset($user->Family) ? $user->Family : '') .' (' . (isset($user->Uname) ? $user->Uname : '') . ')' }}</a>
             </td>
             <td style="vertical-align: middle; text-align: center;">
-                <span>{{ $user->spec_scores($item_id)->count() }}</span>
+                <span>{{ isset($user) ? $user->spec_scores($item_id)->count() : ''}}</span>
             </td>
         </tr>
     @endforeach

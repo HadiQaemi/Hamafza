@@ -26,7 +26,15 @@
     <link href="{{ url('theme/kmkz/css/fonts.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('theme/kmkz/css/jquery.bxslider.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('theme/kmkz/css/style.css') }}" rel="stylesheet" type="text/css" />
-
+    <style>
+        .horizontal-menu .nav {
+            vertical-align: top;
+            display: inline-block;
+            border-radius: 6px;
+            margin-top: -5px;
+            margin-bottom: 0px;
+        }
+    </style>
 </head>
 <body dir="rtl" class="mstr-clr" hmfz-ui-thm="" style="overflow: auto;">
 <div class="h_sidenav_main" id="h_sidenav_main" style="padding: 0; margin: 0; transition: margin-left 1s;">

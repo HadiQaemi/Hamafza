@@ -117,7 +117,7 @@
         </div>
     @endif
 @empty
-    <div style="padding: 10px;">{{ trans('enquiry.nocontent') }}</div>
+    <div style="padding: 10px;">{!! Session::get('enquiry_body'); !!}</div>
 @endforelse
 <script>
     $(document).ready(function(){

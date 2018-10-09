@@ -28,12 +28,15 @@ class SubjectController extends Controller
     public function get_subjects()
     {
         $subjectType = DB::table('subject_type')
-            ->leftJoin('subjects','subject_type.id','=','subjects.kind')
-            ->select('subject_type.id','subject_type.name','subject_type.comment','subject_type.created_at',
-                DB::raw('COUNT(subjects.kind) as get_subject_count'))
-            ->groupBy('subjects.kind')
+//            ->leftJoin('subjects','subject_type.id','=','subjects.kind')
+            ->select('subject_type.id','subject_type.name','subject_type.comment','subject_type.created_at'
+//                ,
+//                DB::raw('COUNT(subjects.kind) as get_subject_count')
+            )
+//            ->groupBy('subjects.kind')
 //            ->orderBy('subject_type.id')
             ->get();
+//        dd($subjectType);
         return \Datatables::of($subjectType)
             ->editColumn('id', function ($data)
             {
@@ -49,6 +52,14 @@ class SubjectController extends Controller
                 {
                     return '';
                 }
+            })
+            ->addColumn('get_subject_count', function ($data)
+            {
+                $subjectType = DB::table('subjects')
+                    ->select(DB::raw('COUNT(subjects.kind) as get_subject_count'))
+                    ->where('subjects.kind','=',$data->id)
+                    ->get();
+                return $subjectType[0]->get_subject_count;
             })
             ->make(true);
 

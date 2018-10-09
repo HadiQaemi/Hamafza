@@ -12,6 +12,7 @@ class SmartdetectClass
     private $default_ips =
     [
         '127.0.0.1',
+        '::1',
     ];
 
     private $default_domains =

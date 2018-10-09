@@ -218,7 +218,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="col-xs-12">
-                                                        <span style="color: blue; font-size: 14px;">اختصاص کاربر به نقش: </span>
+                                                        <span style="color: blue; font-size: 14px;">اختصاص کاربر به نقش: d</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -227,6 +227,80 @@
                                                     </td>
                                                     <td class="col-xs-10">
                                                         <select name="roles_list[]" multiple="multiple" class="form-control roles_list_edit"></select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.relevant_organization')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <input type="text" class="form-control" id="modal_relevant_organization_input_edit" name="relevant_organization_edit">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.province')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <select id="modal_province_input_edit" name="province_edit" class='col-xs-6 select2 province form-control js-example-basic-single jsp_user_detail_province'>
+                                                            @php
+                                                                $cities = \Session::get('cities');
+                                                                $provinces = \Session::get('provinces');
+                                                            @endphp
+                                                            @if($provinces)
+                                                                @foreach($provinces as $province)
+                                                                    @if(trim($province->id)!='' && trim($province->name)!='')
+                                                                        <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.city')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <select id="modal_city_input_edit" name="city_edit" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
+                                                            @if($cities)
+                                                                @foreach($cities as $city)
+                                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.mobile')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <input type="text" class="form-control" id="modal_mobile_input_edit" name="mobile_edit">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.phone')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <input type="text" class="form-control" id="modal_phone_input_edit" name="phone_edit">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-xs-2">
+                                                        <label class="control-label">{{trans('app.education')}}</label>
+                                                    </td>
+                                                    <td class="col-xs-10">
+                                                        <select class="form-control user_education_grade" id="modal_education_input_edit" name="education_edit">
+                                                            <option value="1">دیپلم</option>
+                                                            <option value="2">فوق دیپلم</option>
+                                                            <option value="3">کارشناسی</option>
+                                                            <option value="4">کارشناسی ارشد</option>
+                                                            <option value="5">دکترا</option>
+                                                            <option value="6">دکترای حرفه ای</option>
+                                                            <option value="7">فوق دکتری</option>
+                                                        </select>
                                                     </td>
                                                 </tr>
                                             </table>

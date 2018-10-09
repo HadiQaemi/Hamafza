@@ -362,6 +362,7 @@ class PageController extends Controller
         $id = ($PreCode != '' && $id != '' && is_numeric($id)) ? $id : $PreCode;
         $param = ['id' => $id, 'Type' => $Type, 'PreCode' => $PreCode];
         $res = variable_generator('page', 'defualt', $id, $param);
+
         if(in_array($res,[403,404]))
             return view('errors.'.$res);
         return view($res['viewname'], $res);

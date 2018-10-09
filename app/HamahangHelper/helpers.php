@@ -954,6 +954,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
                                 //$tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
                                 $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
+                                Session::put('enquiry_body',$pageM->body);
                                 if (\Request::exists('tagid'))
                                 {
                                     $keyword = \App\Models\hamafza\Keyword::find(\Request::get('tagid'));
@@ -962,6 +963,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         'viewname' => 'hamahang.Enquiry.enquiry_index',
                                         'posts' => $posts,
                                         'pid' => $pid,
+                                        'body' => $pageM->body,
                                         'sid' => $sid,
                                         'sub_kind' => $sub_kind,
                                         'keywords' => $keywords,
@@ -975,6 +977,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         'viewname' => 'hamahang.Enquiry.enquiry_index',
                                         'posts' => $posts,
                                         'pid' => $pid,
+                                        'body' => $pageM->body,
                                         'sid' => $sid,
                                         'sub_kind' => $sub_kind,
                                         'keywords' => $keywords,

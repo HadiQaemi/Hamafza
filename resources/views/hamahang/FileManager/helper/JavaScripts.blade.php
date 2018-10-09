@@ -12,6 +12,7 @@
     };
 
     function HFM_UploadFiles(FormData, Section) {
+        console.log(FormData);
         $.ajax({
             type: 'post',
             url: "{{URL::route('FileManager.UploadWithAddToSession',array('section'=>""))}}/" + Section,
@@ -251,7 +252,8 @@
         });
 
         $(document).on('click', '#HFM_UploadFormSubmitBtn', function () {
-            var formElement = document.querySelector('#HFM_UploadForm');
+            // var formElement = document.querySelector('#HFM_UploadForm');
+            var formElement = $('.HFM_UploadForm')[0];
             var formData = new FormData(formElement);
             var Section = $('#HFM_Modal #HFM_InputSectionName').val();
             $('#HFM_UploadForm').hide();

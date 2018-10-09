@@ -17,7 +17,6 @@
         @include ('hamahang.Enquiry.helper.content')
     @endif
 @stop
-
 @section('inline_scripts')
     @include('hamahang.Enquiry.helper.common-js')
     @include('hamahang.Enquiry.helper.js')

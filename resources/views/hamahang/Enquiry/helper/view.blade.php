@@ -85,7 +85,7 @@
                                 @forelse ($post->comments as $comment)
                                     <div style="width: 100%; margin: 5px 0; background-color: #f4f4f4; padding: 5px;">
                                         <input class="Postid" value="{!! $comment->id !!}" type="hidden">
-                                        <div style="float: right; margin-right: 5px;">{!! $comment->user->smallAvatar2 !!}</div>
+                                        <div style="float: right; margin-right: 5px;">{!! isset($comment->user->smallAvatar2) ? $comment->user->smallAvatar2 : '' !!}</div>
                                         <div style="float: left; width: 93%; margin: auto; padding: 5px; min-height: 30px; text-align: justify;">
                                             {!! strip_tags($comment->comment) !!}
                                         </div>
