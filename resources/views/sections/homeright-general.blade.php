@@ -6,7 +6,7 @@
                     <span style="color:#2093d4 !important;font-size: 12pt;"  class="icon-pooshe"></span>
                 </div>
                 <div style="display: inline;">
-                    <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style=";color:#555;">
+                    <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style=";color:#FFF;">
                         @if($dashboard['Eghdam']>0)
                         {{$dashboard['Eghdam']}}  وظیفه جدید دارید.
                         @else
@@ -20,7 +20,7 @@
                     <span style="color:#42ff00 !important;font-size: 12pt; "  class="icon-tamasbama"></span>
                 </div>
                 <div style="display: inline;">
-                    <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style=";color:#555;">
+                    <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style=";color:#FFF;">
                         @if($dashboard['Email']>0)
                         {{$dashboard['Email']}}  پیام جدید دارید.
                         @else
@@ -34,7 +34,7 @@
                     <span style="font-size: 12pt;"  class="icon-4"></span>
                 </div>
                 <div style="display: inline;">
-                    <a href="{{ auth()->user()->Uname }}/desktop/showgroups" style=";color:#555;">
+                    <a href="{{ auth()->user()->Uname }}/desktop/showgroups" style=";color:#FFF;">
                         @if($dashboard['Group']>0)
                          عضو {{$dashboard['Group']}} گروه بوده
                         @else
