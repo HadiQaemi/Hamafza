@@ -42,7 +42,7 @@ class PageController extends Controller {
               $sub_kind = $subject->sub_kind;
               $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
               $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $subject->id)->orderBy('reg_date', 'desc')->get();
-              $page_new['content'] = view('hamahang.Enquiry.helper.subcontent')
+              $page_new['content'] = view('api.views.subcontent')
                       ->with('posts', $posts)
                       ->with('sid',$subject->id)
                       ->render();              
