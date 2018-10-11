@@ -27,7 +27,6 @@ class PageController extends Controller {
         $PgC = new HamafzaViewClasses\PageClass();
         $pc = new \App\HamafzaServiceClasses\PageClass();
         $page_new = $PgC->PageDetail($pid, 0, 0, '', 0, 0, 'local');
-        $page_new['content'] = view('api.views.content_html_text')->with('content_main', $page_new['content'])->render();
         $page = Pages::find($pid);
         $subject = $page->subject;
         $posts = $subject->posts;
@@ -36,6 +35,19 @@ class PageController extends Controller {
         foreach ($page_new['Files'] as $file) {
             $file['downloadURL'] = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => enCode($file->id)]) . '/?&fname=' . $file->originalName;
         }
+        if (strlen($page_new['content']) > 0){
+            $page_new['content'] = view('api.views.content_html_text')->with('content_main', $page_new['content'])->render();
+        } else 
+        {
+              $sub_kind = $subject->sub_kind;
+              $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
+              $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $subject->id)->orderBy('reg_date', 'desc')->get();
+              $page_new['content'] = view('hamahang.Enquiry.helper.subcontent')
+                      ->with('posts', $posts)
+                      ->with('sid',$subject->id)
+                      ->render();              
+        }
+        
         $res = [
             'status' => '1',
             'page_title' => $subject->title,
