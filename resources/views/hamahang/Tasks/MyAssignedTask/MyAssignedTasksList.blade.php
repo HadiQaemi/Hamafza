@@ -8,9 +8,9 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
         @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
     </div>
-    <div class="row form_filter_priority_div">
+    <div class="row form_filter_priority_div opacity-7">
         <form id="form_filter_priority">
-            <div class="row padding-bottom-20 opacity-7">
+            <div class="row padding-bottom-20">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
                     <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="title" name="title" placeholder="{{trans('tasks.search_title')}}" autocomplete="off">
@@ -78,28 +78,28 @@
             @if(isset($filter_subject_id))
                 <input type="hidden" value="{{$filter_subject_id}}" name="filter_subject_id" id="filter_subject_id"/>
             @endif
-            {{--<div class="checkbox" style="margin-right: 35px;">--}}
-                {{--<label>--}}
-                    {{--<input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>--}}
-                    {{--<span>{{trans('tasks.status_not_started')}}</span>--}}
-                {{--</label>--}}
-                {{--<label>--}}
-                    {{--<input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>--}}
-                    {{--<span>{{trans('tasks.status_started')}}</span>--}}
-                {{--</label>--}}
-                {{--<label>--}}
-                    {{--<input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks" checked>--}}
-                    {{--<span>{{trans('tasks.status_done')}}</span>--}}
-                {{--</label>--}}
-                {{--<label>--}}
-                    {{--<input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks" checked>--}}
-                    {{--<span>{{trans('tasks.status_finished')}}</span>--}}
-                {{--</label>--}}
-                {{--   <label>--}}
-                      {{--<input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">--}}
-                      {{--<span>{{trans('tasks.status_suspended')}}</span>--}}
-                  {{--</label>--}}
-              {{--</div>--}}
+            <div class="pull-right priority-part">
+                <label>
+                    <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>
+                    <span>{{trans('tasks.status_not_started')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
+                    <span>{{trans('tasks.status_started')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks">
+                    <span>{{trans('tasks.status_done')}}</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks">
+                    <span>{{trans('tasks.status_finished')}}</span>
+                </label>
+                   <label>
+                      <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
+                      <span>{{trans('tasks.status_suspended')}}</span>
+                  </label>
+              </div>
             {{--</div>--}}
         </form>
     </div>

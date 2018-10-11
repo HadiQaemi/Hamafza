@@ -1844,92 +1844,6 @@ pres {
     font-family:"mitra"
 }
 
-#book1 {
-    background:url(../../../tinymce/upload-files/pages/20/rr.jpg) no-repeat
-}
-
-#book2 {
-    background:url(../../../tinymce/upload-files/pages/20/rr1.jpg) no-repeat
-}
-
-#book3 {
-    background:url(../../../tinymce/upload-files/pages/20/rr2.jpg) no-repeat
-}
-
-#tilehelp {
-    background:url(../../../img/them2.jpg) no-repeat
-}
-
-#tileaghaz {
-    background:url(../../../img/them5.jpg) no-repeat
-}
-
-#tilesafahat {
-    background:url(../../../img/them16.jpg) no-repeat
-}
-
-#tileinja {
-    background:url(../../../img/them4.jpg) no-repeat
-}
-
-#tilenarm {
-    background:url(../../../img/them6.jpg) no-repeat
-}
-
-#tilemobile {
-    background:url(../../../img/them6-1.jpg) no-repeat
-}
-
-#tiledesktop {
-    background:url(../../../img/them6-2.jpg) no-repeat
-}
-
-#tileporsesh {
-    background:url(../../../img/them3.jpg) no-repeat
-}
-
-#tiledore {
-    background:url(../../../img/them1.jpg) no-repeat
-}
-
-#tilefaaliat {
-    background:url(../../../img/them7.jpg) no-repeat
-}
-
-#tileEmkanat {
-    background:url(../../../img/them8.jpg) no-repeat
-}
-
-#tiledarbare {
-    background:url(../../../img/them9.jpg) no-repeat
-}
-
-#tileelmi {
-    background:url(../../../img/them11.jpg) no-repeat
-}
-
-#tilemogh {
-    background:url(../../../img/them10.jpg) no-repeat
-}
-
-#tilevazhe {
-    background:url(../../../img/them9.jpg) no-repeat
-}
-
-#tilemarhale {
-    background:url(../../../img/them90.jpg) no-repeat
-}
-#tilemoarefi {
-    background:url(../../../img/them12.jpg) no-repeat
-}
-
-#tilehamkari {
-    background:url(../../../img/them13.jpg) no-repeat
-}
-
-#tileide {
-    background:url(../../../img/them15.jpg) no-repeat
-}
 .tblBorderLess{
     margin-bottom: 20px;
     max-width: 100%;
@@ -2967,6 +2881,7 @@ a .navbar-brand{
 }
 #priority_content_area{
     direction: rtl;
+    margin-top: 100px;
 }
 .row_height{
     direction: rtl;
@@ -3332,10 +3247,97 @@ input{
     margin-top: 0px !important;
 }
 #TextSection div{
-    background: #fff !important;
+    background: #fff;
 }
 #TextSection .mixed-scroll{
     background: transparent !important;
+}
+
+#book1 {
+    background:url(../../../tinymce/upload-files/pages/20/rr.jpg) no-repeat !important;
+}
+
+#book2 {
+    background:url(../../../tinymce/upload-files/pages/20/rr1.jpg) no-repeat !important;
+}
+
+#book3 {
+    background:url(../../../tinymce/upload-files/pages/20/rr2.jpg) no-repeat !important;
+}
+
+#tilehelp {
+    background:url(../../../img/them2.jpg) no-repeat !important;
+}
+
+#tileaghaz {
+    background:url(../../../img/them5.jpg) no-repeat !important;
+}
+
+#tilesafahat {
+    background:url(../../../img/them16.jpg) no-repeat !important;
+}
+
+#tileinja {
+    background:url(../../../img/them4.jpg) no-repeat !important;
+}
+
+#tilenarm {
+    background:url(../../../img/them6.jpg) no-repeat !important;
+}
+
+#tilemobile {
+    background:url(../../../img/them6-1.jpg) no-repeat !important;
+}
+
+#tiledesktop {
+    background:url(../../../img/them6-2.jpg) no-repeat !important;
+}
+
+#tileporsesh {
+    background:url(../../../img/them3.jpg) no-repeat !important;
+}
+
+#tiledore {
+    background:url(../../../img/them1.jpg) no-repeat !important;
+}
+
+#tilefaaliat {
+    background:url(../../../img/them7.jpg) no-repeat !important;
+}
+
+#tileEmkanat {
+    background:url(../../../img/them8.jpg) no-repeat !important;
+}
+
+#tiledarbare {
+    background:url(../../../img/them9.jpg) no-repeat !important;
+}
+
+#tileelmi {
+    background:url(../../../img/them11.jpg) no-repeat !important;
+}
+
+#tilemogh {
+    background:url(../../../img/them10.jpg) no-repeat !important;
+}
+
+#tilevazhe {
+    background:url(../../../img/them9.jpg) no-repeat !important;
+}
+
+#tilemarhale {
+    background:url(../../../img/them90.jpg) no-repeat !important;
+}
+#tilemoarefi {
+    background:url(../../../img/them12.jpg) no-repeat !important;
+}
+
+#tilehamkari {
+    background:url(../../../img/them13.jpg) no-repeat !important;
+}
+
+#tileide {
+    background:url(../../../img/them15.jpg) no-repeat !important;
 }
 #new-content h2{
     font-size: 23px;
@@ -3458,7 +3460,7 @@ input{
     border: none !important;
 }
 .priority-part{
-    margin-right: 10px;
+    margin-left: 40px;
 }
 .my-task-list-priority{
     position: relative;
@@ -3727,4 +3729,28 @@ input{
 }
 #register,#login .modal-dialog{
     margin-top: 40px;
+}
+.header_task {
+    position: absolute;
+    top: -9px;
+    z-index: 10;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.footer_task {
+    position: absolute;
+    background-color: #ffffff;
+    z-index: 10;
+    bottom: 0px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.content_task {
+    position: relative;
+    width: 100%;
+    top: 85px;
+    /*height: 430px;*/
+    height: 74vh;
 }

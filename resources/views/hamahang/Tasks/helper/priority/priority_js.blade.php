@@ -6,11 +6,44 @@
     });
 
     $(document).ready(function () {
-
+        $(".select2_auto_complete_user").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.users')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
         initDraggable();
-        $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
             filter_tasks_priority();
         });
+        $('#title, .task_status, .task_immediate, .task_important, .official_type').on('keyup change', function () {
+            filter_tasks_priority();
+        });
+
+        // $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        //     filter_tasks_priority();
+        // });
         $('#form_filter_priority_time').on('keyup change', 'input, select, textarea', 'checkbox', function () {
             filter_tasks_priority_time();
         });

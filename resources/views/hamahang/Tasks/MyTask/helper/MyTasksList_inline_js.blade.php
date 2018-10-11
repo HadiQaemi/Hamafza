@@ -65,12 +65,19 @@
             return json;
         };
     })(jQuery);
-    $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+    $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
         filter_tasks_priority();
     });
-    $('#new_task_keywords').on('change', function () {
+    $('#title, .task_status, .task_immediate, .task_important, .official_type').on('keyup change', function () {
         filter_tasks_priority();
     });
+
+    // $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+    //     filter_tasks_priority();
+    // });
+    // $('#new_task_keywords').on('change', function () {
+    //     filter_tasks_priority();
+    // });
     function filter_tasks_priority(data) {
         window.table_chart_grid2.destroy();
         readTable($("#form_filter_priority").serializeObject());
@@ -127,6 +134,7 @@
     };
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
+        // alert('asdasd');
         @if(isset($filter_subject_id))
             send_info["subject_id"]= '{{ $filter_subject_id }}'
         @endif

@@ -7,7 +7,13 @@
             autoClose: true,
             format: 'YYYY-MM-DD'
         });
-        $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        // $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
+        //     filter_mytask();
+        // });
+        $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
+            filter_mytask();
+        });
+        $('#title, .task_status, .task_immediate, .task_important, .official_type').on('keyup change', function () {
             filter_mytask();
         });
     });

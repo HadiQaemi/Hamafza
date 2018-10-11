@@ -16,28 +16,6 @@
             margin-left: 10px;
             margin-right: 10px;
         }
-        .header_task{
-            position:absolute;
-            top:-9px;
-            z-index:100;
-            width: 100%;
-            background-color: #ffffff;
-        }
-        .footer_task{
-            position:absolute;
-            background-color: #ffffff;
-            z-index:100;
-            bottom:22px;
-            height: 43px;
-            padding-bottom: 10px;
-            width:100%;
-        }
-        .content_task{
-            position: relative;
-            width: 100%;
-            top: 35px;
-            padding-top: 20px;
-        }
         .state_container {
         }
         .scrlbig{
@@ -45,9 +23,6 @@
         }
         .panel-light{
             height: 73.4vh;
-        }
-        .row{
-            height: 46px !important;
         }
     </style>
 @stop

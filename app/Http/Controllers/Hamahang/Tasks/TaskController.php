@@ -1068,7 +1068,7 @@ class TaskController extends Controller
         {
 //            dd(\Route::currentRouteName(),Request::all());
             $respite = Request::get('respite');
-            $task_title = Request::get('task_title');
+            $task_title = Request::exists('task_title') ? Request::input('task_title') : Request::input('title');
             $task_status = Request::get('task_status');
             $official_type = Request::get('official_type');
             $source = Request::get('act');

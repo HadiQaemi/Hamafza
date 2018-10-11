@@ -13,32 +13,6 @@
             margin-left: 10px;
             margin-right: 10px;
         }
-
-        .header_task {
-            position: absolute;
-            top: -9px;
-            z-index: 10;
-            width: 100%;
-            background-color: #ffffff;
-        }
-
-        .footer_task {
-            position: absolute;
-            background-color: #ffffff;
-            z-index: 10;
-            bottom: 0px;
-            padding-bottom: 10px;
-            width: 100%;
-        }
-
-        .content_task {
-            position: relative;
-            width: 100%;
-            top: 35px;
-            /*height: 430px;*/
-            height: 71vh;
-        }
-
         .scrlbig {
             overflow-y: hidden !important;
         }
