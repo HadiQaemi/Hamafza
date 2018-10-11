@@ -122,16 +122,16 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-2"></div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2"></div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
             @foreach ($post->keywords as $keyword)
             <a href="#" class="h-tag" data-tagid="{!! $keyword->id !!}" data-tagtitle="{!! $keyword->title !!}"><span class="h-span-keyword"><i class="fa fa-tag" aria-hidden="true"></i> {!! $keyword->title !!}</span></a>
             @endforeach
         </div>
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-3">
             {!! $post->jalaliRegDateName !!}
         </div>
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-3">
             {!! $post->user->SmallAvatar !!}<a href="{{ url($post->user->Uname) }}">{!! $post->user->Name !!} {!! $post->user->Family !!}</a>
         </div>
     </div>
