@@ -40,6 +40,7 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
     }
 </style>
 @stop
+@section('content')
 @forelse ($posts as $post)
 @if (isset($post->user))
 
@@ -139,3 +140,4 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
 @empty
 <div style="padding: 10px;">{!! Session::get('enquiry_body'); !!}</div>
 @endforelse
+@stop
