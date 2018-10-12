@@ -105,7 +105,8 @@
                     },
                     classN: "jsPanels",
                     TitleN: "وظیفه",
-                    href:"{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$sid.'&type='.$PageType.'&pid='.$pid.'&title='.$Title)}}&sel={%s}",
+                    href:"{{url('/modals/CreateNewTask?uid='.auth()->id().'&type='.$PageType.'&title='.$Title)}}&sel={%s}",
+                    {{--href:"{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$sid.'&type='.$PageType.'&pid='.$pid.'&title='.$Title)}}&sel={%s}",--}}
                 {{--"{{App::make('url')->to('/')}}/modals/measure?sid={{$sid }}&pid={{$pid }}&type={{$PageType}}&title={{$Title}}&sel={%s}",--}}
                 },
                 {

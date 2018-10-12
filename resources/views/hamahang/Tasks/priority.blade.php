@@ -3,14 +3,6 @@
     @include('hamahang.Tasks.helper.priority.priority_style')
 @stop
 @section('content')
-    <style> #related_links {
-            padding: 1px;
-            left: 15px;
-            position: absolute;
-            top: -15px !important;
-            left:27px;
-            z-index:11;
-        }</style>
     <div style="position: relative;height: 100%;width: 100%;">
         <div class="header_task">
             <div class="space-4"></div>

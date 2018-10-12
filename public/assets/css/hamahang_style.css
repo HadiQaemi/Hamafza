@@ -1825,3 +1825,6 @@ th{
 .jsPanel-btn-minimize{
     display: none;
 }
+#form_filter_priority label{
+    margin-left:2px;
+}

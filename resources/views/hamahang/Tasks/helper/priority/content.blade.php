@@ -14,13 +14,14 @@
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                             @php
                                                 $title = $task->title;
-                                                $words = str_word_count($task->title, 2);
-                                                $pos = array_keys($words);
-                                                $min = min(count($words),3);
-                                                if(isset($pos[$min]))
-                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                                if(mb_strlen($title,'UTF-8')>30){
+                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
+                                                    $content .= '…';
+                                                }else{
+                                                    $content = strip_tags($title);
+                                                }
                                             @endphp
-                                            {{$title}}
+                                            {{$content}}
                                         </a>
                                     </h5>
                                 </div>
@@ -49,13 +50,14 @@
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                             @php
                                                 $title = $task->title;
-                                                $words = str_word_count($task->title, 2);
-                                                $pos = array_keys($words);
-                                                $min = min(count($words),3);
-                                                if(isset($pos[$min]))
-                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                                if(mb_strlen($title,'UTF-8')>30){
+                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
+                                                    $content .= '…';
+                                                }else{
+                                                    $content = strip_tags($title);
+                                                }
                                             @endphp
-                                            {{$title}}
+                                            {{$content}}
                                         </a>
                                     </h5>
                                 </div>
@@ -86,13 +88,14 @@
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                             @php
                                                 $title = $task->title;
-                                                $words = str_word_count($task->title, 2);
-                                                $pos = array_keys($words);
-                                                $min = min(count($words),3);
-                                                if(isset($pos[$min]))
-                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                                if(mb_strlen($title,'UTF-8')>30){
+                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
+                                                    $content .= '…';
+                                                }else{
+                                                    $content = strip_tags($title);
+                                                }
                                             @endphp
-                                            {{$title}}
+                                            {{$content}}
                                         </a>
                                     </h5>
                                 </div>
@@ -122,13 +125,14 @@
                                         <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                             @php
                                                 $title = $task->title;
-                                                $words = str_word_count($task->title, 2);
-                                                $pos = array_keys($words);
-                                                $min = min(count($words),3);
-                                                if(isset($pos[$min]))
-                                                    $title = substr($words, 1, $pos[1]) . '...';
+                                                if(mb_strlen($title,'UTF-8')>30){
+                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
+                                                    $content .= '…';
+                                                }else{
+                                                    $content = strip_tags($title);
+                                                }
                                             @endphp
-                                            {{$title}}
+                                            {{$content}}
                                         </a>
                                     </h5>
                                 </div>
@@ -165,7 +169,7 @@
                                                 $words = str_word_count($task->title, 2);
                                                 $pos = array_keys($words);
                                                 $min = min(count($words),3);
-                                                if(isset($pos[$min]))
+                                                if(isset($pos[1]))
                                                     $title = substr($words, 1, $pos[1]) . '...';
                                             @endphp
                                             {{$title}}

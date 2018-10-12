@@ -52,6 +52,22 @@ use App\Models\Hamahang\keywords;
 
 class MyAssignedTaskController extends Controller
 {
+    public function MyAssignedTasksFetchPackeages()
+    {
+        $uname = Auth::id();
+        $result = DB::table('hamahang_task')
+            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+            ->leftjoin('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
+            ->select("hamahang_task_assignments.employee_id as employee_id","hamahang_task.title","hamahang_task.id","user.Name as name", "user.Family as family")
+            ->where('hamahang_task_assignments.uid', '=', $uname)->get();
+        $result_packages = [];
+        foreach($result as $A_result)
+        {
+            $result_packages[$A_result->employee_id]['tasks'][] = $A_result;
+            $result_packages[$A_result->employee_id]['user'] = $A_result->name.' '.$A_result->family;
+        }
+        return view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksPackages.content', compact('uname', 'result_packages'));
+    }
     public function FetchTranscriptsList()
     {
         $Tasks = tasks::MyTranscriptsTasks(Auth::id(), Request::input('subject_id'));
@@ -202,6 +218,26 @@ class MyAssignedTaskController extends Controller
         $user = auth()->user();
 
 
+        return view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTaskState.content', compact('user', 'myTasks'));
+    }
+
+    private function my_assigned_tasks_package()
+    {
+        $user = auth()->user();
+        $filter_subject_id = isset($arr['filter_subject_id']) ? '' : '';
+        $official_type = [0,1];
+        $importance = [0,1];
+        $immediate = [0,1];
+
+        $myTasks = $user->MyAssignedTasks()->with('subject');
+        if (trim($filter_subject_id)!='')
+        {
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $myTasks = $myTasks->get();
+        dd($myTasks);
         return view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTaskState.content', compact('user', 'myTasks'));
     }
 
