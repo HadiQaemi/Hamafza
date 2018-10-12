@@ -3460,7 +3460,7 @@ input{
     border: none !important;
 }
 .priority-part{
-    margin-left: 40px;
+    margin-left: 20px;
 }
 .my-task-list-priority{
     position: relative;
@@ -3705,7 +3705,6 @@ input{
         }
     }
 }
-
 .jsPanel-content .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     border: transparent;
     border-bottom: 2px solid #1559a5;
@@ -3737,7 +3736,6 @@ input{
     width: 100%;
     background-color: #ffffff;
 }
-
 .footer_task {
     position: absolute;
     background-color: #ffffff;
@@ -3746,7 +3744,6 @@ input{
     padding-bottom: 10px;
     width: 100%;
 }
-
 .content_task {
     position: relative;
     width: 100%;
@@ -3754,3 +3751,4 @@ input{
     /*height: 430px;*/
     height: 74vh;
 }
+
