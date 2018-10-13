@@ -82,7 +82,7 @@ class MyAssignedTaskController extends Controller
             $result = $result
                 ->join('pages', 'pages.id', '=', 'hamahang_subject_ables.subject_id')
                 ->join('subjects', 'subjects.id', '=', 'pages.sid')
-                ->select("hamahang_task.id as task_id","hamahang_subject_ables.subject_id as type_field", "hamahang_task.title", "pages.id as object_id", "hamahang_task.id", "user.Name", "user.Family", 'subjects.title AS u_name');
+                ->select("hamahang_task.id as task_id","hamahang_subject_ables.subject_id as type_field", "hamahang_task.title", "subjects.id as object_id", "hamahang_task.id", "user.Name", "user.Family", 'subjects.title AS u_name');
         }else if(Request::input('package_type')=='keywords')
         {
             $result = $result->join('hamahang_task_keywords', 'hamahang_task_keywords.task_id', '=', 'hamahang_task.id')
