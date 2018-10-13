@@ -83,8 +83,8 @@
                     <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
                     <div class="col-lg-11">
                         <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
-                            @if($pid)
-                                <option value="{{$pid}}" selected>{{$subject->title}}</option>
+                            @if($sid)
+                                <option value="{{$sid}}" selected>{{$subject->title}}</option>
                             @endif
                         </select>
                     </div>

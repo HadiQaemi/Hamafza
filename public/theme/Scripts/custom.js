@@ -1130,7 +1130,7 @@ $(document).ready(function(){
         if ($(".hd-body").scrollTop() > 40 && parseInt(2*window_height)<parseInt($('#new-content').height())) {
             $(".navbar-custom").addClass("hidden");
             $(".dsply-tbl").css("margin-top","-40px");
-            $(".hd-body").css("max-height","95vh");
+            $(".hd-body").css("max-height","100%");
             $(".row-hd").css("max-height","95vh");
             $(".row-hd").css("overflow","visible");
             $("#header").addClass("hidden");
