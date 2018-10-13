@@ -55,28 +55,44 @@ class MyAssignedTaskController extends Controller
     public function MyAssignedTasksFetchPackeages()
     {
         $uname = Auth::id();
-        $result = DB::table('hamahang_task')
-            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
-            ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
-            ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-            ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
-            ->select("hamahang_task_assignments.employee_id as employee_id","hamahang_task.title","hamahang_task.id","user.Name as name", "user.Family as family")
-            ->where('hamahang_task_assignments.uid', '=', $uname)
-            ->whereNull('hamahang_task_assignments.reject_description')
-            ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
-            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')
-            ->groupBy('hamahang_task.id');
-
         $title = Request::get('title');
         $status_filter = Request::get('task_status');
         $official_type = Request::get('official_type');
         $important = Request::get('task_important');
         $immediate = Request::get('task_immediate');
         $filter_subject_id = Request::exists('filter_subject_id') ? Request::get('filter_subject_id') : '';
-        if(trim($filter_subject_id)!='')
+
+        $result = DB::table('hamahang_task')
+            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+            ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
+            ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+            ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
+            ->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+            ->where('hamahang_task_assignments.uid', '=', $uname)
+            ->whereNull('hamahang_task_assignments.reject_description')
+            ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+            ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')
+            ->groupBy('hamahang_task.id');
+
+        if(Request::input('package_type')=='persons')
         {
-            $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-            ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id);
+            $result = $result->select("hamahang_task.id as task_id", "hamahang_task_assignments.employee_id as type_field", "hamahang_task.title", "hamahang_task.id", "user.id as object_id", "user.Name", "user.Family", DB::raw('CONCAT(user.Name," ",user.Family) AS u_name'));
+        }else if(Request::input('package_type')=='pages')
+        {
+            $result = $result
+                ->join('pages', 'pages.id', '=', 'hamahang_subject_ables.subject_id')
+                ->join('subjects', 'subjects.id', '=', 'pages.sid')
+                ->select("hamahang_task.id as task_id","hamahang_subject_ables.subject_id as type_field", "hamahang_task.title", "pages.id as object_id", "hamahang_task.id", "user.Name", "user.Family", 'subjects.title AS u_name');
+        }else if(Request::input('package_type')=='keywords')
+        {
+            $result = $result->join('hamahang_task_keywords', 'hamahang_task_keywords.task_id', '=', 'hamahang_task.id')
+                ->join('keywords', 'keywords.id', '=', 'hamahang_task_keywords.keyword_id')
+                ->select("hamahang_task.id as task_id", "hamahang_subject_ables.subject_id as type_field", "keywords.id as object_id", "hamahang_task.title", "hamahang_task.id", "user.Name", "user.Family", 'keywords.title AS u_name');
+        }
+
+        if(trim($filter_subject_id)!='undefined')
+        {
+            $result->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id);
         }
 
 
@@ -154,8 +170,9 @@ class MyAssignedTaskController extends Controller
         $result_packages = [];
         foreach($result as $A_result)
         {
-            $result_packages[$A_result->employee_id]['tasks'][] = $A_result;
-            $result_packages[$A_result->employee_id]['user'] = $A_result->name.' '.$A_result->family;
+            $result_packages[$A_result->type_field]['tasks'][] = $A_result;
+            $result_packages[$A_result->type_field]['name'] = $A_result->u_name;
+            $result_packages[$A_result->type_field]['object_id'] = $A_result->object_id;
         }
         return view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksPackages.content', compact('uname', 'result_packages'));
     }

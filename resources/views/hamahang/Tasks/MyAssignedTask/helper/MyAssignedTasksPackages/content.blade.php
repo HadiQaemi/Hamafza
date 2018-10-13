@@ -1,6 +1,27 @@
+@php
+    $package_type = '';
+    if(Request::input('package_type')=='persons')
+    {
+        $package_type = 'pid';
+    }else if(Request::input('package_type')=='pages')
+    {
+        $package_type = 'pgid';
+    }else if(Request::input('package_type')=='keywords')
+    {
+        $package_type = 'kid';
+    }
+@endphp
 @foreach($result_packages as $list_task)
     <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
-        <div class="text-center div_title_not_started"><h6>{{$list_task['user']}}</h6></div>
+        <div class="text-center div_title_not_started">
+            <h6>
+                <span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>
+                {{$list_task['name']}}
+                <span style="margin-right: 10px">
+                    <a href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&'.$package_type.'='.$list_task['object_id'])}}" title="وظیفه جدید" class="jsPanels fa fa-plus-square pointer font-large"></a>
+                </span>
+            </h6>
+        </div>
         <div class="div_groups_task state_container droppable" id="task_notstarted" >
             <ul class="ul_dropp">
                 @if(!empty($list_task['tasks']))
@@ -9,7 +30,7 @@
                             <div class="header_div_list_task container-fluid prl-1">
                                 <div class="span_title" >
                                     <span data-toggle="tooltip" title="{{$task->title}}">
-                                        <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}'>
+                                        <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->task_id)}}'>
                                             @php
                                                 $msgTrimmed = mb_substr($task->title,0,25);
                                                 $lastSpace = strrpos($msgTrimmed, ' ', 0);

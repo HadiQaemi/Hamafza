@@ -3752,4 +3752,11 @@ input{
     /*height: 430px;*/
     height: 74vh;
 }
+.font-large{
+    font-size:large;
+}
+.fa-sort-down.pointer.font-large{
+    margin-right: -10.3px;
+    margin-top: 5px;
+}
 
