@@ -170,9 +170,9 @@ class MyAssignedTaskController extends Controller
         $result_packages = [];
         foreach($result as $A_result)
         {
-            $result_packages[$A_result->type_field]['tasks'][] = $A_result;
-            $result_packages[$A_result->type_field]['name'] = $A_result->u_name;
-            $result_packages[$A_result->type_field]['object_id'] = $A_result->object_id;
+            $result_packages[$A_result->object_id]['tasks'][] = $A_result;
+            $result_packages[$A_result->object_id]['name'] = $A_result->u_name;
+            $result_packages[$A_result->object_id]['object_id'] = $A_result->object_id;
         }
         return view('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksPackages.content', compact('uname', 'result_packages'));
     }
