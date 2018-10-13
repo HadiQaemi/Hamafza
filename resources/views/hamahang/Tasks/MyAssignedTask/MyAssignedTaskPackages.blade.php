@@ -27,12 +27,12 @@
         <form id="form_filter_priority">
             <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-bottom-20">
                 <label class="pointer">
-                    <input type="radio" name="package_type" value="pages">
-                    <span>{{trans('tasks.pages')}}</span>
-                </label>
-                <label class="pointer">
                     <input type="radio" name="package_type" value="persons" checked>
                     <span>{{trans('tasks.persons')}}</span>
+                </label>
+                <label class="pointer">
+                    <input type="radio" name="package_type" value="pages">
+                    <span>{{trans('tasks.pages')}}</span>
                 </label>
                 <label class="pointer">
                     <input type="radio" name="package_type" value="keywords">
