@@ -29,13 +29,32 @@ class ChartsController extends Controller
         {
             $citis = LogRequest::where('iso_code', $country->iso_code)->groupBy('city')->select('city', DB::raw('count(*) as total'))->get();
             $data = [];
-            foreach ($citis as $city)
+            $c = 0;
+            foreach ($citis as $k=>$city)
             {
                 $cus_city = $city->city;
                 if ('kmkz' == config('constants.DefIndexView'))
                 {
                     if($city->city == 'Ahvaz' || strlen(trim($city->city))==0)
+                    {
                         $cus_city= 'Khuzestan';
+                        $c = $city->total;
+                        continue;
+                    }else if($city->city == 'Ahvaz')
+                    {
+                        $cus_city= 'Khuzestan';
+                        $city->total +=$c;
+                    }
+                }else{
+                    if(strlen(trim($city->city))==0)
+                    {
+                        $cus_city= 'Tehran';
+                        $c = $city->total;
+                        continue;
+                    }else if(trim($city->city)=='Tehran'){
+                        $city->total +=$c;
+                    }
+
                 }
                 $data[] = [$cus_city, $city->total];
             }
