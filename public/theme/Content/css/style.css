@@ -3759,4 +3759,7 @@ input{
     margin-right: -10.3px;
     margin-top: 5px;
 }
+.highcharts-label text{
+    display: none;
+}
 
