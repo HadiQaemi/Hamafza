@@ -32,11 +32,11 @@ class ChartsController extends Controller
             foreach ($citis as $city)
             {
                 $cus_city = $city->city;
-                if ('kmkz' == config('constants.DefIndexView'))
-                {
+//                if ('kmkz' == config('constants.DefIndexView'))
+//                {
                     if($city->city == 'Ahvaz' || strlen(trim($city->city))==0)
                         $cus_city= 'Khuzestan';
-                }
+//                }
                 $data[] = [$cus_city, $city->total];
             }
             $arr['city'][] = array('name' => $country->country_name, 'id' => $country->country_name, 'data' => $data);
