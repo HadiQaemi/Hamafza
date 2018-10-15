@@ -20,7 +20,6 @@ class ChartsController extends Controller
     {
 
         $countris = LogRequest::groupBy('iso_code')->select('iso_code', DB::raw('count(*) as total'))->get();
-//        dd($countris);
         foreach ($countris as $country)
         {
             $arr['country'][] = array('name' => $country->country_name, 'y' => $country->total, 'drilldown' => $country->country_name);
@@ -33,14 +32,15 @@ class ChartsController extends Controller
             foreach ($citis as $city)
             {
                 $cus_city = $city->city;
-                if($city->city == 'Ahvaz')
-                    $cus_city= 'Khuzestan';
+                if ('kmkz' == config('constants.DefIndexView'))
+                {
+                    if($city->city == 'Ahvaz' || strlen(trim($city->city))==0)
+                        $cus_city= 'Khuzestan';
+                }
                 $data[] = [$cus_city, $city->total];
-
             }
             $arr['city'][] = array('name' => $country->country_name, 'id' => $country->country_name, 'data' => $data);
         };
-//$arr[][] = array($city->city,$country->total,'drilldown'=>$country->country);
         return json_encode($arr);
     }
 

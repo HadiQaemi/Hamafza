@@ -1190,7 +1190,7 @@ class tasks extends Model
 //            dd($result);
 
 
-            $result = $result->get();
+            $result = $result->groupBy('hamahang_task.id')->get();
 //            dd(db::getQueryLog());
         }
         return $result;

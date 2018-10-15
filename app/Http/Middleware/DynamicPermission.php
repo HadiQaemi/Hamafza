@@ -18,7 +18,7 @@ class DynamicPermission
     public function handle($request, Closure $next, $permission)
     {
 //        echo '<hr/>'.($permission).'<hr/>';
-        return $next($request);
+//        return $next($request);
 
         $role_name = config('constants.APP_PUBLIC_ROLE');
         $role = Role::where('name', $role_name)->first();
