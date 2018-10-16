@@ -321,8 +321,8 @@
             <div class="btn-group pull-right mr">
                 <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
             </div>
+            <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
         @endif
-        <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
     @else
         <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
     @endif
