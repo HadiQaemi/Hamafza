@@ -81,8 +81,18 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.post_comment',
         'uses' => 'PageController@post_comment'
     ]);
-    
-     Route::post('post_share', [
+
+    Route::post('delete_comment', [
+        'as' => 'api.v43.delete_comment',
+        'uses' => 'PageController@delete_comment'
+    ]);
+
+    Route::post('delete_post', [
+        'as' => 'api.v43.delete_post',
+        'uses' => 'PageController@delete_post'
+    ]);
+
+    Route::post('post_share', [
         'as' => 'api.v43.post_share',
         'uses' => 'PageController@Sharepost'
     ]);
@@ -107,6 +117,11 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
     Route::post('get_about_me', [
         'as' => 'api.v43.get_about_me',
         'uses' => 'UserController@get_about_me'
+    ]);
+
+    Route::post('update_user', [
+        'as' => 'api.v43.update_user',
+        'uses' => 'UserController@updateUser'
     ]);
     Route::group(array('prefix' => 'tasks'), function () {
         Route::get('get_my_tasks', [

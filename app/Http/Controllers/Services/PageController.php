@@ -659,6 +659,85 @@ class PageController extends Controller {
         ];
         return response()->json($res);
     }
+    
+    public function delete_comment() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        \App\HamafzaServiceClasses\PostsClass::CommentDelete($id);
+        $message = trans('labels.DelOK');
+        $res = ['message' => $message];
+        return response()->json($res);
+    }
+    
+    public function delete_post() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        $uid = $user->id;
+        
+        $page = 'Post';
+        $a = DB::transaction(function () use ($uid, $page, $id)
+                {
+                    $post = \App\Models\hamafza\Post::find($id);
+                    if ($post->accepted)
+                    {
+                        return [0, 'پاسخ تائید شده، امکان حذف آن وجود ندارد.'];
+                    }
+                    else
+                    {
+                        if ($post->answerCount > 0)
+                        {
+                            return [0, 'پاسخ داده شده، امکان حذف آن وجود ندارد.'];
+                        }
+                        else
+                        {
+                            $SP = new \App\HamafzaServiceClasses\PublicsClass();
+                            $menu = $SP->DeleteRow($page, $uid, 0, $id);
+
+                            switch ($post->type)
+                            {
+                                case '1':
+                                    $score_id = config('score.9');
+                                    break;
+                                case '2':
+                                    $score_id = config('score.10');
+                                    break;
+                                case '3':
+                                    $score_id = config('score.11');
+                                    break;
+                                case '4':
+                                    $score_id = config('score.12');
+                                    break;
+                                case '12':
+                                    $score_id = config('score.13');
+                                    break;
+                                case '13':
+                                    $score_id = config('score.14');
+                                    break;
+                            }
+                            score_unregister('App\Models\hamafza\Post', $id, $score_id, $uid);
+
+                            if (2 == $post->type)
+                            {
+                                $reward = Reward::where('from_user_id', $uid)->where('target_table', 'App\Models\hamafza\Post')->where('target_id', $id);
+                                if ($reward)
+                                {
+                                    $reward->delete();
+                                }
+                            }
+                            $message = trans('labels.DelOK');
+                            $res = ['message' => $message];
+                            return response()->json($res);
+                        }
+                    }
+                });
+                return $a;
+    }
 
     public function Sharepost() {
         $user = getUser();

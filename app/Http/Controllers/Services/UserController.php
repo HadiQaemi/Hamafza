@@ -425,20 +425,20 @@ class UserController extends Controller {
         $subjects['private'] = $term ? $subjects['private']->where('title', 'like', "%$term%") : $subjects['private'];
         $subjects['public'] = $subjects['public']->get();
         $subjects['private'] = $subjects['private']->get();
-        foreach ($subjects as $subject_type => $subject_items){
-            foreach ($subject_items as $subject_item){
-                    if ('public' == $subject_type)
-                        $can_view = policy_CanView($subject_item->id, 'App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView');
-                    else
-                         $can_view = true;
+        foreach ($subjects as $subject_type => $subject_items) {
+            foreach ($subject_items as $subject_item) {
+                if ('public' == $subject_type)
+                    $can_view = policy_CanView($subject_item->id, 'App\Models\hamafza\Subject', '\App\Policies\SubjectPolicy', 'canView');
+                else
+                    $can_view = true;
 
-                    if ($can_view)
-                        if (isset($subject_item->pages[0])){
-                            $subject_item->pageid = $subject_item->pages[0]->id;
-                        }
+                if ($can_view)
+                    if (isset($subject_item->pages[0])) {
+                        $subject_item->pageid = $subject_item->pages[0]->id;
+                    }
             }
         }
-            
+
         $r = [
             'subject_types' => $subject_types,
             'term' => $term,
@@ -720,36 +720,64 @@ class UserController extends Controller {
     }
 
     public function getAvatar() {
-        
-        
-            $user = getUser();
-            $not_found_img = 'user_avatar.png';
-            if (!isset($user->id)) {
-                return $user;
-            }
-            $file = \App\Models\Hamahang\FileManager\FileManager::find($user->avatar);
-            if ($file) {
-                $file_EXT = \App\Models\Hamahang\FileManager\FileMimeTypes::where('mimeType', '=', $file->mimeType)->firstOrFail()->ext;
-                $headers = array("Content-Type:{$file->mimeType}");
-           
-                if (\Storage::disk('FileManager')->has($file->path . $file->filename)) {
-                        
-                    $file_path = storage_path() . '/app/FileManager' . $file->path . 'mobile_' . $file->filename;
-                    if (!\Storage::disk('FileManager')->has($file->path . 'mobile_' . $file->filename)) {
-                      
-                        $img = \Intervention\Image\Facades\Image::make(storage_path() . '/app/FileManager' . $file->path . $file->filename);
-                        $img->resize(100, 100);
-                        $img->save($file_path);
-                    }
-                    
-                    return response()->download($file_path, $file->originalName . $file_EXT, $headers);
-                } else {
-                    return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
+
+
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $not_found_img = 'user_avatar.png';
+        $file = \App\Models\Hamahang\FileManager\FileManager::find($user->avatar);
+        if ($file) {
+            $file_EXT = \App\Models\Hamahang\FileManager\FileMimeTypes::where('mimeType', '=', $file->mimeType)->firstOrFail()->ext;
+            $headers = array("Content-Type:{$file->mimeType}");
+
+            if (\Storage::disk('FileManager')->has($file->path . $file->filename)) {
+
+                $file_path = storage_path() . '/app/FileManager' . $file->path . 'mobile_' . $file->filename;
+                if (!\Storage::disk('FileManager')->has($file->path . 'mobile_' . $file->filename)) {
+
+                    $img = \Intervention\Image\Facades\Image::make(storage_path() . '/app/FileManager' . $file->path . $file->filename);
+                    $img->resize(100, 100);
+                    $img->save($file_path);
                 }
+
+                return response()->download($file_path, $file->originalName . $file_EXT, $headers);
             } else {
                 return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
             }
-        
+        } else {
+            return response()->download(storage_path() . '/app/FileManager/System/' . $not_found_img);
+        }
+    }
+
+    public function updateUser() {
+        $v_fields = [
+            'name' => 'required|string|min:3|max:255',
+            'family' => 'required|string|min:3|max:255',
+            'summary' => 'min:3|max:255'
+        ];
+
+        $validator = Validator::make(Request::all(), $v_fields);
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return response()->json($result);
+        } else {
+            $user = getUser();
+            if (!isset($user->id)) {
+                return $user;
+            }
+
+
+            $user->Name = Request::input('name');
+            $user->Family = Request::input('family');
+            $user->Summary = Request::input('summary');
+            $user->save();
+            $result['message'] = "تغییرات با موفقیت ثبت گردید.";
+            $result['success'] = true;
+            return response()->json($result);
+        }
     }
 
 }
