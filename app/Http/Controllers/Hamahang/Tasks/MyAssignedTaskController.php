@@ -1261,7 +1261,7 @@ class MyAssignedTaskController extends Controller
                         ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
                     foreach (Request::input('keywords') as $kw)
                     {
-                        task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
+                        task_keywords::create_task_keyword($task->id, hamahang_add_keyword(hamahang_get_keyword_value($kw)));
                     }
                 }
                 $staff = '';

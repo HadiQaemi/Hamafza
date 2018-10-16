@@ -212,6 +212,19 @@ if (!function_exists('hamahang_add_keyword'))
         return $keyword_id;
     }
 }
+if (!function_exists('hamahang_get_keyword_value'))
+{
+    function hamahang_get_keyword_value($key_id)
+    {
+        if(!strstr($key_id,'exist_in'))
+        {
+            $keyword = keywords::find($key_id);
+            return $keyword->title;
+        }else{
+            return $key_id;
+        }
+    }
+}
 if (!function_exists('new_hamafza_add_resource'))
 {
     function new_hamafza_add_resource($resource)

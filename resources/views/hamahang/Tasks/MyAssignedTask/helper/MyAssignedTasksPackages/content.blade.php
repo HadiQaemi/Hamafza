@@ -16,7 +16,8 @@
         <div class="text-center div_title_not_started">
             <h6>
                 <span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>
-                {{$list_task['name']}}(<span>{{(isset($list_task['tasks']) ? count($list_task['tasks']) : 0)}}</span>)
+                {{$list_task['name']}}
+                {{--(<span>{{(isset($list_task['tasks']) ? count($list_task['tasks']) : 0)}}</span>)--}}
                 <span style="margin-right: 10px">
                     <a href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&'.$package_type.'='.$list_task['object_id'])}}" title="وظیفه جدید" class="jsPanels fa fa-plus-square pointer font-large"></a>
                 </span>
@@ -30,7 +31,7 @@
                             <div class="header_div_list_task container-fluid prl-1">
                                 <div class="span_title" >
                                     <span data-toggle="tooltip" title="{{$task->title}}">
-                                        <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->task_id)}}'>
+                                        <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->task_id)}}'>
                                             @php
                                                 $msgTrimmed = mb_substr($task->title,0,25);
                                                 $lastSpace = strrpos($msgTrimmed, ' ', 0);
