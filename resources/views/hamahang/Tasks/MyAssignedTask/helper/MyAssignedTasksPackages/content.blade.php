@@ -16,7 +16,7 @@
         <div class="text-center div_title_not_started">
             <h6>
                 <span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>
-                {{$list_task['name']}}
+                {{$list_task['name']}}(<span>{{(isset($list_task['tasks']) ? count($list_task['tasks']) : 0)}}</span>)
                 <span style="margin-right: 10px">
                     <a href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&'.$package_type.'='.$list_task['object_id'])}}" title="وظیفه جدید" class="jsPanels fa fa-plus-square pointer font-large"></a>
                 </span>
