@@ -17,7 +17,7 @@ class OpenModalController extends Controller
     public function create_new_task()
     {
         $arr['uname'] = $arr['UName'] = Auth::user()->Uname;
-        $arr['HFM_CNT'] = HFM_GenerateUploadForm([['CreateNewTask', ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],'Multi']]);
+        $arr['HFM_CNT'] = HFM_GenerateUploadForm([['CreateNewTask', ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],'Multi']]);
         return view('hamahang.modals.create_new_task', $arr);
     }
     public function  new_procccess()

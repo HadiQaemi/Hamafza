@@ -52,7 +52,7 @@ class TaskController extends Controller
                 [
                     [
                         'AddNewFiles',
-                        ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                        ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                         'Multi'
                     ]
                 ]
@@ -70,7 +70,7 @@ class TaskController extends Controller
                 [
                     [
                         'AddNewFiles',
-                        ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                        ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                         'Multi'
                     ]
                 ]
@@ -1219,7 +1219,7 @@ class TaskController extends Controller
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
-                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                             'Multi'
                         ]
                     ]
@@ -1230,7 +1230,7 @@ class TaskController extends Controller
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
-                            ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                            ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                             'Multi'
                         ]
                     ]

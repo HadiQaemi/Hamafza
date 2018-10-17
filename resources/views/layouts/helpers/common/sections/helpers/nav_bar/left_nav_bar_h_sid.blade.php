@@ -8,8 +8,19 @@
     #KeywordSearch,#KeywordFehresrt ul {
         width: 350px !important;
         overflow-y: auto !important;
-        height: 500px !important;
+        height: 80vh !important;
         overflow-x: hidden;
+        padding-bottom: 100px;
+    }
+    #PrtalFehresrt {
+        height: 90vh;
+        overflow-y: scroll;
+        padding-bottom: 100px;
+    }
+    #BookmarkFehresrt {
+        height: 90vh !important;
+        overflow-y: scroll !important;
+        padding-bottom: 100px !important;
     }
 
 </style>

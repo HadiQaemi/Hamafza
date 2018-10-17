@@ -370,9 +370,9 @@ class ModalController extends Controller
         $user = auth()->user();
         $HFMAvatarImage = HFM_GenerateUploadForm(
             [
-                ['item_image', ['jpg', 'png', 'jpeg', 'gif'], "Multi"],
+                ['item_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Multi"],
                 ['item_file', ['zip', 'doc', 'docx', 'pdf', 'mp3', 'amr'], "Multi"],
-                ['item_image_edit', ['jpg', 'png', 'jpeg', 'gif'], "Multi"],
+                ['item_image_edit', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Multi"],
                 ['item_file_edit', ['zip', 'doc', 'docx', 'pdf', 'mp3', 'amr'], "Multi"],
             ]);
 
@@ -430,7 +430,7 @@ class ModalController extends Controller
     {
         $HFM_message_file = HFM_GenerateUploadForm(
             [
-                ['message_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'jpg', 'jpeg', 'png', 'xls', 'xlsx', 'ppt', 'pptx'], "Multi"],
+                ['message_file', ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx'], "Multi"],
             ]);
         $content = view('modals.message')
             ->with('HFM_message_file', $HFM_message_file)
@@ -747,7 +747,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
@@ -902,7 +902,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
@@ -947,7 +947,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
@@ -991,7 +991,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
@@ -1027,7 +1027,7 @@ class ModalController extends Controller
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
-                    ['jpeg', 'jpg', 'png', 'gif', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
                     'Multi']
             ]
         );
@@ -1859,7 +1859,7 @@ class ModalController extends Controller
 
     public function discountcoupon_request_form(Request $request)
     {
-        $document = HFM_GenerateUploadForm([['couponrequest_document', ['gif', 'jpg', 'jpeg', 'png',], 'Single',],]);
+        $document = HFM_GenerateUploadForm([['couponrequest_document', ['gif', 'bmp', 'jpg', 'jpeg', 'png',], 'Single',],]);
         if (auth()->check())
         {
             $content = view('hamahang.Bazaar.helper.discountcoupon-request-content')->with('document', $document)->render();
@@ -2298,7 +2298,7 @@ class ModalController extends Controller
         $basic_data_value = BasicdataValue::find($request->data);
         $HFMAddAdImage = HFM_GenerateUploadForm(
             [
-                ['ad_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['ad_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
 
         return json_encode([
@@ -2319,7 +2319,7 @@ class ModalController extends Controller
         $basic_data_value = BasicdataValue::find($request->data);
         $HFMAddSliderImage = HFM_GenerateUploadForm(
             [
-                ['slider_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['slider_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
 
         return json_encode([
@@ -2341,7 +2341,7 @@ class ModalController extends Controller
         $basicdata_value = BasicdataValue::find($request->data);
         $HFMEditItemImage = HFM_GenerateUploadForm(
             [
-                ['edit_item_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['edit_item_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
         $link = '';
         if ($item = $basicdata_value->attrs()->withPivot(['value'])->where('basicdata_attribute_id', 10)->first())
@@ -2415,7 +2415,7 @@ class ModalController extends Controller
         $basicdata_value_tabs = BasicdataValue::where('parent_id', 10)->select('id', 'title')->get();
         $HFMAddItemImage = HFM_GenerateUploadForm(
             [
-                ['add_item_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['add_item_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
 
         return json_encode([
@@ -2477,7 +2477,7 @@ class ModalController extends Controller
 
         $HFMAddSliderImage = HFM_GenerateUploadForm(
             [
-                ['research_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['research_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
 
         return json_encode([
@@ -2498,7 +2498,7 @@ class ModalController extends Controller
         $basic_data_value = BasicdataValue::find($request->data);
         $HFMAddSliderImage = HFM_GenerateUploadForm(
             [
-                ['research_image', ['jpg', 'png', 'jpeg', 'gif'], "Single"],
+                ['research_image', ['jpg', 'png', 'jpeg', 'gif', 'bmp'], "Single"],
             ]);
 
         return json_encode([

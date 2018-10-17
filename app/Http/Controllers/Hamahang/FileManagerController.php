@@ -42,7 +42,7 @@ class FileManagerController extends Controller
         $succeeded_for_session = [];
 
         $failed = [];
-        $allowed = ['zip', 'pdf', 'jpg', 'jpeg', 'png', 'ico', 'rar', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+        $allowed = ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'];
         if (Request::file("$field")[0] !== null)
         {
             /*$MC_Result = HFM_CheckMultiFile($section,Request::file("$field"));

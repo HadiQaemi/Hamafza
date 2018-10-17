@@ -788,7 +788,7 @@ class UserController extends Controller
     public function save_avatar(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'avatar' => 'required|mimes:jpg,png,jpeg|max:1024',
+            'avatar' => 'required|mimes:jpg,png,gif,bmp,jpeg|max:1024',
         ]);
         if ($validator->fails())
         {
