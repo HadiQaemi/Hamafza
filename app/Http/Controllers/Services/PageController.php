@@ -35,19 +35,18 @@ class PageController extends Controller {
         foreach ($page_new['Files'] as $file) {
             $file['downloadURL'] = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => enCode($file->id)]) . '/?&fname=' . $file->originalName;
         }
-        if (strlen($page_new['content']) > 0){
+        if (strlen($page_new['content']) > 0) {
             $page_new['content'] = view('api.views.content_html_text')->with('content_main', $page_new['content'])->render();
-        } else 
-        {
-              $sub_kind = $subject->sub_kind;
-              $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
-              $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $subject->id)->orderBy('reg_date', 'desc')->get();
-              $page_new['content'] = view('api.views.subcontent')
-                      ->with('posts', $posts)
-                      ->with('sid',$subject->id)
-                      ->render();              
+        } else {
+            $sub_kind = $subject->sub_kind;
+            $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
+            $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $subject->id)->orderBy('reg_date', 'desc')->get();
+            $page_new['content'] = view('api.views.subcontent')
+                    ->with('posts', $posts)
+                    ->with('sid', $subject->id)
+                    ->render();
         }
-        
+
         $res = [
             'status' => '1',
             'page_title' => $subject->title,
@@ -659,7 +658,7 @@ class PageController extends Controller {
         ];
         return response()->json($res);
     }
-    
+
     public function delete_comment() {
         $user = getUser();
         if (!isset($user->id)) {
@@ -671,7 +670,7 @@ class PageController extends Controller {
         $res = ['message' => $message];
         return response()->json($res);
     }
-    
+
     public function delete_post() {
         $user = getUser();
         if (!isset($user->id)) {
@@ -679,28 +678,20 @@ class PageController extends Controller {
         }
         $id = Request::input('id');
         $uid = $user->id;
-        
+
         $page = 'Post';
-        $a = DB::transaction(function () use ($uid, $page, $id)
-                {
+        $a = DB::transaction(function () use ($uid, $page, $id) {
                     $post = \App\Models\hamafza\Post::find($id);
-                    if ($post->accepted)
-                    {
+                    if ($post->accepted) {
                         return [0, 'پاسخ تائید شده، امکان حذف آن وجود ندارد.'];
-                    }
-                    else
-                    {
-                        if ($post->answerCount > 0)
-                        {
+                    } else {
+                        if ($post->answerCount > 0) {
                             return [0, 'پاسخ داده شده، امکان حذف آن وجود ندارد.'];
-                        }
-                        else
-                        {
+                        } else {
                             $SP = new \App\HamafzaServiceClasses\PublicsClass();
                             $menu = $SP->DeleteRow($page, $uid, 0, $id);
 
-                            switch ($post->type)
-                            {
+                            switch ($post->type) {
                                 case '1':
                                     $score_id = config('score.9');
                                     break;
@@ -722,11 +713,9 @@ class PageController extends Controller {
                             }
                             score_unregister('App\Models\hamafza\Post', $id, $score_id, $uid);
 
-                            if (2 == $post->type)
-                            {
+                            if (2 == $post->type) {
                                 $reward = Reward::where('from_user_id', $uid)->where('target_table', 'App\Models\hamafza\Post')->where('target_id', $id);
-                                if ($reward)
-                                {
+                                if ($reward) {
                                     $reward->delete();
                                 }
                             }
@@ -736,7 +725,19 @@ class PageController extends Controller {
                         }
                     }
                 });
-                return $a;
+        return $a;
+    }
+
+    public function delete_announce() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        \App\HamafzaServiceClasses\PageClass::DeleteAnnounces($id);
+        $message = trans('labels.DelOK');
+        $res = ['message' => $message];
+        return response()->json($res);
     }
 
     public function Sharepost() {
@@ -745,7 +746,7 @@ class PageController extends Controller {
             return $user;
         }
         $ShareGroup = Request::input("groups");
-        $users =Request::input("users");
+        $users = Request::input("users");
         $inmypage = Request::input('inmypage');
         $descr = Request::input('desc');
         $post_id = Request::input('post_id');

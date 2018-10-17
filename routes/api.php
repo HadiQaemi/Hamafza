@@ -69,6 +69,10 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.add_announce',
         'uses' => 'PageController@announce_add'
     ]);
+    Route::post('delete_announce', [
+        'as' => 'api.v43.delete_announce',
+        'uses' => 'PageController@delete_announce'
+    ]);
     Route::post('send_message', [
         'as' => 'api.v43.send_message',
         'uses' => 'PageController@sendMessage'
@@ -223,7 +227,7 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'as' => 'api.v43.user.delete_user_work',
             'uses' => 'UserController@deleteUserWork',
             'middleware' => ['dynamic_permission:posts.hamahang.users.delete_user_work']
-            ]);
+        ]);
         Route::post('add_user_education', [
             'as' => 'api.v43.user.add_user_education',
             'uses' => 'UserController@addUserEducation',
