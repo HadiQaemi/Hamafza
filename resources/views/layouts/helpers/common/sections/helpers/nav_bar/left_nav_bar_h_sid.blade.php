@@ -14,12 +14,12 @@
     }
     #PrtalFehresrt {
         height: 90vh;
-        overflow-y: scroll;
+        overflow-y: auto !important;
         padding-bottom: 100px;
     }
     #BookmarkFehresrt {
         height: 90vh !important;
-        overflow-y: scroll !important;
+        overflow-y: auto !important;
         padding-bottom: 100px !important;
     }
 
