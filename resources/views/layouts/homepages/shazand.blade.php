@@ -21,7 +21,7 @@
 </head>
 <body dir="rtl" class="mstr-clr" style="overflow-y: auto;">
 <div>
-    <nav id="header" class="navbar navbar-default" style="position: fixed; z-index: 10000; width: 100%;">
+    <nav id="header" class="navbar navbar-default">
         <div class="container-fluid">
             @include('layouts.helpers.common.sections.helpers.nav_bar.menu')
             @include('layouts.helpers.common.sections.nav_bar')

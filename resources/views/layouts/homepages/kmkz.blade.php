@@ -40,7 +40,7 @@
 <div class="h_sidenav_main" id="h_sidenav_main" style="padding: 0; margin: 0; transition: margin-left 1s;">
     <div hmfz-main-header="">
         <style>#header { background-color: #367BAB; }</style>
-        <nav id="header" class="navbar navbar-default" style="position: fixed; z-index: 10000; width: 100%;">
+        <nav id="header" class="navbar navbar-default" style="overflow: hidden">
             <div class="container-fluid">
                 @include('layouts.helpers.common.sections.helpers.nav_bar.menu')
                 @include('layouts.helpers.common.sections.nav_bar')
