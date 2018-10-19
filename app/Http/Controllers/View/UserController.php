@@ -505,6 +505,7 @@ class UserController extends Controller
     public function DefaultTab($username)
     {
         $Type = $this->IsUoG($username);
+
         if ($Type == 'USER')
         {
             $res = variable_generator('user', 'About', $username);

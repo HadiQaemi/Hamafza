@@ -456,7 +456,7 @@ class GroupsClass
             $Group = DB::table('user_group as ug')->join('user_group_member as ugm', 'ug.id', '=', 'ugm.gid')
                 ->join('user as u', 'u.id', '=', 'ugm.uid')
                 ->where('ug.id', $gid)->where('ugm.admin', '1')->select('ug.*', 'ugm.uid as adminid', 'ugm.uid as owner', 'u.Name', 'u.Family')->first();
-        
+
              $key = DB::table('user_group as ug')->join('user_group_key as ugk', 'ug.id', '=', 'ugk.gid')
             ->join('keywords as k', 'k.id', '=', 'ugk.kid')
             ->where('ug.id', $gid)->select('k.id', 'k.title')->get();
@@ -473,7 +473,7 @@ class GroupsClass
             ->where('ug.link', $name)->select('k.id', 'k.title')->get();
 
         }
-        
+
         if ($Group)
         {
             $Group->Ismember = '0';
@@ -482,7 +482,7 @@ class GroupsClass
         if ($uid != '0')
         {
             $us = DB::table('user_group as ug')->join('user_group_member as ugm', 'ugm.gid', '=', 'ug.id')
-                ->where('ug.link', $name)->where('ugm.uid', $uid)->where('ugm.relation', '2')->select('ug.id')->count();
+                ->where('ug.link', $name)->where('ugm.uid', $uid)->whereIn('ugm.relation', ['1','2'])->select('ug.id')->count();
             if ($us > 0)
             {
                 $Group->Ismember = '1';

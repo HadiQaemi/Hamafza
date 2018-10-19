@@ -135,6 +135,8 @@ if (!function_exists('PageTabs'))
                 $groups['tabs']['name']['9'] = 'میزکار';
                 $groups['tabs']['link']['9'] = 'desktop';
                 $group = \App\Models\hamafza\Groups::find($item);
+                $us = DB::table('user_group as ug')->join('user_group_member as ugm', 'ugm.gid', '=', 'ug.id')
+                    ->where('ug.id', $item)->where('ugm.uid', Auth::id())->whereIn('ugm.relation', ['1','2'])->select('ug.id')->count();
                 $Uname = $group->link;
                 if ($group->id != '')
                 {
@@ -147,7 +149,7 @@ if (!function_exists('PageTabs'))
                         $distance = ($key == 1 || $key == 5 || $key == 8) ? 1 : '';
                         $view = true;
                         $group->owner  = ($group->uid == auth()->id());
-                        if (($key == 5) && ($group->owner))
+                        if (($key == 5) && ($group->owner || $us>0))
                         {
                             $view = true;
                         }
@@ -1734,8 +1736,9 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     break;
                 }
             }
+            $tabs = PageTabs('group', $Group->id);
             return array_merge(
-                [
+                $res,[
                     'Tree' => '',
                     'viewname' => $viewname,
                     'PageType' => $PageType,
@@ -1745,12 +1748,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     'Small' => '',
                     'keywords' => '',
                     'SiteTitle' => config('constants.SiteTitle'),
-                    'tabs' => PageTabs('group', $Group->id),
+                    'tabs' => $tabs,
                     'tools' => shortToolsGenerator('Group', $Group->id, ['uid' => Auth::id(), 'sessid' => 0, 'sid' => $Group->id], 0),
                     'tools_menu' => toolsGenerator([$option => ['gid'=> $Group->id]], 1, 5,['subject_id' => $Group->id, 'page_id' => '','member'=>$isMember]),
                     'current_tab' => $current_tab,
                     'RightCol' => $RightCol
-                ], $res
+                ]
             );
             break;
         }
