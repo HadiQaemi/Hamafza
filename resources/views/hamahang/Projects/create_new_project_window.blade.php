@@ -14,49 +14,54 @@
                         <div class="col-xs-12 line-height-35 margin-top-20">
                             <div class="col-xs-2">{{trans('projects.title')}}</div>
                             <div class="col-xs-10">
-                                <input type="text" class="col-xs-4 form-control" id="p_title"/>
+                                <input type="text" class="col-xs-9 form-control" id="p_title" placeholder="{{trans('projects.title')}}"/>
                                 <input type="radio" class="" name="p_type" value="0"/><label>{{trans('projects.official')}}</label>
                                 <input type="radio" class="" name="p_type" value="1"/><label>{{trans('projects.unofficial')}}</label>
                             </div>
                         </div>
-                        <div class="col-xs-12 line-height-35 margin-top-20">
-                            <div class="col-xs-2">{{trans('projects.top_purpose')}}</div>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" id="p_top_goals"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 margin-top-20">
-                            <div class="col-xs-2 line-height-35">{{trans('projects.page')}}</div>
-                            <div class="col-xs-10">
-                                <select class="js-data-example-ajax form-control" id="page_id" name="page_id" multiple></select>
-                                <span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>
-                            </div>
-                        </div>
+                        {{--<div class="col-xs-12 line-height-35 margin-top-20">--}}
+                            {{--<div class="col-xs-2">{{trans('projects.top_purpose')}}</div>--}}
+                            {{--<div class="col-xs-10">--}}
+                                {{--<input type="text" class="form-control" id="p_top_goals"/>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <div class="col-xs-12 line-height-35 margin-top-20">
                             <div class="col-xs-2">{{trans('projects.describe')}}</div>
                             <div class="col-xs-10">
-                                <input type="text" class="form-control" id="p_desc"/>
+                                {{--<input type="text" class="form-control" id="p_desc"/>--}}
+                                <textarea class="form-control" id="p_desc" cols="30" rows="4" placeholder="{{trans('projects.describe')}}"></textarea>
                             </div>
                         </div>
-                        <div class="col-xs-12 margin-top-20">
+                        <div class="col-xs-12 margin-top-60">
+                            <div class="col-xs-2 line-height-35">{{trans('projects.top')}}</div>
+                            <div class="col-xs-10">
+                                <select class="js-data-example-ajax form-control" id="page_id" name="page_id" multiple  data-placeholder="{{trans('projects.can_select_some_options')}}"></select>
+                                {{--<span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>--}}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
                             <div class="col-xs-2 line-height-35">{{trans('projects.project_manager')}}</div>
                             <div class="col-xs-10">
-                                <div class="col-xs-5 noPadding">
-                                    <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
-                                        <option value=""></option>
-                                    </select>
-                                    <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
-                                </div>
-                                <div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>
-                                <div class="col-sm-5 noPadding">
-                                    <select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
-                                        <option value=""></option>
-                                    </select>
-                                    <span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>
-                                </div>
+                                <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                    <option value=""></option>
+                                </select>
+                                {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
+                                {{--<div class="col-sm-5 noPadding">--}}
+                                    {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
+                                        {{--<option value=""></option>--}}
+                                    {{--</select>--}}
+                                    {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
+                                {{--</div>--}}
                             </div>
                         </div>
-                        <div class="col-xs-12 line-height-35 margin-top-20">
+                        <div class="col-xs-12 margin-top-10">
+                            <div class="col-xs-2 line-height-35">{{trans('projects.keywords')}}</div>
+                            <div class="col-xs-10 nput-group pull-right">
+                                <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('projects.keywords')}}" multiple="multiple"></select>
+                                <span class="Chosen-LeftIcon"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line-height-35 margin-top-20" style="border-top: #ccc solid 1px;padding-top: 10px">
                             <div class="col-xs-2">{{trans('projects.schedule_base')}}</div>
                             <div class="col-xs-10">
                                 <select id="p_schedule_on" class="form-control col-xs-4">
@@ -114,13 +119,6 @@
                             <div class="col-xs-2">{{trans('projects.priority')}}</div>
                             <div class="col-xs-2 nput-group pull-right">
                                 <input type="text" class="form-control col-xs-4" id="p_priority"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 margin-top-20">
-                            <div class="col-xs-2 line-height-35">{{trans('projects.keywords')}}</div>
-                            <div class="col-xs-10 nput-group pull-right">
-                                <select class="select2_auto_complete_keywords " name="p_keyword[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
-                                <span class="Chosen-LeftIcon"></span>
                             </div>
                         </div>
                     </div>

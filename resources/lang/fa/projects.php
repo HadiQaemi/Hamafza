@@ -9,6 +9,8 @@ return [
     'official'       => 'رسمی',
     'unofficial'       => 'غیر رسمی',
     'top_purpose'       => 'اهداف بالادستی',
+    'top'       => 'بالادستی',
+    'can_select_some_options' => 'اگر این پروژه مرتبط با صفحه‌هایی است نام آن صفحات را بنویسید',
     'page'       => 'صفحه',
     'describe'       => 'توضیح',
     'task_title'    => 'عنوان وظیفه',

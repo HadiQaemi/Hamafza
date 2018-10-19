@@ -267,6 +267,10 @@ strong.ui-state-error {
     margin-top: 50px;
 }
 
+.margin-top-60 {
+    margin-top: 60px;
+}
+
 .hr {
     display: block;
     height: 0;
