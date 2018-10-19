@@ -1297,7 +1297,9 @@ class tasks extends Model
             $is_assigner = 0;
             $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Priority', function ($query) use ($immediate, $importance,$is_assigner)
             {
-                $query->where('immediate', $immediate)->where('importance', $importance)->where('is_assigner',$is_assigner)->whereNull('deleted_at');
+                $query->where('immediate', $immediate)->where('importance', $importance)
+//                    ->where('is_assigner',$is_assigner)
+                    ->whereNull('deleted_at');
             });
         }
         elseif($type == 'MyAssignedTasks')
@@ -1308,6 +1310,7 @@ class tasks extends Model
                 $query->where('immediate', $immediate)->where('importance', $importance)->whereNull('deleted_at');
             });
         }
+//        dd($type,$tasks_immediate_importance->get());
 
         if ($status_filter)
         {
@@ -1404,7 +1407,6 @@ class tasks extends Model
         }
 
         $tasks_immediate_importance = $tasks_immediate_importance->get();
-
         return $tasks_immediate_importance;
     }
 
@@ -1747,16 +1749,16 @@ class tasks extends Model
         }
         $myTasks=[];
 
-        $tasks_status = $user->MyTasks();
+        $myTasks['not_started'] = $user->MyTasks();
 
         if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
-            $tasks_status->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
         if(trim($title)!=''){
-            $tasks_status->where('title','like','%'.$title.'%');
+            $myTasks['not_started']->where('title','like','%'.$title.'%');
         }
         if($keywords)
         {
@@ -1767,7 +1769,7 @@ class tasks extends Model
             }
             if ($search_task_keywords)
             {
-                $tasks_status = $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                $myTasks['not_started'] = $myTasks['not_started']->whereHas('Keywords', function ($query) use ($search_task_keywords)
                 {
                     $query->whereIn('keyword_id', $search_task_keywords);
                 });
@@ -1775,7 +1777,7 @@ class tasks extends Model
         }
         if($users)
         {
-            $tasks_status->where(function ($result) use ($users){
+            $myTasks['not_started']->where(function ($result) use ($users){
                 $result
                     ->whereIn('hamahang_task.uid', $users)
                     ->orWhereHas('Assignments', function ($query) use ($users)
@@ -1793,7 +1795,6 @@ class tasks extends Model
             });
         }
 
-        $myTasks['not_started'] = $tasks_status;
         $myTasks['not_started']->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance)->whereIn('importance',$importance);
         })->whereHas('priority', function ($p)use($immediate){
@@ -1803,7 +1804,55 @@ class tasks extends Model
         });
         $myTasks['not_started'] = $myTasks['not_started']->get();
 
-        $myTasks['started'] = $tasks_status;
+////////////////////////////////
+
+        $myTasks['started'] = $user->MyTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['started']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['started'] = $myTasks['started']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['started']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+
         $myTasks['started']->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance)->whereIn('importance',$importance);
         })->whereHas('priority', function ($p)use($immediate){
@@ -1813,7 +1862,55 @@ class tasks extends Model
         });
         $myTasks['started'] = $myTasks['started']->get();
 
-        $myTasks['done'] = $tasks_status;
+////////////////////////////////
+
+        $myTasks['done'] = $user->MyTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['done']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['done'] = $myTasks['done']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['done']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+
         $myTasks['done']->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance);
         })->whereHas('priority', function ($p)use($immediate){
@@ -1823,8 +1920,55 @@ class tasks extends Model
         });
         $myTasks['done'] = $myTasks['done']->get();
 
-        $myTasks['ended'] = $tasks_status;
-        $tasks_status->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
+////////////////////////////////
+
+        $myTasks['ended'] = $user->MyTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['ended']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['ended'] = $myTasks['ended']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['ended']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+        $myTasks['ended']->whereIn('type', $official_type)->whereHas('priority', function ($p)use($importance){
             $p->whereIn('importance',$importance);
         })->whereHas('priority', function ($p)use($immediate){
             $p->whereIn('immediate',$immediate);
@@ -1954,16 +2098,20 @@ class tasks extends Model
             $immediate[1]=12;
         }
 
-        $tasks_status = $user->MyAssignedTasks();
+
+/////////////////////////////
+
+
+        $myTasks['not_started'] = $user->MyAssignedTasks();
 
         if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
         {
-            $tasks_status->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+            $myTasks['not_started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
         if(trim($title)!=''){
-            $tasks_status->where('title','like','%'.$title.'%');
+            $myTasks['not_started']->where('title','like','%'.$title.'%');
         }
         if($keywords)
         {
@@ -1974,7 +2122,7 @@ class tasks extends Model
             }
             if ($search_task_keywords)
             {
-                $tasks_status = $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                $myTasks['not_started'] = $myTasks['not_started']->whereHas('Keywords', function ($query) use ($search_task_keywords)
                 {
                     $query->whereIn('keyword_id', $search_task_keywords);
                 });
@@ -1982,7 +2130,7 @@ class tasks extends Model
         }
         if($users)
         {
-            $tasks_status->where(function ($result) use ($users){
+            $myTasks['not_started']->where(function ($result) use ($users){
                 $result
                     ->whereIn('hamahang_task.uid', $users)
                     ->orWhereHas('Assignments', function ($query) use ($users)
@@ -2000,12 +2148,11 @@ class tasks extends Model
             });
         }
 
-        $myTasks['not_started'] = $tasks_status;
         $myTasks['not_started']->whereIn('type', $official_type)
             ->whereHas('Status', function ($q){
                 $q->where('type', 0);
             })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
-                $p->whereIn('importance',$importance)->whereIn('immediate',$immediate)->whereIn('is_assigner',[1]);
+                $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             })
         ;
         if ($respite_filter)
@@ -2021,25 +2168,114 @@ class tasks extends Model
         }
         $myTasks['not_started'] = $myTasks['not_started']->get();
 
-        $myTasks['started'] = $tasks_status;
+/////////////////////////////
+
+        $myTasks['started'] = $user->MyAssignedTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['started']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['started']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['started'] = $myTasks['started']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['started']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
         $myTasks['started']->whereIn('type', $official_type)
             ->whereHas('Status', function ($q){
                 $q->where('type', 1);
-            })->whereHas('AssignerPriority', function ($p)use($importance){
-                $p->whereIn('importance',$importance);
-            })->whereHas('AssignerPriority', function ($p)use($immediate){
-                $p->whereIn('immediate',$immediate);
+            })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
+                $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
         $myTasks['started'] = $myTasks['started']->get();
 
-        $myTasks['done'] = $tasks_status;
-            $myTasks['done']
-            ->whereIn('type', $official_type)->whereHas('Status', function ($q){
+
+/////////////////////////////
+
+        $myTasks['done'] = $user->MyAssignedTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['done']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['done']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['done'] = $myTasks['done']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['done']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+        $myTasks['done']->whereIn('type', $official_type)->whereHas('Status', function ($q){
                 $q->where('type', 2);
-            })->whereHas('AssignerPriority', function ($p)use($importance){
-                $p->whereIn('importance',$importance);
-            })->whereHas('AssignerPriority', function ($p)use($immediate){
-                $p->whereIn('immediate',$immediate);
+            })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
+                $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
         $myTasks['done'] = $myTasks['done']->get();
 //            if ($respite_filter)
@@ -2049,14 +2285,61 @@ class tasks extends Model
 //                    return $item->RespiteRemain['days'] <= (int)$respite_filter;
 //                });
 //            }
-        $myTasks['ended'] = $tasks_status;
+
+
+/////////////////////////////
+
+        $myTasks['ended'] = $user->MyAssignedTasks();
+
+        if (trim($filter_subject_id)!='' && trim($filter_subject_id)!='undefined')
+        {
+            $myTasks['ended']->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
+                ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        if(trim($title)!=''){
+            $myTasks['ended']->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $myTasks['ended'] = $myTasks['ended']->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $myTasks['ended']->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
         $myTasks['ended']
             ->whereIn('type', $official_type)->whereHas('Status', function ($q){
                 $q->where('type', 3);
-            })->whereHas('AssignerPriority', function ($p)use($importance){
-                $p->whereIn('importance',$importance);
-            })->whereHas('AssignerPriority', function ($p)use($immediate){
-                $p->whereIn('immediate',$immediate);
+            })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
+                $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
         $myTasks['ended'] = $myTasks['ended']->get();
 //            if ($respite_filter)
@@ -2102,7 +2385,7 @@ class tasks extends Model
     public function Assignment()
     {
 //        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->whereNull('transmitter_id')->whereNull('transferred_to_id');
-        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->where('status','=',0);//->whereNull('assigner_id');
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id');//->where('status','=',0);//->whereNull('assigner_id');
     }
 
     public function Priorities()
@@ -2122,7 +2405,7 @@ class tasks extends Model
 
     public function AssignerPriority()
     {
-        return $this->hasOne('App\Models\Hamahang\Tasks\task_priority', 'task_id', 'id')->where('uid',auth()->id());
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_priority', 'task_id', 'id')->where('uid',auth()->id())->where('is_assigner',1)->whereNull('deleted_at');//->whereNull('assigner_id');
     }
 
     public function Statuses()
