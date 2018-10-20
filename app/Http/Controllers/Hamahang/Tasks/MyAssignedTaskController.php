@@ -289,7 +289,7 @@ class MyAssignedTaskController extends Controller
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $myTasks['not_started'] = $myTasks['not_started']->get();
+        $myTasks['not_started'] = $myTasks['not_started']->groupBy('hamahang_task.id')->get();
         $myTasks['started'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 1);
@@ -300,7 +300,7 @@ class MyAssignedTaskController extends Controller
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $myTasks['started'] =  $myTasks['started']->get();
+        $myTasks['started'] =  $myTasks['started']->groupBy('hamahang_task.id')->get();
         $myTasks['done'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 2);
@@ -311,7 +311,7 @@ class MyAssignedTaskController extends Controller
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $myTasks['done'] = $myTasks['done']->get();
+        $myTasks['done'] = $myTasks['done']->groupBy('hamahang_task.id')->get();
         $myTasks['ended'] = $user->MyAssignedTasks()->whereHas('Status', function ($q)
         {
             $q->where('type', 3);
@@ -322,7 +322,7 @@ class MyAssignedTaskController extends Controller
                 ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $myTasks['ended'] = $myTasks['ended']->get();
+        $myTasks['ended'] = $myTasks['ended']->groupBy('hamahang_task.id')->get();
         $user = auth()->user();
 
 

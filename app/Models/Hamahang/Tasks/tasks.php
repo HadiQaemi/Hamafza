@@ -1804,7 +1804,7 @@ class tasks extends Model
         })->whereHas('Status', function ($q){
             $q->where('type', 0);
         });
-        $myTasks['not_started'] = $myTasks['not_started']->get();
+        $myTasks['not_started'] = $myTasks['not_started']->groupBy('hamahang_task.id')->get();
 
 ////////////////////////////////
 
@@ -1862,7 +1862,7 @@ class tasks extends Model
         })->whereHas('Status', function ($q){
             $q->where('type', 1);
         });
-        $myTasks['started'] = $myTasks['started']->get();
+        $myTasks['started'] = $myTasks['started']->groupBy('hamahang_task.id')->get();
 
 ////////////////////////////////
 
@@ -1920,7 +1920,7 @@ class tasks extends Model
         })->whereHas('Status', function ($q){
             $q->where('type', 2);
         });
-        $myTasks['done'] = $myTasks['done']->get();
+        $myTasks['done'] = $myTasks['done']->groupBy('hamahang_task.id')->get();
 
 ////////////////////////////////
 
@@ -1977,7 +1977,7 @@ class tasks extends Model
         })->whereHas('Status', function ($q){
             $q->where('type', 3);
         });
-        $myTasks['ended'] = $myTasks['ended']->get();
+        $myTasks['ended'] = $myTasks['ended']->groupBy('hamahang_task.id')->get();
 
         return $myTasks;
 
@@ -2168,7 +2168,7 @@ class tasks extends Model
         {
             $myTasks['not_started'] = $myTasks['not_started']->where('title','like','%'.$title.'%');
         }
-        $myTasks['not_started'] = $myTasks['not_started']->get();
+        $myTasks['not_started'] = $myTasks['not_started']->groupBy('hamahang_task.id')->get();
 
 /////////////////////////////
 
@@ -2223,7 +2223,7 @@ class tasks extends Model
             })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
                 $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
-        $myTasks['started'] = $myTasks['started']->get();
+        $myTasks['started'] = $myTasks['started']->groupBy('hamahang_task.id')->get();
 
 
 /////////////////////////////
@@ -2279,7 +2279,7 @@ class tasks extends Model
             })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
                 $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
-        $myTasks['done'] = $myTasks['done']->get();
+        $myTasks['done'] = $myTasks['done']->groupBy('hamahang_task.id')->get();
 //            if ($respite_filter)
 //            {
 //                $myTasks['done'] = $myTasks['done']->filter(function ($item) use ($respite_filter)
@@ -2343,7 +2343,7 @@ class tasks extends Model
             })->whereHas('AssignerPriority', function ($p)use($importance,$immediate){
                 $p->whereIn('importance',$importance)->whereIn('immediate',$immediate);
             });
-        $myTasks['ended'] = $myTasks['ended']->get();
+        $myTasks['ended'] = $myTasks['ended']->groupBy('hamahang_task.id')->get();
 //            if ($respite_filter)
 //            {
 //                $myTasks['ended'] = $myTasks['ended']->filter(function ($item) use ($respite_filter)
