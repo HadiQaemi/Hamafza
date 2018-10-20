@@ -48,12 +48,12 @@
                                 <input type="radio" value="1" {{$edit_able == 1 ? ' name="type" id="unofficial" ' : 'disabled'}} {{$task['type'] ==1 ? 'checked' : ''}}/>
                                 <label for="unofficial">{{ trans('app.unofficial') }}</label>
                             </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>
-                                <label for="kind_activity">{{ trans('tasks.activity') }}</label>
-                                <input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>
-                                <label for="kind_event">{{ trans('tasks.event')}}</label>
-                            </div>
+                            {{--<div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">--}}
+                                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>--}}
+                                {{--<label for="kind_activity">{{ trans('tasks.activity') }}</label>--}}
+                                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>--}}
+                                {{--<label for="kind_event">{{ trans('tasks.event')}}</label>--}}
+                            {{--</div>--}}
                             <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
                                 <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
                                 <label for="importance_yes">{{ trans('tasks.important') }}</label>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2"><label class="line-height-35">{{ trans('app.about') }}</label></div>
+                    <div class="col-lg-2"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
                     <div class="col-lg-10">
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"

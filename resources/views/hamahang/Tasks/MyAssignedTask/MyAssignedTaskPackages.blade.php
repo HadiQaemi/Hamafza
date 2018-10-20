@@ -33,7 +33,7 @@
                 </label>
                 <label class="pointer">
                     <input type="radio" name="package_type" value="pages">
-                    <span>{{trans('tasks.pages')}}</span>
+                    <span>{{trans('tasks.top')}}</span>
                 </label>
                 <label class="pointer">
                     <input type="radio" name="package_type" value="keywords">

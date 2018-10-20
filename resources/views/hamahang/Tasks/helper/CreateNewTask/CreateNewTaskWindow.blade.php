@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
                     <div class="col-lg-11">
                         <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
                             @if($sid)
@@ -408,14 +408,14 @@
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>
                     </div>
                 </div>
-                <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="pull-right" style="height: 30px;line-height: 30px;">
-                        <input type="radio" name="kind" value="1" id="kind_activity"/>
-                        <label for="kind_activity">{{ trans('tasks.activity') }}</label>
-                        <input type="radio" name="kind" value="0" id="kind_event" checked/>
-                        <label for="kind_event">{{ trans('tasks.event')}}</label>
-                    </div>
-                </div>
+                {{--<div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">--}}
+                    {{--<div class="pull-right" style="height: 30px;line-height: 30px;">--}}
+                        {{--<input type="radio" name="kind" value="1" id="kind_activity"/>--}}
+                        {{--<label for="kind_activity">{{ trans('tasks.activity') }}</label>--}}
+                        {{--<input type="radio" name="kind" value="0" id="kind_event" checked/>--}}
+                        {{--<label for="kind_event">{{ trans('tasks.event')}}</label>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
             <div class="tab-pane tab-view" id="tab_t3">
                 <div class="col-xs-12">

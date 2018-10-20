@@ -120,8 +120,7 @@
                 sortable: false,
                 searchable: false,
                 mRender: function (data, type, full) {
-                    r = full.e;
-                    return r;
+                    return full.e;
                 }
             },
             { //مجموع نشان

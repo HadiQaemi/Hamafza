@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
                     <div class="col-lg-11">
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
@@ -395,12 +395,12 @@
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>
                     </div>
                 </div>
-                <div class="pull-right col-xs-12" style="height: 30px;line-height: 30px;">
-                    <input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>
-                    <label for="kind_activity">{{ trans('tasks.activity') }}</label>
-                    <input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>
-                    <label for="kind_event">{{ trans('tasks.event')}}</label>
-                </div>
+                {{--<div class="pull-right col-xs-12" style="height: 30px;line-height: 30px;">--}}
+                    {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>--}}
+                    {{--<label for="kind_activity">{{ trans('tasks.activity') }}</label>--}}
+                    {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>--}}
+                    {{--<label for="kind_event">{{ trans('tasks.event')}}</label>--}}
+                {{--</div>--}}
             </div>
             <div class="tab-pane" id="tab_t3" style="padding-top: 8px;margin-top:20px">
                 @if($edit_able == 1)
@@ -561,54 +561,47 @@
                 </div>
             </div>
             <div class="tab-pane active" id="tab_t5" style="padding: 8px;">
-                @if($edit_able == 1)
-                    <div class="row col-lg-12" style="margin-top: 20px;">
-                        <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                            <label class="line-height-35">{{ trans('tasks.quality_done') }}</label>
-                        </div>
-                        <div class="col-lg-10">
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-excelent" value="excelent"/>
-                                <label for="quality-excelent">{{ trans('tasks.excelent') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-well" value="well"/>
-                                <label for="quality-well">{{ trans('tasks.well') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-average" value="average"/>
-                                <label for="quality-average">{{ trans('tasks.average') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-week" value="week"/>
-                                <label for="quality-week">{{ trans('tasks.week') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
-                                <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="quality_done" id="quality-not_determined" value="not_determined" checked/>
-                                <label for="quality-not_determined">{{ trans('tasks.not_determined') }}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <label for="quality-not_determined">{{ trans('tasks.score') }}</label>
-                                <input type="text" name="quality_score" id="quality-score" value="" class="form-control border-radius display-inline" style="display: inline;width: 40px;"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-lg-12" style="margin-top: 20px;padding-bottom: 20px;border-bottom: #ccc solid 1px;">
-                        <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                            <label class="line-height-35">{{ trans('tasks.description') }}</label>
-                        </div>
-                        <div class="col-lg-10">
-                            <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
-                        </div>
-                    </div>
-                @endif
-                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;">
+                <div class="row col-lg-12" style="margin-top: 20px;">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.duration') }}</label>
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.status') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="not_start" value="0"  {{$res['task_status'] ==0 ? 'checked' : ''}}/>
+                            <label for="not_start">{{ trans('tasks.not_start') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="on_done" value="1" {{$res['task_status'] ==1 ? 'checked' : ''}}/>
+                            <label for="on_done">{{ trans('tasks.on_done')}}</label>
+                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$res['percent']}}" >
+                            <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_done" value="2" {{$res['task_status'] ==2 ? 'checked' : ''}}/>
+                            <label for="status_done">{{ trans('tasks.status_done') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_finished" value="3" {{$res['task_status'] ==3 ? 'checked' : ''}}/>
+                            <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$res['task_status'] ==4 ? 'checked' : ''}}/>
+                            <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-lg-12" style="margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-bottom: 20px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.predict_duration') }}</label>
                     </div>
                     <div class="col-lg-10">
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
@@ -626,7 +619,7 @@
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 20px;border-bottom: #ccc solid 1px;">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.done_time') }}</label>
+                        <label class="line-height-35">{{ trans('tasks.predict_done_time') }}</label>
                     </div>
                     <div class="col-lg-10">
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
@@ -721,44 +714,6 @@
                     </div>
                     <div class="col-lg-10">
                         <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
-                    </div>
-                </div>
-                <div class="row col-lg-12" style="margin-top: 20px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.status') }}</label>
-                    </div>
-                    <div class="col-lg-11">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="not_start" value="0"  {{$res['task_status'] ==0 ? 'checked' : ''}}/>
-                            <label for="not_start">{{ trans('tasks.not_start') }}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="on_done" value="1" {{$res['task_status'] ==1 ? 'checked' : ''}}/>
-                            <label for="on_done">{{ trans('tasks.on_done')}}</label>
-                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$res['percent']}}" >
-                            <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_done" value="2" {{$res['task_status'] ==2 ? 'checked' : ''}}/>
-                            <label for="status_done">{{ trans('tasks.status_done') }}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_finished" value="3" {{$res['task_status'] ==3 ? 'checked' : ''}}/>
-                            <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$res['task_status'] ==4 ? 'checked' : ''}}/>
-                            <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row col-lg-12" style="margin-top: 20px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
                     </div>
                 </div>
             </div>

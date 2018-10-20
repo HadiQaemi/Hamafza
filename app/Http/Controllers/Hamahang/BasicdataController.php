@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use DB;
 use Request;
 use Validator;
 use Datatables;
@@ -172,12 +173,18 @@ class BasicdataController extends Controller
                     })
                     ->addColumn('d', function ($data)
                     {
-                        $score = Score::where('type_value_id', $data->id);
-                        $r = $score ? $score->count() : 0;
+                        $score = DB::table('hamahang_scores')->groupBy('uid')
+                            ->where('type_value_id', $data->id)
+                            ->select(DB::raw('uid'))->get();
+                        $r = $score ? count($score) : 0;
                         return $r;
                     })
                     ->addColumn('e', function ($data)
                     {
+                        $score = Score::where('type_value_id', $data->id);
+                        $r = $score ? $score->count() : 0;
+                        return $r;
+
                         $score = Score::where('type_value_id', $data->id);
                         $r = $score ? $score->sum('value') : 0;
                         return $r;
