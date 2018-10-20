@@ -51,9 +51,9 @@ class PublicController extends Controller {
 
         //$keyword_types = ['special' => 'تخصص&zwnj;ها', 'subject' => 'صفحات', 'enquiry_pages' => 'صفحات دیگر', ];
         $request_keywords = Request::input('keywords') !== "" ? explode(",", Request::input('keywords')) : [];
-        /*$keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords) {
+        $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keywords) {
             return $q->whereIn('keywords.id', $request_keywords);
-        });*/
+        });
         $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keywords) {
             return $q->whereIn('keywords.id', $request_keywords);
         });
@@ -62,9 +62,9 @@ class PublicController extends Controller {
         })->with('subject');
         if (Request::input('isAnd') == 1) {
             foreach ($request_keywords as $request_keyword) {
-                /*$keywords['special'] = User::whereHas('specials', function ($q) use ($request_keyword) {
+                $keywords['special'] = User::whereHas('specials', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
-                });*/
+                });
                 $keywords['subject'] = Subject::whereHas('keywords', function ($q) use ($request_keyword) {
                     return $q->where('keywords.id', $request_keyword);
                 });
@@ -75,9 +75,9 @@ class PublicController extends Controller {
         }
         $keywords['subject']->Join('pages as p','subjects.id','=','p.sid')->select('p.id as pageid','subjects.title');
         $keywords['enquiry_pages']->Join('pages as p','posts.sid','=','p.sid')->select('p.id as pageid','posts.id as postid', 'posts.title');
-       // $keywords['special']->Join('__users','__users.id','=','user_special.user_id')->select('__users.id as pageid', '__users.firstname', '__users.lastname');
+        $keywords['special']->select('id', 'Name','Uname', 'Family');
         
-        //$keywords['special'] = $keywords['special']->get();
+        $keywords['special'] = $keywords['special']->get();
         $keywords['subject'] = $keywords['subject']->get();
         $keywords['enquiry_pages'] = $keywords['enquiry_pages']->get();
         $r = [

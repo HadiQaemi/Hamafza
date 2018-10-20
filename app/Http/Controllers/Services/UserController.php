@@ -295,10 +295,20 @@ class UserController extends Controller {
     }
 
     public function get_about_me() {
-        $user = getUser();
-        if (!isset($user->id)) {
-            return $user;
+        $me = getUser();
+        if (!isset($me->id)) {
+            return $me;
         }
+        if (Request::input('name')== '')
+        {
+            $user = $me;
+        } else
+        {
+            $user = \App\User::where('Uname',Request::input('name'))->first();
+        }
+      //   return response()->json($user, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
+        if ($user != null){
+       //    return response()->json($user, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         $posts_count = $user->posts->count();
         $follower_persons_count = $user->follower_persons->count();
         $followed_persons_count = $user->followed_persons->count();
@@ -343,7 +353,7 @@ class UserController extends Controller {
                         'section' => 'expertise',
                         'title' => 'تخصص ها',
                         'type' => '1',
-                        'data' => $user->api_specials
+                        'data' => $user->getApiSpecialsAttribute($me->id)
                     ],
                         [
                         'section' => 'responsibility',
@@ -360,6 +370,7 @@ class UserController extends Controller {
                 ]
             ]
         ];
+        }
         return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
     }
 

@@ -524,7 +524,7 @@ class PostsClass {
             }
             $row->comments = DB::table('post_comment as p')
                 ->where('p.pid', '=', $row->id)
-                ->select('uid','comment','reg_date')
+                ->select('uid','comment','reg_date','id')
                 ->get();
         }
         return $table;

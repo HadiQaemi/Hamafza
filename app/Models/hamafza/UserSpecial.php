@@ -29,6 +29,20 @@ class UserSpecial extends Model
             return false;
         }
     }
+    
+    public function getEndorsedByMeMobile($id)
+    {
+        $res = $this->endorse_users()->select('user.id')->get()->toArray();
+        $endorsed_user_ids = array_column($res,'id');
+        if(in_array($id,$endorsed_user_ids))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public function getCountEndorseAttribute()
     {

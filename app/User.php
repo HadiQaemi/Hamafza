@@ -209,21 +209,29 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\hamafza\Keyword', 'user_special', 'user_id', 'keyword_id')->withPivot('id');;
     }
 
-    public function getApiSpecialsAttribute()
+    public function getApiSpecialsAttribute($id)
     {
         $res = [];
-        foreach ($this->specials as $special)
-        {
-            $res[] =
+        $user_specials = $this->user_specials()->whereHas('keyword')->get();
+        if($user_specials && $user_specials->count() > 0){
+            foreach($user_specials as $special)
+            {
+                $keyword = Models\hamafza\Keyword::where('id',$special->keyword_id)->first();
+                $res[] =
                 [
                     [
                         'field' => 'title',
                         'title' => 'عنوان',
-                        'value' => "$special->title",
-                        'id'=>"$special->id"
+                        'value' => $keyword->title,
+                        'id'=>"$special->keyword_id",
+                        'specialid'=>"$special->id",
+                        'count'=>$special->CountEndorse,
+                        'endoesed'=>$special->getEndorsedByMeMobile($id)
+                    
                     ]
                 ];
         }
+    }
         return $res;
     }
 
