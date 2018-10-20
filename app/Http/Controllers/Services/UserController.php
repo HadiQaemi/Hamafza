@@ -11,6 +11,7 @@ use App\HamafzaServiceClasses\UserClass;
 use Validator;
 use App\Models\hamafza\Subject;
 use App\HamafzaViewClasses\DesktopClass;
+use App\Models\hamafza\UserSpecial;
 
 class UserController extends Controller {
 
@@ -789,6 +790,45 @@ class UserController extends Controller {
             $result['success'] = true;
             return response()->json($result);
         }
+    }
+
+    public function userSpecialEndorse() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        $s = UserSpecial::with('endorse_users')->where('id', $id)->first();
+
+        $UserSpecial = UserSpecial::find($id);
+
+        $UserSpec = $UserSpecial->endorse_users()->wherePivot('user_id', $user->id)->first();
+
+        if ($UserSpec) {
+            $UserSpecial->endorse_users()->detach([$user->id]);
+            $count_user_special = $UserSpecial->endorse_users()->select('user.id')->get()->toArray();
+            $result['message'] = false;
+            $result['count_user_special'] = count($count_user_special);
+            return response()->json($result);
+        } else {
+            $UserSpecial->endorse_users()->attach([$user->id]);
+            $count_user_special = $UserSpecial->endorse_users()->select('user.id')->get()->toArray();
+            $result['message'] = true;
+            $result['count_user_special'] = count($count_user_special);
+            return response()->json($result);
+        }
+    }
+
+    public function getEndorse() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        $UserSpecial = UserSpecial::find($id);
+        $count_user_special = $UserSpecial->endorse_users()->select('user.id','Uname','Name','Family')->get();
+
+        return response()->json($count_user_special);
     }
 
 }

@@ -246,6 +246,15 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
             'as' => 'api.v43.user.get_avatar',
             'uses' => 'UserController@getAvatar'
         ]);
+        
+        Route::post('update_endorse', [
+            'as' => 'api.v43.user.update_endorse',
+            'uses' => 'UserController@userSpecialEndorse'
+        ]);
+        Route::get('get_endorse', [
+            'as' => 'api.v43.user.get_endorse',
+            'uses' => 'UserController@getEndorse'
+        ]);
 
 
 
