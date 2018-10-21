@@ -144,7 +144,6 @@
         });
 
         $(document).on("click", "#btn_homepage_login_form", function () {
-
             var form_data = $('#homepage_form_login').serialize();
             // $('.homepage_inner_login_div').hide();
             // $('.homepage_login_div').addClass('loader');

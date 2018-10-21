@@ -1,0 +1,159 @@
+body{
+
+	font-family: sans !important;
+    direction: rtl;
+    text-align: justify;
+    line-height: 23px;
+    height:100%;
+
+}
+html{
+  height: 100%;
+}
+a:hover{
+	color: #000;
+}
+.height-100-vh{
+	height: 100vh;
+}
+@font-face {
+    font-family: 'sans';
+    src: url('../fonts/Bamilo-Sans.otf?#'); /* IE6-8 */
+    src: url('../fonts/Bamilo-Sans.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/Bamilo-Sans.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Bamilo-Sans.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/Bamilo-Sans.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/Bamilo-Sans.svg#Bamilo-Sans') format('svg'); /* Legacy iOS */
+}
+
+.general-list{
+	text-align: right;
+	padding: 10px;
+}
+.general-list a{
+	color: #000 !important;
+}
+.width-50-pre{
+	width: 50%;
+}
+.display-inline{
+	display: inline !important;
+}
+.container-fluid {
+	height: 100%;
+}
+.rigth_box {
+		background-color: #f7f9fa;
+		min-height: 680px !important;
+		
+}
+
+.form-control{
+font-size: 0.7rem !important;
+}
+
+.rigth_box_head{
+	font-size: 17px !important;
+	color: #119b9d;
+padding-top: 1rem;
+
+}
+.rigth_box_body{
+	background-color: #d9e3e6;
+	border-left: #f7f9fa solid 2px;
+	
+}
+.left_box{
+	background-image: url("../img/Vivid-Flowers.png");
+	 /* Full height */
+  min-height: 690px !important;
+  overflow:hidden;
+  background-size: 10%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.nav-pills .nav-link.active{
+background-color: #ecc40a !important;
+}
+.nav-link{
+	background-color: #dcd6df;
+	margin-left: 3px;
+	color: #908a8a;
+	font-size: 14px;
+}
+.nav-pills .nav-link {
+
+    border-radius: 0rem !important;
+
+}
+.linkde{
+	margin-top: 2rem;
+		border-top: 1px solid #a49f93;
+width: 10rem;
+	border-bottom: 1px solid #a49f93;
+}
+.flex-column>.nav-link{
+	background-color: #d9e3e6;
+	font-size: 12px;
+}
+.form-control{
+	font-size: 11px;
+	color: #231f20;
+}
+.forget{
+	font-size: 12px;
+	color: #231f20;
+}
+.btn-primary {
+
+    color: #fff;
+    background-color: #119b9d;
+    border-color: #119b9d;
+    font-size: 13px;
+    margin-right: 1rem;
+}
+.btn-primary:hover{color:#fff;background-color:#0c8d8f;border-color:#0c8d8f}
+
+a:hover{
+	text-decoration: none;
+}
+.flink{
+	font-size: 11px;
+	color: #7e6e72;
+	text-align: right;
+	width: 10rem;
+	padding-top: 1rem;
+	clear: both;
+}
+.subtitle{
+	color: #fff;
+	margin-top: 1rem;
+
+}
+.hlink a{
+	color: #231f20;
+	}
+.hlink {
+	color: #231f20;
+	font-size: 12px;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+}
+.footer{
+	border-top: 1px solid #fff;
+	font-size: 11px;
+	color: #3a413e;
+	position: absolute;
+    bottom: 0.1rem;
+    width: 100%;
+
+}
+.footer a{
+	color: #141a18;
+
+	}
+
