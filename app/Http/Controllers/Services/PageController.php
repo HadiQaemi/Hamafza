@@ -47,6 +47,7 @@ class PageController extends Controller {
                     ->render();
         }
 
+        $sid = $subject->id;
         $res = [
             'status' => '1',
             'page_title' => $subject->title,
@@ -85,68 +86,30 @@ class PageController extends Controller {
                     'data' =>
                         [
                             [
-                            'type' => 'tasks',
-                            'title' => 'وظایف',
-                            'order' => '1',
-                            'data' =>
-                                [
-                                    [
-                                    'type' => 'my_tasks',
-                                    'title' => 'وظایف من',
-                                    'new' => '2',
-                                    'value' => '31',
-                                    'order' => '1',
-                                    'url' => '#'
-                                ],
-                                    [
-                                    'type' => 'my_assigned_task',
-                                    'title' => 'واگذاری های من',
-                                    'new' => '-1',
-                                    'value' => '14',
-                                    'order' => '2',
-                                    'url' => '#'
-                                ],
-                                    [
-                                    'type' => 'drafts',
-                                    'title' => 'پیشنویس ها',
-                                    'new' => '-1',
-                                    'value' => '10',
-                                    'order' => '3',
-                                    'url' => '#'
-                                ]
-                            ]
+                            'title' => 'وظایف من',
+                            'value' => $user->MyTasks()
+                                    ->whereHas('Subjects', function($q)use($sid) {
+                                                $q->where('subjects.id', $sid);
+                                            })->count() . "",
+                        // 'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
                         ],
                             [
-                            'type' => 'announces_and_forms_and_marked',
-                            'title' => 'یادداشت ها، فرم ها',
-                            'order' => '2',
-                            'data' =>
-                                [
-                                    [
-                                    'type' => 'announces',
-                                    'title' => 'یادداشت ها',
-                                    'new' => '-1',
-                                    'value' => '15',
-                                    'order' => '1',
-                                    'url' => '#'
-                                ],
-                                    [
-                                    'type' => 'marked',
-                                    'title' => 'علامت گذاری ها',
-                                    'new' => '-1',
-                                    'value' => '15',
-                                    'order' => '2',
-                                    'url' => '#'
-                                ],
-                                    [
-                                    'type' => 'forms',
-                                    'title' => 'فرم ها',
-                                    'new' => '-1',
-                                    'value' => '15',
-                                    'order' => '3',
-                                    'url' => '#'
-                                ],
-                            ]
+                            'title' => 'یادداشت ها',
+                            'value' => $user->Announces()->whereHas('page', function ($q) use ($sid) {
+                                        $q->whereHas('subject', function ($q) use ($sid) {
+                                                    $q->where('subjects.id', $sid);
+                                                });
+                                    })->get()->count() . "",
+                        //'url' => route('page.desktop.announces', ['sid' => $sid])
+                        ],
+                            [
+                            'title' => 'علامت گذاری ها',
+                            'value' => $user->Highlights()->whereHas('page', function ($q) use ($sid) {
+                                        $q->whereHas('subject', function ($q) use ($sid) {
+                                                    $q->where('subjects.id', $sid);
+                                                });
+                                    })->get()->count() . "",
+                        // 'url' => route('page.desktop.highlights', ['sid' => $sid])
                         ]
                     ]
                 ]
@@ -761,5 +724,103 @@ class PageController extends Controller {
         ];
         return response()->json($res);
     }
+
+    function page_announces() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $sid = Request::input('sid');
+        $my_subject_highlights = $user->Announces()->whereHas('page', function ($q) use ($sid) {
+                    $q->whereHas('subject', function ($q) use ($sid) {
+                        $q->where('subjects.id', $sid);
+                    });
+                })->orderBy('id', 'desc')->get();
+        return response()->json($my_subject_highlights);
+    }
+
+    function page_highlights() {
+        
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $sid = Request::input('sid');
+        $my_subject_highlights = $user->Highlights()->whereHas('page', function ($q) use ($sid) {
+                    $q->whereHas('subject', function ($q) use ($sid) {
+                        $q->where('subjects.id', $sid);
+                    });
+                })->get();
+        return response()->json($my_subject_highlights);
+    }
+    
+    public function page_tasks()
+    {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+         
+        $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'));
+        return response()->json($Tasks);
+        //$date = new \App\HamahangCustomClasses\JDateTime;
+//        dd(Request::input('subject_id'));
+        //$res = \Datatables::of($Tasks);
+            /*->editColumn('type', function ($data)
+            {
+                return GetTaskStatusName($data->task_status);
+            })
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('use_type', function ($data)
+            {
+                return hamahang_get_task_use_type_name($data->use_type);
+            })
+            ->addColumn('respite', function ($data) use ($date)
+            {
+                $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+            })
+            ->addColumn('keywords', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = [];
+                foreach($r as $Ar)
+                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
+                return json_encode($rr);
+            })
+            ->editColumn('immediate', function ($data)
+            {
+                if ($data->immediate == 1)
+                {
+                    $output = 'فوری';
+                }
+                else
+                {
+                    $output = 'غیرفوری';
+                }
+                if ($data->importance == 1)
+                {
+                    $output .= ' و مهم';
+                }
+                else
+                {
+                    $output .= ' و غیرمهم ';
+                }
+                return $output;
+            })
+            ->addColumn('employee', function ($data)
+            {
+                return ['uname'=> $data->Uname,  'fullname' => $data->Name . ' ' . $data->Family ];
+            })
+            ->rawColumns(['employee'])
+            ->make(true);*/
+            //dd($Tasks); die;
+          // response()->json($Tasks);
+    }
+
 
 }

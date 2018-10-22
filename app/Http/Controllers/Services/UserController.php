@@ -734,9 +734,16 @@ class UserController extends Controller {
     public function getAvatar() {
 
 
-        $user = getUser();
-        if (!isset($user->id)) {
-            return $user;
+        $me = getUser();
+        if (!isset($me->id)) {
+            return $me;
+        }
+        if (Request::input('name')== '')
+        {
+            $user = $me;
+        } else
+        {
+            $user = \App\User::where('Uname',Request::input('name'))->first();
         }
         $not_found_img = 'user_avatar.png';
         $file = \App\Models\Hamahang\FileManager\FileManager::find($user->avatar);

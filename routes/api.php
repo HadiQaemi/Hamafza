@@ -100,6 +100,21 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.post_share',
         'uses' => 'PageController@Sharepost'
     ]);
+    
+    Route::get('page_announces', [
+        'as' => 'api.v43.page_announces',
+        'uses' => 'PageController@page_announces'
+    ]);
+    
+    Route::get('page_tasks', [
+        'as' => 'api.v43.page_tasks',
+        'uses' => 'PageController@page_tasks'
+    ]);
+    
+    Route::get('page_highlights', [
+        'as' => 'api.v43.page_highlights',
+        'uses' => 'PageController@page_highlights'
+    ]);
 
 
 
@@ -117,6 +132,7 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.get_my_posts',
         'uses' => 'UserController@get_my_posts'
     ]);
+    
 
     Route::post('get_about_me', [
         'as' => 'api.v43.get_about_me',
