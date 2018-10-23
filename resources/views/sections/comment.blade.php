@@ -66,7 +66,7 @@ $hide_type = false;
                                 border: 0 !important;
                             }
                         </style>--}}
-                        <table class="">
+                        <table class="" style="width: 100%">
                             <tr>
                                 <td colspan="3">
                                     <textarea class="col-md-12 col-sm-12 col-xs-12 form-control" id="NewPost" type="text" placeholder="نظرتان را بنویسید" style="margin-bottom: 5px;"></textarea>

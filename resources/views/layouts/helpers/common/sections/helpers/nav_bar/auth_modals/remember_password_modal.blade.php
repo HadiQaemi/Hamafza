@@ -9,6 +9,7 @@
                 <div class="remember_div"></div>
                 <div class="inner_remember_div">
                     <form name="modal_remember_pass_form" id="modal_remember_pass_form" method="post">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div id="remember_email_request_errors" style="font-family: IranSharp; font-size: 12px; color: red"></div>
                         <div class="form-group input-group">
                             <span class="input-group-addon">رایانامه </span>

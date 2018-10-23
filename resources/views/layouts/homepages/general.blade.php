@@ -61,8 +61,8 @@
                     {{--<img src="file:///C:/Users/soft/Desktop/hamafza%20960616/img/logo.png" style="float: right; margin-top: 2%; margin-right: 3px">--}}
                     {{--<a class="navbar-brand" href="#" style="float: right;font-size: 1.9em;height: 48px;color: #FFF !important;">هم افزا</a>--}}
                     <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
+                        <span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>
                         @if (auth()->check())
-                            <span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>
                         @endif
                         <img class="logo" src="{{App::make('url')->to('/')}}/{{ config('constants.SiteLogo') }}">
                         @if(isset($Title))
@@ -108,7 +108,7 @@
         {{--</div>--}}
         {{--</nav>--}}
     </div>
-    <div id="main" style="overflow: auto;height: 100Vh;background: url(theme/general/img/main-bg.png) no-repeat center center fixed;">
+    <div id="main" style="overflow: auto;height: 100Vh;background: url(theme/general/img/main-bg.png);background-size: 100% 100%;">
         <!-- New HTMl -->
         {{--<div id="scrollReset">--}}
             {{--<a href="#" class="up glyphicon glyphicon-chevron-up"></a>--}}
