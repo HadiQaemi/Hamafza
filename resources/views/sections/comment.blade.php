@@ -39,6 +39,7 @@ $hide_type = false;
                         </select>
                         <div class="col-md-10 col-sm-8 col-xs-8">
                             <input type="text" id="commentTitleW" class="form-control" placeholder="عنوان">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
                         </div>
                         <div class="col-md-1 col-sm-2 col-xs-2 noPadding">
                             <div style="height: 15px">

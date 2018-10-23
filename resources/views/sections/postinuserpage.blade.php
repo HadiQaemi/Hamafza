@@ -60,6 +60,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-8 col-lg-8">
                         <input type="text" id="commentTitleWW" class="form-control" placeholder="عنوان">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                     </div>
                     <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2">
                         <div class="pull-right noPadding" style="height: 15px !important;">
