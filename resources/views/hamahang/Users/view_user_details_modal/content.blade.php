@@ -152,13 +152,13 @@
                             <tr>
                                 <td class="table_td_title">کلمه عبور فعلی</td>
                                 <td>
-                                    <input type="password" name="pass_now" class="form-control required">
+                                    <input type="password" name="pass_now" class="form-control required" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="table_td_title">کلمه عبور جدید</td>
                                 <td>
-                                    <input type="password" name="pass_new" class="form-control required">
+                                    <input type="password" name="pass_new" class="form-control required" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>

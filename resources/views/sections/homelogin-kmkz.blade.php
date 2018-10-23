@@ -8,7 +8,7 @@
                     <div id="homepage_username_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" id="password" class="form-control required" placeholder="رمز عبور" id="pwd">
+                    <input type="password" name="password" id="password" class="form-control required" placeholder="رمز عبور" id="pwd" autocomplete="off">
                     <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
                 </div>
 				@if (!config('app.debug'))

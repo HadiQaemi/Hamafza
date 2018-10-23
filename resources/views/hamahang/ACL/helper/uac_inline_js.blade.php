@@ -292,7 +292,7 @@
     }
 
     function add_new_role() {
-        var form_data = $('#form_add_role').serialize();
+        var form_data = $('#form_addform_add').serialize() + '&name=' + $('#modal_add_name').val() + '&display_name=' + $('#modal_add_display_name').val() + '&modal_add_description=' + $('#modal_add_description').val();
         $.ajax({
             type: "POST",
             url: '{{ route('hamahang.acl.add_new_role')}}',
@@ -838,7 +838,7 @@
         });
 
         $(document).on("click", ".btn_add_new_role", function () {
-            add_new_role()
+            add_new_role();
         });
 
         $(document).on("click", ".btn_add_new_permission", function () {

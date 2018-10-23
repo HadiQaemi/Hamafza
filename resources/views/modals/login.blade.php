@@ -12,7 +12,7 @@
         </div>
         <div class="form-group input-group">
             <span class="input-group-addon">رمزعبور</span>
-            <input class="form-control" name="passwordhid" data-toggle="password" required="required" title="" type="password">
+            <input class="form-control" name="passwordhid" data-toggle="password" required="required" title="" type="password" autocomplete="off">
         </div>
 
         <input type="hidden" name="password" id="passwordhid">

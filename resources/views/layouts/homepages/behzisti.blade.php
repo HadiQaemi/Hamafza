@@ -107,7 +107,7 @@
                                             <tr>
                                                 <td style="padding: 2px;width:100%;padding-left: 15px;">
                                                     <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                    <input type="password" id="passwords" name="password" placeholder="رمز عبور" class="form-control required" style="direction: ltr;">
+                                                    <input type="password" id="passwords" name="password" placeholder="رمز عبور" class="form-control required" style="direction: ltr;" autocomplete="off">
                                                 </td>
                                             </tr>
                                             @if (!config('app.debug'))

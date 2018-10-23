@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon">رمزعبور</span>
-                        <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password">
+                        <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off">
                     </div>
                     <div class="row col-md-9 pull-left">
                         <div class="col-md-4">

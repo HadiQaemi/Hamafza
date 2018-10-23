@@ -393,7 +393,7 @@
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon ">رمزعبور</span>
-                        <input type="password" class="form-control" name="pass" data-toggle="password">
+                        <input type="password" class="form-control" name="pass" data-toggle="password" autocomplete="off">
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon">نام </span>

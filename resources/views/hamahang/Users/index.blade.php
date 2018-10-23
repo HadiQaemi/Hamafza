@@ -106,7 +106,7 @@
                                                     <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i> رمز ورود : </label>
                                                 </td>
                                                 <td class="col-xs-10">
-                                                    <input id="password" name="password" type="password" class="form-control"/>
+                                                    <input id="password" name="password" type="password" class="form-control" autocomplete="off"/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -114,7 +114,7 @@
                                                     <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i>تکرار رمز ورود : </label>
                                                 </td>
                                                 <td class="col-xs-10">
-                                                    <input id="password_confirmation" name="password_confirmation" type="password" class="form-control"/>
+                                                    <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="off"/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -166,7 +166,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <form id="form_edit_item" class="form-horizontal" action="#">
-                                            <input id="item_id" type="hidden" name="item_id" value="">
+                                            <input id="item_id" type="hidden" name="item_id">
                                             <table class="table col-xs-12">
                                                 <tr>
                                                     <td class="col-xs-2">
@@ -197,7 +197,7 @@
                                                         <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i> رمز ورود : </label>
                                                     </td>
                                                     <td class="col-xs-10">
-                                                        <input id="password_edit" name="password" type="password" class="form-control"/>
+                                                        <input id="password_edit" name="password" type="password" class="form-control" autocomplete="off"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -205,7 +205,7 @@
                                                         <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i>تکرار رمز ورود : </label>
                                                     </td>
                                                     <td class="col-xs-10">
-                                                        <input id="password__edit_reply" name="password_confirmation" type="password" class="form-control"/>
+                                                        <input id="password__edit_reply" name="password_confirmation" type="password" class="form-control" autocomplete="off"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -218,7 +218,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="col-xs-12">
-                                                        <span style="color: blue; font-size: 14px;">اختصاص کاربر به نقش: d</span>
+                                                        <span style="color: blue; font-size: 14px;">اختصاص کاربر به نقش:</span>
                                                     </td>
                                                 </tr>
                                                 <tr>

@@ -37,7 +37,7 @@
                 <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i> رمز ورود : </label>
             </td>
             <td class="col-xs-10">
-                <input id="password" name="password" type="password" class="form-control"/>
+                <input id="password" name="password" type="password" class="form-control" autocomplete="off"/>
             </td>
         </tr>
         <tr>
@@ -45,7 +45,7 @@
                 <label class="control-label"><i style="font-size: 8px;color: #b50707;" class="fa fa-asterisk"></i>تکرار رمز ورود : </label>
             </td>
             <td class="col-xs-10">
-                <input id="password_confirmation" name="password_confirmation" type="password" class="form-control"/>
+                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="off" class="form-control"/>
             </td>
         </tr>
         <tr>

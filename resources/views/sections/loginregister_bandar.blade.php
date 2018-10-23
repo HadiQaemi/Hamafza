@@ -342,7 +342,7 @@
                 </div>
                 <div class="form-group input-group">
                     <span class="input-group-addon">رمزعبور</span>
-                    <input class="form-control passwordw" name="passwordw" data-toggle="password" required="required" title="" type="password">
+                    <input class="form-control passwordw" name="passwordw" data-toggle="password" required="required" title="" type="password" autocomplete="off">
                 </div>
 
                 <input type="hidden" name="passwordhidw" id="passwordhidw">
@@ -388,7 +388,7 @@
                 </div>
                 <div class="form-group input-group">
                     <span class="input-group-addon">رمزعبور</span>
-                    <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password">
+                    <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off">
                 </div>
                 <input type="hidden" name="passwordhid" id="passwordhid">
                 <div class="row col-md-9 pull-left">
@@ -429,7 +429,7 @@
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon ">رمزعبور</span>
-                        <input type="password" class="form-control" name="pass" data-toggle="password">
+                        <input type="password" class="form-control" name="pass" data-toggle="password" autocomplete="off">
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon">نام </span>

@@ -144,6 +144,8 @@
         }
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
+        LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
+
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "ajax": {
@@ -191,7 +193,17 @@
 //                }
 //            }
             ]
-        })
+        });
+        $("#MyTasksTable").on('DOMNodeInserted DOMNodeRemoved', function() {
+            if ($(this).find('tbody tr td').first().attr('colspan')) {
+                $('#MyTasksTable_wrapper').hide();
+                $('.no-task-div').removeClass('hidden');
+                $('.message').html("{{trans('tasks.no_task_inserted')}}");
+            } else {
+                $('#MyTasksTable_wrapper').show();
+                $('.no-task-div').addClass('hidden');
+            }
+        });
     }
     function call_modal(title, message, callback_function) {
         $('#confirm_modal_massage').html(message);

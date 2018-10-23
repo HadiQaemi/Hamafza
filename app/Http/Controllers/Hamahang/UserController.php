@@ -292,7 +292,9 @@ class UserController extends Controller
             return json_encode($result);
         } else
         {
-            $user = User::find(deCode($request->item_id));
+//            $user = User::find(deCode($request->item_id));
+            $user = User::find($request->item_id);
+
             $user->Uname = $request->Uname;
             if ($request->password)
             {
@@ -332,6 +334,7 @@ class UserController extends Controller
     public function editShowUsers(Request $request)
     {
         $users = User::where('id', deCode($request->id))->with('_roles')->with('profile')->with('educations')->first();
+//        $users->id = enCode($users->id);
         return json_encode($users);
     }
 

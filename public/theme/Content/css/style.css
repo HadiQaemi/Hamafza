@@ -3223,7 +3223,7 @@ input{
 }
 .sendComment{
     padding: 5px 0px !important;;
-    height: 270px !important;
+    height: 310px !important;
 }
 #TitleHeads{
     margin: 10px 2px !important;
@@ -3758,5 +3758,11 @@ input{
 .fa-sort-down.pointer.font-large{
     margin-right: -10.3px;
     margin-top: 5px;
+}
+.no-task-div{
+    margin-top: 20px;
+}
+.no-task-div-buttons{
+    margin-top: 20px;
 }
 

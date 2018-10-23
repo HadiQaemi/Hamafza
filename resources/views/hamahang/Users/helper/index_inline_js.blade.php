@@ -291,19 +291,24 @@ var num =0;
             data: {id: id},
             dataType: 'json',
             success: function (data) {
+                console.log(data);
                 $('#Name_edit').val(data.Name);
                 $('#Family_edit').val(data.Family);
                 $('#Email_edit').val(data.Email);
                 $('#Uname_edit').val(data.Uname);
                 $('#password_edit').val(data.password);
-                $('#modal_mobile_input_edit').val(data.profile.Mobile);
-                $('#modal_phone_input_edit').val(data.profile.Tel_number);
-                $('#province_edit').val(data.profile.Province);
-                $('#modal_relevant_organization_input_edit').val(data.profile.relevant_organization);
-                $("#modal_province_input_edit").val(data.profile.Province).change();
-                $("#modal_city_input_edit").val(data.profile.City).change();
-                $("#modal_education_input_edit").val(data.educations[data.educations.length - 1].grade).change();
-                $('#item_id').val(id);
+                if(data.profile != null)
+                {
+                    $('#modal_mobile_input_edit').val(data.profile.Mobile);
+                    $('#modal_phone_input_edit').val(data.profile.Tel_number);
+                    $('#province_edit').val(data.profile.Province);
+                    $('#modal_relevant_organization_input_edit').val(data.profile.relevant_organization);
+                    $("#modal_province_input_edit").val(data.profile.Province).change();
+                    $("#modal_city_input_edit").val(data.profile.City).change();
+                }
+                if(data.educations.length>=1)
+                    $("#modal_education_input_edit").val(data.educations[data.educations.length - 1].grade).change();
+                $('#item_id').val(data.id);
                 var arr = [];
                 if (data.role_policy != '') {
                     $(".roles_list_edit").val('-').change();

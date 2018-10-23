@@ -1,4 +1,4 @@
-<form id="form_add_new_role" class="" action="#">
+<form id="form_add_roleform_add_role" class="" action="#">
     <div class="row">
         <table class="table">
             <th>
@@ -6,7 +6,7 @@
                     <span class="col-xs-2">{{trans('auth.name')}}</span>
                 </td>
                 <td class="col-xs-10">
-                    <input id="modal_add_name" name="name" type="text" class="form-control">
+                    <input id="modal_add_name" name="modal_add_name" type="text" class="form-control">
                 </td>
             </th>
         </table>
@@ -16,7 +16,7 @@
                     <span class="col-lg-3 control-label">{{trans('acl.display_name')}}</span>
                 </td>
                 <td class="col-xs-10">
-                    <input id="modal_add_display_name" name="display_name" type="text" class="form-control">
+                    <input id="modal_add_display_name" name="modal_add_display_name" type="text" class="form-control">
                 </td>
             </tr>
         </table>
@@ -26,7 +26,7 @@
                     <span class="col-lg-3 control-label">{{trans('app.description')}}</span>
                 </td>
                 <td class="col-xs-10">
-                    <input id="modal_add_description" name="description" type="text" class="form-control">
+                    <input id="modal_add_description" name="modal_add_description" type="text" class="form-control">
                 </td>
             </tr>
         </table>
