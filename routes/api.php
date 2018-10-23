@@ -106,9 +106,9 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'uses' => 'PageController@page_announces'
     ]);
     
-    Route::get('page_tasks', [
-        'as' => 'api.v43.page_tasks',
-        'uses' => 'PageController@page_tasks'
+    Route::get('get_tasks', [
+        'as' => 'api.v43.get_tasks',
+        'uses' => 'TaskController@get_tasks'
     ]);
     
     Route::get('page_highlights', [

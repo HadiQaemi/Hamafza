@@ -87,10 +87,7 @@ class PageController extends Controller {
                         [
                             [
                             'title' => 'وظایف من',
-                            'value' => $user->MyTasks()
-                                    ->whereHas('Subjects', function($q)use($sid) {
-                                                $q->where('subjects.id', $sid);
-                                            })->count() . "",
+                            'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, true). "",
                         // 'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
                         ],
                             [
@@ -753,74 +750,5 @@ class PageController extends Controller {
                 })->get();
         return response()->json($my_subject_highlights);
     }
-    
-    public function page_tasks()
-    {
-        $user = getUser();
-        if (!isset($user->id)) {
-            return $user;
-        }
-         
-        $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'));
-        return response()->json($Tasks);
-        //$date = new \App\HamahangCustomClasses\JDateTime;
-//        dd(Request::input('subject_id'));
-        //$res = \Datatables::of($Tasks);
-            /*->editColumn('type', function ($data)
-            {
-                return GetTaskStatusName($data->task_status);
-            })
-            ->editColumn('id', function ($data)
-            {
-                return enCode($data->id);
-            })
-            ->editColumn('use_type', function ($data)
-            {
-                return hamahang_get_task_use_type_name($data->use_type);
-            })
-            ->addColumn('respite', function ($data) use ($date)
-            {
-                $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
-            })
-            ->addColumn('keywords', function ($data)
-            {
-                $r = (tasks::TakKeywords($data->id));
-
-                $rr = [];
-                foreach($r as $Ar)
-                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
-                return json_encode($rr);
-            })
-            ->editColumn('immediate', function ($data)
-            {
-                if ($data->immediate == 1)
-                {
-                    $output = 'فوری';
-                }
-                else
-                {
-                    $output = 'غیرفوری';
-                }
-                if ($data->importance == 1)
-                {
-                    $output .= ' و مهم';
-                }
-                else
-                {
-                    $output .= ' و غیرمهم ';
-                }
-                return $output;
-            })
-            ->addColumn('employee', function ($data)
-            {
-                return ['uname'=> $data->Uname,  'fullname' => $data->Name . ' ' . $data->Family ];
-            })
-            ->rawColumns(['employee'])
-            ->make(true);*/
-            //dd($Tasks); die;
-          // response()->json($Tasks);
-    }
-
 
 }

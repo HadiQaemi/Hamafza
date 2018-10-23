@@ -105,5 +105,61 @@ class TaskController extends Controller {
             return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
     }
+    
+     public function get_tasks() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+
+        $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, false);
+        //return response()->json($Tasks);
+        $date = new \App\HamahangCustomClasses\JDateTime;
+//        dd(Request::input('subject_id'));
+//        dd(Request::input('subject_id'));
+        $res = \Datatables::of($Tasks)
+                ->editColumn('type', function ($data) {
+                    return GetTaskStatusName($data->task_status);
+                })
+                
+                
+                ->addColumn('respite', function ($data) use ($date) {
+                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                    return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+                })
+                ->addColumn('keywords', function ($data) {
+                    $r = (\App\Models\Hamahang\Tasks\tasks::TakKeywords($data->id));
+
+                    $rr = [];
+                    foreach ($r as $Ar)
+                        $rr[] = ['id' => $Ar->id, 'title' => $Ar->title];
+                    return json_encode($rr);
+                })
+                ->editColumn('immediate', function ($data) {
+                    if ($data->immediate == 1) {
+                        $output = 'فوری';
+                    } else {
+                        $output = 'غیرفوری';
+                    }
+                    if ($data->importance == 1) {
+                        $output .= ' و مهم';
+                    } else {
+                        $output .= ' و غیرمهم ';
+                    }
+                    return $output;
+                })
+                ->addColumn('employeeName', function ($data) {
+                    return $data->Name . ' ' . $data->Family;
+                })
+                ->rawColumns(['employeeName'])
+                ->addColumn('employeeUname', function ($data) {
+                    return $data->Uname;
+                })
+                ->rawColumns(['employeeUname'])
+                ->make(true);
+
+
+        return response()->json($res);
+    }
 
 }

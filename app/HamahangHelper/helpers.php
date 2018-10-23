@@ -540,10 +540,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                     'active' => '1',
                                                     'title' => 'وظایف من',
                                                     'new' => '-1',
-                                                    'value' => auth()->user()->MyTasks()
-                                                            ->whereHas('Subjects',function($q)use($sid){
-                                                                $q->where('subjects.id',$sid);
-                                                            })->count() . "",
+                                                    'value' =>\App\Models\Hamahang\Tasks\tasks::MyTasks($pid, false, true). "",
                                                     'icon' => 'fa-tasks',
                                                     'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
                                                 ],

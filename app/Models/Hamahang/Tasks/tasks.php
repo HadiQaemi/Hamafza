@@ -569,7 +569,7 @@ class tasks extends Model
         return $task;
     }
 
-    public static function MyTasks($subject_id = false, $user_id = false, $api = false)
+    public static function MyTasks($subject_id = false, $user_id = false, $justCount = false)
     {
         if ($user_id)
         {
@@ -661,6 +661,9 @@ class tasks extends Model
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
+        if ($justCount){
+            return count($result->groupBy('hamahang_task.id')->get());
+        }
         $title = Request::get('title');
         $status_filter = Request::get('task_status');
         $official_type = Request::get('official_type');
@@ -686,7 +689,7 @@ class tasks extends Model
             $result->whereIn('hamahang_task.type', $official_type)
                 ->whereNull('hamahang_task.deleted_at');
         }
-        else
+        else if (!$user_id)
         {
             $result->whereIn('hamahang_task.type', [11]);
         }
@@ -696,7 +699,7 @@ class tasks extends Model
             $result->whereIn('hamahang_task_status.type', $status_filter)
                 ->whereNull('hamahang_task_status.deleted_at');
         }
-        else
+        else if (!$user_id)
         {
             $result->whereIn('hamahang_task_status.type', [11]);
         }
@@ -707,7 +710,7 @@ class tasks extends Model
                 ->whereNull('hamahang_task_priority.deleted_at');
 //            dd($immediate);
         }
-        else
+        else if (!$user_id)
         {
             $result->whereIn('hamahang_task_priority.immediate', [11]);
         }
@@ -718,7 +721,7 @@ class tasks extends Model
                 ->whereNull('hamahang_task_priority.deleted_at');
 //            dd($important);
         }
-        else
+        else if (!$user_id)
         {
             $result->whereIn('hamahang_task_priority.importance', [11]);
         }
