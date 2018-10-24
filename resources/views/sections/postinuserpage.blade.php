@@ -39,204 +39,207 @@
         });
     </script>
     <div class="comment-box" style="display: block;">
-        @if(Session::get('uid') !='')
-            @if (isset($sid))
-                <script>
-                    var Sid = '{{$sid}}';
-                    var Tree = '{{$Tree}}'
-                </script>
-            @endif
-            <div class="commenTxtHolders">
-                <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
-                    <div class="col-xs-12 col-sm-2 col-lg-2">
-                        <select name="post_typeW" id="post_typeW" class="form-control">
-                            <option value="1" selected="">نظر</option>
-                            <option value="2">پرسش</option>
-                            <option value="3">ایده</option>
-                            <option value="4">تجربه</option>
-                            {{--<option value="12">خبر</option>--}}
-                            {{--<option value="13">مرور</option>--}}
-                        </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-8 col-lg-8">
-                        <input type="text" id="commentTitleWW" class="form-control" placeholder="عنوان">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                    </div>
-                    <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2">
-                        <div class="pull-right noPadding" style="height: 15px !important;">
-                            <ul class="pull-right titleCommand col-md-12 col-sm-12 col-xs-12 noPadding">
-                                <li style=" display: inline-block">
-                                    <a id="picUploadW" title="تصویر" data-placement="top" data-toggle="tooltip" href="#" style="font-size: 14pt;">
-                                        <div class="iconX fa icon-ax"></div>
-                                    </a>
-                                </li>
-                                <li style=" display: inline">
-                                    <a id="vidUploadW" title="ویدیو" data-placement="top" data-toggle="tooltip" href="#" style="font-size: 14pt;"><span class="iconX fa icon-view-slide-active"></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <form method="post" action="" enctype="multipart/form-data">
+            @if(Session::get('uid') !='')
+                @if (isset($sid))
+                    <script>
+                        var Sid = '{{$sid}}';
+                        var Tree = '{{$Tree}}'
+                    </script>
+                @endif
+                <div class="commenTxtHolders">
 
-
-
-                <div class="col-md-12 col-sm-12 col-xs-12" id="commentEditorWW" style="height: 0px; display: none; margin-top: 10px;">
-                    <table class="table commentEditorWW-table">
-                        <tr>
-                            <td>
-                                <div id="NewPostW" contenteditable='true' data-placeholder="نظرتان را وارد کنید" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                        <small>کلیدواژه</small>
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                        <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 rewardC">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                        <small>پاداش</small>
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                        <input type="text" class="rewardW form-control" name="rewardW" id="rewardW" style="width: 100%;"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 rewardC">
-                                    (امتیاز شما: <div style="direction: ltr; display: inline-block;">{!! get_user_sumscores() !!}</div>)
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                            <small>درج در درگاه</small>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                            <select class="portal_idW no-padding form-control" name="portal_idW" id="portal_idW" style="display: inline-block;" ></select>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                            <small>درج در گروه ها و کانال ها</small>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                            <select id="groupsW" class="darjdar no-padding form-control" multiple>
-                                @foreach(MyOrganGroups() as $item)
-                                    @if(($Tree=='groupadmin' || $Tree=='ismember') && $item->id==$sid)
-                                    @else
-                                        <option value="{{$item->id}}" class="CheckedGroup" name="CheckedGroup">{{$item->name}}</option>
-                                    @endif
-                                @endforeach
+                    <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
+                        <div class="col-xs-12 col-sm-2 col-lg-2">
+                            <select name="post_typeW" id="post_typeW" class="form-control">
+                                <option value="1" selected="">نظر</option>
+                                <option value="2">پرسش</option>
+                                <option value="3">ایده</option>
+                                <option value="4">تجربه</option>
+                                {{--<option value="12">خبر</option>--}}
+                                {{--<option value="13">مرور</option>--}}
                             </select>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <div class="dropdown keep-open" style="margin-left: 20px"></div>
-                        <input id="pip_post" type="button" value="ارسال" class="btn btn-info ">
+                        <div class="col-xs-12 col-sm-8 col-lg-8">
+                            <input type="text" id="commentTitleWW" class="form-control" placeholder="عنوان">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2">
+                            <div class="pull-right noPadding" style="height: 15px !important;">
+                                <ul class="pull-right titleCommand col-md-12 col-sm-12 col-xs-12 noPadding">
+                                    <li style=" display: inline-block">
+                                        <a id="picUploadW" title="تصویر" data-placement="top" data-toggle="tooltip" href="#" style="font-size: 14pt;">
+                                            <div class="iconX fa icon-ax"></div>
+                                        </a>
+                                    </li>
+                                    <li style=" display: inline">
+                                        <a id="vidUploadW" title="ویدیو" data-placement="top" data-toggle="tooltip" href="#" style="font-size: 14pt;"><span class="iconX fa icon-view-slide-active"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
-                    <script>
-                        $(document).ready(function ()
-                        {
-                            portal_idW = $('.portal_idW');
-                            rewardW = $('.rewardW');
-                            $(".rewardC").css("display","none")
-                            $.ajax
-                            ({
-                                type: 'post',
-                                url: '{!! route("hamahang.enquiry.get") !!}',
-                                data: {'what': 'portals'},
-                                dataType: 'json',
-                                success: function (data)
-                                {
-                                    if (data.success)
-                                    {
-                                        portal_idW.empty();
-                                        json_data = JSON.parse(data.result[0]);
-                                        $.each(json_data, function (id, record)
-                                        {
-                                            portal_idW.append('<option value="' + record.id + '">' + record.title + '</option>');
-                                        });
-                                    }
-                                }
-                            });
-                            post_typeW = $('#post_typeW');
-                            $(document).on('change', post_typeW, function ()
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="commentEditorWW" style="height: 0px; display: none; margin-top: 10px;">
+                        <table class="table commentEditorWW-table">
+                            <tr>
+                                <td>
+                                    <div id="NewPostW" contenteditable='true' data-placeholder="نظرتان را وارد کنید" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                            <small>کلیدواژه</small>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
+                                            <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 rewardC">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                            <small>پاداش</small>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
+                                            <input type="text" class="rewardW form-control" name="rewardW" id="rewardW" style="width: 100%;"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 rewardC">
+                                        (امتیاز شما: <div style="direction: ltr; display: inline-block;">{!! get_user_sumscores() !!}</div>)
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                <small>درج در درگاه</small>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
+                                <select class="portal_idW no-padding form-control" name="portal_idW" id="portal_idW" style="display: inline-block;" ></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                <small>درج در گروه ها و کانال ها</small>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
+                                <select id="groupsW" class="darjdar no-padding form-control" multiple>
+                                    @foreach(MyOrganGroups() as $item)
+                                        @if(($Tree=='groupadmin' || $Tree=='ismember') && $item->id==$sid)
+                                        @else
+                                            <option value="{{$item->id}}" class="CheckedGroup" name="CheckedGroup">{{$item->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="dropdown keep-open" style="margin-left: 20px"></div>
+                            <input id="pip_post" type="button" value="ارسال" class="btn btn-info ">
+                        </div>
+
+                        <script>
+                            $(document).ready(function ()
                             {
-                                hide_on_type_2_1 = $('.hide_on_type_2_1');
-                                show_on_type_2_1 = $('.show_on_type_2_1');
-                                hide_on_type_2_2 = $('.hide_on_type_2_2');
-                                show_on_type_2_2 = $('.show_on_type_2_2');
-                                if (2 == post_typeW.val())
-                                {
-                                    // table 1
-                                    hide_on_type_2_1.removeClass('col-xs-11');
-                                    hide_on_type_2_1.addClass('col-xs-8');
-                                    show_on_type_2_1.show();
-                                    // table 2
-                                    show_on_type_2_2.show();
-                                    hide_on_type_2_2.removeClass('col-xs-10');
-                                    hide_on_type_2_2.addClass('col-xs-5');
-                                    $('.portal_idW').select2({data: {id: 6, text: 'پرس و جو'}});
-                                } else
-                                {
-                                    // table 1
-                                    hide_on_type_2_1.removeClass('col-xs-8');
-                                    hide_on_type_2_1.addClass('col-xs-11');
-                                    show_on_type_2_1.hide();
-                                    // table 2
-                                    show_on_type_2_2.hide();
-                                    hide_on_type_2_2.removeClass('col-xs-5');
-                                    hide_on_type_2_2.addClass('col-xs-10');
-                                }
-                            });
-                            post_typeW.change();
-                            $(".select2_auto_complete_keywords").select2
-                            ({
-                                minimumInputLength: 3,
-                                dir: "rtl",
-                                width: "100%",
-                                tags: true,
-                                ajax:
+                                portal_idW = $('.portal_idW');
+                                rewardW = $('.rewardW');
+                                $(".rewardC").css("display","none")
+                                $.ajax
+                                ({
+                                    type: 'post',
+                                    url: '{!! route("hamahang.enquiry.get") !!}',
+                                    data: {'what': 'portals'},
+                                    dataType: 'json',
+                                    success: function (data)
                                     {
-                                        url: "{{ route('auto_complete.keywords') }}",
-                                        dataType: "json",
-                                        type: "POST",
-                                        quietMillis: 150,
-                                        data: function (term) {
-                                            return {
-                                                term: term
-                                            };
-                                        },
-                                        results: function (data) {
-                                            return {
-                                                results: $.map(data, function (item) {
-                                                    return {
-                                                        text: item.text,
-                                                        id: item.id
-                                                    }
-                                                })
-                                            };
+                                        if (data.success)
+                                        {
+                                            portal_idW.empty();
+                                            json_data = JSON.parse(data.result[0]);
+                                            $.each(json_data, function (id, record)
+                                            {
+                                                portal_idW.append('<option value="' + record.id + '">' + record.title + '</option>');
+                                            });
                                         }
                                     }
+                                });
+                                post_typeW = $('#post_typeW');
+                                $(document).on('change', post_typeW, function ()
+                                {
+                                    hide_on_type_2_1 = $('.hide_on_type_2_1');
+                                    show_on_type_2_1 = $('.show_on_type_2_1');
+                                    hide_on_type_2_2 = $('.hide_on_type_2_2');
+                                    show_on_type_2_2 = $('.show_on_type_2_2');
+                                    if (2 == post_typeW.val())
+                                    {
+                                        // table 1
+                                        hide_on_type_2_1.removeClass('col-xs-11');
+                                        hide_on_type_2_1.addClass('col-xs-8');
+                                        show_on_type_2_1.show();
+                                        // table 2
+                                        show_on_type_2_2.show();
+                                        hide_on_type_2_2.removeClass('col-xs-10');
+                                        hide_on_type_2_2.addClass('col-xs-5');
+                                        $('.portal_idW').select2({data: {id: 6, text: 'پرس و جو'}});
+                                    } else
+                                    {
+                                        // table 1
+                                        hide_on_type_2_1.removeClass('col-xs-8');
+                                        hide_on_type_2_1.addClass('col-xs-11');
+                                        show_on_type_2_1.hide();
+                                        // table 2
+                                        show_on_type_2_2.hide();
+                                        hide_on_type_2_2.removeClass('col-xs-5');
+                                        hide_on_type_2_2.addClass('col-xs-10');
+                                    }
+                                });
+                                post_typeW.change();
+                                $(".select2_auto_complete_keywords").select2
+                                ({
+                                    minimumInputLength: 3,
+                                    dir: "rtl",
+                                    width: "100%",
+                                    tags: true,
+                                    ajax:
+                                        {
+                                            url: "{{ route('auto_complete.keywords') }}",
+                                            dataType: "json",
+                                            type: "POST",
+                                            quietMillis: 150,
+                                            data: function (term) {
+                                                return {
+                                                    term: term
+                                                };
+                                            },
+                                            results: function (data) {
+                                                return {
+                                                    results: $.map(data, function (item) {
+                                                        return {
+                                                            text: item.text,
+                                                            id: item.id
+                                                        }
+                                                    })
+                                                };
+                                            }
+                                        }
+                                });
+                                $('.portal_idW, .darjdar').select2({'width': '100%', 'dir': 'rtl'});
                             });
-                            $('.portal_idW, .darjdar').select2({'width': '100%', 'dir': 'rtl'});
-                        });
-                    </script>
+                        </script>
+                    </div>
+
+
+
                 </div>
-
-
-
-            </div>
-            <input type="file" class="hidden" id="pictureUpload" onchange="loadFile(event);">
-            <input type="file" class="hidden" id="videoUpload">
-        @endif
-        <input type="hidden" id="UserConUname" value="jafarpur">
-        <input type="hidden" id="PageTypes" value="userwall">
+                <input type="file" class="hidden" id="pictureUpload" onchange="loadFile(event);">
+                <input type="file" class="hidden" id="videoUpload">
+            @endif
+            <input type="hidden" id="UserConUname" value="jafarpur">
+            <input type="hidden" id="PageTypes" value="userwall">
+        </form>
     </div>
     <script>
         function readURL(input) {

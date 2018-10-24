@@ -131,7 +131,7 @@
                     <div class="message"></div>
                     <div class="no-task-div-buttons">
                         <a class="jsPanels btn btn-primary" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید">تعیین وظیفه برای خودم</a>
-                        <a class="jsPanels btn btn-primary" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید">تعیین وظیفه برای دیگران</a>
+                        <a class="jsPanels btn btn-primary" href="{{url('/modals/CreateNewTask?resid='.auth()->id())}}" title="وظیفه جدید">تعیین وظیفه برای دیگران</a>
                     </div>
                 </div>
             </fieldset>

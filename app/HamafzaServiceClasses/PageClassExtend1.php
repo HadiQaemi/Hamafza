@@ -4,6 +4,7 @@ namespace App\HamafzaServiceClasses;
 
 use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use App\HamahangCustomClasses\HtmlDomSTR;
@@ -637,12 +638,15 @@ class PageClassExtend1
                 $supervisor = $ManagerPage->supervisor;
                 $admin = $ManagerPage->admin;
             }
-
+            $user_group = DB::table('role_user as u')
+                ->leftJoin('hamahang_role_policies as hp', 'u.role_id', '=', 'u.role_id')
+                ->where('hp.target_id', $sid)
+                ->where('u.user_id', $uid)->get();
             $title = '';
             $Setting = array();
             $Setting['propertie'] = 0;
             //dd("admin: $admin == '1', subject_edit: $subject_edit == '1', $manager: $manager == uid: $uid, supporter: $supporter == uid: $uid, supervisor: $supervisor == uid: $uid, admin: $admin == uid: $uid");
-            if ($admin == '1' || $subject_edit > 0 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
+            if (count($user_group) || $admin == '1' || $subject_edit > 0 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
             {
                 $rowT = DB::table('subjects as s')
                     ->leftJoin('subject_type as sa', 'sa.id', '=', 's.kind')
@@ -653,6 +657,7 @@ class PageClassExtend1
                     ->leftJoin('keywords as k', 'k.id', '=', 'sk.kid')
                     ->select('k.id', 'k.title')
                     ->where('sk.sid', $sid)->groupBy('k.id')->get();
+
                 $T1['asubject'] = $rowT->name;
                 $T1['title'] = $rowT->title;
                 $T1['kind'] = $rowT->kind;
@@ -691,8 +696,6 @@ class PageClassExtend1
                     }
                 }
             }
-
-
             $Setting['Helps'] = $rowT;
             return $Setting;
         } catch (Exception $e)
