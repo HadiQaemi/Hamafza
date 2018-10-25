@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Hamahang\Tasks;
 use App\Http\Controllers\Hamahang\UserController;
 use App\Models\hamafza\Pages;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
+use App\Models\Hamahang\Tasks\hamahang_project_task;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
 use App\Models\Hamahang\Tasks\task_priority_assigner;
@@ -1768,6 +1769,14 @@ class MyAssignedTaskController extends Controller
                 foreach (Request::input('keywords') as $kw)
                 {
                     task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
+                }
+            }
+            if (Request::exists('rel_tasks'))
+            {
+                foreach (Request::input('rel_tasks') as $p)
+                {
+                    if(strlen(trim($p))>0)
+                        hamahang_project_task::create_task_project($task->id, $p);
                 }
             }
             $staff = '';

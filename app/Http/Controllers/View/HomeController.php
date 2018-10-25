@@ -132,6 +132,14 @@ class HomeController extends Controller
                 }
                 break;
             }
+            case 'reo':
+            {
+                if (config('constants.DefIndexView') == 'reo')
+                {
+                    $index_view = 'layouts.homepages.reo';
+                }
+                break;
+            }
             case 'behzisti':
             {
                 if (config('constants.DefIndexView') == 'behzisti')

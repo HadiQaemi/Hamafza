@@ -424,7 +424,7 @@ class SubjectsClass
         );
 
         $subject = Subject::find($work);
-
+        $keywords_list_subject_tmp = [];
         if (is_array($keywords_list_subject))
         {
             foreach ($keywords_list_subject as $key)
@@ -433,7 +433,7 @@ class SubjectsClass
             }
         } else
         {
-            $keywords_list_subject_tmp = [];
+
         }
 
         $keywords_list_subject = $keywords_list_subject_tmp;
@@ -571,10 +571,11 @@ class SubjectsClass
         $err = false;
         $int = (int)$work;
         $keywords = explode(',', $keywords);
-        $keywords = json_encode($keywords);
-        $keywords = json_decode($keywords);
+
         if (is_array($keywords))
         {
+            $keywords = json_encode($keywords);
+            $keywords = json_decode($keywords);
             foreach ($keywords as $value)
             {
                 if ($value != '')

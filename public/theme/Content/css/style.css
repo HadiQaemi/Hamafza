@@ -3714,7 +3714,7 @@ input{
 }
 .jsPanel-content .tab-content{
     overflow-y: auto;
-    max-height: 380px;
+    max-height: 50vh;
     min-height: 50px;
 }
 .jsPanel-content .new-task-form .tab-view{

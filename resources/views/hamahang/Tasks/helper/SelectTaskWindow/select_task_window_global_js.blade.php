@@ -45,6 +45,8 @@
         var send_info = {
             p_id: id
         }
+        var h = $(window).height();
+        var w = $(window).width();
         $.ajax({
             url:'{{ URL::route('hamahang.project.project_info_window' )}}',
             type:'post',
@@ -54,8 +56,9 @@
             {
                     console.log(data);
                     calendarModal = $.jsPanel({
-                    position: {my: "center-top", at: "center-top", offsetY: 15},
-                    contentSize: {width: 1000, height: 600},
+                    position: {my: "center-top", at: "center-top", offsetY: 120},
+                    // contentSize: {width: 1000, height: 600},
+                    panelSize: {width: w * 0.7, height: h * 0.7},
                     headerTitle: data.header,
                     content :data.content ,
                     footerToolbar:data.footer

@@ -142,6 +142,9 @@
     }
 
     function SaveNewProject() {
+        var create_page = 'no';
+        if ($('input[name="create_page"]:checked').length)
+            create_page = 'yes';
         var sendInfo = {
             p_title: $('#p_title').val(),
             p_type: $('input[name=p_type]:checked').val(),
@@ -150,6 +153,12 @@
             p_about: $('#p_about').val(),
             p_desc: $('#p_desc').val(),
             p_responsible: $('#p_responsible').val(),
+            users_list_project_view: $('#users_list_project_view').val(),
+            roles_list_project_view: $('#roles_list_project_view').val(),
+            users_list_project_edit_tasks: $('#users_list_project_edit_tasks').val(),
+            roles_list_project_edit_tasks: $('#roles_list_project_edit_tasks').val(),
+            users_list_project_edit: $('#users_list_project_edit').val(),
+            roles_list_project_edit: $('#roles_list_project_edit').val(),
             p_org_unit: $('#p_org_unit').val(),
             p_keyword: $('#p_keyword').val(),
             p_schedule_on: $('#p_schedule_on').val(),
@@ -158,6 +167,7 @@
             current_date: $('#current_date').val(),
             state_date: $('#state_date').val(),
             base_calendar: $('#base_calendar').val(),
+            create_page: create_page,
             p_priority: $('#p_priority').val(),
             p_page: $('#page_id').val(),
             modify_permission_type: $('input[name=ModifyPermissionType]:checked').val(),
@@ -178,8 +188,15 @@
                     success: function (s) {
                         res = JSON.parse(s);
                         if (res.success == true) {
+                            if(res.type == 'create_page'){
+                                window.location.href = "{{url('/')}}/" + res.pid;
+                            }else{
+                                messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});
+                            }
                             {{--messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});--}}
                             //location.reload();
+                        }else{
+                            messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);
                         }
                     }
                 });
@@ -223,15 +240,162 @@
             format: 'YYYY-MM-DD'
         });
 
-        $('#ModifyPermissionUsers').ajaxChosen({
-            dataType: 'json',
-            type: 'POST',
-            url: "{{ route('auto_complete.users') }}"
-        });
-        $('#ObservationPermissionUsers').ajaxChosen({
-            dataType: 'json',
-            type: 'POST',
-            url: "{{ route('auto_complete.users') }}"
-        });
+        {{--$('#ModifyPermissionUsers').ajaxChosen({--}}
+            {{--dataType: 'json',--}}
+            {{--type: 'POST',--}}
+            {{--url: "{{ route('auto_complete.users') }}"--}}
+        {{--});--}}
+        {{--$('#ObservationPermissionUsers').ajaxChosen({--}}
+            {{--dataType: 'json',--}}
+            {{--type: 'POST',--}}
+            {{--url: "{{ route('auto_complete.users') }}"--}}
+        {{--});--}}
     })(jQuery);
+    $(".users_list_project_view").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.users') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+
+    $(".roles_list_project_view").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.roles') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                var a = true;
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+    $(".roles_list_project_view").html('<option selected="selected" value="3">public عمومی</option>');
+
+    $(".users_list_project_edit_tasks").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.users') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+
+    $(".roles_list_project_edit_tasks").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.roles') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                var a = true;
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+
+    $(".users_list_project_edit").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.users') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+
+    $(".roles_list_project_edit").select2({
+        minimumInputLength: 2,
+        dir: "rtl",
+        width: '95%',
+        ajax: {
+            url: "{{ route('auto_complete.roles') }}",
+            dataType: 'json',
+            type: "POST",
+            quietMillis: 50,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                var a = true;
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        }
+    });
+    $(".roles_list_project_edit").html('<option selected="selected" value="1">administrator مدیر ارشد</option>');
+    $(".roles_list_project_edit_tasks").html('<option selected="selected" value="1">administrator مدیر ارشد</option>');
 </script>

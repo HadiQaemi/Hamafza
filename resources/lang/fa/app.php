@@ -44,6 +44,7 @@ return [
     'register_and_save'   => 'ثبت و ذخیره سازی',
     'register_and_edit'   => 'ثبت و ویرایش',
     'role'   => 'نقش',
+    'user'   => 'کاربر',
     'return'   => 'بازگشت‌',
     'no'   => 'خیر',
     'yes'   => 'بلی',

@@ -1,9 +1,8 @@
+<link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/ChosenAjax/css/chosen.css')}}">
+<link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/TagsInput/css/jquery.tagsinput.rtl.css')}}">
+<link type="text/css" rel="stylesheet"  href="{{URL::to('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css')}}">
 
-    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/ChosenAjax/css/chosen.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/TagsInput/css/jquery.tagsinput.rtl.css')}}">
-    <link type="text/css" rel="stylesheet"  href="{{URL::to('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css')}}">
-
-    <div class="row">
+    <div class="tab-content">
         <div class="space-14"></div>
         <fieldset>
             <legend>{{ trans('modal.project') }} </legend>

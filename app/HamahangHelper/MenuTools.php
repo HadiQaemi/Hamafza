@@ -138,6 +138,8 @@ if (!function_exists('html_ordered_menu'))
             if($element['parent_id']==$parent_id)
             {
                 $html_ordered_menu = html_ordered_menu($array,$element['id']);
+                $element['href'] = (stristr($element['href'],'/') ? '' : '/').$element['href'];
+
                 $strlen = strlen(trim($html_ordered_menu));
                 $menu_html .= '<li class="'.($strlen>10 ? 'parent_li li_'.($parent_id==0 ? 'root' : 'parent') : '').'">'.($strlen>10 ? ($parent_id==0 ? '<span class="fa fa-sort-down display-inline padding-left-10"></span>' : '<span class="fa fa-caret-left display-inline padding-left-10"></span>') : '').'<a href="'.$element['href'].'" class="display-inline">'.$element['title'].'</a>';
                 if($strlen>10)
@@ -146,6 +148,7 @@ if (!function_exists('html_ordered_menu'))
                 $menu_html .= '</li>';
             }
         }
+
         $menu_html .= '</ul>';
         return $menu_html;
     }

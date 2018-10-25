@@ -89,6 +89,18 @@
                         </select>
                     </div>
                 </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
+                    <div class="col-lg-11">
+                        <select id="new_task_projects" name="rel_tasks[]" class="select2_auto_complete_projects col-xs-12"
+                                data-placeholder="{{trans('tasks.enter_project_name')}}">
+                            <option value=""></option>
+                            @if(isset($project))
+                                <option value="{{$project->id}}" selected>{{$project->title}}</option>
+                            @endif
+                        </select>
+                    </div>
+                </div>
                 {{--<div class="row col-lg-12">--}}
                     {{--<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">--}}
                         {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">--}}
@@ -474,29 +486,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <div class="col-xs-1">
-                        <label class="line-height-35">{{ trans('tasks.project') }}</label>
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="col-xs-6">
-                            <select id="new_task_projects" name="rel_tasks[]" class="select2_auto_complete_projects col-xs-12"
-                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                    data-placeholder="{{trans('tasks.enter_project_name')}}">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="col-xs-1">
-                            <label class="line-height-35">{{ trans('tasks.task') }}</label>
-                        </div>
-                        <div class="col-xs-5">
-                            <select id="new_task_tasks" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
-                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                    data-placeholder="{{trans('tasks.select_some_options')}}">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
-                    </div>
+
                     {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
                         {{--<input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
                     {{--</div>--}}

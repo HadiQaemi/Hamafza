@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\HamafzaServiceClasses\SubjectsClass;
+use App\Models\Hamahang\Tasks\project_role_permission;
 use Datatables;
 use DB;
 use Auth;
@@ -33,8 +35,8 @@ class ProjectController extends Controller
     {
 //
         return json_encode([
-            'header' => trans('tasks.task_info'),
-            'content' => view('hamahang.Projects.helper.ProjectInfoWindow')->with('p_id', Request::input('p_id'))->render(),
+            'header' => trans('tasks.project'),
+            'content' => view('hamahang.Projects.create_show_project_window')->with('p_id', Request::input('p_id'))->render(),
             'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'MyAssignedTaskInfo')->render()
         ]);
     }
@@ -755,22 +757,38 @@ class ProjectController extends Controller
 
     public function FetchProjects()
     {
-        $projects = DB::table('hamahang_project')
-            ->where('hamahang_project.uid', '=', Auth::id())
+        $projects_roles = DB::table('hamahang_project')
+            ->whereIn('hamahang_project_role_permission.role_id', function($query){
+                $query->select('role_user.role_id')->from('role_user')
+                    ->Where('role_user.user_id','=',Auth::id());
+            })
             ->whereNull('hamahang_project.deleted_at')
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date')
-            ->join('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
-            ->join('user','user.id','=','hamahang_project_responsible.user_id')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+            ->join('user','user.id','=','hamahang_project.uid')
+            ->join('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+        ;
+        $projects_user = DB::table('hamahang_project')
+            ->where('hamahang_project_user_permission.user_id', '=', Auth::id())
+            ->whereNull('hamahang_project.deleted_at')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+            ->join('user','user.id','=','hamahang_project.uid')
+            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
         //die(var_dump($projects));
         if (Request::exists('subject_id'))
         {
-            $projects->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+            $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+                ->where('hamahang_subject_ables.subject_id', Request::input('subject_id'))
+                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
+                ->whereNull('hamahang_subject_ables.deleted_at');
+            $projects_user->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
                 ->where('hamahang_subject_ables.subject_id', Request::input('subject_id'))
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects2 = $projects->get();
+        $projects_roles = $projects_roles->distinct()->get();
+        $projects_user = $projects_user->distinct()->get();
+        $projects2 = $projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
 
 
         return $dd2 = Datatables::of($projects2)
@@ -827,6 +845,55 @@ class ProjectController extends Controller
         }
         else
         {
+
+            if(Request::input('create_page')=='yes')
+            {
+                $sesid = '';//(session('sesid') != '') ? session('sesid') : 0;
+                $title = Request::input('p_title');
+                $kind = 5;
+                $tem = 'on';
+                $ispublic = Request::input('p_type');
+                $Framework = '';
+                $field = [ '1818' => "",'1819' => "",'1820' => "",'1821' => "",'1822' => "",'1823' => ""];
+                $TT_ttype = [];
+                $field_type = [ '1818' => "text",'1819' => "text",'1820' => "text",'1821' => "text",'1822' => "text",'1823' => "text"];;
+//                $submit = $request->input('submit');
+//
+                $uid = Auth::id();
+
+                $user_group = DB::table('role_user as u')
+                    ->select('role_id')
+                    ->where('u.user_id', $uid)->get()->toArray();
+                $roles = [];
+                foreach($user_group as $role)
+                    $roles[] = $role->role_id;
+                $users_list_subject_view = Request::input('users_list_project_view');
+                $roles_list_subject_view = Request::input('roles_list_project_view');
+                $users_list_subject_edit = Request::input('users_list_project_edit_tasks');
+                $roles_list_subject_edit = Request::input('roles_list_project_edit_tasks');
+                $keywords = Request::input('p_keyword');
+//
+                $tt = '';
+                $fields = array();
+                $i = 1;
+                if (is_array($field_type))
+                {
+                    foreach ($field_type as $key => $val)
+                    {
+                        $fields[$i]['type'] = $val;
+                        $i++;
+                    }
+                }
+                $tt = $field_type;
+                $Skind = 5;
+                $SP = new SubjectsClass();
+                $subject = $SP->AddSubject([], $roles_list_subject_edit, $users_list_subject_edit, $roles_list_subject_view, $users_list_subject_view, $uid, $sesid, $title, $tem, $kind, $Framework, $ispublic, $field, $TT_ttype, $tt, $Skind, '');
+                $id = $subject['id'];
+
+                score_unregister('App\Models\hamafza\Subject', $id / 10, config('score.8'));
+
+            }
+
             $date = new jDateTime();
             date_default_timezone_set('Asia/Tehran');
             $date_to_split = explode('-', Request::input('start_date'));
@@ -899,6 +966,78 @@ class ProjectController extends Controller
                     $p->save();
                 }
             }
+            if (sizeof(Request::input('users_list_project_view')) > 0)
+            {
+                foreach (Request::input('users_list_project_view') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '1';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('users_list_project_edit_tasks')) > 0)
+            {
+                foreach (Request::input('users_list_project_edit_tasks') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '2';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('users_list_project_edit')) > 0)
+            {
+                foreach (Request::input('users_list_project_edit') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '3';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_view')) > 0)
+            {
+                foreach (Request::input('roles_list_project_view') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '1';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_edit_tasks')) > 0)
+            {
+                foreach (Request::input('roles_list_project_edit_tasks') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '2';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_edit')) > 0)
+            {
+                foreach (Request::input('roles_list_project_edit') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '3';
+                    $p->save();
+                }
+            }
             if (sizeof(Request::input('ObservationPermissionUsers')) > 0)
             {
                 foreach (Request::input('ObservationPermissionUsers') as $u)
@@ -915,9 +1054,23 @@ class ProjectController extends Controller
                     }
                 }
             }
+            if(Request::input('create_page')=='yes')
+            {
+                $result['type'] = 'create_page';
+                $result['pid'] = $subject['id'];
+                hamahang_subject_ables::create_items_page($subject['id'],$project->id,'App\Models\Hamahang\Tasks\task_project');
+            }else{
+                $result['type'] = 'no_page';
+            }
             if (sizeof(Request::input('p_page')) > 0)
             {
+                $subjects = [];
                 foreach (Request::input('p_page') as $subject_id)
+                {
+                    $subject_id = $subject_id - $subject_id%10;
+                    $subjects[$subject_id/10] = 1;
+                }
+                foreach ($subjects as $subject_id => $v)
                 {
                     hamahang_subject_ables::create_items_page($subject_id,$project->id,'App\Models\Hamahang\Tasks\task_project');
                 }
