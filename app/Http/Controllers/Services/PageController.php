@@ -87,7 +87,7 @@ class PageController extends Controller {
                         [
                             [
                             'title' => 'وظایف من',
-                            'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, true). "",
+                            'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, true) . "",
                         // 'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
                         ],
                             [
@@ -642,11 +642,15 @@ class PageController extends Controller {
         $page = 'Post';
         $a = DB::transaction(function () use ($uid, $page, $id) {
                     $post = \App\Models\hamafza\Post::find($id);
-                    if ($post->accepted) {
-                        return [0, 'پاسخ تائید شده، امکان حذف آن وجود ندارد.'];
+                    if ($post == FALSE) {
+                        $status = -1;
+                        $message = 'پست موجود نیست';
+                    } else if ($post->accepted) {
+                        $status = -1;
+                        $message = 'پاسخ تائید شده، امکان حذف آن وجود ندارد.';
                     } else {
                         if ($post->answerCount > 0) {
-                            return [0, 'پاسخ داده شده، امکان حذف آن وجود ندارد.'];
+                            $message = 'پاسخ داده شده، امکان حذف آن وجود ندارد.';
                         } else {
                             $SP = new \App\HamafzaServiceClasses\PublicsClass();
                             $menu = $SP->DeleteRow($page, $uid, 0, $id);
@@ -680,10 +684,11 @@ class PageController extends Controller {
                                 }
                             }
                             $message = trans('labels.DelOK');
-                            $res = ['message' => $message];
-                            return response()->json($res);
+                            $status = 1;
                         }
                     }
+                    $res = ['status' => $status, 'message' => $message];
+                    return response()->json($res);
                 });
         return $a;
     }
@@ -695,6 +700,18 @@ class PageController extends Controller {
         }
         $id = Request::input('id');
         \App\HamafzaServiceClasses\PageClass::DeleteAnnounces($id);
+        $message = trans('labels.DelOK');
+        $res = ['message' => $message];
+        return response()->json($res);
+    }
+
+    public function delete_highlight() {
+        $user = getUser();
+        if (!isset($user->id)) {
+            return $user;
+        }
+        $id = Request::input('id');
+        \App\HamafzaServiceClasses\PageClass::DeleteHighlight($id);
         $message = trans('labels.DelOK');
         $res = ['message' => $message];
         return response()->json($res);
@@ -737,7 +754,7 @@ class PageController extends Controller {
     }
 
     function page_highlights() {
-        
+
         $user = getUser();
         if (!isset($user->id)) {
             return $user;

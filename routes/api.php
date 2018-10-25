@@ -73,6 +73,11 @@ Route::group(array('prefix' => 'v43', 'namespace' => 'Services'), function () {
         'as' => 'api.v43.delete_announce',
         'uses' => 'PageController@delete_announce'
     ]);
+    
+    Route::post('delete_highlight', [
+        'as' => 'api.v43.delete_highlight',
+        'uses' => 'PageController@delete_highlight'
+    ]);
     Route::post('send_message', [
         'as' => 'api.v43.send_message',
         'uses' => 'PageController@sendMessage'
