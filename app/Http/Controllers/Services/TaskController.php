@@ -114,7 +114,7 @@ class TaskController extends Controller {
 
         $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, false);
         //return response()->json($Tasks);
-        $date = new \App\HamahangCustomClasses\JDateTime;
+         $date = new \App\HamahangCustomClasses\JDateTime;
 //        dd(Request::input('subject_id'));
 //        dd(Request::input('subject_id'));
         $res = \Datatables::of($Tasks)
@@ -124,7 +124,7 @@ class TaskController extends Controller {
                 
                 
                 ->addColumn('respite', function ($data) use ($date) {
-                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                    $r = \App\HamahangCustomClasses\jDateTime::getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                     return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
                 })
                 ->addColumn('keywords', function ($data) {
