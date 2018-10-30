@@ -36,8 +36,8 @@ class ProjectController extends Controller
 //
         return json_encode([
             'header' => trans('tasks.project'),
-            'content' => view('hamahang.Projects.create_show_project_window')->with('p_id', Request::input('p_id'))->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'MyAssignedTaskInfo')->render()
+            'content' => view('hamahang.Projects.create_show_project_window')->with('ProjectInfo', $this->ProjectInfo())->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'projectInfo')->render()
         ]);
     }
 
@@ -732,6 +732,7 @@ class ProjectController extends Controller
 
     public function ProjectInfo()
     {
+        \Session::put('pid',Request::input('pid'));
         $arr = task_project::project_info(Request::input('pid'));
         return json_encode($arr);
     }
@@ -786,10 +787,9 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects_roles = $projects_roles->distinct()->get();
-        $projects_user = $projects_user->distinct()->get();
+        $projects_roles = $projects_roles->distinct()->orderBy('hamahang_project.id')->get();
+        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id')->get();
         $projects2 = $projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
-
 
         return $dd2 = Datatables::of($projects2)
             ->editColumn('start_date', function ($data)
@@ -888,9 +888,9 @@ class ProjectController extends Controller
                 $Skind = 5;
                 $SP = new SubjectsClass();
                 $subject = $SP->AddSubject([], $roles_list_subject_edit, $users_list_subject_edit, $roles_list_subject_view, $users_list_subject_view, $uid, $sesid, $title, $tem, $kind, $Framework, $ispublic, $field, $TT_ttype, $tt, $Skind, '');
-                $id = $subject['id'];
+                $id = $subject['id'] / 10;
 
-                score_unregister('App\Models\hamafza\Subject', $id / 10, config('score.8'));
+                score_unregister('App\Models\hamafza\Subject', $id, config('score.8'));
 
             }
 
@@ -1058,7 +1058,7 @@ class ProjectController extends Controller
             {
                 $result['type'] = 'create_page';
                 $result['pid'] = $subject['id'];
-                hamahang_subject_ables::create_items_page($subject['id'],$project->id,'App\Models\Hamahang\Tasks\task_project');
+                hamahang_subject_ables::create_items_page($subject['id']/10,$project->id,'App\Models\Hamahang\Tasks\task_project');
             }else{
                 $result['type'] = 'no_page';
             }
@@ -1067,13 +1067,15 @@ class ProjectController extends Controller
                 $subjects = [];
                 foreach (Request::input('p_page') as $subject_id)
                 {
-                    $subject_id = $subject_id - $subject_id%10;
-                    $subjects[$subject_id/10] = 1;
+//                    $subject_id = $subject_id - $subject_id%10;
+//                    $subjects[$subject_id/10] = 1;
+                    hamahang_subject_ables::create_items_page($subject_id/10,$project->id,'App\Models\Hamahang\Tasks\task_project');
+
                 }
-                foreach ($subjects as $subject_id => $v)
-                {
-                    hamahang_subject_ables::create_items_page($subject_id,$project->id,'App\Models\Hamahang\Tasks\task_project');
-                }
+//                foreach ($subjects as $subject_id => $v)
+//                {
+//                    hamahang_subject_ables::create_items_page($subject_id,$project->id,'App\Models\Hamahang\Tasks\task_project');
+//                }
             }
             $keywords = Request::input('p_keyword');
             if (sizeof($keywords) > 0)
@@ -1081,6 +1083,225 @@ class ProjectController extends Controller
                 foreach ($keywords as $kw)
                 {
                     project_keyword::assign_project_keyword($project->id, hamahang_add_keyword($kw));
+                }
+            }
+            $result['success'] = true;
+            return json_encode($result);
+        }
+    }
+
+    public function EditProject()
+    {
+        $result = '';
+        $validator = Validator::make(Request::all(), [
+            'p_title' => 'required|string'
+//            ,
+//            'p_type' => 'required|in:0,1',
+//            'page_id' => 'integer',
+//            'p_schedule_on' => 'required|in:1,2',
+//            'start_date' => 'required_if:p_schedule_on,1',
+//            'end_date' => 'required_if:p_schedule_on,2',
+//            'p_responsible' => 'required'
+
+        ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+
+
+
+            $date = new jDateTime();
+            date_default_timezone_set('Asia/Tehran');
+            $date_to_split = explode('-', Request::input('start_date'));
+            $respite_timestsmp = $date->mktime('0', '0', '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
+            $start_date = $respite_timestsmp;
+            $date_to_split = explode('-', Request::input('end_date'));
+            $respite_timestsmp = $date->mktime('0', '0', '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
+            $end_date = $respite_timestsmp;
+            $date_to_split = explode('-', Request::input('current_date'));
+            $respite_timestsmp = $date->mktime('0', '0', '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
+            $current_date = $respite_timestsmp;
+            $date_to_split = explode('-', Request::input('state_date'));
+            $respite_timestsmp = $date->mktime('0', '0', '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
+            $state_date = $respite_timestsmp;
+
+            $pid = \Session::get('pid');
+            $project = task_project::find($pid);
+            $project->uid = Auth::id();
+            $project->title = Request::input('p_title');
+            $project->desc = Request::input('p_desc');
+            $project->base_calendar = Request::input('base_calendar');
+            //$project->page = Request::input('p_page');
+            $project->priority = Request::input('p_priority');
+            //$project->responsible = Request::input('p_responsible');
+            $project->top_goals = Request::input('p_top_goals');
+            $project->type = Request::input('p_type');
+            $project->org_unit = Request::input('p_org_unit')[0];
+            $project->start_date = $start_date;
+            $project->end_date = $end_date;
+            $project->state_date = $state_date;
+            $project->current_date = $current_date;
+            $project->schedule_on = Request::input('p_schedule_on');
+            if (Request::input('observation_permission_type') == 'all')
+            {
+                $project->observation_permission_all = 1;
+            }
+            else
+            {
+                $project->observation_permission_all = 0;
+            }
+            if (Request::input('observation_permission_type') == 'all')
+            {
+                $project->modify_permission_all = 1;
+            }
+            else
+            {
+                $project->modify_permission_all = 0;
+            }
+            if (Request::input('save_type') == 11)
+            {
+                $project->draft = 0;
+            }
+            elseif (Request::input('save_type') == 22)
+            {
+                $project->draft = 1;
+            }
+            $project->save();
+
+            project_permissions::where('project_id', '=', $pid)->delete();
+            project_role_permission::where('project_id', '=', $pid)->delete();
+            hamahang_project_responsible::where('project_id', '=', $pid)->delete();
+            hamahang_subject_ables::where('target_id', '=', $pid)->delete();
+            project_keyword::where('project_id', '=', $pid)->delete();
+
+            $responsible = new hamahang_project_responsible;
+            $responsible->uid = Auth::id();
+            $responsible->user_id = Request::input('p_responsible')[0];
+            $responsible->project_id = $project->id;
+            $responsible->save();
+
+            if (sizeof(Request::input('ModifyPermissionUsers')) > 0)
+            {
+                foreach (Request::input('ModifyPermissionUsers') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '011';
+                    $p->save();
+                }
+            }
+
+
+            if (sizeof(Request::input('users_list_project_view')) > 0)
+            {
+                foreach (Request::input('users_list_project_view') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '1';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('users_list_project_edit_tasks')) > 0)
+            {
+                foreach (Request::input('users_list_project_edit_tasks') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '2';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('users_list_project_edit')) > 0)
+            {
+                foreach (Request::input('users_list_project_edit') as $u)
+                {
+                    $p = new project_permissions;
+                    $p->uid = Auth::id();
+                    $p->user_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '3';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_view')) > 0)
+            {
+                foreach (Request::input('roles_list_project_view') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '1';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_edit_tasks')) > 0)
+            {
+                foreach (Request::input('roles_list_project_edit_tasks') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '2';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('roles_list_project_edit')) > 0)
+            {
+                foreach (Request::input('roles_list_project_edit') as $u)
+                {
+                    $p = new project_role_permission;
+                    $p->uid = Auth::id();
+                    $p->role_id = $u;
+                    $p->project_id = $project->id;
+                    $p->permission_type = '3';
+                    $p->save();
+                }
+            }
+            if (sizeof(Request::input('ObservationPermissionUsers')) > 0)
+            {
+                foreach (Request::input('ObservationPermissionUsers') as $u)
+                {
+                    $find = project_permissions::where('user_id', '=', $u)->where('project_id', '=', $project->id)->first();
+                    if (sizeof($find) == 0)
+                    {
+                        $p = new project_permissions;
+                        $p->uid = Auth::id();
+                        $p->user_id = $u;
+                        $p->project_id = $project->id;
+                        $p->permission_type = '001';
+                        $p->save();
+                    }
+                }
+            }
+
+            if (sizeof(Request::input('p_page')) > 0)
+            {
+                foreach (Request::input('p_page') as $subject_id)
+                {
+                    hamahang_subject_ables::create_items_page($subject_id,$project->id,'App\Models\Hamahang\Tasks\task_project');
+
+                }
+            }
+            $keywords = Request::input('p_keyword');
+            if (sizeof($keywords) > 0)
+            {
+                foreach ($keywords as $kw)
+                {
+                    project_keyword::assign_project_keyword($project->id, hamahang_add_keyword(hamahang_get_keyword_value($kw)));
                 }
             }
             $result['success'] = true;

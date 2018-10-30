@@ -1751,7 +1751,7 @@ preventDuplicates: true,
     public function pagesearch(Request $request)
     {
         $search = $request->input('q');
-        $tabs = DB::table('pages as p')->join('subjects as s ', 'p.sid', '=', 's.id')
+        $tabs = DB::table('pages as p')->join('subjects as s', 'p.sid', '=', 's.id')
             ->where('s.archive', '0')
             ->where('s.list', '=', '1')
             ->where('s.ispublic', '=', '1')

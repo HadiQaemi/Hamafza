@@ -43,7 +43,8 @@
     function show_project_info(id)
     {
         var send_info = {
-            p_id: id
+            p_id: id,
+            pid: id
         }
         var h = $(window).height();
         var w = $(window).width();

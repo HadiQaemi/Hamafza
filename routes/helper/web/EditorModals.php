@@ -5,10 +5,7 @@ Route::group(['prefix' => 'editor/modals', 'middleware' => ['dynamic_permission:
     Route::get('dashboard', ['as' => 'editor.modals.dashboard', 'uses' => 'View\ModalController@dashboard', 'middleware' => ['dynamic_permission:editor.modals.dashboard']]);//js
     Route::get('form', ['as' => 'editor.modals.form', 'uses' => 'View\ModalController@Forms', 'middleware' => ['dynamic_permission:editor.modals.form']]);//js
     Route::get('alerts', ['as' => 'editor.modals.alerts', 'uses' => 'View\ModalController@Alerts', 'middleware' => ['dynamic_permission:editor.modals.alerts']]);//js
-    Route::get('content', ['as' => 'editor.modals.content', 'middleware' => ['dynamic_permission:editor.modals.content']], function ()
-    {
-        return view('modals.editor.content');
-    });//js
+    Route::get('content', ['as' => 'editor.modals.content', 'uses' => 'View\ModalController@content', 'middleware' => ['dynamic_permission:editor.modals.content']]);//js
     Route::get('keywords', ['as' => 'editor.modals.keywords', 'middleware' => ['dynamic_permission:editor.modals.keywords']], function ()
     {
         return view('modals.editor.keywords');

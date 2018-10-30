@@ -5,6 +5,7 @@ Route::post('ProjectInfoWindow', ['as' => 'hamahang.project.project_info_window'
 Route::post('FetchProjectList', ['as' => 'hamahang.projects.list', 'uses' => 'ProjectController@FetchProjects', 'middleware' => ['dynamic_permission:posts.hamahang.project.list']]);
 Route::post('UserProjects', ['as' => 'hamahang.project.user_projects', 'uses' => 'ProjectController@UserProjects', 'middleware' => ['dynamic_permission:posts.hamahang.project.user_projects']]);
 Route::post('SaveNewProject', ['as' => 'hamahang.project.save_new_project', 'uses' => 'ProjectController@SaveNewProject', 'middleware' => ['dynamic_permission:posts.hamahang.project.save_new_project']]);
+Route::post('SaveNewProject', ['as' => 'hamahang.project.edit_project', 'uses' => 'ProjectController@EditProject', 'middleware' => ['dynamic_permission:posts.hamahang.project.save_new_project']]);
 Route::post('GetGanttData', ['as' => 'hamahang.project.get_gantt_data', 'uses' => 'ProjectController@prepare_gantt_data', 'middleware' => ['dynamic_permission:posts.hamahang.project.get_gantt_data']]);
 Route::post('AddProjectTask', ['as' => 'hamahang.project.add_project_task', 'uses' => 'ProjectController@AddProjectTask', 'middleware' => ['dynamic_permission:posts.hamahang.project.add_project_task']]);
 Route::post('FetchRelation', ['as' => 'hamahang.project.fetch_relation', 'uses' => 'ProjectController@FetchRelation', 'middleware' => ['dynamic_permission:posts.hamahang.project.fetch_relation']]);

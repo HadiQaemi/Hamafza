@@ -126,6 +126,17 @@
             <a class="btn btn-primary" onclick="SaveNewProcess(1)">{{ trans('app.confirm') }}</a>
         </span>
     </div>
+@elseif($btn_type == 'projectInfo')
+    <div class="col-xs-12">
+        <div class="pull-left">
+            <input type="radio" name="save_type" value="11"/>
+            <label>پیش نویس</label>
+            <input type="radio" name="save_type" value="22" checked />
+            <label>نهایی</label>
+            <a class="btn btn-primary">تایید و ثبت پروژه جدید</a>
+            <a class="btn btn-primary" id="edit_btn_project" onclick="CheckForm()">تایید</a>
+        </div>
+    </div>
 @elseif($btn_type == 'CreateNewProject')
     <div class="col-xs-12">
         <div class="pull-left">

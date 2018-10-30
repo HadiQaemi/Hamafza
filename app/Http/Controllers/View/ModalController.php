@@ -2847,6 +2847,9 @@ class ModalController extends Controller
         }
     }
 
+    public function content(){
+        return view('modals.editor.content');
+    }
     public function help_seealso_content(Request $request)
     {
         $id = deCode($request->input('id'));

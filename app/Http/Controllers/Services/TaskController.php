@@ -7,6 +7,7 @@ use App\Models\Hamahang\Tasks\tasks;
 use App\Http\Controllers\Controller;
 use App\Models\Hamahang\Tasks\task_assignments;
 use App\Models\Hamahang\Tasks\task_status;
+use App\HamahangCustomClasses\jDateTime;
 
 class TaskController extends Controller {
 
@@ -114,7 +115,7 @@ class TaskController extends Controller {
 
         $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, false);
         //return response()->json($Tasks);
-         $date = new \App\HamahangCustomClasses\JDateTime;
+         $date = '';//new \App\HamahangCustomClasses\JDateTime;
 //        dd(Request::input('subject_id'));
 //        dd(Request::input('subject_id'));
         $res = \Datatables::of($Tasks)
