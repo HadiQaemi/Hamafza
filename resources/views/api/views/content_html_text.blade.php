@@ -19,6 +19,11 @@ $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolo
         font-family: BZar,'BZar',tahoma;;
         margin: 10px 20px 10px 20px;
     }
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        height: inherit !important;
+    }
 </style>
 @stop
 

@@ -46,6 +46,8 @@ class PageController extends Controller {
                     ->with('sid', $subject->id)
                     ->render();
         }
+        $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+        $page_new['content'] = str_replace('src="../../', 'src="' . $base_url . '/', $page_new['content']);
 
         $sid = $subject->id;
         $res = [
