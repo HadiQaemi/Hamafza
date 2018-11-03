@@ -779,18 +779,17 @@ class ProjectController extends Controller
         if (Request::exists('subject_id'))
         {
             $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
-                ->where('hamahang_subject_ables.subject_id', Request::input('subject_id'))
+                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
             $projects_user->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
-                ->where('hamahang_subject_ables.subject_id', Request::input('subject_id'))
+                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects_roles = $projects_roles->distinct()->orderBy('hamahang_project.id')->get();
-        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id')->get();
+        $projects_roles = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id', 'desc')->get();
         $projects2 = $projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
-
         return $dd2 = Datatables::of($projects2)
             ->editColumn('start_date', function ($data)
             {
@@ -919,6 +918,8 @@ class ProjectController extends Controller
             $project->top_goals = Request::input('p_top_goals');
             $project->type = Request::input('p_type');
             $project->org_unit = Request::input('p_org_unit')[0];
+            $project->immediate = Request::input('immediate');
+            $project->importance = Request::input('importance');
             $project->start_date = $start_date;
             $project->end_date = $end_date;
             $project->state_date = $state_date;
@@ -1143,6 +1144,8 @@ class ProjectController extends Controller
             //$project->responsible = Request::input('p_responsible');
             $project->top_goals = Request::input('p_top_goals');
             $project->type = Request::input('p_type');
+            $project->immediate = Request::input('immediate');
+            $project->importance = Request::input('importance');
             $project->org_unit = Request::input('p_org_unit')[0];
             $project->start_date = $start_date;
             $project->end_date = $end_date;

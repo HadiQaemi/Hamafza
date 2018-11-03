@@ -32,7 +32,6 @@
                             $user_permission = $ProjectInfo[6];
                             $project_info = $project_info->project_info;
                             $project_info = $project_info[0];
-
                         @endphp
                         <div class="tab-pane active" id="t1">
                             <div class="col-xs-12 line-height-35 margin-top-20">
@@ -113,20 +112,21 @@
                                     <span id="schedule_massage" style="color-rendering: gray"></span>
                                 </div>
                             </div>
+
                             <div class="col-xs-12 line-height-35 margin-top-20">
                                 <div class="col-xs-2">{{trans('projects.end_date')}}</div>
                                 <div class="col-xs-2 nput-group pull-right">
                                     {{--<span class="input-group-addon" id="respite_date">--}}
                                         {{--<i class="fa fa-calendar"></i>--}}
                                     {{--</span>--}}
-                                    <input type="text" class="form-control DatePicker" id="start_date" name="start_date" aria-describedby="respite_date">
+                                    <input type="text" class="form-control DatePicker" id="start_date" name="start_date" aria-describedby="respite_date" value="{{$project_info->start_date->year.'/'.$project_info->start_date->mon.'/'.$project_info->start_date->mday}}">
                                 </div>
                                 <div class="col-xs-2">{{trans('projects.final_date')}}</div>
                                 <div class="col-xs-2 nput-group pull-right">
                                     {{--<span class="input-group-addon" id="respite_date">--}}
                                         {{--<i class="fa fa-calendar"></i>--}}
                                     {{--</span>--}}
-                                    <input type="text" class="form-control DatePicker" name="end_date" id="end_date" aria-describedby="respite_date">
+                                    <input type="text" class="form-control DatePicker" name="end_date" id="end_date" aria-describedby="respite_date" value="{{$project_info->end_date->year.'/'.$project_info->end_date->mon.'/'.$project_info->end_date->mday}}">
                                 </div>
                             </div>
                             <div class="col-xs-12 line-height-35 margin-top-20">
@@ -135,14 +135,14 @@
                                     {{--<span class="input-group-addon" id="respite_date">--}}
                                     {{--<i class="fa fa-calendar"></i>--}}
                                     {{--</span>--}}
-                                    <input type="text" class="form-control DatePicker" name="current_date" id="current_date" aria-describedby="respite_date">
+                                    <input type="text" class="form-control DatePicker" name="current_date" id="current_date" aria-describedby="respite_date" value="{{$project_info->current_date->year.'/'.$project_info->current_date->mon.'/'.$project_info->current_date->mday}}">
                                 </div>
                                 <div class="col-xs-2">{{trans('projects.status_date')}}</div>
                                 <div class="col-xs-2 nput-group pull-right">
                                     {{--<span class="input-group-addon" id="respite_date">--}}
                                     {{--<i class="fa fa-calendar"></i>--}}
                                     {{--</span>--}}
-                                    <input type="text" class="form-control DatePicker" name="state_date" id="state_date" aria-describedby="respite_date">
+                                    <input type="text" class="form-control DatePicker" name="state_date" id="state_date" aria-describedby="respite_date" value="{{$project_info->state_date->year.'/'.$project_info->state_date->mon.'/'.$project_info->state_date->mday}}">
                                 </div>
                             </div>
                             <div class="col-xs-12 line-height-35 margin-top-20">
@@ -157,8 +157,19 @@
                                     {{--</select>--}}
                                 {{--</div>--}}
                                 <div class="col-xs-2">{{trans('projects.priority')}}</div>
-                                <div class="col-xs-2 nput-group pull-right">
-                                    <input type="text" class="form-control col-xs-4" id="p_priority" value="{{$project_info->priority}}"/>
+                                <div class="col-xs-6 nput-group pull-right">
+                                    <div class="pull-right">
+                                        <input type="radio" name="importance" id="importance_yes" value="1" {{$project_info->importance ==1 ? 'checked' : ''}}/>
+                                        <label for="importance_yes">{{ trans('tasks.important') }}</label>
+                                        <input type="radio" name="importance" id="importance_no" value="0"  {{$project_info->importance ==0 ? 'checked' : ''}}/>
+                                        <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
+                                    </div>
+                                    <div class="pull-right">
+                                        <input type="radio" name="immediate" id="immediate_yes" value="1" {{$project_info->immediate ==1 ? 'checked' : ''}}/>
+                                        <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
+                                        <input type="radio" name="immediate" id="immediate_no" value="0"  {{$project_info->immediate ==0 ? 'checked' : ''}}/>
+                                        <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
+                                    </div>
                                 </div>
                             </div>
                             {{--<div class="col-xs-12 line-height-35 margin-top-20">--}}

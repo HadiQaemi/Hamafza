@@ -27,7 +27,8 @@ class task_project extends Model
 //            ->whereNull('hamahang_project_responsible.deleted_at')
             ->where('hamahang_project.id','=',$pid)
             ->get();
-
+//        $date = new jDateTime();
+//dd($date->getdate($project->state_date));
         $pages = DB::table('hamahang_subject_ables')
             ->select('hamahang_subject_ables.subject_id','subjects.title')
             ->join('subjects' , 'subjects.id' , '=','hamahang_subject_ables.subject_id')
@@ -37,8 +38,10 @@ class task_project extends Model
             ->get();
 
         $date = new jDateTime();
-        $project[0]->start_date = $date::getdate($project[0]->start_date);
-        $project[0]->end_date = $date::getdate($project[0]->end_date);
+        $project[0]->start_date = $date::getdate($project[0]->start_date,null,false);
+        $project[0]->end_date = $date::getdate($project[0]->end_date,null,false);
+        $project[0]->current_date = $date::getdate($project[0]->current_date,null,false);
+        $project[0]->state_date = $date::getdate($project[0]->state_date,null,false);
 
         $project_tasks = DB::table('hamahang_project_task')
             ->join('hamahang_project', 'hamahang_project.id', '=','hamahang_project_task.project_id')

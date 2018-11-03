@@ -18,6 +18,7 @@
                            style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th></th>
                             <th>{{trans('projects.title')}}</th>
                             <th>{{trans('projects.project_manager')}}</th>
                             <th>{{trans('projects.start_date')}}</th>
@@ -53,6 +54,7 @@
             LangJson_DataTables = window.LangJson_DataTables;
             LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
             window.ProjectList = $('#ProjectList').DataTable({
+                "order": [[ 0, "desc" ]],
                 "dom": window.CommonDom_DataTables,
                 "ajax": {
                     "url": "{{ route('hamahang.projects.list') }}",
@@ -64,7 +66,10 @@
                 "language": window.LangJson_DataTables,
                 "serverside": true,
                 columns: [
-                    // {"data": "id"},
+                    {
+                        "data": "id",
+                        "visible": false
+                    },
 //                    {"data": "title"},
                     {
                         "data": "title",
@@ -109,6 +114,8 @@
                     // }
                 }
             });
+            datatable.columns(['id']).visible(false);
+
             window.table_hirerical_view = $('#hirerical_view').DataTable();
             $('#hirerical_view').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');

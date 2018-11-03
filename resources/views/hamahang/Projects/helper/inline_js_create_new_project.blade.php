@@ -174,6 +174,8 @@
             modify_permission_type: $('input[name=ModifyPermissionType]:checked').val(),
             ModifyPermissionUsers: $('#ModifyPermissionUsers').val(),
             observation_permission_type: $('input[name=ObservationPermissionType]:checked').val(),
+            importance: $('input[name=importance]:checked').val(),
+            immediate: $('input[name=immediate]:checked').val(),
             ObservationPermissionUsers: $('#ObservationPermissionUsers').val(),
             save_type: $('input[name=save_type]:checked').val(),
         };

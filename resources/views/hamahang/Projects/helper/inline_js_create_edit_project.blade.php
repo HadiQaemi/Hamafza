@@ -158,6 +158,8 @@
             users_list_project_edit_tasks: $('#users_list_project_edit_tasks').val(),
             roles_list_project_edit_tasks: $('#roles_list_project_edit_tasks').val(),
             users_list_project_edit: $('#users_list_project_edit').val(),
+            importance: $('input[name=importance]:checked').val(),
+            immediate: $('input[name=immediate]:checked').val(),
             roles_list_project_edit: $('#roles_list_project_edit').val(),
             p_org_unit: $('#p_org_unit').val(),
             p_keyword: $('#p_keyword').val(),
