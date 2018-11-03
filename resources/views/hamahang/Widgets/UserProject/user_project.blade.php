@@ -44,7 +44,7 @@
             <!--<div class="panel-heading panel-heading-darkblue">تازه&zwnj;های دیوار من </div>-->
             <div class="panel-body new-list">
                 <div class="row event_result_holder ">
-                    <table id="personalCalendarGrid" class="table_td_padding_5px">
+                    <table id="personalProjectsGrid" class="table_td_padding_5px">
                         {{--<thead>--}}
                         {{--<tr>--}}
                         {{--<th data-column-id="rowIndex">{{trans('calendar.calendar_index_calendar_datatable_rowindex')}}</th>--}}

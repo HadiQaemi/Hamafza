@@ -84,8 +84,16 @@
                         "mRender": function (data, type, full) {
                             return full.end_date;
                         }},
-                    {"data": "end_date"},
-                    {"data": "end_date"}
+                    {"data": "end_date",
+                        "mRender": function (data, type, full) {
+                            return "";
+                        }
+                    },
+                    {"data": "end_date",
+                        "mRender": function (data, type, full) {
+                            return "";
+                        }
+                    }
                     // {
                     //     "data": "project_id",
                     //     "mRender": function (data, type, full) {

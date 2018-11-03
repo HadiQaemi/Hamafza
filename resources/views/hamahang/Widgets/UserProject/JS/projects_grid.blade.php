@@ -8,7 +8,7 @@
         };
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
-        window.ProjectList = $('#personalCalendarGrid').DataTable({
+        window.ProjectList = $('#personalProjectsGrid').DataTable({
             "fnDrawCallback": function(oSettings) {
                 if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {
                     $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
@@ -26,7 +26,6 @@
                 "data": send_info
             },
             columns: [
-                // {"data": "id"},
 //                    {"data": "title"},
                 {
                     "data": "title",
@@ -34,16 +33,21 @@
                         return "<a class='project_info cursor-pointer' data-p_id= '"+ full.id +"' >"+ full.title +"</a>";
                     }
                 },
-                {"data": "title"
-                    ,
+                {"data": "id",
                     "mRender": function (data, type, full) {
-                        return
-                            // "<i class='fa fa-edit cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
-                            // "<i class='fa fa-address-book cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
-                            "<i class='fa fa-remove cursor-pointer' data-p_id= '"+ full.id +"' ></i>"
-                        ;
+                        var id =full.id;
+                        return "<i class='fa fa-edit pointer' data-p_id= '"+ id +"' ></i>&nbsp;&nbsp;&nbsp;<i class='fa fa-address-book pointer' data-p_id= '"+ id +"' ></i>";
                     }
                 }
+                // ,
+                // {data : function (data, type, full) {
+                //         return
+                //             // "<i class='fa fa-edit cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
+                //             // "<i class='fa fa-address-book cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
+                //             "<i class='fa fa-remove cursor-pointer' data-p_id= '"+ full.id +"' ></i>"
+                //         ;
+                //     }
+                // }
             ],
             fnInitComplete : function() {
                 // alert($(this).find('tbody tr').length);

@@ -13,7 +13,6 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active tab-view" id="tab_t1">
-            <div class="space-14"></div>
             <div class="col-xs-12">
                 <div id="tab" class="table-bordered">
                     {{--<ul class="nav nav-tabs">--}}
