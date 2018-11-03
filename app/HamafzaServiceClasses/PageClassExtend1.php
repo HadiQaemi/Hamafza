@@ -2895,42 +2895,67 @@ class PageClassExtend1
         $bodysss = '';
         if (trim($body) != '')
         {
-            $html = new HtmlDomSTR('str', $body);
-            $insert_mohtava = $html->find('p[id=insert_mohtava]');
-            foreach ($html->find('p[id=insert_mohtava]') as $element)
+            preg_match_all('/INSCON_(.*)_INSCON/',$body,$matches);
+            foreach($matches[0] as $k=>$matche)
             {
-                $Con = '';
-                $innertext = $element->innertext;
-                $explode_ex = explode_ex('_', $element->attr['class']);
+                $explode_ex = explode_ex('_', $matches[1][$k]);
                 @list ($pid, $gume, $makhaz) = @$explode_ex;
                 $Page = DB::table('pages')->whereIn('id', [$pid*10])->select('body')->first();
-                if ($Page)
-                {
-                    $PageClass = new PageClass();
-                    $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
-                }
-                $body = str_replace($innertext, $Con, $body);
-                continue;
 
-                $body = str_replace($innertext, $Con, $body);
-                $pos = stripos($innertext, "(");
-                $str = substr($innertext, $pos);
-                $str_two = substr($str, strlen("("));
-                $second_pos = stripos($str_two, ")");
-                $str_three = substr($str_two, 0, $second_pos);
-                $pid = trim($str_three); // remove whitespaces
-                dd($pid);
-                $Page = DB::table('pages')->where('id', '=', $pid)->select('body')->first();
                 if ($Page)
                 {
                     $PageClass = new PageClass();
                     $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
                 }
-                $body = str_replace($innertext, $Con, $body);
+                $body = $this->insert_a_mohtava($matche, $Con, $body);
             }
-            //$body = $html;
+            return $body;
+//            print_r($matches);
+//            die();
+//            $html = new HtmlDomSTR('str', $body);
+//            $insert_mohtava = $html->find('p[id=insert_mohtava]');
+//            foreach ($html->find('p[id=insert_mohtava]') as $element)
+//            {
+//
+//                $Con = '';
+//                $innertext = $element->innertext;
+//                $explode_ex = explode_ex('_', $element->attr['class']);
+//                @list ($pid, $gume, $makhaz) = @$explode_ex;
+//                $Page = DB::table('pages')->whereIn('id', [$pid*10])->select('body')->first();
+//
+//                if ($Page)
+//                {
+//                    $PageClass = new PageClass();
+//                    $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
+//                }
+//return $body;
+//                $body = $this->insert_a_mohtava($innertext, $Con, $body);
+//
+//                continue;
+//
+//                $body = str_replace($innertext, $Con, $body);
+//                $pos = stripos($innertext, "(");
+//                $str = substr($innertext, $pos);
+//                $str_two = substr($str, strlen("("));
+//                $second_pos = stripos($str_two, ")");
+//                $str_three = substr($str_two, 0, $second_pos);
+//                $pid = trim($str_three); // remove whitespaces
+//                dd($pid);
+//                $Page = DB::table('pages')->where('id', '=', $pid)->select('body')->first();
+//                if ($Page)
+//                {
+//                    $PageClass = new PageClass();
+//                    $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
+//                }
+//                $body = insert_a_mohtava($innertext, $Con, $body);
+//            }
+//            //$body = $html;
         }
         return $body;
+    }
+    public function insert_a_mohtava($innertext, $Con, $body)
+    {
+        return str_replace($innertext, $Con, $body);
     }
 
     public function thesaurusinPage($body, $sid)
