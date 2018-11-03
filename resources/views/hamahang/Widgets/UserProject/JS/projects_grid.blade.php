@@ -34,7 +34,16 @@
                         return "<a class='project_info cursor-pointer' data-p_id= '"+ full.id +"' >"+ full.title +"</a>";
                     }
                 },
-                {"data": "full_name"}
+                {"data": "title"
+                    ,
+                    "mRender": function (data, type, full) {
+                        return
+                            // "<i class='fa fa-edit cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
+                            // "<i class='fa fa-address-book cursor-pointer' data-p_id= '"+ full.id +"' ></i>" +
+                            "<i class='fa fa-remove cursor-pointer' data-p_id= '"+ full.id +"' ></i>"
+                        ;
+                    }
+                }
             ],
             fnInitComplete : function() {
                 // alert($(this).find('tbody tr').length);

@@ -248,7 +248,7 @@
                             stay: false,
                             type: 'success'
                         });
-                        {{--window.location.href = "{{url('/')}}/" + data.pid;--}}
+                        window.location.href = "{{url('/')}}/" + data.pid;
                         //hide_modal();
                     }
                 },

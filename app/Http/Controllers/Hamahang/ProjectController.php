@@ -1112,8 +1112,10 @@ class ProjectController extends Controller
         }
         else
         {
-
-
+            if(Request::exists('create_new_project'))
+            {
+                return $this->SaveNewProject();
+            }
 
             $date = new jDateTime();
             date_default_timezone_set('Asia/Tehran');

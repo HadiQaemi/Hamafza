@@ -228,7 +228,8 @@ EOH;
     function _parseHtml($html)
     {
         $html = preg_replace("/<!DOCTYPE((.|\n)*?)>/ims", "", $html);
-        $html = preg_replace("/<script((.|\n)*?)>((.|\n)*?)<\/script>/ims", "", $html);
+//        $html = preg_replace("/<script((.|\n)*?)>((.|\n)*?)<\/script>/ims", "", $html);
+        $html = preg_replace("/<script(.*?)>(.*?)<\/script>/ims", "", $html);
         preg_match("/<head>((.|\n)*?)<\/head>/ims", $html, $matches);
         $head = $matches[1];
         preg_match("/<title>((.|\n)*?)<\/title>/ims", $head, $matches);

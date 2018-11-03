@@ -2789,6 +2789,8 @@ class PageClassExtend1
 
     public function modifyText($body, $uid = 0, $pid = 0, $sid = 0, $tabtype = false)
     {
+        $body = $this->insert_mohtava($body);
+
         $body = PageClass::helper_viewer($body);
         $body = $this->Help_Replace($body);
         $list = $this->RefList($body);
@@ -2826,7 +2828,6 @@ class PageClassExtend1
         $body = $this->Tag_replace($body);
         $body = $this->paragraph($body);
 
-        $body = $this->insert_mohtava($body);
         $body = $this->tinymce_url($body);
         //$body = $this->FaqList_Replace($body);
         //$body = $this->table_replace($body);
@@ -2895,16 +2896,30 @@ class PageClassExtend1
         if (trim($body) != '')
         {
             $html = new HtmlDomSTR('str', $body);
-            foreach ($html->find('p[class=insert_mohtava]') as $element)
+            $insert_mohtava = $html->find('p[id=insert_mohtava]');
+            foreach ($html->find('p[id=insert_mohtava]') as $element)
             {
                 $Con = '';
                 $innertext = $element->innertext;
+                $explode_ex = explode_ex('_', $element->attr['class']);
+                @list ($pid, $gume, $makhaz) = @$explode_ex;
+                $Page = DB::table('pages')->whereIn('id', [$pid*10])->select('body')->first();
+                if ($Page)
+                {
+                    $PageClass = new PageClass();
+                    $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
+                }
+                $body = str_replace($innertext, $Con, $body);
+                continue;
+
+                $body = str_replace($innertext, $Con, $body);
                 $pos = stripos($innertext, "(");
                 $str = substr($innertext, $pos);
                 $str_two = substr($str, strlen("("));
                 $second_pos = stripos($str_two, ")");
                 $str_three = substr($str_two, 0, $second_pos);
                 $pid = trim($str_three); // remove whitespaces
+                dd($pid);
                 $Page = DB::table('pages')->where('id', '=', $pid)->select('body')->first();
                 if ($Page)
                 {

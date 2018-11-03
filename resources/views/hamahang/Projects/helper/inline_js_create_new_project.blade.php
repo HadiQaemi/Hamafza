@@ -155,6 +155,7 @@
             p_responsible: $('#p_responsible').val(),
             users_list_project_view: $('#users_list_project_view').val(),
             roles_list_project_view: $('#roles_list_project_view').val(),
+            create_new_project: $('#create_new_project').attr('id'),
             users_list_project_edit_tasks: $('#users_list_project_edit_tasks').val(),
             roles_list_project_edit_tasks: $('#roles_list_project_edit_tasks').val(),
             users_list_project_edit: $('#users_list_project_edit').val(),
@@ -181,7 +182,7 @@
             {{--message: '{{trans('projects.are_you_sure_to_create_new_project')}}',--}}
             {{--onConfirm: function () {--}}
                 $.ajax({
-                    url: '{!! route('hamahang.project.save_new_project')!!}',
+                    url: '{!! route('hamahang.project.edit_project')!!}',
                     type: 'POST', // Send post dat
                     data: sendInfo,
                     async: false,
@@ -189,7 +190,7 @@
                         res = JSON.parse(s);
                         if (res.success == true) {
                             if(res.type == 'create_page'){
-                                window.location.href = "{{url('/')}}/" + res.pid;
+                                window.location.href = "{{url('/')}}/page_edit/" + res.pid + "/text";
                             }else{
                                 messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});
                             }

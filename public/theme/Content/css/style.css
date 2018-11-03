@@ -3765,4 +3765,7 @@ input{
 .no-task-div-buttons{
     margin-top: 20px;
 }
-
+.jsPanel .navbar-default {
+    background-color: transparent !important;
+    border-color: transparent !important;;
+}
