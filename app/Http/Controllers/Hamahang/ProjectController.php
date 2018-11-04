@@ -758,22 +758,40 @@ class ProjectController extends Controller
 
     public function FetchProjects()
     {
+//        $projects_roles = DB::table('hamahang_project')
+//            ->whereIn('hamahang_project_role_permission.role_id', function($query){
+//                $query->select('role_user.role_id')->from('role_user')
+//                    ->Where('role_user.user_id','=',Auth::id());
+//            })
+//            ->whereNull('hamahang_project.deleted_at')
+//            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+//            ->join('user','user.id','=','hamahang_project.uid')
+//            ->join('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+//        ;
+//        $projects_user = DB::table('hamahang_project')
+//            ->where('hamahang_project_user_permission.user_id', '=', Auth::id())
+//            ->whereNull('hamahang_project.deleted_at')
+//            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+//            ->join('user','user.id','=','hamahang_project.uid')
+//            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
+//        ;
         $projects_roles = DB::table('hamahang_project')
-            ->whereIn('hamahang_project_role_permission.role_id', function($query){
-                $query->select('role_user.role_id')->from('role_user')
-                    ->Where('role_user.user_id','=',Auth::id());
+            ->where(function($query) {
+                $query->where(function($query) {
+                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
+                        $query->select('role_user.role_id')->from('role_user')
+                            ->Where('role_user.user_id','=',Auth::id());
+                    })->whereNull('hamahang_project.deleted_at');
+                })
+                    ->orWhere(function($query) {
+                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
+                            ->whereNull('hamahang_project.deleted_at');
+                    });
             })
-            ->whereNull('hamahang_project.deleted_at')
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->join('user','user.id','=','hamahang_project.uid')
-            ->join('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
-        ;
-        $projects_user = DB::table('hamahang_project')
-            ->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-            ->whereNull('hamahang_project.deleted_at')
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-            ->join('user','user.id','=','hamahang_project.uid')
-            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
         //die(var_dump($projects));
         if (Request::exists('subject_id'))
@@ -782,14 +800,14 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
-            $projects_user->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
-                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
-                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
-                ->whereNull('hamahang_subject_ables.deleted_at');
+//            $projects_user->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+//                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
+//                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
+//                ->whereNull('hamahang_subject_ables.deleted_at');
         }
         $projects_roles = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
-        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id', 'desc')->get();
-        $projects2 = $projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
+//        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+        $projects2 = $projects_roles;//$projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
         return $dd2 = Datatables::of($projects2)
             ->editColumn('start_date', function ($data)
             {
