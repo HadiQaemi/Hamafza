@@ -888,9 +888,7 @@ class ProjectController extends Controller
                 $roles_list_subject_view = Request::input('roles_list_project_view');
                 $users_list_subject_edit = Request::input('users_list_project_edit_tasks');
                 $roles_list_subject_edit = Request::input('roles_list_project_edit_tasks');
-                $keywords = Request::input('p_keyword');
-//
-                $tt = '';
+
                 $fields = array();
                 $i = 1;
                 if (is_array($field_type))
@@ -904,7 +902,9 @@ class ProjectController extends Controller
                 $tt = $field_type;
                 $Skind = 5;
                 $SP = new SubjectsClass();
-                $subject = $SP->AddSubject([], $roles_list_subject_edit, $users_list_subject_edit, $roles_list_subject_view, $users_list_subject_view, $uid, $sesid, $title, $tem, $kind, $Framework, $ispublic, $field, $TT_ttype, $tt, $Skind, '');
+                $keywords = Request::input('p_keyword');
+
+                $subject = $SP->AddSubject($keywords, $roles_list_subject_edit, $users_list_subject_edit, $roles_list_subject_view, $users_list_subject_view, $uid, $sesid, $title, $tem, $kind, $Framework, $ispublic, $field, $TT_ttype, $tt, $Skind, '');
                 $id = $subject['id'] / 10;
 
                 score_unregister('App\Models\hamafza\Subject', $id, config('score.8'));
