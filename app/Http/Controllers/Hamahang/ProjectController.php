@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 
 use App\HamafzaServiceClasses\SubjectsClass;
 use App\Models\Hamahang\Tasks\project_role_permission;
+use App\User;
 use Datatables;
 use DB;
 use Auth;
@@ -970,7 +971,20 @@ class ProjectController extends Controller
             $project->save();
             $responsible = new hamahang_project_responsible;
             $responsible->uid = Auth::id();
-            $responsible->user_id = Request::input('p_responsible')[0];
+            $req_user = Request::input('p_responsible')[0];
+
+            if (substr($req_user, 0, 8) == 'exist_in')
+            {
+                $responsible->user_id = (int)substr($req_user, 8);
+            }
+            else
+            {
+                $user = new User();
+                $user->Name = $req_user;
+                $user->is_new = '1';
+                $user->save();
+            }
+
             $responsible->project_id = $project->id;
             $responsible->save();
             if (sizeof(Request::input('ModifyPermissionUsers')) > 0)

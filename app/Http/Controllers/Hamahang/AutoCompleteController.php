@@ -55,6 +55,31 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+    public function users_new(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = User::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
+        }
+        else
+        {
+            $data = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Family", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Email", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $users = [];
+        foreach ($data as $user)
+        {
+            $users[] = ['id'=>'exist_in'.$user->id,'text'=>$user->text];//($request->exists('exist_in') ? $request->exist_in : 'exist_in') . $user->id;
+        }
+        $data = array('results' => $users);
+        return response()->json($data);
+    }
+
     public function hamahang_cities(Request $request)
     {
         $cities = City::where('province_id', $request->province_id)->get(['id', 'name as text']);
