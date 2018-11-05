@@ -219,7 +219,12 @@ if (!function_exists('hamahang_get_keyword_value'))
         if(!strstr($key_id,'exist_in'))
         {
             $keyword = keywords::find($key_id);
-            return $keyword->title;
+            if(count($keyword))
+            {
+                return 'exist_in'.$key_id;
+            }else{
+                return $keyword->title;
+            }
         }else{
             return $key_id;
         }

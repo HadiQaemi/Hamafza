@@ -1101,7 +1101,7 @@ class ProjectController extends Controller
             {
                 foreach ($keywords as $kw)
                 {
-                    project_keyword::assign_project_keyword($project->id, hamahang_add_keyword($kw));
+                    project_keyword::assign_project_keyword($project->id, hamahang_add_keyword(hamahang_get_keyword_value($kw)));
                 }
             }
             $result['success'] = true;
