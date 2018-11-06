@@ -790,8 +790,10 @@ class ProjectController extends Controller
                     });
             })
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-            ->join('user','user.id','=','hamahang_project.uid')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_responsible.deleted_at')
+            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
         //die(var_dump($projects));
@@ -981,9 +983,12 @@ class ProjectController extends Controller
                 else
                 {
                     $user = new User();
+                    $user->Uname = $req_user;
+                    $user->Email = $req_user;
                     $user->Name = $req_user;
                     $user->is_new = '1';
                     $user->save();
+                    $responsible->user_id = $user->id;
                 }
             }
 
@@ -1220,7 +1225,24 @@ class ProjectController extends Controller
 
             $responsible = new hamahang_project_responsible;
             $responsible->uid = Auth::id();
-            $responsible->user_id = Request::input('p_responsible')[0];
+            $req_user = Request::input('p_responsible')[0];
+            if($req_user != null)
+            {
+                if (substr($req_user, 0, 8) == 'exist_in')
+                {
+                    $responsible->user_id = (int)substr($req_user, 8);
+                }
+                else
+                {
+                    $user = new User();
+                    $user->Uname = $req_user;
+                    $user->Email = $req_user;
+                    $user->Name = $req_user;
+                    $user->is_new = '1';
+                    $user->save();
+                    $responsible->user_id = $user->id;
+                }
+            }
             $responsible->project_id = $project->id;
             $responsible->save();
 

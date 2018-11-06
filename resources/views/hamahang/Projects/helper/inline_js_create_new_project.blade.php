@@ -194,7 +194,8 @@
                             if(res.type == 'create_page'){
                                 window.location.href = "{{url('/')}}/page_edit/" + res.pid + "/text";
                             }else{
-                                messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});
+{{--                                messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});--}}
+                                window.ProjectList.ajax.reload();
                             }
                             {{--messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});--}}
                             //location.reload();

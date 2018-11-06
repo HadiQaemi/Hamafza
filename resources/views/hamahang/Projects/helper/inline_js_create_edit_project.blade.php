@@ -57,9 +57,9 @@
         minimumInputLength: 3,
         dir: "rtl",
         width: "100%",
-        tags: false,
+        tags: true,
         ajax: {
-            url: "{{route('auto_complete.users')}}",
+            url: "{{route('auto_complete.users_new')}}",
             dataType: "json",
             type: "POST",
             quietMillis: 150,
