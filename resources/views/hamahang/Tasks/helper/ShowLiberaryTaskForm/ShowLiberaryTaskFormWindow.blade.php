@@ -18,8 +18,9 @@
         <li>
             <a href="#tab_t4" data-toggle="tab">روابط</a>
         </li>
-        <li class="{{$res["task_all"]->is_save==1 ? '' : 'hidden'}} {{count($res['task']['users'])>0 ? 'active' :''}}">
-            <a href="#tab_t5" data-toggle="tab">اقدام</a>
+        {{--<li class="{{$res["task_all"]->is_save==1 ? '' : 'hidden'}} {{count($res['task']['users'])>0 ? 'active' :''}}">--}}
+        <li class="active">
+            <a href="#tab_t5" data-toggle="tab" >اقدام</a>
         </li>
         <li class="{{$res["task_all"]->is_save==1 ? '' : 'hidden'}}">
             <a href="#tab_t6" data-toggle="tab">گفتگو</a>

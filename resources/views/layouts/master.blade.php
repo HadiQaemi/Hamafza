@@ -244,6 +244,8 @@
 									$('.jsPanel-btn-close').click();
 								}
 								{{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+                                window.table_chart_grid2.ajax.reload();
+                                window.table_chart_grid3.ajax.reload();
                                 eventInfo = (result.event);
                                 (function ($) {
                                     $("#calendar").fullCalendar('addEventSource', [{
@@ -277,6 +279,8 @@
                             if (result.success == true) {
                                 $('.jsPanel-btn-close').click();
                                 {{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+                                window.table_chart_grid2.ajax.reload();
+                                window.table_chart_grid3.ajax.reload();
                             }
                             else {
                                 messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
