@@ -1736,7 +1736,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
             $tabs = PageTabs('group', $Group->id);
             return array_merge(
                 $res,[
-                    'Tree' => '',
+                    'Tree' => isset($res['Tree']) ? $res['Tree'] : '',
                     'viewname' => $viewname,
                     'PageType' => $PageType,
                     'sid' => $Group->id,

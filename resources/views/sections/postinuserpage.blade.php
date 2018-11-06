@@ -1,4 +1,4 @@
-@if($Small == Auth::id() || (!is_array($Tree ) && ($Tree=='groupadmin' || $Tree=='ismember') ))
+@if($Small == Auth::id() || (!is_array($Tree) && ($Tree=='groupadmin' || $Tree=='ismember') ))
     <script type="text/javascript">
         $(document).ready(function () {
             $("#input-plugin-methods2").tokenInput("{{App::make('url')->to('/')}}/Tagsearch", {
@@ -9,7 +9,7 @@
                 onAdd: function (item) {
                     //add the new label into the database
                     if (parseInt(item.id) == 0) {
-                        name = $("tester").text();
+                        var name = $("tester").text();
                         if (name != null) {
                             $.ajax({
                                 type: "POST",
