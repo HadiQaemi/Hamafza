@@ -1,4 +1,4 @@
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="">
+<div class="modal fade" id="login" role="dialog" aria-labelledby="">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header modal-header-darkblue">
@@ -16,14 +16,14 @@
                             <div id="username_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>
                             <div class="form-group input-group" id="username">
                                 <span class="input-group-addon">نام کاربری</span>
-                                <input type="text" name="username" class="form-control" tabindex="-1" autofocus style="direction: ltr">
+                                <input type="text" name="username" class="form-control" autofocus style="direction: ltr" >
                                 <span class="fa fa-ok form-control-feedback"></span>
                                 <span class="input-group-addon">EN</span>
                             </div>
                             <div id="password_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon">رمزعبور</span>
-                                <input class="form-control" id="password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off" tabindex="0" style="direction: ltr">
+                                <input class="form-control" id="password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off" style="direction: ltr" >
                             </div>
                             @if (!config('app.debug'))
                             <div id="captcha_request_errors" class="modal_login_error_inputs" style="font-family: IranSharp; font-size: 12px; color: red"></div>
@@ -32,7 +32,7 @@
                                     <div class="col-md-6" style="padding-right: 0">
                                         <div id="captcha_code" class="form-group input-group">
                                             <span class="input-group-addon">کد امنیتی</span>
-                                            <input id="modal_login_captcha" type="text" name="captcha_code" class="form-control" tabindex="1" style="direction: ltr; font-family: arial;">
+                                            <input id="modal_login_captcha" type="text" name="captcha_code" class="form-control" style="direction: ltr; font-family: arial;" autocomplete="off" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -54,13 +54,13 @@
                             </div>
 							<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas" tabindex="6">فراموشی رمز عبور</div>
+                                    <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                                 </div>
 								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register" tabindex="5">ثبت نام</div>
+                                    <div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register">ثبت نام</div>
                                 </div>
 								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <button type="button" class="btn btn-primary" id="btn_modal_login" tabindex="2">ورود</button>
+                                    <button type="button" class="btn btn-primary" id="btn_modal_login">ورود</button>
                                 </div>
                             </div>
                         </form>

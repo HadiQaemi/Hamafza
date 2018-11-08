@@ -16,7 +16,7 @@
                         <label>کد امنیتی</label>
                         <div id="captcha_code" class="form-group input-group">
                             <div id="homepage_captcha_request_errors" style="font-family: IranSharp; font-size: 12px; color: red"></div>
-                            <input type="text" name="captcha_code" class="form-control" tabindex="1" style="direction: ltr; font-family: arial;">
+                            <input type="text" name="captcha_code" class="form-control" tabindex="1" style="direction: ltr; font-family: arial;" autocomplete="off">
                         </div>
 
                         <div class="homepage_login_captcha_refresh captcha-refresh-style" style="">
@@ -41,3 +41,6 @@
             </form>
     </div>
 </div>
+<script>
+    $('.homepage_login_captcha_image,.login_captcha_image').attr('src', '{{ route('captcha', 'login') }}' + '?' + Math.random());
+</script>

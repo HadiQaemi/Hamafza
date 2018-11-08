@@ -143,13 +143,13 @@
                                                 <label style="padding-bottom: 10px;padding-top: 10px;">رایانامه یا نام کاربری</label>
                                                 <span style=""></span>
                                                 <div id="homepage_username_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                <input type="text" name="username" id="username" autofocus="" class="form-control required" style="direction: ltr; font-family: Arial;"></td>
+                                                <input type="text" name="username" id="username" autofocus="" class="form-control required" style="direction: ltr; font-family: Arial;" tabindex="1"></td>
                                         </tr>
                                         <tr>
                                             <td style="padding: 2px;width:100%;padding-left: 15px;">
                                                 <label style="padding-bottom: 10px;padding-top: 10px;">رمز عبور</label>
                                                 <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                <input type="password" id="passwords" name="password" class="form-control required" style="direction: ltr;" autocomplete="off">
+                                                <input type="password" id="passwords" name="password" class="form-control required" style="direction: ltr;" autocomplete="off" tabindex="2">
                                             </td>
                                         </tr>
                                         @if (!config('app.debug'))
@@ -158,8 +158,8 @@
                                                     <div class="col-xs-2" style="height: 35px;line-height: 35px;padding:0px"><label>کد امنیتی</label></div>
                                                     <div class="col-xs-4" style="padding:0px">
                                                         <div id="captcha_code" class="form-group input-group">
+                                                            <input type="text" name="captcha_code" class="form-control" style="direction: ltr; font-family: arial;" autocomplete="off" tabindex="3">
                                                             <div id="homepage_captcha_request_errors" style="font-family: IranSharp; font-size: 12px; color: red"></div>
-                                                            <input type="text" name="captcha_code" class="form-control" tabindex="1" style="direction: ltr; font-family: arial;">
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-6" style="padding:0px">
@@ -285,5 +285,8 @@
     @include('layouts.homepages.helpers.general.assets.script.inline_scripts')
     @include('layouts.helpers.common.sections.helpers.nav_bar.auth_modals')
 </div>
+<script>
+    $('.homepage_login_captcha_image,.login_captcha_image').attr('src', '{{ route('captcha', 'login') }}' + '?' + Math.random());
+</script>
 </body>
 </html>

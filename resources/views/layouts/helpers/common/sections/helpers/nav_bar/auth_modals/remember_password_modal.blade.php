@@ -22,7 +22,7 @@
                                 <div class="col-md-6" style="padding-right: 0">
                                     <div class="form-group input-group">
                                         <span class="input-group-addon">کد امنیتی</span>
-                                        <input id="modal_remember_password_captcha" type="text" name="captcha_code" class="form-control" tabindex="2" style="direction: ltr; font-family: Arial;">
+                                        <input id="modal_remember_password_captcha" type="text" name="captcha_code" class="form-control" tabindex="2" style="direction: ltr; font-family: Arial;" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

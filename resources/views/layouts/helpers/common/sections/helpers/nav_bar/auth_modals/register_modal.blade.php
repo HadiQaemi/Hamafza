@@ -111,7 +111,7 @@
                                     <div class="col-md-6" style="padding-right: 0">
                                         <div class="form-group input-group" style="margin-bottom: 0;  margin-top: 12px;">
                                             <span class="input-group-addon">کد امنیتی</span>
-                                            <input id="modal_register_captcha" type="text" name="captcha_code" class="form-control" style="font-family: Arial;direction: ltr">
+                                            <input id="modal_register_captcha" type="text" name="captcha_code" class="form-control" style="font-family: Arial;direction: ltr" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

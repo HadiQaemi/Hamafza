@@ -43,7 +43,7 @@
                         <input style="height: 30px;" type="text" class="form-control" name="username" placeholder="رایانامه یا نام کاربری" required="" autofocus=""/>
                         <input style="height: 30px;" type="password" class="form-control" name="password" placeholder="رمزعبور" required=""/>
                         <div class="col-md-6">
-                            <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;">
+                            <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off">
                         </div>
                         <div class="col-md-6">
                             <div class="captcha-refresh-style login_captcha_refresh" style="cursor: pointer; width: 39px; height: 30px;">

@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="form-group input-group">
                                     <span class="input-group-addon">کد امنیتی</span>
-                                    <input id="form_login_captcha" type="text" name="captcha_code" class="form-control" style="direction: ltr">
+                                    <input id="form_login_captcha" type="text" name="captcha_code" class="form-control" style="direction: ltr" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6">

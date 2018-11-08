@@ -127,7 +127,7 @@
             });
         });
 
-        $(document).on('keydown', '#homepage_form_login #username, #homepage_form_login #password, #homepage_form_login #captcha_code', function(e)
+        $(document).on('keydown', '#homepage_form_login', function(e)
         {
             if (13 == e.keyCode)
             {
@@ -135,7 +135,7 @@
             }
         });
 
-        $(document).on('keydown', '#modal_login_form #username, #modal_login_form #password, #modal_login_form #captcha_code', function(e)
+        $(document).on('keydown', '#modal_login_form', function(e)
         {
             if (13 == e.keyCode)
             {
