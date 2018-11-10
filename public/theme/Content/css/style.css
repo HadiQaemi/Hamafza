@@ -3761,7 +3761,7 @@ input{
     margin-top: 5px;
 }
 .no-task-div{
-    margin-top: 20px;
+    margin-top: 80px;
 }
 .no-task-div-buttons{
     margin-top: 20px;
@@ -3769,4 +3769,11 @@ input{
 .jsPanel .navbar-default {
     background-color: transparent !important;
     border-color: transparent !important;;
+}
+#base_items_div{
+    height: 80vh;
+    overflow-y: scroll;
+    width: 100%;
+    padding-bottom: 120px;
+    border-top: 1px solid #ccc;
 }

@@ -373,7 +373,10 @@ class AutoCompleteController extends Controller
                 ->where('user_id', '=', \Auth::id())
                 ->first();
         }
-        \Session::put('default_calendar',$list->id);
+        if(isset($list->id))
+        {
+            \Session::put('default_calendar',$list->id);
+        }
         return json_encode($list);
     }
 

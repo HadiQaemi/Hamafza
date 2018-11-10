@@ -2,8 +2,19 @@
 @section('specific_plugin_style')
     @include('hamahang.Tasks.helper.priority.priority_style')
 @stop
+<style>
+    .hd-body{
+        overflow: hidden !important;
+    }
+    #priority_content_area {
+         margin-top: 10px;
+    }
+    #priority_content_area{
+        margin-top: 10px !important;
+    }
+</style>
 @section('content')
-    <div style="position: relative;height: 100%;width: 100%;">
+    <div style="position: relative;width: 100%;">
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">
@@ -16,7 +27,9 @@
             </div>
         </div>
     </div>
-    @include('hamahang.Tasks.helper.priority.content')
+    <div id="base_items_div" style="margin-top: 100px;">
+       @include('hamahang.Tasks.helper.priority.content')
+    </div>
 
     @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['function'=>'filter_tasks_priority'])
 @stop

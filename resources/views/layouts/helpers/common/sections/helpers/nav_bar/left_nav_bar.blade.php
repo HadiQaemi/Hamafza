@@ -74,6 +74,7 @@
 @php ($style = $logged_in ? null : 'style="display: none;"')
 @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')
 <ul class="nav navbar-nav pull-left quick-links hidden-xs">
+    {{--<li href="#tab1" {!! $style !!}><a><span class="icon-choobalefnazok" title="چوب‌های الف" data-placement="top" data-toggle="tooltip"></span></a></li>--}}
     <li href="#tab1" {!! $style !!}><a><span class="icon-choobalefnazok" title="چوب‌های الف" data-placement="top" data-toggle="tooltip"></span></a></li>
     <li href="#tab2"><a><span class="icon-dargah icon-dargah-click" title="درگاه‌ها" data-placement="top" data-toggle="tooltip"></span></a></li>
     <li href="#tab3"><a><span class="icon-tag" title="کلید واژه‌ها" data-placement="top" data-toggle="tooltip"></span></a></li>

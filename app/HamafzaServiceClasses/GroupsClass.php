@@ -613,7 +613,7 @@ class GroupsClass
     function Group_Tabs($group, $uid = 0)
     {
         $group_tab = array();
-        $groups['tabs']['name']['0'] = 'درباره';
+        $groups['tabs']['name']['0'] = 'معرفی';
         $groups['tabs']['link']['0'] = 'intro';
         $groups['tabs']['name']['1'] = 'مطالب';
         $groups['tabs']['link']['1'] = 'contents';

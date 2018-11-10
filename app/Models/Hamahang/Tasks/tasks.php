@@ -1304,7 +1304,7 @@ class tasks extends Model
             {
                 $query->where('immediate', $immediate)->where('importance', $importance)
 //                    ->where('is_assigner',$is_assigner)
-                    ->whereNull('deleted_at');
+                    ->whereNull('hamahang_task_priority.deleted_at');
             });
         }
         elseif($type == 'MyAssignedTasks')
@@ -1330,6 +1330,15 @@ class tasks extends Model
             {
                 $query->whereIn('type', [11]);
             });
+        }
+        if (isset($arr['filter_subject_id']))
+        {
+            if (trim($arr['filter_subject_id'])!='')
+            {
+                $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Subjects', function ($query) use ($arr) {
+                    $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id']);
+                });
+            }
         }
         $keywords = Request::input('keywords');
         if(Request::exists('keywords'))
@@ -1373,15 +1382,6 @@ class tasks extends Model
 //                    ->orWhereIn('hamahang_task_assignments.employee_id', $users)
                 ;
             });
-        }
-        if (isset($arr['filter_subject_id']))
-        {
-            if (trim($arr['filter_subject_id'])!='')
-            {
-                $tasks_immediate_importance = $tasks_immediate_importance->whereHas('Pages', function ($query) use ($arr) {
-                    $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id']);
-                });
-            }
         }
 
         if ($title_filter)
@@ -1428,7 +1428,7 @@ class tasks extends Model
         }
         $myTasks=[];
 
-        $tasks_status = self::whereHas('Pages', function ($query) use ($arr) {
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
             $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
                 ->whereNull('hamahang_subject_ables.deleted_at');
         });
@@ -1472,7 +1472,7 @@ class tasks extends Model
     public static function all_tasks_immediate_importance($arr,$immediate = 0, $importance = 0, $type = 'MyTasks', $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false, $keywords=[], $users=[])
     {
 //        db::enableQueryLog();
-        $tasks_immediate_importance = self::whereHas('Pages', function ($query) use ($arr) {
+        $tasks_immediate_importance = self::whereHas('Subjects', function ($query) use ($arr) {
             $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
                 ->whereNull('hamahang_subject_ables.deleted_at');
         });
@@ -1631,7 +1631,7 @@ class tasks extends Model
         }
         $myTasks=[];
 
-        $tasks_status = self::whereHas('Pages', function ($query) use ($filter_subject_id) {
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($filter_subject_id) {
             $query->where('hamahang_subject_ables.subject_id', '=', $filter_subject_id)
                 ->whereNull('hamahang_subject_ables.deleted_at');
         });

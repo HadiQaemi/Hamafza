@@ -1,7 +1,7 @@
 <style>
-    .datepicker-plot-area {
+    .datepicker-plot-area_2 {
         position: relative !important;
-        top: 40% !important;
+        top: 50% !important;
         left: -80% !important;
     }
 </style>
@@ -67,3 +67,12 @@
 
 </div>
 @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask_JS',['function'=>@$function])
+<script>
+    // $('#create_rapid_task_respite_date').click(function () {
+    //     alert('asdasd');
+    //     $('.datepicker-plot-area').css('top','70% !important');
+    // });
+    $("#create_rapid_task_respite_date").click(function(){
+        $('.datepicker-plot-area').addClass("datepicker-plot-area_2");
+    });
+</script>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class tasks_relations extends Model
+class tasks_relationscc extends Model
 {
     use SoftDeletes;
     protected $table = 'hamahang_task_relations';
@@ -16,7 +16,7 @@ class tasks_relations extends Model
     public static function create_task_relation($task_id1, $task_id2, $delay, $delay_type, $relation, $weight, $uid = -1)
     {
 
-        $keyword = new tasks_relations;
+        $keyword = new tasks_relationscc;
         $keyword->uid = ($uid == -1) ? Auth::id() : $uid;
         $keyword->task_id1 = $task_id1;
         $keyword->task_id2 = $task_id2;

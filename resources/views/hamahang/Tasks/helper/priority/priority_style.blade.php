@@ -4,7 +4,7 @@
     }
     .task_items {
         width: 100%;
-        height: 200px;
+        height: 40%;
         overflow-y: scroll;
         overflow-x: hidden;
         border: 1px solid #ececec;

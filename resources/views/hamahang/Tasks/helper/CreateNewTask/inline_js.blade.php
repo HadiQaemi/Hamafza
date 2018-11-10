@@ -327,16 +327,15 @@
 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
 //			'       </td>\n' +
 			'       <td>\n' +
-			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
-			'       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
-			'       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-			'       	<label class="pull-right" for="r2"> --- '+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
+			// '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+			// '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+			// '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+			'       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
 			'       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
 			'       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_tasks-container').attr('title')+ '"/>' +
 			'       </td>\n' +
 			'       <td>\n' +
 			'           <label class="input-group pull-right">\n' +
-							$('#new_task_weight').val() +
 			'       		<input name="new_task_weight[]" type="text" value="0"/>' +
 			'           </label>\n' +
 			'       </td>\n' +

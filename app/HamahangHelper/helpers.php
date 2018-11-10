@@ -101,7 +101,7 @@ if (!function_exists('PageTabs'))
             {
                 $user_tab = [];
                 $user = User::findOrFail((int)$item);
-                $user_tab[0]['title'] = 'درباره';
+                $user_tab[0]['title'] = 'معرفی';
                 $user_tab[0]['link'] = 'intro';
                 $user_tab[0]['href'] = $user->Uname . '';
                 $user_tab[1]['title'] = 'مطالب';
@@ -122,7 +122,7 @@ if (!function_exists('PageTabs'))
             case 'group':
             {
                 $group_tab = array();
-                $groups['tabs']['name']['0'] = 'درباره';
+                $groups['tabs']['name']['0'] = 'معرفی';
                 $groups['tabs']['link']['0'] = 'intro';
                 $groups['tabs']['name']['1'] = 'مطالب';
                 $groups['tabs']['link']['1'] = 'contents';

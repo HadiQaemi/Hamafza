@@ -682,7 +682,7 @@ class ProcessController extends Controller
         {
             case 'pgs.desktop.hamahang.process.list':
                 $arr = variable_generator('page','desktop',$uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.ProcessList', $arr);
                 break;

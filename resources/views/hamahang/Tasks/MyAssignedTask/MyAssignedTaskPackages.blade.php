@@ -11,13 +11,6 @@
     .hd-body{
         overflow: hidden !important;
     }
-    #base_items_div{
-        height: 71vh;
-        overflow-y: scroll;
-        width: 100%;
-        padding-bottom: 100px;
-        border-top: 1px solid #ccc;
-    }
 </style>
 @section('content')
 

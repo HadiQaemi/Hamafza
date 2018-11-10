@@ -242,7 +242,7 @@ class MyAssignedTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.transcripts':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
@@ -356,8 +356,10 @@ class MyAssignedTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
+//                db::enableQueryLog();
                 $arr = array_merge($arr, tasks::MyAssignedTasksPriority($arr,[0,1],false,false,[0,1]));
+//                dd(db::getQueryLog());
                 return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
                 //return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksPriority', $arr);
                 break;
@@ -379,7 +381,7 @@ class MyAssignedTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 //$arr['tasks'] = tasks::FetchTasksForMyAssignedTasksState($uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['MyTasksInState'] = $this->my_assigned_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
                 break;
@@ -741,7 +743,7 @@ class MyAssignedTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.list':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
@@ -1240,6 +1242,17 @@ class MyAssignedTaskController extends Controller
                     }
                 }
 
+                if (Request::exists('new_task_tasks_'))
+                {
+                    DB::table('hamahang_task_relations')
+                        ->where('hamahang_task_relations.task_id1','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    foreach (Request::input('new_task_tasks_') as $k=>$task_id)
+                    {
+                        task_relations::create_task_relation($task->id, $task_id, Request::input('new_task_delay_num')[$k], Request::input('new_task_delay_type')[$k], Request::input('new_task_relation')[$k], Request::input('new_task_weight')[$k]);
+                    }
+                }
                 if (Request::exists('transcripts'))
                 {
                     DB::table('hamahang_task_transcript')
@@ -1265,6 +1278,18 @@ class MyAssignedTaskController extends Controller
                         task_keywords::create_task_keyword($task->id, hamahang_add_keyword(hamahang_get_keyword_value($kw)));
                     }
                 }
+                if (Request::exists('project_tasks'))
+                {
+                    DB::table('hamahang_project_task')
+                        ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
+                        ->whereNull('deleted_at')
+                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    foreach (Request::input('project_tasks') as $project_id)
+                    {
+                        hamahang_project_task::create_task_project($task->id, $project_id);
+                    }
+                }
+
                 $staff = '';
                 if (Request::exists('users'))
                 {
@@ -1751,6 +1776,22 @@ class MyAssignedTaskController extends Controller
                 foreach (Request::input('pages') as $page_id)
                 {
                     hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
+                }
+            }
+
+            if (Request::exists('project_tasks'))
+            {
+                foreach (Request::input('project_tasks') as $project_id)
+                {
+                    hamahang_project_task::create_task_project($task->id, $project_id);
+                }
+            }
+
+            if (Request::exists('new_task_tasks_'))
+            {
+                foreach (Request::input('new_task_tasks_') as $k=>$task_id)
+                {
+                    task_relations::create_task_relation($task->id, $task_id, Request::input('new_task_delay_num')[$k], Request::input('new_task_delay_type')[$k], Request::input('new_task_relation')[$k], Request::input('new_task_weight')[$k]);
                 }
             }
 

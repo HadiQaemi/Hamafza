@@ -110,7 +110,7 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.transcripts_list':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
                         ['AddNewFiles',
@@ -145,7 +145,7 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_list':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['packages'] = $packages;
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.MyTask.AllTasksList', $arr);
                 break;
@@ -164,13 +164,13 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_state':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_state':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
                 break;
@@ -216,7 +216,7 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_priority':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
 //                DB::enableQueryLog();
                 $arr = array_merge($arr, tasks::AllTasksPriority($arr,[0,1],false,false,[0,1]));
 //                dd(DB::getQueryLog());
@@ -381,7 +381,7 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.state':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
 
                 Session::put('filter_subject_id',$uname);
                 $arr['MyTasksInState'] = $this->my_task_in_status($arr)->render();
@@ -402,7 +402,7 @@ class MyTaskController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.priority':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
 //                DB::enableQueryLog();
                 $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
 //                dd(DB::getQueryLog());
@@ -447,7 +447,7 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.list':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['packages'] = $packages;
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
                 return view('hamahang.Tasks.MyTask.MyTasksList', $arr);
                 break;

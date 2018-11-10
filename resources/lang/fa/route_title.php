@@ -10,7 +10,7 @@ return [
     'myassignedtasks_state'=>'وضعیت وظایف',
     'mytask_list'=>'لیست وظایف من',
     'mytask_priority'=>'اولویت وظایف من ',
-    'mytask_state'=>'وضعیت وظایف من ',
+    'mytask_state'=>'مراحل وظایف من ',
     'myassignedtask_packages'=>'ارجاعات من',
     'mytask_package'=>'بسته کاری- وظایف من ',
     'task_taskpackages'=>'تمام وظایف',

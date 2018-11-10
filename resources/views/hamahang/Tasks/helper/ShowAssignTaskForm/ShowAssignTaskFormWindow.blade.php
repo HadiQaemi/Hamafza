@@ -13,13 +13,16 @@
             <a href="#tab_t4" data-toggle="tab">روابط</a>
         </li>
         <li class="active">
-        <a href="#tab_t5" data-toggle="tab">اقدام</a>
+            <a href="#tab_t5" data-toggle="tab">اقدام</a>
         </li>
         <li>
-        <a href="#tab_t6" data-toggle="tab">گفتگو</a>
+            <a href="#tab_t6" data-toggle="tab">اختصاص</a>
         </li>
         <li>
-        <a href="#tab_t7" data-toggle="tab">سابقه</a>
+            <a href="#tab_t7" data-toggle="tab">گفتگو</a>
+        </li>
+        <li>
+            <a href="#tab_t8" data-toggle="tab">سابقه</a>
         </li>
         <li style="float: left">
             <h5 id="task_type" style="color: blue"></h5>
@@ -599,7 +602,105 @@
                         <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="margin-bottom: 20px;">
+                <div class="row col-lg-12">
+                    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
+                        <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
+                        <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
+                        <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
+                        <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
+                        <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
+                    </div>
+                    <div class="col-lg-8" style="height: 20px;line-height: 20px;">
+                        <div class="col-lg-10">
+                            <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple disabled=""></select>
+                            <span class=" Chosen-LeftIcon"></span>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                            <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels assingned_options" title="{{ trans('tasks.selecet_user') }}">
+                                <span class="icon icon-afzoodane-fard fonts"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-top-20">
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
+                        <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date" name="action_date" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <input type="text" class="form-control border-radius" style="display: inline" id="action_duration" name="action_duration" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <select class="form-control" id="action_duration_type">
+                            <option value="ساعت">ساعت</option>
+                            <option value="دقیقه">دقیقه</option>
+                        </select>
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
+                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-50">
+                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="padding: 20px" id="action_list"></div>
+            </div>
+            <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
+
+                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.ready') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <label for="">{{ trans('tasks.ready_body')}}</label>
+
+                            <input type="radio" name="ready_body" id="ready_body_0" value="0" checked/>
+                            <label for="ready_body_0">{{ trans('tasks.low') }}</label>
+
+                            <input type="radio" name="ready_body" id="ready_body_l" value="1"/>
+                            <label for="ready_body_l">{{ trans('tasks.high') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 50px">
+                            <label for="on_done">{{ trans('tasks.ready_mental')}}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0" checked/>
+                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
+                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple"></select>
+                        <span class=" Chosen-LeftIcon"></span>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.predict_duration') }}</label>
                     </div>
@@ -648,76 +749,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.ready') }}</label>
-                    </div>
-                    <div class="col-lg-11">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <label for="">{{ trans('tasks.ready_body')}}</label>
 
-                            <input type="radio" name="ready_body" id="ready_body_0" value="0" checked/>
-                            <label for="ready_body_0">{{ trans('tasks.low') }}</label>
-
-                            <input type="radio" name="ready_body" id="ready_body_l" value="1"/>
-                            <label for="ready_body_l">{{ trans('tasks.high') }}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 50px">
-                            <label for="on_done">{{ trans('tasks.ready_mental')}}</label>
-
-                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0" checked/>
-                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
-
-                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
-                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
-                    </div>
-                    <div class="col-lg-11">
-                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"></select>
-                        <span class=" Chosen-LeftIcon"></span>
-                    </div>
-                </div>
-
-                <div class="row col-lg-12" style="margin-bottom: 20px;margin-top: 20px">
-                    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
-                        <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
-                        <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
-                        <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
-                    </div>
-                    <div class="col-lg-8" style="height: 20px;line-height: 20px;">
-                        <div class="col-lg-10">
-                            <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple disabled=""></select>
-                            <span class=" Chosen-LeftIcon"></span>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels assingned_options" title="{{ trans('tasks.selecet_user') }}">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row col-lg-12" style="padding-bottom: 20px;margin-top: 20px;border-bottom: #ccc solid 1px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
-                    </div>
-                </div>
             </div>
-            <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
                     <div class="col-xs-3">
                         <label class="line-height-3">گفتگو</label>
@@ -763,7 +797,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane" id="tab_t8" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
                     <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>

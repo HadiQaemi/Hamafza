@@ -18,7 +18,7 @@ class PackageController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.package':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['packages'] = task_packages::PrepareDataForMyAssignedTaskPackages($uname);
                 return view('hamahang.Tasks.MyAssignedTask.MyAssignedTaskPackages',$arr);
                 break;
@@ -36,7 +36,7 @@ class PackageController extends Controller
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.package':
                 $arr = variable_generator('page', 'desktop', $uname);
-                $arr['filter_subject_id'] = $arr["pid"];
+                $arr['filter_subject_id'] = $arr["sid"];
                 $arr['packages'] = task_packages::PrepareDataForMyTasksPackages($uname);
                 return view('hamahang.Tasks.MyTask.MyTaskPackages', $arr);
                 break;

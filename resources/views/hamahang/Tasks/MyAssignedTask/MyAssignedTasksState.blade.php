@@ -22,7 +22,10 @@
             overflow-y: hidden !important;
         }
         .panel-light{
-            height: 73.4vh;
+            /*height: 73.4vh;*/
+        }
+        .hd-body{
+            overflow: hidden !important;
         }
     </style>
 @stop
@@ -39,7 +42,7 @@
             </div>
             <hr>
         </div>
-        <div class="content_task">
+        <div class="content_task" id="base_items_div">
             <div class="base_list_task">
                 <div id="base_items" style="direction: rtl;">
                     {!! $MyTasksInState !!}

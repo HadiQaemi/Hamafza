@@ -1343,7 +1343,7 @@ class UserClass
     public function UserTabs($uid, $Uname, $cuid)
     {
         $user_tab = array();
-        $user['tabs']['name']['0'] = 'درباره';
+        $user['tabs']['name']['0'] = 'معرفی';
         $user['tabs']['link']['0'] = 'intro';
 
         $user['tabs']['name']['1'] = 'مطالب';

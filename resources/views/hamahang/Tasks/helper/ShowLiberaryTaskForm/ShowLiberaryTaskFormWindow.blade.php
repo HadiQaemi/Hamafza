@@ -99,6 +99,19 @@
                         </select>
                     </div>
                 </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
+                    <div class="col-lg-11">
+                        <select class="select2_auto_complete_projects col-xs-12"
+                                data-placeholder="{{trans('tasks.enter_project_name')}}" multiple="multiple" {{$edit_able == 1 ? ' name=project_tasks[] id=new_task_projects ' : 'disabled'}} >
+                            @if(!empty($res['task_projects']))
+                                @foreach($res['task_projects'] as $project)
+                                    <option selected="selected" value="{{ $project->id }}">{{ $project->title }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-11">

@@ -21,12 +21,21 @@
         {
             height: 100%;
         }
+         .hd-body{
+             overflow: hidden !important;
+         }
+        #priority_content_area {
+            margin-top: 10px;
+        }
+        #priority_content_area{
+            margin-top: 10px !important;
+        }
     </style>
 @stop
 
 @section('content')
     <div style="position: relative;height: 100%;width: 100%;">
-        <div class="header_task">
+        <div class="">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">
                 @if(isset($filter_subject_id))
@@ -35,13 +44,11 @@
                 @include('hamahang.Tasks.MyTask.helper.task_related_pages')
                 @include('hamahang.Tasks.MyTask.helper.MyTasksState.task_filter')
             </div>
-            <hr>
         </div>
-        <div class="content_task" style="padding-top: 20px">
-            <div class="base_list_task">
-                <div id="base_items" style="direction: rtl;">
-                    {!! $MyTasksInState !!}
-                </div>
+
+        <div class="base_items" id="base_items_div">
+            <div id="base_items" style="direction: rtl;">
+                {!! $MyTasksInState !!}
             </div>
         </div>
         {{--<div class="footer_task">--}}

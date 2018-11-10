@@ -600,7 +600,25 @@
 		$('.div-schedul div').addClass('hidden');
 		$('.'+schedul).removeClass('hidden');
     });
-	
+    function remove_action(action_list) {
+        $('.action_list'+action_list).remove();
+    }
+    var action_list = 0;
+	$('#add_btn_action').on('click', function() {
+        action_list ++;
+	    html =
+            '<div class="col-xs-12 action_list'+action_list+'">' +
+            '<div class="col-xs-1">{{trans('tasks.duration')}} </div>' +
+            '<div class="col-xs-2"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '">' + $('#action_date').val() + '</div>' +
+            '<div class="col-xs-2"><input type="hidden" name="action_date_list[]" value="' + $('#action_duration').val() + '">' + $('#action_duration').val() + '</div>' +
+            '<div class="col-xs-2"><input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_type').val() + '">' + $('#action_duration_type').val() + '</div>' +
+            '<div class="col-xs-2"><input type="hidden" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '">' + $('#action_time_from').val() + '</div>' +
+            '<div class="col-xs-2"><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '">' + $('#action_time_to').val() + '</div>' +
+            '<div class="col-xs-1"><i class="fa fa-remove pointer" onclick="remove_action('+action_list+')"></i></div>' +
+            '</div>';
+        $('#action_list').append(html);
+    });
+
 	$('#new_task_transcripts').on('change', function() {
         var none = $(this).find('option:selected').length;
         if(none >=1)

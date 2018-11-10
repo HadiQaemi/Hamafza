@@ -3,7 +3,11 @@
 @section('specific_plugin_style')
     <link type="text/css" rel="stylesheet" href="{{URL::to('assets/css/one-page-wonder.css')}}">
 @stop
-
+<style>
+    .hd-body{
+        overflow: hidden !important;
+    }
+</style>
 @section('content')
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
         @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
@@ -104,7 +108,7 @@
         </form>
     </div>
 
-    <div class="container-fluid noLeftPadding noRightPadding task-list-height">
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
         {{--<a class="task_info" data-t_id="42">تست</a>--}}
         <fieldset>
             <div class="row">

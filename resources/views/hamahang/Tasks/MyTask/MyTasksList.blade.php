@@ -15,7 +15,11 @@
         }
     </style>
 @stop
-
+<style>
+    .hd-body{
+        overflow: hidden !important;
+    }
+</style>
 @section('inline_scripts')
     @include('hamahang.Tasks.MyTask.helper.MyTasksList_inline_js')
 @stop
@@ -24,7 +28,7 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
     @include('hamahang.Tasks.MyTask.helper.task_related_pages')
     </div>
-    <div class="row" style="padding-right: 5px;" >
+    <div class="row" style="padding-right: 5px;padding-bottom: 10px" >
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
@@ -111,7 +115,7 @@
             </div>
         </form>
     </div>
-    <div class="container-fluid noLeftPadding noRightPadding task-list-height">
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
         <div class="row">
             <fieldset>
                 <div class="col-md-12">

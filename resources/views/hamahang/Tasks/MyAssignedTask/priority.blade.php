@@ -3,14 +3,38 @@
     @include('hamahang.Tasks.helper.priority.priority_style')
 @stop
 @section('content')
-    <style> #related_links {
-            padding: 1px;
-            left: 15px;
-            position: absolute;
-            top: -15px !important;
-            left:27px;
-            z-index:11;
-        }</style>
+    {{--<style> #related_links {--}}
+            {{--padding: 1px;--}}
+            {{--left: 15px;--}}
+            {{--position: absolute;--}}
+            {{--top: -15px !important;--}}
+            {{--left:27px;--}}
+            {{--z-index:11;--}}
+        {{--}--}}
+    {{--</style>--}}
+    <style>
+        .hd-body{
+            overflow: hidden !important;
+        }
+        #priority_content_area {
+            margin-top: 10px;
+        }
+        #priority_content_area{
+            margin-top: 10px !important;
+        }
+        #priority_content_area{
+            height: 80vh;
+        }
+        #priority_content_area .row{
+            height: 45%;
+        }
+        #priority_content_area .task_items{
+            height: 85%;
+        }
+        #base_items_div{
+            padding-bottom: 50px;
+        }
+    </style>
     <div style="position: relative;height: 100%;width: 100%;">
         <div class="header_task">
             <div class="space-4"></div>
@@ -24,8 +48,9 @@
             </div>
         </div>
     </div>
-    @include('hamahang.Tasks.helper.priority.content')
-
+    <div id="base_items_div" style="margin-top: 100px;">
+        @include('hamahang.Tasks.helper.priority.content')
+    </div>
     @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['function'=>'filter_tasks_priority'])
 @stop
 

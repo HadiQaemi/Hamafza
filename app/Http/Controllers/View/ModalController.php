@@ -593,7 +593,7 @@ class ModalController extends Controller
             $pid = (isset($res['pid'])) ? $res['pid'] : '0';
             $content = GroupClass::GroupSetting($res['sid'], $pid, \Auth::id(), $res['sesid'], $title)->render();
         }
-        $apply = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" id="submit2"> ';
+        $apply = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" data-apply="apply" value="ذخیره " style=" float: left" id="submit2"> ';
         $save = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" value="تایید " style=" float: left" id="submit2">';
         return json_encode(['header' => '', 'content' => $content, 'footer' => $apply . $save]);
     }
@@ -782,11 +782,31 @@ class ModalController extends Controller
                 else
                     $pages = array($task['pages']);
                 $task_pages = DB::table('subjects as s')
-                    ->leftJoin('pages as p', 's.id', '=', 'p.sid')
-                    ->select('p.id', 's.title')
-                    ->whereIn('p.id', $pages)->get();
+                    ->select('s.id', 's.title')
+                    ->whereIn('s.id', $pages)->get();
             }
         }
+
+        $task_projects = DB::table('hamahang_project_task')
+            ->join('hamahang_project','hamahang_project.id','=','hamahang_project_task.project_id')
+            ->select('hamahang_project.id', 'hamahang_project.title')
+            ->whereNull('hamahang_project_task.deleted_at')
+            ->where('hamahang_project_task.task_id','=', $task_aid)->get();
+//        if(isset($task['project_tasks']))
+//        {
+//            if(count($task['project_tasks'])>0)
+//            {
+//                $projects = array();
+//                if(is_array($task['project_tasks']))
+//                    $projects = $task['project_tasks'];
+//                else
+//                    $projects = array($task['project_tasks']);
+//                $task_pages = DB::table('hamahang_project_task as s')
+//                    ->join('hamahang_project','project_id','=','id')
+//                    ->select('hamahang_project.id', 'hamahang_project.title')
+//                    ->whereIn('hamahang_project_task.project_id', $projects)->get();
+//            }
+//        }
 
         $task_users = array();
         if(isset($task['users']))
@@ -880,6 +900,7 @@ class ModalController extends Controller
         $res['task_id'] = enCode($res['tid']);
         $res['pages'] = $task_pages;
         $res['task_pages'] = $task_pages;
+        $res['task_projects'] = $task_projects;
         $res['task_users'] = $task_users;
         $res['task_transcripts'] = $task_transcripts;
         $res['task_keywords'] = $task_keywords;
