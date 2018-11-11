@@ -657,7 +657,7 @@ class tasks extends Model
         if ($subject_id)
         {
             $result->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
-                ->where('hamahang_subject_ables.subject_id', '=',$subject_id)
+                ->where('hamahang_subject_ables.subject_id', '=',($subject_id > 99999 ? $subject_id/10 : $subject_id))
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
