@@ -89,7 +89,7 @@ class PageController extends Controller {
                         [
                             [
                             'title' => 'وظایف من',
-                            'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, true) . "",
+                            'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks($sid, $user->id, true) . "",
                         // 'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
                         ],
                             [
