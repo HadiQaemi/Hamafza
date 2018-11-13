@@ -106,24 +106,26 @@ class TaskController extends Controller {
             return response()->json($res, 200)->withHeaders(['Content-Type' => 'text/plain', 'charset' => 'utf-8']);
         }
     }
-    
-     public function get_tasks() {
+
+    public function get_tasks() {
         $user = getUser();
         if (!isset($user->id)) {
             return $user;
         }
-
-        $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks(Request::input('page_id'), $user->id, false);
+        $pid = Request::input('page_id');
+        if ($pid !== null && trim($pid) !== "") {
+            $page = \App\Models\hamafza\Pages::find($pid);
+            $pid = $page->subject->id;
+        }
+        $Tasks = \App\Models\Hamahang\Tasks\tasks::MyTasks($pid, $user->id, false);
         //return response()->json($Tasks);
-         $date = '';//new \App\HamahangCustomClasses\JDateTime;
+        $date = ''; //new \App\HamahangCustomClasses\JDateTime;
 //        dd(Request::input('subject_id'));
 //        dd(Request::input('subject_id'));
         $res = \Datatables::of($Tasks)
                 ->editColumn('type', function ($data) {
                     return GetTaskStatusName($data->task_status);
                 })
-                
-                
                 ->addColumn('respite', function ($data) use ($date) {
                     $r = \App\HamahangCustomClasses\jDateTime::getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                     return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
