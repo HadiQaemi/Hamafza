@@ -5175,7 +5175,7 @@ var id = data.node.id;
     {
         $res = '';
         $Uscount = DB::table('user')->select('id')->count();
-        $Users = DB::table('user as u')->where('u.Active', '1')->select('u.id', 'u.uname', 'u.Name', 'u.Family', 'u.Pic', 'u.Summary')->orderBy('id', 'desc')->take(4)->get();
+        $Users = DB::table('user as u')->where('u.Active', '1')->select('u.id', 'u.uname', 'u.Name', 'u.Family', 'u.Pic', 'u.avatar', 'u.Summary')->orderBy('id', 'desc')->take(4)->get();
         $i = 1;
         $j = 1;
         $ress =
@@ -5210,6 +5210,12 @@ var id = data.node.id;
             $summary1 = explode('<br/>', $summary);
             $summary = (trim($summary1[0]) != '' && strlen($summary) > 100) ? $summary1[0] . ' ...' : $summary1[0];
             $pic = (trim($UserS->Pic)) ? $UserS->Pic : 'defusers.png';
+            if(trim($UserS->avatar) != ''){
+                $pic = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => $UserS->avatar ? enCode($UserS->avatar) : -1, 'default_img' => 'user_avatar.png']);
+            }else{
+                $pic = '"pics/user/' . $pic;
+            }
+
             if (($UserS->uname) != '')
             {
                 $link = config('constants.SiteAddress') . "$UserS->uname";
@@ -5219,7 +5225,7 @@ var id = data.node.id;
                 $link = config('constants.SiteAddress') . "user/{$tid}";
             }
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
-						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/user/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
+						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
 						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . $link . '">' . $title . '</a></div>
 					</div>';
             $i++;
@@ -5310,10 +5316,10 @@ var id = data.node.id;
             $link = $UserS->link;
             $title = $UserS->name;
             $summary = $UserS->summary;
-//            $pic = (trim($UserS->pic)) ? $UserS->pic : 'chanels.png';
-            $pic = 'chanels.png';
+            $pic = (trim($UserS->pic)) ? $UserS->pic : 'chanels.png';
+//            $pic = 'chanels.png';
             $link = config('constants.SiteAddress') . $link;
-            $res .= '<li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
+            $res .= '<li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="/pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
             $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail"></div>';
             $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li>';
 

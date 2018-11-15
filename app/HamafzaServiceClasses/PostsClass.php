@@ -1158,7 +1158,7 @@ class PostsClass {
                                 'score' => $reward,
             ]);
         }
-
+        $score_id = '';
         switch ($type) {
             case '1':
                 $score_id = config('score.1');
@@ -1179,7 +1179,8 @@ class PostsClass {
                 $score_id = config('score.6');
                 break;
         }
-        score_register('App\Models\hamafza\Post', $pid, $score_id,$uid);
+        if(trim($score_id) != '')
+            score_register('App\Models\hamafza\Post', $pid, $score_id,$uid);
 
         if ($keys != '') {
             $myArray = explode(',', $keys);

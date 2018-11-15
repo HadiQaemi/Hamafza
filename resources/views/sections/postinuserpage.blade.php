@@ -52,7 +52,8 @@
                     <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
                         <div class="col-xs-12 col-sm-2 col-lg-2">
                             <select name="post_typeW" id="post_typeW" class="form-control">
-                                <option value="1" selected="">نظر</option>
+                                <option value="0" selected="">انتخاب کنید</option>
+                                <option value="1">نظر</option>
                                 <option value="2">پرسش</option>
                                 <option value="3">ایده</option>
                                 <option value="4">تجربه</option>
@@ -96,7 +97,7 @@
                                             <small>کلیدواژه</small>
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                            <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple"></select>
+                                            <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.keyword')}}" multiple="multiple"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 rewardC">
@@ -146,7 +147,7 @@
                             {
                                 portal_idW = $('.portal_idW');
                                 rewardW = $('.rewardW');
-                                $(".rewardC").css("display","none")
+                                $(".rewardC").css("display","none");
                                 $.ajax
                                 ({
                                     type: 'post',
@@ -155,6 +156,7 @@
                                     dataType: 'json',
                                     success: function (data)
                                     {
+                                        // alert(data.success);
                                         if (data.success)
                                         {
                                             portal_idW.empty();

@@ -88,15 +88,15 @@ $(document).ready(function() {
                     <input type="hidden" value="0" name="isorgan">
                 </td>
             </tr>
-            <tr>
-                <td>تصویر</td>
-                <td>
-                    <span class="btn btn-default btn-file">
-                        انتخاب فایل <input type="file" onchange="FileName(this);" style="width:388px" dir="rtl" id="group_pic" class="form-control" value="" name="pic">
-                    </span>
-                    <span style="display: none;" class="descr"> عنوان فایل <input value="" style="width:200px" class="form-control" name="ftitle[1]"></span>
-                </td>
-            </tr>
+            {{--<tr>--}}
+                {{--<td>تصویر</td>--}}
+                {{--<td>--}}
+                    {{--<span class="btn btn-default btn-file">--}}
+                        {{--انتخاب فایل <input type="file" onchange="FileName(this);" style="width:388px" dir="rtl" id="group_pic" class="form-control" value="" name="pic">--}}
+                    {{--</span>--}}
+                    {{--<span style="display: none;" class="descr"> عنوان فایل <input value="" style="width:200px" class="form-control" name="ftitle[1]"></span>--}}
+                {{--</td>--}}
+            {{--</tr>--}}
             <tr>
                 <td colspan="2">عضویت  افراد نیاز به تایید مدیر گروه
                     <input type="radio" checked="" value="0" name="group_limit">ندارد

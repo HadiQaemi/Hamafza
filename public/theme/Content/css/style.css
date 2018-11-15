@@ -2826,6 +2826,10 @@ a .navbar-brand{
     padding-top: 4%;
     width: 100%;
 }
+.person-list{
+    height: 50vh;
+    overflow-y: auto;
+}
 .person-list li {
     border: 1px solid #dbdbdb;
     height: 120px;
@@ -3719,10 +3723,10 @@ input{
     padding-bottom: 70px;
 }
 .jsPanel-content .new-task-form .tab-view{
-    overflow: hidden !important;
+    /*overflow: hidden !important;*/
 }
 .jsPanel-content{
-    overflow: hidden !important;
+    /*overflow: hidden !important;*/
 }
 .form_filter_priority_div{
     padding-right: 5px;padding-right: 5px;padding-bottom: 10px;
@@ -3776,4 +3780,10 @@ input{
     width: 100%;
     padding-bottom: 120px;
     border-top: 1px solid #ccc;
+}
+#NewPostW #theImg{
+    width: 600px;
+}
+.comment-box #theImg{
+    max-width: 600px;
 }

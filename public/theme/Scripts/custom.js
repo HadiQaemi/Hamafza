@@ -452,24 +452,24 @@ $(document).on("click", "#rSubMenuBtn", function (e) {
         $(this).addClass('icon-bastan');
 
         $(document).stop().mouseup(function (e) {
-            var container = $("div.rightSubMenu >div.menu");
-            if (!container.is(e.target) // if the target of the click isn't the container...
-                && container.has(e.target).length === 0) // ... nor a descendant of the container
-                $("#toolbar .btn-group").show();
-            $("#toolbar .frst-wdt").show();
-            $("#rSubMenuBtn").removeClass('icon-bastan');
-            $("#rSubMenuBtn").addClass('icon-reorder');
-            {
-                $("div.rightSubMenu").stop().css("display", "block").animate({
-                    right: "-2600px"
-                }, function () {
-                    if (rightSubMenu == "-2600px") {
-                        $("div.rightSubMenu").stop().css("display", "none");
-                        $("#rSubMenuBtn").removeClass('icon-bastan');
-                        $("#rSubMenuBtn").addClass('icon-reorder');
-                    }
-                })
-            }
+            // var container = $("div.rightSubMenu >div.menu");
+            // if (!container.is(e.target) // if the target of the click isn't the container...
+            //     && container.has(e.target).length === 0) // ... nor a descendant of the container
+            //     $("#toolbar .btn-group").show();
+            // $("#toolbar .frst-wdt").show();
+            // $("#rSubMenuBtn").removeClass('icon-bastan');
+            // $("#rSubMenuBtn").addClass('icon-reorder');
+            // {
+            //     $("div.rightSubMenu").stop().css("display", "block").animate({
+            //         right: "-2600px"
+            //     }, function () {
+            //         if (rightSubMenu == "-2600px") {
+            //             $("div.rightSubMenu").stop().css("display", "none");
+            //             $("#rSubMenuBtn").removeClass('icon-bastan');
+            //             $("#rSubMenuBtn").addClass('icon-reorder');
+            //         }
+            //     })
+            // }
         });
     }
 

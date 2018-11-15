@@ -34,6 +34,16 @@ class GroupClass
         return $Res;
     }
 
+    public function total_keywords($keywords)
+    {
+        $Res = '<div class="total"><h1 class="heading" id="b5">
+                 <span class="icon icon-open"></span>کلیدواژه ها:</h1>';
+        $Res .= '<div class="inner">';
+        foreach($keywords as $keyword)
+            $Res .= '<span class="bottom_keywords one_keyword" data-id="468" data-title="'.$keyword->title.'"><i class="fa fa-tag"></i> <span style="color: #6391C5;">'.$keyword->title.'</span></span>';
+        return $Res . '</div></div>';
+    }
+
     public function Other($group)
     {
         $Circles = array();
@@ -70,6 +80,21 @@ class GroupClass
             $Det = $this->total_html($Title, $Det);
             $res .= $Det;
         }
+
+        $activity = $Other['activity'];
+        $Det = $activity['1'];
+        $Title = $activity['0'];
+        if ($Det != '')
+        {
+            $Det = $this->total_html($Title, $Det);
+            $res .= $Det;
+        }
+
+        $keywords = \DB::table('user_group_key as ugk')
+            ->leftJoin('keywords','keywords.id', '=', 'ugk.kid')
+            ->where('ugk.gid', '=', $group['preview']['id'])
+            ->select('keywords.title')->get();
+        $res .= $this->total_keywords($keywords);
 
         if ($IsOrgan == '0')
         {
@@ -124,7 +149,8 @@ class GroupClass
             foreach ($members as $value)
             {
                 $sa = $group['preview'];
-                $pic = ($value->Pic != '') ? url('/') . '/pics/user/' . $value->Pic : '/pics/user/avator.jpg';
+                $pic = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => $value->avatar ? enCode($value->avatar) : -1, 'default_img' => 'user_avatar.png']);
+
                 $Det .= '<li class=""><a href="' . url('/') . '/' . $value->Uname . '"><img src="' . $pic . '" class="person-avatar"></a>';
                 if ($value->id == $sa['adminid'])
                 {
@@ -152,7 +178,7 @@ class GroupClass
         $Title = $Preview['name'];
         $summary = $Preview['summary'];
         $descrip = $Preview['descrip'];
-        $pic = ($Preview['pic'] != '') ? $Preview['pic'] : '/pics/group/avator.jpg';
+        $pic = ($Preview['pic'] != '') ? '/pics/group/'.$Preview['pic'] : '/pics/group/defgroup.png';
         $res = '<div style="margin:15px;" class="gkCode10"><table style="border:none;"><tbody><tr style="border:none;"><td width="150" style="border: none;vertical-align: top;padding-top: 15px;text-align: right;"><img style="max-width:100px; height:auto; margin-left:15px;" ';
         $res .= 'src="' . $pic . '"></td><td style="border:none;text-align:right;"><div style="max-width: 760px;display: inline-block;vertical-align: top;text-align: right;font-size:9pt;">';
         $res .= '<h1>' . nl2br($Title) . '</h1>' . nl2br($summary) . '<hr style="width:100%;margin:0;"><p>' . nl2br($descrip) . '</p></div></td></tr></tbody></table></div>';

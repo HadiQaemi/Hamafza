@@ -101,28 +101,9 @@
             </div>
         </nav>
         @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
-        {{--<nav id="header" class="navbar navbar-default">--}}
-        {{--<div class="container-fluid">--}}
-        {{--@include('layouts.helpers.common.sections.helpers.nav_bar.menu')--}}
-        {{--@include('layouts.helpers.common.sections.nav_bar')--}}
-        {{--</div>--}}
-        {{--</nav>--}}
     </div>
     <div id="main" style="overflow: auto;height: 100Vh;background: url(theme/general/img/main-bg.png);background-size: 100% 100%;">
-        <!-- New HTMl -->
-        {{--<div id="scrollReset">--}}
-            {{--<a href="#" class="up glyphicon glyphicon-chevron-up"></a>--}}
-            {{--<a href="#" class="down glyphicon glyphicon-chevron-down"></a>--}}
-        {{--</div>--}}
-        <!--End New HTMl -->
-
         <div hmfz-ui-view="">
-            <!-- start of Main Template -->
-
-        {{--@include('layouts.homepages.helpers.general.index_content')--}}
-    {{--    @include('layouts.homepages.helpers.hamafza.index_content')--}}
-        <!-- end of Main Template -->
-            {{--@include('layouts.helpers.common.sections.footer_helper')--}}
             <div class="row col-xs-12 margin-top-50">
                 <div class="col-xs-2"></div>
                     @if (auth()->check())
@@ -204,42 +185,6 @@
                 </div>
                 <div class="col-xs-2"></div>
             </div>
-            {{--<div id="login_div" class="right-div" style="height: 420px;margin-top: 100px;">--}}
-
-            {{--</div>--}}
-            {{--<div class="right-div">--}}
-                {{--<p class="text-center">ثبت نام در هم افزا</p>--}}
-                {{--<form id="loginform" class="form-horizontal" role="form" style="">--}}
-
-                    {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-                        {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">نام کاربری</span>--}}
-                        {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-                    {{--</div>--}}
-
-                    {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-                        {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">پست الکترونیک</span>--}}
-                        {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-                    {{--</div>--}}
-
-                    {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-                        {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">گذرواژه</span>--}}
-                        {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-                    {{--</div>--}}
-
-                    {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-                        {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">نام و نام خانوادگی</span>--}}
-                        {{--<input id="login-password" class="login-input" type="password" class="form-control custom-form" name="password" placeholder="">--}}
-
-                    {{--</div>--}}
-                {{--</form>--}}
-                {{--<div class="btn btn-success">ثبت نام</div>--}}
-                {{--<a href="#"><p class="blue-text">عضو سایت هستم</p></a>--}}
-
-            {{--</div>--}}
-
         </div>
         <footer class="general-footer col-xs-12 text-center navbar-fixed-bottom">
             <ul id="footer" style="border-top: 1px solid #0bbb0b">

@@ -134,7 +134,40 @@ tinymce.init({
                         <input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12"   />
                     </td>
                 </tr>
+        <tr>
+            <td>تصویر</td>
+            <td>
+                <?php
+                if ($group_edit['pic'] != "" && file_exists("pics/group/" . $group_edit['id'] . "-" . $group_edit['pic'] . "")) {
+                ?>
+                <img src="<?php echo "pics/group/" . $group_edit['id'] . "-" . $group_edit['pic']; ?>" alt="" style="width: 100px; height: auto" />
+                <input type="hidden" name="vpic" id="vpic" value="<?php echo $group_edit['pic'] ?>"/><br/>
+                <?php
+                }
+                ?>
+                <script type="text/javascript">
+                    function FileName(obj)
+                    {
 
+                        var fileName = $(obj).val();
+                        pos = fileName.lastIndexOf('.');
+                        fileName = fileName.substring(0, pos);
+                        var top = $(obj).closest('span');
+                        top.css("color", "red");
+                        top.next('span').show();
+
+                        top.next('span').children('input').val(fileName);
+                    }
+                </script>
+                <span class="btn btn-default btn-file">
+                            انتخاب فایل <input type="file" name="pic" value="" class="form-control" id="group_pic" dir="rtl" style="width:388px" onchange="FileName(this);">
+                        </span></span>
+                <span class="descr" style="display: none;"> عنوان فایل <input name="ftitle[1]" class="form-control" style="width:200px" value="" /></span>
+
+
+                <input name="group_link" type="hidden" value="<?php echo (isset($group_edit['link']) ? $group_edit['link'] : ''); ?>"
+            </td>
+        </tr>
 
                 <tr>
                     <td>دیدگاه ها و ایده های اصلی</td>
@@ -142,40 +175,7 @@ tinymce.init({
 
 
                 </tr>
-                <tr>
-                    <td>تصویر</td>
-                    <td>
-                        <?php
-                        if ($group_edit['pic'] != "" && file_exists("pics/group/" . $group_edit['id'] . "-" . $group_edit['pic'] . "")) {
-                            ?>
-                            <img src="<?php echo "pics/group/" . $group_edit['id'] . "-" . $group_edit['pic']; ?>" alt="" style="width: 100px; height: auto" />
-                            <input type="hidden" name="vpic" id="vpic" value="<?php echo $group_edit['pic'] ?>"/><br/>
-                            <?php
-                        }
-                        ?>
-                        <script type="text/javascript">
-                            function FileName(obj)
-                            {
 
-                                var fileName = $(obj).val();
-                                pos = fileName.lastIndexOf('.');
-                                fileName = fileName.substring(0, pos);
-                                var top = $(obj).closest('span');
-                                top.css("color", "red");
-                                top.next('span').show();
-
-                                top.next('span').children('input').val(fileName);
-                            }
-                        </script>
-                        <span class="btn btn-default btn-file">
-                            انتخاب فایل <input type="file" name="pic" value="" class="form-control" id="group_pic" dir="rtl" style="width:388px" onchange="FileName(this);">
-                        </span></span>
-                        <span class="descr" style="display: none;"> عنوان فایل <input name="ftitle[1]" class="form-control" style="width:200px" value="" /></span>
-
-
-                        <input name="group_link" type="hidden" value="<?php echo (isset($group_edit['link']) ? $group_edit['link'] : ''); ?>"
-                    </td>
-                </tr>
 
                 <tr <?php echo $group_edit['isorgan'] == '1' ? 'style="display:none;"' : ''; ?> >
                     <td>نوع</td>

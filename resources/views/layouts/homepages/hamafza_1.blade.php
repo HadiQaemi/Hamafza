@@ -118,7 +118,7 @@
         <div hmfz-ui-view="">
             <!-- start of Main Template -->
 
-        @include('layouts.homepages.helpers.hamafza_1.index_content')
+            @include('layouts.homepages.helpers.hamafza_1.index_content')
     {{--    @include('layouts.homepages.helpers.hamafza.index_content')--}}
         <!-- end of Main Template -->
             @include('layouts.helpers.common.sections.footer_helper')

@@ -41,6 +41,7 @@ return array(
     'Grouptel' => 'شماره‌های تماس ',
     'Groupurl' => 'وب‌گاه ',
     'Groupemail' => 'رایانامه',
+    'Groupactivity' => 'فعالیتها',
     'Like' => 'پسند',
     'disLike' => 'حذف پسند',
     'follow' => 'دنبال ',

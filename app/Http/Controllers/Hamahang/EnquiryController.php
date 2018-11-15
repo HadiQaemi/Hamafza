@@ -296,13 +296,13 @@ class EnquiryController extends Controller
         $what = Request::get('what');
         $sid = Request::input('sid', 0);
         $sub_kind = Request::input('sub_kind', 0);
-        $sub_kind = 2 == $sub_kind ? 0 : $sub_kind;
-
+        $sub_kind = 2 == $sub_kind ?  0 : $sub_kind;
+//        db::enableQueryLog();
         switch ($what)
         {
             case 'portals':
 //                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
-                $subject_result = Subject::where('kind', '20')->where('kind', $sub_kind)->select(['id', 'title']);
+                $subject_result = Subject::whereIn('kind', ['20', '21', '22', '27'] )->select(['id', 'title']);
                 if ($sid)
                 {
                     $subject_result = $subject_result->where('id', $sid);
@@ -311,6 +311,7 @@ class EnquiryController extends Controller
                 $r = json_encode($subject_result->toArray());
             break;
         }
+//        dd(db::getQueryLog());
         return response()->json(['success' => true, 'result' => [$r]]);
     }
 

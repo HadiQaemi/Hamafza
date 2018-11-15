@@ -22,8 +22,11 @@
 
 <!---------------**Inline Style**-------------->
 @include('layouts.homepages.helpers.general.assets.style.inline_style')
+    <link type="text/css" rel="stylesheet" href="{{url('theme/Content/css/style.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/bootstrap.min.css"/>
+    {{--<link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/bootstrap.min.css"/>--}}
+    <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap/css/bootstrap.css')}}"/>
+    <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap/css/bootstrap-rtl.css')}}"/>
 
 <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
@@ -67,7 +70,7 @@
 <body>
 <div class="container-fluid  h-100" style="background-color: #119b9d;">
     <div class="row height-100-vh" >
-        <div class="col-2 rigth_box text-justify" style="margin-top: 1rem;" >
+        <div class="col-xs-2 rigth_box text-justify" style="margin-top: 1rem;" >
             <div class="rigth_box_head row justify-content-md-center">
                 <p class="text-center">
                     سامانه دانش
@@ -76,21 +79,20 @@
                 </p>
             </div>
             <div class="rigth_box_body row justify-content-md-center">
-                <nav class="nav flex-column text-center linkde" >
-                    <a class="nav-link" href="#">راهنما</a>
-                    <a class="nav-link" href="#">ارتباط با ما</a>
-                    <a class="nav-link" href="#">درباره ما</a>
-
-                </nav>
+                <div class="text-center linkde" style="margin-right: 30%;">
+                    <div class="pointer" href="#" style="margin-top: 10px;cursor: pointer">راهنما</div>
+                    <div class="pointer" href="#" style="margin-top: 10px;cursor: pointer">ارتباط با ما</div>
+                    <div class="pointer" href="#" style="margin-top: 10px;margin-bottom: 10px;cursor: pointer">درباره ما</div>
+                </div>
                 <div class="col-xs-12 justify-content-md-center text-center">
                     @if (auth()->check())
-                        <div class="col-xs-3 margin-left-10">
+                        <div class="col-xs-12 margin-left-10">
                             <a href="{{App::make('url')->to('/')}}/{{session('Uname')}}/wall" class="wall">دیوار @if(session('WallNotificaton')>0)<span class="badge">{{session('WallNotificaton')}}</span>@endif</a>
                             <a href="{{App::make('url')->to('/')}}/{{session('Uname')}}/desktop" class="wall">میز کار @if(session('DesktopNotificaton')>0)<span class="badge DesktopNotificaton">{{session('DesktopNotificaton')}}</span>@endif</a>
                             @include('sections.homeright-general')
                         </div>
                     @else
-                        <div class="col-xs-3 background-white margin-left-10">
+                        <div class="col-xs-12 background-white margin-left-10">
                             <div class="homepage_login_div">
                                 <div class="homepage_inner_login_div">
                                     <form id="homepage_form_login" name="form-login" class="form_login clearfix" method="post">
@@ -143,7 +145,7 @@
                                                 <input type="button" id="btn_homepage_login_form" class="btn btn-primary pull-right" value="ورود"/>
                                             </div>
                                             <div class="col-xs-6 display-inline width-50-pre" style="padding-top: 8px;">
-                                                <span class="" style="font-size: 12px;cursor: pointer;line-height: 35px">فراموشی رمز</span>
+                                                <a class="register res-a" data-toggle="modal" data-target="#register">ثبت نام</a>
                                             </div>
                                         </div>
                                     </form>
@@ -161,7 +163,7 @@
             </div>
 
         </div>
-        <div class="col-10 left_box h-100"  style="margin-top: 1rem;">
+        <div class="col--xs-10 left_box"  style="margin-top: 1rem;">
             <div style="background-color: rgba(33, 33, 36, 0.3);">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 0.4rem;padding-top: 0.6rem;">
                     <li class="nav-item">

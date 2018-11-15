@@ -104,14 +104,14 @@ class GroupsClass
         if ($type == 1)
         {
             $user = DB::table('user_group_member as ugm')->join('user as u', 'u.id', '=', 'ugm.uid')
-                ->where('ugm.gid', $group->id)->where('ugm.relation', '2')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic')->get();
+                ->where('ugm.gid', $group->id)->where('ugm.relation', '2')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic', 'u.avatar')->get();
         }
         else
         {
             $users = DB::table('user_group_member as ugm')->join('user as u', 'u.id', '=', 'ugm.uid')
-                ->where('ugm.gid', $group->id)->where('ugm.relation', '2')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic')->get();
+                ->where('ugm.gid', $group->id)->where('ugm.relation', '2')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic', 'u.avatar')->get();
             $userrequest = DB::table('user_group_member as ugm')->join('user as u', 'u.id', '=', 'ugm.uid')
-                ->where('ugm.gid', $group->id)->where('ugm.admin', '0')->where('ugm.relation', '1')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic')->get();
+                ->where('ugm.gid', $group->id)->where('ugm.admin', '0')->where('ugm.relation', '1')->select('u.id', 'u.Name', 'u.Family', 'u.Uname', 'u.Pic', 'u.avatar')->get();
 
             $user['accept'] = $users;
             $user['request'] = $userrequest;
@@ -455,7 +455,7 @@ class GroupsClass
         {
             $Group = DB::table('user_group as ug')->join('user_group_member as ugm', 'ug.id', '=', 'ugm.gid')
                 ->join('user as u', 'u.id', '=', 'ugm.uid')
-                ->where('ug.id', $gid)->where('ugm.admin', '1')->select('ug.*', 'ugm.uid as adminid', 'ugm.uid as owner', 'u.Name', 'u.Family')->first();
+                ->where('ug.id', $gid)->where('ugm.admin', '1')->select('ug.*', 'ugm.uid as adminid', 'ugm.uid as owner', 'u.Name', 'u.avatar', 'u.Family')->first();
 
              $key = DB::table('user_group as ug')->join('user_group_key as ugk', 'ug.id', '=', 'ugk.gid')
             ->join('keywords as k', 'k.id', '=', 'ugk.kid')
@@ -466,7 +466,7 @@ class GroupsClass
         {
             $Group = DB::table('user_group as ug')->join('user_group_member as ugm', 'ug.id', '=', 'ugm.gid')
                 ->join('user as u', 'u.id', '=', 'ugm.uid')
-                ->whereRaw("ug.link='$name'")->where('ugm.admin', '1')->select('ug.*', 'ugm.uid as adminid', 'ugm.uid as owner', 'u.Name', 'u.Family')->first();
+                ->whereRaw("ug.link='$name'")->where('ugm.admin', '1')->select('ug.*', 'ugm.uid as adminid', 'ugm.uid as owner', 'u.Name', 'u.avatar', 'u.Family')->first();
         
             $key = DB::table('user_group as ug')->join('user_group_key as ugk', 'ug.id', '=', 'ugk.gid')
             ->join('keywords as k', 'k.id', '=', 'ugk.kid')
@@ -520,7 +520,7 @@ class GroupsClass
         {
             $G['id'] = $group->id;
             $G['name'] = $group->name;
-            $G['PreTitle'] = ($group->isorgan == '0') ? 'گروه' : '';
+            $G['PreTitle'] = ($group->isorgan != '0') ? 'کانال' : 'گروه';
             $G['summary'] = $group->summary;
             $G['descr'] = $group->descrip;
             $G['pic'] = $group->pic;
@@ -596,6 +596,10 @@ class GroupsClass
             $email[0] = trans('labels.Groupemail');
             $email[1] = $group->email;
 
+            $activity = array();
+            $activity[0] = trans('labels.Groupactivity');
+            $activity[1] = $group->activity;
+
 
             $Group_Other['target'] = $Target;
             $Group_Other['audience'] = $audience;
@@ -603,6 +607,7 @@ class GroupsClass
             $Group_Other['description'] = $description;
             $Group_Other['address'] = $address;
             $Group_Other['tel'] = $tel;
+            $Group_Other['activity'] = $activity;
             $Group_Other['email'] = $email;
         }
 

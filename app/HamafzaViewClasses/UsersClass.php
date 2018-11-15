@@ -52,7 +52,7 @@ class UsersClass
         foreach ($mes as $item)
         {
             $items = DB::table('user_friend_circle as uf')->join('user_friend as f', 'uf.fid', '=', 'f.id')
-                ->leftjoin('user as u', 'u.id', '=', 'f.fid')->where('uf.cid', $item->id)->select('f.id', 'u.Name', 'u.Family', 'u.id as uid')->take(50)->get();
+                ->leftjoin('user as u', 'u.id', '=', 'f.fid')->where('uf.cid', $item->id)->select('f.id', 'u.Name', 'u.avatar', 'u.Family', 'u.id as uid')->take(50)->get();
             $item->members = $items;
         }
         return $mes;

@@ -174,7 +174,7 @@ class UserClass
         if ($type == 1)
         {
             $Users = DB::table('user as u')->whereRaw("CONCAT_WS(' ',Name,Family) LIKE '%$term%' OR Summary LIKE '%$term%' ")
-                ->select('u.id', 'u.Uname', 'u.Name', 'u.Family', 'u.Summary', 'u.Pic')->get();
+                ->select('u.id', 'u.Uname', 'u.Name', 'u.Family', 'u.Summary', 'u.Pic', 'u.avatar')->get();
             foreach ($Users as $value)
             {
                 if ($uid != 0)
