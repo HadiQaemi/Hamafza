@@ -3723,14 +3723,14 @@ input{
     padding-bottom: 70px;
 }
 .jsPanel-content .new-task-form .tab-view{
-    /*overflow: hidden !important;*/
+    overflow: hidden !important;
 }
 .jsPanel-content{
-    /*overflow: hidden !important;*/
+    overflow: hidden !important;
 }
 .form_filter_priority_div{
     padding-right: 5px;padding-right: 5px;padding-bottom: 10px;
-    /*border-bottom: 1px solid #d4d1ff;*/
+    border-bottom: 1px solid #d4d1ff;
 }
 #register,#login .modal-dialog{
     margin-top: 40px;
@@ -3786,4 +3786,10 @@ input{
 }
 .comment-box #theImg{
     max-width: 600px;
+}
+.filemanager-buttons-client .pointer{
+    color: #999;
+}
+.border-bottom{
+    border-bottom: 1px solid #ddd;
 }

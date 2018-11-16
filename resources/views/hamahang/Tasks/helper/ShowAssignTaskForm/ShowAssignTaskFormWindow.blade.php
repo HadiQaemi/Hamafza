@@ -3,20 +3,22 @@
         <li>
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
-        <li>
-            <a href="#tab_t2" data-toggle="tab">تنظیم</a>
+        <li class="disabled">
+            {{--<a href="#tab_t2" data-toggle="tab">تنظیم</a>--}}
+            <a href="" data-toggle="tab">تنظیم</a>
         </li>
-        <li>
-            <a href="#tab_t3" data-toggle="tab">منابع</a>
+        <li class="disabled">
+            {{--<a href="#tab_t3" data-toggle="tab">منابع</a>--}}
+            <a href="" data-toggle="tab">منابع</a>
         </li>
         <li>
             <a href="#tab_t4" data-toggle="tab">روابط</a>
         </li>
+        <li>
+            <a href="#tab_t6" data-toggle="tab">تخصیص</a>
+        </li>
         <li class="active">
             <a href="#tab_t5" data-toggle="tab">اقدام</a>
-        </li>
-        <li>
-            <a href="#tab_t6" data-toggle="tab">اختصاص</a>
         </li>
         <li>
             <a href="#tab_t7" data-toggle="tab">گفتگو</a>
@@ -181,8 +183,8 @@
 
                         <div class="col-xs-12 noRightPadding noLeftPadding">
                             <span class="pull-right;">
-                                <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=on-time ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? 'checked' : '' }}/>
-                                <label for="on-time">{{ trans('tasks.on-time') }}</label>
+                                {{--<input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=on-time ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? 'checked' : '' }}/>--}}
+                                {{--<label for="on-time">{{ trans('tasks.on-time') }}</label>--}}
                                 <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=no-detemine ' : 'disabled'}} onclick="" value="3" {{ $task['respite_timing_type']==3 ? 'checked' : '' }}/>
                                 <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
                             </span>
@@ -689,17 +691,6 @@
 
                     </div>
                 </div>
-                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
-                    </div>
-                    <div class="col-lg-11">
-                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"></select>
-                        <span class=" Chosen-LeftIcon"></span>
-                    </div>
-                </div>
                 <div class="row col-lg-12">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.predict_duration') }}</label>
@@ -719,49 +710,82 @@
                     </div>
                 </div>
                 <div class="row col-lg-12" style="margin-bottom: 20px;border-bottom: #ccc solid 1px;">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.predict_done_time') }}</label>
+                    <div class="row col-lg-12 noLeftPadding noRightPadding">
+                        <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                            <label class="line-height-35">{{ trans('tasks.timing') }}</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="pull-right">
+                                <input type="radio" name="timing_type" id="timing_automatic" value="automatic" checked/>
+                                <label class="line-height-35" for="timing_automatic">{{ trans('tasks.automatic') }}</label>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                                <input type="radio" name="timing_type" id="timing_manual" value="manual"/>
+                                <label class="line-height-35" for="timing_manual">{{ trans('tasks.manual') }}</label>
+                            </div>
+
+                            {{--<div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">--}}
+                                {{--<input type="radio" name="done_time" id="not-determine" value="not-determine"/>--}}
+                                {{--<label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>--}}
+                            {{--</div>--}}
+                        </div>
                     </div>
-                    <div class="col-lg-10">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="done_time" id="to_end" value="to_end"/>
+                    <div class="row col-lg-12 noLeftPadding noRightPadding time_manual hidden">
+                        <div class="col-lg-12 noLeftPadding noRightPadding">
+                            <div class="col-lg-2 noLeftPadding noRightPadding"></div>
+                            <div class="col-lg-9 pull-right">
+                                <label>{{ trans('tasks.begin') }}: </label>
+                                <label for="determined-time">{{ trans('tasks.in') }}</label>
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                            </div>
                         </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <label for="to_end">{{ trans('tasks.to_end') }}</label>
+                        <div class="col-lg-12 noLeftPadding noRightPadding">
+                            <div class="col-lg-2 noLeftPadding noRightPadding"></div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                                <label>{{ trans('tasks.end') }}: </label>
+                                <input type="radio" name="done_time" id="to_end" value="to_end"/>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                                <label for="to_end">{{ trans('tasks.to_end') }}</label>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                                <select id="task_schedul_" name="to_end" class="form-control border-radius">
+                                    <option value="daily">{{trans('tasks.today')}}</option>
+                                    <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
+                                    <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
+                                </select>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                                <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
+                                <label for="determined-time">{{ trans('tasks.in') }}</label>
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                                <label for="determined-time">{{ trans('tasks.hour') }}</label>
+                                <input type="text" class="form-control border-radius TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
+                            </div>
                         </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
-                            <select id="task_schedul_" name="to_end" class="form-control border-radius">
-                                <option value="daily">{{trans('tasks.this')}} {{trans('tasks.day')}}</option>
-                                <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
-                                <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
-                            </select>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
-                            <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
-                            <label for="determined-time">{{ trans('tasks.in') }}</label>
-                            <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
-                            <label for="determined-time">{{ trans('tasks.hour') }}</label>
-                            <input type="text" class="form-control border-radius TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
-                            <input type="radio" name="done_time" id="not-determine" value="not-determine"/>
-                            <label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>
-                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple"></select>
+                        <span class=" Chosen-LeftIcon"></span>
                     </div>
                 </div>
 
             </div>
             <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
-                <div class="col-xs-12">
-                    <div class="col-xs-3">
-                        <label class="line-height-3">گفتگو</label>
-                    </div>
-                    <div class="col-xs-8">
+                <div class="col-xs-12 margin-bottom-30">
+                    <div class="col-xs-11">
                         <input type="text" id="message" class="form-control border-radius" placeholder="پیام"/>
                         <input type="hidden" id="user" class="form-control border-radius" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
-                    <div class="col-xs-1">
-                        <span class="btn btn-primary fa fa-plus" id="add_message_task"></span>
+                    <div class="col-xs-1 pointer line-height-30">
+                        <span class="fa fa-plus line-height-30" id="add_message_task"></span>
                     </div>
                 </div>
                 <div class="col-xs-12">

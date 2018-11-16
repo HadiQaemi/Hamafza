@@ -9,11 +9,13 @@
         <li class="{{count($res['task']['users'])>0 ? '' :'active'}}">
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
-        <li>
-            <a href="#tab_t2" data-toggle="tab">تنظیم</a>
+        <li class="disabled">
+            {{--<a href="#tab_t2" data-toggle="tab">تنظیم</a>--}}
+            <a href="#" data-toggle="tab">تنظیم</a>
         </li>
-        <li>
-            <a href="#tab_t3" data-toggle="tab">منابع</a>
+        <li class="disabled">
+            {{--<a href="#tab_t3" data-toggle="tab">منابع</a>--}}
+            <a href="#" data-toggle="tab">منابع</a>
         </li>
         <li>
             <a href="#tab_t4" data-toggle="tab">روابط</a>
@@ -99,19 +101,6 @@
                         </select>
                     </div>
                 </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
-                    <div class="col-lg-11">
-                        <select class="select2_auto_complete_projects col-xs-12"
-                                data-placeholder="{{trans('tasks.enter_project_name')}}" multiple="multiple" {{$edit_able == 1 ? ' name=project_tasks[] id=new_task_projects ' : 'disabled'}} >
-                            @if(!empty($res['task_projects']))
-                                @foreach($res['task_projects'] as $project)
-                                    <option selected="selected" value="{{ $project->id }}">{{ $project->title }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-11">
@@ -189,6 +178,27 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-11 line-height-35">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
+                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{$task['importance'] ==0 ? 'checked' : ''}}/>
+                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_yes ' : 'disabled'}} value="1" {{$task['immediate'] ==1 ? 'checked' : ''}}/>
+                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_no ' : 'disabled'}} value="0"  {{$task['immediate'] ==0 ? 'checked' : ''}}/>
+                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
@@ -198,8 +208,8 @@
 
                         <div class="col-xs-12 noRightPadding noLeftPadding">
                             <span class="pull-right;">
-                                <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=on-time ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? 'checked' : '' }}/>
-                                <label for="on-time">{{ trans('tasks.on-time') }}</label>
+                                {{--<input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=on-time ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? 'checked' : '' }}/>--}}
+                                {{--<label for="on-time">{{ trans('tasks.on-time') }}</label>--}}
                                 <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=no-detemine ' : 'disabled'}} onclick="" value="3" {{ $task['respite_timing_type']==3 ? 'checked' : '' }}/>
                                 <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
                             </span>
@@ -220,27 +230,6 @@
                             </span>
                         </div>
 
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-11 line-height-35">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
-                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{$task['importance'] ==0 ? 'checked' : ''}}/>
-                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_yes ' : 'disabled'}} value="1" {{$task['immediate'] ==1 ? 'checked' : ''}}/>
-                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_no ' : 'disabled'}} value="0"  {{$task['immediate'] ==0 ? 'checked' : ''}}/>
-                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
-                        </div>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -493,6 +482,25 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_t4" style="padding-top: 8px;margin-top:20px">
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.task') }}</label></div>
+                    <div class="col-lg-11">
+                        <span class="task_title line-height-35">{{$task['title']}}</span>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-bottom-30 border-bottom">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
+                    <div class="col-lg-11">
+                        <select class="select2_auto_complete_projects col-xs-12"
+                                data-placeholder="{{trans('tasks.enter_project_name')}}" multiple="multiple" {{$edit_able == 1 ? ' name=project_tasks[] id=new_task_projects ' : 'disabled'}} >
+                            @if(!empty($res['task_projects']))
+                                @foreach($res['task_projects'] as $project)
+                                    <option selected="selected" value="{{ $project->id }}">{{ $project->title }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
                 @if($edit_able == 1)
                     <div class="col-xs-12">
                         <div class="col-xs-1">
@@ -510,10 +518,11 @@
                         {{--<input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
                         {{--</div>--}}
                         <div class="col-xs-1">
-                            <span class="btn btn-primary" id="add_rel_task">{{ trans('app.add') }}</span>
+                            <span class="fa fa-plus line-height-30" id="add_rel_task"></span>
                         </div>
                     </div>
                 @endif
+
                 <div class="col-xs-12">
                     <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>

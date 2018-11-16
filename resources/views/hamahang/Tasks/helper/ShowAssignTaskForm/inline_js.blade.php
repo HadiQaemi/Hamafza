@@ -603,6 +603,14 @@
     function remove_action(action_list) {
         $('.action_list'+action_list).remove();
     }
+    $('input:radio[name="timing_type"]').on('click', function () {
+        if($(this).val() == 'manual')
+        {
+            $('.time_manual').removeClass('hidden');
+        }else{
+            $('.time_manual').addClass('hidden');
+        }
+    });
     var action_list = 0;
 	$('#add_btn_action').on('click', function() {
         action_list ++;
