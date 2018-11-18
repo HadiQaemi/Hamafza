@@ -202,13 +202,14 @@ class PageClass
             $data['sid'] = $sid;
             if ($ISView == 1)
             {
-                //add by hadi
+                //add by hadi nofollow
                 //orginal $page = $pc->modifyText($Body, $uid, $pid, $sid, $tabtype);
-                if($subject->kind == 3 && strlen($Body) > 500000)
+                if($subject->kind == 3 && strlen($Body) > 5000000)
                     $page = $Body;
                 else
                     $page = $pc->modifyText($Body, $uid, $pid, $sid, $tabtype);
                 //
+
                 $files = $pc->page_files($pid);
                 $slides = $pc->page_slides($pid);
                 $films = $pc->page_films($pid);

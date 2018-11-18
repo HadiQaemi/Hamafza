@@ -716,11 +716,11 @@
                         </div>
                         <div class="col-lg-10">
                             <div class="pull-right">
-                                <input type="radio" name="timing_type" id="timing_automatic" value="automatic" checked/>
+                                <input type="radio" name="timing_type" id="timing_automatic" value="automatic" disabled/>
                                 <label class="line-height-35" for="timing_automatic">{{ trans('tasks.automatic') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="timing_type" id="timing_manual" value="manual"/>
+                                <input type="radio" name="timing_type" id="timing_manual" value="manual" checked/>
                                 <label class="line-height-35" for="timing_manual">{{ trans('tasks.manual') }}</label>
                             </div>
 
@@ -730,32 +730,31 @@
                             {{--</div>--}}
                         </div>
                     </div>
-                    <div class="row col-lg-12 noLeftPadding noRightPadding time_manual hidden">
+                    <div class="row col-lg-12 noLeftPadding noRightPadding time_manual">
                         <div class="col-lg-12 noLeftPadding noRightPadding">
                             <div class="col-lg-2 noLeftPadding noRightPadding"></div>
-                            <div class="col-lg-9 pull-right">
+                            <div class="pull-right">
                                 <label>{{ trans('tasks.begin') }}: </label>
-                                <label for="determined-time">{{ trans('tasks.in') }}</label>
                                 <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
                             </div>
                         </div>
                         <div class="col-lg-12 noLeftPadding noRightPadding">
                             <div class="col-lg-2 noLeftPadding noRightPadding"></div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
                                 <label>{{ trans('tasks.end') }}: </label>
-                                <input type="radio" name="done_time" id="to_end" value="to_end"/>
+                                <input type="radio" name="done_time" id="to_end" value="to_end" checked/>
                             </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <label for="to_end">{{ trans('tasks.to_end') }}</label>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
+                                <label for="to_end">{{ trans('tasks.to') }}</label>
                             </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
                                 <select id="task_schedul_" name="to_end" class="form-control border-radius">
                                     <option value="daily">{{trans('tasks.today')}}</option>
                                     <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
                                     <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
                                 </select>
                             </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
                                 <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
                                 <label for="determined-time">{{ trans('tasks.in') }}</label>
                                 <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
@@ -784,12 +783,13 @@
                         <input type="text" id="message" class="form-control border-radius" placeholder="پیام"/>
                         <input type="hidden" id="user" class="form-control border-radius" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
                     </div>
-                    <div class="col-xs-1 pointer line-height-30">
-                        <span class="fa fa-plus line-height-30" id="add_message_task"></span>
+                    <div class="col-xs-1 pointer line-height-35">
+                        <a id="add_message_task" class="btn btn-primary">{{trans('app.submit')}}</a>
                     </div>
+
                 </div>
                 <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}

@@ -18,7 +18,7 @@ class CaptchaController extends Controller
         $width = config('captcha.width');
         $height = config('captcha.height');
 //        $random_string = str_replace('O', '5', strtoupper(md5(rand(0, 1000000))));
-        $random_string = strtoupper((rand(0, 1000000000)));
+        $random_string = strtoupper((rand(100000, 1000000000)));
         /*$random_string = str_replace('O', '5', strtoupper((rand(0, 1000000000))));
         $random_string = str_replace('0', 'H', $random_string);
         $random_string = str_replace('B', 'F', $random_string);
