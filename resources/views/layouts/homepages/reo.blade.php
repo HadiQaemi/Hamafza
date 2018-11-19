@@ -140,59 +140,50 @@
                                         <tbody>
                                         <tr>
                                             <td style="padding: 2px;padding-left: 15px;">
-                                                <label style="padding-bottom: 10px;padding-top: 10px;">رایانامه یا نام کاربری</label>
-                                                <span style=""></span>
                                                 <div id="homepage_username_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                <input type="text" name="username" id="username" autofocus="" class="form-control required" style="direction: ltr; font-family: Arial;" tabindex="1"></td>
+                                                <input type="text" name="username" id="username" autofocus="" class="form-control required"  " placeholder="رایانامه یا نام کاربری"></td>
                                         </tr>
                                         <tr>
                                             <td style="padding: 2px;width:100%;padding-left: 15px;">
-                                                <label style="padding-bottom: 10px;padding-top: 10px;">رمز عبور</label>
-                                                <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                <input type="password" id="passwords" name="password" class="form-control required" style="direction: ltr;" autocomplete="off" tabindex="2">
+                                                <div id="homepage_password_request_errors" style=" font-size: 12px; color: red"></div>
+                                                <input type="password" id="passwords" name="password" class="form-control required"  " placeholder="رمز عبور"  autocomplete="off">
                                             </td>
                                         </tr>
                                         @if (!config('app.debug'))
                                             <tr>
-                                                <td style="padding: 2px;padding-left: 15px;padding-top: 15px;">
-                                                    <div class="col-xs-2" style="height: 35px;line-height: 35px;padding:0px"><label>کد امنیتی</label></div>
-                                                    <div class="col-xs-4" style="padding:0px">
-                                                        <div id="captcha_code" class="form-group input-group">
-                                                            <input type="text" name="captcha_code" class="form-control" style="direction: ltr; font-family: arial;" autocomplete="off" tabindex="3">
-                                                            <div id="homepage_captcha_request_errors" style="font-family: IranSharp; font-size: 12px; color: red"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6" style="padding:0px">
-                                                        <div class="homepage_login_captcha_refresh captcha-refresh-style" style="">
-                                                            <i style="color: black; margin-top: 9px;" class="fa fa-refresh"></i>
-                                                        </div>
-                                                        <div style="float: right;">
-                                                            <img style="height: 34px;" class="homepage_login_captcha_image" src="{{ route('captcha', 'login') }}">
+                                                <td style="padding: 2px;padding-left: 15px;">
+                                                    <div style="padding:0px">
+                                                        <div id="captcha_code" class="form-group input-group col-xs-5" style="float: right;" >
+
+                                                            <input type="text" name="captcha_code" placeholder="کد امنیتی" class="form-control" tabindex="1"     >
                                                         </div>
 
+                                                        <div class="homepage_login_captcha_refresh captcha-refresh-style" style="float: right;margin-right: 7px;">
+                                                            <i style="color: black; margin-top: 9px;" class="fa fa-refresh"></i>
+                                                        </div>
+                                                        <div >
+                                                            <img style="height: 34px;  border-radius: 4px 0px 0px 4px !important" class="homepage_login_captcha_image" src="{{ route('captcha', 'login') }}">
+                                                        </div>
+                                                        <div id="homepage_captcha_request_errors" style="    clear: both;font-family: IranSharp; font-size: 12px; color: red"></div>
                                                     </div>
                                                 </td>
                                             </tr>
                                         @endif
-                                        <tr style="margin-top: 20px">
-                                            <td class="homepage_login" style="padding: 2px; padding-left: 15px;">
-
-                                                {{--<div class="forgetpas homepage_forget_password_user" data-target="#forgetpas" data-toggle="modal" data-dismiss="modal" style="display: table; margin: auto;">رمز عبور را فراموش کرده‌ام</div>--}}
+                                        <tr>
+                                            <td style="padding: 2px;padding-left: 15px;">
+                                                <input type="button" id="btn_homepage_login_form" class="btn btn-primary col-xs-12" value="ورود به سامانه"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="homepage_register_user" style="cursor: pointer; color: green;">کاربر جدید هستم</span>
+                                                /
+                                                <span class="homepage_forget_password_user" style="cursor: pointer;">رمز عبور را فراموش کرده‌ام</span>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div class="col-xs-12 noLeftPadding noRightPadding margin-top-15">
-                                        <div class="col-xs-4 noLeftPadding noRightPadding" style="">
-                                            <input type="button" id="btn_homepage_login_form" class="btn btn-primary pull-right" value="ورود به سامانه"/>
-                                        </div>
-                                        <div class="col-xs-8 noLeftPadding noRightPadding"  style="padding-top: 5px;">
-                                            <span class="homepage_register_user" style="cursor: pointer; color: green;">کاربر جدید هستم</span>
-                                            /
-                                            <span class="homepage_forget_password_user" style="cursor: pointer;">رمز عبور را فراموش کرده‌ام</span>
-                                            {{--<a href="#">lhljhkj</a>--}}
-                                        </div>
-                                    </div>
+
                                 </form>
                             </div>
                         </div>
