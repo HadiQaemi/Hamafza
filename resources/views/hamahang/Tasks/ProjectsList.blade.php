@@ -25,6 +25,7 @@
                             <th>{{trans('projects.end_date')}}</th>
                             <th>{{trans('projects.progress')}}</th>
                             <th>{{trans('projects.status')}}</th>
+                            <th>{{trans('projects.operation')}}</th>
                             {{--<th>عملیات</th>--}}
                         </tr>
                         </thead>
@@ -46,6 +47,7 @@
     <script>
         $(document).ready(function () {
             window.table_chart_grid3 = $('#grid3').DataTable();
+            $('[data-toggle="tooltip"]').tooltip();
             var send_info = {
                 @if(isset($filter_subject_id))
                 subject_id: '{{ $filter_subject_id }}'
@@ -97,6 +99,11 @@
                     {"data": "end_date",
                         "mRender": function (data, type, full) {
                             return "";
+                        }
+                    },
+                    {"data": "end_date",
+                        "mRender": function (data, type, full) {
+                            return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-paper-plane margin-right-10 pointer' data-toggle='tooltip' title='صفحه'></a><a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف'></a>";
                         }
                     }
                     // {

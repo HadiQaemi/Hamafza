@@ -8,7 +8,9 @@
         document.getElementById('date1').disabled = true;
         document.getElementById('time1').disabled = true;
     }
-
+    $('#title').keypress(function () {
+        $('.task_title').html($(this).val());
+    });
     function change_normal_task_timing_type(id) {
 
         if (id == 1) {
@@ -731,7 +733,5 @@
 		});
         $('.new_task_save_type_draft').click();
     })
-    $('#title').keypress(function () {
-        $('.task_title').html($(this).val());
-    });
+
 </script>

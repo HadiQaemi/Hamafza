@@ -3793,3 +3793,13 @@ input{
 .border-bottom{
     border-bottom: 1px solid #ddd;
 }
+.title_task{
+    border: 1px solid #999;
+    border-radius: 10px;
+    width: 150px;
+}
+.title_task_angel{
+    height: 35px;
+    line-height: 35px;
+    font-size: 35px;
+}

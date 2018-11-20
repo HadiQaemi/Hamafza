@@ -480,6 +480,10 @@
                     show_project_info($(this).data("p_id"));
                 });
 
+                $(document).on('click', ".project_tasks", function () {
+                    show_project_tasks($(this).data("p_id"));
+                });
+
                 function resize_init() {
                     window.pageheight = $(window).height();
                     window.dcrl2 = pageheight;

@@ -42,6 +42,14 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function ProjectTasksWindow()
+    {
+        return json_encode([
+            'header' => trans('tasks.project'),
+            'content' => view('hamahang.Projects.show_project_tasks_window')->with('ProjectInfo', $this->project_tasks(Request::input('pid')))->render()
+        ]);
+    }
+
     private function find_start_date($id)
     {
         $relation = DB::table('hamahang_project_task_relations')
@@ -257,14 +265,69 @@ class ProjectController extends Controller
         return $children;
     }
 
-    public function project_gantt_data($uname)
+    public function project_tasks($pid)
+    {
+        date_default_timezone_set('Asia/Tehran');
+        $res = [];
+        $hamahang_project_task = DB::table('hamahang_project_task')
+            ->where('project_id', '=', $pid)
+            ->whereNull('deleted_at')
+            ->pluck('task_id')->toArray();
+
+        $res['project_task_relations'] =  DB::table('hamahang_task_relations')
+            ->leftjoin('hamahang_task as t1', 't1.id', '=', 'hamahang_task_relations.task_id1')
+            ->leftjoin('hamahang_task as t2', 't2.id', '=', 'hamahang_task_relations.task_id2')
+            ->whereIn('hamahang_task_relations.task_id1', $hamahang_project_task)
+            ->whereIn('hamahang_task_relations.task_id2', $hamahang_project_task)
+            ->whereNull('hamahang_task_relations.deleted_at')
+            ->select("hamahang_task_relations.*", "t1.title as title1", "t2.title as title2")
+            ->get();
+
+        $end_start = [];
+        foreach($res['project_task_relations'] as $project_task_relation)
+            $end_start[$project_task_relation->task_id1] = $project_task_relation;
+
+        $res['project_task_relations_begins'] =  DB::table('hamahang_task as ht')
+            ->whereNotExists(function ($query) {
+                $query->select(\DB::raw(1))
+                    ->from('hamahang_task_relations')
+                    ->whereRaw('hamahang_task_relations.task_id2 = ht.id');
+            })
+            ->whereExists(function ($query) {
+                $query->select(\DB::raw(1))
+                    ->from('hamahang_task_relations')
+                    ->whereRaw('hamahang_task_relations.task_id1 = ht.id');
+            })
+            ->whereIn('ht.id', $hamahang_project_task)
+            ->get()
+        ;
+
+
+        $hamahang_project_task = DB::table('hamahang_project_task')
+            ->where('project_id', '=', $pid)
+            ->leftjoin('hamahang_task', 'hamahang_task.id', '=', 'hamahang_project_task.task_id')
+            ->whereNull('hamahang_project_task.deleted_at')
+            ->get();
+        $project_tasks = [];
+        foreach($hamahang_project_task as $task)
+        {
+            $project_tasks[$task->id] = $task;
+        }
+        $res['end_start'] =  $end_start;
+        $res['project_info'] =  $project_info = $this->ProjectInfo();
+        $res['hamahang_project_task'] =  $hamahang_project_task;
+        $res['ordered_project_tasks'] =  $project_tasks;
+        return $res;
+    }
+
+    public function project_gantt_data($pid)
     {
         date_default_timezone_set('Asia/Tehran');
         $arr = [];
-        $project_startdate = DB::table('hamahang_project')->where('id', '=', 2)->first()->start_date;
+        $project_startdate = DB::table('hamahang_project')->where('id', '=', $pid)->first()->start_date;
 
         $project_task_relations = DB::table('hamahang_project_task_relations')
-            ->where('project_id', '=', 9)
+            ->where('project_id', '=', $pid)
             ->whereNull('deleted_at')
             ->select('first_task_id', 'second_task_id', 'relation')
             ->get();
@@ -279,7 +342,7 @@ class ProjectController extends Controller
         $ProjectTasks = DB::table('hamahang_project_task')
             ->join('hamahang_task', 'hamahang_task.id', '=', 'hamahang_project_task.task_id')
             ->whereNull('hamahang_project_task.deleted_at')
-            ->where('hamahang_project_task.project_id', '=', 9)
+            ->where('hamahang_project_task.project_id', '=', $pid)
             ->select('hamahang_project_task.task_id', 'hamahang_task.duration_day', 'hamahang_task.title')
             ->get();
 

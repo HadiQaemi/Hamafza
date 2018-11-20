@@ -2,6 +2,7 @@
 Route::post('UserOrgs', ['as' => 'hamahang.project.user_orgs', 'uses' => 'TaskController@UserOrgs', 'middleware' => ['dynamic_permission:posts.hamahang.project.user_orgs']]);
 Route::post('ProjectInfo', ['as' => 'hamahang.project.info', 'uses' => 'ProjectController@ProjectInfo', 'middleware' => ['dynamic_permission:posts.hamahang.project.info']]);
 Route::post('ProjectInfoWindow', ['as' => 'hamahang.project.project_info_window', 'uses' => 'ProjectController@ProjectInfoWindow', 'middleware' => ['dynamic_permission:posts.hamahang.project.project_info_window']]);
+Route::post('ProjectTasksWindow', ['as' => 'hamahang.project.show_project_tasks', 'uses' => 'ProjectController@ProjectTasksWindow', 'middleware' => ['dynamic_permission:posts.hamahang.project.project_info_window']]);
 Route::post('FetchProjectList', ['as' => 'hamahang.projects.list', 'uses' => 'ProjectController@FetchProjects', 'middleware' => ['dynamic_permission:posts.hamahang.project.list']]);
 Route::post('UserProjects', ['as' => 'hamahang.project.user_projects', 'uses' => 'ProjectController@UserProjects', 'middleware' => ['dynamic_permission:posts.hamahang.project.user_projects']]);
 Route::post('SaveNewProject', ['as' => 'hamahang.project.save_new_project', 'uses' => 'ProjectController@SaveNewProject', 'middleware' => ['dynamic_permission:posts.hamahang.project.save_new_project']]);
