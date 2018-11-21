@@ -1,5 +1,4 @@
 @php
-
     $ordered_project_tasks = $ProjectInfo['ordered_project_tasks'];
     $end_start = $ProjectInfo['end_start'];
     $project_task_relations_begins = $ProjectInfo['project_task_relations_begins'];
@@ -61,32 +60,26 @@
     </div>
 </div>
 <div class="col-xs-12 line-height-35 margin-top-20 border-top-lg" style="height: 500px;overflow: auto">
-    <?php
-    $showed = [];
-    foreach($project_task_relations_begins as $task)
-    {
-        $showed[] = $task->id;
-        echo '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10">';
-        echo '<div class="col-lg-3 title_task pull-right">'.$task->title.'</div><i class="fa fa-caret-left fa-4 pull-right title_task_angel margin-right-10"></i>';
-        $task_new = isset($end_start[$task->id]->task_id2) ? $ordered_project_tasks[$end_start[$task->id]->task_id2] : '';
-        while(isset($task_new->title))
+    <table id="ProjectList" class="table dt-responsive nowrap display dataTable no-footer"
+           style="text-align: center" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>شماره</th>
+            <th>عنوان</th>
+            <th>بعدی</th>
+            <th>زیرین</th>
+        </tr>
+        </thead>
+        <?php
+        foreach($ordered_project_tasks as $task)
         {
-            $showed[] = $task_new->id;
-            echo '<div class="col-lg-3 title_task pull-right">'.$task_new->title.'</div><i class="fa fa-caret-left fa-4 pull-right title_task_angel margin-right-10"></i>';
-            $task_new = isset($end_start[$task_new->id]->task_id2) ? $ordered_project_tasks[$end_start[$task_new->id]->task_id2] : '';
-
+            echo '<tr>';
+                echo '<td>'.$task->id.'</td>';
+                echo '<td>'.$task->title.'</td>';
+                echo '<td>'.(isset($end_start[$task->id]->task_id2) ? $end_start[$task->id]->task_id2 : '').'</td>';
+                echo '<td>'.(isset($end_start[$task->id]->task_id2) ? $end_start[$task->id]->task_id2 : '').'</td>';
+            echo '</tr>';
         }
-        echo '</div>';
-    }
-    foreach($ordered_project_tasks as $task)
-    {
-        if(!in_array($task->id,$showed))
-        {
-            echo '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10"><div class="col-xs-12 title_task">'.$task->title.'</div><i class="fa fa-caret-left fa-4 pull-right title_task_angel margin-right-10"></i></div>';
-        }
-        $showed[] = $task->id;
-    }
-
-    ?>
-
+        ?>
+    </table>
 </div>

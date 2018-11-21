@@ -103,7 +103,7 @@
                     },
                     {"data": "end_date",
                         "mRender": function (data, type, full) {
-                            return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-paper-plane margin-right-10 pointer' data-toggle='tooltip' title='صفحه'></a><a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف'></a>";
+                            return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-paper-plane margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'0"></a>' : '<a class="fa fa-paper-plane margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف' onclick='confirm(\"آیا حذف شود؟\")'></a>";
                         }
                     }
                     // {

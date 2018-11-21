@@ -16,7 +16,21 @@ class task_relations extends Model
 
     public static function create_task_relation($task_id1, $task_id2, $delay, $delay_type, $relation, $weight, $uid = -1)
     {
-
+        $temp = '';
+        if($relation == 'end_start')
+        {
+            $delay_type == 'start_end';
+            $temp = $task_id1;
+            $task_id1 = $task_id2;
+            $task_id2 = $temp;
+        }
+        if($relation == 'up')
+        {
+            $delay_type == 'down';
+            $temp = $task_id1;
+            $task_id1 = $task_id2;
+            $task_id2 = $temp;
+        }
         $keyword = new tasks_relationscc;
         $keyword->uid = ($uid == -1) ? Auth::id() : $uid;
         $keyword->task_id1 = $task_id1;

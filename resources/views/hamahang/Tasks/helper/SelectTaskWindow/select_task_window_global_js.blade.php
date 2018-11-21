@@ -95,7 +95,33 @@
             }
         });
     }
-
+    function show_project_tasks_list(id)
+    {
+        var send_info = {
+            p_id: id,
+            pid: id
+        }
+        var h = $(window).height();
+        var w = $(window).width();
+        $.ajax({
+            url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',
+            type:'post',
+            data: send_info,
+            dataType:'json',
+            success :function(data)
+            {
+                console.log(data);
+                calendarModal = $.jsPanel({
+                    position: {my: "center-top", at: "center-top", offsetY: 120},
+                    // contentSize: {width: 1000, height: 600},
+                    panelSize: {width: w * 0.7, height: h * 0.7},
+                    headerTitle: data.header,
+                    content :data.content ,
+                    footerToolbar:data.footer
+                });
+            }
+        });
+    }
     function show_task_info(id) {
         var send_info = {
             t_id: id
