@@ -352,5 +352,11 @@
 @stop
 @include('sections.tabs')
 @section('position_right_col_3')
-    @include('sections.desktop_menu')
+    <?php
+        if($get_menu !='')
+            echo $get_menu;
+        else{?>
+            @include('sections.desktop_menu')
+        <?php }?>
+    {{--@include('sections.desktop_menu')--}}
 @stop

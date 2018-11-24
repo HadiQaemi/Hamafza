@@ -238,10 +238,12 @@ class MyAssignedTaskController extends Controller
     }
     public function get_transcripts($uname)
     {
+        $get_menu = '';
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.transcripts':
                 $arr = variable_generator('page', 'desktop', $uname);
+                $arr['get_menu'] = $get_menu;
                 $arr['filter_subject_id'] = $arr["sid"];
                 $arr['HFM_CNT'] = HFM_GenerateUploadForm(
                     [
@@ -263,6 +265,7 @@ class MyAssignedTaskController extends Controller
                     ]
                 );
                 $arr = variable_generator('user', 'desktop', $uname);
+                $arr['get_menu'] = $get_menu;
                 return view('hamahang.Tasks.MyAssignedTask.MyTranscriptsTasksList', $arr);
                 break;
         }

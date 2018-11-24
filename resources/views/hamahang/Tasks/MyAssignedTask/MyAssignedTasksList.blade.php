@@ -99,11 +99,11 @@
                     <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks">
                     <span>{{trans('tasks.status_finished')}}</span>
                 </label>
-                   <label>
-                      <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
-                      <span>{{trans('tasks.status_suspended')}}</span>
-                  </label>
-              </div>
+                <label>
+                    <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
+                    <span>{{trans('tasks.status_suspended')}}</span>
+                </label>
+            </div>
             {{--</div>--}}
         </form>
     </div>
@@ -168,7 +168,7 @@
                                 <div class="col-xs-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                        <span>   انتخاب وظایف</span>
+                                            <span>   انتخاب وظایف</span>
                                         </div>
                                         <div class="panel-body">
                                             <div class="row row-fluid">

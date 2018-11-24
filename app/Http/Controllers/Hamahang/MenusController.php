@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 
 use App\Models\Hamahang\Menus\MenuItem;
 use App\Role;
+use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redis;
@@ -643,28 +644,29 @@ class MenusController extends Controller
 
     public function menusList($menutype = 1, $subject_id = false)
     {
-
-        $menus = \Session::get('treeMenu');
-        if(!is_array($menus) || count($menus)==0)
-        {
-            $menuObj = Menus::with('items')->find($menutype);
-            $menus = $menuObj->items()->where('status', '1')->get()->toArray();
-
-//            \Session::put('treeMenu',$menus);
+        if (\Cache::store('file')->has(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER'])) {
+            return \Cache::store('file')->get(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER']);
         }else{
-            $menus = $menus;
-        }
-//        $redis = Redis::connection();
-//        Redis::set('asdasd','asdasd');
-//        $DB = \Session::all();
-//        $mem = memory_get_peak_usage();
-//        $DB_tmp = unserialize(serialize($DB));
-////        $mem = memory_get_peak_usage() - $mem;
-//        dd(($mem/1024/1024),$DB);
-        $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
-//        dd($treeMenu);
+            $menus = \Session::get('treeMenu');
+            if(!is_array($menus) || count($menus)==0)
+            {
+                if (\Cache::store('file')->has(auth()->user().'-'.'menutype'.$menutype)) {
+                    $menus = \Cache::store('file')->get(auth()->user()->Uname.'-'.'menutype'.$menutype);
+                }else {
+                    $menuObj = Menus::with('items')->find($menutype);
+                    $menus = $menuObj->items()->where('status', '1')->get()->toArray();
+                    \Cache::store('file')->put(auth()->user()->Uname.'-'.'menutype'.$menutype, $menus, Carbon::now()->addMonth(1));
+                }
+            }else{
+                $menus = $menus;
+            }
+//            $treeMenu = \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));
+            $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
 
-        return \Response::json($treeMenu);
+            \Cache::store('file')->put(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER'], $treeMenu, Carbon::now()->addMonth(1));
+            return $treeMenu;
+        }
+//        return \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));
     }
 
     public function getMenuNodes(Request $request)

@@ -22,7 +22,8 @@ if (!function_exists('buildMenuTree'))
             $sub['text'] = $sub['title'];
             if ($sub['href'] != '' && $sub['href_type'] == 0)
             {
-                $sub['a_attr']['href'] = $sub['href'];
+                $sub['a_attr']['href'] = '#';
+                $sub['a_attr']['hrefhref'] = $sub['href'];
             }
             else
             {
@@ -34,7 +35,8 @@ if (!function_exists('buildMenuTree'))
                         $sub['href'] = str_replace('[subject_id]', $item, $sub['href']);
                         $sub['href'] = str_replace('[page_id]', $item, $sub['href']);
                     }
-                    $sub['a_attr']['href'] = url($sub['href']);
+                    $sub['a_attr']['href'] = '#';
+                    $sub['a_attr']['hrefhref'] =  url($sub['href']);
                 }
                 else
                 {
@@ -52,15 +54,17 @@ if (!function_exists('buildMenuTree'))
                             }
                         }
 
-                        $sub['a_attr']['href'] = route($sub['route_name'], $result_route_var);
+                        $sub['a_attr']['href'] = '#';
+                        $sub['a_attr']['hrefhref'] = route($sub['route_name'], $result_route_var);
                     }
                     else
                     {
-                        $sub['a_attr']['href'] = $sub['href'];
+                        $sub['a_attr']['href'] = '#';
+                        $sub['a_attr']['hrefhref'] = $sub['href'];
                     }
                 }
             }
-            if ($current_url == $sub['a_attr']['href'])
+            if ($current_url == $sub['a_attr']['hrefhref'])
             {
                 //var_dump($sub['href']);
                 $sub['state']['opened'] = true;
@@ -124,7 +128,31 @@ if (!function_exists('buildMenuTree'))
         {
             $tree = [];
         }
-        return $tree;
+        $tree_t = '';
+        $status = 'hide';
+        foreach($tree as $k=>$node) {
+            $tree_child = '';
+            $status = 'hide';
+            foreach ($node['children'] as $children) {
+                if(isset($children['state']) and isset($children['state']['opened']))
+                {
+                    if($children['state']['opened']==true)
+                    {
+                        $status = 'ShowIndex show';
+                        $tree_child .= '<li class="active"><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
+                    }
+                }else{
+                    $tree_child .= '<li><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
+                }
+            }
+            $tree_t .= '<li class="dropdown-ver" node="'.$k.'">';
+            $tree_t .= '<a href="' . $node['href'] . '" data-toggle="dropdown-ver">' . $node['title'] . '</a>';
+            $tree_t .= '<ul class="dropdown-menu node'.$k.' '.$status.'">';
+            $tree_t .= $tree_child;
+            $tree_t .= '</ul>';
+            $tree_t .= '</li>';
+        }
+        return $tree_t;
     }
 
 }
