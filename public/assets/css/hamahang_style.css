@@ -696,6 +696,7 @@ strong.ui-state-error {
 
 .jsPanel {
     font-family: "IranSharp" !important;
+    z-index: 1000 !important;
 }
 
 .jsPanel .jsPanel-hdr {
