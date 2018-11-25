@@ -305,7 +305,7 @@
                 <button id="CommentPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
             </div>
         @endif
-        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&type='.$type)}}" title="وظیفه جدید"></a>
+        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&type='.$type.'&sid='.$params['sid'])}}" title="وظیفه جدید"></a>
 {{--        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$params['sid'].'&pid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>--}}
     @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
         @if ('0' == $vals['follow'])

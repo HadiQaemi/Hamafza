@@ -809,20 +809,24 @@ class MyAssignedTaskController extends Controller
                 if ($data->immediate == 1)
                 {
                     $output = 'فوری';
+                    $output_new = 'priority1';
                 }
                 else
                 {
                     $output = 'غیرفوری';
+                    $output_new = 'priority0';
                 }
                 if ($data->importance == 1)
                 {
                     $output .= ' و مهم';
+                    $output_new .= '1';
                 }
                 else
                 {
                     $output .= ' و غیرمهم ';
+                    $output_new .= '0';
                 }
-                return $output;
+                return $output_new;
             })
             ->addColumn('employee', function ($data)
             {

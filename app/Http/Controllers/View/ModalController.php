@@ -739,10 +739,18 @@ class ModalController extends Controller
 
     public function CreateNewTask()
     {
-        $res = $this->getParams(['sid', 'pid', 'sel']);
+        $res = $this->getParams(['sid', 'pid', 'sel', 'urid', 'kdid']);
         if ($res['sid'])
         {
             $res['subject'] = Subject::find($res['sid']);
+        }
+        if ($res['urid'])
+        {
+            $res['responsible'] = User::find($res['urid'])->toArray();
+        }
+        if ($res['kdid'])
+        {
+            $res['keyword'] = Keyword::find($res['kdid']);
         }
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
@@ -751,6 +759,7 @@ class ModalController extends Controller
                     'Multi']
             ]
         );
+//        dd($res);
         $arr = array_merge($arr, $res);
         return json_encode([
             'header' => trans('tasks.create_new_task'),

@@ -18,7 +18,7 @@
                 background: #999999;
             }
             .container-menu {
-                padding-top: 4px;
+                padding-top: 2px;
                 margin-left: -5px;
             }
             .container-menu > ul {

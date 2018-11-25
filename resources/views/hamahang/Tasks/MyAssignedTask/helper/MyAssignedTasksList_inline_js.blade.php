@@ -170,7 +170,10 @@
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     }},
-                {"data": "immediate"},
+                {"data": "immediate",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate+".png'/>";
+                    }},
                 {"data": "respite"},
                 {"data": "type"}
                 ,

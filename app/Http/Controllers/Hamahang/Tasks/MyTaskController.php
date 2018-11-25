@@ -497,20 +497,24 @@ class MyTaskController extends Controller
                 if ($data->immediate == 1)
                 {
                     $output = 'فوری';
+                    $output_num = 'priority1';
                 }
                 else
                 {
                     $output = 'غیرفوری';
+                    $output_num = 'priority0';
                 }
                 if ($data->importance == 1)
                 {
                     $output .= ' و مهم';
+                    $output_num .= '1';
                 }
                 else
                 {
                     $output .= ' و غیرمهم ';
+                    $output_num .= '0';
                 }
-                return $output;
+                return $output_num;
             })
             ->addColumn('employee', function ($data)
             {

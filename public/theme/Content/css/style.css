@@ -3730,7 +3730,7 @@ input{
 }
 .form_filter_priority_div{
     padding-right: 5px;padding-right: 5px;padding-bottom: 10px;
-    border-bottom: 1px solid #d4d1ff;
+    /*border-bottom: 1px solid #d4d1ff;*/
 }
 #register,#login .modal-dialog{
     margin-top: 40px;
@@ -3756,6 +3756,9 @@ input{
     top: 85px;
     /*height: 430px;*/
     height: 74vh;
+}
+.immediate-pic{
+    width: 35px;
 }
 .font-large{
     font-size:large;

@@ -934,7 +934,7 @@ class tasks extends Model
             $result->whereIn('hamahang_task_priority.importance', [11]);
         }
 
-        $result = $result->get();
+        $result = $result->groupBy('hamahang_task.id')->get();
         return $result;
     }
 

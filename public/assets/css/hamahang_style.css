@@ -1630,6 +1630,7 @@ th{
 }
 #portallist-search{
     height: 34px !important;
+    color:#fff !important;
 }
 #portallist-search::placeholder {
     color: #ccc;
@@ -1637,6 +1638,7 @@ th{
 }
 #bookmarklist-search{
     height: 34px !important;
+    color:#fff !important;
 }
 #page4 #search_term{
     background: #787979 !important;
@@ -1644,7 +1646,8 @@ th{
     border-bottom: 1px solid #585d5e !important;
     border-radius: 0px !important;
     background: #fff !important;
-    color: #ccc !important;
+    color:#fff !important;
+
 }
 #page4 #search_term::placeholder {
     color: #ccc;

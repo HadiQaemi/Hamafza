@@ -2,20 +2,20 @@
     $package_type = '';
     if(Request::input('package_type')=='persons')
     {
-        $package_type = 'pid';
+        $package_type = 'urid';
     }else if(Request::input('package_type')=='pages')
     {
-        $package_type = 'pgid';
+        $package_type = 'sid';
     }else if(Request::input('package_type')=='keywords')
     {
-        $package_type = 'kid';
+        $package_type = 'kdid';
     }
 @endphp
 @foreach($result_packages as $list_task)
     <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
         <div class="text-center div_title_not_started">
             <h6>
-                <span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>
+                {{--<span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>--}}
                 {{$list_task['name']}}
                 {{--(<span>{{(isset($list_task['tasks']) ? count($list_task['tasks']) : 0)}}</span>)--}}
                 <span style="margin-right: 10px">

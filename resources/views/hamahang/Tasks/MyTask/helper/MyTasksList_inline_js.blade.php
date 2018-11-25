@@ -82,19 +82,19 @@
         window.table_chart_grid2.destroy();
         readTable($("#form_filter_priority").serializeObject());
         {{--$.ajax({--}}
-            {{--url: '{{ route('hamahang.tasks.my_tasks.fetch') }}',--}}
-            {{--method: 'POST',--}}
-            {{--dataType: "json",--}}
-            {{--data: $("#form_filter_priority").serialize(),--}}
-            {{--success: function (res) {--}}
-                {{--//console.log(res.success);--}}
-                {{--if (res.success == true) {--}}
-                    {{--$('#priority_content_area').html(res.data);--}}
-                    {{--//messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'});--}}
-                {{--} else if (res.success == false) {--}}
-                    {{--messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);--}}
-                {{--}--}}
-            {{--}--}}
+        {{--url: '{{ route('hamahang.tasks.my_tasks.fetch') }}',--}}
+        {{--method: 'POST',--}}
+        {{--dataType: "json",--}}
+        {{--data: $("#form_filter_priority").serialize(),--}}
+        {{--success: function (res) {--}}
+        {{--//console.log(res.success);--}}
+        {{--if (res.success == true) {--}}
+        {{--$('#priority_content_area').html(res.data);--}}
+        {{--//messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'});--}}
+        {{--} else if (res.success == false) {--}}
+        {{--messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);--}}
+        {{--}--}}
+        {{--}--}}
         {{--});--}}
 
     }
@@ -153,6 +153,8 @@
                 "type": "POST",
                 "data": send_info
             },
+            "bSort": true,
+            "bSortable": true,
             "autoWidth": false,
             "searching": false,
             "pageLength": 25,
@@ -178,7 +180,10 @@
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     }},
-                {"data": "immediate"},
+                {"data": "immediate",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate+".png'/>";
+                    }},
                 {"data": "respite"},
                 {"data": "type"}
 
@@ -340,4 +345,68 @@
     var current_tab = '';
     var current_id = '';
 
+
+    Grid_Table = $('#subjectsGrid').DataTable({
+        "dom": window.CommonDom_DataTables,
+        "processing": true,
+        "serverSide": true,
+        "language": window.LangJson_DataTables,
+        ajax: {
+            url: '{!! route('hamahang.subjects.get_subjects') !!}',
+            type: 'POST'
+        },
+        columns: [
+            {
+                mRender: function (data, type, full) {
+                    return '';
+                }
+            },
+            {
+                data: 'name',class:'name',
+                mRender: function (data, type, full) {
+                    return full['name'];
+                }
+            },
+            {
+                data: 'comment',
+                mRender: function (data, type, full) {
+                    return full['comment'];
+                }
+            },
+            {
+                mRender: function (data, type, full) {
+                    return '<a title="صفحات" href="{!! route('modals.view_subject')  !!}?sid=' + full['id'] + ' "  class="jsPanels viewSubjects">' + full['get_subject_count'] + '</a>';
+                }
+            },
+            {
+                mRender: function (data, type, full) {
+                    return full['jdate'];
+                }
+            },
+            {
+                mRender: function (data, type, full) {
+                    var result = '';
+
+
+                    result += '' +
+                        '<button style="margin-right: 3px;" title="ویرایش موضوع" type="button" class="btn btn-xs bg-warning-400 fa fa-edit btn_grid_item_edit" ' +
+                        '   data-grid_item_id="' + full['id'] + '" ' +
+                        '   data-grid_item_title="' + full['name'] + '" ' +
+                        '   data-grid_item_description="' + full['comment'] + '">' +
+                        '</button>';
+
+
+                    result += '' +
+                        '<button style="margin-right: 3px;" title="حذف موضوع" type="button" class="btn btn-xs bg-danger-800 fa fa-remove btn_grid_destroy_item" data-grid_item_id="' + full['id'] + '"></button>';
+
+                    return result;
+                }
+            }
+        ]
+    });
+    Grid_Table.on('draw.dt order.dt search.dt', function () {
+        Grid_Table.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 </script>

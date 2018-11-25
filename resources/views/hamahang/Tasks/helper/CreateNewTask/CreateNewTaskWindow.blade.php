@@ -120,7 +120,9 @@
                         <div class="col-sm-5 row" style="padding: 0px;">
                             <select id="new_task_users_responsible" name="users[]" class="select2_auto_complete_user col-xs-12"
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple>
-                                <option value=""></option>
+                                @if($urid)
+                                    <option value="{{$urid}}" selected>{{$responsible['Name'].' '.$responsible['Family']}}</option>
+                                @endif
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
@@ -169,7 +171,11 @@
                     <div class="col-lg-11">
                         <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                 data-placeholder="{{trans('tasks.select_some_keywords')}}"
-                                multiple="multiple"></select>
+                                multiple="multiple">
+                            @if($kdid)
+                                <option value="{{$kdid}}" selected>{{$keyword['title']}}</option>
+                            @endif
+                        </select>
                         <span class=" Chosen-LeftIcon"></span>
                     </div>
                 </div>
