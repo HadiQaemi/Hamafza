@@ -693,6 +693,7 @@
     });
 
     $('#task_title').on('keyup', function() {
+
         var title = $(this).val();
         var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
         if(title.trim().length>0 && new_task_users_responsible>0)
@@ -731,7 +732,9 @@
             else
                 $('.new_task_save_type_draft').click();
 		});
-        $('.new_task_save_type_draft').click();
+        new_task_save_type = $("input[name='new_task_save_type']:checked").val();
+        if(new_task_save_type==0)
+            $('.new_task_save_type_draft').click();
     })
 
 </script>

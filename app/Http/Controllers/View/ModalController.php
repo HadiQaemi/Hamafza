@@ -739,7 +739,9 @@ class ModalController extends Controller
 
     public function CreateNewTask()
     {
-        $res = $this->getParams(['sid', 'pid', 'sel', 'urid', 'kdid']);
+        $tid = '';
+        $task = '';
+        $res = $this->getParams(['sid', 'pid', 'sel', 'urid', 'kdid', 'tid']);
         if ($res['sid'])
         {
             $res['subject'] = Subject::find($res['sid']);
@@ -751,6 +753,12 @@ class ModalController extends Controller
         if ($res['kdid'])
         {
             $res['keyword'] = Keyword::find($res['kdid']);
+        }
+        if ($res['tid'])
+        {
+            $tid = $res['tid'];
+            $task = tasks::find(deCode($res['tid']));
+            $res['task'] = $this->TakeTaskInfo($res,$task);
         }
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
@@ -764,7 +772,7 @@ class ModalController extends Controller
         return json_encode([
             'header' => trans('tasks.create_new_task'),
             'content' => view('hamahang.Tasks.helper.CreateNewTask.CreateNewTaskWindow', $arr)->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'CreateNewTask')->render()
+            'footer' => view('hamahang.helper.JsPanelsFooter',['tid'=>$tid])->with('btn_type', 'CreateNewTask')->render()
         ]);
     }
 
@@ -901,7 +909,10 @@ class ModalController extends Controller
 //        $task['respite_date'];
 //        dd($res['tid']);
         Session::put('TaskForm_tid',($res['tid']));
-        Session::put('TaskForm_aid',($res['aid']));
+        if(isset($res['aid']))
+        {
+            Session::put('TaskForm_aid',($res['aid']));
+        }
         Session::put('TaskForm_is_creator',$task_all->uid != Auth::id() ? true : false);
         Session::put('TaskForm_task_all',$task);
         $res['task_all'] = $task_all;

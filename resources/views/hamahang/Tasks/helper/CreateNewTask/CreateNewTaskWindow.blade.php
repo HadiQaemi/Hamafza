@@ -40,7 +40,7 @@
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
                     <div class="col-lg-8">
                         <div class="row">
-                            <input type="text" class="form-control" name="title" id="title" placeholder="{{ trans('tasks.title') }}"/>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="{{trans('tasks.title')}}" value="{{isset($task['task']['title']) ? $task['task']['title'] : ''}}"/>
                             <input name="event_type" id="event_type" type="hidden">
                             <input name="startdate" id="startdate" type="hidden">
                             <input name="enddate" id="enddate" type="hidden">
@@ -50,9 +50,9 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" name="type" value="0" id="official" checked/>
+                            <input type="radio" name="type" value="0" id="official" {{isset($task['task']['type']) ? ($task['task']['type']==0 ? 'checked' : '') : 'checked'}}/>
                             <label for="official">{{ trans('app.official') }}</label>
-                            <input type="radio" name="type" value="1" id="unofficial"/>
+                            <input type="radio" name="type" value="1" id="unofficial" {{isset($task['task']['type']) ? ($task['task']['type']==1 ? 'checked' : '') : ''}}/>
                             <label for="unofficial">{{ trans('app.unofficial') }}</label>
                         </div>
                     </div>
@@ -66,8 +66,8 @@
                                 <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
                             </div>
                             <div class="row main-desc">
-                                <textarea class="form-control row content_tab_text content_tab" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4"></textarea>
-                                <div class="content_tab_view content_tab hidden"></div>
+                                <textarea class="form-control row content_tab_text content_tab" name="task_desc" id="desc" value="{{@$sel}}" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{isset($task['task']['desc']) ? $task['task']['desc'] : ''}}</textarea>
+                                <div class="content_tab_view content_tab hidden">{{isset($task['task']['desc']) ? $task['task']['desc'] : ''}}</div>
                             </div>
                             <div class="filemanager-buttons-client pull-right bottom-desc">
                                 <label for="fileToUpload" class="pointer">
@@ -87,6 +87,11 @@
                         <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
                             @if($sid)
                                 <option value="{{$sid}}" selected>{{$subject->title}}</option>
+                            @endif
+                            @if(isset($task['pages']))
+                                @foreach($task['pages'] as $page)
+                                    <option value="{{$page->id}}" selected>{{$page->title}}</option>
+                                @endforeach
                             @endif
                         </select>
                     </div>
@@ -122,6 +127,11 @@
                                     data-placeholder="{{trans('tasks.select_some_persons')}}" multiple>
                                 @if($urid)
                                     <option value="{{$urid}}" selected>{{$responsible['Name'].' '.$responsible['Family']}}</option>
+                                @endif
+                                @if(isset($task['task_users']))
+                                    @foreach($task['task_users'] as $user)
+                                        <option value="{{$user->id}}" selected>{{$user->Name.' '.$user->Family}}</option>
+                                    @endforeach
                                 @endif
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
@@ -174,6 +184,11 @@
                                 multiple="multiple">
                             @if($kdid)
                                 <option value="{{$kdid}}" selected>{{$keyword['title']}}</option>
+                            @endif
+                            @if(isset($task['task_keywords']))
+                                @foreach($task['task_keywords'] as $keyword)
+                                    <option value="{{$keyword->id}}" selected>{{$keyword->title}}</option>
+                                @endforeach
                             @endif
                         </select>
                         <span class=" Chosen-LeftIcon"></span>

@@ -102,9 +102,9 @@
         {{--<input type="radio" name="new_task_save_type" class="new_task_save_private_library" id="new_task_save_private_library" value="3"/>--}}
         {{--<label for="new_task_save_private_library" id="new_task_save_private_library_l">{{ trans('tasks.library').' '.trans('tasks.private') }}</label>--}}
 
-        <input type="radio" name="new_task_save_type" class="new_task_save_type_draft" id="new_task_save_type_draft" value="0" checked/>
+        <input type="radio" name="new_task_save_type" class="new_task_save_type_draft" id="new_task_save_type_draft" value="0" {{trim($tid)=='' ? 'checked' : ''}}/>
         <label for="new_task_save_type_draft" id="new_task_save_type_draft_l">{{ trans('general.draft') }}</label>
-        <input type="radio" name="new_task_save_type" class="new_task_save_type_final" id="new_task_save_type_final" value="1"/>
+        <input type="radio" name="new_task_save_type" class="new_task_save_type_final" id="new_task_save_type_final" value="1" {{trim($tid)=='' ? '' : 'checked'}}/>
         <label for="new_task_save_type_final" id="new_task_save_type_final_l">{{ trans('general.final') }}</label>
     </div>
     <a data-form_id = "create_new_task" data-again_save = "1" class="btn btn-primary pull-left save_task" id="">

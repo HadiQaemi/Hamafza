@@ -127,6 +127,7 @@
                             <th style="text-align: right;">اولویت</th>
                             <th style="text-align: right;">مهلت</th>
                             <th style="text-align: right;">وضعیت</th>
+                            <th style="text-align: right;">عملیات</th>
                         </tr>
                         </thead>
                     </table>

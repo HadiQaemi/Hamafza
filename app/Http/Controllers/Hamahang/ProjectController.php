@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 
 use App\HamafzaServiceClasses\SubjectsClass;
 use App\Http\Controllers\Hamahang\Tasks\TaskController;
+use App\Models\hamafza\Pages;
 use App\Models\Hamahang\Tasks\project_role_permission;
 use App\User;
 use Datatables;
@@ -1012,6 +1013,7 @@ class ProjectController extends Controller
                     ->where('hamahang_subject_ables.target_id', '=',$data->id)
                     ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                     ->whereNull('hamahang_subject_ables.deleted_at')->pluck('subject_id')->toArray();
+                $pages = DB::table('pages')->whereIn('sid',$pages)->groupBy('sid')->pluck('id')->toArray();
                 return $pages;
             })
             ->make(true);

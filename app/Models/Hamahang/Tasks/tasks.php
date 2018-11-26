@@ -650,8 +650,6 @@ class tasks extends Model
             ->whereNull('hamahang_task_assignments.reject_description')
             ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
             ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')
-            ->orderBy('hamahang_task.id', 'DESC')
-            ->groupBy('hamahang_task.id')
 //            ->toSql()
         ;
         if ($subject_id)
@@ -740,7 +738,7 @@ class tasks extends Model
             }
         }
 
-        $result = $result->groupBy('hamahang_task.id')->get();
+        $result = $result->groupBy('hamahang_task.id')->orderBy('hamahang_task.id', 'DESC')->get();
         return $result;
     }
     public static function AllTasksList($subject_id = false, $user_id = false, $api = false)
