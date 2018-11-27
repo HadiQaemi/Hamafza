@@ -596,7 +596,7 @@
                     </div>
                 </div>
 
-                <div class="row col-lg-12" style="margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
@@ -604,29 +604,29 @@
                         <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
                     </div>
                 </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
-                        <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
-                        <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
-                        <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
-                        <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
-                    </div>
-                    <div class="col-lg-8" style="height: 20px;line-height: 20px;">
-                        <div class="col-lg-10">
+                <div class="row col-lg-12 margin-top-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
+                        <div class="pull-right">
+                            <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
+                            <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
+                            <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
+                            <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
+                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
+                            <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
+                        </div>
+                        <div class="pull-right width-400">
                             <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
                                     data-placeholder="{{trans('tasks.select_some_options')}}" multiple disabled=""></select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <div class="pull-right margin-right-10 line-height-35">
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels assingned_options" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
+                <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
@@ -639,25 +639,25 @@
                         <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
                         <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date" name="action_date" aria-describedby="respite_date">
                     </div>
-                    <div class="pull-right height-30 line-height-30">
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
                         <label for="determined-time">{{ trans('tasks.duration') }}</label>
                     </div>
-                    <div class="pull-right height-30 line-height-30">
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
                         <input type="text" class="form-control border-radius" style="display: inline" id="action_duration" name="action_duration" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
                     </div>
-                    <div class="pull-right height-30 line-height-30">
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
                         <select class="form-control" id="action_duration_type">
                             <option value="ساعت">ساعت</option>
                             <option value="دقیقه">دقیقه</option>
                         </select>
                     </div>
-                    <div class="pull-right height-30 line-height-30">
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
                         <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
                         <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
                         <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
                         <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
                     </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-50">
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
                         <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
                     </div>
                 </div>
