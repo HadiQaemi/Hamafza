@@ -828,6 +828,15 @@ class MyAssignedTaskController extends Controller
                 }
                 return $output_new;
             })
+            ->addColumn('pages', function ($data)
+            {
+                $pages = DB::table('hamahang_subject_ables')
+                    ->where('hamahang_subject_ables.target_id', '=',$data->id)
+                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
+                    ->whereNull('hamahang_subject_ables.deleted_at')->pluck('subject_id')->toArray();
+                $pages = DB::table('pages')->whereIn('sid',$pages)->groupBy('sid')->pluck('id')->toArray();
+                return $pages;
+            })
             ->addColumn('employee', function ($data)
             {
                 return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>" . $data->Name . " " . $data->Family . "</a>";

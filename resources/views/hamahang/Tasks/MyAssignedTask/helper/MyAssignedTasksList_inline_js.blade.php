@@ -183,7 +183,8 @@
                     "bSortable": false,
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        return "<a style='margin:2px;' class='cls3' onclick='del(\"" + full.id + "\")' href=\"#\"><i class='fa fa-trash'></i></a>";
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><a class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></a>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></a>') + "<a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف' onclick='del(\"" + full.id + "\")'></a>";
+
                     }
                 }
                 // , {
@@ -628,7 +629,9 @@
                 success: function (data) {
                 }
             });
-            messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});
+            {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
+            window.table_chart_grid2.ajax.reload();
+            window.table_chart_grid3.ajax.reload();
         }
         else{
         }
