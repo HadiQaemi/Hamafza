@@ -9,8 +9,10 @@
     <div class="container-fluid">
         <div class="row">
 
-            <fieldset id="fieldset_noData">
-
+            <fieldset id="fieldset_noData"></fieldset>
+            <fieldset id="fieldset_info" class="hidden">
+                <div class="col-xs-12"><i class="fa fa-backward pointer" id="BackToProjects"></i></div>
+                <div id="ProjectInfoList"></div>
             </fieldset>
             <fieldset id="fieldset">
                 {{--<legend>لیست پروژه ها</legend>--}}
@@ -191,6 +193,28 @@
             dir: "rtl",
             width: "100%",
             tags: true
+        });
+        $(document).on('click', ".project_tasks_list", function () {
+            var send_info = {
+                p_id: $(this).data("p_id"),
+                pid: $(this).data("p_id")
+            }
+            $.ajax({
+                url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',
+                type:'post',
+                data: send_info,
+                dataType:'json',
+                success :function(data)
+                {
+                    $('#ProjectInfoList').html(data.content);
+                    $('#fieldset_info').removeClass('hidden');
+                    $('#fieldset').addClass('hidden');
+                }
+            });
+        });
+        $(document).on('click', "#BackToProjects", function () {
+            $('#fieldset').removeClass('hidden');
+            $('#fieldset_info').addClass('hidden');
         });
     </script>
 @stop

@@ -609,10 +609,6 @@
                         show_project_info($(this).data("p_id"));
                     });
 
-                    $(document).on('click', ".project_tasks_list", function () {
-                        show_project_tasks_list($(this).data("p_id"));
-                    });
-
                     $(document).on('click', ".project_tasks_chart", function () {
                         show_project_tasks($(this).data("p_id"));
                     });

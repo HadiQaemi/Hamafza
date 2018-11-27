@@ -481,15 +481,15 @@
                 </div>
             </div>
             <div class="tab-pane tab-view" id="tab_t4">
-                <div class="row col-lg-12">
+                <div class="row col-lg-12 margin-bottom-30 border-bottom">
                     <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.task') }}</label></div>
                     <div class="col-lg-11">
                         <span class="task_title line-height-35"></span>
                     </div>
                 </div>
-                <div class="row col-lg-12 margin-bottom-30 border-bottom">
+                <div class="row col-lg-12 margin-bottom-30">
                     <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
-                    <div class="col-lg-11">
+                    <div class="col-lg-9">
                         <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"
                                 data-placeholder="{{trans('tasks.enter_project_name')}}" multiple="multiple">
                             <option value=""></option>
@@ -498,6 +498,27 @@
                             @endif
                         </select>
                     </div>
+                    <div class="col-lg-1">
+                        <input type="text" class="form-control" placeholder="وزن">
+                    </div>
+                    <div class="col-lg-1">
+                        <span class="fa fa-plus pointer line-height-30" id="add_project_task"></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 margin-bottom-30 border-bottom">
+                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
+                            <th class="col-xs-10">{{ trans('tasks.project') }}</th>
+                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
+                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody id="rel_projects_list">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="row hidden">
                     <div class="col-xs-12" id="project_in_task">
@@ -518,7 +539,7 @@
                     <div class="col-xs-1">
                         <label class="line-height-35">{{ trans('tasks.task') }}</label>
                     </div>
-                    <div class="col-xs-9">
+                    <div class="col-xs-10">
                         <select id="new_task_tasks" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
                                 {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
                                 data-placeholder="{{trans('tasks.select_some_options')}}">
@@ -534,7 +555,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}

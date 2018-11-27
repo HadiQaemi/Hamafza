@@ -15,6 +15,9 @@
     $project_info = $project_info->project_info;
     $project_info = $project_info[0];
 @endphp
+<div style="position: absolute;top:10px; width: 250px;left:0px;">
+    @include('hamahang.Tasks.projects.project_related_pages')
+</div>
 <div class="col-xs-12 margin-top-20" style="border-bottom: solid 1px #555;padding-bottom: 20px">
     <div class="pull-right line-height-35 margin-top-20">
         <div class="pull-right">{{trans('projects.title')}}: </div>
@@ -66,8 +69,8 @@
         <tr>
             <th>شماره</th>
             <th>عنوان</th>
-            <th>بعدی</th>
-            <th>زیرین</th>
+            <th>وزن</th>
+            <th>درصد پیشرفت</th>
         </tr>
         </thead>
         <?php

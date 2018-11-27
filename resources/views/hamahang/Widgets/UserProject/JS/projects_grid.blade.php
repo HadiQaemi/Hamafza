@@ -33,12 +33,14 @@
                     "mRender": function (data, type, full) {
                         return "<a class='project_info cursor-pointer' data-p_id= '"+ full.id +"' >"+ full.title +"</a>";
                     }
-                },
+                }
+                ,
                 {"data": "id",
                     "width": "20%",
                     "mRender": function (data, type, full) {
                         var id =full.id;
-                        return "<i class='fa fa-edit pointer' data-p_id= '"+ id +"' ></i>&nbsp;&nbsp;&nbsp;<i class='fa fa-address-book pointer' data-p_id= '"+ id +"' ></i>";
+                        return "";
+                        // return "<i class='fa fa-edit pointer' data-p_id= '"+ id +"' ></i>&nbsp;&nbsp;&nbsp;<i class='fa fa-address-book pointer' data-p_id= '"+ id +"' ></i>";
                     }
                 }
                 // ,
