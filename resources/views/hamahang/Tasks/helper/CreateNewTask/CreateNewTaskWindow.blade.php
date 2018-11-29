@@ -487,72 +487,37 @@
                         <span class="task_title line-height-35"></span>
                     </div>
                 </div>
-                <div class="row col-lg-12 margin-bottom-30">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
-                    <div class="col-lg-9">
-                        <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"
-                                data-placeholder="{{trans('tasks.enter_project_name')}}" multiple="multiple">
-                            <option value=""></option>
-                            @if(isset($project))
-                                <option value="{{$project->id}}" selected>{{$project->title}}</option>
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-lg-1">
-                        <input type="text" class="form-control" placeholder="وزن">
-                    </div>
-                    <div class="col-lg-1">
-                        <span class="fa fa-plus pointer line-height-30" id="add_project_task"></span>
-                    </div>
-                </div>
                 <div class="col-xs-12 margin-bottom-30 border-bottom">
-                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                            <th class="col-xs-10">{{ trans('tasks.project') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody id="rel_projects_list">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row hidden">
-                    <div class="col-xs-12" id="project_in_task">
-                        <div class="col-xs-1">
-                            <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                    <form id="task_project">
+                        <div class="row col-lg-6 margin-bottom-30 noLeftPadding">
+                            <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
+                            <div class="col-lg-11">
+                                <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"
+                                        data-placeholder="{{trans('tasks.enter_project_name')}}">
+                                    <option value=""></option>
+                                    @if(isset($project))
+                                        <option value="{{$project->id}}" selected>{{$project->title}}</option>
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-xs-11">
-                            <select name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
-                                    {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                    data-placeholder="{{trans('tasks.select_some_options')}}">
-                                <option value=""></option>
-                            </select>
-                            <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
+                        <div class="row col-lg-6 noLeftPadding noRightPadding">
+                            <div class="col-xs-1">
+                                <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                            </div>
+                            <div class="col-xs-10">
+                                <select id="new_task_rel" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
+                                        {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
+                                        data-placeholder="{{trans('tasks.select_some_options')}}">
+                                    <option value=""></option>
+                                </select>
+                                <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
+                            </div>
+                            <div class="col-xs-1">
+                                <span class="fa fa-plus pointer line-height-30" id="add_rel_task"></span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <div class="col-xs-1">
-                        <label class="line-height-35">{{ trans('tasks.task') }}</label>
-                    </div>
-                    <div class="col-xs-10">
-                        <select id="new_task_tasks" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
-                                {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                data-placeholder="{{trans('tasks.select_some_options')}}">
-                            <option value=""></option>
-                        </select>
-                        <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
-                    </div>
-                    {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
-                    {{--<input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
-                    {{--</div>--}}
-                    <div class="col-xs-1">
-                        <span class="fa fa-plus pointer line-height-30" id="add_rel_task"></span>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-xs-12">
                     <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
@@ -560,7 +525,7 @@
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
                             <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
-                            <th class="col-xs-5">{{ trans('tasks.task') }}</th>
+                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                             <th class="col-xs-1">{{ trans('tasks.action') }}</th>
                         </tr>

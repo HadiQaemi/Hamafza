@@ -3816,7 +3816,7 @@ input{
 .width-400{
     width: 400px !important;
 }
-#form_filter_priority input,select,.select2-selection,.select2-container{
+#form_filter_priority input,#form_filter_priority select,#form_filter_priority .select2-selection,#form_filter_priority .select2-container{
     background: #eee !important;
 }
 .checkboxVertical input[type=checkbox] {
@@ -3841,7 +3841,7 @@ input{
     top: 30px;
     left: -3px;
     padding: 8px !important;
-    background: #ccc;
+    background: #969696;
 }
 .checkboxVertical input[type=checkbox]:checked + label {
     top: 0px;

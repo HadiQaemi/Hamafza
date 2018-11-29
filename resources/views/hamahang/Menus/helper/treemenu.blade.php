@@ -68,7 +68,7 @@
                 background: #b3b3b3;
                 padding: 10px 10px;
             }
-            .active > a{
+            .dropdown-ver .active > a{
                 border-right: 4px solid #FFF;
             }
             .dropdown-ver .dropdown-menu li a:active {
