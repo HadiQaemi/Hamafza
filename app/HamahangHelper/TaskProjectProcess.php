@@ -193,7 +193,7 @@ if (!function_exists('GetTaskStatusName'))
                 break;
             }
         }
-        return $status_name;
+        return ['status_name'=>$status_name,'id'=>$id];
     }
 }
 if (!function_exists('hamahang_add_keyword'))

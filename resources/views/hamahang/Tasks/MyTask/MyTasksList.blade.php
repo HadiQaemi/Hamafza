@@ -28,7 +28,7 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
     @include('hamahang.Tasks.MyTask.helper.task_related_pages')
     </div>
-    <div class="row" style="padding-right: 5px;padding-bottom: 10px" >
+    <div class="row" style="padding-right: 5px;padding-bottom: 10px;margin-top: -10px;background: #eee" >
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
@@ -89,26 +89,49 @@
                         </label>
                     </div>
                     <div class="checkbox pull-right margin-right-50">
-                        <label>
-                            <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked>
-                            <span>{{trans('tasks.status_not_started')}}</span>
+                        <label class="container-checkmark">
+                            <input type="checkbox" checked="checked" class="form-check-input" value="1" name="task_important[]" checked>
+                            <span class="checkmark" style="background: red;"></span>
                         </label>
-                        <label>
-                            <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked>
-                            <span>{{trans('tasks.status_started')}}</span>
+                        <label class="container-checkmark">
+                            <input type="checkbox" checked="checked" class="form-check-input" value="0" name="task_important[]" checked>
+                            <span class="checkmark" style="background: #caca2b"></span>
                         </label>
-                        <label>
-                            <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks">
-                            <span>{{trans('tasks.status_done')}}</span>
+                    </div>
+                    <div class="checkbox pull-right margin-right-10">
+                        <label class="container-checkmark">
+                            <input type="checkbox" checked="checked" class="form-check-input" value="1" name="task_immediate[]" checked>
+                            <span class="checkmark" style="background: #ce8923"></span>
                         </label>
-                        <label>
-                            <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks">
-                            <span>{{trans('tasks.status_finished')}}</span>
+                        <label class="container-checkmark">
+                            <input type="checkbox" checked="checked" class="form-check-input" value="0" name="task_immediate[]" checked>
+                            <span class="checkmark"></span>
                         </label>
-                        <label>
-                            <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks">
-                            <span>{{trans('tasks.status_suspended')}}</span>
-                        </label>
+                    </div>
+                    <div class="checkbox pull-right margin-right-50">
+                        <div class="pull-right">
+                            <span style="margin-top: 20px;display: block;">{{trans('tasks.stages')}}</span>
+                        </div>
+                        <div class="checkboxVertical pull-right margin-right-10">
+                            <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" checked/>
+                            <label for="not_started_tasks"></label>
+                        </div>
+                        <div class="checkboxVertical pull-right margin-right-10">
+                            <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked/>
+                            <label for="started_tasks"></label>
+                        </div>
+                        <div class="checkboxVertical pull-right margin-right-10">
+                            <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks"/>
+                            <label for="done_tasks"></label>
+                        </div>
+                        <div class="checkboxVertical pull-right margin-right-10">
+                            <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="completed_tasks"/>
+                            <label for="completed_tasks"></label>
+                        </div>
+                        <div class="checkboxVertical pull-right margin-right-10">
+                            <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="stoped_tasks"/>
+                            <label for="stoped_tasks"></label>
+                        </div>
                     </div>
                     {{--</div>--}}
                 </div>

@@ -142,6 +142,7 @@ return [
     'urgency'=>'فوریت',
     'immediate'=>'فوری',
     'non-immediate'=>'غیرفوری',
+    'stages'=>'مراحل',
     'Non-urgent'=>'غیرفوری',
     'responsible'=>'مسئول',
     'collective'=>'جمعی',

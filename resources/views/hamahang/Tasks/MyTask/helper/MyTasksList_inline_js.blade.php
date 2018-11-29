@@ -185,13 +185,16 @@
                     }},
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate+".png'/>";
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     }},
                 {"data": "respite"},
-                {"data": "type"},
+                {"data": "type",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                    }},
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><a class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></a>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></a>')+'<a class="fa fa-trash pointer margin-right-10" data-toggle="tooltip" title="حذف" onclick="confirm(\'آیا از حذف صفحه اطمینان دارید؟\')"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10" data-toggle="tooltip" title="حذف" onclick="confirm(\'آیا از حذف صفحه اطمینان دارید؟\')"></a>';
                     }}
 
 //            , {

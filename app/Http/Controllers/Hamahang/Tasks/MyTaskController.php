@@ -514,7 +514,7 @@ class MyTaskController extends Controller
                     $output .= ' و غیرمهم ';
                     $output_num .= '0';
                 }
-                return $output_num;
+                return ['output'=>$output,'output_image'=>$output_num];
             })
             ->addColumn('pages', function ($data)
             {
