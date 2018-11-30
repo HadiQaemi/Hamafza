@@ -92,11 +92,14 @@
             .dropdown-ver .show li a{
                 padding-right: 20px;
             }
+            .dropdown-ver span{
+                padding: 0px !important;
+            }
             .dropdown-ver .show {
                 position: relative;
                 width: 100%;
                 font-size: 10px;
-                margin-bottom: 15px;
+                margin-bottom: 0px;
                 display: block;
                 max-height: 9999px;
                 -moz-transform: scaleY(1);

@@ -1063,6 +1063,9 @@ function _confirm_delete() {
 }
 
 $(document).ready(function () {
+    $(function() {
+        $('.tipsy').tipsy({fade: true, gravity: 'n'});
+    });
     $('.quick-links li, .quick-links a').click(function (e) {
         e.preventDefault();
         $($(this).attr('href')).trigger('click');

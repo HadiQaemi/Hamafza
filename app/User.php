@@ -654,6 +654,10 @@ class User extends Authenticatable
             $group->where('title', 'like', "%$term%");
             $channel->where('title', 'like', "%$term%");
         }
+        $page->leftJoin('pages','hamahang_bookmarks.target_id','=','pages.id')
+            ->leftJoin('subjects','subjects.id','=','pages.sid')
+            ->leftJoin('subject_type','subjects.kind','=','subject_type.id')
+            ->select('hamahang_bookmarks.id as id','hamahang_bookmarks.title as title','subject_type.pretitle as pretitle');
         $r['user'] = $user->get();
         $r['page'] = $page->get();
         $r['subject'] = $subject->get();

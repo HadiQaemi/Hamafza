@@ -12,5 +12,5 @@
             @endforeach
         </ul>
     </div>
-    <button class="btn" onclick="pages_list_load_more();" style="background-color: #ffff88; color: red; cursor: pointer; padding: 5px 10px; margin: auto auto 25px auto; width: 100%; background-color: #ffff88; ">بارگذاری موارد بیشتر...</button>
+    {{--<button class="btn" onclick="pages_list_load_more();" style="background-color: #ffff88; color: red; cursor: pointer; padding: 5px 10px; margin: auto auto 25px auto; width: 100%; background-color: #ffff88; ">بارگذاری موارد بیشتر...</button>--}}
 @endif

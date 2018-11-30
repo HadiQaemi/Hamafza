@@ -5,13 +5,17 @@
         <div class="panel-body">
             <img style="width: 100%; height: 100%; position: relative;" title="" src="{{route('FileManager.DownloadFile',['ID', isset($image) ? enCode((int)$image->id) : -1])}}">
         </div>
-                <a class="btn btn-danger fa fa-remove remove_image" title="{{ trans('app.remove_image') }}" style="margin-right: 10px;"></a>
-                <input type="hidden" class="image_id" value="{{ $image ? enCode($image->id) : '' }}">
-                <input type="text" class="image_originalName" value="{{ $image ? $image->originalName : 'تصویر پیش‌فرض' }}">
-                <a class="btn btn-info fa fa-edit edit_image_originalName" title=""></a>
+        <a class="btn btn-danger fa fa-remove remove_image" title="{{ trans('app.remove_image') }}" style="margin-right: 10px;"></a>
+        <input type="hidden" class="image_id" value="{{ $image ? enCode($image->id) : '' }}">
+        <input type="text" class="image_originalName" value="{{ $image ? $image->originalName : 'تصویر پیش‌فرض' }}">
+        <a class="btn btn-info fa fa-edit edit_image_originalName" title=""></a>
+
     </div>
 </div>
-
+<div class="show_image" style="width:250px; margin: 10px auto">
+    <input type="checkbox" class="form-check-input" name="show_pic" value="0" id="show_pic" checked>
+    <label class="pointer" for="show_pic">نمایش در صفحه</label>
+</div>
 <div class="upload_form" style="width:250px; margin: 10px auto">
     {{--<div class="panel panel-default ">--}}
         <div class="panel-body" style="padding-right: 25%;">

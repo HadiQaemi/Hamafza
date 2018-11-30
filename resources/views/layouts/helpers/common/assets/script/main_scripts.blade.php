@@ -11,6 +11,7 @@
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/homslider/jquery.fitvids.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/homslider/jquery.grozav.bootslider.min.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.tipsy.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/custom.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/public.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.bsvalidate.js"></script>

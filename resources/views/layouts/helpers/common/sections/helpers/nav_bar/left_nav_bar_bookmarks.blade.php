@@ -4,7 +4,7 @@
         <ul class="bookmark_{!! $bookmark_type !!}">
             @foreach ($bookmark_items as $bookmark_item)
                 <li id="bookmark_{!! $bookmark_item->id !!}" style="list-style: inside none square;">
-                    <a rel="canonical" href="{!! url("/bookmarks/view/$bookmark_item->id") !!}" target="_blank">{!! $bookmark_item->title !!}</a>
+                    <a rel="canonical" href="{!! url("/bookmarks/view/$bookmark_item->id") !!}" target="_blank">{!! (trim($bookmark_item->pretitle)!='' ? '<span>'.$bookmark_item->pretitle.':</span> ' : '').$bookmark_item->title !!}</a>
                     <span class="help-icon-span icon-hazv HazfBookmark" data-bookmark-id="{!! $bookmark_item->id !!}"></span>
                 </li>
             @endforeach

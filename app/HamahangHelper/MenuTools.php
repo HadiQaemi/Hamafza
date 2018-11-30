@@ -129,7 +129,6 @@ if (!function_exists('buildMenuTree'))
             $tree = [];
         }
         $tree_t = '';
-        $status = 'hide';
         foreach($tree as $k=>$node) {
             $tree_child = '';
             $status = 'hide';
@@ -146,7 +145,7 @@ if (!function_exists('buildMenuTree'))
                 }
             }
             $tree_t .= '<li class="dropdown-ver" node="'.$k.'">';
-            $tree_t .= '<a href="' . $node['href'] . '" data-toggle="dropdown-ver">' . $node['title'] . '</a>';
+            $tree_t .= '<a href="' . $node['href'] . '" data-toggle="dropdown-ver" class="col-xs-12"><span class="col-xs-11">' . $node['title'] . '</span><span class="col-xs-1 submenu-icon fa fa-angle-down"></span></a>';
             $tree_t .= '<ul class="dropdown-menu node'.$k.' '.$status.'">';
             $tree_t .= $tree_child;
             $tree_t .= '</ul>';

@@ -135,6 +135,41 @@
         @endif
 
     };
+    {{--$(".remove_task").off();--}}
+    {{--$(".remove_task").click(function () {--}}
+        {{--confirmModal({--}}
+            {{--title: 'حذف وظیفه',--}}
+            {{--message: 'آیا از حذف وظیفه مطمئن هستید؟',--}}
+            {{--onConfirm: function () {--}}
+                {{--$.ajax({--}}
+                    {{--url: '{{ route($remove_route, $params['remove_route']) }}',--}}
+                    {{--type: 'post',--}}
+                    {{--data: {--}}
+                        {{--item_id: $('#item_id').val()--}}
+                    {{--},--}}
+                    {{--dataType: "json",--}}
+                    {{--success: function (s) {--}}
+                        {{--// console.log(s);--}}
+                        {{--// if (s.success == true) {--}}
+                        {{--//     $('.show_image').hide();--}}
+                        {{--//     $('.btn_save_image').show();--}}
+                        {{--//     $('.upload_form').show();--}}
+                        {{--//     $(':file').filestyle({--}}
+                        {{--//         buttonName: 'انتخاب فایل'--}}
+                        {{--//     });--}}
+                        {{--//     messageModal('success', 'حذف تصویر', s.result);--}}
+                        {{--//--}}
+                        {{--// }--}}
+                        {{--// else {--}}
+                        {{--//     messageModal('error', 'خطای آپلود فایل', s.result);--}}
+                        {{--// }--}}
+                    {{--}--}}
+                {{--});--}}
+            {{--},--}}
+            {{--afterConfirm: 'close'--}}
+        {{--});--}}
+    {{--});--}}
+
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
         // alert('asdasd');
