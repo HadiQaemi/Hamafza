@@ -330,7 +330,7 @@
                 //			'       <td>\n' +
                 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
                 //			'       </td>\n' +
-                '       <td>پایین دستی\n' +
+                '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
                 '       </td>\n' +
                 '       <td>\n' +
                 // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
@@ -360,7 +360,7 @@
                 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
                 //			'       </td>\n' +
                 '       <td>\n' +
-                '       	<select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this)" style="width: 150px;">\n' +
+                '       	<select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this,' + num_add_rel_task + ')" style="width: 150px;">\n' +
                 '				<option value="end_start">پایان به شروع</option>\n' +
                 '				<option value="start_start">شروع به شروع</option>\n' +
                 '				<option value="start_end">شروع به پایان</option>\n' +
@@ -383,13 +383,13 @@
                 // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
                 // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       	<label class="pull-right line-height-30" for="r2">'+$('#select2-new_task_rel-container').attr('title')+'</label>\n' +
+                '       	<label class="pull-right line-height-30" for="r2">وظیفه: '+$('#select2-new_task_rel-container').attr('title')+'</label>\n' +
                 '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_rel').val()+ '"/>' +
                 '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_rel-container').attr('title')+ '"/>' +
                 '       </td>\n' +
                 '       <td>\n' +
                 '           <label class="input-group pull-right">\n' +
-                '       		<input name="new_task_weight[]" class="form-control" type="text" value="0"/>' +
+                '       		<input name="new_task_weight[]" class="form-control hidden new_task_weight'+num_add_rel_task+'" type="text" value="0"/>' +
                 '           </label>\n' +
                 '       </td>\n' +
                 '       <td>\n' +
@@ -400,11 +400,16 @@
             $('#rel_task_list').append(project_span);
         }
     });
-    function new_task_relation(t) {
-        if($(t).val() == 'up' || $(t).val() == 'down')
+    function new_task_relation(t,num) {
+        if($(t).val() == 'up' || $(t).val() == 'down'){
             $(t).next().addClass('hidden');
-        else
+            $('.new_task_weight'+(num)).removeClass('hidden');
+        }
+        else{
             $(t).next().removeClass('hidden');
+            $('.new_task_weight'+(num)).addClass('hidden');
+        }
+
     }
 	var num_add_resource_task = 1;
 	$("#add_resource_task").click(function () {

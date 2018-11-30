@@ -28,7 +28,7 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
     @include('hamahang.Tasks.MyTask.helper.task_related_pages')
     </div>
-    <div class="row" style="padding-right: 5px;padding-bottom: 10px;margin-top: -10px;background: #eee" >
+    <div class="row" style="padding-right: 5px;padding-bottom: 5px;margin-top: -10px;background: #eee" >
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
@@ -50,8 +50,8 @@
             </div>
             <div class="row opacity-7">
                 <div class="form-inline" style="" >
-                    <div class="checkbox pull-right hidden">
-                        <div class="form-inline">
+                    <div class="checkbox pull-right" style="height: 50px">
+                        <div class="form-inline" style="margin-top: 35px">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>
@@ -88,7 +88,7 @@
                             <span>{{trans('tasks.non-immediate')}}</span>
                         </label>
                     </div>
-                    <div class="checkbox pull-right">
+                    <div class="checkbox pull-right margin-right-50">
                         <div class="pull-right">
                             <span style="margin-top: 35px;display: block;">{{trans('tasks.priority')}}</span>
                         </div>

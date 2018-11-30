@@ -227,9 +227,7 @@
         $('#confirm_modal').modal({show: true});
     }
     function close_modal() {
-
         $('#confirm_modal').modal('hide');
-
     }
     function RemovePackage(id) {
         $('#new_package').modal('hide');
