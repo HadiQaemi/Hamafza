@@ -135,12 +135,12 @@
         @endif
 
     };
-    $(".remove_task").off();
-    $(".remove_task").click(function () {
-        confirmModal({
-            title: 'حذف وظیفه',
-            message: 'آیا از حذف وظیفه مطمئن هستید؟',
-            onConfirm: function () {
+    {{--$(".remove_task").off();--}}
+    {{--$(".remove_task").click(function () {--}}
+        {{--confirmModal({--}}
+            {{--title: 'حذف وظیفه',--}}
+            {{--message: 'آیا از حذف وظیفه مطمئن هستید؟',--}}
+            {{--onConfirm: function () {--}}
                 {{--$.ajax({--}}
                     {{--url: '{{ route($remove_route, $params['remove_route']) }}',--}}
                     {{--type: 'post',--}}
@@ -165,10 +165,10 @@
                         {{--// }--}}
                     {{--}--}}
                 {{--});--}}
-            },
-            afterConfirm: 'close'
-        });
-    });
+            {{--},--}}
+            {{--afterConfirm: 'close'--}}
+        {{--});--}}
+    {{--});--}}
 
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
@@ -229,7 +229,7 @@
                     }},
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10" data-toggle="tooltip" title="حذف" onclick="confirm(\'آیا از حذف صفحه اطمینان دارید؟\')"></a>';
                     }}
 
 //            , {
