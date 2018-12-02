@@ -135,40 +135,7 @@
         @endif
 
     };
-    {{--$(".remove_task").off();--}}
-    {{--$(".remove_task").click(function () {--}}
-        {{--confirmModal({--}}
-            {{--title: 'حذف وظیفه',--}}
-            {{--message: 'آیا از حذف وظیفه مطمئن هستید؟',--}}
-            {{--onConfirm: function () {--}}
-                {{--$.ajax({--}}
-                    {{--url: '{{ route($remove_route, $params['remove_route']) }}',--}}
-                    {{--type: 'post',--}}
-                    {{--data: {--}}
-                        {{--item_id: $('#item_id').val()--}}
-                    {{--},--}}
-                    {{--dataType: "json",--}}
-                    {{--success: function (s) {--}}
-                        {{--// console.log(s);--}}
-                        {{--// if (s.success == true) {--}}
-                        {{--//     $('.show_image').hide();--}}
-                        {{--//     $('.btn_save_image').show();--}}
-                        {{--//     $('.upload_form').show();--}}
-                        {{--//     $(':file').filestyle({--}}
-                        {{--//         buttonName: 'انتخاب فایل'--}}
-                        {{--//     });--}}
-                        {{--//     messageModal('success', 'حذف تصویر', s.result);--}}
-                        {{--//--}}
-                        {{--// }--}}
-                        {{--// else {--}}
-                        {{--//     messageModal('error', 'خطای آپلود فایل', s.result);--}}
-                        {{--// }--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--},--}}
-            {{--afterConfirm: 'close'--}}
-        {{--});--}}
-    {{--});--}}
+
 
     readTable($("#form_filter_priority").serializeObject());
     function  readTable(send_info) {
@@ -229,7 +196,7 @@
                     }},
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10" data-toggle="tooltip" title="حذف" onclick="confirm(\'آیا از حذف صفحه اطمینان دارید؟\')"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
                     }}
 
 //            , {
@@ -255,6 +222,40 @@
             }
         });
     }
+    // $(".remove_task").off();
+    $(document).on('click', '.remove_task', function () {
+        confirmModal({
+            title: 'حذف وظیفه',
+            message: 'آیا از حذف وظیفه مطمئن هستید؟',
+            onConfirm: function () {
+                {{--$.ajax({--}}
+                {{--url: '{{ route($remove_route, $params['remove_route']) }}',--}}
+                {{--type: 'post',--}}
+                {{--data: {--}}
+                {{--item_id: $('#item_id').val()--}}
+                {{--},--}}
+                {{--dataType: "json",--}}
+                {{--success: function (s) {--}}
+                {{--// console.log(s);--}}
+                {{--// if (s.success == true) {--}}
+                {{--//     $('.show_image').hide();--}}
+                {{--//     $('.btn_save_image').show();--}}
+                {{--//     $('.upload_form').show();--}}
+                {{--//     $(':file').filestyle({--}}
+                {{--//         buttonName: 'انتخاب فایل'--}}
+                {{--//     });--}}
+                {{--//     messageModal('success', 'حذف تصویر', s.result);--}}
+                {{--//--}}
+                {{--// }--}}
+                {{--// else {--}}
+                {{--//     messageModal('error', 'خطای آپلود فایل', s.result);--}}
+                {{--// }--}}
+                {{--}--}}
+                {{--});--}}
+            },
+            afterConfirm: 'close'
+        });
+    });
     function call_modal(title, message, callback_function) {
         $('#confirm_modal_massage').html(message);
         $('#confirm_modal_title').html(title);

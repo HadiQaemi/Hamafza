@@ -55,10 +55,12 @@ class SubjectController extends Controller
             })
             ->addColumn('get_subject_count', function ($data)
             {
-                $subjectType = DB::table('subjects')
-                    ->select(DB::raw('COUNT(subjects.kind) as get_subject_count'))
-                    ->where('subjects.kind','=',$data->id)
-                    ->get();
+//                $subjectType = DB::table('subjects')
+//                    ->select(DB::raw('COUNT(subjects.kind) as get_subject_count'))
+//                    ->where('subjects.kind','=',$data->id)
+//                    ->whereNull('deleted_at')
+//                    ->get();
+                $subjectType = Subject::where('kind', $data->id)->with('pages')->whereHas('pages')->select(DB::raw('COUNT(subjects.kind) as get_subject_count'))->get();
                 return $subjectType[0]->get_subject_count;
             })
             ->make(true);

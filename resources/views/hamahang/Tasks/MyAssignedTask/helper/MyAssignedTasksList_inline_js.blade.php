@@ -175,15 +175,20 @@
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate+".png'/>";
                     }},
                 {"data": "respite"},
-                {"data": "type"}
-                ,
+                {
+                    "data": "type",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                    }
+                },
                 {
                     "data": "id", "width": "8%",
                     "bSearchable": false,
                     "bSortable": false,
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><a class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></a>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></a>') + "<a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف' onclick='del(\"" + full.id + "\")'></a>";
+                        // return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>') + "<a class='fa fa-remove margin-right-10 pointer remove_task' data-toggle='tooltip' title='حذف' rel='" + full.id + "'></a>";
 
                     }
                 }
@@ -616,22 +621,31 @@
 
 
     }
+    $(document).on('click', '.remove_task', function () {
+        id = $(this).attr('rel');
+        confirmModal({
+            title: 'حذف وظیفه',
+            message: 'آیا از حذف وظیفه مطمئن هستید؟',
+            onConfirm: function () {
+                $.ajax({
+                    type: "POST",
+                    url: '{{ URL::route('hamahang.tasks.task_delete') }}',
+                    dataType: "json",
+                    data: {id:id},
+                    success: function (data) {
+                        window.table_chart_grid2.ajax.reload();
+                        window.table_chart_grid3.ajax.reload();
+                    }
+                });
+                {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
+
+            },
+            afterConfirm: 'close'
+        });
+    });
     function del(id) {
         if(confirm("از حذف اطمینان دارید؟")){
-            var sendInfo = {
-                id: id
-            };
-            $.ajax({
-                type: "POST",
-                url: '{{ URL::route('hamahang.tasks.task_delete') }}',
-                dataType: "json",
-                data: sendInfo,
-                success: function (data) {
-                }
-            });
-            {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
-            window.table_chart_grid2.ajax.reload();
-            window.table_chart_grid3.ajax.reload();
+
         }
         else{
         }

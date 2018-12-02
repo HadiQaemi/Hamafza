@@ -14,7 +14,7 @@
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
         @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
     </div>
-    <div class="row form_filter_priority_div opacity-7">
+    <div class="row form_filter_priority_div opacity-7" style="margin-top: -10px;background: #eee">
         <form id="form_filter_priority">
             <div class="row padding-bottom-20">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>

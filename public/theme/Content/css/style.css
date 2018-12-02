@@ -3931,3 +3931,10 @@ input{
     margin-top: 10px;
     display: inline-block;
 }
+#subjects_subjectType_Grid_wrapper .row{
+    overflow: auto;
+    height: 400px;
+}
+#subjects_subjectType_Grid_wrapper .row.form-inline{
+    height: 50px;
+}
