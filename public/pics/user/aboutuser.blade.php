@@ -848,7 +848,7 @@
             <div class="fix-inr1">
                 <div style="padding: 0;" class="panel-heading panel-heading-darkblue"></div>
                 <div class="panel-body text-decoration">
-                    <b>{{ Lang::get('label.Files');  }}</b>
+                    <b>{{ Lang::get('label.Files') }}</b>
                     @foreach($Files as $item)
                     <li><a href="{{ $item['id'] }}">{{ $item['ext']}} -><span>{{ $item['title']}}</span>:{{ $item['size']}}ک.ب</a></li>
                     @endforeach

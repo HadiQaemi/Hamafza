@@ -48,9 +48,10 @@
                     <div class="panel-body text-decoration">
                         <b>{{ trans('label.Files') }}</b>
                         @foreach ($Files as $file)
+                            {{--<pre>{{print_r($file)}}</pre>--}}
                             <li>
                                 <div style="display: inline-block;height: 10px; margin: 5px">
-                                    <span style="font-size: 15pt;height: 10px;" class="icon icon-{{$file->extension}}"></span>
+                                    <span style="font-size: 15pt;height: 10px;" class="fa fa-file-{{$file->extension}}-o"></span>
                                 </div>
                                 <a href="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode($file->id)])}}/?&fname={{ $file->originalName }}">
                                     <span>{{  $file->originalName }}</span>
