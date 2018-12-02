@@ -9,7 +9,7 @@
                     <tr>
                         <td style="box-sizing: border-box; overflow: hidden; text-align: center; padding: 0; margin: 0;">
                             <a href="{!! url($subject->pages[0]->id) !!}" target="_blank">
-                                <img class="{!! $animates ? 'zoom' : null !!}" src="{!! $subject->def_image_url !!}" style="background-size: cover; width: 100%; height: 150px;" />
+                                <img class="{!! $animates ? 'zoom' : null !!}" src="{!! $subject->def_image_url !!}" style="background-size: cover; max-height: 150px;" />
                             </a>
                         </td>
                     </tr>

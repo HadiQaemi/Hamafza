@@ -663,7 +663,7 @@ class MenusController extends Controller
 //            $treeMenu = \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));
             $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
 
-//            \Cache::store('file')->put(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER'], $treeMenu, Carbon::now()->addMonth(1));
+            \Cache::store('file')->put(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER'], $treeMenu, Carbon::now()->addMonth(1));
             return $treeMenu;
         }
 //        return \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));

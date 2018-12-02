@@ -286,12 +286,24 @@ $(document).ready(function () {
             var str = $('#pcol_32').html();
             $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
         }else{
+            
             $('.first-fix-box').toggleClass('ful-fix');
-            //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
             if ($(".first-fix-box .ful-scrn span").hasClass("icon-nim-safhe"))
+            {
+                //$(".ful-fix.fix-box").mCustomScrollbar({theme: "dark-3"});
                 $(".first-fix-box .ful-scrn span").removeClass("icon-nim-safhe");
-            else
+                $('.mixed-scroll').css('right','29%');
+            }
+            else{
                 $(".first-fix-box .ful-scrn span").addClass("icon-nim-safhe");
+                if($(".first-fix-box .ful-scrn span").hasClass("icon-openNav00"))
+                {
+                    $('.mixed-scroll').css('right','20%');
+
+                }else{
+                    $('.mixed-scroll').css('right','1%');
+                }
+            }
             //alert($('#pcol_32').html());
             if ($("#new-fehrest").hasClass("hidden")){
                 $('#new-fehrest').removeClass("hidden");

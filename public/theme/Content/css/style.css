@@ -2560,7 +2560,7 @@ a .navbar-brand{
 }
 
 .fix-inr::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #555;
     outline: 1px solid slategrey;
 }
 
@@ -3076,6 +3076,9 @@ a .navbar-brand{
 }
 .padding-left-20{
     padding-left: 20px !important;
+}
+.padding-10{
+    padding: 10px !important;
 }
 .text-justify{
     text-align: justify !important;

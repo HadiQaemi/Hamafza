@@ -46,7 +46,7 @@
                 -->
                 <div class="col-md-6 noPadding" style=" margin-right: 90px;">
                     <a style="background-color: #3eb332;border: medium none;border-radius: 0;color: #fff;font-size: 9pt; margin: 10px 0 0;position: relative; width: 100%;" href="{{App::make('url')->to('/')}}/{{session('Uname')}}"
-                       type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">درباره</a>
+                       type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">معرفی</a>
                 </div>
                 <div class="clearfix"></div>
                 <div class="footer">

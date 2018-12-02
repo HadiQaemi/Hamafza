@@ -30,9 +30,9 @@ Line: Approximately Line 357
     </style>
     <form class="form_bazaar form-inline" id="form_bazaar" name="form_bazaar">
         <div class="row">
-            @if($image_exist)
+            @if($image_exist && $showDefimg)
                 <div class="col-md-4">
-                    <img src="{!! $image !!}" style="border-radius: 15px 0; height: 200px; width: 100%;"/>
+                    <img src="{!! $image !!}" style="border-radius: 15px 0; max-height: 200px;"/>
                 </div>
             @endif
             @if($fields || $spi)

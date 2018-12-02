@@ -328,6 +328,9 @@
             date_input = $("#date_input_1").val();
             edit_num = $("#edit_num").val();
             edit_com = $("#edit_com").val();
+            show_pic = 0;
+            if ($('#show_pic').is(':checked'))
+                show_pic = 1;
             url = $(this).attr('url');
             uid = curUid;
             pid = Curpid;
@@ -337,7 +340,7 @@
                 type: "POST",
                 url: '{{ route('hamafza.edit_page_send') }}',
                 dataType: 'html',
-                data: ({uid: uid, pid: pid, content_body: content, date_input: date_input, edit_num: edit_num, edit_com: edit_com, description: description, token: token}),
+                data: ({uid: uid, pid: pid, content_body: content, date_input: date_input, edit_num: edit_num, edit_com: edit_com, description: description, token: token, show_pic:show_pic}),
                 success: function (theResponse) {
                     jQuery.noticeAdd({
                         text: theResponse,
@@ -354,6 +357,9 @@
             date_input = $("#date_input_1").val();
             edit_num = $("#edit_num").val();
             edit_com = $("#edit_com").val();
+            show_pic = 0;
+            if ($('#show_pic').is(':checked'))
+                show_pic = 1;
             uid = curUid;
             pid = Curpid;
             token = $("_Alltoken").val();
@@ -362,7 +368,7 @@
                 type: "POST",
                 url: '{{ route('hamafza.edit_page_send') }}',
                 dataType: 'html',
-                data: ({uid: uid, pid: pid, content_body: content, date_input: date_input, edit_num: edit_num, edit_com: edit_com, description: description, token: token}),
+                data: ({uid: uid, pid: pid, content_body: content, date_input: date_input, edit_num: edit_num, edit_com: edit_com, description: description, token: token, show_pic:show_pic}),
                 success: function (theResponse) {
                     jQuery.noticeAdd({
                         text: theResponse,

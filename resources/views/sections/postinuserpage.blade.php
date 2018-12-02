@@ -49,8 +49,8 @@
                 @endif
                 <div class="commenTxtHolders">
 
-                    <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
-                        <div class="col-xs-12 col-sm-2 col-lg-2">
+                    <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding margin-bottom-30" style="margin-right: 15px;">
+                        <div class="col-xs-12 col-sm-2 col-lg-2 noLeftPadding noRightPadding">
                             <select name="post_typeW" id="post_typeW" class="form-control">
                                 <option value="0" selected="">انتخاب کنید</option>
                                 <option value="1">نظر</option>
@@ -65,7 +65,7 @@
                             <input type="text" id="commentTitleWW" class="form-control" placeholder="عنوان">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                         </div>
-                        <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2">
+                        <div class="col-xs-12 col-sm-2 col-sm-2 col-lg-2 noLeftPadding noRightPadding">
                             <div class="pull-right noPadding" style="height: 15px !important;">
                                 <ul class="pull-right titleCommand col-md-12 col-sm-12 col-xs-12 noPadding">
                                     <li style=" display: inline-block">
@@ -83,51 +83,27 @@
 
 
 
-                    <div class="col-md-12 col-sm-12 col-xs-12" id="commentEditorWW" style="height: 0px; display: none; margin-top: 10px;">
-                        <table class="table commentEditorWW-table">
-                            <tr>
-                                <td>
-                                    <div id="NewPostW" contenteditable='true' data-placeholder="نظرتان را وارد کنید" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                            <small>کلیدواژه</small>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                            <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.keyword')}}" multiple="multiple"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 rewardC">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                            <small>پاداش</small>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                            <input type="text" class="rewardW form-control" name="rewardW" id="rewardW" style="width: 100%;"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 rewardC">
-                                        (امتیاز شما: <div style="direction: ltr; display: inline-block;">{!! get_user_sumscores() !!}</div>)
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                <small>درج در درگاه</small>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                <select class="portal_idW no-padding form-control" name="portal_idW" id="portal_idW" style="display: inline-block;" ></select>
+                    <div class="row" id="commentEditorWW" style="height: 0px; display: none; margin-top: 10px;">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bottom-30">
+                            <div id="NewPostW" contenteditable='true' data-placeholder="نظرتان را وارد کنید" class="form-control padding-10"></div>
+                        </div>
+                        <div class="col-xs-11 margin-bottom-30">
+                            <select id="keywords" class="no-padding form-control select2_auto_complete_keywords" name="Commentkeywords2[]" ttype="12" data-placeholder="{{trans('tasks.keyword')}}" multiple="multiple"></select>
+                        </div>
+                        <div class="col-xs-1">
+                            <div class="rewardC">
+                                <input type="text" placeholder="پاداش" class="rewardW form-control" name="rewardW" id="rewardW" style="width: 100%;"/>
+                                {{--(امتیاز شما: <div style="direction: ltr; display: inline-block;">{!! get_user_sumscores() !!}</div>)--}}
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                <small>درج در گروه ها و کانال ها</small>
+                        <div class="col-xs-11">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 noLeftPadding noRightPadding">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noLeftPadding">
+                                    <select class="portal_idW no-padding form-control" name="portal_idW" id="portal_idW" style="display: inline-block;" multiple data-placeholder="درج در درگاه"></select>
+                                </div>
                             </div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
-                                <select id="groupsW" class="darjdar no-padding form-control" multiple>
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 noLeftPadding noRightPadding">
+                                <select id="groupsW" class="darjdar no-padding form-control" multiple data-placeholder="درج در گروه ها و کانال ها">
                                     @foreach(MyOrganGroups() as $item)
                                         @if(($Tree=='groupadmin' || $Tree=='ismember') && $item->id==$sid)
                                         @else
@@ -137,9 +113,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                             <div class="dropdown keep-open" style="margin-left: 20px"></div>
-                            <input id="pip_post" type="button" value="ارسال" class="btn btn-info ">
+                            <input id="pip_post" type="button" value="ارسال" class="btn btn-primary pull-left">
                         </div>
 
                         <script>

@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="show_image" style="width:250px; margin: 10px auto">
-    <input type="checkbox" class="form-check-input" name="show_pic" value="0" id="show_pic" checked>
+    <input type="checkbox" class="form-check-input" name="show_pic" id="show_pic" checked>
     <label class="pointer" for="show_pic">نمایش در صفحه</label>
 </div>
 <div class="upload_form" style="width:250px; margin: 10px auto">

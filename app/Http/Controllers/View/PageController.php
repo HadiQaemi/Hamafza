@@ -315,9 +315,10 @@ class PageController extends Controller
             $ver_date = $request->input('ver_date');
             $edit_num = $request->input('edit_num');
             $description = $request->input('description');
+            $show_pic = $request->input('show_pic');
             $PC = new PageClass();
             $content = \App\HamafzaServiceClasses\PageClass::helper_maker($content, $pid);
-            $s = $PC->EditPageSend($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description);
+            $s = $PC->EditPageSend($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description,$show_pic);
             return $s;
         }
     }

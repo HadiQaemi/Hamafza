@@ -1708,7 +1708,7 @@ class PageClassExtend1
         )->setCallback(Input::get('callback'));
     }
 
-    public static function page_edit($pageid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_numm, $description)
+    public static function page_edit($pageid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_numm, $description, $show_pic='')
     {
         $edit_date = gmdate("Y-m-d H:i:s", time() + 12600);
         $ver_date = $edit_date;
@@ -1717,7 +1717,7 @@ class PageClassExtend1
         $content = PageClass::ModifyContent($content);
         DB::table('pages')
             ->where('id', $pageid)
-            ->update(array('body' => $content, 'edit_date' => $edit_date, 'editor' => $admin, 'ver_date' => $ver_date, 'description' => $description));
+            ->update(array('body' => $content, 'edit_date' => $edit_date, 'editor' => $admin, 'ver_date' => $ver_date, 'description' => $description, 'showDefimg' => $show_pic));
         $ver = DB::table('page_version')
             ->where('pid', $pageid)
             ->select('vid')

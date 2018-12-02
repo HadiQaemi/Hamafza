@@ -343,9 +343,11 @@ class PageClass
                             $(".buttoninfullscreen").css("position","relative");
                             $("#new-content").addClass("col-xs-9");
                             $("#new-content").removeClass("col-xs-12");
-                            
+                            $(".first-fix-box .ful-scrn span").addClass("icon-openNav00");
+                            $(".mixed-scroll").css("right","20%");
                         }
                         function closeNav00() {
+                            
                             $("#new-fehrest li").css("margin-right","8px !important");
                             $("#new-fehrest .jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none");
                             $(".jstree-default.jstree-rtl .jstree-leaf > .jstree-ocl").css("display","none !important");
@@ -364,7 +366,8 @@ class PageClass
                             $("#buttoninfullscreen").removeClass("col-xs-3");
                             $("#new-content").removeClass("col-xs-9");
                             $("#new-content").addClass("col-xs-12");
-                            
+                            $(".first-fix-box .ful-scrn span").removeClass("icon-openNav00");
+                            $(".mixed-scroll").css("right","1%");
                         }
                     </script>';
                 ?>
@@ -462,6 +465,7 @@ class PageClass
                     'spi' => $spi,
                     'image' => $subject->def_image_url,
                     'image_exist' => $subject->DefImageExist,
+                    'showDefimg' => $subject->pages[0]->showDefimg,
                     //'PageDescription' => $object_page->description
                 ]
                 )->render();
@@ -1284,11 +1288,11 @@ $("#SlideSwitch").removeClass("btnActive");
         return $content;
     }
 
-    public function EditPageSend($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description)
+    public function EditPageSend($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description,$show_pic='')
     {
         $SP = new \App\HamafzaServiceClasses\PageClass();
         $content = PageClass::ModifyContent($content);
-        $menu = $SP->page_edit($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description);
+        $menu = $SP->page_edit($pid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_num, $description,$show_pic);
         return $menu;
     }
 

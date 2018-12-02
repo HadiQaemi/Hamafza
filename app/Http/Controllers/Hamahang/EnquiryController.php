@@ -301,8 +301,9 @@ class EnquiryController extends Controller
         switch ($what)
         {
             case 'portals':
-//                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
-                $subject_result = Subject::whereIn('kind', ['20', '21', '22', '27'] )->select(['id', 'title']);
+                $subject_result = Subject::where('kind', '20')->where('sub_kind', $sub_kind)->select(['id', 'title']);
+//                $subject_result = Subject::whereIn('kind', ['20', '21', '22', '27'] )->select(['id', 'title']);
+//                $subject_result = Subject::whereIn('kind', ['20', '21', '22'] )->select(['id', 'title']);
                 if ($sid)
                 {
                     $subject_result = $subject_result->where('id', $sid);
