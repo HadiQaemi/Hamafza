@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View;
 
 use App\Models\hamafza\Subject;
+use App\Models\Hamahang\Bookmark;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -1081,7 +1082,11 @@ class FormsController extends Controller
                 $data = $user;
                 $ShowEdit = $user['ShowEdit'];
                 $Alert = $user['Alert'];
-
+                if($request->exists('add_to_alef'))
+                {
+                    $target_type = 'App\Models\hamafza\Subject';
+                    Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $id, 'user_id' => $uid,]);
+                }
                 score_unregister('App\Models\hamafza\Subject', $id / 10, config('score.8'));
 
                 return json_encode($data);

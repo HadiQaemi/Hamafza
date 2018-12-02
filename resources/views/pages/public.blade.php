@@ -51,7 +51,11 @@
                             {{--<pre>{{print_r($file)}}</pre>--}}
                             <li>
                                 <div style="display: inline-block;height: 10px; margin: 5px">
-                                    <span style="font-size: 15pt;height: 10px;" class="fa fa-file-{{$file->extension}}-o"></span>
+                                    @if(trans('label.'.$file->extension)=='label.'.$file->extension)
+                                        <span style="font-size: 15pt;height: 10px;" class="fa fa-file-o"></span>
+                                    @else
+                                        <span style="font-size: 15pt;height: 10px;" class="fa fa-file-{{ trans('label.'.$file->extension) }}-o"></span>
+                                    @endif
                                 </div>
                                 <a href="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode($file->id)])}}/?&fname={{ $file->originalName }}">
                                     <span>{{  $file->originalName }}</span>

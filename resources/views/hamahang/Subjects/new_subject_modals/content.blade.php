@@ -66,6 +66,15 @@
                         <select name="keywords_list_subject[]" multiple="multiple" class="form-control keywords_list_subject"></select>
                     </td>
                     <td style="width:120px;border:none;text-align: right">کلید واژه ها</td>
+                </tr><tr>
+                    <td dir="rtl">
+                        <label for="add_to_alef">
+                            افزودن به چوب الف
+                        </label>
+                    </td>
+                    <td style="width:120px;border:none;text-align: right">
+                        <input type="checkbox" name="add_to_alef" id="add_to_alef" class="">
+                    </td>
                 </tr>
 
             </table>
