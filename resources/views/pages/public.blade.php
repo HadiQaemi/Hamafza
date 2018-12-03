@@ -58,8 +58,8 @@
                                     @endif
                                 </div>
                                 <a href="{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode($file->id)])}}/?&fname={{ $file->originalName }}">
-                                    <span>{{  $file->originalName }}</span>
-                                    <span style="font-size: 7pt;margin-right:10px">{{  $file->size }}</span>
+                                    <span style="display: inline-block">{{  $file->originalName }}</span>
+                                    <span style="display: inline-block">- {{  ceil($file->size/1024) }}KB</span>
                                 </a>
                             </li>
                         @endforeach

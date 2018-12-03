@@ -42,7 +42,7 @@
                     onClick: function (text, offset) {
                         $("#CommentPage").trigger("click");
                         $("#NewPost").val(text);
-                        //$("#SelectedComment").val(text);
+                        $("#SelectedComment").val(text);
                         //$(".text-content").highlight(text);
                         $('.ful-scrn').css('display','none');
                         $(".sendComment").css('height','270px');

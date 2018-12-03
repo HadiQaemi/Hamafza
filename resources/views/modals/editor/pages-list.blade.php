@@ -128,8 +128,8 @@
 
 <table class="table" id="table_pages_list">
     <tr>
-        <td><label for="types">نوع موضوع</label></td>
-        <td>
+        <td class="no-border"><label for="types">نوع موضوع</label></td>
+        <td class="no-border">
             <select class="form-control" id="types" multiple="multiple">
                 @foreach ($types as $type)
                     <option value="{!! $type->id !!}">{!! $type->name !!}</option>
@@ -138,8 +138,8 @@
         </td>
     </tr>
     <tr>
-        <td><label for="keywords">کلیدواژه</label><br /><br /></td>
-        <td>
+        <td class="no-border"><label for="keywords">کلیدواژه</label><br /><br /></td>
+        <td class="no-border">
             <select class="form-control" id="keywords" multiple="multiple"></select><br />
             <div style="margin-top: 10px;">
                 <input type="radio" id="keywords_and_or_0" value="0" name="keywords_and_or" checked="checked" /><label for="keywords_and_or_0">حداقل یکی از کلیدواژه ها</label>
@@ -148,8 +148,8 @@
         </td>
     </tr>
     <tr>
-        <td><label for="admins">مدیر</label></td>
-        <td><select class="form-control" id="admins" multiple="multiple"></select></td>
+        <td class="no-border"><label for="admins">مدیر</label></td>
+        <td class="no-border"><select class="form-control" id="admins" multiple="multiple"></select></td>
     </tr>
     <tr>
         <td><label for="count">تعداد</label></td>
@@ -169,8 +169,8 @@
         </td>
     </tr>
     <tr>
-        <td><label for="arrange">ترتیب</label></td>
-        <td>
+        <td class="no-border"><label for="arrange">ترتیب</label></td>
+        <td class="no-border">
             <input type="radio" name="arrange" id="arrange_1" value="1" checked="checked" /><label for="arrange_1">زمان ثبت</label>
             <input type="radio" name="arrange" id="arrange_2" value="2" /><label for="arrange_2">الفبایی</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -179,8 +179,8 @@
         </td>
     </tr>
     <tr>
-        <td><label for="arrange">محتوا</label></td>
-        <td>
+        <td class="no-border"><label for="arrange">محتوا</label></td>
+        <td class="no-border">
             <input type="radio" name="content_type" id="content_type_1" onclick="$('[id^=contents_]').removeAttr('checked').attr('disabled', 'disabled');" /><label for="content_type_1">فقط عنوان</label>
             <input type="radio" name="content_type" id="content_type_2" onclick="$('[id^=contents_]').removeAttr('disabled');" checked="checked" /><label for="content_type_2">عنوان به همراه</label>
             <input type="checkbox" id="contents_0" /><label for="contents_0">تصویر</label>
@@ -190,8 +190,8 @@
         </td>
     </tr>
     <tr>
-        <td><label for="arrange">انیمیشن</label></td>
-        <td>
+        <td class="no-border"><label for="arrange">انیمیشن</label></td>
+        <td class="no-border">
             <input type="checkbox" id="animates_0" name="animate" /><label for="animates_0">زوم تصویر</label>
         </td>
     </tr>

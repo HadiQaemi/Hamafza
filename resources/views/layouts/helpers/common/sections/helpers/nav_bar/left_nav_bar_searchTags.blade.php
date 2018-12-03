@@ -8,9 +8,9 @@
                     if($keyword_type != 'special')
                     {
                         $title = $keyword_item->title;
-                        preg_match('/^.{1,60}\s/s', $keyword_item->title, $match);
-                        if(isset($match[0]))
-                            $title = trim($match[0])== $keyword_item->title ? $match[0] : $match[0].'... ';
+                        //preg_match('/^.{1,60}\s/s', $keyword_item->title, $match);
+                        //if(isset($match[0]))
+                            //$title = trim($match[0])== $keyword_item->title ? $match[0] : $match[0].'... ';
                     }
                     switch ($keyword_type)
                     {
@@ -19,7 +19,7 @@
                             $r .=
                             '
                             <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                <a rel="canonical" href="' . url($keyword_item->Uname) . '" target="_blank">' . $keyword_item->FullName . '</a>
+                                <a rel="canonical" href="' . url($keyword_item->Uname) . '" target="_blank"><i class="fa fa-eercast padding-left-10"></i>' . $keyword_item->FullName . '</a>
                             </li>
                             ';
                             break;
@@ -31,7 +31,7 @@
                                 $r .=
                                 '
                                 <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                    <a rel="canonical" href="' . url($keyword_item->pages[0]->id) . '" target="_blank" title="'. $keyword_item->title .'">' . $title . '</a>
+                                    <a rel="canonical" href="' . url($keyword_item->pages[0]->id) . '" target="_blank" title="'. $keyword_item->title .'"><i class="fa fa-eercast padding-left-10"></i>' . $title . '</a>
                                 </li>
                                 ';
                             }
@@ -46,7 +46,7 @@
                                     $r .=
                                     '
                                     <li id="keyword_' . $keyword_item->id . '" style="list-style: inside none square; margin-bottom: 5px;">
-                                        <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" title="'. $keyword_item->title .'">' . $title . '</a>
+                                        <a rel="canonical" href="' . url("{$keyword_item->sid}0/enquiry/$keyword_item->id") . '" title="'. $keyword_item->title .'"><i class="fa fa-eercast padding-left-10"></i>' . $title . '</a>
                                     </li>
                                     ';
                                 }

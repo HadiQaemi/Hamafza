@@ -3938,3 +3938,16 @@ input{
 #subjects_subjectType_Grid_wrapper .row.form-inline{
     height: 50px;
 }
+.no-border{
+    border: none !important;
+}
+.ui-tooltip-content{
+    color: #FFF;
+}
+.ui-widget-shadow{
+    color: #888 !important;
+}
+#all_files_div .file-name{
+    width: 200px;
+    display: inline-block;
+}

@@ -64,19 +64,23 @@
                             {{--</div>--}}
                         {{--</div>--}}
                     {{--</div>--}}
-                    <div class="pull-right" style="margin-top: 18px;">
+                    <div class="pull-right" style="margin-top: 10px;">
                         <label class="container-checkmark">
-                            <span>{{trans('tasks.official')}}</span>
                             <input type="checkbox" checked="checked" class="form-check-input" name="official_type[]" value="0" id="official" checked>
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <div class="pull-right" style="margin-top: 18px;">
+                    <div class="pull-right" style="margin-top: 10px;">
+                        <span>{{trans('tasks.official')}}</span>
+                    </div>
+                    <div class="pull-right" style="margin-top: 10px;">
                         <label class="container-checkmark">
-                            <span>{{trans('tasks.unofficial')}}</span>
                             <input type="checkbox" checked="checked" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>
                             <span class="checkmark"></span>
                         </label>
+                    </div>
+                    <div class="pull-right" style="margin-top: 10px;">
+                        <span>{{trans('tasks.unofficial')}}</span>
                     </div>
                     <div class="checkbox pull-right margin-right-50 hidden">
                         <label>
@@ -104,7 +108,7 @@
                     </div>
                     <div class="checkbox pull-right margin-right-50">
                         <div class="pull-right">
-                            <span style="margin-top: 20px;display: block;">{{trans('tasks.priority')}}</span>
+                            <span style="margin-top: 10px;display: block;">{{trans('tasks.priority')}}</span>
                         </div>
                     </div>
                     <div class="checkbox pull-right margin-right-15 ">
@@ -129,7 +133,7 @@
                     </div>
                     <div class="checkbox pull-right margin-right-20">
                         <div class="pull-right">
-                            <span style="margin-top: 20px;display: block;">{{trans('tasks.stage')}}</span>
+                            <span style="margin-top: 10px;display: block;">{{trans('tasks.stage')}}</span>
                         </div>
                         <div class="checkboxVertical pull-right margin-right-10">
                             <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}" checked/>

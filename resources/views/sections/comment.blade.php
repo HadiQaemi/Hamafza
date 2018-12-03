@@ -318,6 +318,7 @@ $hide_type = false;
         formData.append('uid', uid);
         formData.append('pid', pid);
         formData.append('type', type);
+        formData.append('selectText', selectText);
         formData.append('desc', desc);
         formData.append('title', title);
         formData.append('all', all);

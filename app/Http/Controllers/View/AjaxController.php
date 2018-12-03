@@ -1901,6 +1901,7 @@ preventDuplicates: true,
         $pid = $request->input('pid');
         $type = $request->input('type');
         $desc = $request->input('desc');
+        $selectText = $request->input('selectText');
         $desc = preg_replace("/<img[^>]+\>/i", "", $desc);
         $video = $request->input('video');
         $all = $request->input('all');
@@ -1935,7 +1936,7 @@ preventDuplicates: true,
 
         $SP = new \App\HamafzaServiceClasses\PostsClass();
         $time = time();
-        $menu = $SP->NewPost($uid, $sesid, $Pid, $type, $desc, $tmpFileName, $video, $time, $all, $keys, $cids, $gids, $title, $portal_id, $reward);
+        $menu = $SP->NewPost($uid, $sesid, $Pid, $type, $desc, $tmpFileName, $video, $time, $all, $keys, $cids, $gids, $title, $portal_id, $reward, $selectText);
         if ($menu)
         {
             $file = HFM_SaveMultiFiles('comment_file', '\App\Models\Hamahang\FileManager\Fileable', 'fileable_id', $menu, ['created_by' => auth()->id(), 'fileable_type' => 'App\Models\hamafza\Pages', 'type' => 2]);

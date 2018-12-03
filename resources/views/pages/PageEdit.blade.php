@@ -308,7 +308,7 @@
                                 '           <i title="{{ trans('app.delete') }}" data-file_name="' + result.page_files[x].originalName + '" data-file_id="' + result.page_files[x].id + '" style="padding-left: 5px;" class="fa fa-remove text-danger-400 remove_page_file"></i></a>|' +
                                 '           <a title="{{ trans('site.download') }}" href="{{ route('FileManager.DownloadFile',['ID',''])}}/' + result.page_files[x].encoded_file_id + '"><i style="padding-right: 5px;" class="fa fa-download"></i></a>' +
                                 '       </span>' +
-                                '       <span>' + result.page_files[x].originalName + '.' + result.page_files[x].extension  + '</span>' +
+                                '       <span class="file-name">' + result.page_files[x].originalName + '.' + result.page_files[x].extension  + '</span>' +
                                 '   </div>' +
                                 '</div>';
                         }
