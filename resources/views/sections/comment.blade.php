@@ -300,7 +300,7 @@ $hide_type = false;
         selectText = $("#SelectedComment").val();
         if (selectText != '')
         {
-            desc = "درباره «" + selectText + "»<hr>" + desc;
+            desc = "درباره «" + '<a href="/' + pid + '0" class="link-page">' + selectText + '</a>' + "» " + desc;
         }
         $("#SelectedComment").val("");
         image = '';

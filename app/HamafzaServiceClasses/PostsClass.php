@@ -1125,7 +1125,7 @@ class PostsClass {
         return $sr;
     }
 
-    public function NewPost($uid, $sesid, $sid = 0, $type, $desc, $image, $video, $time, $all, $keys, $circles, $groups, $title, $portal_id = 0, $reward = 0, $selectText='') {
+    public function NewPost($uid, $sesid, $sid_org = 0, $type, $desc, $image, $video, $time, $all, $keys, $circles, $groups, $title, $portal_id = 0, $reward = 0, $selectText='') {
         $PC = new PageClass();
 
         switch ($type) {
@@ -1146,7 +1146,7 @@ class PostsClass {
                 break;
         }
 
-        $pid = DB::table('posts')->insertGetId(['uid' => $uid, 'sid' => $sid, 'type' => $type, 'desc' => "$desc", 'pic' => $image, 'video' => $video, 'reg_date' => $time, 'view' => $all, 'title' => "$title", 'portal_id' => $portal_id, 'select_text' => $selectText]);
+        $pid = DB::table('posts')->insertGetId(['uid' => $uid, 'sid' => $sid_org, 'type' => $type, 'desc' => "$desc", 'pic' => $image, 'video' => $video, 'reg_date' => $time, 'view' => $all, 'title' => "$title", 'portal_id' => $portal_id]);
 
         if ($type == 2 && $reward > 0) {
             $reward_id = Reward::create(
