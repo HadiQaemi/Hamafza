@@ -499,7 +499,8 @@ class PostsClass {
             $row->type = PostsClass::PostType($row->type);
             $GR = DB::table('user_group')
                             ->where('id', $row->gid)->select('isorgan', 'name', 'link', 'uid', 'pic')->first();
-
+            if(!isset($row->gid) || !isset($GR->isorgan))
+                continue;
             if ($row->gid != '' && $GR->isorgan == '1' && $GR->uid == $row->uid) {
                 $row->OrganName = $GR->name;
                 $row->Organlink = '';
@@ -522,6 +523,7 @@ class PostsClass {
                 $row->InsertedGroup = '';
                 $row->InsertedGrouplink = '';
             }
+
             $row->comments = DB::table('post_comment as p')
                 ->where('p.pid', '=', $row->id)
                 ->select('uid','comment','reg_date','id')
@@ -1127,12 +1129,14 @@ class PostsClass {
 
     public function NewPost($uid, $sesid, $sid_org = 0, $type, $desc, $image, $video, $time, $all, $keys, $circles, $groups, $title, $portal_id = 0, $reward = 0, $selectText='') {
         $PC = new PageClass();
-
         switch ($type) {
             case 1:
                 if (env('CONSTANTS_ENQUIRY_FOR_COMMENT')) {
                     $sid = $portal_id = env('CONSTANTS_ENQUIRY_FOR_COMMENT');
                 }
+                break;
+            case 2:
+                $sid = $portal_id = 6;
                 break;
             case 3:
                 if (env('CONSTANTS_ENQUIRY_FOR_IDEA')) {
@@ -1293,12 +1297,19 @@ class PostsClass {
             }
 
 
+            $row->keywords = DB::table('post_keys as keys')
+                            ->leftjoin('keywords as k', 'keys.kid', '=', 'k.id')
+                            ->where('keys.pid', $row->id)
+                            ->select('k.title', 'k.id')
+                            ->get();
+
+
             $tables = DB::table('post_comment as p')
-                            ->leftjoin('user as u', 'p.uid', '=', 'u.id')
-                            ->where('pid', $row->id)
-                            ->orderBy('reg_date')
-                            ->select('p.id', 'p.comment', 'p.reg_date', 'u.id as uid', 'u.Uname', 'u.Name', 'u.Family', 'u.Pic AS Pic')
-                            ->take(10)->get();
+                ->leftjoin('user as u', 'p.uid', '=', 'u.id')
+                ->where('pid', $row->id)
+                ->orderBy('reg_date')
+                ->select('p.id', 'p.comment', 'p.reg_date', 'u.id as uid', 'u.Uname', 'u.Name', 'u.Family', 'u.Pic AS Pic')
+                ->take(10)->get();
             foreach ($tables as $rows) {
                 $rows->reg_date = PublicsClass::timeAgo($rows->reg_date);
                 $url = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';

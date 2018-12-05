@@ -36,7 +36,7 @@
                     <span class="homepage_forget_password_user" style="cursor: pointer;">رمز عبور را فراموش کرده‌ام</span>
                     <br />
                     <br />
-                    <span></span><a class="sub_login" href="#">راهنما</a></span>
+                    <span></span><a class="sub_login" href="/17">راهنما</a></span>
                 </center>
             </form>
     </div>

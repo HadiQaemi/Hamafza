@@ -67,7 +67,8 @@
     @else
         <img class="pull-right" src="{{App::make('url')->to('/')}}/theme/Content/icons/avatar.png"/>
         <div class="login" data-toggle="modal" data-target="#login">ورود</div>
-        <div class="register" data-toggle="modal" data-target="#register">ثبت نام</div>
+        {{--<div class="register" data-toggle="modal" data-target="#register">ثبت نام</div>--}}
+        <div class="register homepage_register_user">ثبت نام</div>
     @endif
 </div>
 

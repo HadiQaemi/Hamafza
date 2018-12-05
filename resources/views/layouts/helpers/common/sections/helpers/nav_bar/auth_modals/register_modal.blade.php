@@ -2,12 +2,12 @@
     <div class="modal-dialog">
         <div class="modal-content" style="{{'kmkz' == config('constants.DefIndexView') ? 'height: 750px;' : ''}}">
             <div class="modal-header modal-header-darkblue">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
                 <h3 class="modal-title">ثبت نام</h3>
             </div>
             <div class="modal-body modal-register" style="height: 500px;">
                 <div class="register_div"></div>
-                <div class="inner_register_div" style="overflow-y: auto; overflow-x: hidden; direction: rtl;">
+                <div class="inner_register_div" style="overflow-y: auto; overflow-x: hidden; direction: rtl;width: 96%;padding-right: 2%;padding-top: 2%">
                     <div style="">
                         <form name="modal_register_form" class="HamafzaIcon" id="modal_register_form" method="post">
                             {{ csrf_field() }}
@@ -137,7 +137,7 @@
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#login" class="login">ورود</div>
                                 </div>
                                 <div class="col-md-5">
-                                    <button type="button" class="btn btn-success" id="btn_modal_register">ثبت کاربر جدید</button>
+                                    <button type="button" class="btn btn-success btn_modal_register">ثبت کاربر جدید</button>
                                 </div>
                             </div>
                             <div class="clearfix"></div>

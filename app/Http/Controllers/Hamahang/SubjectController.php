@@ -33,6 +33,7 @@ class SubjectController extends Controller
 //                ,
 //                DB::raw('COUNT(subjects.kind) as get_subject_count')
             )
+            ->whereNull('subject_type.deleted_at')
 //            ->groupBy('subjects.kind')
 //            ->orderBy('subject_type.id')
             ->get();

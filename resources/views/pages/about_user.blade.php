@@ -36,7 +36,11 @@
             @endif
                 <div style="max-width:170px; display:inline-block; vertical-align:top">
                 <a class="@if(auth()->check() && $user->id == auth()->id()) jsPanels @endif" href="{{ route('modals.profile_avatar') }}">
-                    <i class="fa fa-edit" style="margin-right: -20px;"></i>
+                    @if(isset($user->Uname) && isset(auth()->user()->Uname))
+                        @if($user->Uname == auth()->user()->Uname)
+                            <i class="fa fa-edit" style="margin-right: -20px;"></i>
+                        @endif
+                    @endif
                     <img src="{{$user->AvatarLink}}" style="width:100px; height: 100px; margin:0 10px;float:right;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; "/>
                 </a>
             </div>

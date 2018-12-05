@@ -2318,6 +2318,21 @@ preventDuplicates: true,
                 }
             })->whereHas('subject')->with('subject')->get();
         }
+        if ($in_posts)
+        {
+            $searchs['groups'] = Post::where(function ($query) use ($term, $for_title, $for_content)
+            {
+                if ($for_title)
+                {
+                    $posts = $query->orWhere('title', 'like', "%$term%");
+                }
+                if ($for_content)
+                {
+                    $posts = $query->orWhere('desc', 'like', "%$term%");
+                }
+            })->whereHas('group')->with('group')->get();
+        }
+//        dd($searchs);
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_search')->with
         ([
             'searchs' => $searchs,

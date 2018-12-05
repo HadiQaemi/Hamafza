@@ -521,7 +521,7 @@ $(document).mouseup(function (e) {
 });
 
 /*when click on register/login button*/
-$(document).on("click", "div#login div.register,div#register div.login,#header div.register,#header div.login", function () {
+$(document).on("click", "div#login div.registers,div#register div.login,#header div.registers,#header div.login", function () {
     if ($("body").find("div#modalTransparent").length <= 0) {
         $("body").append("<div id='modalTransparent' />")
     }

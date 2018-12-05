@@ -106,6 +106,7 @@ if (!function_exists('buildMenuTree'))
                 $grouped[$sub[$pidKey]][] = $sub;
             }
         }
+
         $fnBuilder = function ($siblings) use (&$fnBuilder, $grouped, $idKey, $children_key)
         {
             $siblings = sort_arr($siblings);
@@ -128,20 +129,24 @@ if (!function_exists('buildMenuTree'))
         {
             $tree = [];
         }
+
         $tree_t = '';
         foreach($tree as $k=>$node) {
             $tree_child = '';
             $status = 'hide';
-            foreach ($node['children'] as $children) {
-                if(isset($children['state']) and isset($children['state']['opened']))
-                {
-                    if($children['state']['opened']==true)
+            if(isset($node['children']))
+            {
+                foreach ($node['children'] as $children) {
+                    if(isset($children['state']) and isset($children['state']['opened']))
                     {
-                        $status = 'ShowIndex show';
-                        $tree_child .= '<li class="active"><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
+                        if($children['state']['opened']==true)
+                        {
+                            $status = 'ShowIndex show';
+                            $tree_child .= '<li class="active"><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
+                        }
+                    }else{
+                        $tree_child .= '<li><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
                     }
-                }else{
-                    $tree_child .= '<li><a href="/' . $children['href'] . '">' . $children['title'] . '</a></li>';
                 }
             }
             $tree_t .= '<li class="dropdown-ver" node="'.$k.'">';

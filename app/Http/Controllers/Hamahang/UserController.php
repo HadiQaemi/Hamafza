@@ -123,7 +123,8 @@ class UserController extends Controller
         if (!empty($request->input('extra')))
         {
             $extra_search = $request->input('extra');
-            $users = User::select('Uname', 'id', 'Name', 'Family', 'Active', 'created_at')
+            $users = User::select('Uname', 'user.id', 'Name', 'Family', 'Active', 'user.created_at', 'user_profile.Mobile', 'user_profile.Tel_number', 'user_profile.relevant_organization')
+                ->leftJoin('user_profile','user_profile.uid','=','user.id')
                 ->with(['_roles' => function ($query) use ($extra_search)
                 {
                     $query->whereIn('role_id', $extra_search);
@@ -134,6 +135,10 @@ class UserController extends Controller
                 })
                 ->orderBy('id', 'DESC');
             return \Datatables::eloquent($users)
+                ->editColumn('id', function ($data)
+                {
+                    return enCode($data->id);
+                })
                 ->addColumn('id_code', function ($data)
                 {
                     return enCode($data->id);
@@ -157,10 +162,15 @@ class UserController extends Controller
         }
         else
         {
-            $users = User::select('Uname', 'id', 'Name', 'Family', 'Active', 'created_at')->orderBy('id', 'DESC')->with('_roles');
+            $users = User::select('Uname', 'user.id', 'Name', 'Family', 'Active', 'user.created_at', 'user_profile.Mobile', 'user_profile.Tel_number', 'user_profile.relevant_organization')
+                ->leftJoin('user_profile','user_profile.uid','=','user.id')->orderBy('id', 'DESC')->with('_roles');
 //            dd($users[0]);
 
             return \Datatables::eloquent($users)
+                ->editColumn('id', function ($data)
+                {
+                    return enCode($data->id);
+                })
                 ->addColumn('id_code', function ($data)
                 {
                     return enCode($data->id);
@@ -293,8 +303,7 @@ class UserController extends Controller
         } else
         {
 //            $user = User::find(deCode($request->item_id));
-            $user = User::find($request->item_id);
-
+            $user = User::find(deCode($request->item_id));
             $user->Uname = $request->Uname;
             if ($request->password)
             {
@@ -305,19 +314,50 @@ class UserController extends Controller
             $user->Email = $request->Email;
             $user->save();
 
+//            $profile = UserProfile::where('uid','=',deCode($request->item_id));
             $profile = UserProfile::where('uid','=',deCode($request->item_id));
-            $profile->update([
-                'Province' => $request->province_edit,
-                'City' => $request->city_edit,
-                'Mobile' => $request->mobile_edit,
-                'Tel_number' => $request->phone_edit,
-                'relevant_organization' => $request->input('relevant_organization_edit', null)
-            ]);
+            if($profile->get()->count()==0)
+            {
+                DB::table('user_profile')->insert(
+                    [
+                        'uid' => deCode($request->item_id),
+                        'Province' => $request->province_edit,
+                        'City' => $request->city_edit,
+                        'Mobile' => $request->mobile_edit,
+                        'Tel_number' => $request->phone_edit,
+                        'relevant_organization' => $request->input('relevant_organization_edit', null)
+                    ]
+                );
+            }else{
+                $profile = UserProfile::where('uid','=',deCode($request->item_id));
+                $profile->update([
+                    'Province' => $request->province_edit,
+                    'City' => $request->city_edit,
+                    'Mobile' => $request->mobile_edit,
+                    'Tel_number' => $request->phone_edit,
+                    'relevant_organization' => $request->input('relevant_organization_edit', null)
+                ]);
 
+            }
+
+//            $user_education = UserEducation::where('uid','=',deCode($request->item_id));
             $user_education = UserEducation::where('uid','=',deCode($request->item_id));
-            $user_education->update([
-                'grade' => $request->education_edit
-            ]);
+            if($user_education->get()->count()==0)
+            {
+                DB::table('user_education')->insert(
+                    [
+                        'uid' => deCode($request->item_id),
+                        'grade' => $request->education_edit
+                    ]
+                );
+            }else{
+                $user_education = UserEducation::where('uid','=',deCode($request->item_id));
+                $user_education->update([
+                    'grade' => $request->education_edit
+                ]);
+
+            }
+
 
 
             $role = Role::whereIn('id', $request->roles_list)->get();
@@ -333,9 +373,13 @@ class UserController extends Controller
 
     public function editShowUsers(Request $request)
     {
-        $users = User::where('id', deCode($request->id))->with('_roles')->with('profile')->with('educations')->first();
-//        $users->id = enCode($users->id);
-        return json_encode($users);
+        $users = User::where('id', deCode($request->id))->with('_roles')->with('profile')->with('educations')->first()->toArray();
+        $users_new = [];
+        foreach($users as $k=>$v)
+            $users_new[$k] = $v;
+
+        $users_new['id'] = enCode($users['id']);
+        return json_encode($users_new);
     }
 
     public function destroyUser(Request $request)

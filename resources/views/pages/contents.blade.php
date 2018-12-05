@@ -98,7 +98,7 @@
                             <div style="margin:5px; ">
                                 @if(array_key_exists("keywords",$item) && is_array($item->keywords))
                                     @foreach($item->keywords as $items)
-                                        <div class="FaqTags" id="Key_{{$items->id}}">{{$items->title}}</div>
+                                        <div class="FaqTags" id="Key_{{$items->id}}"><span class="h-span-keyword"><i class="fa fa-tag" aria-hidden="true"></i> {{$items->title}}</div>
                                     @endforeach
                                 @endif
                             </div>
@@ -108,41 +108,43 @@
                     @if($item->likes!='0')
                         <div class="like-box">
                             @else
-                                <div class="like-box40">
-                                    @endif
-                                    <div class="firstRow">
-                                        @if($item->islike)
-                                            <span class="PostLike" like='0' postid="{{$item->id}}">حذف پسند </span>
-                                        @else
-                                            <span class="PostLike" like='1' postid="{{$item->id}}">پسند </span>
+                                    <div class="like-box40">
                                         @endif
-                                        - <span postid="Comment_{{$item->id}}" class="Comment_Foc">اظهار نظر</span> -
-                                        <span> <a class="jsPanels" title="بازنشر" href="{{App::make('url')->to('/')}}/modals/postshare?postid={{$item->id}}">بازنشر</a> </span>
-                                        <div class="pull-left left-detail PostDate">
-                                            @if(session('uid') ==$item->uid)
-                                                @php
-                                                    $post = App\Models\hamafza\Post::where('parent_id', $item->id)->get();
-                                                @endphp
-                                                @if (isset($item->accepted) && !$item->accepted)
-                                                    @if (!$post->count())
-                                                        <span id="{{$item->id}}" action="delete" page="Post" class="FloatLeft fonts icon-hazv  PostDelicn"></span>
-                                                    @endif
+                                        <div class="firstRow">
+                                            @if(auth()->id())
+                                                @if($item->islike)
+                                                    <span class="PostLike" like='0' postid="{{$item->id}}">حذف پسند </span>
+                                                @else
+                                                    <span class="PostLike" like='1' postid="{{$item->id}}">پسند </span>
                                                 @endif
+                                                - <span postid="Comment_{{$item->id}}" class="Comment_Foc">اظهار نظر</span> -
+                                                <span> <a class="jsPanels" title="بازنشر" href="{{App::make('url')->to('/')}}/modals/postshare?postid={{$item->id}}">بازنشر</a> </span>
+                                                <div class="pull-left left-detail PostDate">
+                                                    @if(session('uid') ==$item->uid)
+                                                        @php
+                                                            $post = App\Models\hamafza\Post::where('parent_id', $item->id)->get();
+                                                        @endphp
+                                                        @if (isset($item->accepted) && !$item->accepted)
+                                                            @if (!$post->count())
+                                                                <span id="{{$item->id}}" action="delete" page="Post" class="FloatLeft fonts icon-hazv  PostDelicn"></span>
+                                                            @endif
+                                                        @endif
+                                                    @endif
+                                                        {{$item->reg_date}}
+                                                </div>
                                             @endif
-                                            {{$item->reg_date}}
                                         </div>
-                                    </div>
                                     @if ($item->likes!='0')
                                         <div class="secondRow">
-                                            <span id="LikeCounter_{{$item->id}}">{{$item->likes  }}  </span> نفر این مطلب را
+                                                <span id="LikeCounter_{{$item->id}}">{{$item->likes  }}  </span> نفر این مطلب را
                                             @if ($item->likes!='1')
                                                 پسندیده‌اند
                                             @else
                                                 پسندید
-                                            @endif
-                                        </div>
-                                    @endif
-                                </div>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
                                 @if (is_array($item->comments))
                                     @foreach($item->comments as $items)
                                         @if (\App\User::find($item->uid))

@@ -18,7 +18,14 @@
         });
 
         $(document).on("click", ".homepage_register_user", function () {
-            $('#register').modal('show');
+            // $('#register').modal('show');
+            calendarModal = $.jsPanel({
+                position: {my: "center-top", at: "center-top", offsetY: 120},
+                // contentSize: {width: 1000, height: 600},
+                panelSize: {width: 1000, height: 750},
+                headerTitle: $('#register .modal-header').html(),
+                content : $('#register .modal-body').html()
+            });
         });
 
         $(document).on("click", ".register_captcha_refresh", function () {
@@ -190,8 +197,8 @@
             });
         });
 
-        $(document).on("click", "#btn_modal_register", function () {
-            var form_data = $('#modal_register_form').serialize();
+        $(document).on("click", ".btn_modal_register", function () {
+            var form_data = $('.jsPanel #modal_register_form').serialize();
             $('.inner_register_div').hide();
             $('.register_div').addClass('loader');
             $.ajax({
@@ -208,43 +215,44 @@
                         $('#modal_register_captcha').val('');
                         $('.register_div').removeClass('loader');
                         $('.inner_register_div').show();
+                        $('.jsPanel .modal_register_error_inputs').html('');
                         $('.modal_register_error_inputs').css('color', 'red');
                         register_captcha_refresh();
                         if (result.error.captcha_code) {
-                            $('#reg_captcha_request_errors').html(result.error.captcha_code);
+                            $('.jsPanel #reg_captcha_request_errors').html(result.error.captcha_code);
                         }
                         else {
-                            $('#reg_captcha_request_errors').html('');
+                            $('.jsPanel #reg_captcha_request_errors').html('');
                         }
                         if (result.error.username) {
-                            $('#reg_username_request_errors').html(result.error.username);
+                            $('.jsPanel #reg_username_request_errors').html(result.error.username);
                         }
                         else {
-                            $('#reg_username_request_errors').html('');
+                            $('.jsPanel #reg_username_request_errors').html('');
                         }
                         if (result.error.email) {
-                            $('#reg_email_request_errors').html(result.error.email);
+                            $('.jsPanel #reg_email_request_errors').html(result.error.email);
                         }
                         else {
-                            $('#reg_email_request_errors').html('');
+                            $('.jsPanel #reg_email_request_errors').html('');
                         }
                         if (result.error.password) {
-                            $('#reg_password_request_errors').html(result.error.password);
+                            $('.jsPanel #reg_password_request_errors').html(result.error.password);
                         }
                         else {
-                            $('#reg_password_request_errors').html('');
+                            $('.jsPanel #reg_password_request_errors').html('');
                         }
                         if (result.error.name) {
-                            $('#reg_name_request_errors').html(result.error.name);
+                            $('.jsPanel #reg_name_request_errors').html(result.error.name);
                         }
                         else {
-                            $('#reg_name_request_errors').html('');
+                            $('.jsPanel #reg_name_request_errors').html('');
                         }
                         if (result.error.family) {
-                            $('#reg_family_request_errors').html(result.error.family);
+                            $('.jsPanel #reg_family_request_errors').html(result.error.family);
                         }
                         else {
-                            $('#reg_family_request_errors').html('');
+                            $('.jsPanel #reg_family_request_errors').html('');
                         }
                     }
 //                        messageModal('alert', 'خطا در ثبت نام', result.error);

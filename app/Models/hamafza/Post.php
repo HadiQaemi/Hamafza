@@ -121,6 +121,10 @@ class Post extends Model
         return $this->belongsTo('App\Models\hamafza\Subject', 'sid','id');
     }
 
+    public function group()
+    {
+        return $this->belongsTo('App\Models\hamafza\Groups', 'sid','id');
+    }
     /*
     public function votes_count()
     {
