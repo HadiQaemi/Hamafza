@@ -3778,7 +3778,7 @@ var id = data.node.id;
                             }
                             else
                             {
-                                $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>($name ،$year)</a>";
+                                $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>($name $year)</a>";
                             }
                         }
                         $body = str_replace($array['0'][$x], $nev, $body);
