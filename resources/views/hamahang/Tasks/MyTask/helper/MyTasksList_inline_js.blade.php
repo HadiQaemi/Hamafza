@@ -159,6 +159,7 @@
                 "data": send_info
             },
             "bSort": true,
+            "aaSorting": [],
             "bSortable": true,
             "autoWidth": false,
             "searching": false,
