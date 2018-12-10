@@ -26,7 +26,10 @@
             {
                 data: 'subject_type.name',
                 mRender: function (data, type, full) {
-                    return full['subject_type']['name'];
+                    if(full['subject_type'] == null )
+                        return '';
+                    else
+                        return full['subject_type']['name'];
                 }
             },
             {

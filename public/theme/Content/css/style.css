@@ -3951,3 +3951,7 @@ input{
     width: 200px;
     display: inline-block;
 }
+.user_edit_jspanel_content{
+    overflow: hidden !important;
+    height: 500px !important;
+}

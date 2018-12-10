@@ -16,130 +16,117 @@
                         <div id="edit_user_detail" style="padding: 10px 10px 10px 32px;">
                             <form id="user_detail_edit_form" enctype="multipart/form-data" method="post" action="{{ route('hamahang.users.update_user_detail') }}">
                                 {!! csrf_field() !!}
-                                <table class="table{{---striped--}} col-xs-12">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <span style="color:red">*</span>نام<br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <span style="color:red">*</span>نام خانوادگی
-                                            <br />
-                                            <br />
-                                            <br />
-                                            معرفی اجمالی
-                                        </td>
-                                        <td>
-                                            <input type="text" name="name" class="form-control required" value="{{ $user->Name }} "><br />
-                                            <input type="text" name="family" class="form-control required" value="{{ $user->Family }}"><br />
-                                            <input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ trans('profile.your_avatar_image') }}</td>
-                                        <td>
-                                            @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
-                                                <span class="fa fa-times remove_avater remove_avatar_image" style="cursor: pointer;"></span>
-                                            @endif
-                                            <img class="img_avatar" style="margin-bottom: 10px; width: 150px; height: 150px; position: relative;"
-                                                 title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">
-                                            <div style="padding-right: 15px;"><input id="setting_input_file_avatar" class="form-control filestyle" type="file" name="user_avatar"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>دیدگاه</td>
-                                        <td colspan="1">
-                                            <textarea class="form-control" rows="5" name="comment" id="comment" placeholder="دیدگاه">{{ $user->Comment }}</textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>جنسیت</td>
-                                        <td>
-                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='0') checked="checked" @endif value="0" name="gender">مرد</label>
-                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='1') checked="checked" @endif value="1" name="gender">زن</label>
-                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>تاریخ تولد</td>
-                                        <td>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6"><input type="text" name="name" class="form-control required" value="{{ $user->Name }} " placeholder="نام"></div>
+                                    <div class="col-xs-6"><input type="text" name="family" class="form-control required" value="{{ $user->Family }}" placeholder="نام خانوادگی"></div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-12">
+                                        <input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تاریخ تولد</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input id="birthday" name="birthday" class="form-control jalali_date jsp_user_birth_date" type="text" value="@if(isset($user->profile)){{ $user->profile->birth_date }}@endif"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>محل تولد</td>
-                                        {{--                                {{ dd($user->province) }}--}}
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-xs-3" style="padding-right: 0;">
-                                                    <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province'>
-                                                        @if($provinces)
-                                                            @foreach($provinces as $province)
-                                                                <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-9" style="padding-left: 0;">
-                                                    <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
-                                                        @if($cities)
-                                                            @foreach($cities as $city)
-                                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>تلفن همراه</td>
-                                        <td><input type="text" name="mobile" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Mobile }} @endif"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>تلفن ثابت</td>
-                                        <td style="text-align: right;">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">محل تولد</div>
+                                        <div class="col-xs-5 noRightPadding noLeftPadding">
+                                                <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province'>
+                                                    @if($provinces)
+                                                        @foreach($provinces as $province)
+                                                            <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                        </div>
+                                        <div class="col-xs-5 noRightPadding noLeftPadding">
+                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
+                                                @if($cities)
+                                                    @foreach($cities as $city)
+                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن همراه</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input type="text" name="mobile" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Mobile }} @endif">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 text-center">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-355">تلفن ثابت</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_number }}@endif" name="tel_number" size="34"
                                                    maxlength="10" placeholder="شماره تلفن">
                                             <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_code }}@endif" name="tel_code" size="4" maxlength="4"
                                                    placeholder="کد شهر">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td> فاکس</td>
-                                        <td style="text-align: right;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">فاکس</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_number }}@endif" name="fax_number" size="34" maxlength="10" placeholder="شماره فکس">
                                             <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_code  }}@endif" name="fax_code" size="4" maxlength="4" placeholder="کد شهر">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>وب سایت</td>
-                                        <td>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 text-center">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">وب سایت</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input type="text" name="website" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Website }}@endif">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span style="color:red">*</span>رایانامه</td>
-                                        <td><input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" {!! 'shazand' == config('constants.IndexView') ? null : 'readonly' !!}></td>
-                                    </tr>
-                                    @if ('kmkz' == config('constants.DefIndexView'))
-                                    <tr>
-                                        <td>سازمان مربوطه</td>
-                                        <td><input type="text" name="relevant_organization" class="dir_ltr form-control" value="{{ isset($profile->relevant_organization) ? $profile->relevant_organization : '' }}"></td>
-                                    </tr>
-                                    @endif
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            {{--<span class="FloatLeft">
-                                                <input type="button" value="تایید" class="btn btn-primary btn_edit_user_detail">
-                                                <input type="button" value="لغو" class="btn btn-default btn_abort_edit_user_detail">
-                                            </span>--}}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        <div class="pull-right line-height-35">رایانامه</div>
+                                        <div class="pull-right margin-right-10">
+                                            <input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" {!! 'shazand' == config('constants.IndexView') ? null : 'readonly' !!}>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="pull-right">جنسیت</div>
+                                        <div class="pull-right"><label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='0') checked="checked" @endif value="0" name="gender">مرد</label>
+                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='1') checked="checked" @endif value="1" name="gender">زن</label>
+                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        @if ('kmkz' == config('constants.DefIndexView'))
+                                            <div class="pull-right line-height-35">سازمان مربوطه</div>
+                                            <div class="pull-right margin-right-10">
+                                                <input type="text" name="relevant_organization" class="dir_ltr form-control" value="{{ isset($profile->relevant_organization) ? $profile->relevant_organization : '' }}">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-xs-6">
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-6">
+                                        <div>دیدگاه</div>
+                                        <div><textarea class="form-control" rows="5" name="comment" id="comment" placeholder="دیدگاه">{{ $user->Comment }}</textarea></div>
+                                    </div>
+                                    <div class="col-xs-6 text-center">
+                                        @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
+                                            <span class="fa fa-times remove_avater remove_avatar_image" style="cursor: pointer;"></span>
+                                        @endif
+                                        <img class="img_avatar" style="margin-bottom: 10px; width: 150px; height: 150px; position: relative;"
+                                             title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">
+                                        <div class="text-center" style="padding-right: 38%;"><input id="setting_input_file_avatar" class="form-control filestyle" type="file" name="user_avatar"></div>
+                                    </div>
+                                </div>
                                 <input type="submit" id="user_detail_form_data" hidden>
                             </form>
                         </div>

@@ -58,8 +58,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    {{--<img src="file:///C:/Users/soft/Desktop/hamafza%20960616/img/logo.png" style="float: right; margin-top: 2%; margin-right: 3px">--}}
-                    {{--<a class="navbar-brand" href="#" style="float: right;font-size: 1.9em;height: 48px;color: #FFF !important;">هم افزا</a>--}}
                     <a class="navbar-brand rtl-brand" href="{{App::make('url')->to('/')}}" style="padding: inherit !important; height: 47px!important;">
                         <span style="font-size: 20px;">{{ config('constants.SiteFullTitle') }}</span>
                         @if (auth()->check())
@@ -123,7 +121,7 @@
         {{--    @include('layouts.homepages.helpers.hamafza.index_content')--}}
         <!-- end of Main Template -->
             {{--@include('layouts.helpers.common.sections.footer_helper')--}}
-            <div class="row col-xs-12 margin-top-50">
+            <div class="row col-xs-12" style="margin-top:10%;">
                 <div class="col-xs-2"></div>
                 @if (auth()->check())
                     <div class="col-xs-3 margin-left-10">
@@ -144,14 +142,14 @@
                                                 <input type="text" name="username" id="username" autofocus="" class="form-control required"  " placeholder="رایانامه یا نام کاربری"></td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 2px;width:100%;padding-left: 15px;">
+                                            <td style="padding: 2px;width:100%;padding-left: 15px;padding-top: 12px;">
                                                 <div id="homepage_password_request_errors" style=" font-size: 12px; color: red"></div>
-                                                <input type="password" id="passwords" name="password" class="form-control required"  " placeholder="رمز عبور"  autocomplete="off">
+                                                <input type="password" id="passwords" name="password" class="form-control required" placeholder="رمز عبور"  autocomplete="off">
                                             </td>
                                         </tr>
                                         @if (!config('app.debug'))
                                             <tr>
-                                                <td style="padding: 2px;padding-left: 15px;">
+                                                <td style="padding: 2px;padding-left: 15px;padding-top: 12px;">
                                                     <div style="padding:0px">
                                                         <div id="captcha_code" class="form-group input-group col-xs-5" style="float: right;" >
 
@@ -170,12 +168,12 @@
                                             </tr>
                                         @endif
                                         <tr>
-                                            <td style="padding: 2px;padding-left: 15px;">
+                                            <td style="padding: 2px;padding-left: 15px;padding-top: 12px;">
                                                 <input type="button" id="btn_homepage_login_form" class="btn btn-primary col-xs-12" value="ورود به سامانه"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="padding-top: 12px;">
                                                 <span class="homepage_register_user" style="cursor: pointer; color: green;">کاربر جدید هستم</span>
                                                 /
                                                 <span class="homepage_forget_password_user" style="cursor: pointer;">رمز عبور را فراموش کرده‌ام</span>
@@ -192,67 +190,17 @@
 
                 <div class="col-xs-5 left-div">
                     <img class="center-block" src="theme/general/img/ecological.png">
-                    <p class="first-p2" style="height: 76px">
+                    <p class="first-p2">
                         {{--در <span>هم افزا</span> وفاق گسترش می یابد--}}
                     </p>
                     <p >در دسترس بودن دانش و بسترهای ارتباطی شفافیت ها را افزایش داده، اختلافات بی حاصل را کمرنگ کرده و اجماع را می‌افزاید.</p>
                 </div>
                 <div class="col-xs-2"></div>
             </div>
-            {{--<div id="login_div" class="right-div" style="height: 420px;margin-top: 100px;">--}}
-
-            {{--</div>--}}
-            {{--<div class="right-div">--}}
-            {{--<p class="text-center">ثبت نام در هم افزا</p>--}}
-            {{--<form id="loginform" class="form-horizontal" role="form" style="">--}}
-
-            {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-            {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">نام کاربری</span>--}}
-            {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-            {{--</div>--}}
-
-            {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-            {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">پست الکترونیک</span>--}}
-            {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-            {{--</div>--}}
-
-            {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-            {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">گذرواژه</span>--}}
-            {{--<input id="login-username" class="login-input" type="text" class="form-control custom-form" name="username" value="" placeholder="">--}}
-
-            {{--</div>--}}
-
-            {{--<div style="margin-bottom: 4%" class="input-group form-group-sm">--}}
-            {{--<span class="input-group-addon custom-addon2" style="border-left: none; border-right: 1px solid #ccc; width: 39%; text-align: right; font-size: 1.1em">نام و نام خانوادگی</span>--}}
-            {{--<input id="login-password" class="login-input" type="password" class="form-control custom-form" name="password" placeholder="">--}}
-
-            {{--</div>--}}
-            {{--</form>--}}
-            {{--<div class="btn btn-success">ثبت نام</div>--}}
-            {{--<a href="#"><p class="blue-text">عضو سایت هستم</p></a>--}}
-
-            {{--</div>--}}
 
         </div>
         <footer class="general-footer col-xs-12 text-center navbar-fixed-bottom">
             <ul id="footer" style="border-top: 1px solid #0bbb0b;height: 50px">
-                {{--<li>--}}
-                {{--<a href="http://www.hamafza.ir/ms">درباره هم افزا</a>--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                {{--<img src="http://hamafza.eqbal.ac.ir/theme/eghbal/Img/li-icon.png">--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                {{--<a href="http://www.hamafza.ir/100" target="_blank"><span>مبتنی بر</span> هم افزا</a>--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                {{--<img src="http://hamafza.eqbal.ac.ir/theme/eghbal/Img/li-icon.png">--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                {{--<a href="http://www.hamafza.co" target="_blank"><span>پشتیبانی :</span> فناوران مدیریت علم هم افزا</a>--}}
-                {{--</li>--}}
             </ul>
         </footer>
     </div>
