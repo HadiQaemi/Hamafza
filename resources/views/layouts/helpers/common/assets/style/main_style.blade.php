@@ -21,7 +21,7 @@
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}">
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/select2/dist/css/select2.min.css')}}"/>
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap/css/select2-bootstrap.css')}}"/>
-<link type="text/css" rel="stylesheet" href="{{url('/assets/Packages/gemini-scrollbar/gemini-scrollbar.css')}}">
+{{--<link type="text/css" rel="stylesheet" href="{{url('/assets/Packages/gemini-scrollbar/gemini-scrollbar.css')}}">--}}
 <link type="text/css" rel="stylesheet" href="{{url('assets/css/hamahang_style.css')}}"/>
 
 <?php

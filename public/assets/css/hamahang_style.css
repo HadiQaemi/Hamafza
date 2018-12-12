@@ -1707,9 +1707,9 @@ th{
 #keyWords .gm-scroll-view{
   opacity: 0;
 }
-.h_sidenav_client .gm-scrollbar .-horizontal{
-    display: none;
-}
+/*.h_sidenav_client .gm-scrollbar .-horizontal{*/
+    /*display: none;*/
+/*}*/
 
 .mce-i-indent:before{content:"\e00d"!important;}/*  '\e00c'  */
 .mce-i-outdent:before{content:"\e00c"!important;}/* '\e00d'  */

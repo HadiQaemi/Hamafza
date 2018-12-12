@@ -3969,3 +3969,9 @@ input{
 .no-bold{
     font-weight: normal;
 }
+#KeywordFehresrt,#PrtalFehresrt{
+    padding-right: 20px;
+}
+.bookmark_page li:hover .HazfBookmark{
+    display: inline !important;
+}

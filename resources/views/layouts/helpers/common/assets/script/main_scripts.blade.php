@@ -36,7 +36,7 @@
 <script type="text/javascript" src="{{URL::asset('assets/Packages/select2/dist/js/i18n/fa.js')}}"></script>
 <script src="{{ asset('assets/Packages/PersianDateOrTimePicker/js/persian-date.js') }}"></script>
 <script src="{{ asset('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js') }}"></script>
-<script src="{!! url('/assets/Packages/gemini-scrollbar/gemini-scrollbar.js') !!}"></script>
+{{--<script src="{!! url('/assets/Packages/gemini-scrollbar/gemini-scrollbar.js') !!}"></script>--}}
 
 <script>
     $.ajaxSetup({
