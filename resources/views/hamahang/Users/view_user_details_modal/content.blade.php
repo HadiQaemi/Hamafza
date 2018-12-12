@@ -17,12 +17,31 @@
                             <form id="user_detail_edit_form" enctype="multipart/form-data" method="post" action="{{ route('hamahang.users.update_user_detail') }}">
                                 {!! csrf_field() !!}
                                 <div class="col-xs-12">
-                                    <div class="col-xs-6"><input type="text" name="name" class="form-control required" value="{{ $user->Name }} " placeholder="نام"></div>
-                                    <div class="col-xs-6"><input type="text" name="family" class="form-control required" value="{{ $user->Family }}" placeholder="نام خانوادگی"></div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">نام</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input type="text" name="name" class="form-control required" value="{{ $user->Name }} " placeholder="نام">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">نام خانوادگی</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input type="text" name="family" class="form-control required" value="{{ $user->Family }}" placeholder="نام خانوادگی">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
-                                    <div class="col-xs-12">
-                                        <input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن همراه</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input type="text" name="mobile" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Mobile }} @endif">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">وب سایت</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input type="text" name="website" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Website }}@endif">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
@@ -56,13 +75,14 @@
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
                                     <div class="col-xs-6">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن همراه</div>
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">فاکس</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input type="text" name="mobile" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Mobile }} @endif">
+                                            <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_number }}@endif" name="fax_number" size="34" maxlength="10" placeholder="شماره فکس">
+                                            <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_code  }}@endif" name="fax_code" size="4" maxlength="4" placeholder="کد شهر">
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 text-center">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-355">تلفن ثابت</div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن ثابت</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_number }}@endif" name="tel_number" size="34"
                                                    maxlength="10" placeholder="شماره تلفن">
@@ -73,31 +93,18 @@
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
                                     <div class="col-xs-6">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">فاکس</div>
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">رایانامه</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_number }}@endif" name="fax_number" size="34" maxlength="10" placeholder="شماره فکس">
-                                            <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_code  }}@endif" name="fax_code" size="4" maxlength="4" placeholder="کد شهر">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 text-center">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">وب سایت</div>
-                                        <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input type="text" name="website" class="dir_ltr form-control" value="@if(isset($user->profile)){{ $user->profile->Website }}@endif">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 margin-top-10">
-                                    <div class="col-xs-6">
-                                        <div class="pull-right line-height-35">رایانامه</div>
-                                        <div class="pull-right margin-right-10">
                                             <input type="text" name="email" class="dir_ltr form-control" value="{{ isset($user->Email) ? $user->Email : '' }}" {!! 'shazand' == config('constants.IndexView') ? null : 'readonly' !!}>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
-                                        <div class="pull-right">جنسیت</div>
-                                        <div class="pull-right"><label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='0') checked="checked" @endif value="0" name="gender">مرد</label>
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">جنسیت</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding line-height-35">
+                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='0') checked="checked" @endif value="0" name="gender">مرد</label>
                                             <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='1') checked="checked" @endif value="1" name="gender">زن</label>
-                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label></div>
+                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
@@ -111,6 +118,12 @@
                                     </div>
                                     <div class="col-xs-6">
 
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-10">
+                                    <div class="col-xs-1">معرفی اجمالی</div>
+                                    <div class="col-xs-11">
+                                        <input type="text" name="summary" class="text form-control" value="{{ $user->Summary }}" placeholder="چند واژه برای معرفی شما (مانند عناوینی که در کارت ملاقات ذکر می شود)">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 margin-top-10">

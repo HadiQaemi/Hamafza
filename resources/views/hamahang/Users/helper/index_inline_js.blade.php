@@ -23,7 +23,8 @@
                 "processing": true,
                 "serverSide": true,
                 "autoWidth": false,
-                "bSort": false,
+                "bSort": true,
+                "ordering": true,
                 "language": window.LangJson_DataTables,
                 ajax: {
                     url: '{!! route('hamahang.users.get_users') !!}',

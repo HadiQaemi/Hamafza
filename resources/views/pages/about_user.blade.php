@@ -44,34 +44,41 @@
                     <img src="{{$user->AvatarLink}}" style="width:100px; height: 100px; margin:0 10px;float:right;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; "/>
                 </a>
             </div>
-            <div style="max-width:760px; display:inline-block; vertical-align:top">
-                <h1>{{ $user->Name }}  {{ $user->Family }} </h1>
-                @if(isset($user->Summary) && trim($user->Summary))
-                    {{ $user->Summary }}<br>
-                @endif
-                @if(isset($user->Comment) && trim($user->Comment))
-                    {{ $user->Comment }}<br>
-                @endif
-                @if(isset($user->profile) && trim($user->profile->birth_date))
-                    <span>تاریخ تولد:</span> {{ $user->profile->birth_date }} <span style="padding-left: 10px;"></span>
-                @endif
-                @if(isset($user->profile->City) && trim($user->profile->City))
-                    <span>محل تولد:</span> {{ $user->profile->city->name }} <br>
-                @endif
-                @if($user->Email)
-                    <span>رایانامه:</span> <a href="mailto:{{ $user->Email }}">{{ $user->Email }} </a> <span style="padding-left: 10px;"></span>
-                @endif
-                @if(isset($user->profile) && trim($user->profile->Tel_number))
-                    <span>تلفن:</span> {{ $user->profile->Tel_number }}-{{ $user->profile->Tel_code }} <span style="padding-left: 10px;"></span>
-                @endif
-                @if(isset($user->profile) && trim($user->profile->Website))
-                    <span>وبگاه:</span> <a target="_blank" href="http://{{ $user->profile->Website }}">{{ $user->profile->Website }} </a> <span style="padding-left: 10px;"></span>
-                @endif
-                @if(isset($user->profile) && trim($user->profile->Mobile))
-                    <span>تلفن همراه:</span> {{ $user->profile->Mobile }}<span style="padding-left: 10px;"></span>
-                @endif
-                @if(isset($user->profile) && trim($user->profile->Fax_number))
-                    <span>دورنگار:</span> {{ $user->profile->Fax_number }}-{{ $user->profile->Fax_code }}
+            <div style="width:80%; display:inline-block; vertical-align:top">
+                <div class="col-xs-3">
+                    <h1>{{ $user->Name }}  {{ $user->Family }} </h1>
+                    @if(isset($user->Summary) && trim($user->Summary))
+                        {{ $user->Summary }}<br>
+                    @endif
+                    @if(isset($user->Comment) && trim($user->Comment))
+                        {{ $user->Comment }}<br>
+                    @endif
+                    @if(isset($user->profile) && trim($user->profile->birth_date))
+                        <span>تاریخ تولد:</span> {{ $user->profile->birth_date }} <span style="padding-left: 10px;"></span>
+                    @endif
+                    @if(isset($user->profile->City) && trim($user->profile->City))
+                        <span>محل تولد:</span> {{ $user->profile->city->name }} <br>
+                    @endif
+                    @if($user->Email)
+                        <span>رایانامه:</span> <a href="mailto:{{ $user->Email }}">{{ $user->Email }} </a> <span style="padding-left: 10px;"></span>
+                    @endif
+                    @if(isset($user->profile) && trim($user->profile->Tel_number))
+                        <span>تلفن:</span> {{ $user->profile->Tel_number }}-{{ $user->profile->Tel_code }} <span style="padding-left: 10px;"></span>
+                    @endif
+                    @if(isset($user->profile) && trim($user->profile->Website))
+                        <span>وبگاه:</span> <a target="_blank" href="http://{{ $user->profile->Website }}">{{ $user->profile->Website }} </a> <span style="padding-left: 10px;"></span>
+                    @endif
+                    @if(isset($user->profile) && trim($user->profile->Mobile))
+                        <span>تلفن همراه:</span> {{ $user->profile->Mobile }}<span style="padding-left: 10px;"></span>
+                    @endif
+                    @if(isset($user->profile) && trim($user->profile->Fax_number))
+                        <span>دورنگار:</span> {{ $user->profile->Fax_number }}-{{ $user->profile->Fax_code }}
+                    @endif
+                </div>
+                @if(trim($user_comment)!='')
+                    <div class="col-xs-9 user_comment">
+                        {{ $user_comment }}
+                    </div>
                 @endif
             </div>
         </div>

@@ -19,13 +19,15 @@
     @if(auth()->check())
 
         <div class="pull-left user-config dropdown"{!! $change_color !!}>
-            <a href="#" style="background-color: transparent !important;" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            {{--<a href="#" style="background-color: transparent !important;" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">--}}
+            <a style="background-color: transparent !important;" id="avatar" aria-expanded="false" href="{{App::make('url')->to('/')}}/{{ auth()->user()->Uname }}">
                 {{ auth()->user()->Name .' '. auth()->user()->Family }}
-                <span class="caret"></span>
+                {{--<span class="caret"></span>--}}
                 <img class="img-circle img-responsive jsPanels" href="{{route('modals.profile_avatar')}}" src="{{ auth()->user()->avatar_link }}"/>
             </a>
             <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
             <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
+            <a href="{{App::make('url')->to('/')}}/Logout" class="exit glyphicon glyphicon-off" style="font-size: 7.8pt;"></a>
             <!-- begin cart`s basket -->
 
         {{--<a href="{{ route('ugc.desktop.hamahang.bazaar.cart', ['username' => auth()->user()->Uname]) }}" class="wall" style="visibility: {!! count(Session::get('cart')) ? 'visible' : 'hidden' !!}" id="basket_area">--}}

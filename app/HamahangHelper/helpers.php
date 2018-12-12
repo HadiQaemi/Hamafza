@@ -1195,6 +1195,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     }
                     $PageType = 'user';
                     $RightCol = RightCol($uid, 'user_about');
+                    $user_comment = \App\Models\hamafza\UserProfile::where('uid', $uid)->pluck('Comment')->first();
                     $res = [
                         'alert' => $alert,
                         'user_education' => '',//$user_data['user_education'],
@@ -1203,6 +1204,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         'user_special' => '', //$user_data['user_special'],
                         //'specials' => $user->specials,
                         'preview' => '', //$user_data['preview'],
+                        'user_comment' => $user_comment, //$user_data['preview'],
                         'PageType' => 'aboutuser',
                         'pid' => 'intro',
                         'content' => '', //$Ab
