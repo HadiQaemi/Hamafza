@@ -487,7 +487,7 @@
             '   <div>' +
             '      <input id="edit_form_item_id" type="hidden" name="item_id" value="' + item_id + '">' +
             '      <input type="hidden" name="uid" value="' + {{ $user->id }} +'">' +
-            '      <table class="">' +
+            '      <table class="" style="background: #eee;border-radius: 15px">' +
             '         <tr>' +
             '             <td>' +
             '                 <span>سمت</span>' +
@@ -536,7 +536,7 @@
             '             <td>پایان</td>' +
             '             <td>' +
             '                 <input name="end_year" class="form-control jalali_date user_work_end_year" type="text" value="' + end_year + '"/>' +
-            '                 <span for="end_now"><input name="end_now" id="end_now" type="checkbox" value="1"/>هم اکنون</span>' +
+            '                 <label for="end_now" class="no-bold"><input name="be_continue" id="end_now" type="checkbox" value="1"/>ادامه دارد</label>' +
             '             </td>' +
             '         </tr>' +
             '         <tr>' +

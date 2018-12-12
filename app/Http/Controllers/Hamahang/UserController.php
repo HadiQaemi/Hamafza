@@ -1083,6 +1083,7 @@ class UserController extends Controller
                 $user_work->start_year = $request->start_year;
                 $user_work->end_year = $request->end_year;
                 $user_work->comment = $request->comment;
+                $user_work->be_continue = isset($request->be_continue) ? $request->be_continue : 0;
                 $user_work->save();
             }
 

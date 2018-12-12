@@ -282,7 +282,7 @@
                                 <td>
                                     <label style="display:inline-block;padding:0;width:100%;">
                                         {{$i}}- {{ isset($work->post) ? $work->post : '' }}</label>{{ isset($work->company) ? $work->company : ''}}؛ {{ isset($work->section) ? $work->section : '' }}
-                                    ؛ {{ isset($work->start_year) ? $work->jalali_start_year : '' }} - {{ isset($work->end_year) ? $work->jalali_end_year : '' }}
+                                    ؛ {{ isset($work->start_year) ? $work->jalali_start_year : '' }} - {{ isset($work->end_year) ? ($work->be_continue==1 ? 'ادامه دارد' : $work->jalali_end_year ) : '' }}
                                     ؛ {{ isset($work->province->name) ? $work->province->name : '' }} {{ isset($work->city->name) ? $work->city->name : '' }}
                                     @if ($user->id == auth()->id())
                                         <div class="icon IconHeight">

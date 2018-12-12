@@ -3966,3 +3966,6 @@ input{
 #form_filter_priority .select2-selection__choice{
     background: #fff;
 }
+.no-bold{
+    font-weight: normal;
+}
