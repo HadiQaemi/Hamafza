@@ -840,7 +840,7 @@ $(document).on('click', '#TagBut', function () {
             jQuery('#KeywordSearch').html("<p></p>");
             jQuery('#KeywordSearch').html(html);
 //                jQuery('#Tagloding').hide();
-            GeminiScrollbar_Results.update();
+//             GeminiScrollbar_Results.update();
 
 
         }
@@ -908,7 +908,7 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
             $('.HelpBookmarks').show();
             setTimeout(function()
             {
-                GeminiScrollbar_BookmarkFehresrt.update();
+                // GeminiScrollbar_BookmarkFehresrt.update();
             }, 1500);
             break;
         }
@@ -917,7 +917,7 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
             $('.HelpPortals').show();
             setTimeout(function()
             {
-                GeminiScrollbar_portallistDiv.update();
+                // GeminiScrollbar_portallistDiv.update();
             }, 1500);
             break;
         }
@@ -928,7 +928,7 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
             $('.HelpKeywords').show();
             setTimeout(function()
             {
-                GeminiScrollbar_keyWords.update();
+                // GeminiScrollbar_keyWords.update();
                 $("#keyWords .gm-scroll-view").animate({opacity: 1}, 1000);
             }, 1500);
             break;
@@ -1033,7 +1033,7 @@ $(document).on('click', 'ul.navbar-nav [href="#tab2"], ul.navbar-navtabs [href="
         dataType: 'html',
         success: function (response) {
             $('#PrtalFehresrt').html(response);
-            GeminiScrollbar_portallistDiv.update();
+            // GeminiScrollbar_portallistDiv.update();
         }
     });
 });
@@ -1130,7 +1130,7 @@ function h_sidenav_close() {
 function GeminiScrollbar_make(e) {
     obj_e = $(e);
     obj_e.css({'height': $(document).height() - 240, 'overflow-x': 'hide', 'overflow-y': 'scroll'});
-    return new GeminiScrollbar({element: document.querySelector(e), autoshow: false}).create();
+    // return new GeminiScrollbar({element: document.querySelector(e), autoshow: false}).create();
 }
 
 $(document).ready(function(){

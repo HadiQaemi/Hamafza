@@ -2660,6 +2660,7 @@ class ModalController extends Controller
     public function edit_user_detail(Request $request)
     {
         $user = User::find($request->user_id);
+//        dd($user);
         $provinces = Province::all();
         $cities = City::all();
         return json_encode([

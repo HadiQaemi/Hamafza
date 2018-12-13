@@ -60,6 +60,10 @@
         $("#div_bas_footer").html('<input type="button" value="تایید" class="btn btn-primary btn_edit_user_detail">');
 
     });
+    $(document).on("click", "#tab_pic", function () {
+        $("#div_bas_footer").html('<input type="button" value="تایید" class="btn btn-primary btn_save_avatar">');
+
+    });
     $(document).on("click", ".btn_change_pass", function () {
         var form_data = $('#user_password_edit_form').serialize();
         $.ajax({

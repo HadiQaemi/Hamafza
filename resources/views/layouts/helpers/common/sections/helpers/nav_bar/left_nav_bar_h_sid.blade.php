@@ -32,10 +32,10 @@
         $('#BookmarkFehresrt').css({'height': $(document).height() - 110});
         $('#portallistDiv').css({'height': $(document).height() - 175});
         $('#keyWords, #Results').css({'height': $(document).height() - 230});
-        GeminiScrollbar_portallistDiv = new GeminiScrollbar({element: document.querySelector('#portallistDiv'), forceGemini: true}).create();
-        GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
-        GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
-        GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
+        // GeminiScrollbar_portallistDiv = new GeminiScrollbar({element: document.querySelector('#portallistDiv'), forceGemini: true}).create();
+        // GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
+        // GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
+        // GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
         $(".select2-search__field").attr("placeholder", "{{trans('tasks.search_some_persons')}}").blur();
     });
 </script>

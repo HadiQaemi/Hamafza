@@ -1,11 +1,12 @@
 @include('hamahang.Users.view_user_details_modal.helper.view_user_inline_js')
 @if ($user->id == auth()->id())
 
-    {{--    {{ dd($user->profile->province) }}--}}
+{{--        {{ dd($user->profile->City,$user->profile->Province) }}--}}
     <div style="padding: 0 15px 15px 15px;">
         <div class="navbar ">
             <ul class="nav nav-tabs">
                 <li class="active" id="tab_edit"><a aria-controls="art-tab-1" href="#edit_user" role="tab" data-toggle="tab">مشخصات</a></li>
+                <li id="tab_pic"><a aria-controls="art-tab-1" href="#edit_pic" role="tab" data-toggle="tab">تصویر</a></li>
                 <li id="tab_pass"><a aria-controls="art-tab-2" href="#edit_pass" role="tab" data-toggle="tab">تغییر رمز عبور</a></li>
             </ul>
         </div>
@@ -24,13 +25,42 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">نام خانوادگی</div>
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">نام‌خانوادگی</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
                                             <input type="text" name="family" class="form-control required" value="{{ $user->Family }}" placeholder="نام خانوادگی">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 margin-top-10">
+                                <div class="col-xs-12 margin-top-10" style="border-bottom: 1px solid #eee;padding-bottom: 10px">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تاریخ تولد</div>
+                                        <div class="col-xs-10 noRightPadding noLeftPadding">
+                                            <input id="birthday" name="birthday" class="form-control jalali_date jsp_user_birth_date" type="text" value="@if(isset($user->profile)){{ $user->profile->birth_date }}@endif"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">محل تولد</div>
+                                        <div class="col-xs-5 noLeftPadding noRightPadding">
+                                            <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province'>
+                                                @if($provinces)
+                                                    @foreach($provinces as $province)
+                                                        <option value="{{ $province->id }}" @if($province->id==$user->profile->Province) selected="selected" @endif>{{ $province->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-5 noRightPadding">
+                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
+                                                @if($cities)
+                                                    @foreach($cities as $city)
+                                                        <option value="{{ $city->id }}" @if($city->id==$user->profile->City) selected="selected" @endif>{{ $city->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 margin-top-20">
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن همراه</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
@@ -46,52 +76,23 @@
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
                                     <div class="col-xs-6">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تاریخ تولد</div>
-                                        <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input id="birthday" name="birthday" class="form-control jalali_date jsp_user_birth_date" type="text" value="@if(isset($user->profile)){{ $user->profile->birth_date }}@endif"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">محل تولد</div>
-                                        <div class="col-xs-5 noRightPadding noLeftPadding">
-                                                <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province'>
-                                                    @if($provinces)
-                                                        @foreach($provinces as $province)
-                                                            <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                        </div>
-                                        <div class="col-xs-5 noRightPadding noLeftPadding">
-                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
-                                                @if($cities)
-                                                    @foreach($cities as $city)
-                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 margin-top-10">
-                                    <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">فاکس</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_number }}@endif" name="fax_number" size="34" maxlength="10" placeholder="شماره فکس">
-                                            <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_code  }}@endif" name="fax_code" size="4" maxlength="4" placeholder="کد شهر">
+                                            <input style="width: 79%" class="pull-right form-control" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_number }}@endif" name="fax_number" size="34" maxlength="10" placeholder="شماره فکس">
+                                            <input style="width: 20%" class="pull-left form-control" type="text" value="@if(isset($user->profile)){{ $user->profile->Fax_code  }}@endif" name="fax_code" size="4" maxlength="4" placeholder="کد شهر">
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">تلفن ثابت</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
-                                            <input style="width: 250px" class="dir_ltr form-control col-xs-9" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_number }}@endif" name="tel_number" size="34"
+                                            <input style="width: 79%" class="pull-right form-control" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_number }}@endif" name="tel_number" size="10"
                                                    maxlength="10" placeholder="شماره تلفن">
-                                            <input style="width: 100px" class="dir_ltr form-control col-xs-3" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_code }}@endif" name="tel_code" size="4" maxlength="4"
+                                            <input style="width: 20%" class="pull-left form-control" type="text" value="@if(isset($user->profile)){{ $user->profile->Tel_code }}@endif" name="tel_code" size="4" maxlength="4"
                                                    placeholder="کد شهر">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 margin-top-10">
+                                <div class="col-xs-12 margin-top-10" style="border-bottom: 1px solid #eee;padding-bottom: 10px">
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">رایانامه</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding">
@@ -101,9 +102,9 @@
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">جنسیت</div>
                                         <div class="col-xs-10 noRightPadding noLeftPadding line-height-35">
+                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label>
                                             <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='0') checked="checked" @endif value="0" name="gender">مرد</label>
                                             <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='1') checked="checked" @endif value="1" name="gender">زن</label>
-                                            <label style="display:inline"><input class="gender" type="radio" @if($user->Gender =='2' || $user->Gender =='') checked="checked" @endif value="2" name="gender">نامشخص</label>
                                         </div>
                                     </div>
                                 </div>
@@ -127,19 +128,24 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 margin-top-10">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-1">
                                         <div>دیدگاه</div>
-                                        <div><textarea class="form-control" rows="5" name="comment" id="comment" placeholder="دیدگاه">{{ $user->Comment }}</textarea></div>
                                     </div>
-                                    <div class="col-xs-6 text-center">
-                                        @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
-                                            <span class="fa fa-times remove_avater remove_avatar_image" style="cursor: pointer;"></span>
-                                        @endif
-                                        <img class="img_avatar" style="margin-bottom: 10px; width: 150px; height: 150px; position: relative;"
-                                             title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">
-                                        <div class="text-center" style="padding-right: 38%;"><input id="setting_input_file_avatar" class="form-control filestyle" type="file" name="user_avatar"></div>
+                                    <div class="col-xs-11">
+                                        <input type="text" name="comment" class="text form-control" id="comment" placeholder="دیدگاه" value="{{ $user->profile->Comment }}">
                                     </div>
                                 </div>
+                                {{--<div class="col-xs-12 margin-top-10">--}}
+                                    {{----}}
+                                    {{--<div class="col-xs-6 text-center">--}}
+                                        {{--@if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )--}}
+                                            {{--<span class="fa fa-times remove_avater remove_avatar_image" style="cursor: pointer;"></span>--}}
+                                        {{--@endif--}}
+                                        {{--<img class="img_avatar" style="margin-bottom: 10px; width: 150px; height: 150px; position: relative;"--}}
+                                             {{--title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">--}}
+                                        {{--<div class="text-center" style="padding-right: 38%;"><input id="setting_input_file_avatar" class="form-control filestyle" type="file" name="user_avatar"></div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <input type="submit" id="user_detail_form_data" hidden>
                             </form>
                         </div>
@@ -147,7 +153,7 @@
                 </div>
                 <div id="edit_pass" role="tabpanel" class="tab-pane">
                     <form id="user_password_edit_form">
-                        <table class="table-striped col-xs-12">
+                        <table class="col-xs-12">
                             <tbody>
                             <tr>
                                 <td class="table_td_title">کلمه عبور فعلی</td>
@@ -171,6 +177,65 @@
                         </table>
                     </form>
                 </div>
+                <div id="edit_pic" role="tabpanel" class="tab-pane">
+                    {{--<div class="col-xs-12 margin-top-10">--}}
+
+                        {{--<div class="col-xs-6 text-center">--}}
+                            {{--@if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )--}}
+                                {{--<span class="fa fa-times remove_avater remove_avatar_image" style="cursor: pointer;"></span>--}}
+                            {{--@endif--}}
+                            {{--<img class="img_avatar" style="margin-bottom: 10px; width: 150px; height: 150px; position: relative;"--}}
+                            {{--title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">--}}
+                            {{--<div class="text-center" style="padding-right: 38%;"><input id="setting_input_file_avatar" class="form-control filestyle" type="file" name="user_avatar"></div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                    <style>
+                        .remove_avater{
+                            color: red;
+                            font-size: 17px;
+                            cursor: pointer;
+                        }
+                    </style>
+                    <div class="show_avatar_image" style="width:300px; margin: 10px auto">
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="padding-top:6px;" >
+                                @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
+                                    <span class="fa fa-times remove_avater remove_avatar_image"></span>
+                                @endif
+                                <img class="img_avatar" style="width: 100%; height: 100%; position: relative;cursor: pointer; cursor:{{URL('img/pen_edit.png')}}"  title="@if($user->avatar_info){{ $user->avatar_info->originalName }}@endif" src="{{$user->AvatarLink}}">
+                            </div>
+                            <div class="panel-footer">
+                                <input type="hidden" class="avatar_image_id" value="@if($user->avatar_info){{ $user->avatar_info->id }}@endif">
+                                <span style="font-size: 11px;">{{ trans('profile.avatar_title') }}:</span> <span value="">
+                                    @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
+                                        @if($user->avatar_info){{ $user->avatar_info->originalName }}@else تصویر پیش‌فرض @endif
+                                    @else {{ trans('profile.no_select_picture') }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                        <center>
+                            @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
+                                <button type="button" class="btn btn-primary remove_avatar_image">{{ trans('profile.delete_profile') }}</button>
+                            @else
+                                <button type="button" id="footer_selec_avatar" class="btn btn-primary select_file">{{ trans('profile.select_file') }}</button>
+                            @endif
+                        </center>
+                    </div>
+
+                    <div class="upload_form" style="width:300px; margin: 10px auto">
+
+                        <div class="panel panel-default ">
+                            <div class="panel-body">
+                                <h5 style="padding-bottom: 10px">{{ trans('profile.select_new_avatar_image') }}</h5>
+                                <form method="Post" enctype="multipart/form-data" id="avatar_form" action="#">
+                                    <input id="input_file_avatar" class="form-control filestyle" type="file" name="avatar">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -193,7 +258,7 @@
                 });
 
                 $(".jsp_user_detail_city").select2("trigger", "select", {
-                    data: {id: "{!! $user->profile->city->id !!}", text: "{!! $user->profile->city->name !!}"}
+                    data: {id: "{!! $user->profile->city !!}", text: "{!! $user->profile->city->name !!}"}
                 });
             @endif
 
@@ -224,7 +289,7 @@
 
                             }
                             else {
-                                messageModal('error', 'خطای آپلود فایل', s.result);
+                                // messageModal('error', 'خطای آپلود فایل', s.result);
                             }
                         }
                     });

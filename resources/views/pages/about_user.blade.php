@@ -31,15 +31,16 @@
         <div class="gkCode10" style="  margin: 10px;">
             @if(auth()->check() && $user->id == auth()->id())
                 <a href="{!! route('modals.edit_user_detail') !!}?user_id={{ $user->id }}" title="تنظیمات صفحه کاربری" style=" height: 10px;margin-left: -15px;padding: 0;" class=" iconEdit  edit_user_detail_icon FloatLeft jsPanels">
-                    <span class="fa fa-gear" style="color: black; font-size: 17px;"></span>
+                    <span class="fa fa-edit" style="color: black; font-size: 17px;"></span>
                 </a>
             @endif
                 <div style="max-width:170px; display:inline-block; vertical-align:top">
-                <a class="@if(auth()->check() && $user->id == auth()->id()) jsPanels @endif" href="{{ route('modals.profile_avatar') }}">
+                {{--<a class="@if(auth()->check() && $user->id == auth()->id()) jsPanels @endif" href="{{ route('modals.profile_avatar') }}">--}}
+                <a class="@if(auth()->check() && $user->id == auth()->id()) @endif">
                     @if(isset($user->Uname) && isset(auth()->user()->Uname))
-                        @if($user->Uname == auth()->user()->Uname)
-                            <i class="fa fa-edit" style="margin-right: -20px;"></i>
-                        @endif
+                        {{--@if($user->Uname == auth()->user()->Uname)--}}
+                            {{--<i class="fa fa-edit" style="margin-right: -20px;"></i>--}}
+                        {{--@endif--}}
                     @endif
                     <img src="{{$user->AvatarLink}}" style="width:100px; height: 100px; margin:0 10px;float:right;border-radius: 50%; border: 1px solid #CCCCCC;background: #FFF;padding: 2px; "/>
                 </a>

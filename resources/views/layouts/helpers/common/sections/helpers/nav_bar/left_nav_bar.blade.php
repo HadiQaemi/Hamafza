@@ -8,10 +8,10 @@
         $('#BookmarkFehresrt').css({'height': $(document).height() - 110});
         $('#portallistDiv').css({'height': $(document).height() - 175});
         $('#keyWords, #Results').css({'height': $(document).height() - 230});
-        GeminiScrollbar_portallistDiv = new GeminiScrollbar({element: document.querySelector('#portallistDiv'), forceGemini: true}).create();
-        GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
-        GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
-        GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
+        // GeminiScrollbar_portallistDiv = new GeminiScrollbar({element: document.querySelector('#portallistDiv'), forceGemini: true}).create();
+        // GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
+        // GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
+        // GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
     });
 </script>
 @php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)
