@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <fieldset id="fieldset_noData"></fieldset>
+            {{--<fieldset id="fieldset_noData"></fieldset>--}}
             <fieldset id="fieldset_info" class="hidden">
                 <div class="col-xs-12"><i class="fa fa-backward pointer" id="BackToProjects"></i></div>
                 <div id="ProjectInfoList"></div>

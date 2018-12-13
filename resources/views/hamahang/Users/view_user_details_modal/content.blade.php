@@ -40,17 +40,15 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">محل تولد</div>
-                                        <div class="col-xs-5 noLeftPadding noRightPadding">
-                                            <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province'>
+                                        <div class="col-xs-10 noLeftPadding noRightPadding">
+                                            <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province pull-right' style="width: 50%">
                                                 @if($provinces)
                                                     @foreach($provinces as $province)
                                                         <option value="{{ $province->id }}" @if($province->id==$user->profile->Province) selected="selected" @endif>{{ $province->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
-                                        </div>
-                                        <div class="col-xs-5 noRightPadding">
-                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city'>
+                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city pull-left' style="width: 49%">
                                                 @if($cities)
                                                     @foreach($cities as $city)
                                                         <option value="{{ $city->id }}" @if($city->id==$user->profile->City) selected="selected" @endif>{{ $city->name }}</option>

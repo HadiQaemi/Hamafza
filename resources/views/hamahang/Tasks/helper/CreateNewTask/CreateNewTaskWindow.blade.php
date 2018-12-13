@@ -481,15 +481,15 @@
                 </div>
             </div>
             <div class="tab-pane tab-view" id="tab_t4">
-                <div class="row col-lg-12 margin-bottom-30 border-bottom">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.task') }}</label></div>
+                <div class="row col-lg-12 border-bottom">
+                    <div class="col-lg-1"><label>{{ trans('tasks.task') }}</label></div>
                     <div class="col-lg-11">
                         <span class="task_title line-height-35"></span>
                     </div>
                 </div>
-                <div class="col-xs-12 margin-bottom-30 border-bottom">
+                <div class="col-xs-12 border-bottom">
                     <form id="task_project">
-                        <div class="row col-lg-6 margin-bottom-30 noLeftPadding">
+                        <div class="row col-lg-6 noLeftPadding">
                             <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
                             <div class="col-lg-11">
                                 <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"

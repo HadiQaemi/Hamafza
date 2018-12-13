@@ -554,21 +554,23 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <select class="form-control border-radius" {{$edit_able == 1 ? ' name=new_task_relation[]  ' : 'disabled'}}>
-                                            {{--<option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>--}}
-                                            {{--<option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>--}}
-                                            {{--<option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>--}}
-                                            {{--<option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>--}}
-                                            <option value="up" {{$res['task']['new_task_relation'][$k] == 'up' ? 'selected="selected"' :''}}>بالادستی</option>
-                                            <option value="down" {{$res['task']['new_task_relation'][$k] == 'down' ? 'selected="selected"' :''}}>پایین دستی</option>
-                                            {{--<option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>--}}
-                                            {{--<option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>--}}
-                                        </select>
+
+                                            <select class="form-control border-radius" {{$edit_able == 1 ? ' name=new_task_relation[]  ' : 'disabled'}}>
+                                                {{--<option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>--}}
+                                                {{--<option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>--}}
+                                                {{--<option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>--}}
+                                                {{--<option value="end_end" {{$res['task']['new_task_relation'][$k] == 'end_end' ? 'selected="selected"' :''}}>پایان به پایان</option>--}}
+                                                <option value="up" @if(isset($res['task']['new_task_relation'][$k])) {{ $res['task']['new_task_relation'][$k] == 'up' ? 'selected="selected"' :''}} @endif>بالادستی</option>
+                                                <option value="down" @if(isset($res['task']['new_task_relation'][$k])) {{$res['task']['new_task_relation'][$k] == 'down' ? 'selected="selected"' :''}} @endif>پایین دستی</option>
+                                                {{--<option value="after" {{$res['task']['new_task_relation'][$k] == 'after' ? 'selected="selected"' :''}}>گردش کار - بعدی</option>--}}
+                                                {{--<option value="previous" {{$res['task']['new_task_relation'][$k] == 'previous' ? 'selected="selected"' :''}}>گردش کار - قبلی</option>--}}
+                                            </select>
+
                                     </td>
                                     <td>
                                         <label class="input-group pull-right">
                                             <div class="col-xs-6">
-                                                <input {{$edit_able == 1 ? ' name=new_task_delay_num[]  ' : 'disabled'}} value="{{$res['task']['new_task_delay_num'][$k]}}" type="text" class="form-control border-radius" placeholder="وقفه"/>
+                                                <input {{$edit_able == 1 ? ' name=new_task_delay_num[]  ' : 'disabled'}} value="@if(isset($res['task']['new_task_delay_num'][$k])) {{$res['task']['new_task_delay_num'][$k]}} @endif" type="text" class="form-control border-radius" placeholder="وقفه"/>
                                             </div>
                                             <div class="col-xs-6">
                                                 <select {{$edit_able == 1 ? ' name=new_task_delay_type[]  ' : 'disabled'}} class="form-control border-radius" >
