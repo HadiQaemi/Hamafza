@@ -3569,8 +3569,8 @@ var id = data.node.id;
                 {
                     $sid = $myArray[0];
                     $type = $myArray[1];
-                    $numb = $myArray[2];
-                    $numb = ": " . $numb;
+                    $numb = trim($myArray[2]);
+                    $numb = "، " . $numb;
                     if (trim($type) == 'اس')
                     {
                         $reps = DB::table('subject_fields_report as r')
@@ -3598,7 +3598,7 @@ var id = data.node.id;
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
                         }
-                        $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>($year  $numb)</a>";
+                        $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($year.$numb).")</a>";
                     }
                     else
                     {
@@ -3623,7 +3623,7 @@ var id = data.node.id;
                             })
                             ->where('st.field_id', '7')->where('p.id', $sid)
                             ->select('r.field_value as field_val', 'r.field_id')->first();
-                        $name = ($reps && trim($reps->field_val) != '') ? "$reps->field_val" . $hamkar : '';
+                        $name = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) . $hamkar : '';
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
@@ -3643,14 +3643,13 @@ var id = data.node.id;
                             $nev = $myArrays[0];
                             $my = explode('،', $nev);
                             $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                            $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$sid'>($nev $year $numb)</a>" : '';
+                            $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($nev.$year.$numb).")</a>" : '';
                         }
                         else
                         {
-                            $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>($name $year $numb)</a>";
+                            $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($name.$year.$numb).")</a>";
                         }
                     }
-
                     $body = str_replace($array['0'][$x], $nev, $body);
                 }
                 else
@@ -3688,7 +3687,8 @@ var id = data.node.id;
                                     ->select('r.field_value as field_val', 'r.field_id')->first();
                                 $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
                             }
-                            $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>($year)</a>";
+                            $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($year).")</a>";
+
                         }
                         else
                         {
@@ -3731,11 +3731,11 @@ var id = data.node.id;
                                 $nev = $myArrays[0];
                                 $my = explode('،', $nev);
                                 $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                                $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$sid'>($nev $year)</a>" : '';
+                                $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($nev.$year).")</a>" : '';
                             }
                             else
                             {
-                                $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>($name $year)</a>";
+                                $nev = "<a target='_blank'  href='" . url('/') . "/$sid'>(".trim($name.$year).")</a>";
                             }
                         }
                         $body = str_replace($array['0'][$x], $nev, $body);
@@ -3753,6 +3753,21 @@ var id = data.node.id;
                             })
                             ->where('st.field_id', '7')->where('p.id', $gid)
                             ->select('r.field_value as field_val', 'r.field_id')->first();
+                        $zabans = DB::table('subject_fields_report as r')
+                            ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
+                            ->leftjoin('pages as p', 's.id', '=', 'p.sid')
+                            ->leftJoin('subject_type_fields as st', function ($join)
+                            {
+                                $join->on('st.stid', '=', 's.kind');
+                                $join->on('st.id', '=', 'r.field_id');
+                            })->where('st.field_id', '36')
+                            ->where('p.id', $gid)
+                            ->select('r.field_value as field_val', 'r.field_id')->first();
+                        $zaban = 'fa';
+                        if ($zabans && $zabans->field_val == 'انگلیسی')
+                        {
+                            $zaban = 'en';
+                        }
                         $name = ($reps && trim($reps->field_val) != '') ? "$reps->field_val" : '';
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
@@ -3774,13 +3789,15 @@ var id = data.node.id;
                                 $nev = $myArray[0];
                                 $my = explode('،', $nev);
                                 $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                                $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$Con'>($nev  و همکاران$year)</a>" : '';
+                                $nev = ($nev != '') ? "<a target='_blank'  href='" . url('/') . "/$Con'>(".($zaban == 'en' ? 'ennnnnnnn='.trim($nev.'  و همکاران'.$year) : trim($nev.'  و همکاران'.$year)).")</a>" : '';
                             }
                             else
                             {
-                                $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>($name $year)</a>";
+                                $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>(".trim($name.$year).")</a>";
                             }
                         }
+                        if($zaban == 'en')
+                            $nev = '<span style="font-size:12px !important;">'.$nev.'</span>';
                         $body = str_replace($array['0'][$x], $nev, $body);
                     }
                 }
