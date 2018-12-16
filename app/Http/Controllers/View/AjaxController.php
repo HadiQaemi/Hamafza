@@ -1653,29 +1653,30 @@ preventDuplicates: true,
             $html = '<head><title></title></head><style>table {border-collapse: collapse;}table, th, td {border: 1px solid black;}</style><body><p>' . $title . '</p>' . $html . '</body>';
             $htmltodoc = new \App\HamafzaViewClasses\htmltodoc();
             $FULLSITE = url('/');
-            $html = str_replace("<p", "<p lang=FA dir=RTL style='font-weight: normal;font-family:\"B Nazanin\";text-align: justify;font-size:14pt'", $html);
-            $html = str_replace("<h1", "<h1 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<h2", "<h1 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<p", "<p lang=FA dir=RTL style='font-weight: normal;text-indent: 0.5cm;font-family:\"B mitra\";text-align: justify;font-size:14pt'", $html);
+            $html = str_replace("<h1", "<h1 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<h2", "<h1 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("</h2>", "</h1>", $html);
 
-            $html = str_replace("<h3", "<h2 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<h3", "<h2 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("</h3>", "</h2>", $html);
 
-            $html = str_replace("<h4", "<h3 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<h4", "<h3 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("</h4>", "</h3>", $html);
 
-            $html = str_replace("<h5", "<h4 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<h5", "<h4 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("</h5>", "</h4>", $html);
 
-            $html = str_replace("<h6", "<h5 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<h6", "<h5 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("</h6>", "</h5>", $html);
 
 
-            $html = str_replace("<span", "<span lang=FA dir=RTL style='font-family:\"B Nazanin\";font-size:14pt'", $html);
-            $html = str_replace("<a", "<a align='center' lang=FA dir=RTL style='font-family:\"B Nazanin\";font-size:14pt'", $html);
-            $html = str_replace("<li", "<li lang=FA dir=RTL style='font-weight: normal;font-family:\"B Nazanin\";text-align: justify;font-size:14pt'", $html);
-            $html = str_replace('class="number"', "class=\"number\" style='font-family:\"B Nazanin\";text-align: center;font-size:14pt'", $html);
-            $html = str_replace("<table", "<table align='center' lang=FA dir=RTL style='font-family:\"B Nazanin\";font-size:12pt'", $html);
+            $html = str_replace("<span", "<span lang=FA dir=RTL style='font-family:\"B mitra\";font-size:14pt'", $html);
+            $html = str_replace("<a lang='en'", "<a align='center' lang=FA dir=RTL style='font-family:\"B mitra\";text-decoration:\"blink !important\"; font-size:12pt'", $html);
+            $html = str_replace("<a lang='fa'", "<a align='center' lang=FA dir=RTL style='font-family:\"B mitra\";text-decoration:\"blink !important\"; font-size:14pt'", $html);
+            $html = str_replace("<li", "<li lang=FA dir=RTL style='font-weight: normal;font-family:\"B mitra\";text-align: justify;font-size:14pt'", $html);
+            $html = str_replace('class="number"', "class=\"number\" style='font-family:\"B mitra\";text-align: center;font-size:14pt'", $html);
+            $html = str_replace("<table", "<table align='center' lang=FA dir=RTL style='font-family:\"B mitra\";font-size:12pt'", $html);
             $html = str_replace("<td", "<td lang=FA dir=RTL style='padding:0cm 5.4pt 0cm 5.4pt'font-size:14pt", $html);
             $htmltodoc->createDocFromContent($html, $title . '.doc', true);
             exit;
@@ -1684,17 +1685,17 @@ preventDuplicates: true,
         {
             $html = '<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title></title></head><body>' . $html . '</body>';
             $FULLSITE = url('/');
-            $html = str_replace("<p", "<p lang=FA dir=RTL style='font-family:\"B Nazanin\";text-align: justify;'", $html);
-            $html = str_replace("<h1", "<h1 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<h2", "<h2 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<h3", "<h3 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<h4", "<h4 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<h5", "<h5 lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<span", "<span lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<a", "<a lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
-            $html = str_replace("<li", "<li lang=FA dir=RTL style='font-family:\"B Nazanin\";text-align: justify;'", $html);
-            $html = str_replace('class="number"', "class=\"number\" style='font-family:\"B Nazanin\";text-align: center;'", $html);
-            $html = str_replace("<table", "<table lang=FA dir=RTL style='font-family:\"B Nazanin\";'", $html);
+            $html = str_replace("<p", "<p lang=FA dir=RTL style='font-family:\"B mitra\";text-align: justify;'", $html);
+            $html = str_replace("<h1", "<h1 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<h2", "<h2 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<h3", "<h3 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<h4", "<h4 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<h5", "<h5 lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<span", "<span lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
+            $html = str_replace("<a", "<a lang=FA dir=RTL style='font-family:\"B mitra\";text-decoration:\"blink !important\";'", $html);
+            $html = str_replace("<li", "<li lang=FA dir=RTL style='font-family:\"B mitra\";text-align: justify;'", $html);
+            $html = str_replace('class="number"', "class=\"number\" style='font-family:\"B mitra\";text-align: center;'", $html);
+            $html = str_replace("<table", "<table lang=FA dir=RTL style='font-family:\"B mitra\";'", $html);
             $html = str_replace("<td", "<td lang=FA dir=RTL style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;'", $html);
             $html = str_replace('src="', 'src="' . $FULLSITE . '/', $html);
 
