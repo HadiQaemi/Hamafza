@@ -301,49 +301,56 @@ class ProjectController extends Controller
 
         $end_start = [];
         $down_up = [];
+        $res['parents'] = [];
+        $res['childs'] = [];
         foreach($res['project_task_relations'] as $project_task_relation)
         {
             if($project_task_relation->relation == 'end_start')
                 $end_start[$project_task_relation->task_id1] = $project_task_relation;
-            else if($project_task_relation->relation == 'down')
+            else if($project_task_relation->relation == 'up')
+            {
                 $down_up[$project_task_relation->task_id1] = $project_task_relation;
-
+                if(!in_array($project_task_relation->task_id2,$res['childs']))
+                {
+                    $res['parents'][$project_task_relation->task_id1][] = $project_task_relation->task_id2;
+                    $res['childs'][] = $project_task_relation->task_id2;
+                }
+            }
         }
 
-        $res['project_task_relations_begins'] =  DB::table('hamahang_task as ht')
-            ->whereNotExists(function ($query) {
-                $query->select(\DB::raw(1))
-                    ->from('hamahang_task_relations')
-                    ->where('hamahang_task_relations.relation','=','end_start')
-                    ->whereRaw('hamahang_task_relations.task_id2 = ht.id');
-            })
-            ->whereExists(function ($query) {
-                $query->select(\DB::raw(1))
-                    ->from('hamahang_task_relations')
-                    ->where('hamahang_task_relations.relation','=','end_start')
-                    ->whereRaw('hamahang_task_relations.task_id1 = ht.id');
-            })
-            ->whereIn('ht.id', $hamahang_project_task)
-            ->get()
-        ;
-
-        $res['project_task_relations_up'] =  DB::table('hamahang_task as ht')
-            ->whereNotExists(function ($query) {
-                $query->select(\DB::raw(1))
-                    ->from('hamahang_task_relations')
-                    ->where('hamahang_task_relations.relation','=','down')
-                    ->whereRaw('hamahang_task_relations.task_id2 = ht.id');
-            })
-            ->whereExists(function ($query) {
-                $query->select(\DB::raw(1))
-                    ->from('hamahang_task_relations')
-                    ->where('hamahang_task_relations.relation','=','down')
-                    ->whereRaw('hamahang_task_relations.task_id1 = ht.id');
-            })
-            ->whereIn('ht.id', $hamahang_project_task)
-            ->get()
-        ;
-
+//        $res['project_task_relations_begins'] =  DB::table('hamahang_task as ht')
+//            ->whereNotExists(function ($query) {
+//                $query->select(\DB::raw(1))
+//                    ->from('hamahang_task_relations')
+//                    ->where('hamahang_task_relations.relation','=','end_start')
+//                    ->whereRaw('hamahang_task_relations.task_id2 = ht.id');
+//            })
+//            ->whereExists(function ($query) {
+//                $query->select(\DB::raw(1))
+//                    ->from('hamahang_task_relations')
+//                    ->where('hamahang_task_relations.relation','=','end_start')
+//                    ->whereRaw('hamahang_task_relations.task_id1 = ht.id');
+//            })
+//            ->whereIn('ht.id', $hamahang_project_task)
+//            ->get()
+//        ;
+//
+//        $res['project_task_relations_up'] =  DB::table('hamahang_task as ht')
+//            ->whereNotExists(function ($query) {
+//                $query->select(\DB::raw(1))
+//                    ->from('hamahang_task_relations')
+//                    ->where('hamahang_task_relations.relation','=','up')
+//                    ->whereRaw('hamahang_task_relations.task_id2 = ht.id');
+//            })
+//            ->whereExists(function ($query) {
+//                $query->select(\DB::raw(1))
+//                    ->from('hamahang_task_relations')
+//                    ->where('hamahang_task_relations.relation','=','up')
+//                    ->whereRaw('hamahang_task_relations.task_id1 = ht.id');
+//            })
+//            ->whereIn('ht.id', $hamahang_project_task)
+//            ->get()
+//        ;
 
         $hamahang_project_task = DB::table('hamahang_project_task')
             ->where('project_id', '=', $pid)

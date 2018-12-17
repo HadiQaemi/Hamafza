@@ -3065,7 +3065,7 @@ a .navbar-brand{
     display: inline !important;
 }
 
-.padding-bottom-20{
+.padding-bottom-10{
     padding-bottom: 10px;
 }
 .padding-right-50{
@@ -3076,6 +3076,18 @@ a .navbar-brand{
 }
 .padding-left-20{
     padding-left: 20px !important;
+}
+.padding-left-30{
+    padding-left: 30px !important;
+}
+.padding-right-10{
+    padding-right: 10px !important;
+}
+.padding-right-20{
+    padding-right: 20px !important;
+}
+.padding-right-30{
+    padding-right: 30px !important;
 }
 .padding-10{
     padding: 10px !important;

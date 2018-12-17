@@ -24,22 +24,22 @@ class task_relations extends Model
             $task_id1 = $task_id2;
             $task_id2 = $temp;
         }
-        if($relation == 'up')
+        if($relation == 'down')
         {
-            $delay_type == 'down';
+            $relation = 'up';
             $temp = $task_id1;
             $task_id1 = $task_id2;
             $task_id2 = $temp;
         }
-        $keyword = new tasks_relationscc;
-        $keyword->uid = ($uid == -1) ? Auth::id() : $uid;
-        $keyword->task_id1 = $task_id1;
-        $keyword->task_id2 = $task_id2;
-        $keyword->delay = $delay;
-        $keyword->delay_type = $delay_type;
-        $keyword->relation = $relation;
-        $keyword->weight = $weight;
-        $keyword->save();
+        $relations = new task_relations;
+        $relations->uid = ($uid == -1) ? Auth::id() : $uid;
+        $relations->task_id1 = $task_id1;
+        $relations->task_id2 = $task_id2;
+        $relations->delay = $delay;
+        $relations->delay_type = $delay_type;
+        $relations->relation = $relation;
+        $relations->weight = $weight;
+        $relations->save();
 
         return 120;
     }

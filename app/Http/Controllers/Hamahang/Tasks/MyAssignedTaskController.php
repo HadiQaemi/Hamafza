@@ -1595,7 +1595,6 @@ class MyAssignedTaskController extends Controller
 //            }
 
         }
-
         $final_result = ['success' => true];
         if (Request::input('respite_timing_type') == 1)
         {
@@ -1795,11 +1794,12 @@ class MyAssignedTaskController extends Controller
                 }
             }
 
-            if (Request::exists('project_tasks'))
+            if (Request::exists('new_task_projects_'))
             {
-                foreach (Request::input('project_tasks') as $project_id)
+                $new_project_weight = Request::input('new_project_weight');
+                foreach (Request::input('new_task_projects_') as $k=>$project_id)
                 {
-                    hamahang_project_task::create_task_project($task->id, $project_id);
+                    hamahang_project_task::create_task_project($task->id, $project_id, $new_project_weight[$k]);
                 }
             }
 

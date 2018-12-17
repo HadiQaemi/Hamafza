@@ -337,12 +337,12 @@
                 // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
                 '       	<label class="pull-right line-height-30" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
-                '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
-                '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
                 '       </td>\n' +
                 '       <td>\n' +
                 '           <label class="input-group pull-right">\n' +
-                '       		<input name="new_task_weight[]" class="form-control" type="text" value="0"/>' +
+                '       		<input name="new_project_weight[]" class="form-control" type="text" value="0"/>' +
                 '           </label>\n' +
                 '       </td>\n' +
                 '       <td>\n' +
