@@ -18,14 +18,14 @@
         });
 
         $(document).on("click", ".homepage_register_user", function () {
-            // $('#register').modal('show');
-            calendarModal = $.jsPanel({
-                position: {my: "center-top", at: "center-top", offsetY: 80},
-                // contentSize: {width: 1000, height: 600},
-                panelSize: {width: 1000, height: 650},
-                headerTitle: $('#register .modal-header').html(),
-                content : $('#register .modal-body').html()
-            });
+            $('#register').modal('show');
+            // calendarModal = $.jsPanel({
+            //     position: {my: "center-top", at: "center-top", offsetY: 80},
+            //     // contentSize: {width: 1000, height: 600},
+            //     panelSize: {width: 1000, height: 650},
+            //     headerTitle: $('#register .modal-header').html(),
+            //     content : $('#register .modal-body').html()
+            // });
         });
 
         $(document).on("click", ".register_captcha_refresh", function () {

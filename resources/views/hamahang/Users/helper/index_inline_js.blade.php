@@ -1,3 +1,9 @@
+<style>
+    div.dataTables_wrapper {
+        width: 98%;
+        margin: 0 auto;
+    }
+</style>
 <script>
     var success_msg_area_id = '';
     var error_msg_area_id = '';
@@ -20,11 +26,14 @@
         //DataTable grid in Inbox
 
         window[varibleDataTable] = $(element).DataTable({
-                "processing": true,
-                "serverSide": true,
-                "autoWidth": false,
                 "bSort": true,
+                "aaSorting": [],
+                "bSortable": true,
+                "processing": true,
+                "autoWidth": false,
                 "ordering": true,
+                "scrollX": true,
+                // "scrollY": 200,
                 "language": window.LangJson_DataTables,
                 ajax: {
                     url: '{!! route('hamahang.users.get_users') !!}',

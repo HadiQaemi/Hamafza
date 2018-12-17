@@ -1,6 +1,6 @@
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="">
     <div class="modal-dialog">
-        <div class="modal-content" style="{{'kmkz' == config('constants.DefIndexView') ? 'height: 750px;' : ''}}">
+        <div class="modal-content" style="{{'kmkz' == config('constants.DefIndexView') ? 'height: 500px;' : ''}}">
             <div class="modal-header modal-header-darkblue">
                 {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
                 <h3 class="modal-title">ثبت نام</h3>
@@ -12,7 +12,7 @@
                         <form name="modal_register_form" class="HamafzaIcon" id="modal_register_form" method="post">
                             {{ csrf_field() }}
                             {{--<code style="font-family: IranSharp; font-size: 10px; color: orange;"> نام کاربری تنها می‌تواند ترکیبی از حروف و اعداد باشد. کاراکترهای '_' و '.' به جز اول نام کاربری مجاز می‌باشند.</code>--}}
-                            <div style="height: 450px;overflow: auto">
+                            <div style="{{'kmkz' == config('constants.DefIndexView') ? 'height: 350px' : 'height: 450px'}};overflow: auto">
                                 <div class="form-group input-group" style="margin-bottom: 0;">
                                     <span class="input-group-addon">نام کاربری</span>
                                     <input type="text" class="form-control" id="modal_username_input" name="username" placeholder="فقط حروف انگلیسی" style="direction: ltr; font-family: Arial;">
