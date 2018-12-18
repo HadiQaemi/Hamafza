@@ -153,6 +153,8 @@
             p_about: $('#p_about').val(),
             p_desc: $('#p_desc').val(),
             p_responsible: $('#p_responsible').val(),
+            p_observer: $('#p_observer').val(),
+            p_supervisor: $('#p_supervisor').val(),
             users_list_project_view: $('#users_list_project_view').val(),
             roles_list_project_view: $('#roles_list_project_view').val(),
             users_list_project_edit_tasks: $('#users_list_project_edit_tasks').val(),

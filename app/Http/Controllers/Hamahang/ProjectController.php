@@ -1243,29 +1243,85 @@ class ProjectController extends Controller
                 $project->draft = 1;
             }
             $project->save();
-            $responsible = new hamahang_project_responsible;
-            $responsible->uid = Auth::id();
-            $req_user = Request::input('p_responsible')[0];
-            if($req_user != null)
-            {
-                if (substr($req_user, 0, 8) == 'exist_in')
-                {
-                    $responsible->user_id = (int)substr($req_user, 8);
-                }
-                else
-                {
-                    $user = new User();
-                    $user->Uname = $req_user;
-                    $user->Email = $req_user;
-                    $user->Name = $req_user;
-                    $user->is_new = '1';
-                    $user->save();
-                    $responsible->user_id = $user->id;
+
+            if(Request::exists('p_responsible')){
+                foreach(Request::input('p_responsible') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->permission_type = 1;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->project_id = $project->id;
+                    $responsible->save();
                 }
             }
-
-            $responsible->project_id = $project->id;
-            $responsible->save();
+            if(Request::exists('p_observer')){
+                foreach(Request::input('p_observer') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->permission_type = 2;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->project_id = $project->id;
+                    $responsible->save();
+                }
+            }
+            if(Request::exists('p_supervisor')){
+                foreach(Request::input('p_supervisor') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->permission_type = 3;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->project_id = $project->id;
+                    $responsible->save();
+                }
+            }
             if (sizeof(Request::input('ModifyPermissionUsers')) > 0)
             {
                 foreach (Request::input('ModifyPermissionUsers') as $u)

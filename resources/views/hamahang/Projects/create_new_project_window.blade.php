@@ -57,6 +57,36 @@
                 </div>
             </div>
             <div class="col-xs-12 margin-top-10">
+                <div class="col-xs-2 line-height-35"><label>{{trans('projects.project_observer')}}</label></div>
+                <div class="col-xs-10">
+                    <select name="p_observer[]" id="p_observer" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                        <option value=""></option>
+                    </select>
+                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</label></div>--}}
+                    {{--<div class="col-sm-5 noPadding">--}}
+                    {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
+                    {{--<option value=""></option>--}}
+                    {{--</select>--}}
+                    {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
+                    {{--</div>--}}
+                </div>
+            </div>
+            <div class="col-xs-12 margin-top-10">
+                <div class="col-xs-2 line-height-35"><label>{{trans('projects.project_supervisor')}}</label></div>
+                <div class="col-xs-10">
+                    <select name="p_supervisor[]" id="p_supervisor" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                        <option value=""></option>
+                    </select>
+                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</label></div>--}}
+                    {{--<div class="col-sm-5 noPadding">--}}
+                    {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
+                    {{--<option value=""></option>--}}
+                    {{--</select>--}}
+                    {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
+                    {{--</div>--}}
+                </div>
+            </div>
+            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
                 <div class="col-xs-2 line-height-35"><label>{{trans('projects.keywords')}}</label></div>
                 <div class="col-xs-10 nput-group pull-right">
                     <select class="select2_auto_complete_keywords " name="p_keyword[]" id="p_keyword" data-placeholder="{{trans('projects.keywords')}}" multiple="multiple"></select>

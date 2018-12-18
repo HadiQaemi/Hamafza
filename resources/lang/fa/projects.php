@@ -23,6 +23,8 @@ return [
     'due_date'      => 'مهلت',
     'operation'      => 'عملیات',
     'project_name'  => 'نام پروژه',
+    'project_observer'  => 'ناظر',
+    'project_supervisor'  => 'مدیر سبد پروژه',
     'project_manager'  => 'مدیر پروژه',
     'view_project'  => 'مجوز مشاهده پروژه',
     'edit_view_project'  => 'مجوز مشاهده و ویرایش تنظیمات پروژه',
