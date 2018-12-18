@@ -8,7 +8,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-
+            <div style="position: absolute;top:10px; width: 250px;left:0px;">
+                @include('hamahang.Tasks.projects.project_related_pages')
+            </div>
             {{--<fieldset id="fieldset_noData"></fieldset>--}}
             <fieldset id="fieldset_info" class="hidden">
                 <div class="col-xs-12"><i class="fa fa-backward pointer" id="BackToProjects"></i></div>

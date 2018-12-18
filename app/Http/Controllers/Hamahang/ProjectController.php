@@ -281,6 +281,75 @@ class ProjectController extends Controller
         return $children;
     }
 
+    public static function MyProjectsPriority($arr, $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
+    {
+        $projects_roles = DB::table('hamahang_project')
+            ->where(function($query) {
+                $query->where(function($query) {
+                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
+                        $query->select('role_user.role_id')->from('role_user')
+                            ->Where('role_user.user_id','=',Auth::id());
+                    })->whereNull('hamahang_project.deleted_at');
+                })
+                    ->orWhere(function($query) {
+                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
+                            ->whereNull('hamahang_project.deleted_at');
+                    });
+            })
+            ->select('hamahang_project.*')
+            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_responsible.deleted_at')
+            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
+            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
+        ;
+        if (Request::exists('subject_id'))
+        {
+            $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
+                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $projects = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+        $res['projects_immediate_importance'] = [];
+        $res['projects_not_immediate_importance'] = [];
+        $res['projects_immediate_not_importance'] = [];
+        $res['projects_not_immediate_not_importance'] = [];
+        foreach($projects as $project)
+        {
+            if($project->immediate==1 && $project->importance==1)
+            {
+                $res['projects_immediate_importance'][] = $project;
+            }elseif($project->immediate==0 && $project->importance==1)
+            {
+                $res['projects_not_immediate_importance'][] = $project;
+            }elseif($project->immediate==1 && $project->importance==0)
+            {
+                $res['projects_immediate_not_importance'][] = $project;
+            }elseif($project->immediate==0 && $project->importance==0)
+            {
+                $res['projects_not_immediate_not_importance'][] = $project;
+            }
+        }
+        return $res;
+    }
+    public function ProjectsPriority($uname)
+    {
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.tasks.my_assigned_tasks.priority':
+                $arr = variable_generator('page', 'desktop', $uname);
+                $arr['filter_subject_id'] = $arr["sid"];
+                $arr = array_merge($arr, tasks::MyAssignedTasksPriority($arr,[0,1],false,false,[0,1]));
+                return view('hamahang.Tasks.MyAssignedTask.priority', $arr);
+                break;
+            case 'ugc.desktop.hamahang.project.priority':
+                $arr = variable_generator('user', 'desktop', $uname);
+                $arr = array_merge($arr, self::MyProjectsPriority($arr,[0,1],false,false,[0,1]));
+                return view('hamahang.Tasks.projects.priority', $arr);
+                break;
+        }
+    }
     public function project_tasks_list($pid)
     {
         date_default_timezone_set('Asia/Tehran');
