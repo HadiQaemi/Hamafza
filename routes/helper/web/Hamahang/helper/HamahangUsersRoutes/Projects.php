@@ -3,6 +3,7 @@ Route::group(['prefix' => 'Project', 'middleware' => ['dynamic_permission:ugc.de
 {
     Route::get('list', ['as' => 'ugc.desktop.hamahang.project.list', 'uses' => 'ProjectController@ProjectsList', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.list']]);
     Route::get('priority', ['as' => 'ugc.desktop.hamahang.project.priority', 'uses' => 'ProjectController@ProjectsPriority', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.list']]);
+    Route::get('state', ['as' => 'ugc.desktop.hamahang.project.state', 'uses' => 'ProjectController@ProjectsState', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.list']]);
     /* ??? */Route::get('HierarchicalView/{project_id}', ['as' => 'ugc.desktop.hamahang.project.hierarchical_view', 'uses' => 'ProjectController@HierarchicalView', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.hierarchical_view']]);
     /* ??? */Route::get('ShowGanttChart', ['as' => 'ugc.desktop.hamahang.project.show_gantt_chart', 'uses' => 'ProjectController@ShowGanttChart', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.show_gantt_chart']]);
     /* ??? */Route::get('GanttChart/{ProjectID}', ['as' => 'ugc.desktop.hamahang.project.gantt_chart', 'uses' => 'ProjectController@GanttChartShow', 'middleware' => ['dynamic_permission:ugc.desktop.hamahang.project.gantt_chart']]);

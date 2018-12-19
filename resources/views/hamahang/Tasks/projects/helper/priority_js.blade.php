@@ -95,22 +95,22 @@
                 var day = $('#'+Drag_Destination).attr('day');
 
                 var dropped = ui.draggable;
-                var task_id = dropped.data('task_id');
+                var project_id = dropped.data('project_id');
                 var Drag_Action = dropped.data('action');
                 var title = dropped.data('title');
                 if(Drag_Action=='task_timing')
                 {
                     daySplit = day.split('-');
                     var droppedOn = $(this);
-                    showTimeAndTask(title,day,day,hour,hour,droppedOn,task_id);
+                    showTimeAndTask(title,day,day,hour,hour,droppedOn,project_id);
                     subClass = '';
                     for(sd=1;sd<daySplit[2];sd++)
                     {
                         subClass += ' subClass'+sd;
                     }
                     $('#table_task_time').append(
-                            '<li class="draggable task_item_'+task_id+' ui-draggable ui-draggable-handle dynamic-add-task '+subClass+'" data-action="task_timing" data-title="'+title+'" data-task_id="'+task_id+'">'+
-                                $('.task_item_'+task_id).html()+
+                            '<li class="draggable task_item_'+project_id+' ui-draggable ui-draggable-handle dynamic-add-task '+subClass+'" data-action="task_timing" data-title="'+title+'" data-project_id="'+project_id+'">'+
+                                $('.task_item_'+project_id).html()+
                             '</li>');
 
                     x = $('#'+Drag_Destination).position();
@@ -119,14 +119,14 @@
                     var table_task_time = $('#table_task_time').width();
                     var start_stamo = parseInt(starttime[0]*60)+parseInt(starttime[1]);
 
-                    $('#table_task_time .task_item_'+task_id).css('position','absolute');
-                    $('#table_task_time .task_item_'+task_id).css('right',Math.floor((table_task_time*start_stamo)/(24*60)-table_task_time/24)+'px');
-                    $('#table_task_time .task_item_'+task_id).css('width',parseInt(table_task_time/12)+'px');
-                    $('#table_task_time .task_item_'+task_id).css('top',x.top+'px');
+                    $('#table_task_time .task_item_'+project_id).css('position','absolute');
+                    $('#table_task_time .task_item_'+project_id).css('right',Math.floor((table_task_time*start_stamo)/(24*60)-table_task_time/24)+'px');
+                    $('#table_task_time .task_item_'+project_id).css('width',parseInt(table_task_time/12)+'px');
+                    $('#table_task_time .task_item_'+project_id).css('top',x.top+'px');
 
                 }else{
                     var action = $('#source').val();
-                    submit_change_priority(Drag_Destination, task_id,action);
+                    submit_change_priority(Drag_Destination, project_id,action);
                     var droppedOn = $(this);
                     $(dropped).detach().appendTo(droppedOn);
                 }
@@ -146,41 +146,6 @@
         $(".droppable").sortable();
     }
 
-    function showTimeAndTask(title, startdate, enddate, starttime, endtime, droppedOn,task_id) {
-        console.log(droppedOn);
-        startdate = startdate.split("/");
-        starttime = starttime.split("-");
-        endtime = starttime[0];
-        starttime = starttime[1];
-
-        newEventModal = $.jsPanel({
-            position: {my: "center-top", at: "center-top", offsetY: 15},
-            contentSize: {width: 800, height: 300},
-            contentAjax: {
-                url: '{{ URL::route('modals.task_time' )}}',
-                method: 'POST',
-                dataType: 'json',
-                done: function (data, textStatus, jqXHR, panel) {
-                    this.headerTitle(data.header);
-                    this.content.html(data.content);
-                    this.toolbarAdd('footer', [{item: data.footer}]);
-
-                    $('#form-multi-tasking input[name="startdate"]').val(startdate);
-                    $('#form-multi-tasking input[name="enddate"]').val(enddate);
-                    $('#form-multi-tasking input[name="starttime"]').val(starttime);
-                    $('#form-multi-tasking input[name="endtime"]').val(endtime);
-                    $('#form-multi-tasking #take_title').text("{{trans('calendar.modal_calendar_setting_title')}} : " + title);
-                    $('#form-multi-tasking form').append('<input type="hidden" name="mode" value="calendar"/>');
-                    $('#form-multi-tasking #title_time_task').val(title);
-                    $('#form-multi-tasking #droppedOn').val(droppedOn);
-                    $('#form-multi-tasking #task_id').val(task_id);
-                }
-            }
-        });
-
-        newEventModal.content.html('<div class="loader"></div>');
-
-    }
     function filter_tasks_priority(data) {
         var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + $('#filter_subject_id').val() + '&act=' + $('#act_form').val();
         console.log(data);
@@ -220,12 +185,12 @@
             }
         });
     }
-    function submit_change_priority(type, task_id, action) {
+    function submit_change_priority(type, project_id, action) {
         $.ajax({
-            url: '{{ route('hamahang.tasks.priority.change') }}',
+            url: '{{ route('hamahang.projects.priority.change') }}',
             method: 'POST',
             dataType: "json",
-            data: {type: type, task_id: task_id, action: action},
+            data: {type: type, project_id: project_id, action: action},
             success: function (res) {
                 console.log(res.success);
                 if (res.success == true) {

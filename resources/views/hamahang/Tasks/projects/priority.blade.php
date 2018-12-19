@@ -63,7 +63,7 @@
 @stop
 
 @section('inline_scripts')
-    @include('hamahang.projects.helper.priority_js')
+    @include('hamahang.Tasks.projects.helper.priority_js')
 @stop
 
 

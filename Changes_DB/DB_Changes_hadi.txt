@@ -1,3 +1,4 @@
 table user_work add
 importance & immediate added in hamahang_project
 weight added in hamahang_project_task
+progress add hamahang_project

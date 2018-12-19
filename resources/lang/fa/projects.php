@@ -26,6 +26,7 @@ return [
     'project_observer'  => 'ناظر',
     'project_supervisor'  => 'مدیر سبد پروژه',
     'project_manager'  => 'مدیر پروژه',
+    'no_permissioned'  => 'شما مجوز این کار را ندارید',
     'view_project'  => 'مجوز مشاهده پروژه',
     'edit_view_project'  => 'مجوز مشاهده و ویرایش تنظیمات پروژه',
     'edit_view_project_tasks'  => 'مجوز مشاهده و ویرایش وظایف پروژه',

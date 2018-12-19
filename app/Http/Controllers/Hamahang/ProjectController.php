@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Hamahang;
 use App\HamafzaServiceClasses\SubjectsClass;
 use App\Http\Controllers\Hamahang\Tasks\TaskController;
 use App\Models\hamafza\Pages;
+use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\project_role_permission;
 use App\User;
 use Datatables;
 use DB;
 use Auth;
+//use phpDocumentor\Reflection\Project;
 use Request;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -1094,7 +1096,157 @@ class ProjectController extends Controller
             })
             ->make(true);
     }
+    public static function create_task_priority($task_id, $immediate = 0, $importance = 0, $is_assigner = [0], $user_id = -1, $uid = -1, $timestamp = -1)
+    {
+        if(!is_array($is_assigner))
+        {
+            $priority = new task_priority;
+            $priority->uid = ($uid == -1) ? Auth::id() : $uid;
+            $priority->user_id = ($user_id == -1) ? Auth::id() : $user_id;
+            $priority->task_id = $task_id;
+            $priority->is_assigner = $is_assigner;
+            $priority->importance = $importance;
+            $priority->immediate = $immediate;
+            $priority->timestamp = ($timestamp == -1) ? time() : $timestamp;
+            $priority->save();
+        }else{
+            foreach($is_assigner as $Ais_assigner)
+            {
+                $priority = new task_priority;
+                $priority->uid = ($uid == -1) ? Auth::id() : $uid;
+                $priority->user_id = ($user_id == -1) ? Auth::id() : $user_id;
+                $priority->task_id = $task_id;
+                $priority->is_assigner = $Ais_assigner;
+                $priority->importance = $importance;
+                $priority->immediate = $immediate;
+                $priority->timestamp = ($timestamp == -1) ? time() : $timestamp;
+                $priority->save();
+            }
+        }
+        return $priority;
+    }
+    public function ProjectsState($uname)
+    {
+        switch (\Route::currentRouteName())
+        {
+            case 'pgs.desktop.hamahang.project.state':
+                $arr = variable_generator('page', 'desktop', $uname);
+                //$arr['tasks'] = tasks::FetchTasksForMyAssignedTasksState($uname);
+                $arr['filter_subject_id'] = $arr["sid"];
+                $arr['MyTasksInState'] = $this->my_assigned_task_in_status($arr)->render();
+                return view('hamahang.Tasks.MyAssignedTask.MyAssignedTasksState', $arr);
+                break;
+            case 'ugc.desktop.hamahang.project.state':
+                $arr = variable_generator('user', 'desktop', $uname);
+                $arr['attach_files'] = HFM_GenerateUploadForm([['new_process_task', ['pdf', 'jpg', 'zip', 'docx', 'xlsx', 'ppt', 'pptx'], 'Multi']]);
+                $arr['MyTasksInState'] = $this->my_project_in_status($arr)->render();
+                return view('hamahang.Tasks.projects.MyState', $arr);
+                break;
+        }
+    }
+    private function my_project_in_status($arr =[],$user = false)
+    {
+        $projects_roles = DB::table('hamahang_project')
+            ->where(function($query) {
+                $query->where(function($query) {
+                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
+                        $query->select('role_user.role_id')->from('role_user')
+                            ->Where('role_user.user_id','=',Auth::id());
+                    })->whereNull('hamahang_project.deleted_at');
+                })
+                    ->orWhere(function($query) {
+                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
+                            ->whereNull('hamahang_project.deleted_at');
+                    });
+            })
+            ->select('hamahang_project.*')
+            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_responsible.deleted_at')
+            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
+            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
+        ;
+        if (Request::exists('subject_id'))
+        {
+            $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
+                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        }
+        $projects = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+        $myProjects=[];
+        foreach($projects as $project){
+            if($project->progress == 0)
+                $myProjects['not_started'][] = $project;
+            else if($project->progress == 100)
+                $myProjects['done'][] = $project;
+            else
+                $myProjects['started'][] = $project;
+        }
+        return view('hamahang.Tasks.projects.state', $myProjects);
 
+    }
+    public function change_projects_priority()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'type' => 'required|in:important_and_immediate,important_and_not_immediate,not_important_and_immediate,not_important_and_not_immediate',
+                'project_id' => 'required|exists:hamahang_project,id',
+            ]);
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            $project_id = Request::get('project_id');
+            $project = projects::find($project_id);
+            $user = auth()->user();
+            $roles = $user->MyProjects()->where('permission_type','=',3)->where('project_id','=',$project_id)->get()->count();
+            if($roles>0)
+            {
+                switch (Request::get('type'))
+                {
+                    case 'important_and_immediate':
+                        {
+                            $project->importance = 1;
+                            $project->immediate = 1;
+                            break;
+                        }
+                    case 'important_and_not_immediate':
+                        {
+                            $project->importance = 1;
+                            $project->immediate = 0;
+                            break;
+                        }
+                    case 'not_important_and_immediate':
+                        {
+                            $project->importance = 0;
+                            $project->immediate = 1;
+                            break;
+                        }
+                    case 'not_important_and_not_immediate':
+                        {
+                            $project->importance = 0;
+                            $project->immediate = 0;
+                            break;
+                        }
+                    default :
+                        {
+                            break;
+                        }
+                }
+                $project->save();
+                $result['success'] = true;
+            }else{
+                $result['success'] = false;
+                $result['error'] = trans('projects.no_permissioned');
+            }
+            return json_encode($result);
+        }
+    }
     public function ProjectsList($uname)
     {
         switch (\Route::currentRouteName())

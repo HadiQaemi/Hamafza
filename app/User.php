@@ -491,6 +491,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Hamahang\Tasks\tasks', 'hamahang_task_assignments', 'employee_id', 'task_id');
     }
 
+    public function MyProjects()
+    {
+        return $this->belongsToMany('App\Models\Hamahang\Tasks\projects', 'hamahang_project_user_permission', 'user_id', 'project_id');
+    }
+
     public function getMyTasksCountAttribute()
     {
         return $this->MyTasks->count();

@@ -78,7 +78,7 @@
             '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>' +
             '<strong>' + lable + '</strong>' + msgStr + '</div>';
         var html_modal_alert = '<div id="alertMsg" class="' + className + ' fade in alert-dismissable" role="alert">' +
-            msgStr + '</div>';
+            msg + '</div>';
 
         if (selector == null) {
             // console.log(msgStr);

@@ -1,4 +1,5 @@
 <?php
+Route::post('change_project_priority', ['as' => 'hamahang.projects.priority.change', 'uses' => 'ProjectController@change_projects_priority', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.priority.change']]);
 Route::post('UserOrgs', ['as' => 'hamahang.project.user_orgs', 'uses' => 'TaskController@UserOrgs', 'middleware' => ['dynamic_permission:posts.hamahang.project.user_orgs']]);
 Route::post('ProjectInfo', ['as' => 'hamahang.project.info', 'uses' => 'ProjectController@ProjectInfo', 'middleware' => ['dynamic_permission:posts.hamahang.project.info']]);
 Route::post('ProjectInfoWindow', ['as' => 'hamahang.project.project_info_window', 'uses' => 'ProjectController@ProjectInfoWindow', 'middleware' => ['dynamic_permission:posts.hamahang.project.project_info_window']]);
