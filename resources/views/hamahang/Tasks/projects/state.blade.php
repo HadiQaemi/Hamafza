@@ -1,6 +1,7 @@
 <script>
     $('.first-fix-box').removeClass('height-100');
 </script>
+{{$not_starteds}}
 <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
    <div class="text-center div_title_not_started"><h6>{{trans('tasks.status_not_started')}}</h6></div>
     <div class="div_groups_task state_container droppable" id="task_notstarted" >
