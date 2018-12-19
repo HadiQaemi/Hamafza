@@ -3990,3 +3990,7 @@ input{
 #calendar_myCalendar .panel-heading, #calendar_myCalendar .panel-body, #calendar_myCalendar .dataTables_filter input{
     background: #eee;
 }
+.text-project-task{
+    width: 40px !important;
+    text-align: center !important;;
+}

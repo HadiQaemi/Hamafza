@@ -94,9 +94,9 @@
                 }
                 echo '<div class="col-xs-1">'.$task->id.'</div>';
                 echo '<div class="col-xs-6">'.$task->title.'</div>';
-                echo '<div class="col-xs-2"><input type="text" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[]"/></div>';
-                echo '<div class="col-xs-2"><input type="text" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress[]"/></div>';
-                echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$task->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$task->id.'"></i></div>';
+                echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[]"/></div>';
+                echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress[]"/></div>';
+                echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$task->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" rel="'.$task->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$task->id.'"></i></div>';
                 if(isset($parents[$task->id]))
                 {
                     show_project($parents,$ordered_project_tasks,$task->id);
@@ -121,9 +121,9 @@ function show_project($parents,$ordered_project_tasks,$id)
         }
         echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task]->id.'</div>';
         echo '<div class="col-xs-6">'.$ordered_project_tasks[$sub_task]->title.'</div>';
-        echo '<div class="col-xs-2"><input type="text" value="'.(isset($ordered_project_tasks[$sub_task]->weight) ? $ordered_project_tasks[$sub_task]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_weight[]"/></div>';
-        echo '<div class="col-xs-2"><input type="text" value="'.(isset($ordered_project_tasks[$sub_task]->progress) ? $ordered_project_tasks[$sub_task]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_progress[]"/></div>';
-        echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i></div>';
+        echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($ordered_project_tasks[$sub_task]->weight) ? $ordered_project_tasks[$sub_task]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_weight[]"/></div>';
+        echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($ordered_project_tasks[$sub_task]->progress) ? $ordered_project_tasks[$sub_task]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_progress[]"/></div>';
+        echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i></div>';
         if(isset($parents[$ordered_project_tasks[$sub_task]->id]))
         {
             show_project($parents,$ordered_project_tasks,$ordered_project_tasks[$sub_task]->id);

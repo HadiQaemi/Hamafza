@@ -62,7 +62,7 @@
 @stop
 
 @section('inline_scripts')
-    @include('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksState_inline_js')
+    {{--@include('hamahang.Tasks.MyAssignedTask.helper.MyAssignedTasksState_inline_js')--}}
 @stop
 
 @include('sections.tabs')
