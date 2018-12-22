@@ -1,5 +1,7 @@
 @php
+    $pid = $ProjectInfo['pid'];
     $ordered_project_tasks = $ProjectInfo['ordered_project_tasks'];
+    $task_project = $ProjectInfo['task_project'];
     $end_start = $ProjectInfo['end_start'];
     $parents = $ProjectInfo['parents'];
     $childs = $ProjectInfo['childs'];
@@ -31,17 +33,6 @@
             {{$project_info->desc}}
         </div>
     </div>
-
-    {{--<div class="pull-right line-height-35 margin-top-20 margin-right-50">--}}
-        {{--<div class="pull-right">{{trans('projects.pages')}}: </div>--}}
-        {{--<div class="pull-right margin-right-10">--}}
-            {{--@if(!empty($pages->pages))--}}
-                {{--@foreach($pages->pages as $page_res)--}}
-                    {{--<a class="margin-right-10" href="/{{ $page_res->subject_id }}0" target="_blank">{{ $page_res->title }}</a>--}}
-                {{--@endforeach--}}
-            {{--@endif--}}
-        {{--</div>--}}
-    {{--</div>--}}
     <div class="pull-right line-height-35 margin-top-20 margin-right-50">
         <div class="pull-right">{{trans('projects.project_manager')}}: </div>
         <div class="pull-right margin-right-10">
@@ -55,24 +46,11 @@
     <div class="pull-right line-height-35 margin-top-20 margin-right-50">
         <div class="pull-right"> درصد پیشرفت: </div>
         <div class="pull-right margin-right-10">
-            0
+            <span id="project_progress">{{$project_info->progress}}</span>
         </div>
     </div>
-    {{--<div class="pull-right line-height-35 margin-top-20 margin-right-50">--}}
-        {{--<div class="pull-right">{{trans('projects.keywords')}}: </div>--}}
-        {{--<div class="pull-right margin-right-10">--}}
-            {{--@if(!empty($project_keywords->project_keywords))--}}
-                {{--@foreach($project_keywords->project_keywords as $project_keyword)--}}
-                    {{--<span class="bottom_keywords one_keyword" data-id="{{ $project_keyword->id }}" data-title="{{ $project_keyword->title }}"><i class="fa fa-tag"></i> <span style="color: #6391C5;">{{ $project_keyword->title }}</span></span>--}}
-                {{--@endforeach--}}
-            {{--@endif--}}
-        {{--</div>--}}
-    {{--</div>--}}
 </div>
 <div class="col-xs-12 line-height-35 margin-top-20 border-top-lg" style="height: 500px;overflow: auto">
-    {{--<table id="ProjectList" class="table dt-responsive nowrap display dataTable no-footer"--}}
-           {{--style="text-align: center" cellspacing="0" width="100%">--}}
-        {{--<thead>--}}
         <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom">
             <div class="col-xs-1">شماره</div>
             <div class="col-xs-6">عنوان</div>
@@ -80,7 +58,7 @@
             <div class="col-xs-2">درصد پیشرفت</div>
             <div class="col-xs-1">عملیات</div>
         </div>
-        {{--</thead>--}}
+    <form class="list-project-tasks">
         <?php
         foreach($ordered_project_tasks as $task)
         {
@@ -88,45 +66,44 @@
             {
                 if(!isset($parents[$task->id]))
                 {
-                    echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom">';
+                    echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom process'.$task->id.'">';
                 }else{
-                    echo '<div class="row col-xs-12 noLeftPadding noRightPadding">';
+                    echo '<div class="row col-xs-12 noLeftPadding noRightPadding process'.$task->id.'">';
                 }
                 echo '<div class="col-xs-1">'.$task->id.'</div>';
                 echo '<div class="col-xs-6">'.$task->title.'</div>';
-                echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[]"/></div>';
-                echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress[]"/></div>';
-                echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$task->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" rel="'.$task->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$task->id.'"></i></div>';
+                echo '<div class="col-xs-2"><input type="text" class="text-project-weight weight-'.$task->id.'" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[parent-'.$task_project[$task->id].'-'.$task->id.']" autocomplete="off"/></div>';
+                echo '<div class="col-xs-2"><input type="text" class="text-project-progress progress-'.$task->id.'" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress['.$task->id.']" autocomplete="off"/></div>';
+                echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-check task_project_save_status pointer" t="'.$task->id.'" pid="'.$pid.'" rel="'.$task_project[$task->id].'" tp="parent"></i></div>';
                 if(isset($parents[$task->id]))
                 {
-                    show_project($parents,$ordered_project_tasks,$task->id);
+                    show_project($parents,$ordered_project_tasks,$task->id,$pid);
                 }
                 echo '</div>';
             }
         }
         ?>
-    </table>
+    </form>
 </div>
 <?php
-function show_project($parents,$ordered_project_tasks,$id)
+function show_project($parents,$ordered_project_tasks,$id,$pid)
 {
     foreach($parents[$id] as $sub_task)
     {
-//        echo '<div class="row col-xs-12 padding-right-30 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom">';
-        if(isset($parents[$ordered_project_tasks[$sub_task]->id]))
+        if(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]))
         {
-            echo '<div class="row col-xs-12 noLeftPadding padding-right-30 noRightPadding margin-top-10 padding-bottom-10 border-bottom">';
+            echo '<div class="row col-xs-12 noLeftPadding padding-right-30 noRightPadding margin-top-10 padding-bottom-10 border-bottom process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
         }else{
-            echo '<div class="row col-xs-12 noLeftPadding padding-right-30 noRightPadding margin-top-10">';
+            echo '<div class="row col-xs-12 noLeftPadding padding-right-30 noRightPadding margin-top-10 process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
         }
-        echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task]->id.'</div>';
-        echo '<div class="col-xs-6">'.$ordered_project_tasks[$sub_task]->title.'</div>';
-        echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($ordered_project_tasks[$sub_task]->weight) ? $ordered_project_tasks[$sub_task]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_weight[]"/></div>';
-        echo '<div class="col-xs-2"><input type="text" class="text-project-task" value="'.(isset($ordered_project_tasks[$sub_task]->progress) ? $ordered_project_tasks[$sub_task]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task]->id.'" name="task_project_progress[]"/></div>';
-        echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i><i class="fa fa-check task_project_check pointer" rel="'.$ordered_project_tasks[$sub_task]->id.'"></i></div>';
-        if(isset($parents[$ordered_project_tasks[$sub_task]->id]))
+        echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
+        echo '<div class="col-xs-6">'.$ordered_project_tasks[$sub_task['id']]->title.'</div>';
+        echo '<div class="col-xs-2"><input type="text" class="text-project-weight child_of_'.$id.' weight-'.$id.'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->weight) ? $ordered_project_tasks[$sub_task['id']]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_weight[child-'.$sub_task['rel'].']" autocomplete="off"/></div>';
+        echo '<div class="col-xs-2"><input type="text" class="text-project-progress child_of_'.$id.' progress-'.$sub_task['id'].'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->progress) ? $ordered_project_tasks[$sub_task['id']]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_progress['.$ordered_project_tasks[$sub_task['id']]->id.']" autocomplete="off"/></div>';
+        echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10"  rel="'.$sub_task['rel'].'" t="'.$ordered_project_tasks[$sub_task['id']]->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" rel="'.$sub_task['rel'].'" t="'.$ordered_project_tasks[$sub_task['id']]->id.'"></i><i class="fa fa-check task_project_save_status pointer" tp="child" rel="'.$sub_task['rel'].'" t="'.$ordered_project_tasks[$sub_task['id']]->id.'" pid="'.$pid.'" parent="'.$id.'"></i></div>';
+        if(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]))
         {
-            show_project($parents,$ordered_project_tasks,$ordered_project_tasks[$sub_task]->id);
+            show_project($parents,$ordered_project_tasks,$ordered_project_tasks[$sub_task['id']]->id,$pid);
         }
         echo '</div>';
     }

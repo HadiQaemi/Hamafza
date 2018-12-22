@@ -127,7 +127,6 @@
                     // }
                 }
             });
-            datatable.columns(['id']).visible(false);
 
             window.table_hirerical_view = $('#hirerical_view').DataTable();
             $('#hirerical_view').on('click', 'td.details-control', function () {
@@ -218,7 +217,68 @@
             $('#fieldset').removeClass('hidden');
             $('#fieldset_info').addClass('hidden');
         });
+        $(document).on('click', ".task_project_save_status", function () {
+            weight = $('.process'+$(this).attr("t")+' .text-project-weight').val();
+            progress = $('.process'+$(this).attr("t")+' .text-project-progress').val();
+            parent = $(this).attr("parent");
+            id = $(this).attr("t");
+            precent = $('.progress-'+id).val();
+            $('.child_of_'+id + '').each(function() {
+                if($(this).hasClass('text-project-weight')){
+                    weight = $(this).val();
+                }
+                if($(this).hasClass('text-project-progress')){
+                    $(this).val(Math.floor(precent*weight/100));
+                }
+            });
+            precent = 0;
+            weight = 0;
+            progress = 0;
+            $('.child_of_'+parent).each(function() {
+                if($(this).hasClass('text-project-weight')){
+                    weight = $(this).val();
+                }
+                if($(this).hasClass('text-project-progress')){
+                    progress = $(this).val();
+                }
+                if(weight != 0 && progress != 0) {
+                    precent += progress * weight;
+                    progress = weight = 0;
+                }
+            });
+            $(".progress-"+parent+"").val(precent/100);
+            $('.process' + parent).each(function() {
+                if($(this).hasClass('text-project-weight')){
+                    weight = $(this).val();
+                }
+                if($(this).hasClass('text-project-progress')){
+                    $(this).val(Math.floor(precent*weight/100));
+                }
+            });
+
+            var send_info = {
+                form: $('.list-project-tasks').serialize(),
+                t: $(this).attr("t"),
+                tp: $(this).attr("tp"),
+                pid: $(this).attr("pid"),
+                parent: parent,
+                weight: weight,
+                progress: progress,
+                rel: $(this).attr("rel")
+            }
+            $.ajax({
+                url:'<?php echo e(URL::route('hamahang.project.change_task_relation' )); ?>',
+                type:'post',
+                data: $('.list-project-tasks').serialize() + '&pid=' + $(this).attr("pid"),
+                dataType:'json',
+                success :function(data)
+                {
+                    $('#project_progress').html(data);
+                }
+            });
+        });
     </script>
+
 @stop
 
 @include('sections.tabs')
