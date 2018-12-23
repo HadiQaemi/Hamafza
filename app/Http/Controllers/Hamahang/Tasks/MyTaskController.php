@@ -462,9 +462,10 @@ class MyTaskController extends Controller
 
     public function MyTasksFetch()
     {
+        db::enableQueryLog();
         $Tasks = tasks::MyTasks(Request::input('subject_id'));
+//        dd(db::getQueryLog());
         $date = new jDateTime;
-//        dd(Request::input('subject_id'));
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {

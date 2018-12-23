@@ -37,7 +37,7 @@
         $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
             filter_tasks_priority();
         });
-        $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_fianl[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
+        $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
             filter_tasks_priority();
         });
 

@@ -40,7 +40,6 @@
                 @include('hamahang.Tasks.MyAssignedTask.helper.task_related_pages')
                 @include('hamahang.Tasks.MyTask.helper.MyTasksState.task_filter')
             </div>
-            <hr>
         </div>
         <div class="content_task" id="base_items_div">
             <div class="base_list_task">

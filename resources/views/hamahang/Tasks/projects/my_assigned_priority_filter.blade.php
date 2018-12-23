@@ -56,12 +56,12 @@
         <div class="pull-right priority-part">
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="0" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="1" name="task_fianl[]" checked>
+                <input type="checkbox" class="form-check-input" value="1" name="task_final[]" checked>
                 <span>{{trans('tasks.final')}}</span>
             </label>
             <label>
                 {{--<input type="checkbox" class="form-check-input" value="1" name="task_immediate[]" id="not_started_tasks" checked>--}}
-                <input type="checkbox" class="form-check-input" value="0" name="task_fianl[]" checked>
+                <input type="checkbox" class="form-check-input" value="0" name="task_final[]" checked>
                 <span>{{trans('tasks.draft')}}</span>
             </label>
         </div>
