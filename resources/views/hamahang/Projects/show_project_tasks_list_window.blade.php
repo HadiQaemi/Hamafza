@@ -53,10 +53,10 @@
 <div class="col-xs-12 line-height-35 margin-top-20 border-top-lg" style="height: 500px;overflow: auto">
         <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom">
             <div class="col-xs-1">شماره</div>
-            <div class="col-xs-6">عنوان</div>
-            <div class="col-xs-2">وزن</div>
-            <div class="col-xs-2">درصد پیشرفت</div>
-            <div class="col-xs-1">عملیات</div>
+            <div class="col-xs-7">عنوان</div>
+            <div class="col-xs-1">وزن</div>
+            <div class="col-xs-1">درصد پیشرفت</div>
+            <div class="col-xs-2">عملیات</div>
         </div>
     <form class="list-project-tasks">
         <?php
