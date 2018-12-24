@@ -73,7 +73,7 @@
                         </label>
                     </td>
                     <td style="width:120px;border:none;text-align: right">
-                        <input type="checkbox" name="add_to_alef" id="add_to_alef" class="">
+                        <input type="checkbox" name="add_to_alef" id="add_to_alef" class="" checked>
                     </td>
                 </tr>
 

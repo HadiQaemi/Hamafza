@@ -128,7 +128,7 @@
 
 <table class="table" id="table_pages_list">
     <tr>
-        <td class="no-border"><label for="types">نوع موضوع</label></td>
+        <td class="no-border"><label for="types">نوع صفحه</label></td>
         <td class="no-border">
             <select class="form-control" id="types" multiple="multiple">
                 @foreach ($types as $type)

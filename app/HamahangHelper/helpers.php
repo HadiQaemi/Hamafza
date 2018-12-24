@@ -625,7 +625,6 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $defimage = $page['defimage'];
                     $obj_defimage = \App\Models\Hamahang\FileManager\FileManager::find($defimage);
                     $page_id = $page['id'];
-                    $showDefimg = $page['showDefimg'];
                     $tabname = $page['Tabname'];
                     $viewtext = $page['viewtext'];
                     $viewslide = $page['viewslide'];
@@ -1859,9 +1858,9 @@ function between($subject, $min, $max)
 
 if (!function_exists('SIUFormGenerator'))
 {
-    function SIUFormGenerator($item_id, $image, $save_route, $rename_route, $remove_route, $params = ['save_route' => [], 'rename_route' => [], 'remove_route' => []])
+    function SIUFormGenerator($item_id, $image, $save_route, $rename_route, $remove_route ,$showDefimg=0 , $params = ['save_route' => [], 'rename_route' => [], 'remove_route' => []])
     {
-        $result = view('hamahang.helper.SingleImageUploader.upload_content', compact('item_id', 'image', 'save_route', 'rename_route', 'remove_route', 'params'));
+        $result = view('hamahang.helper.SingleImageUploader.upload_content', compact('item_id', 'image', 'save_route', 'rename_route', 'remove_route', 'showDefimg', 'params'));
         return $result;
     }
 }

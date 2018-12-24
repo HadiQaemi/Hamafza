@@ -182,7 +182,7 @@
             <div accordion="" class="panel-group accordion" id="accordion">
                 <div class="panel-heading panel-heading-darkblue"></div>
 
-                {!! SIUFormGenerator($item_id, $image, 'savePageImage', 'renamePageImage', 'removePageImage') !!}
+                {!! SIUFormGenerator($item_id, $image, 'savePageImage', 'renamePageImage', 'removePageImage',$showDefimg) !!}
 
                 {{--@if($defimage!='')--}}
                 {{--<img id="DefimgSrc" src="{{App::make('url')->to('/')}}/{{$defimage}}" style="width: 150px;@if ($defimage =='')display:none; @endif">--}}

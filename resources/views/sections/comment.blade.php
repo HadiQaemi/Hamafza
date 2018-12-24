@@ -27,7 +27,7 @@ $hide_type = false;
         <div class="clearfix"></div>
         <div class="commenTxtHolder col-md-10 col-md-push-1">
             <div class="commenTxtHolders">
-                <div class="commenTxtHolders">
+                <div class="commenTxtHolders" style="height: 280px !important;">
                     <div class="pull-right col-md-12 col-sm-12 col-xs-12 noPadding " style="margin-right: 15px;">
                         <select name="post_type" id="post_type" class="col-md-1 col-sm-2 col-xs-2 pull-right form-control"{!! $hide_type ? ' disabled="disabled"' : null !!}>
                             <option value="1" selected="">نظر</option>
@@ -68,6 +68,11 @@ $hide_type = false;
                             }
                         </style>--}}
                         <table class="" style="width: 100%">
+                            <tr>
+                                <td colspan="12">
+                                    <div class="SelectedCommentDiv"></div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="3">
                                     <textarea class="col-md-12 col-sm-12 col-xs-12 form-control" id="NewPost" type="text" placeholder="نظرتان را بنویسید" style="margin-bottom: 5px;"></textarea>
@@ -122,7 +127,7 @@ $hide_type = false;
                                 </td>
                             </tr>
                         </table>
-                        <input type="hidden" id='SelectedComment' value="">
+                        <input type="hidden" class='SelectedComment' value="">
                         <script>
                             $(document).ready(function () {
                                 portal_id = $('.portal_id');
@@ -297,12 +302,13 @@ $hide_type = false;
 
         desc = cleanHTML(desc);
         title = $("#commentTitleW").val();
-        selectText = $("#SelectedComment").val();
+        selectText = $(".SelectedComment").val();
         if (selectText != '')
         {
-            desc = "درباره «" + '<a href="/' + pid + '0" class="link-page">' + selectText + '</a>' + "» " + desc;
+            desc = '<a href="/' + pid + '0" class="link-page"> در صفحه' + '</a>' +  "نظر درباره «" + selectText + "» <br/>" + desc;
         }
-        $("#SelectedComment").val("");
+        $(".SelectedComment").val("");
+        $(".SelectedCommentDiv").html("");
         image = '';
         video = '';
         all = '1';

@@ -41,8 +41,9 @@
                     title: '<span style="height:30px" class="btn comment fa fa-anchor icon-ezhare-nazar"></span>نظر',
                     onClick: function (text, offset) {
                         $("#CommentPage").trigger("click");
-                        $("#NewPost").val(text);
-                        $("#SelectedComment").val(text);
+                        $("#NewPost").val();
+                        $(".SelectedComment").val(text);
+                        $(".SelectedCommentDiv").html(text);
                         //$(".text-content").highlight(text);
                         $('.ful-scrn').css('display','none');
                         $(".sendComment").css('height','270px');

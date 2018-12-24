@@ -9,11 +9,10 @@
         <input type="hidden" class="image_id" value="{{ $image ? enCode($image->id) : '' }}">
         <input type="text" class="image_originalName" value="{{ $image ? $image->originalName : 'تصویر پیش‌فرض' }}">
         <a class="btn btn-info fa fa-edit edit_image_originalName" title=""></a>
-
     </div>
 </div>
 <div class="show_image" style="width:250px; margin: 10px auto">
-    <input type="checkbox" class="form-check-input" name="show_pic" id="show_pic" checked>
+    <input type="checkbox" class="form-check-input" name="show_pic" id="show_pic" {{$showDefimg==0 ? '' : 'checked'}}>
     <label class="pointer" for="show_pic">نمایش در صفحه</label>
 </div>
 <div class="upload_form" style="width:250px; margin: 10px auto">
