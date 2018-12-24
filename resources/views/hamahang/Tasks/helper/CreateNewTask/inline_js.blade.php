@@ -336,7 +336,7 @@
                 // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
                 // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       	<label class="pull-right line-height-30" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
                 '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
                 '       </td>\n' +

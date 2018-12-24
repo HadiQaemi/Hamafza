@@ -71,10 +71,10 @@
                     echo '<div class="row col-xs-12 noLeftPadding noRightPadding process'.$task->id.'">';
                 }
                 echo '<div class="col-xs-1">'.$task->id.'</div>';
-                echo '<div class="col-xs-6">'.$task->title.'</div>';
-                echo '<div class="col-xs-2"><input type="text" class="text-project-weight weight-'.$task->id.'" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[parent-'.$task_project[$task->id].'-'.$task->id.']" autocomplete="off"/></div>';
-                echo '<div class="col-xs-2"><input type="text" class="text-project-progress progress-'.$task->id.'" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress['.$task->id.']" autocomplete="off"/></div>';
-                echo '<div class="col-xs-1"><i class="fa fa-remove task_project_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-check task_project_save_status pointer" t="'.$task->id.'" pid="'.$pid.'" rel="'.$task_project[$task->id].'" tp="parent"></i></div>';
+                echo '<div class="col-xs-7">'.$task->title.'</div>';
+                echo '<div class="col-xs-1"><input type="text" class="text-project-weight weight-'.$task->id.'" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[parent-'.$task_project[$task->id].'-'.$task->id.']" autocomplete="off"/></div>';
+                echo '<div class="col-xs-1"><input type="text" class="text-project-progress progress-'.$task->id.'" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress['.$task->id.']" autocomplete="off"/></div>';
+                echo '<div class="col-xs-2"><i class="fa fa-remove task_project_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-trash task_remove pointer margin-left-10" t="'.$task->id.'"></i><i class="fa fa-check task_project_save_status pointer" t="'.$task->id.'" pid="'.$pid.'" rel="'.$task_project[$task->id].'" tp="parent"></i></div>';
                 if(isset($parents[$task->id]))
                 {
                     show_project($parents,$ordered_project_tasks,$task->id,$pid);
