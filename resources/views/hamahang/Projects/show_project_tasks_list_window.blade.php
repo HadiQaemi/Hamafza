@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="pull-right line-height-35 margin-top-20 margin-right-50">
-        <div class="pull-right"> درصد پیشرفت: </div>
+        <div class="pull-right">پیشرفت: </div>
         <div class="pull-right margin-right-10">
             <span id="project_progress">{{$project_info->progress}}</span>
         </div>
@@ -55,7 +55,7 @@
             <div class="col-xs-1">شماره</div>
             <div class="col-xs-7">عنوان</div>
             <div class="col-xs-1">وزن</div>
-            <div class="col-xs-1">درصد پیشرفت</div>
+            <div class="col-xs-1">پیشرفت</div>
             <div class="col-xs-2">عملیات</div>
         </div>
     <form class="list-project-tasks">
