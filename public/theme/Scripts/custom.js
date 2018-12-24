@@ -979,35 +979,40 @@ $(document).on('click', 'ul.navbar-nav [href="#tab1"], ul.navbar-navtabs [href="
 });
 
 $(document).on('click', '.HazfBookmark', function () {
-    if (!_confirm_delete()) {
-        return;
-    }
     var id = $(this).attr('data-bookmark-id');
-    if (id != null) {
-        var bookmark_id = $('#bookmark_' + id);
-        var bookmark_id_parent = bookmark_id.parent();
-        $.ajax
-        ({
-            type: 'post',
-            url: Baseurl + 'bookmarks/delete',
-            dataType: 'html',
-            data: ({id: id}),
-            success: function (response) {
-                bookmark_id.remove();
-                if (0 == bookmark_id_parent.find('li').length) {
-                    bookmark_id_parent.remove();
-                    $('#' + bookmark_id_parent.attr('class')).remove()
-                }
-                jQuery.noticeAdd
+
+    confirmModal({
+        title: 'حذف',
+        message: 'آیا از حذف مطمئن هستید؟',
+        onConfirm: function () {
+            if (id != null) {
+                var bookmark_id = $('#bookmark_' + id);
+                var bookmark_id_parent = bookmark_id.parent();
+                $.ajax
                 ({
-                    text: 'حذف با موفقیت انجام شد.',
-                    stay: false,
-                    type: 'success'
+                    type: 'post',
+                    url: Baseurl + 'bookmarks/delete',
+                    dataType: 'html',
+                    data: ({id: id}),
+                    success: function (response) {
+                        bookmark_id.remove();
+                        if (0 == bookmark_id_parent.find('li').length) {
+                            bookmark_id_parent.remove();
+                            $('#' + bookmark_id_parent.attr('class')).remove()
+                        }
+                        jQuery.noticeAdd
+                        ({
+                            text: 'حذف با موفقیت انجام شد.',
+                            stay: false,
+                            type: 'success'
+                        });
+                        //$('[href=#page1]').trigger('click');
+                    }
                 });
-                //$('[href=#page1]').trigger('click');
             }
-        });
-    }
+        },
+        afterConfirm: 'close'
+    });
 });
 
 $(document).on('click', 'ul.navbar-nav [href="#tab2"], ul.navbar-navtabs [href="#page2"]', function () {

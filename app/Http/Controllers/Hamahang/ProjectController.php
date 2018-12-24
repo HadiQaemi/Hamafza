@@ -395,6 +395,8 @@ class ProjectController extends Controller
             ->whereIn('hamahang_task_relations.task_id1', $hamahang_project_task)
             ->whereIn('hamahang_task_relations.task_id2', $hamahang_project_task)
             ->whereNull('hamahang_task_relations.deleted_at')
+            ->whereNull('t1.deleted_at')
+            ->whereNull('t2.deleted_at')
             ->select("hamahang_task_relations.*", "t1.title as title1", "t2.title as title2")
             ->get();
 

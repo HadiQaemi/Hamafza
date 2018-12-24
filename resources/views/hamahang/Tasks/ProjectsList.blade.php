@@ -217,6 +217,61 @@
             $('#fieldset').removeClass('hidden');
             $('#fieldset_info').addClass('hidden');
         });
+        $(document).on('click', ".task_project_remove", function () {var id = $(this).attr('rel');
+
+            confirmModal({
+                title: 'حذف ارتباط',
+                message: 'آیا از حذف مطمئن هستید؟',
+                onConfirm: function () {
+                    if (id != null) {
+                        // var bookmark_id = $('#bookmark_' + id);
+                        // var bookmark_id_parent = bookmark_id.parent();
+                        // $.ajax
+                        // ({
+                        //     type: 'post',
+                        //     url: Baseurl + 'bookmarks/delete',
+                        //     dataType: 'html',
+                        //     data: ({id: id}),
+                        //     success: function (response) {
+                        //         bookmark_id.remove();
+                        //         if (0 == bookmark_id_parent.find('li').length) {
+                        //             bookmark_id_parent.remove();
+                        //             $('#' + bookmark_id_parent.attr('class')).remove()
+                        //         }
+                        //         jQuery.noticeAdd
+                        //         ({
+                        //             text: 'حذف با موفقیت انجام شد.',
+                        //             stay: false,
+                        //             type: 'success'
+                        //         });
+                        //         //$('[href=#page1]').trigger('click');
+                        //     }
+                        // });
+                    }
+                },
+                afterConfirm: 'close'
+            });
+        });
+        $(document).on('click', ".task_remove", function () {var id = $(this).attr('rel');
+
+            confirmModal({
+                title: 'حذف وظیفه',
+                message: 'آیا از حذف وظیفه مطمئن هستید؟',
+                onConfirm: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ URL::route('hamahang.tasks.task_delete') }}',
+                        dataType: "json",
+                        data: {id:$(this).attr('t')},
+                        success: function (data) {
+                        }
+                    });
+                    {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
+
+                },
+                afterConfirm: 'close'
+            });
+        });
         $(document).on('click', ".task_project_save_status", function () {
             weight = $('.process'+$(this).attr("t")+' .text-project-weight').val();
             progress = $('.process'+$(this).attr("t")+' .text-project-progress').val();
