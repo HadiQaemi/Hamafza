@@ -3994,3 +3994,39 @@ input{
     width: 40px !important;
     text-align: center !important;;
 }
+.list-project-tasks input{
+    height: 30px !important;
+    width: 30px !important;
+}
+.padding-right-10{
+    padding-right: 10px !important;
+}
+.padding-right-20{
+    padding-right: 20px !important;
+}
+.padding-right-30{
+    padding-right: 30px !important;
+}
+.padding-right-40{
+    padding-right: 40px !important;
+}
+.padding-right-50{
+    padding-right: 50px !important;
+}
+#ProjectInfoList{
+    margin-top: -15px;
+    background: #eee;
+    height: 87px;
+}
+#personalProjectsGrid .sorting{
+    display: none;
+}
+#personalProjectsGrid .sorting_asc{
+    display: none;
+}
+#create_new_task .DatePicker {
+    width: 100px !important;
+}
+.select2-search__field{
+    width: 450px !important;
+}

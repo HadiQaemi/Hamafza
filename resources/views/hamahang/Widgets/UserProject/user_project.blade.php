@@ -26,20 +26,6 @@
 </div>
 <div id="calendar_myCalendar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;">
     <div style="direction: rtl">
-        <div class="panel-heading panel-heading-darkblue">
-            <div class="row">
-                {{--<h6 class="noPadding noMargin">--}}
-                {{--                    <span>{{trans('calendar.calendar_index_calendar_list_title')}}</span>--}}
-                {{--<a href="#" onclick="addPersonalCalendar();"--}}
-                {{--class="btn btn-default fa fa-plus pull-left"--}}
-                {{--alt="{{ trans('calendar.modal_calendar_ header_title') }} "--}}
-                {{--title="{{ trans('calendar.modal_calendar_ header_title') }}">--}}
-                {{--{{ trans('app.add') }} --}}
-                {{--</a>--}}
-                </h6>
-                <div class="clearfixed"></div>
-            </div>
-        </div>
         <div class="panel panel-light panel-list padding-remove">
             <!--<div class="panel-heading panel-heading-darkblue">تازه&zwnj;های دیوار من </div>-->
             <div class="panel-body new-list">
