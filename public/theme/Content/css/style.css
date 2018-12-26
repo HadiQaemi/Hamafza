@@ -3792,7 +3792,8 @@ input{
     margin-top: 5px;
 }
 .no-task-div{
-    margin: 80px 35%;
+    padding: 80px 35%;
+    text-align: center;
 }
 .no-task-div-buttons{
     margin-top: 20px;
@@ -4044,4 +4045,28 @@ input{
 .custom_respite_number{
     display: inline-block;
     margin-left: 10px;
+}
+.checkboxVertical label.not_started{
+    background: #de643d !important;
+}
+.checkboxVertical.not_started{
+    background: #f7c3b3 !important;
+}
+.checkboxVertical label.started{
+    background: #d0c000 !important;
+}
+.checkboxVertical.started{
+    background: #cec98c !important;
+}
+.checkboxVertical label.done{
+    background: #8bad03 !important;
+}
+.checkboxVertical.done{
+    background: #c7d492 !important;
+}
+.checkboxVertical label.completed{
+    background: #1fce14 !important;
+}
+.checkboxVertical.completed{
+    background: #96d492 !important;
 }

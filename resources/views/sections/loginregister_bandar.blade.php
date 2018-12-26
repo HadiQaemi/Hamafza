@@ -346,7 +346,7 @@
                 </div>
 
                 <input type="hidden" name="passwordhidw" id="passwordhidw">
-                <div class="row col-md-9 pull-left">
+                <div class="row col-md-12 pull-left">
                     <div class="col-md-4">
                         <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                     </div>
@@ -391,7 +391,7 @@
                     <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off">
                 </div>
                 <input type="hidden" name="passwordhid" id="passwordhid">
-                <div class="row col-md-9 pull-left">
+                <div class="row col-md-12 pull-left">
                     <div class="col-md-4">
                         <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                     </div>
@@ -441,7 +441,7 @@
                         <input type="text" class="form-control" name="family" aria-label="Amount (to the nearest dollar)">
                         <span class="input-group-addon icon-a-b"></span>
                     </div>
-                    <div class="row col-md-9 pull-left">
+                    <div class="row col-md-12 pull-left">
                         <div class="col-md-4">
                             <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                         </div>

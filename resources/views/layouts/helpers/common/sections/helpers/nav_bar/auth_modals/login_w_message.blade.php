@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <input type="checkbox" name="remember_me"><span style="color: black; font-size: 12px;">مرا به خاطر بسپار</span>
                             </div>
-                            <div class="row col-md-9 pull-left">
+                            <div class="row col-md-12 pull-left">
                                 <div class="col-md-4">
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas" tabindex="6">فراموشی رمز عبور</div>
                                 </div>

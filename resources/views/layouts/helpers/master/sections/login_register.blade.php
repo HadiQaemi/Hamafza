@@ -406,7 +406,7 @@
                         <span class="input-group-addon icon-a-b"></span>
                     </div>
 
-                    <div class="row col-md-9 pull-left">
+                    <div class="row col-md-12 pull-left">
                         <div class="col-md-4">
                             <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                         </div>

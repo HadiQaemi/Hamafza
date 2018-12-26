@@ -215,7 +215,7 @@ return [
     'unofficial'=>'شخصی',
     'task_title_placeholder'=>'عنوان وظیفه ...',
     'search_in_task_title_placeholder'=>'جستجو در عنوان ...',
-    'no_task_sended'=>'تا کنون وظیفه‌ای را به دیگران واگذار نکرده اید. ',
-    'no_task_inserted'=>'تا کنون وظیفه‌ای برای شما تعیین نشده است.',
+    'no_task_sended'=>'تاکنون وظیفه‌ای را به دیگران واگذار نکرده اید. ',
+    'no_task_inserted'=>'تاکنون وظیفه‌ای برای شما تعیین نشده است.',
     'selecet_user'=>'انتخاب کاربر',
 ];

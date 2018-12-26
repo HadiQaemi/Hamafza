@@ -34,7 +34,7 @@
                         <span class="input-group-addon">رمزعبور</span>
                         <input class="form-control password" name="password" data-toggle="password" required="required" title="" type="password" autocomplete="off">
                     </div>
-                    <div class="row col-md-9 pull-left">
+                    <div class="row col-md-12 pull-left">
                         <div class="col-md-4">
                             <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                         </div>

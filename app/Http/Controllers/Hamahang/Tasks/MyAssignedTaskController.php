@@ -808,11 +808,34 @@ class MyAssignedTaskController extends Controller
             {
                 return hamahang_get_task_use_type_name($data->use_type);
             })
+//            ->addColumn('respite', function ($data)
+//            {
+//                $date = new jDateTime;
+//                $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+//                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+//            })
             ->addColumn('respite', function ($data)
             {
                 $date = new jDateTime;
                 $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+                $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                if ($respite_days[0]['delayed'] == 1)
+                {
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
+                    $bg = 'bg_red';
+                }
+                else
+                {
+                    $respite_days = $respite_days[0]['day_no'];
+                    $bg = 'bg_green';
+                }
+                return ['bg'=>$bg,'respite_days'=>$respite_days,'gdate'=>$r['year'].'/'.$r['mon'].'/'.$r['mday']];
+            })
+            ->editColumn('created_at', function ($data)
+            {
+                $date = new jDateTime;
+                $r = $date->getdate(strtotime($data->created_at));
+                return $r['year'].'/'.$r['mon'].'/'.$r['mday'];
             })
             ->addColumn('keywords', function ($data)
             {
@@ -853,8 +876,15 @@ class MyAssignedTaskController extends Controller
                     ->where('hamahang_subject_ables.target_id', '=',$data->id)
                     ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
                     ->whereNull('hamahang_subject_ables.deleted_at')->pluck('subject_id')->toArray();
-                $pages = DB::table('pages')->whereIn('sid',$pages)->groupBy('sid')->pluck('id')->toArray();
-                return $pages;
+                $pages = DB::table('pages')
+                    ->leftJoin('subjects','subjects.id','=','pages.sid')
+                    ->whereIn('sid',$pages)->groupBy('sid')->select('pages.id','subjects.title')->get()->toArray();
+                $pages_detail = [];
+                foreach($pages as $page)
+                {
+                    $pages_detail[] = ['id'=>$page->id,'title'=>$page->title];
+                }
+                return $pages_detail;
             })
             ->addColumn('employee', function ($data)
             {

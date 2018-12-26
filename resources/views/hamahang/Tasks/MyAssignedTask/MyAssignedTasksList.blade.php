@@ -100,21 +100,25 @@
                     <div class="pull-right">
                         <span style="margin-top: 10px;display: block;">{{trans('tasks.stage')}}</span>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10">
+                    <div class="checkboxVertical draft pull-right margin-right-10">
+                        <input type="checkbox" class="form-check-input" value="00" name="task_status[]" id="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}"/>
+                        <label for="not_started_tasks" class="draft" data-toggle="tooltip" title="{{trans('tasks.draft')}}"></label>
+                    </div>
+                    <div class="checkboxVertical not_started pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}" checked/>
-                        <label for="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}"></label>
+                        <label for="not_started_tasks" class="not_started" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}"></label>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10">
+                    <div class="checkboxVertical started pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_started')}}" checked/>
-                        <label for="started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_started')}}"></label>
+                        <label for="started_tasks" class="started" data-toggle="tooltip" title="{{trans('tasks.status_started')}}"></label>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10">
+                    <div class="checkboxVertical done pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_done')}}" id="done_tasks"/>
-                        <label for="done_tasks" data-toggle="tooltip" title="{{trans('tasks.status_done')}}"></label>
+                        <label for="done_tasks" class="done" data-toggle="tooltip" title="{{trans('tasks.status_done')}}"></label>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10">
+                    <div class="checkboxVertical completed pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}" id="completed_tasks"/>
-                        <label for="completed_tasks" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}"></label>
+                        <label for="completed_tasks" class="completed" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_suspended')}}" id="stoped_tasks"/>
@@ -139,17 +143,18 @@
                     <tr>
                         <th style="text-align: right;">عنوان</th>
                         <th style="text-align: right;">مسئول انجام</th>
+                        <th style="text-align: right;">زمان ایجاد</th>
                         <th style="text-align: right;">اولویت</th>
                         <th style="text-align: right;">مهلت</th>
                         <th style="text-align: right;">وضعیت</th>
-                        <th style="text-align: right;">عملیات</th>
+                        <th style="text-align: right;" class="table-no-sort"></th>
                         {{--<th style="text-align: right;">کتابخانه</th>--}}
                     </tr>
                     </thead>
                 </table>
             </div>
             <div class="col-xs-12 no-task-div hidden">
-                <div class="message"></div>
+                <div class="message text-center"></div>
                 <div class="no-task-div-buttons">
                     <a class="jsPanels btn btn-primary" href="{{url('/modals/CreateNewTask?resid='.auth()->id())}}" title="وظیفه جدید">ایجاد وظیفه جدید</a>
                 </div>

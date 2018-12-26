@@ -8,12 +8,12 @@
 <div class="row row_height rapid-task">
     <hr class="hr-4"/>
     <form method="POST" id="form_create_rapid_task">
-        <div class="col-xs-4" dir="rtl">
+        <div class="col-xs-3" dir="rtl">
             <input type="text" class="form-control" autocomplete="off" placeholder="عنوان وظیفه" name='task_title' id="create_rapid_task_title"/>
         </div>
-        <div class="col-xs-5" style="padding: 0">
+        <div class="col-xs-6" style="padding: 0">
             <div class="input-group">
-                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.selecet_user')}}" multiple="multiple"></select>
+                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.select_some_persons')}}" multiple="multiple"></select>
                 <span class="input-group-addon">
                     <i class="">
                         <a href="{!! route('modals.setting_user_view',['id_select'=>'create_rapid_task_multi_selected_users']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
