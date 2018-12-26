@@ -198,7 +198,7 @@
         });
 
         $(document).on("click", ".btn_modal_register", function () {
-            var form_data = $('.jsPanel #modal_register_form').serialize();
+            var form_data = $('#modal_register_form').serialize();
             $('.inner_register_div').hide();
             $('.register_div').addClass('loader');
             $.ajax({
@@ -215,44 +215,45 @@
                         $('#modal_register_captcha').val('');
                         $('.register_div').removeClass('loader');
                         $('.inner_register_div').show();
-                        $('.jsPanel .modal_register_error_inputs').html('');
+                        $('.modal_register_error_inputs').html('');
                         $('.modal_register_error_inputs').css('color', 'red');
+                        console.log(result);
                         register_captcha_refresh();
                         if (result.error.captcha_code) {
-                            $('.jsPanel #reg_captcha_request_errors').html(result.error.captcha_code);
+                            $('#reg_captcha_request_errors').html(result.error.captcha_code);
                         }
                         else {
-                            $('.jsPanel #reg_captcha_request_errors').html('');
+                            $('#reg_captcha_request_errors').html('');
                         }
                         if (result.error.username) {
-                            $('.jsPanel #reg_username_request_errors').html(result.error.username);
+                            $('#reg_username_request_errors').html(result.error.username);
                         }
                         else {
-                            $('.jsPanel #reg_username_request_errors').html('');
+                            $('#reg_username_request_errors').html('');
                         }
                         if (result.error.email) {
-                            $('.jsPanel #reg_email_request_errors').html(result.error.email);
+                            $('#reg_email_request_errors').html(result.error.email);
                         }
                         else {
-                            $('.jsPanel #reg_email_request_errors').html('');
+                            $('#reg_email_request_errors').html('');
                         }
                         if (result.error.password) {
-                            $('.jsPanel #reg_password_request_errors').html(result.error.password);
+                            $('#reg_password_request_errors').html(result.error.password);
                         }
                         else {
-                            $('.jsPanel #reg_password_request_errors').html('');
+                            $('#reg_password_request_errors').html('');
                         }
                         if (result.error.name) {
-                            $('.jsPanel #reg_name_request_errors').html(result.error.name);
+                            $('#reg_name_request_errors').html(result.error.name);
                         }
                         else {
-                            $('.jsPanel #reg_name_request_errors').html('');
+                            $('#reg_name_request_errors').html('');
                         }
                         if (result.error.family) {
-                            $('.jsPanel #reg_family_request_errors').html(result.error.family);
+                            $('#reg_family_request_errors').html(result.error.family);
                         }
                         else {
-                            $('.jsPanel #reg_family_request_errors').html('');
+                            $('#reg_family_request_errors').html('');
                         }
                     }
 //                        messageModal('alert', 'خطا در ثبت نام', result.error);
