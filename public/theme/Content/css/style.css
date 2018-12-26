@@ -614,7 +614,8 @@ body{
 }
 
 .right-menu .menu li.active {
-    background: #fff;
+    background: #b3b3b3;
+    color: #FFF;
     /*box-shadow: 7px 0px 8px rgba(1, 2, 2, 0.15) inset;*/
 }
 
@@ -3791,7 +3792,7 @@ input{
     margin-top: 5px;
 }
 .no-task-div{
-    margin-top: 80px;
+    margin: 80px 35%;
 }
 .no-task-div-buttons{
     margin-top: 20px;
@@ -4039,4 +4040,8 @@ input{
 .table-no-sort {
     pointer-events: none!important;
     cursor: default!important;
+}
+.custom_respite_number{
+    display: inline-block;
+    margin-left: 10px;
 }

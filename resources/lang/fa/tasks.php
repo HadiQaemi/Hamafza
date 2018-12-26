@@ -167,7 +167,7 @@ return [
     'library'=>'کتابخانه',
     'public'=>'رسمی',
     'private'=>'شخصی',
-    'action'=>'عملیات',
+//    'action'=>'عملیات',
     'delete_it'=>'حذف شود',
     'delete_task'=>'حذف وظیفه',
     'do_respite'=>'مهلت',

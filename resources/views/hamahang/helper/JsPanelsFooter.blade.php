@@ -34,7 +34,7 @@
     </div>
     <a data-form_id = "ShowTaskForm" data-again_save = "1" class="btn btn-primary pull-left act_on_task" id="">
         <i ></i>
-        {{trans('tasks.submit')}}
+        {{trans('tasks.ok')}}
     </a>
     {{--<a class="btn btn-primary pull-left update_task" id="save_commit" type="button" data-again_save = "2" data-form_id="ShowTaskForm">--}}
         {{--<i ></i>--}}

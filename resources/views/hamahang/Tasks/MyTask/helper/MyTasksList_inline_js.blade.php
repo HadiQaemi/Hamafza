@@ -168,6 +168,12 @@
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
 
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
+            columnDefs: [
+                { "width": "10%", "targets": [2,3,4,5,6] },
+                { "width": "20%", "targets": 1 },
+                { "width": "50%", "targets": 0 },
+                { "width": "15%", "targets": 2 }
+            ],
             "dom": window.CommonDom_DataTables,
             "ajax": {
                 "url": "{{ route('hamahang.tasks.my_tasks.fetch') }}",
@@ -191,7 +197,6 @@
                         return "<a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
                     }
                 },
-                {"data": "assignment_created_at"},
                 {
                     "data": "employee",
                     "mRender": function (data, type, full) {
@@ -203,22 +208,28 @@
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     }},
+                {"data": "assignment_created_at"},
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
-                    }},
+                    },
+                    "width": 10
+                },
                 {"data": "respite",
                     "mRender": function (data, type, full) {
-                        return "<div class='respite_number "+full.respite.bg+"'>"+full.respite.respite_days+"</div>";
-                    }
+                        return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
+                    },
+                    "width": 10
                 },
                 {"data": "type",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
-                    }},
+                    },
+                    "width": 10
+                },
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task color_red" data-toggle="tooltip" title="حذف"></a>';
                     }}
 
 //            , {

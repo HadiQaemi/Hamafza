@@ -1397,7 +1397,7 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
-//        dd(Request::all());
+        dd(Request::all());
 //        dd($task_id);
         //
         $action = "";
@@ -1408,7 +1408,7 @@ class MyAssignedTaskController extends Controller
                 $action = 'rejection';
                 DB::table('hamahang_task_assignments')
                     ->where('id', (int) $assign_id)
-                    ->update(['status' => 1,'reject_description'=>Request::input('explain_reject')]);
+                    ->update(['status' => 1,'reject_description'=>Request::input('explain_reject'),'uid'=>Auth::id()]);
                 task_assignments::create_task_assignment($task_assignment['uid'] ,$task_assignment['uid'] ,$task_id,$assign_id);
                 task_history::create_task_history($task_id, 'reject', serialize(Request::all()),$task_assignment['uid']);
                 task_status::create_task_status($task_id, 0, 0, $task_assignment['uid'], time());
@@ -1416,6 +1416,10 @@ class MyAssignedTaskController extends Controller
             }else if (Request::exists('assigns_new'))
             {
                 $action = 'assignmention';
+                DB::table('hamahang_task_assignments')
+                    ->where('id', (int) $assign_id)
+                    ->update(['assignment' => 1,'reject_description'=>Request::input('explain_reject')]);
+
                 $staff = '';
                 foreach (Request::input('assigns_new') as $key => $value_employee_id)
                 {

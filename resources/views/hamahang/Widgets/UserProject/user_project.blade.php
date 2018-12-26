@@ -12,6 +12,9 @@
     .datepicker-plot-area{
         border-bottom: none !important;
     }
+    .background-white{
+        margin-right: -4px;
+    }
 </style>
 <div id="calendar_datepickar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;">
     <div style="direction: rtl">
@@ -24,7 +27,7 @@
 
     </div>
 </div>
-<div id="calendar_myCalendar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;">
+<div id="calendar_myCalendar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hd-tree" data-mcs-theme="minimal-dark2" style="direction: ltr; max-height: 80vh; overflow-y: auto;width: 100.8%;">
     <div style="direction: rtl">
         <div class="panel panel-light panel-list padding-remove">
             <!--<div class="panel-heading panel-heading-darkblue">تازه&zwnj;های دیوار من </div>-->

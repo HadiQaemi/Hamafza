@@ -32,12 +32,12 @@
             {{$project_info->title}}
         </div>
     </div>
-    <div class="pull-right line-height-35 margin-top-20 margin-right-50">
-        <div class="pull-right">{{trans('projects.describe')}}: </div>
-        <div class="pull-right margin-right-10">
-            {{$project_info->desc}}
-        </div>
-    </div>
+    {{--<div class="pull-right line-height-35 margin-top-20 margin-right-50">--}}
+        {{--<div class="pull-right">{{trans('projects.describe')}}: </div>--}}
+        {{--<div class="pull-right margin-right-10">--}}
+            {{--{{$project_info->desc}}--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="pull-right line-height-35 margin-top-20 margin-right-50">
         <div class="pull-right">{{trans('projects.project_manager')}}: </div>
         <div class="pull-right margin-right-10">

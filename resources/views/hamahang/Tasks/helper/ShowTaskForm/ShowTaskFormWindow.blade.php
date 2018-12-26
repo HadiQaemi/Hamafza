@@ -711,7 +711,7 @@
                             <label class="line-height-35">{{ trans('tasks.duration') }}</label>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="text" class="form-control" name="action_duration" id="action_duration" value="1"/>
+                            <input type="text" class="form-control" name="action_duration" id="action_duration" value="1" style="width: 70px;text-align: center;"/>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
                             <select id="action_time_type" name="action_time_type" class="form-control">

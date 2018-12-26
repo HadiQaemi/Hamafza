@@ -709,7 +709,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
                     <div class="row col-lg-12 noLeftPadding noRightPadding">
                         <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                             <label class="line-height-35">{{ trans('tasks.timing') }}</label>
@@ -764,7 +764,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="margin-top: 20px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                <div class="row col-lg-12" style="margin-top: 10px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
                     </div>

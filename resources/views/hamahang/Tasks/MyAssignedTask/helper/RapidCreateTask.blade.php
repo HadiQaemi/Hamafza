@@ -13,6 +13,7 @@
         </div>
         <div class="col-xs-5" style="padding: 0">
             <div class="input-group">
+                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.selecet_user')}}" multiple="multiple"></select>
                 <span class="input-group-addon">
                     <i class="">
                         <a href="{!! route('modals.setting_user_view',['id_select'=>'create_rapid_task_multi_selected_users']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
@@ -20,14 +21,13 @@
                           </a>
                     </i>
                 </span>
-                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" multiple="multiple"></select>
             </div>
         </div>
         <div class="col-xs-2">
             <div class="input-group">
-                <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </span>
+                {{--<span class="input-group-addon">--}}
+                    {{--<span class="fa fa-calendar"></span>--}}
+                {{--</span>--}}
                 <input type="text" class="DatePickersss form-control col-xs-2" autocomplete="off" placeholder="مهلت..." dir="rtl" id="create_rapid_task_respite_date" name='respite_date'/>
             </div>
         </div>

@@ -6,7 +6,7 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: -10px">
         <div class="row">
             <div style="position: absolute;top:10px; width: 250px;left:0px;">
                 @include('hamahang.Tasks.projects.project_related_pages')
@@ -82,7 +82,7 @@
                     {
                         "data": "title",
                         "mRender": function (data, type, full) {
-                            return "<a class='project_info cursor-pointer' data-p_id= '"+ full.id +"' >"+ full.title +"</a>";
+                            return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'>"+ full.title +"</a>";
                         }
                     },
                     {"data": "full_name"},
