@@ -272,7 +272,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>مهلت انجام</td>
+                                                    <td>مهلت</td>
                                                     <td>
                                                         <div class="col-xs-12">
                                                             <div class="input-group">

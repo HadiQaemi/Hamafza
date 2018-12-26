@@ -375,7 +375,7 @@
             '           </label>\n' +
             '       </td>\n' +
             '       <td>\n' +
-            '       	<span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+            '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
             '       </td>\n' +
             '    </tr>\n';
         $('#rel_task_list').append(project_span);
@@ -410,7 +410,7 @@
 			'           </label>\n' +
 			'       </td>\n' +
 			'       <td>\n' +
-			'       	<span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
+			'       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
 			'       </td>\n' +
 			'    </tr>\n';
         $('#resources_task_list').append(project_span);

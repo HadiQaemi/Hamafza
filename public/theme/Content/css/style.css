@@ -4030,3 +4030,13 @@ input{
 .select2-search__field{
     width: 450px !important;
 }
+.gray_light_color{
+    color: #aaa;
+}
+.table-no-sort::after {
+    display: none!important;
+}
+.table-no-sort {
+    pointer-events: none!important;
+    cursor: default!important;
+}

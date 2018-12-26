@@ -169,11 +169,12 @@
                         <thead>
                         <tr>
                             <th style="text-align: right;">عنوان</th>
+                            <th style="text-align: right;">زمان ارجاع</th>
                             <th style="text-align: right;">واگذارنده</th>
                             <th style="text-align: right;">اولویت</th>
                             <th style="text-align: right;">مهلت</th>
                             <th style="text-align: right;">وضعیت</th>
-                            <th style="text-align: right;">عملیات</th>
+                            <th class="table-no-sort" style="text-align: right;"></th>
                         </tr>
                         </thead>
                     </table>

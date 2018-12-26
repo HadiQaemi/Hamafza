@@ -446,7 +446,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -534,7 +534,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <span class="fa fa-remove remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
                                     </td>
                                 </tr>
                             @endforeach

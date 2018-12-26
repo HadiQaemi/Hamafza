@@ -191,6 +191,7 @@
                         return "<a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
                     }
                 },
+                {"data": "assignment_created_at"},
                 {
                     "data": "employee",
                     "mRender": function (data, type, full) {
@@ -206,14 +207,18 @@
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     }},
-                {"data": "respite"},
+                {"data": "respite",
+                    "mRender": function (data, type, full) {
+                        return "<div class='respite_number "+full.respite.bg+"'>"+full.respite.respite_days+"</div>";
+                    }
+                },
                 {"data": "type",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
                     }},
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
                     }}
 
 //            , {

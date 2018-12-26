@@ -479,10 +479,32 @@ class MyTaskController extends Controller
             {
                 return hamahang_get_task_use_type_name($data->use_type);
             })
+            ->editColumn('assignment_created_at', function ($data)
+            {
+                $date = new jDateTime;
+                $datetime = explode(' ', $data->assignment_created_at);
+                $task_date = explode('-', $datetime[0]);
+                $time = explode(':', $datetime[1]);
+                $g_timestamp = mktime($time[0], $time[1], $time[2], $task_date [1], $task_date [2], $task_date [0]);
+                $jdate = $date->getdate($g_timestamp);
+                $jdate = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
+                return $jdate;
+            })
             ->addColumn('respite', function ($data) use ($date)
             {
                 $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+                $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                if ($respite_days[0]['delayed'] == 1)
+                {
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
+                    $bg = 'bg_red';
+                }
+                else
+                {
+                    $respite_days = $respite_days[0]['day_no'];
+                    $bg = 'bg_green';
+                }
+                return ['bg'=>$bg,'respite_days'=>$respite_days];
             })
             ->addColumn('keywords', function ($data)
             {
