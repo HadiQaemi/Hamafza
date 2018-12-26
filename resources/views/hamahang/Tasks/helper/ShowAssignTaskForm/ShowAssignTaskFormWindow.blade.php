@@ -607,11 +607,11 @@
                 <div class="row col-lg-12 margin-top-15">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
                         <div class="pull-right">
-                            <input type="checkbox" name="assign_object" id="assign_object" class="" value="0" style="display: inline"/>
-                            <label for="r2" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.forward') }}</label>
+                            <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="" checked/>
+                            <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.action') }}</label>
                             <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
                             <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
-                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline" disabled/>
+                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline"/>
                             <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
                         </div>
                         <div class="pull-right width-400">
@@ -823,26 +823,26 @@
             </div>
             <div class="tab-pane" id="tab_t8" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                    <table id="ChildsGrid" class="table dt-responsive nowrap display dataTable no-footer" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th class="col-xs-2">زمان</th>
                             <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-5">اقدام</th>
-                            <th class="col-xs-5">زمان</th>
+                            <th class="col-xs-8">اقدام</th>
                         </tr>
                         </thead>
                         <tbody id="message_task_list">
                             @if(isset($res['task_history']))
                                 @foreach($res['task_history'] as $k=>$task_history)
                                     <tr id="add_resource_task{{$k.'show'}}">
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$task_history->Name.' '.$task_history->Family}}</label>
+                                        <td style="border-bottom: 1px solid #999;text-align: center">
+                                            {{$task_history->created_at}}
                                         </td>
-                                        <td>
-                                            <label class="pull-right" for="r2">{{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}</label>
+                                        <td style="border-bottom: 1px solid #999;text-align: center">
+                                            {{$task_history->Name.' '.$task_history->Family}}
                                         </td>
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$task_history->created_at}}</label>
+                                        <td style="border-bottom: 1px solid #999;text-align: center">
+                                            {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}
                                         </td>
                                     </tr>
                                 @endforeach
