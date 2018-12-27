@@ -25,10 +25,10 @@
                                         </a>
                                     </h5>
                                 </div>
-                                <div class="state">
-                                    {!! $task->Status->StatusIcon !!}
-                                </div>
-                                <div class="referrer" style="top: 1px;">
+                                {{--<div class="state">--}}
+                                    {{--{!! $task->Status->StatusIcon !!}--}}
+                                {{--</div>--}}
+                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                     <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                     <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
                                     </a>
@@ -61,10 +61,10 @@
                                         </a>
                                     </h5>
                                 </div>
-                                <div class="state">
-                                    {!! $task->Status->StatusIcon !!}
-                                </div>
-                                <div class="referrer" style="top: 1px;">
+                                {{--<div class="state">--}}
+                                    {{--{!! $task->Status->StatusIcon !!}--}}
+                                {{--</div>--}}
+                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                     <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                         <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
                                     </a>
@@ -99,10 +99,10 @@
                                         </a>
                                     </h5>
                                 </div>
-                                <div class="state">
-                                    {!! $task->Status->StatusIcon !!}
-                                </div>
-                                <div class="referrer" style="top: 1px;">
+                                {{--<div class="state">--}}
+                                    {{--{!! $task->Status->StatusIcon !!}--}}
+                                {{--</div>--}}
+                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                     <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                         <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
                                     </a>
@@ -136,10 +136,10 @@
                                         </a>
                                     </h5>
                                 </div>
-                                <div class="state">
-                                    {!! $task->Status->StatusIcon !!}
-                                </div>
-                                <div class="referrer" style="top: 1px;">
+                                {{--<div class="state">--}}
+                                    {{--{!! $task->Status->StatusIcon !!}--}}
+                                {{--</div>--}}
+                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                     <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
                                         <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
                                     </a>

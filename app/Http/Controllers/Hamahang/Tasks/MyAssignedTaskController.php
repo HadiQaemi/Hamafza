@@ -131,6 +131,21 @@ class MyAssignedTaskController extends Controller
         {
             $result->whereIn('hamahang_task_status.type', [11]);
         }
+        $task_final[] = 1;
+        if(is_array(Request::input('task_status')))
+            if(in_array('10',Request::input('task_status')))
+            {
+                $task_final[] = 0;
+            }
+        if ($task_final)
+        {
+            $result->whereIn('hamahang_task.is_save', $task_final)
+                ->whereNull('hamahang_task.deleted_at');
+        }
+        else
+        {
+            $result->whereIn('hamahang_task.is_save', [11]);
+        }
         if(is_array(Request::input('task_important_immediate'))){
             $result->where(function($q) use ($task_important_immediate) {
                 foreach($task_important_immediate as $Atask_important_immediate)

@@ -52,24 +52,24 @@
                 <div class="pull-right" style="margin-top: 10px;">
                     <span>{{trans('tasks.unofficial')}}</span>
                 </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <label class="container-checkmark">
-                        <input type="checkbox" checked="checked" class="form-check-input" name="task_final[]" value="1" checked>
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <span>{{trans('tasks.final')}}</span>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <label class="container-checkmark">
-                        <input type="checkbox" checked="checked" class="form-check-input" name="task_final[]" value="0" checked>
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <span>{{trans('tasks.draft')}}</span>
-                </div>
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<label class="container-checkmark">--}}
+                        {{--<input type="checkbox" checked="checked" class="form-check-input" name="task_final[]" value="1" checked>--}}
+                        {{--<span class="checkmark"></span>--}}
+                    {{--</label>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<span>{{trans('tasks.final')}}</span>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<label class="container-checkmark">--}}
+                        {{--<input type="checkbox" checked="checked" class="form-check-input" name="task_final[]" value="0" checked>--}}
+                        {{--<span class="checkmark"></span>--}}
+                    {{--</label>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<span>{{trans('tasks.draft')}}</span>--}}
+                {{--</div>--}}
                 <div class="pull-right" style="margin-top: 10px;margin-right: 15px">
                     <span>{{trans('tasks.priority')}}</span>
                 </div>
@@ -98,21 +98,28 @@
                     <div class="pull-right">
                         <span style="margin-top: 10px;display: block;">{{trans('tasks.stage')}}</span>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10">
-                        <input type="checkbox" class="form-check-input" value="0" name="task_status[]" id="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}" checked/>
-                        <label for="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}"></label>
+                    <div class="pull-right">
+                        <span style="margin-top: 10px;display: block;">{{trans('tasks.stage')}}</span>
+                    </div>
+                    <div class="checkboxVertical draft pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.draft')}}">
+                        <input type="checkbox" class="form-check-input" value="10" name="task_status[]" id="draft_tasks" />
+                        <label for="draft_tasks" class="draft"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10">
-                        <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_started')}}" checked/>
-                        <label for="started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_started')}}"></label>
+                        <input type="checkbox" class="form-check-input not_started" value="0" name="task_status[]" id="not_started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}" checked/>
+                        <label for="not_started_tasks" class="not_started" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10">
-                        <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_done')}}" id="done_tasks"/>
-                        <label for="done_tasks" data-toggle="tooltip" title="{{trans('tasks.status_done')}}"></label>
+                        <input type="checkbox" class="form-check-input started" value="1" name="task_status[]" id="started_tasks" data-toggle="tooltip" title="{{trans('tasks.status_started')}}" checked/>
+                        <label for="started_tasks" class="started" data-toggle="tooltip" title="{{trans('tasks.status_started')}}"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10">
-                        <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}" id="completed_tasks"/>
-                        <label for="completed_tasks" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}"></label>
+                        <input type="checkbox" class="form-check-input done" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_done')}}" id="done_tasks"/>
+                        <label for="done_tasks" class="done" data-toggle="tooltip" title="{{trans('tasks.status_done')}}"></label>
+                    </div>
+                    <div class="checkboxVertical pull-right margin-right-10">
+                        <input type="checkbox" class="form-check-input completed" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}" id="completed_tasks"/>
+                        <label for="completed_tasks" class="completed" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10">
                         <input type="checkbox" class="form-check-input" value="2" name="task_status[]" data-toggle="tooltip" title="{{trans('tasks.status_suspended')}}" id="stoped_tasks"/>

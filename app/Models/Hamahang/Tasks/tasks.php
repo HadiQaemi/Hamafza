@@ -1471,6 +1471,21 @@ class tasks extends Model
                 ;
             });
         }
+        $task_final[] = 1;
+        if(is_array(Request::input('task_status')))
+            if(in_array('10',Request::input('task_status')))
+            {
+                $task_final[] = 0;
+            }
+        if ($task_final)
+        {
+            $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_final)
+                ->whereNull('hamahang_task.deleted_at');
+        }
+        else
+        {
+            $tasks_immediate_importance->whereIn('hamahang_task.is_save', [11]);
+        }
 
         if ($title_filter)
         {
@@ -1484,7 +1499,6 @@ class tasks extends Model
         {
             $tasks_immediate_importance = $tasks_immediate_importance->whereIn('type', [11]);
         }
-
         if (Request::exists('task_final'))
         {
             $task_final = Request::input('task_final');

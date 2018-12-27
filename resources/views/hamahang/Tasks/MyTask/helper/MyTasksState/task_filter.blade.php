@@ -1,4 +1,4 @@
-    <div class="row" style="margin-top: -14px;background: #eee">
+    <div class="row" style="margin-top: -8px;background: #eee">
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>

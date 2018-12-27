@@ -79,7 +79,7 @@
 
     .draggable .referrer {
         position: absolute;
-        left: 40px;
+        left: 10px;
         top: 5px;
         width: 25px;
         text-align: center;
