@@ -137,7 +137,7 @@
             </div>
             {{--<fieldset id="fieldset_noData"></fieldset>--}}
             <fieldset id="fieldset_info" class="hidden">
-                <div class="col-xs-12"><i class="fa fa-arrow-left pointer" id="BackToProjects"></i></div>
+                <div class="col-xs-12"><i class="fa fa-arrow-left pointer" id="BackToProjects" style="margin-top: 10px;"></i></div>
                 <div id="ProjectInfoList"></div>
             </fieldset>
             <fieldset id="fieldset">
@@ -444,6 +444,7 @@
                 dataType:'json',
                 success :function(data)
                 {
+                    $('#form_filter_priority').addClass('hidden');
                     $('#ProjectInfoList').html(data.content);
                     $('#fieldset_info').removeClass('hidden');
                     $('#fieldset').addClass('hidden');
@@ -453,6 +454,7 @@
         $(document).on('click', "#BackToProjects", function () {
             $('#fieldset').removeClass('hidden');
             $('#fieldset_info').addClass('hidden');
+            $('#form_filter_priority').removeClass('hidden');
         });
         $(document).on('click', ".task_project_remove", function () {var id = $(this).attr('rel');
 
