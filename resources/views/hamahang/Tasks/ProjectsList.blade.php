@@ -130,7 +130,7 @@
         </form>
     </div>
 
-    <div class="container-fluid" style="margin-top: -10px">
+    <div class="container-fluid">
         <div class="row">
             <div style="position: absolute;top:10px; width: 250px;left:0px;">
                 @include('hamahang.Tasks.projects.project_related_pages')

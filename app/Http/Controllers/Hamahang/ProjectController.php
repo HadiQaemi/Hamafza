@@ -7,6 +7,7 @@ use App\Http\Controllers\Hamahang\Tasks\TaskController;
 use App\Models\hamafza\Pages;
 use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\project_role_permission;
+use App\Models\Hamahang\Tasks\task_status;
 use App\User;
 use Datatables;
 use DB;
@@ -372,6 +373,7 @@ class ProjectController extends Controller
         foreach(Request::input('task_project_progress') as $key=>$progress)
         {
             DB::table('hamahang_task')->where('id','=', (int) $key)->update(['progress'=>(float) $progress]);
+            task_status::create_task_status($key, 1, $progress, Auth::id(), time());
         }
         DB::table('hamahang_project')->where('id','=', (int) Request::input('pid'))->update(['progress'=>(float) $project/100]);
         return $project/100;

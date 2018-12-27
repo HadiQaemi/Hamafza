@@ -1427,7 +1427,7 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
-        dd(Request::all());
+//        dd(Request::all());
 //        dd($task_id);
         //
         $action = "";
@@ -1510,6 +1510,8 @@ class MyAssignedTaskController extends Controller
             ->where('task_id', '=', $task_id)
             ->delete();
         task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
+        DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
+
         task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), trans('tasks.action').': '.task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : ''));
 
         if (Request::exists('keywords'))

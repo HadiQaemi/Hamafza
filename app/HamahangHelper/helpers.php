@@ -1239,55 +1239,55 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     }
                     $res ['desktop_sections'] =
                         [
-                            [
-                                'type' => 'times',
-                                'title' => 'برنامه امروز',
-                                'order' => '1',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'برنامه امروز',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyTasksCount",
-                                            'icon' => 'fa-calendar',
-                                            'subData' => [
-                                                [
-                                                    "title" => "امروز",
-                                                    "icon" => "",
-                                                    "url" => ""
-                                                ],
-                                                [
-                                                    "title" => "هفته",
-                                                    "icon" => "",
-                                                    "url" => ""
-                                                ],
-                                                [
-                                                    "title" => "ماه",
-                                                    "icon" => "",
-                                                    "url" => ""
-                                                ]
-                                            ],
-                                            'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'واگذاری های من',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyAssignedTasksCount",
-                                            'icon' => 'fa-list-alt',
-                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'پیشنویس ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->MyDraftTasksCount",
-                                            'icon' => 'fa-pencil-square ',
-                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
-                                        ]
-                                    ]
-                            ],
+//                            [
+//                                'type' => 'times',
+//                                'title' => 'برنامه امروز',
+//                                'order' => '1',
+//                                'data' =>
+//                                    [
+//                                        [
+//                                            'active' => '1',
+//                                            'title' => 'برنامه امروز',
+//                                            'new' => '-1',
+//                                            'value' => "$auth_user->MyTasksCount",
+//                                            'icon' => 'fa-calendar',
+//                                            'subData' => [
+//                                                [
+//                                                    "title" => "امروز",
+//                                                    "icon" => "",
+//                                                    "url" => ""
+//                                                ],
+//                                                [
+//                                                    "title" => "هفته",
+//                                                    "icon" => "",
+//                                                    "url" => ""
+//                                                ],
+//                                                [
+//                                                    "title" => "ماه",
+//                                                    "icon" => "",
+//                                                    "url" => ""
+//                                                ]
+//                                            ],
+//                                            'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
+//                                        ],
+//                                        [
+//                                            'active' => '1',
+//                                            'title' => 'واگذاری های من',
+//                                            'new' => '-1',
+//                                            'value' => "$auth_user->MyAssignedTasksCount",
+//                                            'icon' => 'fa-list-alt',
+//                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
+//                                        ],
+//                                        [
+//                                            'active' => '1',
+//                                            'title' => 'پیشنویس ها',
+//                                            'new' => '-1',
+//                                            'value' => "$auth_user->MyDraftTasksCount",
+//                                            'icon' => 'fa-pencil-square ',
+//                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
+//                                        ]
+//                                    ]
+//                            ],
                             [
                                 'type' => 'tasks',
                                 'title' => 'وظایف',
