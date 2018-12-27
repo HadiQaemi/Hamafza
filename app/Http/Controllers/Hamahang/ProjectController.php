@@ -1035,6 +1035,7 @@ class ProjectController extends Controller
 //            ->join('user','user.id','=','hamahang_project.uid')
 //            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
 //        ;
+//        dd(Request::all());
         $projects_roles = DB::table('hamahang_project')
             ->where(function($query) {
                 $query->where(function($query) {
@@ -1067,7 +1068,117 @@ class ProjectController extends Controller
 //                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
 //                ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects_roles = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+        $title = Request::exists('title') ? Request::input('title') : '';
+        if (trim($title))
+        {
+            $projects_roles->where('hamahang_project.title', 'like', '%'.$title.'%');
+        }
+        $official_type = Request::get('official_type');
+        if ($official_type)
+        {
+            $projects_roles->whereIn('hamahang_project.type', $official_type)
+                ->whereNull('hamahang_project.deleted_at');
+        }
+        else
+        {
+            $projects_roles->whereIn('hamahang_project.type', [11]);
+        }
+        if(Request::exists('keywords'))
+        {
+            $search_task_keywords = [];
+            foreach(Request::input('keywords') as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $projects_roles->join('hamahang_project_keyword', 'hamahang_project_keyword.project_id', '=', 'hamahang_project.id')
+                    ->whereIn('hamahang_project_keyword.keyword_id', $search_task_keywords);
+            }
+        }
+        if(Request::exists('users'))
+        {
+            $projects_roles->where(function ($result) {
+                $result
+                    ->whereIn('hamahang_project.uid', Request::input('users'))
+                    ->orWhereIn('hamahang_project_responsible.user_id', Request::input('users'));
+            });
+        }
+        $task_important_immediate = Request::input('task_important_immediate');
+        if(is_array(Request::input('task_important_immediate'))){
+            $projects_roles->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 0)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 0)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 1)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 0)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 0)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 1)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 1)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 1)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }
+                }
+            });
+        }
+        $task_final[] = 1;
+        if(is_array(Request::input('task_status')))
+        {
+            if(in_array('10',Request::input('task_status')))
+            {
+                $task_final[] = 0;
+            }
+        }
+        if ($task_final)
+        {
+            $projects_roles->whereIn('hamahang_project.draft', $task_final)
+                ->whereNull('hamahang_project.deleted_at');
+        }
+        else
+        {
+            $projects_roles->whereIn('hamahang_task.is_save', [11]);
+        }
+        $task_status = Request::input('task_status');
+        if(is_array($task_status))
+        {
+            foreach($task_status as $a_status)
+            {
+//                if($a_status == 0){
+//                    $projects_roles->where('hamahang_project.progress', '=<', 0);
+//                }else if($a_status == 1){
+//                    $projects_roles->where('hamahang_project.progress', '>', 0)->where('hamahang_project.progress', '<', 100);
+//                }else if($a_status == 2){
+//                    $projects_roles->where('hamahang_project.progress', '=', 100);
+//                }
+            }
+        }
+
+        $projects_roles = $projects_roles->groupBy('hamahang_project.id', 'desc')->get();
 //        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id', 'desc')->get();
         $projects2 = $projects_roles;//$projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
         return $dd2 = Datatables::of($projects2)
@@ -1405,13 +1516,13 @@ class ProjectController extends Controller
                             $user->Uname = $req_user;
                             $user->Email = $req_user;
                             $user->Name = $req_user;
-                            $user->permission_type = 1;
                             $user->is_new = '1';
                             $user->save();
                             $responsible->user_id = $user->id;
                         }
                     }
                     $responsible->project_id = $project->id;
+                    $responsible->permission_type = 1;
                     $responsible->save();
                 }
             }
@@ -1431,13 +1542,13 @@ class ProjectController extends Controller
                             $user->Uname = $req_user;
                             $user->Email = $req_user;
                             $user->Name = $req_user;
-                            $user->permission_type = 2;
                             $user->is_new = '1';
                             $user->save();
                             $responsible->user_id = $user->id;
                         }
                     }
                     $responsible->project_id = $project->id;
+                    $responsible->permission_type = 2;
                     $responsible->save();
                 }
             }
@@ -1463,6 +1574,7 @@ class ProjectController extends Controller
                             $responsible->user_id = $user->id;
                         }
                     }
+                    $responsible->permission_type = 3;
                     $responsible->project_id = $project->id;
                     $responsible->save();
                 }
@@ -1696,28 +1808,109 @@ class ProjectController extends Controller
             hamahang_subject_ables::where('target_id', '=', $pid)->delete();
             project_keyword::where('project_id', '=', $pid)->delete();
 
-            $responsible = new hamahang_project_responsible;
-            $responsible->uid = Auth::id();
-            $req_user = Request::input('p_responsible')[0];
-            if($req_user != null)
-            {
-                if (substr($req_user, 0, 8) == 'exist_in')
-                {
-                    $responsible->user_id = (int)substr($req_user, 8);
-                }
-                else
-                {
-                    $user = new User();
-                    $user->Uname = $req_user;
-                    $user->Email = $req_user;
-                    $user->Name = $req_user;
-                    $user->is_new = '1';
-                    $user->save();
-                    $responsible->user_id = $user->id;
+//            $responsible = new hamahang_project_responsible;
+//            $responsible->uid = Auth::id();
+//            $req_user = Request::input('p_responsible')[0];
+//            if($req_user != null)
+//            {
+//                if (substr($req_user, 0, 8) == 'exist_in')
+//                {
+//                    $responsible->user_id = (int)substr($req_user, 8);
+//                }
+//                else
+//                {
+//                    $user = new User();
+//                    $user->Uname = $req_user;
+//                    $user->Email = $req_user;
+//                    $user->Name = $req_user;
+//                    $user->is_new = '1';
+//                    $user->save();
+//                    $responsible->user_id = $user->id;
+//                }
+//            }
+//            $responsible->project_id = $project->id;
+//            $responsible->save();
+
+
+            if(Request::exists('p_responsible')){
+                foreach(Request::input('p_responsible') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->project_id = $project->id;
+                    $responsible->permission_type = 1;
+                    $responsible->save();
                 }
             }
-            $responsible->project_id = $project->id;
-            $responsible->save();
+            if(Request::exists('p_observer')){
+                foreach(Request::input('p_observer') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->project_id = $project->id;
+                    $responsible->permission_type = 2;
+                    $responsible->save();
+                }
+            }
+            if(Request::exists('p_supervisor')){
+                foreach(Request::input('p_supervisor') as $req_user){
+                    $responsible = new hamahang_project_responsible;
+                    $responsible->uid = Auth::id();
+                    if($req_user != null)
+                    {
+                        if (substr($req_user, 0, 8) == 'exist_in')
+                        {
+                            $responsible->user_id = (int)substr($req_user, 8);
+                        }
+                        else
+                        {
+                            $user = new User();
+                            $user->Uname = $req_user;
+                            $user->Email = $req_user;
+                            $user->Name = $req_user;
+                            $user->permission_type = 3;
+                            $user->is_new = '1';
+                            $user->save();
+                            $responsible->user_id = $user->id;
+                        }
+                    }
+                    $responsible->permission_type = 3;
+                    $responsible->project_id = $project->id;
+                    $responsible->save();
+                }
+            }
 
             if (sizeof(Request::input('ModifyPermissionUsers')) > 0)
             {

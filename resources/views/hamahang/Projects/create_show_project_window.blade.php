@@ -74,7 +74,51 @@
                                     <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
                                         @if(!empty($project_responsibles->responsibles))
                                             @foreach($project_responsibles->responsibles as $project_res)
-                                                <option selected="selected" value="{{ $project_res->user_id }}">{{ $project_res->full_name }}</option>
+                                                @if($project_res->permission_type == 1 || trim($project_res->permission_type) == '')
+                                                    <option selected="selected" value="exist_in{{ $project_res->user_id }}">{{ $project_res->full_name }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
+                                    {{--<div class="col-sm-5 noPadding">--}}
+                                        {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
+                                            {{--<option value=""></option>--}}
+                                        {{--</select>--}}
+                                        {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
+                                    {{--</div>--}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+                                <div class="col-xs-2 line-height-35">{{trans('projects.project_observer')}}</div>
+                                <div class="col-xs-10">
+                                    <select name="p_observer[]" id="p_observer" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                        @if(!empty($project_responsibles->responsibles))
+                                            @foreach($project_responsibles->responsibles as $project_res)
+                                                @if($project_res->permission_type == 2)
+                                                    <option selected="selected" value="exist_in{{ $project_res->user_id }}">{{ $project_res->full_name }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
+                                    {{--<div class="col-sm-5 noPadding">--}}
+                                        {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
+                                            {{--<option value=""></option>--}}
+                                        {{--</select>--}}
+                                        {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
+                                    {{--</div>--}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+                                <div class="col-xs-2 line-height-35">{{trans('projects.project_supervisor')}}</div>
+                                <div class="col-xs-10">
+                                    <select name="p_supervisor[]" id="p_supervisor" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
+                                        @if(!empty($project_responsibles->responsibles))
+                                            @foreach($project_responsibles->responsibles as $project_res)
+                                                @if($project_res->permission_type == 3)
+                                                    <option selected="selected" value="exist_in{{ $project_res->user_id }}">{{ $project_res->full_name }}</option>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </select>

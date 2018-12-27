@@ -1113,7 +1113,11 @@ class tasks extends Model
 //            db::enableQueryLog();
 //            dd(Request::all());
             $task_important_immediate = Request::input('task_important_immediate');
-            $task_final = Request::get('task_final');
+            $task_final[] = 1;
+            if(in_array('10',Request::input('task_status')))
+            {
+                $task_final[] = 0;
+            }
             $result = DB::table('hamahang_task')
                 ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
                 ->leftjoin('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
@@ -1218,7 +1222,6 @@ class tasks extends Model
             {
                 $result->whereIn('hamahang_task.is_save', $task_final)
                     ->whereNull('hamahang_task.deleted_at');
-//            dd($immediate);
             }
             else
             {
@@ -1267,12 +1270,15 @@ class tasks extends Model
 //            {
 //                $result->whereIn('hamahang_task_priority.importance', [11]);
 //            }
-            if(count($task_final)>1)
-                $result->whereRaw('(( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0))', [Auth::id()]);
-            else if(in_array(0,$task_final))
-                $result->whereRaw('is_save in (0)');
-            else
+            if(is_array($task_final))
+            {
+                if(count($task_final)>1)
+                    $result->whereRaw('(( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0))', [Auth::id()]);
+                else if(in_array(0,$task_final))
+                    $result->whereRaw('is_save in (0)');
+            }else{
                 $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) ', [Auth::id()]);
+            }
 //            $result = $result->tosql();
 //            dd($result);
 

@@ -62,7 +62,7 @@ class task_project extends Model
             ->where('project_id', '=', $pid)
             ->join('user','user.id','=','hamahang_project_responsible.user_id')
             ->whereNull('hamahang_project_responsible.deleted_at')
-            ->select('hamahang_project_responsible.user_id', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
+            ->select('hamahang_project_responsible.permission_type', 'hamahang_project_responsible.user_id', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
             ->get();
 
         $role_permission = DB::table('hamahang_project_role_permission')
