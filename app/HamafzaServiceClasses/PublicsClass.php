@@ -1214,7 +1214,7 @@ class PublicsClass
         foreach ($rows as $row)
         {
             //hqi استفاده از استمر
-            //$string = str_replace($row->first, $row->second, $string);
+            $string = str_replace($row->first, $row->second, $string);
         }
         return trim($string);
     }

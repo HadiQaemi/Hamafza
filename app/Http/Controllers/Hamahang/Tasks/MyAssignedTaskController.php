@@ -214,7 +214,7 @@ class MyAssignedTaskController extends Controller
     public function FetchTranscriptsList()
     {
         $Tasks = tasks::MyTranscriptsTasks(Auth::id(), Request::input('subject_id'));
-
+        $date = new jDateTime;
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
@@ -228,31 +228,45 @@ class MyAssignedTaskController extends Controller
             {
                 return hamahang_get_task_use_type_name($data->use_type);
             })
-            ->addColumn('respite', function ($data)
+            ->addColumn('respite', function ($data) use ($date)
             {
-                $date = new jDateTime;
                 $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-                return $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+                $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                if ($respite_days[0]['delayed'] == 1)
+                {
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
+                    $bg = 'bg_red';
+                }
+                else
+                {
+                    $respite_days = $respite_days[0]['day_no'];
+                    $bg = 'bg_green';
+                }
+                return ['bg'=>$bg,'respite_days'=>$respite_days,'gdate'=>$r['year'].'/'.$r['mon'].'/'.$r['mday']];
             })
             ->editColumn('immediate', function ($data)
             {
                 if ($data->immediate == 1)
                 {
                     $output = 'فوری';
+                    $output_num = 'priority1';
                 }
                 else
                 {
                     $output = 'غیرفوری';
+                    $output_num = 'priority0';
                 }
                 if ($data->importance == 1)
                 {
                     $output .= ' و مهم';
+                    $output_num .= '1';
                 }
                 else
                 {
                     $output .= ' و غیرمهم ';
+                    $output_num .= '0';
                 }
-                return $output;
+                return ['output'=>$output,'output_image'=>$output_num];
             })
             ->addColumn('keywords', function ($data)
             {

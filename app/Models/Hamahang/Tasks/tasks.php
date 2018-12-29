@@ -955,23 +955,47 @@ class tasks extends Model
             $result->whereIn('hamahang_task_status.type', [11]);
         }
 
-        if ($immediate)
-        {
-            $result->whereIn('hamahang_task_priority.immediate', $immediate)
-                ->whereNull('hamahang_task_priority.deleted_at');
-        }else
-        {
-            $result->whereIn('hamahang_task_priority.immediate', [11]);
-        }
+        $task_important_immediate = Request::input('task_important_immediate');
+        if(is_array(Request::input('task_important_immediate'))){
+            $result->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
 
-        if ($important)
-        {
-            $result->whereIn('hamahang_task_priority.importance', $important)
-                ->whereNull('hamahang_task_priority.deleted_at');
-        }
-        else
-        {
-            $result->whereIn('hamahang_task_priority.importance', [11]);
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
         }
 
         $result = $result->groupBy('hamahang_task.id')->get();
@@ -1001,9 +1025,12 @@ class tasks extends Model
 
         $status_filter = Request::get('task_status');
         $official_type = Request::get('official_type');
-        $important = Request::get('task_important');
-        $immediate = Request::get('task_immediate');
         $filter_subject_id = Request::get('filter_subject_id');
+        $title = Request::exists('title') ? Request::input('title') : '';
+        if (trim($title))
+        {
+            $result->where('hamahang_task.title', 'like', '%'.$title.'%');
+        }
 
         if (isset($filter_subject_id))
         {
@@ -1033,28 +1060,49 @@ class tasks extends Model
         {
 //                $result->whereIn('hamahang_task_status.type', [11]);
         }
+        $task_important_immediate = Request::input('task_important_immediate');
+        if(is_array(Request::input('task_important_immediate'))){
+            $result->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
 
-        if ($immediate)
-        {
-            $result->whereIn('hamahang_task_priority.immediate', $immediate)
-                ->whereNull('hamahang_task_priority.deleted_at');
-//            dd($immediate);
-        }
-        else
-        {
-            $result->whereIn('hamahang_task_priority.immediate', [11]);
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
         }
 
-        if ($important)
-        {
-            $result->whereIn('hamahang_task_priority.importance', $important)
-                ->whereNull('hamahang_task_priority.deleted_at');
-//            dd($important);
-        }
-        else
-        {
-            $result->whereIn('hamahang_task_priority.importance', [11]);
-        }
         if(Request::exists('search_task_keywords'))
         {
             $search_task_keywords = [];

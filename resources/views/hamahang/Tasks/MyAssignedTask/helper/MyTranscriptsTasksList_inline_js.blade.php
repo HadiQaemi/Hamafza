@@ -134,9 +134,21 @@
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     }},
-                {"data": "immediate"},
-                {"data": "respite"},
-                {"data": "type"}
+                {"data": "immediate",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
+                    }
+                },
+                {"data": "respite",
+                    "mRender": function (data, type, full) {
+                        return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
+                    }
+                },
+                {"data": "type",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                    }
+                }
                 // ,
                 // {
                 //     "data": "id", "width": "8%",

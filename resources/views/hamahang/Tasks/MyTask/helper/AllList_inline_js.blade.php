@@ -65,12 +65,12 @@
             return json;
         };
     })(jQuery);
-    $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
+    $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
         filter_tasks_priority();
     });
-    $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
-        filter_tasks_priority();
-    });
+    // $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
+    //     filter_tasks_priority();
+    // });
     // $('#form_filter_priority').on('keyup', 'input, select, textarea', 'checkbox', function () {
     //     filter_tasks_priority();
     // });
@@ -170,9 +170,21 @@
                     }
                 },
                 {"data": "assigner"},
-                {"data": "immediate"},
-                {"data": "respite"},
-                {"data": "type"}
+                {"data": "immediate",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
+                    }
+                    },
+                {"data": "respite",
+                    "mRender": function (data, type, full) {
+                        return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
+                    }
+                },
+                {"data": "type",
+                    "mRender": function (data, type, full) {
+                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                    }
+                }
 
 //            , {
 //                "data": "id", "width": "8%",
