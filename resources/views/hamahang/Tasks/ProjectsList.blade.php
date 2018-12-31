@@ -154,7 +154,7 @@
                             <th>{{trans('projects.start_date')}}</th>
                             <th>{{trans('projects.end_date')}}</th>
                             <th>{{trans('projects.progress')}}</th>
-                            <th>{{trans('projects.status')}}</th>
+                            <th>{{trans('projects.priority')}}</th>
                             <th>{{trans('projects.operation')}}</th>
                             {{--<th>عملیات</th>--}}
                         </tr>
@@ -293,7 +293,17 @@
                                 return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'>"+ full.title +"</a>";
                             }
                         },
-                        {"data": "full_name"},
+                        {"data": "full_name",
+                            "mRender": function (data, type, full) {
+                                var keywords = full.keywords.replace(/&quot;/g,'"');
+                                keywords = JSON.parse(keywords);
+                                data2 = "";
+                                $.each(keywords, function(index) {
+                                    data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
+                                });
+                                return full.full_name+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
+                            }
+                        },
                         {
                             "data": "start_date",
                             "mRender": function (data, type, full) {
@@ -307,12 +317,12 @@
                             }},
                         {"data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "";
+                                return "<img class='immediate-pic' src='/assets/images/"+full.progress.output_image+"' title='"+full.progress.out_title+"' data-toggle='tooltip'/>";
                             }
                         },
                         {"data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "";
+                                return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                             }
                         },
                         {"data": "end_date",

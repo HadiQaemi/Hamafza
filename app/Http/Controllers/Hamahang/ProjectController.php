@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hamahang;
 use App\HamafzaServiceClasses\SubjectsClass;
 use App\Http\Controllers\Hamahang\Tasks\TaskController;
 use App\Models\hamafza\Pages;
+use App\Models\Hamahang\keywords;
 use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\project_role_permission;
 use App\Models\Hamahang\Tasks\task_status;
@@ -1051,7 +1052,7 @@ class ProjectController extends Controller
                             ->whereNull('hamahang_project.deleted_at');
                     });
             })
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
             ->whereNull('hamahang_project_responsible.deleted_at')
@@ -1188,6 +1189,64 @@ class ProjectController extends Controller
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
             })
+            ->editColumn('progress', function ($data)
+            {
+                $out_image = '';
+                $out_title = '';
+                if($data->draft == 0){
+                    $out_image = 'task00.png';
+                    $out_title = 'پیش نویس';
+                }else if($data->status == 1){
+                    $out_image = 'task4.png';
+                    $out_title = 'پایان یافته';
+                }else if($data->status == 2){
+                    $out_image = 'task4.png';
+                    $out_title = 'متوقف';
+                }else if($data->progress == null || $data->progress==0){
+                    $out_image = 'task0.png';
+                    $out_title = 'برای انجام';
+                }else if($data->progress == 100){
+                    $out_image = 'task2.png';
+                    $out_title = 'انجا شده';
+                }else if($data->progress < 100){
+                    $out_image = 'task1.png';
+                    $out_title = 'در حال انجام';
+                }
+                return ['output_image'=>$out_image, 'out_title'=>$out_title];
+            })
+            ->addColumn('keywords', function ($data)
+            {
+                $r = (self::ProjectKeywords($data->id));
+
+                $rr = [];
+                foreach($r as $Ar)
+                    $rr[]= ['id'=>$Ar->id,'title'=>$Ar->title];
+                return json_encode($rr);
+            })
+            ->editColumn('immediate', function ($data)
+            {
+                if ($data->immediate == 1)
+                {
+                    $output = 'فوری';
+                    $output_num = 'priority1';
+                }
+                else
+                {
+                    $output = 'غیرفوری';
+                    $output_num = 'priority0';
+                }
+                if ($data->importance == 1)
+                {
+                    $output .= ' و مهم';
+                    $output_num .= '1';
+                }
+                else
+                {
+                    $output .= ' و غیرمهم ';
+                    $output_num .= '0';
+                }
+                return ['output'=>$output,'output_image'=>$output_num];
+            })
             ->editColumn('end_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->end_date,1,1);
@@ -1202,6 +1261,17 @@ class ProjectController extends Controller
             })
             ->make(true);
     }
+
+    public static function ProjectKeywords($pid)
+    {
+        $keywords = keywords::select('keywords.title', 'keywords.id')
+            ->join('hamahang_project_keyword', 'hamahang_project_keyword.keyword_id', '=', 'keywords.id')
+            ->where('hamahang_project_keyword.project_id', '=', $pid)
+            ->whereNull('hamahang_project_keyword.deleted_at')
+            ->get();
+        return $keywords;
+    }
+
     public static function create_task_priority($task_id, $immediate = 0, $importance = 0, $is_assigner = [0], $user_id = -1, $uid = -1, $timestamp = -1)
     {
         if(!is_array($is_assigner))
