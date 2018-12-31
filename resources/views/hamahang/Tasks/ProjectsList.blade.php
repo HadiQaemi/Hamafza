@@ -272,16 +272,15 @@
                 LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
                 window.ProjectList = $('#ProjectList').DataTable({
                     "order": [[ 0, "desc" ]],
-                    "dom": window.CommonDom_DataTables,
+                    dom: window.CommonDom_DataTables,
+                    "processing": true,
+                    "serverSide": true,
+                    "language": window.LangJson_DataTables,
                     "ajax": {
                         "url": "{{ route('hamahang.projects.list') }}",
                         "type": "POST",
                         "data": send_info
                     },
-                    "autoWidth": false,
-                    "processing": true,
-                    "language": window.LangJson_DataTables,
-                    "serverside": true,
                     columns: [
                         {
                             "data": "id",
@@ -578,6 +577,6 @@
 @include('sections.tabs')
 
 @section('position_right_col_3')
-    {!!userProjectsWidget()!!}
+    {{--{!!userProjectsWidget()!!}--}}
     @include('sections.desktop_menu')
 @stop
