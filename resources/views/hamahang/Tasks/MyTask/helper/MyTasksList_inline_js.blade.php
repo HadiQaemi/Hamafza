@@ -194,7 +194,7 @@
                     "mRender": function (data, type, full) {
                         var id = full.id;
                         // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";<a style="float: right;" class="jsPanels" href="/modals/ShowTaskForm?tid='+id+'" title="{{trans('tasks.show_task')}}">{{trans('tasks.show_task')}}</a>
-                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
                     }
                 },
                 {
@@ -206,7 +206,7 @@
                         $.each(keywords, function(index) {
                             data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                         });
-                        return "<div class='" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "'>"+full.employee+"</div><div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
+                        return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     }},
                 {"data": "assignment_created_at"},
                 {"data": "immediate",
