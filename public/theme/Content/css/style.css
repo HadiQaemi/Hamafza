@@ -3838,7 +3838,7 @@ input{
     margin-bottom: 15px !important;
 }
 .width-400{
-    width: 400px !important;
+    min-width: 400px !important;
 }
 #form_filter_priority input,#form_filter_priority select,#form_filter_priority .select2-selection,#form_filter_priority .select2-container{
     background: #eee !important;
@@ -4069,4 +4069,10 @@ input{
 }
 .checkboxVertical.completed{
     background: #96d492 !important;
+}
+.color_grey{
+    color: #999 !important;
+}
+.color_grey a{
+    color: #999 !important;
 }

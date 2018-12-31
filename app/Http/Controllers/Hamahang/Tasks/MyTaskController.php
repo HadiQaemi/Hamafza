@@ -477,7 +477,7 @@ class MyTaskController extends Controller
 
     public function MyTasksFetch()
     {
-        db::enableQueryLog();
+//        db::enableQueryLog();
         $Tasks = tasks::MyTasks(Request::input('subject_id'));
 //        dd(db::getQueryLog());
         $date = new jDateTime;
@@ -489,6 +489,10 @@ class MyTaskController extends Controller
             ->editColumn('id', function ($data)
             {
                 return enCode($data->id);
+            })
+            ->editColumn('assignment_id', function ($data)
+            {
+                return enCode($data->assignment_id);
             })
             ->editColumn('use_type', function ($data)
             {

@@ -964,6 +964,7 @@ class ModalController extends Controller
         if ($res['tid'])
         {
             $res['tid'] = deCode($res['tid']);
+            $aid = deCode($res['aid']);
 
             $task = DB::table('hamahang_task_assignments as t')
                 ->leftJoin('hamahang_task', 'hamahang_task.id', '=', 't.task_id')
@@ -971,7 +972,7 @@ class ModalController extends Controller
                 ->leftjoin('hamahang_task_transcript', 'hamahang_task_transcript.task_id', '=', 'hamahang_task.id')
                 ->select('hamahang_task.*','hamahang_task_status.type as task_status','hamahang_task_status.percent as percent')
                 ->where('t.task_id','=', $res['tid'])
-                ->where('t.id','=', $res['aid'])
+                ->where('t.id','=', $aid)
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
                 ->whereNull('hamahang_task_status.deleted_at')
                 ->where(function($q) {

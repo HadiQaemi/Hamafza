@@ -9,7 +9,7 @@
         document.getElementById('time1').disabled = true;
     }
     $('input:radio[name="reject_assigner"]').change(function(){
-        if($(this).val() == 0){
+        if($(this).val() == 1){
             $("#assigns_new").prop('disabled', true);
         }else {
             $("#assigns_new").prop('disabled', false);

@@ -639,15 +639,15 @@ class tasks extends Model
 //        DB::enableQueryLog();
 
         $result = DB::table('hamahang_task')
-            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_assignments.created_at as assignment_created_at","hamahang_task_status.type as task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
+            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_assignments.assignment as assignment_assignment","hamahang_task_assignments.created_at as assignment_created_at","hamahang_task_status.type as task_status","hamahang_task.schedule_time", "hamahang_task.schedule_id", "hamahang_task.use_type", "hamahang_task.duration_timestamp", "hamahang_task.created_at", "user.Uname", "user.Name", "user.Family", DB::raw('CONCAT("user.Name"," ","user.Family") AS employee'), "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance")
             ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
             ->join('user', 'user.id', '=', 'hamahang_task_assignments.uid')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
             ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
             //->whereNull('hamahang_task_assignments.transmitter_id')
             ->where('hamahang_task_assignments.employee_id', '=', $uid)
-            ->where('hamahang_task_assignments.status', '=', 0)
-            ->whereNull('hamahang_task_assignments.reject_description')
+//            ->where('hamahang_task_assignments.status', '=', 0)
+//            ->whereNull('hamahang_task_assignments.reject_description')
             ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
             ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')
 //            ->toSql()

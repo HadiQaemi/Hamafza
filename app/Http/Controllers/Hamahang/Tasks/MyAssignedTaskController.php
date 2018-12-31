@@ -1446,6 +1446,9 @@ class MyAssignedTaskController extends Controller
         $task_all = Session::get('TaskForm_task_all');
         $task_id = Session::get('TaskForm_tid');
         $assign_id = Session::get('TaskForm_aid');
+
+        $task_id = deCode(Request::input('tid'));
+        $assign_id = deCode(Request::input('aid'));
         $task_assignment = task_assignments::where('id', '=', $assign_id)
             ->select('assigner_id', 'uid', 'staff_id')->first();
         if(Session::get('ShowAssignTaskForm_is_creator'))
@@ -1457,12 +1460,12 @@ class MyAssignedTaskController extends Controller
 
         }
 //        dd(Request::all());
-//        dd($task_id);
+//        dd($assign_id,Request::all(),$task_assignment);
         //
         $action = "";
-        if(Request::exists('assign_object'))
+        if(Request::input('reject_assigner')!=3)
         {
-            if(Request::exists('reject_assigner'))
+            if(Request::input('reject_assigner'))
             {
                 $action = 'rejection';
                 DB::table('hamahang_task_assignments')
@@ -1500,57 +1503,57 @@ class MyAssignedTaskController extends Controller
                     ->where('id', (int) $assign_id)
                     ->update(['status' => 1]);
             }
-        }
-        //task_status
-        $reject_description = "";
-        if (Request::exists('explain_reject'))
-            $reject_description = Request::input('explain_reject');
-        $power_physical = "";
-        if (Request::exists('ready_body'))
-            $power_physical = Request::input('ready_body');
-        $power_mental = "";
-        if (Request::exists('ready_mental'))
-            $power_mental = Request::input('ready_mental');
-        $quality = "";
-        if (Request::exists('quality'))
-            $quality = Request::input('ready_mental');
+        }else{
+            //task_status
+            $reject_description = "";
+            if (Request::exists('explain_reject'))
+                $reject_description = Request::input('explain_reject');
+            $power_physical = "";
+            if (Request::exists('ready_body'))
+                $power_physical = Request::input('ready_body');
+            $power_mental = "";
+            if (Request::exists('ready_mental'))
+                $power_mental = Request::input('ready_mental');
+            $quality = "";
+            if (Request::exists('quality'))
+                $quality = Request::input('ready_mental');
 
-        $respite_duration_timestamp = 0;
-        if (Request::input('done_time') == 'determined-time')
-        {
-            $respite_duration_timestamp = hamahang_make_task_respite(Request::input('action_date'), Request::input('action_time'));
-        }
-        elseif (Request::input('done_time') == 'not-determine')
-        {
-            $respite_duration_timestamp = null;
-        }
-        elseif (Request::input('done_time') == 'to_end')
-        {
-            if(Request::input('to_end') == 'daily')
-                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 1, 0, 0, 0);
-            if(Request::input('to_end') == 'weekly')
-                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 7, 0, 0, 0);
-            if(Request::input('to_end') == 'monthly')
-                $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 30, 0, 0, 0);
-        }
-        task_action::create_task_action($task_id, Request::input('task_status'), Request::input('progress'), $action,$reject_description,
-            $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
-        task_status::where('uid', '=', Auth::id())
-            ->where('task_id', '=', $task_id)
-            ->delete();
-        task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
-        DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
-
-        task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), trans('tasks.action').': '.task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : ''));
-
-        if (Request::exists('keywords'))
-        {
-            foreach (Request::input('keywords') as $kw)
+            $respite_duration_timestamp = 0;
+            if (Request::input('done_time') == 'determined-time')
             {
-                task_keywords::create_task_keyword($task_id, hamahang_add_keyword($kw));
+                $respite_duration_timestamp = hamahang_make_task_respite(Request::input('action_date'), Request::input('action_time'));
+            }
+            elseif (Request::input('done_time') == 'not-determine')
+            {
+                $respite_duration_timestamp = null;
+            }
+            elseif (Request::input('done_time') == 'to_end')
+            {
+                if(Request::input('to_end') == 'daily')
+                    $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 1, 0, 0, 0);
+                if(Request::input('to_end') == 'weekly')
+                    $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 7, 0, 0, 0);
+                if(Request::input('to_end') == 'monthly')
+                    $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, 30, 0, 0, 0);
+            }
+            task_action::create_task_action($task_id, Request::input('task_status'), Request::input('progress'), $action,$reject_description,
+                $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
+            task_status::where('uid', '=', Auth::id())
+                ->where('task_id', '=', $task_id)
+                ->delete();
+            task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
+            DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
+
+            task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), trans('tasks.action').': '.task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : ''));
+
+            if (Request::exists('keywords'))
+            {
+                foreach (Request::input('keywords') as $kw)
+                {
+                    task_keywords::create_task_keyword($task_id, hamahang_add_keyword($kw));
+                }
             }
         }
-
 
         $result['success'] = true;
         return json_encode($result);

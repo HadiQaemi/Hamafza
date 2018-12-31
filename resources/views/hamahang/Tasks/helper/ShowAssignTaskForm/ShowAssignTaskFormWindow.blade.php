@@ -32,7 +32,6 @@
     </ul>
     @php
     $task = $res['task'];
-
     $edit_able = ($res['task_all']->uid == Auth::id() ? true : false);
     @endphp
 
@@ -45,6 +44,7 @@
                     <div class="col-lg-8">
                         <input type="text" class="form-control border-radius" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
                         <input type="hidden" name="tid" id="tid" value="{{$res['task_id']}}"/>
+                        <input type="hidden" name="aid" id="aid" value="{{$res['aid']}}"/>
                     </div>
                     <div class="col-lg-3">
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
@@ -607,11 +607,11 @@
                 <div class="row col-lg-12 margin-top-15">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
                         <div class="pull-right">
-                            <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="" checked/>
+                            <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="3" checked/>
                             <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.action') }}</label>
-                            <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="0" style="display: inline" disabled/>
+                            <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="1" style="display: inline" disabled/>
                             <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
-                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="1" style="display: inline"/>
+                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="0" style="display: inline"/>
                             <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
                         </div>
                         <div class="pull-right width-400">
