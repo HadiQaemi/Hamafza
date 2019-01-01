@@ -347,7 +347,31 @@
                 });
             }
 
+            $(document).on('click', '#create_rapid_task_to_project_btn_submit', function () {
+                var sendInfo = $('#form_create_rapid_task').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: '{{ URL::route('hamahang.tasks.rapid_new_task_to_project') }}',
+                    dataType: "json",
+                    data: sendInfo,
+                    success: function (data) {
+                        if (data.success == 'success') {
+                            $('#create_rapid_task_title').val('');
+                            $('#create_rapid_task_multi_selected_users').val('');
+                            {{--   messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'}
+                            @if(isset($function))
+                                ,{!! $function !!},'data'
+                            @endif
+                            );--}}
+                            //reload_mytask();
 
+                        }
+                        else {
+                            messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                        }
+                    }
+                });
+            });
             window.table_hirerical_view = $('#hirerical_view').DataTable();
             $('#hirerical_view').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');

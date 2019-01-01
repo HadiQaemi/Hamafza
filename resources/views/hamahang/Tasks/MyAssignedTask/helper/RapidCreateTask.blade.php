@@ -11,9 +11,9 @@
         <div class="col-xs-3" dir="rtl">
             <input type="text" class="form-control" autocomplete="off" placeholder="عنوان وظیفه" name='task_title' id="create_rapid_task_title"/>
         </div>
-        <div class="col-xs-6" style="padding: 0">
+        <div class="col-xs-6" style="padding-left: 15px">
             <div class="input-group">
-                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.select_some_persons')}}" multiple="multiple"></select>
+                <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.responsible')}}" multiple="multiple"></select>
                 <span class="input-group-addon">
                     <i class="">
                         <a href="{!! route('modals.setting_user_view',['id_select'=>'create_rapid_task_multi_selected_users']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
@@ -60,8 +60,9 @@
             </div>
         </div>
         <div class="col-xs-1 center_text_align">
-            <a class="btn btn-primary pull-left" id="create_rapid_task_btn_submit"><i ></i> {{trans('app.confirm')}}</a>
+            <a class="btn btn-primary pull-left" id="{{isset($pid) ? 'create_rapid_task_to_project_btn_submit' : 'create_rapid_task_btn_submit'}}"><i ></i> {{trans('app.confirm')}}</a>
         </div>
+        <input type="hidden" name="pid" id="pid" value="{{isset($pid) ? $pid : ''}}">
     </form>
     <div class="clearfixed"></div>
 

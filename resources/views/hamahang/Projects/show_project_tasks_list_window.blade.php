@@ -90,6 +90,7 @@
         ?>
     </form>
 </div>
+@include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['pid'=>@$pid])
 <?php
 function show_project($parents,$ordered_project_tasks,$id,$pid,$cnt=1)
 {

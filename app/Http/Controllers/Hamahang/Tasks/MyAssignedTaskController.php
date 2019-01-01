@@ -2474,6 +2474,90 @@ class MyAssignedTaskController extends Controller
             return response()->json($res);
         }
     }
+    public function rapid_new_task_to_project()
+    {
+        $validator = Validator::make(Request::all(), [
+            'immediacy' => 'required|in:0,1',
+            'importance' => 'required|in:0,1',
+            'task_title' => 'required|string',
+            'respite_date' => 'required|jalali_date:-',
+            'selected_users' => 'required|array',
+        ],[
+            'selected_users.required'=>'باید کاربر انتخاب شود'
+        ],[
+                'task_title'=>'عنوان وظیفه',
+                'selected_users'=>'کاربر'
+            ]
+            );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else
+        {
+            DB::transaction(function () use (&$task, &$employee, &$respite_date, &$status)
+            {
+                $immediacy = Request::get('immediacy');
+                $importance = Request::get('importance');
+                $task_title = Request::get('task_title');
+                $respite_date = Request::get('respite_date');
+                $selected_users = Request::get('selected_users');
+                $pid = Request::get('pid');
+                $respite_duration_timestamp = hamahang_make_task_respite($respite_date, '08:00:00');
+
+                $task = new tasks;
+                $task->title = $task_title;
+                $task->duration_timestamp = $respite_duration_timestamp;
+                $task->schedule_time = date('Y-m-d H:i:s');
+                $task->use_type = 0;
+                $task->type = 0;
+                $task->uid = Auth::id();
+                $task->save();
+
+                $x = 0;
+                $staff = '';
+                if (sizeof($selected_users) > 0)
+                {
+                    foreach ($selected_users as $u)
+                    {
+                        if ($x == 0)
+                        {
+                            $staff = $u;
+                            $x = 1;
+                        }
+                        task_assignments::create_task_assignment($u ,$staff ,$task->id,0);
+                    }
+                }
+
+                $status = task_status::create_task_status($task->id);
+                $priority = task_priority::create_task_priority($task->id, $immediacy, $importance);
+                $employee = User::find($staff);
+
+                $respite_date = hamahang_respite_remain(strtotime($task->schedule_time), $task->duration_timestamp);
+                if ($respite_date[0]['delayed'] == 1)
+                {
+                    $task->respite_days = ($respite_date[0]['day_no']) * (-1);
+                }
+                else
+                {
+                    $task->respite_days = $respite_date[0]['day_no'];
+                }
+                hamahang_project_task::create_task_project($task->id, $pid, 0);
+            });
+
+            $res =
+                [
+                    'success' => 'success',
+                    'id' => $task->id,
+                    'user_name' => $employee->name,
+                    'respite_days' => $respite_date,
+                    'type' => $status->type
+                ];
+            return response()->json($res);
+        }
+    }
 
     public function add_task_ajax()
     {
