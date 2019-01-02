@@ -278,7 +278,6 @@
                     "language": window.LangJson_DataTables,
                     "bSearchable": false,
                     "searching": false,
-                    "pageLength": 25,
                     "scrollY": 400,
                     "scrollX": true,
                     "dom": '<"bottom">rt<"bottom"ipl><"clear">',

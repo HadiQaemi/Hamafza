@@ -168,12 +168,12 @@
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
 
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
-            columnDefs: [
-                { "width": "10%", "targets": [2,3,4,5,6] },
-                { "width": "20%", "targets": 1 },
-                { "width": "50%", "targets": 0 },
-                { "width": "15%", "targets": 2 }
-            ],
+            // columnDefs: [
+            //     { "width": "10%", "targets": [2,3,4,5,6] },
+            //     { "width": "20%", "targets": 1 },
+            //     { "width": "50%", "targets": 0 },
+            //     { "width": "15%", "targets": 2 }
+            // ],
             // "dom": window.CommonDom_DataTables,
             "dom": '<"bottom">rt<"bottom"ipl><"clear">',
             "ajax": {
