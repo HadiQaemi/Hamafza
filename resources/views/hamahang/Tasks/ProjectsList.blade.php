@@ -307,7 +307,7 @@
                                 $.each(keywords, function(index) {
                                     data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                                 });
-                                return full.full_name+"<div class='project_keywords'>"+data2+"</div>";
+                                return (full.full_name !== null ? full.full_name : '')+"<div class='project_keywords'>"+data2+"</div>";
                             }
                         },
                         {
