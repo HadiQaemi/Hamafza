@@ -188,7 +188,6 @@
             "searching": false,
             "pageLength": 25,
             "scrollY": 400,
-            "scrollX": true,
             "language": LangJson_DataTables,
             "processing": true,
             columns: [

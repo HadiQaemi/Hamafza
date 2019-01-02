@@ -724,9 +724,9 @@
 
         var title = $('#title').val();
         if(title.trim().length>0 && none>0)
-            $('.new_task_save_type_final').click();
+            $('#new_task_save_type_final').click();
         else
-            $('.new_task_save_type_draft').click();
+            $('#new_task_save_type_draft').click();
     });
 
     $('#task_title').on('keyup', function() {

@@ -531,7 +531,7 @@
                         </tr>
                         </thead>
                         <tbody id="rel_task_list">
-                            @if(count($project)>0)
+                            @if(isset($project))
                                 <tr id="num_add_rel_task1">
                                     <td>
                                         <label class="pull-right line-height-30">پایین دستی</label>
@@ -1285,6 +1285,7 @@
         {
 
         });
+
     });
 </script>
 

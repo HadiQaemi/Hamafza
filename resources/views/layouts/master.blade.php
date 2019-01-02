@@ -466,6 +466,7 @@
                     //     });
                     //
                     // });
+
                     $(document).on('click', '.update_task', function () {
                         var save_type = $("input[name='new_task_save_type']:checked").val();
                         $('#task_of_action').val('fffffffffffffff');

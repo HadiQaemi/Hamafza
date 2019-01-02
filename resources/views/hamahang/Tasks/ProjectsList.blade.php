@@ -271,16 +271,17 @@
                 LangJson_DataTables = window.LangJson_DataTables;
                 LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
                 window.ProjectList = $('#ProjectList').DataTable({
-                    "order": [[ 0, "desc" ]],
-                    // dom: window.CommonDom_DataTables,
-                    "processing": true,
-                    "serverSide": true,
-                    "language": window.LangJson_DataTables,
-                    "bSearchable": false,
+                    dom: window.CommonDom_DataTables,
+                    "bSort": true,
+                    "aaSorting": [],
+                    "bSortable": true,
+                    "autoWidth": false,
                     "searching": false,
                     "scrollY": 400,
-                    "scrollX": true,
-                    "dom": '<"bottom">rt<"bottom"ipl><"clear">',
+                    "pageLength": 25,
+                    "language": LangJson_DataTables,
+                    "processing": true,
+                    // "dom": '<"bottom">rt<"bottom"ipl><"clear">',
                     "ajax": {
                         "url": "{{ route('hamahang.projects.list') }}",
                         "type": "POST",
@@ -295,7 +296,16 @@
                         {
                             "data": "title",
                             "mRender": function (data, type, full) {
-                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'>"+ full.title +"</a>";
+                                split = full.title.split(' ');
+                                sub_title = '';
+                                $.each(split,function(i,val){
+                                    if(i<=3){
+                                        sub_title = sub_title + ' ' + val;
+                                    }else if(i==4){
+                                        sub_title = sub_title + ' ...';
+                                    }
+                                });
+                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'>"+ sub_title +"</a>";
                             }
                         },
                         {"data": "full_name",
@@ -306,7 +316,7 @@
                                 $.each(keywords, function(index) {
                                     data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                                 });
-                                return (full.full_name !== null ? full.full_name : '')+"<div class='project_keywords'>"+data2+"</div>";
+                                return "<div style='height: 20px'>" + (full.full_name !== null ? full.full_name : '') + "</div>" +"<div class='project_keywords'>"+data2+"</div>";
                             }
                         },
                         {
@@ -328,7 +338,7 @@
                         },
                         {"data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-remove margin-right-10 pointer' data-toggle='tooltip' title='حذف' onclick='confirm(\"آیا حذف شود؟\")'></a>"+"<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
+                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red' data-toggle='tooltip' title='حذف' onclick='confirm(\"آیا حذف شود؟\")'></a>";
                             }
                         }
                         // {
