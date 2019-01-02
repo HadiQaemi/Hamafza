@@ -531,7 +531,26 @@
                         </tr>
                         </thead>
                         <tbody id="rel_task_list">
-
+                            @if(count($project)>0)
+                                <tr id="num_add_rel_task1">
+                                    <td>
+                                        <label class="pull-right line-height-30">پایین دستی</label>
+                                    </td>
+                                    <td>
+                                        <label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">{{$project->title}}</label>
+                                        <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
+                                        <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
+                                    </td>
+                                    <td>
+                                        <label class="input-group pull-right">
+                                            <input name="new_project_weight[]" class="form-control" type="text" value="0"/>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(1)" for="r2"></span>
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

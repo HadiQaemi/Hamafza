@@ -4076,3 +4076,29 @@ input{
 .color_grey a{
     color: #999 !important;
 }
+.dataTables_scrollBody{
+    height: 52vh !important;
+}
+#ProjectList_info, #MyTasksTable_info{
+    width: 30% !important;;
+    display: inline-block !important;
+    position: relative;
+    top: -10px;
+}
+#ProjectList_paginate, #MyTasksTable_paginate{
+    width: 50% !important;;
+    display: inline-block !important;
+    padding-top: 10px;
+}
+#ProjectList_length, #MyTasksTable_length{
+    width: 20% !important;;
+    display: inline-block !important;
+    position: relative;
+    top: -10px;
+}
+.project_keywords{
+    margin: 2px 0px;
+    position: relative;
+    right: -50px;
+    padding: 5px;
+}

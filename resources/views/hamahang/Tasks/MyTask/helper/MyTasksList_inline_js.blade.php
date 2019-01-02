@@ -174,7 +174,8 @@
                 { "width": "50%", "targets": 0 },
                 { "width": "15%", "targets": 2 }
             ],
-            "dom": window.CommonDom_DataTables,
+            // "dom": window.CommonDom_DataTables,
+            "dom": '<"bottom">rt<"bottom"ipl><"clear">',
             "ajax": {
                 "url": "{{ route('hamahang.tasks.my_tasks.fetch') }}",
                 "type": "POST",
@@ -186,6 +187,8 @@
             "autoWidth": false,
             "searching": false,
             "pageLength": 25,
+            "scrollY": 400,
+            "scrollX": true,
             "language": LangJson_DataTables,
             "processing": true,
             columns: [

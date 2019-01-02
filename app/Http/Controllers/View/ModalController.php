@@ -32,6 +32,7 @@ use App\Models\Hamahang\PaymentGatewayRawLogs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
 use App\Models\Hamahang\Score;
+use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\task_assignments;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\tasks;
@@ -759,6 +760,11 @@ class ModalController extends Controller
             $tid = $res['tid'];
             $task = tasks::find(deCode($res['tid']));
             $res['task'] = $this->TakeTaskInfo($res,$task);
+        }
+        if ($res['pid'])
+        {
+            $tid = $res['pid'];
+            $res['project'] = projects::find($res['pid']);
         }
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [

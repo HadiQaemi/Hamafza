@@ -1212,7 +1212,7 @@ class ProjectController extends Controller
                     $out_image = 'task1.png';
                     $out_title = 'در حال انجام';
                 }
-                return ['output_image'=>$out_image, 'out_title'=>$out_title];
+                return $data->progress;//['output_image'=>$out_image, 'out_title'=>$out_title];
             })
             ->addColumn('keywords', function ($data)
             {
