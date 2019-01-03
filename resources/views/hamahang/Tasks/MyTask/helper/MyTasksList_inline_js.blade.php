@@ -195,8 +195,16 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";<a style="float: right;" class="jsPanels" href="/modals/ShowTaskForm?tid='+id+'" title="{{trans('tasks.show_task')}}">{{trans('tasks.show_task')}}</a>
-                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
+                        split = full.title.split(' ');
+                        sub_title = '';
+                        $.each(split,function(i,val){
+                            if(i<=3){
+                                sub_title = sub_title + ' ' + val;
+                            }else if(i==4){
+                                sub_title = sub_title + ' ...';
+                            }
+                        });
+                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + title + "'>"+sub_title+"</a>";
                     }
                 },
                 {

@@ -162,8 +162,17 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
+                        split = full.title.split(' ');
+                        sub_title = '';
+                        $.each(split,function(i,val){
+                            if(i<=3){
+                                sub_title = sub_title + ' ' + val;
+                            }else if(i==4){
+                                sub_title = sub_title + ' ...';
+                            }
+                        });
                         // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + title + "'>"+sub_title+"</a>";
                     }
                 },
                 {
