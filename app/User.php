@@ -488,7 +488,7 @@ class User extends Authenticatable
 
     public function MyTasks()
     {
-        return $this->belongsToMany('App\Models\Hamahang\Tasks\tasks', 'hamahang_task_assignments', 'employee_id', 'task_id');
+        return $this->belongsToMany('App\Models\Hamahang\Tasks\tasks', 'hamahang_task_assignments', 'employee_id', 'task_id')->whereNull('hamahang_task_assignments.deleted_at');
     }
 
     public function MyProjects()

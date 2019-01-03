@@ -130,7 +130,7 @@
         </form>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
         <div class="row">
             <div style="position: absolute;top:10px; width: 250px;left:0px;">
                 @include('hamahang.Tasks.projects.project_related_pages')
