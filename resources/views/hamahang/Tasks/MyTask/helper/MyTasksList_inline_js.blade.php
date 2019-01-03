@@ -187,7 +187,7 @@
             "autoWidth": false,
             "searching": false,
             "pageLength": 25,
-            "scrollY": 400,
+            // "scrollY": 400,
             "language": LangJson_DataTables,
             "processing": true,
             columns: [

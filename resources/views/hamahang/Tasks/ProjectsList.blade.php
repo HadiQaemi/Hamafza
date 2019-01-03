@@ -277,7 +277,7 @@
                     "bSortable": true,
                     "autoWidth": false,
                     "searching": false,
-                    "scrollY": 400,
+                    // "scrollY": 400,
                     "pageLength": 25,
                     "language": LangJson_DataTables,
                     "processing": true,
