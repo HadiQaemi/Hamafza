@@ -305,7 +305,7 @@
                                         sub_title = sub_title + ' ...';
                                     }
                                 });
-                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='" + title + "'>"+ sub_title +"</a>";
+                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='" + full.title + "'>"+ sub_title +"</a>";
                             }
                         },
                         {"data": "full_name",

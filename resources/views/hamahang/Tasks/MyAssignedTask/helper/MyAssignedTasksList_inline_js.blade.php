@@ -172,7 +172,7 @@
                             }
                         });
                         // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + title + "'>"+sub_title+"</a>";
+                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>"+sub_title+"</a>";
                     }
                 },
                 {

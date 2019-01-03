@@ -204,7 +204,7 @@
                                 sub_title = sub_title + ' ...';
                             }
                         });
-                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + title + "'>"+sub_title+"</a>";
+                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>"+sub_title+"</a>";
                     }
                 },
                 {
