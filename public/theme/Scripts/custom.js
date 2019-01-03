@@ -1110,6 +1110,7 @@ function h_sidenav_open(thic) {
             $('.h_sidenav_client').fadeIn();
         }
     }, 50);
+    $('#myNavbar .quick-links-res').addClass('hidden');
     $($(thic).attr('href')).trigger('click');
 }
 
@@ -1124,10 +1125,11 @@ function h_sidenav_close() {
         $('.h_sidenav').width(0);
         $('.h_sidenav_main').css({'margin-left': 0});
         // $('.logo-configs').animate({'margin-left': 0},700);
-    });
+   });
     var t = window.setInterval(function () {
         if ($('.h_sidenav').width() == 0) {
             clearInterval(t);
+            $('#myNavbar .quick-links-res').removeClass('hidden');
         }
     }, 50);
 }

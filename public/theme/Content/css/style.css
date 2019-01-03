@@ -2674,13 +2674,13 @@ a .navbar-brand{
     width: 65px;
     padding: 2%;
     float: right;
-    margin-top: 7px;
+    margin-top: 20px;
     border-left: 1px solid #eee;
     color: #b0c8e2;
 }
 
 .text-desktop-tool {
-    font-size: 1.3em;
+    font-size: 1.2em;
     width: 70%;
     margin: 6% auto;
 }
@@ -4095,4 +4095,24 @@ input{
     position: relative;
     padding: 5px;
     width: 100px;
+}
+.subData{
+    font-size: 10px;
+    display: inline-block;
+    margin: 0px 10px;
+}
+.desktop-not-primary{
+    height: 20px !important;
+    line-height: 20px !important;;
+    width: 65px !important;;
+    padding: 2% !important;;
+    float: right !important;;
+    padding-right: 20px !important;;
+    margin-top: 5px !important;;
+    border-left: 1px solid #eee !important;;
+    color: #b0c8e2 !important;;
+}
+.desktop-not-primary a{
+    margin-top: -7px;
+    position: absolute;
 }

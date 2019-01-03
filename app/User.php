@@ -513,7 +513,7 @@ class User extends Authenticatable
 
     public function MyDraftTasks()
     {
-        return $this->hasMany('App\Models\Hamahang\Tasks\drafts', 'user_id', 'id');
+        return $this->hasMany('App\Models\Hamahang\Tasks\tasks', 'uid', 'id')->where('is_save','=',0);
     }
 
     public function getMyDraftTasksCountAttribute()

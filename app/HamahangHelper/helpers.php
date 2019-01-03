@@ -546,7 +546,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                 ],
                                                 [
                                                     'active' => '1',
-                                                    'title' => 'یادداشت ها',
+                                                    'title' => 'یادداشت‌ها',
                                                     'new' => '-1',
                                                     'value' => auth()->user()->Announces()->whereHas('page', function ($q) use ($sid)
                                                         {
@@ -560,7 +560,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                 ],
                                                 [
                                                     'active' => '1',
-                                                    'title' => 'علامت گذاری ها',
+                                                    'title' => 'علامت گذاری‌ها',
                                                     'new' => '-1',
                                                     'value' => auth()->user()->Highlights()->whereHas('page', function ($q) use ($sid)
                                                         {
@@ -1239,55 +1239,102 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     }
                     $res ['desktop_sections'] =
                         [
-//                            [
-//                                'type' => 'times',
-//                                'title' => 'برنامه امروز',
-//                                'order' => '1',
-//                                'data' =>
-//                                    [
-//                                        [
-//                                            'active' => '1',
-//                                            'title' => 'برنامه امروز',
-//                                            'new' => '-1',
-//                                            'value' => "$auth_user->MyTasksCount",
-//                                            'icon' => 'fa-calendar',
-//                                            'subData' => [
-//                                                [
-//                                                    "title" => "امروز",
-//                                                    "icon" => "",
-//                                                    "url" => ""
-//                                                ],
-//                                                [
-//                                                    "title" => "هفته",
-//                                                    "icon" => "",
-//                                                    "url" => ""
-//                                                ],
-//                                                [
-//                                                    "title" => "ماه",
-//                                                    "icon" => "",
-//                                                    "url" => ""
-//                                                ]
-//                                            ],
-//                                            'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
-//                                        ],
-//                                        [
-//                                            'active' => '1',
-//                                            'title' => 'واگذاری های من',
-//                                            'new' => '-1',
-//                                            'value' => "$auth_user->MyAssignedTasksCount",
-//                                            'icon' => 'fa-list-alt',
-//                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
-//                                        ],
-//                                        [
-//                                            'active' => '1',
-//                                            'title' => 'پیشنویس ها',
-//                                            'new' => '-1',
-//                                            'value' => "$auth_user->MyDraftTasksCount",
-//                                            'icon' => 'fa-pencil-square ',
-//                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
-//                                        ]
-//                                    ]
-//                            ],
+                            [
+                                'type' => 'times',
+                                'title' => 'برنامه امروز',
+                                'order' => '1',
+                                'data' =>
+                                    [
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'برنامه امروز',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-calendar',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-sun-o",
+                                                    "url" => ""
+                                                ],
+                                                [
+                                                    "title" => "هفته",
+                                                    "icon" => "",
+                                                    "url" => ""
+                                                ],
+                                                [
+                                                    "title" => "ماه",
+                                                    "icon" => "",
+                                                    "url" => route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])
+                                                ]
+                                            ],
+                                            'url' => '#'
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'وظایف من',
+                                            'new' => '-1',
+                                            'value' => "$auth_user->MyTasksCount",
+                                            'icon' => 'fa-tasks',
+                                            'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname]),
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_tasks.list',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-retweet",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_tasks.priority',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-bar-chart",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_tasks.state',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-dropbox",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_tasks.package',['username'=>$auth_user->Uname])
+                                                ]
+                                            ],
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'وظایف بدون وقت',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-list-alt',
+                                            'url' => '#',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => ''
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-retweet",
+                                                    "url" => ''
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-bar-chart",
+                                                    "url" => ''
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-dropbox",
+                                                    "url" => ''
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                            ],
                             [
                                 'type' => 'tasks',
                                 'title' => 'وظایف',
@@ -1296,27 +1343,111 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                     [
                                         [
                                             'active' => '1',
-                                            'title' => 'وظایف من',
+                                            'primary' => '1',
+                                            'title' => 'جلسات',
                                             'new' => '-1',
-                                            'value' => "$auth_user->MyTasksCount",
+                                            'value' => "0",
                                             'icon' => 'fa-tasks',
-                                            'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname])
+                                            'url' => '#',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => ''
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-calendar",
+                                                    "url" => ''
+                                                ]
+                                            ]
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'واگذاری های من',
+                                            'primary' => '1',
+                                            'title' => 'فرم‌های من',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-wpforms',
+                                            'url' => '#'
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'یادآوری‌ها',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa fa-bell-o',
+                                            'url' => '#'
+                                        ]
+                                    ]
+                            ],
+                            [
+                                'type' => 'tasks',
+                                'title' => 'وظایف',
+                                'order' => '1',
+                                'data' =>
+                                    [
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'واگذاری‌های من',
                                             'new' => '-1',
                                             'value' => "$auth_user->MyAssignedTasksCount",
                                             'icon' => 'fa-list-alt',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-retweet",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.priority',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-bar-chart",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.state',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-dropbox",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.package',['username'=>$auth_user->Uname])
+                                                ]
+                                            ],
                                             'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list', ['username' => $auth_user->Uname])
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'پیشنویس ها',
+                                            'primary' => '1',
+                                            'title' => 'پیگیری‌ها',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-list-alt',
+                                            'url' => '#'
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'وظایف پیش‌نویس',
                                             'new' => '-1',
                                             'value' => "$auth_user->MyDraftTasksCount",
                                             'icon' => 'fa-pencil-square ',
-                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts', ['username' => $auth_user->Uname])
+                                            'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts',['username'=>$auth_user->Uname]),
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts',['username'=>$auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-retweet",
+                                                    "url" => ''
+                                                ]
+                                            ]
                                         ]
                                     ]
                             ],
@@ -1328,26 +1459,41 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                     [
                                         [
                                             'active' => '1',
-                                            'title' => 'افراد',
+                                            'primary' => '1',
+                                            'title' => 'دنبال شده‌ها',
                                             'new' => '-1',
-                                            'value' => "$auth_user->UserPersonsCount",
-                                            'icon' => 'fa-user',
+                                            'value' => "0",
+                                            'icon' => 'fa-bookmark',
                                             'url' => '#'
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'گروه ها و کانال ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->ApiUserGroupsCount",
-                                            'icon' => 'fa-users',
-                                            'url' => '#'
+                                            'primary' => '1',
+                                            'title' => 'پیام‌ها',
+                                            'new' => "$auth_user->NewRecieveTicketsCount",
+                                            'value' => "$auth_user->RecieveTicketsCount",
+                                            'icon' => 'fa-inbox',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-inbox",
+                                                    "url" => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    'icon' => 'fa fa-paper-plane-o',
+                                                    'url' => route('ugc.desktop.hamahang.tickets.outbox', ['username' => $auth_user->Uname])
+                                                ]
+                                            ],
+                                            'url' => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
                                         ],
                                         [
                                             'active' => '0',
-                                            'title' => 'شاید بشناسید',
+                                            'primary' => '1',
+                                            'title' => 'خرید‌ها',
                                             'new' => '-1',
                                             'value' => '0',
-                                            'icon' => 'fa-user-o',
+                                            'icon' => 'fa-shopping-basket',
                                             'url' => '#'
                                         ]
                                     ]
@@ -1360,39 +1506,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                     [
                                         [
                                             'active' => '1',
-                                            'title' => 'دریافتی ها',
-                                            'new' => "$auth_user->NewRecieveTicketsCount",
-                                            'value' => "$auth_user->RecieveTicketsCount",
-                                            'icon' => 'fa-inbox',
-                                            'url' => route('ugc.desktop.hamahang.tickets.inbox', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'title' => 'ارسالی ها',
-                                            'new' => '-1',
-                                            'value' => "$auth_user->SendTicketsCount",
-                                            'icon' => 'fa-paper-plane-o',
-                                            'url' => route('ugc.desktop.hamahang.tickets.outbox', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'title' => 'مکالمه ها',
-                                            'new' => '-1',
-                                            'value' => '---',
-                                            'icon' => 'fa-commenting ',
-                                            'url' => '#'
-                                        ],
-                                    ]
-                            ],
-                            [
-                                'type' => 'announces_and_forms_and_marked',
-                                'title' => 'یادداشت ها، فرم ها',
-                                'order' => '4',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'title' => 'یادداشت ها',
+                                            'primary' => '0',
+                                            'title' => 'یادداشت‌ها',
                                             'new' => '-1',
                                             'value' => "$auth_user->AnnouncesCount",
                                             'icon' => 'fa-pencil',
@@ -1400,7 +1515,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'علامت گذاری ها',
+                                            'primary' => '0',
+                                            'title' => 'علامت گذاری‌ها',
                                             'new' => '-1',
                                             'value' => "$auth_user->HighlightsCount",
                                             'icon' => 'fa-bookmark-o',
@@ -1408,46 +1524,50 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'فرم ها',
+                                            'primary' => '0',
+                                            'title' => 'گروه ها و کانال ها',
                                             'new' => '-1',
-                                            'value' => "$auth_user->FormsCount",
-                                            'icon' => 'fa-wpforms',
-                                            'url' => route('ugc.desktop.form_list.me', ['username' => $auth_user->Uname])
-                                        ],
+                                            'value' => "$auth_user->ApiUserGroupsCount",
+                                            'icon' => 'fa-users',
+                                            'url' => '#'
+                                        ]
                                     ]
                             ],
                             [
-                                'type' => 'user_account',
-                                'title' => 'حساب کاربری',
-                                'order' => '5',
+                                'type' => 'announces_and_forms_and_marked',
+                                'title' => 'یادداشت‌ها، فرم‌ها',
+                                'order' => '4',
                                 'data' =>
                                     [
                                         [
-                                            'active' => '1',
-                                            'title' => 'هشدار ها',
-                                            'new' => "$auth_user->NewEmailsCount",
-                                            'value' => "$auth_user->EmailsCount",
-                                            'icon' => 'fa-clock-o',
-                                            'url' => route('ugc.desktop.notifications', ['username' => $auth_user->Uname])
+                                            'active' => '0',
+                                            'primary' => '0',
+                                            'title' => 'شاید بشناسید',
+                                            'new' => '-1',
+                                            'value' => '0',
+                                            'icon' => 'fa-user-o',
+                                            'url' => '#'
+                                        ],
+                                        [
+                                            'active' => '0',
+                                            'primary' => '0',
+                                            'title' => 'دفترچه تماس',
+                                            'new' => '-1',
+                                            'value' => '---',
+                                            'icon' => 'fa-commenting ',
+                                            'url' => '#'
                                         ],
                                         [
                                             'active' => '1',
-                                            'title' => 'امتیاز ها',
+                                            'primary' => '0',
+                                            'title' => 'امتیاز‌ها',
                                             'new' => '-1',
                                             'value' => get_user_sumscores(),
                                             'icon' => 'fa-certificate ',
                                             'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'title' => 'خرید ها',
-                                            'new' => '-1',
-                                            'value' => '---',
-                                            'icon' => 'fa-shopping-basket',
-                                            'url' => '#'
-                                        ],
+                                        ]
                                     ]
-                            ],
+                            ]
                         ];
                     $res['pid'] = 'desktop';
                     break;
@@ -1759,7 +1879,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             ],
                                             [
                                                 'active' => '1',
-                                                'title' => 'یادداشت ها',
+                                                'title' => 'یادداشت‌ها',
                                                 'new' => '-1',
                                                 'value' =>' 0'. "",
                                                 'icon' => 'fa-pencil',
