@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Calendar extends Model
 {
     use softdeletes;
+    public static $PERSONAL = 'personal';
     protected $table = "hamahang_calendar";
 
     /**

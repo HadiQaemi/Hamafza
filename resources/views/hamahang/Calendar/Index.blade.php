@@ -32,16 +32,22 @@
             direction: ltr;
             font-family: Verdana;
         }
-        #vrScroll2{
-            padding-right: 10px !important;
-        }
+        /*#vrScroll2{*/
+            /*padding-right: 10px !important;*/
+        /*}*/
         #vrScroll2 .scrl{
             direction: ltr !important;
-            padding-right: 0px !important;
+            margin-right: -5px !important;
         }
-        #vrScroll2 .hd-tree{
-            padding-right: 7px !important;
+        #calendar_datepickar{
+            padding-right: 5px !important;
         }
+        #calendar_myCalendar{
+            padding-right: 5px !important;
+        }
+        /*#vrScroll2 .hd-tree{*/
+            /*padding-right: 7px !important;*/
+        /*}*/
         #pcol_32{
             overflow-y: visible !important;
         }

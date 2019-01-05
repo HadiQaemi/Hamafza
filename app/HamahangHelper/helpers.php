@@ -1254,8 +1254,8 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'icon' => 'fa-calendar',
                                             'subData' => [
                                                 [
-                                                    "title" => "",
-                                                    "icon" => "fa fa-sun-o",
+                                                    "title" => "روز",
+                                                    "icon" => "",
                                                     "url" => ""
                                                 ],
                                                 [
@@ -1464,7 +1464,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'new' => '-1',
                                             'value' => "0",
                                             'icon' => 'fa-bookmark',
-                                            'url' => '#'
+                                            "url" => route('ugc.desktop.Hamahang.files.follow_ME',['username'=>$auth_user->Uname])
                                         ],
                                         [
                                             'active' => '1',

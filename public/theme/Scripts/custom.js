@@ -910,10 +910,15 @@ $(document).on('click', 'ul.navbar-navtabs li a', function()
             {
                 // GeminiScrollbar_BookmarkFehresrt.update();
             }, 1500);
+
+            $('.list-search').removeAttr('autofocus');
+            $('#bookmarklist-search').attr('autofocus', 'true');
             break;
         }
         case 'tab2':
         {
+            $('.list-search').removeAttr('autofocus');
+            $('#portallist-search').attr('autofocus', 'true');
             $('.HelpPortals').show();
             setTimeout(function()
             {
@@ -965,6 +970,8 @@ $(document).on('click', 'ul.navbar-nav [href="#tab1"], ul.navbar-navtabs [href="
         '   </div>' +
         '</div>'
     );
+    $('.list-search').removeAttr('autofocus');
+    $('#bookmarklist-search').attr('autofocus', 'true');
     token = $('#_Alltoken').val();
     $.ajax
     ({
@@ -1038,6 +1045,8 @@ $(document).on('click', 'ul.navbar-nav [href="#tab2"], ul.navbar-navtabs [href="
         dataType: 'html',
         success: function (response) {
             $('#PrtalFehresrt').html(response);
+            $('.list-search').removeAttr('autofocus');
+            $('#portallist-search').attr('autofocus', 'true');
             // GeminiScrollbar_portallistDiv.update();
         }
     });
@@ -1111,6 +1120,7 @@ function h_sidenav_open(thic) {
         }
     }, 50);
     $('#myNavbar .quick-links-res').addClass('hidden');
+    $('.subData').addClass('hidden');
     $($(thic).attr('href')).trigger('click');
 }
 
@@ -1130,6 +1140,7 @@ function h_sidenav_close() {
         if ($('.h_sidenav').width() == 0) {
             clearInterval(t);
             $('#myNavbar .quick-links-res').removeClass('hidden');
+            $('.subData').removeClass('hidden');
         }
     }, 50);
 }

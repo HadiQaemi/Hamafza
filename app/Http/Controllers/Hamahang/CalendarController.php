@@ -149,15 +149,22 @@ class CalendarController extends Controller
             'reminder'=>array('checked'=>1 ,'color'=>'#26242d'),
             ))));*/
         $arr = variable_generator('user', 'desktop', $Uname);
-        DB::enableQueryLog();
         $arr['cal'] = DB::table('hamahang_calendar')
             ->select('hamahang_calendar.*')
             ->where('hamahang_calendar.user_id', '=', Auth::id())
+            ->whereNull('hamahang_calendar.deleted_at')
             ->get();
         if (!$arr['cal']->count())
         {
-
-            $arr['cal'][0] = (object)array('title' => 'تقویمی موجود نیست ', 'id' => 0);
+            $calendar = new Calendar();
+            $calendar->title = trans('calendar.my_calendar');
+            $calendar->type = Calendar::$PERSONAL;
+            $calendar->is_default = 1;
+            $calendar->description = trans('calendar.my_calendar');
+            $calendar->user_id = Auth::id();
+            $calendar->uid = Auth::id();
+            $calendar->save();
+            $arr['cal'][0] = (object)array('title' => trans('calendar.my_calendar'), 'id' => $calendar->id);
         }
         // var_dump($arr['cal'][0]);die();
         Session::put('current_c', $arr['cal'][0]->id);

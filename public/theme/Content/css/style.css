@@ -4097,7 +4097,7 @@ input{
     width: 100px;
 }
 .subData{
-    font-size: 10px;
+    font-size: 15px;
     display: inline-block;
     margin: 0px 10px;
 }
@@ -4115,4 +4115,16 @@ input{
 .desktop-not-primary a{
     margin-top: -7px;
     position: absolute;
+}
+table.dataTable thead .sorting:after{
+    display: none !important;
+}
+.dataTable th{
+    text-align: center !important;
+}
+.dataTable td{
+    text-align: center !important;;
+}
+table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting {
+    padding-right: 0px !important;
 }

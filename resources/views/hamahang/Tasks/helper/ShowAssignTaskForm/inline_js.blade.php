@@ -634,14 +634,15 @@
 	$('#add_btn_action').on('click', function() {
         action_list ++;
 	    html =
-            '<div class="col-xs-12 action_list'+action_list+'">' +
-            '<div class="col-xs-1">{{trans('tasks.duration')}} </div>' +
-            '<div class="col-xs-2"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '">' + $('#action_date').val() + '</div>' +
-            '<div class="col-xs-2"><input type="hidden" name="action_date_list[]" value="' + $('#action_duration').val() + '">' + $('#action_duration').val() + '</div>' +
-            '<div class="col-xs-2"><input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_type').val() + '">' + $('#action_duration_type').val() + '</div>' +
-            '<div class="col-xs-2"><input type="hidden" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '">' + $('#action_time_from').val() + '</div>' +
-            '<div class="col-xs-2"><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '">' + $('#action_time_to').val() + '</div>' +
-            '<div class="col-xs-1"><i class="fa fa-remove pointer" onclick="remove_action('+action_list+')"></i></div>' +
+            '<div class="col-xs-12 action_list'+action_list+'" style="margin-top:10px">' +
+            '<div class="col-xs-2"> </div>' +
+            '<div class="col-xs-1">{{trans('tasks.in_date')}} </div>' +
+            '<div class="col-xs-3"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '"><span class="margin-right-10"> ' + $('#action_date').val() + '' +
+            '</span> <span class="margin-right-10"> <input type="hidden" name="action_date_list[]" value="' + $('#action_duration').val() + '">{{trans('tasks.duration')}}: ' + $('#action_duration').val() +
+            '</span> <span class="margin-right-10"> <input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_type').val() + '">' + $('#action_duration_type').val() + '</span> </div>' +
+            '<div class="col-xs-4"><span class="margin-right-10"> {{ trans('tasks.from') }} </span><input type="hidden" class="margin-right-10" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '"> <span class="margin-right-10"> ' + $('#action_time_from').val() +
+            ' </span> <span class="margin-right-10"> {{ trans('tasks.to') }} </span><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '"><span class="margin-right-10">' + $('#action_time_to').val() + '</span>' +
+            '<i class="fa fa-remove pointer margin-right-10" onclick="remove_action('+action_list+')"></i></div>' +
             '</div>';
         $('#action_list').append(html);
     });

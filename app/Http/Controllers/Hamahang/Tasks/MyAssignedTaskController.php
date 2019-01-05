@@ -1544,7 +1544,7 @@ class MyAssignedTaskController extends Controller
             task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
             DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
 
-            task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), trans('tasks.action').': '.task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : ''));
+            task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : '').(trim(Request::input('action_explain'))!= '' ? '، '.Request::input('action_explain') : ''));
 
             if (Request::exists('keywords'))
             {

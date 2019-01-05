@@ -570,8 +570,8 @@
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.status') }}</label>
                     </div>
-                    <div class="col-lg-11">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                    <div class="col-lg-11 noRightPadding noLeftPadding">
+                        <div class="pull-right noRightPadding noLeftPadding" style="height: 30px;line-height: 30px;">
                             <input type="radio" name="task_status" id="not_start" value="0"  {{$res['task_status'] ==0 ? 'checked' : ''}}/>
                             <label for="not_start">{{ trans('tasks.not_start') }}</label>
                         </div>
@@ -595,7 +595,37 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row col-lg-12 margin-top-20">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.report') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
+                        <input type="text" class="form-control border-radius DatePicker" style="display: inline;width: 110px;" id="action_date" name="action_date" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <input type="text" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration" name="action_duration" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <select class="form-control" id="action_duration_type">
+                            <option value="ساعت">ساعت</option>
+                            <option value="دقیقه">دقیقه</option>
+                        </select>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
+                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
+                    </div>
+                </div>
+                <div class="row col-lg-12" id="action_list"></div>
                 <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
@@ -634,34 +664,6 @@
                         <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
                     </div>
                 </div>
-                <div class="row col-lg-12 margin-top-20">
-                    <div class="pull-right height-30 line-height-30">
-                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
-                        <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date" name="action_date" aria-describedby="respite_date">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <input type="text" class="form-control border-radius" style="display: inline" id="action_duration" name="action_duration" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <select class="form-control" id="action_duration_type">
-                            <option value="ساعت">ساعت</option>
-                            <option value="دقیقه">دقیقه</option>
-                        </select>
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
-                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
-                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
-                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
-                    </div>
-                </div>
-                <div class="row col-lg-12" style="padding: 20px" id="action_list"></div>
             </div>
             <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
 
