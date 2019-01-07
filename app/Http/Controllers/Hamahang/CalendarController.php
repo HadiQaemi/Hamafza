@@ -160,6 +160,7 @@ class CalendarController extends Controller
             $calendar->title = trans('calendar.my_calendar');
             $calendar->type = Calendar::$PERSONAL;
             $calendar->is_default = 1;
+            $calendar->is_optional = 1;
             $calendar->description = trans('calendar.my_calendar');
             $calendar->user_id = Auth::id();
             $calendar->uid = Auth::id();
@@ -920,10 +921,16 @@ class CalendarController extends Controller
         $calendar = Calendar::find($cid);
         $delete = DB::transaction(function ()
         {
-            Calendar::find(Request::input('cid'))->delete();
-            Calendar_Hiddentimes::where('calendar_id', '=', Request::input('cid'))->delete();
-            Calendar_Permission::where('calendar_id', '=', Request::input('cid'))->delete();
-            Calendar_Sharing::where('calendar_share_of', '=', Request::input('cid'))->delete();
+            $Calendar = Calendar::find(Request::input('cid'))->toArray();
+            if($Calendar['is_optional'] !=1){
+                Calendar::find(Request::input('cid'))->delete();
+                Calendar_Hiddentimes::where('calendar_id', '=', Request::input('cid'))->delete();
+                Calendar_Permission::where('calendar_id', '=', Request::input('cid'))->delete();
+                Calendar_Sharing::where('calendar_share_of', '=', Request::input('cid'))->delete();
+            }else{
+                return json_encode(array('success' => false));
+            }
+
         });
         //die(dd($delete));
         if ($delete == null)
@@ -1179,7 +1186,7 @@ class CalendarController extends Controller
 
     public function personalCalendar()
     {
-        $calendars = Calendar::select('id', 'title', 'is_default')->where('hamahang_calendar.user_id', '=', auth()->id())->orderBy('is_default');
+        $calendars = Calendar::select('id', 'is_optional', 'title', 'is_default')->where('hamahang_calendar.user_id', '=', auth()->id())->orderBy('is_default');
         return Datatables::eloquent($calendars)->make(true);
     }
 

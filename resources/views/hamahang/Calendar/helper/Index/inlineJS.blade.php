@@ -471,6 +471,8 @@
                             msg = '{{trans("calendar.calendar_deletePersonalCalendar_func_msg2")}} ' + res.title + '{{trans("calendar.calendar_deletePersonalCalendar_func_msg3")}}';
                             // messageModal('success', title, {0:msg});
                             reloadGrid();
+                        }else{
+                            messageModal('error', '{{trans('app.operation_is_failed')}}', '{{trans('app.operation_is_failed')}}');
                         }
                     }
                 });

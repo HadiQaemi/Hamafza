@@ -44,6 +44,7 @@ use App\Models\Hamahang\Tools\ToolsGroup;
 use App\Models\Hamahang\Tools\ToolsPosition;
 use App\Role;
 use App\User;
+use Datatables;
 use Illuminate\Http\Request;
 use App\HamafzaViewClasses\PublicClass;
 use App\Http\Controllers\Controller;
@@ -990,6 +991,20 @@ class ModalController extends Controller
                 ->first();
         }
         $res = $this->TakeTaskInfo($res,$task);
+        $res['task_status'] = $task->task_status;
+        $res['events'] = DB::table('hamahang_calendar_events_task as t')->where('t.task_id','=',$res['tid'])
+            ->leftJoin('hamahang_calendar_user_events as e','e.id','=','t.event_id')
+            ->select('t.id as ctid','e.*')->get();
+        $res['events'] = (Datatables::of($res['events'])
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('ctid', function ($data)
+            {
+                return enCode($data->ctid);
+            })->make(true));
+
         $res['task_status'] = $task->task_status;
         $res['percent'] = $task->percent;
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(

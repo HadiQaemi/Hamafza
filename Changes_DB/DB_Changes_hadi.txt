@@ -3,3 +3,4 @@ importance & immediate added in hamahang_project
 weight added in hamahang_project_task
 progress add hamahang_project
 progress add hamahang_task
+is_optional add hamahang_calendar (1) for my_calemdar that added by sys

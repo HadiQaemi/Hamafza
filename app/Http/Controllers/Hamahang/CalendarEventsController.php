@@ -366,10 +366,10 @@ class CalendarEventsController extends Controller
     {
         $uid = Auth::id();
 //        dd(Request::all());
+
         $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         $validator = \Validator::make(Request::all(), [
-            'htitle' => 'required|string',
-            'hcid' => 'required|integer',
+//            'htitle' => 'required|string',
             'hstartdate' => 'required',
             'henddate' => 'required'
         ]);
@@ -382,6 +382,12 @@ class CalendarEventsController extends Controller
         }
         else
         {
+            if(Request::input('hcid') == ''){
+                $Calendar = Calendar::Where('uid','=',$uid)->Where('is_default','=',1)->whereNull('deleted_at')->get();
+                $hcid = $Calendar[0]->id;
+            }else{
+                $hcid = Request::input('hcid');
+            }
             if (Request::input('event_id') && Request::input('mode') == 'edit')
             {
                 $userEvent = User_Event::find(Request::input('event_id'));
@@ -390,7 +396,6 @@ class CalendarEventsController extends Controller
             {
                 $userEvent = new User_Event();
             }
-
             $userEvent->uid = isset($info['uid']) ? $info['uid'] : $uid;
             $userEvent->title = isset($info['htitle']) ? $info['htitle'] : Request::input('htitle');
             $userEvent->allDay = isset($info['allDay']) ? $info['allDay'] : Request::input('allDay');
@@ -399,7 +404,7 @@ class CalendarEventsController extends Controller
             $userEvent->description = isset($info['description']) ? $info['description'] : Request::input('description');
             $userEvent->type = isset($info['type']) ? $info['type'] : Request::input('type') ? Request::input('type') : 0;
             $userEvent->event_type = isset($info['event_type']) ? $info['event_type'] : $event_type;
-            $userEvent->cid = isset($info['hcid']) ? $info['hcid'] : Request::input('hcid');
+            $userEvent->cid = isset($info['hcid']) ? $info['hcid'] : $hcid;
 
             if ($userEvent->save())
             {
@@ -413,7 +418,7 @@ class CalendarEventsController extends Controller
                 }
                 $taskObj ->uid = $uid;
                 $taskObj->event_id = $userEvent->id;
-                $taskObj->task_id = Request::input('task_id') ? Request::input('task_id') : $info['task_id'];
+                $taskObj->task_id = Request::input('task_id') ? (is_numeric(Request::input('task_id')) ? Request::input('task_id') : deCode(Request::input('task_id'))) : $info['task_id'];
                 if ($taskObj->save())
                 {
                     if (Request::input('mode') == 'edit')
@@ -1127,14 +1132,14 @@ class CalendarEventsController extends Controller
 //        dd($cid,$startDate,$endDate);
         if ($cid)
         {
-            $calendar = Calendar::select('id', 'title', 'default_options', 'sharing_options')
+            $calendar = Calendar::select('id', 'title', 'default_options', 'is_optional', 'sharing_options')
                 ->where('id', '=', $cid)
                 ->firstOrFail()
                 ->toArray();
         }
         else
         {
-            $calendar = Calendar::select('id', 'title', 'default_options', 'sharing_options')
+            $calendar = Calendar::select('id', 'title', 'default_options', 'is_optional', 'sharing_options')
                 ->where('is_default', '=', 1)
                 ->where('uid', '=', Auth::id())
                 ->firstOrFail()

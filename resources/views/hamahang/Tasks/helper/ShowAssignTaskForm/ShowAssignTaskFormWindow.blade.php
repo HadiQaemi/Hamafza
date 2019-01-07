@@ -64,7 +64,7 @@
                                 <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
                             </div>
                             <div class="row main-desc">
-                                <textarea class="form-control row content_tab_text content_tab" {{$edit_able == 1 ? ' name="task_desc" id="desc" ' : 'disabled'}} name="task_desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{$task['task_desc']}}</textarea>
+                                <textarea class="form-control row content_tab_text content_tab" {{$edit_able == 1 ? ' name=task_desc id=desc ' : 'disabled'}} name="task_desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{$task['task_desc']}}</textarea>
                                 <div class="content_tab_view content_tab hidden">
                                     {!! preg_replace('/img::/','<div><img src="'.route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/',preg_replace('/::img/','"></div>',$task['task_desc'])) !!}
                                 </div>
@@ -607,17 +607,17 @@
                         <label for="determined-time">{{ trans('tasks.duration') }}</label>
                     </div>
                     <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <input type="text" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration" name="action_duration" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                        <input type="text" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
                     </div>
                     <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <select class="form-control" id="action_duration_type">
+                        <select class="form-control" id="action_duration_act_type">
                             <option value="ساعت">ساعت</option>
                             <option value="دقیقه">دقیقه</option>
                         </select>
                     </div>
                     <div class="pull-right height-30 line-height-30 margin-right-10">
                         <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
-                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
+                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
                         <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
                         <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
                     </div>
@@ -625,13 +625,50 @@
                         <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
                     </div>
                 </div>
-                <div class="row col-lg-12" id="action_list"></div>
+                <div class="row col-lg-12" id="action_list">
+                    @foreach($events->original['data'] as $Aevent)
+                        <div class="col-xs-12 action_list'+action_list+'" style="margin-top:10px">
+                            <div class="col-xs-2"> </div>
+                            <div class="col-xs-1">{{trans('tasks.in_date')}} </div>
+                            <div class="col-xs-3">
+                                <span class="margin-right-10"> {{$Aevent['startdate']}}</span>
+                                <span class="margin-right-10"> {{trans('tasks.duration')}}: </span>
+                            </div>
+                            <div class="col-xs-4">
+                                <span class="margin-right-10">{{$Aevent['enddate']}}</span>
+                                <i class="fa fa-remove pointer margin-right-10" ctid='{{trans('tasks.duration')}}' ce='{{trans('tasks.duration')}}' onclick="remove_action()"></i>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
                 <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
-                    <div class="col-lg-10">
-                        <input type="text" name="action_explain" id="explain" class="form-control border-radius" placeholder="{{trans('tasks.description')}}"/>
+                    <div class="col-lg-10 noRightPadding noLeftPadding">
+                        <div id="for-desc">
+                            <div class="row col-lg-12 header">
+                                <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                            </div>
+                            <div class="row main-desc">
+                                <textarea class="form-control row content_tab_text content_tab" name="action_explain" id="explain" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4"></textarea>
+                                <div class="content_tab_view content_tab hidden">
+                                    {!! preg_replace('/img::/','<div><img src="'.route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/',preg_replace('/::img/','"></div>','')) !!}
+                                </div>
+                            </div>
+                            @if($edit_able == 1)
+                                <div class="filemanager-buttons-client pull-right bottom-desc">
+                                    <label for="fileToUpload2" class="pointer">
+                                        <input type="file" class="fileToUpload2 form-control" style="display: none;" id="fileToUpload2"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                            <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                        </svg>
+                                        <div class="display-inline">{{trans('app.add_file')}}</div>
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="row col-lg-12 margin-top-15">
@@ -759,9 +796,9 @@
                             <div class="pull-right" style="height: 30px;line-height: 30px;">
                                 <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
                                 <label for="determined-time">{{ trans('tasks.in') }}</label>
-                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date" name="action_date" aria-describedby="respite_date">
                                 <label for="determined-time">{{ trans('tasks.hour') }}</label>
-                                <input type="text" class="form-control border-radius TimePicker" style="display: inline" name="action_time" aria-describedby="respite_time">
+                                <input type="text" class="form-control border-radius TimePicker" style="display: inline" id="action_time" name="action_time" aria-describedby="respite_time">
                             </div>
                         </div>
                     </div>
@@ -794,7 +831,6 @@
                     <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
                             <th class="col-xs-2">کاربر</th>
                             <th class="col-xs-10">پیام</th>
                         </tr>
@@ -803,9 +839,6 @@
                             @if(isset($res['task']['message_username']))
                                 @foreach($res['task']['message_username'] as $k=>$message_username)
                                     <tr id="add_resource_task{{$k.'show'}}">
-                                        {{--<td>--}}
-                                        {{--<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>--}}
-                                        {{--</td>--}}
                                         <td>
                                             <label class="pull-right" for="r2">{{$res['task']['message_username'][$k]}}</label>
                                             <input name="message_username[]" type="hidden" value="{{$res['task']['message_username'][$k]}}"/>
@@ -876,12 +909,39 @@
                 contentType: false,
                 success: function(data)
                 {
-                    console.log(data);
                     if (data.success)
                     {
                         $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
                         if($('#desc').val() != undefined)
                             $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                    } else
+                    {
+                        messageModal('fail', 'خطا', data.result);
+                    }
+                }
+            });
+        });
+        $(".fileToUpload2").on('change', function() {
+            var formElement = $( '.fileToUpload2' )[0].files[0];
+            var data = new FormData();
+            data.append('image',formElement);
+            data.append('pid','{{rand(1,100).rand(1,100)}}');
+            data.append('form_type','form');
+            $.ajax
+            ({
+                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data)
+                {
+                    if (data.success)
+                    {
+                        $('#explain').val($('#explain').val() + "\nimg::" + data.FileID + "::img");
+                        if($('#explain').val() != undefined)
+                            $('.content_tab_view').html($('#explain').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
                     } else
                     {
                         messageModal('fail', 'خطا', data.result);

@@ -4125,6 +4125,12 @@ table.dataTable thead .sorting:after{
 .dataTable td{
     text-align: center !important;;
 }
+#calendar_myCalendar .dataTable th{
+    text-align: right !important;
+}
+#calendar_myCalendar .dataTable td{
+    text-align: right !important;;
+}
 table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting {
     padding-right: 0px !important;
 }

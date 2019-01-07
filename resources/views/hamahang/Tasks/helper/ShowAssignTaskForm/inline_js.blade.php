@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/jsclender/jalali.js"></script>
 <script type="text/javascript">
     $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=JDNi3x7xEY8') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
     function do_enable() {
@@ -50,13 +51,13 @@
 //                 '</div>' +
             '';
             $('#normal_task_timing').html(txt);
-            $(".TimePicker").persianDatepicker({
-                format: "HH:mm:ss a",
-                timePicker: {
-                    //showSeconds: false,
-                },
-                onlyTimePicker: true
-            });
+            // $(".TimePicker").persianDatepicker({
+            //     format: "HH:mm:ss a",
+            //     timePicker: {
+            //         //showSeconds: false,
+            //     },
+            //     onlyTimePicker: true
+            // });
 
             $("#respite_date").persianDatepicker({
                 observer: true,
@@ -122,13 +123,13 @@
             '</table>';
             $('#respite_span').html(respite_span);
             $('#project_span').html('');
-            $(".TimePicker").persianDatepicker({
-                format: "HH:mm:ss a",
-                timePicker: {
-                    //showSeconds: false,
-                },
-                onlyTimePicker: true
-            });
+            // $(".TimePicker").persianDatepicker({
+            //     format: "HH:mm:ss a",
+            //     timePicker: {
+            //         //showSeconds: false,
+            //     },
+            //     onlyTimePicker: true
+            // });
 
             $(".DatePicker").persianDatepicker({
                 observer: true,
@@ -328,13 +329,77 @@
         $('#new_task_keywords').val('');
         $('#create_new_task').trigger("reset");
     }
-    $(".TimePicker").persianDatepicker({
+    $("#action_time").persianDatepicker({
         format: "HH:mm:ss a",
         timePicker: {
             //showSeconds: false,
         },
         onlyTimePicker: true
     });
+
+    $("#action_time_to").persianDatepicker({
+        selectedDate:"23:15:00 am",
+        format: "HH:mm",
+        timePicker: {
+            //showSeconds: false,
+        },
+        onlyTimePicker: true
+    });
+
+    $("#add_btn_action").on('click', function() {
+        startdate = $('#action_date').val().split('-');
+        enddate = $('#action_date').val().split('-');
+        title = '';//$('#title_time_task').val();
+
+        var startdate = JalaliDate.jalaliToGregorian(startdate[0], startdate[1], startdate[2]);
+        var enddate = JalaliDate.jalaliToGregorian(enddate[0], enddate[1], enddate[2]);
+        var task_id = $('#task_id').val();
+        var saveObj = {};
+        startdate = startdate[0] + '-' + startdate[1] + '-' + startdate[2] + " " + $('#action_time_from').val() + ':00';
+        enddate = enddate[0] + '-' + enddate[1] + '-' + enddate[2] + " " + $('#action_time_to').val() + ':00';
+        saveObj.hstartdate = startdate;
+        saveObj.henddate = enddate;
+        saveObj.htitle = title;
+        saveObj.hcid = '';
+        saveObj.event_type = "task";
+        saveObj.task_id = $('#tid').val();
+        $.ajax({
+            url: '{{ URL::route('hamahang.calendar_events.save_task_event')}}',
+            type: 'POST', // Send post dat
+            data: saveObj,
+            async: false,
+            success: function (s) {
+                res = JSON.parse(s);
+                console.log(s);
+                console.log(res);
+                if (res.success == false) {
+                    errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
+                } else {
+
+                }
+
+            }
+        });
+    });
+
+    $("#action_time_from").on('keyup', function() {
+        var action_time_from = $('#action_time_from').val().split(':');
+        action_time_from = parseInt(action_time_from[0])*60 + parseInt(action_time_from[1]);
+        var action_time_to = $('#action_time_to').val().split(':');
+        action_time_to = parseInt(action_time_to[0])*60 + parseInt(action_time_to[1]);
+        if(action_time_to > action_time_from)
+            $("#action_duration_act").val(Math.floor((action_time_to-action_time_from)/(parseInt($('#action_duration_act_type').val()=='ساعت' ? 60 : 1))));
+    });
+
+    $("#action_duration_act").on('keyup', function() {
+        var pe = new persianDate().subtract('milliseconds', 1000*$('#action_duration_act').val()*($('#action_duration_act_type').val()=='ساعت' ? 3600 : 60));
+        $("#action_time_from").val(parseArabic(pe.format('HH:mm')));
+    });
+    $("#action_duration_act_type").on('change', function() {
+        var pe = new persianDate().subtract('milliseconds', 1000*$('#action_duration_act').val()*($('#action_duration_act_type').val()=='ساعت' ? 3600 : 60));
+        $("#action_time_from").val(parseArabic(pe.format('HH:mm')));
+    });
+
     $(".DatePicker").persianDatepicker({
         observer: true,
         autoClose: true,
@@ -639,7 +704,7 @@
             '<div class="col-xs-1">{{trans('tasks.in_date')}} </div>' +
             '<div class="col-xs-3"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '"><span class="margin-right-10"> ' + $('#action_date').val() + '' +
             '</span> <span class="margin-right-10"> <input type="hidden" name="action_date_list[]" value="' + $('#action_duration').val() + '">{{trans('tasks.duration')}}: ' + $('#action_duration').val() +
-            '</span> <span class="margin-right-10"> <input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_type').val() + '">' + $('#action_duration_type').val() + '</span> </div>' +
+            '</span> <span class="margin-right-10"> <input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_act_type').val() + '">' + $('#action_duration_act_type').val() + '</span> </div>' +
             '<div class="col-xs-4"><span class="margin-right-10"> {{ trans('tasks.from') }} </span><input type="hidden" class="margin-right-10" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '"> <span class="margin-right-10"> ' + $('#action_time_from').val() +
             ' </span> <span class="margin-right-10"> {{ trans('tasks.to') }} </span><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '"><span class="margin-right-10">' + $('#action_time_to').val() + '</span>' +
             '<i class="fa fa-remove pointer margin-right-10" onclick="remove_action('+action_list+')"></i></div>' +

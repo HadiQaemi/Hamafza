@@ -93,7 +93,8 @@
                                 action += "<a class='cls3'  alt='{{trans("calendar.calendar_save_calendar_grid_action_view")}}' title='{{trans("calendar.calendar_save_calendar_grid_action_view")}}' style='margin: 2px' onclick='showEvent(" + full.id + ")' href=\"#\"><i class='fa fa-eye-slash'></i></a>";
                             }
                         }
-                        action += "<a alt='حذف' title='{{trans("calendar.calendar_save_calendar_grid_action_delete")}}' style='margin:2px;' class='cls3'  onclick='deletePersonalCalendar(" + full.id + ")'><i class='fa fa-close'></i></a>";
+                        if(full.is_optional !=1 )
+                            action += "<a alt='حذف' class='pointer' title='{{trans("calendar.calendar_save_calendar_grid_action_delete")}}' style='margin:2px;' class='cls3'  onclick='deletePersonalCalendar(" + full.id + ")'><i class='fa fa-close'></i></a>";
                         return action;
                     }
                 }

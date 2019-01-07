@@ -1459,9 +1459,9 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
-//        dd(Request::all());
+        dd(Request::all());
 //        dd($assign_id,Request::all(),$task_assignment);
-        //
+
         $action = "";
         if(Request::input('reject_assigner')!=3)
         {
