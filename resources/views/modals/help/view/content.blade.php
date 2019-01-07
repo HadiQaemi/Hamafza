@@ -11,7 +11,14 @@
             @endif
         @endif
     </div>
-    <br />
+    <div class="row col-lg-12" style="border-top: 1px solid #eee;padding-top: 10px;">
+        آیا این راهنما مفید بود؟
+        <span class="margin-right-10"><label for="yes">بله</label><input type="radio" id="yes"></span>
+        <span><label for="no">خیر</label><input type="radio" id="no"></span>
+    </div>
+    <div class="row col-lg-12">
+        <textarea class="form-control" rows="5" id="coment_help" placeholder="پیشنهاد شما برای بهتر شدن این راهنما چیست؟"></textarea>
+    </div>
 </div>
 
 <script>
