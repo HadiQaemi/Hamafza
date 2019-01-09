@@ -30,7 +30,7 @@
                     data: 'title',
                     render: function(data, type, full, meta)
                     {
-                        return '<a class="jsPanels" href="{!! route('modals.help.view') !!}?id=' + full.id + '">' + full.title + ' <small>(' + full.blocks_count + ' {!! trans('help.title_blocks') !!})</small></a>';
+                        return '<a class="jsPanels" href="{!! route('modals.help.view') !!}?id=' + full.id + '">' + full.title + '</a>';
                     }
                 },
                 {
@@ -42,11 +42,17 @@
                 },
                 {
                     data: 'usages',
-                    name: 'usages'
+                    render: function(data, type, full, meta)
+                    {
+                        return '';
+                    }
                 },
                 {
                     data: 'see_also',
-                    name: 'see_also'
+                    render: function(data, type, full, meta)
+                    {
+                        return '';
+                    }
                 },
             ]
         });

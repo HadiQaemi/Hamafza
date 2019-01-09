@@ -16,6 +16,7 @@ use App\Models\Hamahang\DiscountCoupon;
 use App\Models\Hamahang\DiscountCouponRequest;
 use App\Models\Hamahang\FileManager\FileManager;
 use App\Models\Hamahang\Help;
+use App\Models\Hamahang\Help2;
 use App\Models\Hamahang\HelpBlock;
 use App\Models\Hamahang\HelpRelation;
 use App\Models\Hamahang\Invoice;
@@ -994,7 +995,9 @@ class ModalController extends Controller
         $res['task_status'] = $task->task_status;
         $res['events'] = DB::table('hamahang_calendar_events_task as t')->where('t.task_id','=',$res['tid'])
             ->leftJoin('hamahang_calendar_user_events as e','e.id','=','t.event_id')
-            ->select('t.id as ctid','e.*')->get();
+            ->whereNull('t.deleted_at')
+            ->whereNull('e.deleted_at')
+            ->select(DB::Raw('t.id as ctid,e.*, TIMEDIFF(e.enddate, e.startdate) as dif'))->get();
         $res['events'] = (Datatables::of($res['events'])
             ->editColumn('id', function ($data)
             {
@@ -2870,6 +2873,13 @@ class ModalController extends Controller
     public function help_view(Request $request)
     {
         $id = deCode($request->input('id'));
+        $help = Help2::find($id);
+        return json_encode
+        ([
+            'header' => trans('محتوای مرتبط'),
+            'content' => view('hamahang.help.helpers.view_content')->with(['items' => $help,'id'=>$request->input('id')])->render(),
+            'footer' => view('hamahang.help.helpers.view_footer')->render()
+        ]);
         $help_block = HelpBlock::where('help_id', $id)->with('page');
         if ($help_block->count())
         {

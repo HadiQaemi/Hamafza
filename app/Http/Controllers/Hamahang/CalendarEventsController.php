@@ -362,18 +362,23 @@ class CalendarEventsController extends Controller
         }
 
     }
+    public function deleteTaskEvent()
+    {
+        $uid = Auth::id();
+        $ctid = deCode(Request::input('ctid'));
+        $ce = deCode(Request::input('ce'));
+        User_Event::where('id','=',$ce)->where('uid','=',$uid)->delete();
+        Events_Tasks::where('id','=',$ctid)->where('uid','=',$uid)->delete();
+        return json_encode(array('success' => true));
+    }
     public function saveTaskEvent($info = [])
     {
         $uid = Auth::id();
-//        dd(Request::all());
-
         $event_type = Request::input('event_type') ? Request::input('event_type') : 0;
         $validator = \Validator::make(Request::all(), [
-//            'htitle' => 'required|string',
             'hstartdate' => 'required',
             'henddate' => 'required'
         ]);
-        //DB::enableQueryLog();
         if ($validator->fails() && count($info) == 0)
         {
             $result['error'] = $validator->errors();
@@ -421,6 +426,8 @@ class CalendarEventsController extends Controller
                 $taskObj->task_id = Request::input('task_id') ? (is_numeric(Request::input('task_id')) ? Request::input('task_id') : deCode(Request::input('task_id'))) : $info['task_id'];
                 if ($taskObj->save())
                 {
+                    task_status::create_task_status($taskObj->task_id, 1, 0);
+
                     if (Request::input('mode') == 'edit')
                     {
                         return json_encode(array('success' => true, 'mode' => 'edit'));

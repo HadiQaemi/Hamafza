@@ -42,7 +42,7 @@
                 <div class="row col-lg-12">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
                     <div class="col-lg-8">
-                        <input type="text" class="form-control border-radius" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
+                        <input type="text" class="form-control border-radius task_title" {{$edit_able == 1 ? ' name=title id=title ' : 'disabled'}} value="{{$task['title']}}"/>
                         <input type="hidden" name="tid" id="tid" value="{{$res['task_id']}}"/>
                         <input type="hidden" name="aid" id="aid" value="{{$res['aid']}}"/>
                     </div>
@@ -595,53 +595,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12 margin-top-20">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.report') }}</label>
-                    </div>
-                    <div class="pull-right height-30 line-height-30">
-                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
-                        <input type="text" class="form-control border-radius DatePicker" style="display: inline;width: 110px;" id="action_date" name="action_date" aria-describedby="respite_date">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <input type="text" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <select class="form-control" id="action_duration_act_type">
-                            <option value="ساعت">ساعت</option>
-                            <option value="دقیقه">دقیقه</option>
-                        </select>
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
-                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
-                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
-                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
-                    </div>
-                    <div class="pull-right height-30 line-height-30 margin-right-10">
-                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
-                    </div>
-                </div>
-                <div class="row col-lg-12" id="action_list">
-                    @foreach($events->original['data'] as $Aevent)
-                        <div class="col-xs-12 action_list'+action_list+'" style="margin-top:10px">
-                            <div class="col-xs-2"> </div>
-                            <div class="col-xs-1">{{trans('tasks.in_date')}} </div>
-                            <div class="col-xs-3">
-                                <span class="margin-right-10"> {{$Aevent['startdate']}}</span>
-                                <span class="margin-right-10"> {{trans('tasks.duration')}}: </span>
-                            </div>
-                            <div class="col-xs-4">
-                                <span class="margin-right-10">{{$Aevent['enddate']}}</span>
-                                <i class="fa fa-remove pointer margin-right-10" ctid='{{trans('tasks.duration')}}' ce='{{trans('tasks.duration')}}' onclick="remove_action()"></i>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
+                <div class="row col-lg-12 margin-top-15">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
                         <label class="line-height-35">{{ trans('tasks.description') }}</label>
                     </div>
@@ -670,6 +624,57 @@
                             @endif
                         </div>
                     </div>
+                </div>
+                <div class="row col-lg-12 margin-top-20">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.report') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
+                        <input type="text" class="form-control border-radius DatePicker" style="display: inline;width: 110px;" id="action_date" name="action_date" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <input type="number" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <select class="form-control" id="action_duration_act_type">
+                            <option value="ساعت">ساعت</option>
+                            <option value="دقیقه">دقیقه</option>
+                        </select>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
+                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-bottom-20 border-bottom padding-bottom-20" id="action_list">
+                    @php $k=1; @endphp
+                    @foreach($events->original['data'] as $Aevent)
+                        <div class="col-xs-12 action_list action_list{{$k}}" style="margin-top:10px">
+                            <div class="col-xs-2"> </div>
+                            <div class="col-xs-1">{{trans('tasks.in_date')}} </div>
+                            <div class="col-xs-3">
+                                <span class="margin-right-10"> {{preg_split('/ /',$Aevent['startdate'])[0]}}</span>
+                                <span class="margin-right-10"> {{trans('tasks.duration')}}: </span>
+                                <span class="margin-right-10"> {{$Aevent['dif']}} </span>
+                            </div>
+                            <div class="col-xs-3">
+                                <span class="margin-right-10">{{trans('tasks.from')}}</span>
+                                <span class="margin-right-10">{{preg_split('/ /',$Aevent['startdate'])[1]}}</span>
+                                <span class="margin-right-10">{{ trans('tasks.to') }}</span>
+                                <span class="margin-right-10">{{preg_split('/ /',$Aevent['enddate'])[1]}}</span>
+                                <i class="fa fa-remove pointer margin-right-10" onclick="remove_action('{{$k++}}','{{$Aevent['ctid']}}','{{$Aevent['id']}}')"></i>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="row col-lg-12 margin-top-15">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
@@ -774,7 +779,7 @@
                             <div class="col-lg-2 noLeftPadding noRightPadding"></div>
                             <div class="pull-right">
                                 <label>{{ trans('tasks.begin') }}: </label>
-                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date" aria-describedby="respite_date">
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date_begin" aria-describedby="respite_date">
                             </div>
                         </div>
                         <div class="col-lg-12 noLeftPadding noRightPadding">
@@ -796,7 +801,7 @@
                             <div class="pull-right" style="height: 30px;line-height: 30px;">
                                 <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
                                 <label for="determined-time">{{ trans('tasks.in') }}</label>
-                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date" name="action_date" aria-describedby="respite_date">
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date_" name="action_date_" aria-describedby="respite_date">
                                 <label for="determined-time">{{ trans('tasks.hour') }}</label>
                                 <input type="text" class="form-control border-radius TimePicker" style="display: inline" id="action_time" name="action_time" aria-describedby="respite_time">
                             </div>

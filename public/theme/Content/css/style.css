@@ -3430,6 +3430,7 @@ input{
     cursor: pointer;
     margin-left: 5px;
     padding: 5px;
+    font-size: 8px;
 }
 .task-list-height{
     height: 67vh;
@@ -4133,4 +4134,16 @@ table.dataTable thead .sorting:after{
 }
 table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting {
     padding-right: 0px !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+.help-view ul, .help-view li #tab_t1{
+    padding: 10px;
+}
+.help-view p #tab_t1{
+    padding: 10px;
 }

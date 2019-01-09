@@ -6,6 +6,7 @@ Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middlewar
     Route::post('tasks', ['as' => 'auto_complete.tasks', 'uses' => 'AutoCompleteController@tasks', 'middleware' => ['dynamic_permission:auto_complete.tasks']]);
     Route::post('resources', ['as' => 'auto_complete.resources', 'uses' => 'AutoCompleteController@resources', 'middleware' => ['dynamic_permission:auto_complete.resources']]);
     Route::post('pages', ['as' => 'auto_complete.pages', 'uses' => 'AutoCompleteController@pages', 'middleware' => ['dynamic_permission:auto_complete.pages']]);
+    Route::post('permissions', ['as' => 'auto_complete.permissions', 'uses' => 'AutoCompleteController@permissions', 'middleware' => ['dynamic_permission:auto_complete.pages']]);
     Route::post('keywords', ['as' => 'auto_complete.keywords', 'uses' => 'AutoCompleteController@keywords', 'middleware' => ['dynamic_permission:auto_complete.keywords']]);
     Route::post('about_user_keywords', ['as' => 'auto_complete.about_user_keywords', 'uses' => 'AutoCompleteController@about_user_keywords', 'middleware' => ['dynamic_permission:auto_complete.about_user_keywords']]);
     Route::post('organs', ['as' => 'auto_complete.organs', 'uses' => 'AutoCompleteController@organs', 'middleware' => ['dynamic_permission:auto_complete.organs']]);

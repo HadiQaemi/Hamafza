@@ -16,6 +16,7 @@ return [
     'ce_agenda_label'=>'دستورجلسه ',
     'ce_saved_msg'=>'داده ها با موفقیت ذخیره شد',
     'ce_error_label'=>'خطا',
+    'no_enter_duration'=>'مدت زمان وارد نشده است',
     'ce_hour_label'=>'ساعت',
     'ce_date_label'=>'تاریخ',
     'ce_delete_label'=>'حذف',

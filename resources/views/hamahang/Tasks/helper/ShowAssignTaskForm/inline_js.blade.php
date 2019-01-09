@@ -346,42 +346,6 @@
         onlyTimePicker: true
     });
 
-    $("#add_btn_action").on('click', function() {
-        startdate = $('#action_date').val().split('-');
-        enddate = $('#action_date').val().split('-');
-        title = '';//$('#title_time_task').val();
-
-        var startdate = JalaliDate.jalaliToGregorian(startdate[0], startdate[1], startdate[2]);
-        var enddate = JalaliDate.jalaliToGregorian(enddate[0], enddate[1], enddate[2]);
-        var task_id = $('#task_id').val();
-        var saveObj = {};
-        startdate = startdate[0] + '-' + startdate[1] + '-' + startdate[2] + " " + $('#action_time_from').val() + ':00';
-        enddate = enddate[0] + '-' + enddate[1] + '-' + enddate[2] + " " + $('#action_time_to').val() + ':00';
-        saveObj.hstartdate = startdate;
-        saveObj.henddate = enddate;
-        saveObj.htitle = title;
-        saveObj.hcid = '';
-        saveObj.event_type = "task";
-        saveObj.task_id = $('#tid').val();
-        $.ajax({
-            url: '{{ URL::route('hamahang.calendar_events.save_task_event')}}',
-            type: 'POST', // Send post dat
-            data: saveObj,
-            async: false,
-            success: function (s) {
-                res = JSON.parse(s);
-                console.log(s);
-                console.log(res);
-                if (res.success == false) {
-                    errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
-                } else {
-
-                }
-
-            }
-        });
-    });
-
     $("#action_time_from").on('keyup', function() {
         var action_time_from = $('#action_time_from').val().split(':');
         action_time_from = parseInt(action_time_from[0])*60 + parseInt(action_time_from[1]);
@@ -646,8 +610,6 @@
             }
         }
     });
-
-    
     $('#new_task_users').on('change', function() {
         var none = $(this).find('option:selected').length;
         if(none > 1)
@@ -665,8 +627,24 @@
 		$('.div-schedul div').addClass('hidden');
 		$('.'+schedul).removeClass('hidden');
     });
-    function remove_action(action_list) {
-        $('.action_list'+action_list).remove();
+    function remove_action(action_list, ctid, ce) {
+        var saveObj = {};
+        saveObj.ctid = ctid;
+        saveObj.ce = ce;
+        $.ajax({
+            url: '{{ URL::route('hamahang.calendar_events.delete_task_event')}}',
+            type: 'POST', // Send post dat
+            data: saveObj,
+            async: false,
+            success: function (s) {
+                res = JSON.parse(s);
+                if (res.success == false) {
+                    errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
+                } else {
+                    $('.action_list'+action_list).remove();
+                }
+            }
+        });
     }
     $('input:radio[name="timing_type"]').on('click', function () {
         if($(this).val() == 'manual')
@@ -695,21 +673,53 @@
             '    </tr>\n';
         $('#message_task_list').append(project_span);
     });
-    var action_list = 0;
+    var action_list = 10000;
 	$('#add_btn_action').on('click', function() {
-        action_list ++;
-	    html =
-            '<div class="col-xs-12 action_list'+action_list+'" style="margin-top:10px">' +
-            '<div class="col-xs-2"> </div>' +
-            '<div class="col-xs-1">{{trans('tasks.in_date')}} </div>' +
-            '<div class="col-xs-3"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '"><span class="margin-right-10"> ' + $('#action_date').val() + '' +
-            '</span> <span class="margin-right-10"> <input type="hidden" name="action_date_list[]" value="' + $('#action_duration').val() + '">{{trans('tasks.duration')}}: ' + $('#action_duration').val() +
-            '</span> <span class="margin-right-10"> <input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_act_type').val() + '">' + $('#action_duration_act_type').val() + '</span> </div>' +
-            '<div class="col-xs-4"><span class="margin-right-10"> {{ trans('tasks.from') }} </span><input type="hidden" class="margin-right-10" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '"> <span class="margin-right-10"> ' + $('#action_time_from').val() +
-            ' </span> <span class="margin-right-10"> {{ trans('tasks.to') }} </span><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '"><span class="margin-right-10">' + $('#action_time_to').val() + '</span>' +
-            '<i class="fa fa-remove pointer margin-right-10" onclick="remove_action('+action_list+')"></i></div>' +
-            '</div>';
-        $('#action_list').append(html);
+	    if(!($('#action_duration_act').val()>0)){
+            messageModal('error', '{{trans('app.operation_is_failed')}}', '{{trans('calendar_events.no_enter_duration')}}');
+            return false;
+        }
+        startdate = $('#action_date').val().split('-');
+        enddate = $('#action_date').val().split('-');
+        title = $('.task_title').val();
+        var startdate = JalaliDate.jalaliToGregorian(startdate[0], startdate[1], startdate[2]);
+        var enddate = JalaliDate.jalaliToGregorian(enddate[0], enddate[1], enddate[2]);
+        var task_id = $('#task_id').val();
+        var saveObj = {};
+        startdate = startdate[0] + '-' + startdate[1] + '-' + startdate[2] + " " + $('#action_time_from').val() + ':00';
+        enddate = enddate[0] + '-' + enddate[1] + '-' + enddate[2] + " " + $('#action_time_to').val() + ':00';
+        saveObj.hstartdate = startdate;
+        saveObj.henddate = enddate;
+        saveObj.htitle = title;
+        saveObj.hcid = '';
+        saveObj.event_type = "task";
+        saveObj.task_id = $('#tid').val();
+        $.ajax({
+            url: '{{ URL::route('hamahang.calendar_events.save_task_event')}}',
+            type: 'POST', // Send post dat
+            data: saveObj,
+            async: false,
+            success: function (s) {
+                res = JSON.parse(s);
+                if (res.success == false) {
+                    errorsFunc('{{trans('calendar_events.ce_error_label')}}', res.error, '', '');
+                } else {
+                    action_list ++;
+                    html =
+                        '<div class="col-xs-12 action_list'+action_list+'" style="margin-top:10px">' +
+                        '<div class="col-xs-2"> </div>' +
+                        '<div class="col-xs-1">{{trans('tasks.in_date')}} </div>' +
+                        '<div class="col-xs-3"><input type="hidden" name="action_date_list[]" value="' + $('#action_date').val() + '"><span class="margin-right-10"> ' + $('#action_date').val() + '' +
+                        '</span> <span class="margin-right-10"> <input type="hidden" name="action_date_list[]" value="' + $('#action_duration_act').val() + '">{{trans('tasks.duration')}}: ' + $('#action_duration_act').val() +
+                        '</span> <span class="margin-right-10"> <input type="hidden" name="action_duration_type_list[]" value="' + $('#action_duration_act_type').val() + '">' + $('#action_duration_act_type').val() + '</span> </div>' +
+                        '<div class="col-xs-4"><span class="margin-right-10"> {{ trans('tasks.from') }} </span><input type="hidden" class="margin-right-10" name="action_time_from_list[]" value="' + $('#action_time_from').val() + '"> <span class="margin-right-10"> ' + $('#action_time_from').val() +
+                        ' </span> <span class="margin-right-10"> {{ trans('tasks.to') }} </span><input type="hidden" name="action_time_to_list[]" value="' + $('#action_time_to').val() + '"><span class="margin-right-10">' + $('#action_time_to').val() + '</span>' +
+                        '<i class="fa fa-remove pointer margin-right-10" onclick="remove_action('+action_list+')"></i></div>' +
+                        '</div>';
+                    $('#action_list').append(html);
+                }
+            }
+        });
     });
 
 	$('#new_task_transcripts').on('change', function() {
