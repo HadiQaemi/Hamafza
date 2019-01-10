@@ -278,6 +278,7 @@
                     "autoWidth": false,
                     "searching": false,
                     // "scrollY": 400,
+                    "serverSide": true,
                     "pageLength": 25,
                     "language": LangJson_DataTables,
                     // "dom": '<"bottom">rt<"bottom"ipl><"clear">',

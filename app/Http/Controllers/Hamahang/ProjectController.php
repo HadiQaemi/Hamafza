@@ -1087,8 +1087,8 @@ class ProjectController extends Controller
 //            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
 //        ;
 //        dd(Request::all());
-        $projects_roles = DB::table('hamahang_project')
-            ->where(function($query) {
+        $projects_roles = task_project::
+            where(function($query) {
                 $query->where(function($query) {
                     $query->whereIn('hamahang_project_role_permission.role_id', function($query){
                         $query->select('role_user.role_id')->from('role_user')
@@ -1228,12 +1228,7 @@ class ProjectController extends Controller
 //                }
             }
         }
-
-        $projects_roles = $projects_roles->groupBy('hamahang_project.id', 'desc')->get();
-
-//        $projects_user = $projects_user->distinct()->orderBy('hamahang_project.id', 'desc')->get();
-        $projects2 = $projects_roles;//$projects_user->merge($projects_roles);//->groupBy('hamahang_project.id');
-        return $dd2 = Datatables::of($projects2)
+        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles->groupBy('hamahang_project.id', 'desc'))
             ->editColumn('start_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
