@@ -10,7 +10,7 @@
             <a href="#tab_t3" data-toggle="tab">{{trans('help.votes')}}</a>
         </li>
         <li>
-            <a href="#tab_t4" data-toggle="tab">{{trans('help.pages')}}</a>
+            <a href="#tab_t4" class="tab_t4" data-toggle="tab">{{trans('help.pages')}}</a>
         </li>
     </ul>
     <div class="tab-content help-view">
@@ -26,7 +26,7 @@
         <div class="tab-pane tab-view padding-10" id="tab_t4">
             <div class="col-xs-12">
                 <div class="col-xs-11">
-                    <select id="new_permission" class="select2_auto_complete_permission " name="permission[]" data-placeholder="{{trans('help.select')}}"></select>
+                    <select id="permission_id" class="select2_auto_complete_permission " name="permission[]" data-placeholder="{{trans('help.select')}}"></select>
                     <input type="hidden" id="help_id" value="{{$id}}">
                 </div>
                 <div class="col-xs-1 line-height-35">
@@ -34,11 +34,12 @@
                 </div>
             </div>
 
-            <table id="help_grid" width="100%" class="table dt-responsive nowrap display text-center">
+            <table id="permissions_help_grid" width="100%" class="table dt-responsive nowrap display text-center">
                 <thead>
                 <tr>
                     <th>{{trans('help.row')}}</th>
                     <th>{{trans('help.permission')}}</th>
+                    <th>{{trans('help.operations')}}</th>
                 </tr>
                 </thead>
             </table>

@@ -375,7 +375,7 @@
                         stay: false,
                         type: 'success'
                     });
-                    window.location.reload();
+                    // window.location.reload();
                 }
             });
         });

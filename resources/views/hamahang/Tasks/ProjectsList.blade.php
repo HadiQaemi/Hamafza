@@ -280,7 +280,6 @@
                     // "scrollY": 400,
                     "pageLength": 25,
                     "language": LangJson_DataTables,
-                    "processing": true,
                     // "dom": '<"bottom">rt<"bottom"ipl><"clear">',
                     "ajax": {
                         "url": "{{ route('hamahang.projects.list') }}",
@@ -292,23 +291,24 @@
                             "data": "id",
                             "visible": false
                         },
-//                    {"data": "title"},
                         {
                             "data": "title",
                             "mRender": function (data, type, full) {
                                 split = full.title.split(' ');
                                 sub_title = '';
                                 $.each(split,function(i,val){
-                                    if(i<=3){
+                                    if(i<=7){
                                         sub_title = sub_title + ' ' + val;
-                                    }else if(i==4){
+                                    }else if(i==8){
                                         sub_title = sub_title + ' ...';
                                     }
                                 });
                                 return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='" + full.title + "'>"+ sub_title +"</a>";
-                            }
+                            },
+                            "width": "40%"
                         },
-                        {"data": "full_name",
+                        {
+                            "data": "full_name",
                             "mRender": function (data, type, full) {
                                 var keywords = full.keywords.replace(/&quot;/g,'"');
                                 keywords = JSON.parse(keywords);
@@ -317,29 +317,43 @@
                                     data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                                 });
                                 return "<div style='height: 20px'>" + (full.full_name !== null ? full.full_name : '') + "</div>" +"<div class='project_keywords'>"+data2+"</div>";
-                            }
+                            },
+                            "width": "20%"
                         },
                         {
                             "data": "start_date",
                             "mRender": function (data, type, full) {
                                 return full.start_date;
-                            }
+                            },
+                            "width": "5%"
                         },
                         {
                             "data": "end_date",
                             "mRender": function (data, type, full) {
                                 return full.end_date;
-                            }},
-                        {"data": "progress"},
-                        {"data": "end_date",
+                            },
+                            "width": "5%"
+                        },
+                        {
+                            "data": "progress",
+                            "mRender": function (data, type, full) {
+                                return full.progress<1 ? 0 : full.progress;
+                            },
+                            "width": "5%"
+                        },
+                        {
+                            "data": "end_date",
                             "mRender": function (data, type, full) {
                                 return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
-                            }
+                            },
+                            "width": "5%"
                         },
-                        {"data": "end_date",
+                        {
+                            "data": "end_date",
                             "mRender": function (data, type, full) {
                                 return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red' data-toggle='tooltip' title='حذف' onclick='confirm(\"آیا حذف شود؟\")'></a>";
-                            }
+                            },
+                            "width": "10%"
                         }
                         // {
                         //     "data": "project_id",
@@ -369,13 +383,7 @@
                         if (data.success == 'success') {
                             $('#create_rapid_task_title').val('');
                             $('#create_rapid_task_multi_selected_users').val('');
-                            {{--   messageModal('success', '{{trans('app.operation_is_success')}}', {0: '{{trans('access.succes_insert_data')}}'}
-                            @if(isset($function))
-                                ,{!! $function !!},'data'
-                            @endif
-                            );--}}
-                            //reload_mytask();
-
+                            loadTasks({p_id: $('#pid').val(),pid: $('#pid').val()});
                         }
                         else {
                             messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
@@ -481,6 +489,9 @@
                 p_id: $(this).data("p_id"),
                 pid: $(this).data("p_id")
             }
+            loadTasks(send_info);
+        });
+        function loadTasks(send_info){
             $.ajax({
                 url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',
                 type:'post',
@@ -494,42 +505,27 @@
                     $('#fieldset').addClass('hidden');
                 }
             });
-        });
+        }
         $(document).on('click', "#BackToProjects", function () {
             $('#fieldset').removeClass('hidden');
             $('#fieldset_info').addClass('hidden');
             $('#form_filter_priority').removeClass('hidden');
         });
-        $(document).on('click', ".task_project_remove", function () {var id = $(this).attr('rel');
-
+        $(document).on('click', ".task_project_remove", function () {
+            var id = $(this).attr('rel');
             confirmModal({
                 title: 'حذف ارتباط',
                 message: 'آیا از حذف مطمئن هستید؟',
                 onConfirm: function () {
                     if (id != null) {
-                        // var bookmark_id = $('#bookmark_' + id);
-                        // var bookmark_id_parent = bookmark_id.parent();
-                        // $.ajax
-                        // ({
-                        //     type: 'post',
-                        //     url: Baseurl + 'bookmarks/delete',
-                        //     dataType: 'html',
-                        //     data: ({id: id}),
-                        //     success: function (response) {
-                        //         bookmark_id.remove();
-                        //         if (0 == bookmark_id_parent.find('li').length) {
-                        //             bookmark_id_parent.remove();
-                        //             $('#' + bookmark_id_parent.attr('class')).remove()
-                        //         }
-                        //         jQuery.noticeAdd
-                        //         ({
-                        //             text: 'حذف با موفقیت انجام شد.',
-                        //             stay: false,
-                        //             type: 'success'
-                        //         });
-                        //         //$('[href=#page1]').trigger('click');
-                        //     }
-                        // });
+                        $.ajax({
+                            type: "POST",
+                            url: '{{ URL::route('hamahang.project.delete_task_project') }}',
+                            dataType: "json",
+                            data: {id:$(this).attr('t')},
+                            success: function (data) {
+                            }
+                        });
                     }
                 },
                 afterConfirm: 'close'

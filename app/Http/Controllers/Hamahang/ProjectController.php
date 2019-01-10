@@ -51,24 +51,24 @@ class ProjectController extends Controller
 
     public function ProjectTasksWindow()
     {
-//        $TaskController = new TaskController();
-//        $TaskController->GanttChart();
         return json_encode([
             'header' => trans('tasks.project'),
             'content' => view('hamahang.Projects.show_project_tasks_window')->with('ProjectInfo', $this->project_tasks(Request::input('pid')))->render()
-//            'content' => view('hamahang.Projects.show_project_tasks_window')->with('ProjectInfo', $this->project_tasks(Request::input('pid')))->render()
         ]);
     }
 
     public function ProjectTasksListWindow()
     {
-//        $TaskController = new TaskController();
-//        $TaskController->GanttChart();
         return json_encode([
             'header' => trans('tasks.project'),
             'content' => view('hamahang.Projects.show_project_tasks_list_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
-//            'content' => view('hamahang.Projects.show_project_tasks_window')->with('ProjectInfo', $this->project_tasks(Request::input('pid')))->render()
         ]);
+    }
+
+    public function DeleteTaskProject()
+    {
+//        hamahang_project_task();
+        dd(Request::all());
     }
 
     private function find_start_date($id)
@@ -426,6 +426,7 @@ class ProjectController extends Controller
             ->where('project_id', '=', $pid)
             ->leftjoin('hamahang_task', 'hamahang_task.id', '=', 'hamahang_project_task.task_id')
             ->whereNull('hamahang_project_task.deleted_at')
+            ->select('hamahang_project_task.*', 'hamahang_task.*', 'hamahang_project_task.id as hp_task')
             ->get();
         $project_tasks = [];
         foreach($hamahang_project_task as $task)

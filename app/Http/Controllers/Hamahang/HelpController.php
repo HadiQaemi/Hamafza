@@ -17,7 +17,7 @@ class HelpController extends Controller
         return view('hamahang.help.help', $variable_generator);
     }
 
-    public function help_content()
+    public function HelpContent()
     {
         $help = DB::table('hamahang_helps')
             ->leftJoin('hamahang_help_blocks','hamahang_help_blocks.help_id','=','hamahang_helps.id')
@@ -34,6 +34,25 @@ class HelpController extends Controller
             ->editColumn('id', function ($q) { return enCode($q->id); })
             ->make(true);
         return $r;
+    }
+
+    public function AddHelpPermission()
+    {
+        DB::table('hamahang_help_relations')->insert
+        ([
+            'target_type' => 'App\Permission',
+            'target_id' => \Request::input('permission_id'),
+            'help_id' =>  deCode(\Request::input('help_id')),
+            'created_by' => auth()->id(),
+        ]);
+    }
+    public function TakeHelpPermissions()
+    {
+        $result['data'] = DB::table('hamahang_help_relations')
+            ->leftJoin('permissions','')
+            ->where('help_id', '=', deCode(\Request::input('help_id')))
+            ->get();
+        return json_encode($result);
     }
 
 }
