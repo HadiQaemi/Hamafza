@@ -351,7 +351,7 @@
                         {
                             "data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red' data-toggle='tooltip' title='حذف' onclick='confirm(\"آیا حذف شود؟\")'></a>";
+                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.id +"' title='حذف'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
                             },
                             "width": "10%"
                         }
@@ -547,6 +547,25 @@
                     });
                     {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
 
+                },
+                afterConfirm: 'close'
+            });
+        });
+        $(document).on('click', ".delete_project", function () {
+            var id = $(this).attr('pid');
+            confirmModal({
+                title: '{{trans('projects.delete_project')}}',
+                message: '{{trans('projects.confirm_delete_project')}}',
+                onConfirm: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '{{ URL::route('hamahang.projects.project_delete') }}',
+                        dataType: "json",
+                        data: {id:id},
+                        success: function (data) {
+                            window.ProjectList.ajax.reload();
+                        }
+                    });
                 },
                 afterConfirm: 'close'
             });

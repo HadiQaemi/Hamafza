@@ -37,6 +37,8 @@ return [
     'end_date'  => 'تاریخ پایان',
     'start_date'  => 'شروع پروژه',
     'end_date'  => 'پایان',
+    'delete_project'  => 'حذف پروژه',
+    'confirm_delete_project'  => 'آیا از حذف پروژه مطمئن هستید؟',
     'begin_date'  => 'تاریخ آغاز',
     'final_date'  => 'تاریخ پایان',
     'current_date'  => 'تاریخ جاری',
