@@ -1215,19 +1215,33 @@ class ProjectController extends Controller
             $projects_roles->whereIn('hamahang_task.is_save', [11]);
         }
         $task_status = Request::input('task_status');
-        if(is_array($task_status))
-        {
-            foreach($task_status as $a_status)
-            {
-//                if($a_status == 0){
-//                    $projects_roles->where('hamahang_project.progress', '=<', 0);
-//                }else if($a_status == 1){
-//                    $projects_roles->where('hamahang_project.progress', '>', 0)->where('hamahang_project.progress', '<', 100);
-//                }else if($a_status == 2){
-//                    $projects_roles->where('hamahang_project.progress', '=', 100);
-//                }
+        $projects_roles->where(function($q) use ($task_status) {
+            if(is_array($task_status))
+                $task_status = array_diff($task_status, ["10"]);
+            if(count($task_status)){
+                foreach($task_status as $a_status){
+                    if($a_status == 0){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '=', 0);
+                        });
+
+                    }else if($a_status == 1){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '>', 0)->where('hamahang_project.progress', '<', 100);
+                        });
+                    }else if($a_status == 2){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '=', 100);
+                        });
+                    }
+                }
+            }else{
+                $q->orWhere(function($q) {
+                    $q->where('hamahang_project.progress', '=', 200);
+                });
             }
-        }
+        });
+
         return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles->groupBy('hamahang_project.id', 'desc'))
             ->editColumn('start_date', function ($data)
             {

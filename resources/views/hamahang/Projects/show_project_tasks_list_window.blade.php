@@ -29,7 +29,7 @@
     <div class="pull-right line-height-35 margin-top-20">
         <div class="pull-right">{{trans('projects.title')}}: </div>
         <div class="pull-right margin-right-10">
-            {{$project_info->title}}
+            <a class='pointer project_info cursor-pointer' data-p_id= '{{$pid}}' data-toggle='tooltip' title='ویرایش'>{{$project_info->title}}</a>
         </div>
     </div>
     {{--<div class="pull-right line-height-35 margin-top-20 margin-right-50">--}}
@@ -76,7 +76,8 @@
                     echo '<div class="row col-xs-12 noLeftPadding noRightPadding process'.$task->id.'">';
                 }
                 echo '<div class="col-xs-1">'.$task->id.'</div>';
-                echo '<div class="col-xs-7">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).$task->title.'</div>';
+                echo '<div class="col-xs-7">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+                    '<a class="cursor-pointer jsPanels" href="/modals/ShowAssignTaskForm?tid='.enCode($task->id).'">'.$task->title.'</a></div>';
                 echo '<div class="col-xs-1"><input type="text" class="text-project-weight weight-'.$task->id.'" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[parent-'.$task_project[$task->id].'-'.$task->id.']" autocomplete="off"/></div>';
                 echo '<div class="col-xs-1"><input type="text" class="text-project-progress progress-'.$task->id.'" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress['.$task->id.']" autocomplete="off"/></div>';
                 echo '<div class="col-xs-2"><i class="fa fa-floppy-o task_project_save_status pointer margin-left-10" t="'.$task->id.'" pid="'.$pid.'" rel="'.$task_project[$task->id].'" tp="parent"></i><i class="fa fa-remove task_project_remove pointer margin-left-10" t="'.enCode($task->id).'"></i><i class="fa fa-trash task_remove pointer margin-left-10" t="'.enCode($task->id).'"></i></div>';
@@ -103,7 +104,8 @@ function show_project($parents,$ordered_project_tasks,$id,$pid,$cnt=1)
             echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
         }
         echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
-        echo '<div class="col-xs-7" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).$ordered_project_tasks[$sub_task['id']]->title.'</div>';
+        echo '<div class="col-xs-7" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+            '<a class="cursor-pointer jsPanels" href="/modals/ShowAssignTaskForm?tid='.enCode($ordered_project_tasks[$sub_task['id']]->id).'">'.$ordered_project_tasks[$sub_task['id']]->title.'</a></div>';
         echo '<div class="col-xs-1"><input type="text" class="text-project-weight child_of_'.$id.' weight-'.$id.'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->weight) ? $ordered_project_tasks[$sub_task['id']]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_weight[child-'.$sub_task['rel'].']" autocomplete="off"/></div>';
         echo '<div class="col-xs-1"><input type="text" class="text-project-progress child_of_'.$id.' progress-'.$sub_task['id'].'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->progress) ? $ordered_project_tasks[$sub_task['id']]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_progress['.$ordered_project_tasks[$sub_task['id']]->id.']" autocomplete="off"/></div>';
         echo '<div class="col-xs-2">

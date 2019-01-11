@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @section('specific_plugin_style')
-    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/css/one-page-wonder.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/DataTables/datatables.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/ChosenAjax/css/chosen.css')}}">
 @stop
-
 @section('inline_style')
     <style>
         td.details-control:before {
@@ -13,19 +13,20 @@
         tr.shown td.details-control:before {
             content: '-';
         }
-         .hd-body{
-             overflow: hidden !important;
-         }
     </style>
 @stop
-
+<style>
+    .hd-body{
+        overflow: hidden !important;
+    }
+</style>
 @section('inline_scripts')
     @include('hamahang.Tasks.MyTask.helper.AllList_inline_js')
 @stop
 
 @section('content')
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
-    {{--@include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')--}}
+        {{--@include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')--}}
     </div>
     <div class="row opacity-7" style="margin-top: -10px;background: #eee">
         <form id="form_filter_priority">
@@ -117,7 +118,7 @@
             </div>
         </form>
     </div>
-    <div class="container-fluid noLeftPadding noRightPadding task-list-height">
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
         <div class="row">
             <fieldset>
                 <div class="col-md-12">

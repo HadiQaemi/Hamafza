@@ -3430,7 +3430,7 @@ input{
     cursor: pointer;
     margin-left: 5px;
     padding: 5px;
-    font-size: 8px;
+    font-size: 10px;
 }
 .task-list-height{
     height: 67vh;
@@ -4125,6 +4125,9 @@ table.dataTable thead .sorting:after{
 }
 .dataTable td{
     text-align: center !important;;
+}
+.dataTable td:first-child, .dataTable td:first-child + td{
+    text-align: right !important;
 }
 #calendar_myCalendar .dataTable th{
     text-align: right !important;
