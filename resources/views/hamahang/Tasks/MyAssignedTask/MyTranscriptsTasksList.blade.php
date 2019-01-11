@@ -362,15 +362,5 @@
 @stop
 @include('sections.tabs')
 @section('position_right_col_3')
-    <?php
-    if(isset($get_menu)){
-        if($get_menu !=''){
-            echo $get_menu;
-        }
-    }else{?>
-        @include('sections.desktop_menu')
-    <?php
-    }
-    ?>
-    {{--@include('sections.desktop_menu')--}}
+    @include('sections.desktop_menu')
 @stop
