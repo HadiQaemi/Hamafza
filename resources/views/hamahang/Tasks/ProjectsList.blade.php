@@ -574,7 +574,7 @@
                         type: "POST",
                         url: '{{ URL::route('hamahang.projects.project_delete') }}',
                         dataType: "json",
-                        data: {id:id},
+                        data: {pid:id},
                         success: function (data) {
                             if (data.success == true) {
                                 window.ProjectList.ajax.reload();

@@ -99,13 +99,13 @@ class ProjectController extends Controller
 
     public function projectDelete()
     {
-        $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
+        $pid = deCode(Request::input('pid'));
+        $permission = self::TakeProjectPermissions($pid);
         if(!in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission)) {
             $result['error'] = trans('projects.no_permissions');
             $result['success'] = false;
             return json_encode($result);
         }else{
-            $pid = Request::input('id');
             project_permissions::where('project_id', '=', $pid)->delete();
             project_role_permission::where('project_id', '=', $pid)->delete();
             hamahang_project_responsible::where('project_id', '=', $pid)->delete();
@@ -1848,7 +1848,6 @@ class ProjectController extends Controller
 
     public static function TakeProjectPermissions($pid)
     {
-
         $projects_roles = DB::table('hamahang_project')
             ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
             ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
