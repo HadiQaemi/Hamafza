@@ -4128,16 +4128,22 @@ table.dataTable thead .sorting:after{
 }
 .dataTable td:first-child, .dataTable td:first-child + td{
     text-align: right !important;
+    padding-right: 0px;
 }
 #calendar_myCalendar .dataTable th{
     text-align: right !important;
 }
 #calendar_myCalendar .dataTable td{
-    text-align: right !important;;
+    text-align: right !important;
 }
 table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting {
     padding-right: 0px !important;
 }
+.dataTable th:first-child, .dataTable th:first-child + th{
+    text-align: right !important;
+    padding-right: 10px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */

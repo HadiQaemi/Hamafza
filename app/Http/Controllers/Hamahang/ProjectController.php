@@ -6,6 +6,7 @@ use App\HamafzaServiceClasses\SubjectsClass;
 use App\Http\Controllers\Hamahang\Tasks\TaskController;
 use App\Models\hamafza\Pages;
 use App\Models\Hamahang\keywords;
+use App\Models\Hamahang\Tasks\hamahang_project_task;
 use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\project_role_permission;
 use App\Models\Hamahang\Tasks\task_status;
@@ -38,6 +39,13 @@ class ProjectController extends Controller
     private $second_task_duration = 0;
     private $project_task_relations = [];
     private $project_tasks;
+    public static  $_VIEW_PROJECT_PERMISSSION = 1;
+    public static  $_MANAGE_TASK_PROJECT_PERMISSSION = 2;
+    public static  $_MANAGE_PROJECT_PERMISSSION = 3;
+
+    public static  $_PROJECT_MANAGER = 1;
+    public static  $_PROJECT_SUPERVISOR = 2;
+    public static  $_PROJECT_BASKET_MANAGER = 3;
 
     public function ProjectInfoWindow()
     {
@@ -59,63 +67,53 @@ class ProjectController extends Controller
 
     public function ProjectTasksListWindow()
     {
-        return json_encode([
-            'header' => trans('tasks.project'),
-            'content' => view('hamahang.Projects.show_project_tasks_list_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
-        ]);
-    }
-
-    public function CheckProjectPermissions($pid)
-    {
-        db::enableQueryLog();
-        $projects_roles = DB::table('hamahang_project')->where('hamahang_project.id','=',$pid)
-            ->where(function($query) use ($pid) {
-                $query->where(function($query) use ($pid) {
-                    $query->whereIn('hamahang_project_role_permission.role_id', function($query) use ($pid){
-                        $query->select('role_user.role_id')->from('role_user')
-                            ->Where('role_user.user_id','=',Auth::id());
-                    })->whereNull('hamahang_project.deleted_at')->where('hamahang_project.id','=',$pid);
-                })
-                    ->orWhere(function($query)  use ($pid) {
-                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-                            ->whereNull('hamahang_project.deleted_at')->where('hamahang_project.id','=',$pid);
-                    });
-            })
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
-            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
-            ->whereNull('hamahang_project_responsible.deleted_at')
-            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
-            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
-            ->get()
-        ;
-        dd(db::getQueryLog());
-        return $projects_roles;
+        $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
+        if(in_array(self::$_VIEW_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
+            return json_encode([
+                'success' => true,
+                'header' => trans('tasks.project'),
+                'content' => view('hamahang.Projects.show_project_tasks_list_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
+            ]);
+        }else{
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }
     }
 
     public function DeleteTaskProject()
     {
-        dd(Request::all());
-        $pid = Request::input('');
-        project_permissions::where('project_id', '=', $pid)->delete();
-        project_role_permission::where('project_id', '=', $pid)->delete();
-        hamahang_project_responsible::where('project_id', '=', $pid)->delete();
-        hamahang_subject_ables::where('target_id', '=', $pid)->delete();
-        project_keyword::where('project_id', '=', $pid)->delete();
-        task_project::where('project_id', '=', $pid)->delete();
-
+        $pid = deCode(Request::input('pid'));
+        $tid = deCode(Request::input('tid'));
+        $permission = self::TakeProjectPermissions($pid);
+        if(in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
+            hamahang_project_task::where('project_id', '=', $pid)->where('task_id', '=', $tid)->delete();
+            $result['success'] = true;
+            return json_encode($result);
+        }else{
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }
     }
 
     public function projectDelete()
     {
-        $pid = Request::input('id');
-        project_permissions::where('project_id', '=', $pid)->delete();
-        project_role_permission::where('project_id', '=', $pid)->delete();
-        hamahang_project_responsible::where('project_id', '=', $pid)->delete();
-        hamahang_subject_ables::where('target_id', '=', $pid)->delete();
-        project_keyword::where('project_id', '=', $pid)->delete();
-        task_project::where('id', '=', $pid)->delete();
-        return json_encode(['success' => true]);
+        $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
+        if(!in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission)) {
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }else{
+            $pid = Request::input('id');
+            project_permissions::where('project_id', '=', $pid)->delete();
+            project_role_permission::where('project_id', '=', $pid)->delete();
+            hamahang_project_responsible::where('project_id', '=', $pid)->delete();
+            hamahang_subject_ables::where('target_id', '=', $pid)->delete();
+            project_keyword::where('project_id', '=', $pid)->delete();
+            task_project::where('id', '=', $pid)->delete();
+            return json_encode(['success' => true]);
+        }
     }
 
     private function find_start_date($id)
@@ -404,31 +402,51 @@ class ProjectController extends Controller
     }
     public function ChangeTaskRelation()
     {
+        $permissions = self::TakeProjectPermissions(deCode(Request::input('pid')));
+        $responsibes = self::TakeProjectResponsible(deCode(Request::input('pid')));
+        $message = trans('projects.no_permissions');
         $project = 0;
-        $cnt = 0;
-        foreach(Request::input('task_project_weight') as $key=>$weight)
-        {
-            $split_weight = preg_split('/-/',$key);
-            if($split_weight[0]=='parent')
+        $doing = 0;
+        if(in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION, $permissions)) {
+            $cnt = 0;
+            $doing++;
+            foreach(Request::input('task_project_weight') as $key=>$weight)
             {
-                $project += (float) Request::input('task_project_progress')[$split_weight[2]] * $weight;
-                DB::table('hamahang_project_task')->where('id','=', (int) $split_weight[1])->update(['weight'=>(float) $weight]);
-            }else{
-                DB::table('hamahang_task_relations')->where('id','=', (int) $split_weight[1])->update(['weight'=>(float) $weight]);
+                $split_weight = preg_split('/-/',$key);
+                if($split_weight[0]=='parent')
+                {
+                    $project += (float) Request::input('task_project_progress')[$split_weight[2]] * $weight;
+                    DB::table('hamahang_project_task')->where('id','=', (int) $split_weight[1])->update(['weight'=>(float) $weight]);
+                }else{
+                    DB::table('hamahang_task_relations')->where('id','=', (int) $split_weight[1])->update(['weight'=>(float) $weight]);
+                }
+                $cnt ++;
             }
-            $cnt ++;
+            $message = trans('projects.change_weights_permissions');
         }
-        foreach(Request::input('task_project_progress') as $key=>$progress)
-        {
-            DB::table('hamahang_task')->where('id','=', (int) $key)->update(['progress'=>(float) $progress]);
-            task_status::create_task_status($key, 1, $progress, Auth::id(), time());
+        if(in_array(self::$_PROJECT_MANAGER, $responsibes)) {
+            $doing++;
+            foreach(Request::input('task_project_progress') as $key=>$progress)
+            {
+                DB::table('hamahang_task')->where('id','=', (int) $key)->update(['progress'=>(float) $progress]);
+                task_status::create_task_status($key, 1, $progress, Auth::id(), time());
+            }
+            DB::table('hamahang_project')->where('id','=', (int) Request::input('pid'))->update(['progress'=>(float) $project/100]);
+            $message = trans('projects.change_weights_permissions');
         }
-        DB::table('hamahang_project')->where('id','=', (int) Request::input('pid'))->update(['progress'=>(float) $project/100]);
-        return $project/100;
+        if($doing ==2 )
+            return json_encode(['success'=>true]);
+        else if(trim($message)==trans('projects.no_permissions')){
+            return json_encode(['success'=>false, 'message'=>$message]);
+        }else{
+            return json_encode(['success'=>false, 'project'=>$project/100, 'message'=>$message]);
+        }
     }
     public function project_tasks_list($pid)
     {
+        $pid = deCode($pid);
         date_default_timezone_set('Asia/Tehran');
+
         $res = [];
         $hamahang_project_task = DB::table('hamahang_project_task')
             ->where('project_id', '=', $pid)
@@ -1069,37 +1087,21 @@ class ProjectController extends Controller
 
     public function FetchProjects()
     {
-//        $projects_roles = DB::table('hamahang_project')
-//            ->whereIn('hamahang_project_role_permission.role_id', function($query){
-//                $query->select('role_user.role_id')->from('role_user')
-//                    ->Where('role_user.user_id','=',Auth::id());
-//            })
-//            ->whereNull('hamahang_project.deleted_at')
-//            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-//            ->join('user','user.id','=','hamahang_project.uid')
-//            ->join('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
-//        ;
-//        $projects_user = DB::table('hamahang_project')
-//            ->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-//            ->whereNull('hamahang_project.deleted_at')
-//            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-//            ->join('user','user.id','=','hamahang_project.uid')
-//            ->join('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
-//        ;
-//        dd(Request::all());
-        $projects_roles = task_project::
-            where(function($query) {
-                $query->where(function($query) {
-                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
-                        $query->select('role_user.role_id')->from('role_user')
-                            ->Where('role_user.user_id','=',Auth::id());
-                    })->whereNull('hamahang_project.deleted_at');
-                })
-                    ->orWhere(function($query) {
-                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-                            ->whereNull('hamahang_project.deleted_at');
-                    });
-            })
+        $projects_roles = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+            ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
+            ->whereNull('hamahang_project_role_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->select('hamahang_project.id');
+        $projects_user = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_user_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project_user_permission.user_id','=',Auth::id())
+            ->unionAll($projects_roles)
+            ->pluck('hamahang_project.id')->toArray();
+
+        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
@@ -1107,17 +1109,12 @@ class ProjectController extends Controller
             ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
-        //die(var_dump($projects));
         if (Request::exists('subject_id'))
         {
             $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
                 ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
-//            $projects_user->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
-//                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
-//                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
-//                ->whereNull('hamahang_subject_ables.deleted_at');
         }
         $title = Request::exists('title') ? Request::input('title') : '';
         if (trim($title))
@@ -1246,6 +1243,10 @@ class ProjectController extends Controller
             ->editColumn('start_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
+            })
+            ->editColumn('pid', function ($data)
+            {
+                return enCode($data->id);
             })
             ->editColumn('progress', function ($data)
             {
@@ -1845,6 +1846,38 @@ class ProjectController extends Controller
         }
     }
 
+    public static function TakeProjectPermissions($pid)
+    {
+
+        $projects_roles = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+            ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
+            ->whereNull('hamahang_project_role_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project.id','=',$pid)
+        ->select('permission_type');
+        $projects_user = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_user_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project.id','=',$pid)
+        ->unionAll($projects_roles)->pluck('permission_type')->toArray();
+        return $projects_user;
+    }
+
+    public static function TakeProjectResponsible($pid)
+    {
+
+        $respons = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_responsible', 'project_id','=','hamahang_project.id')
+            ->where('hamahang_project_responsible.user_id', '=',Auth::id())
+            ->whereNull('hamahang_project_responsible.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project.id','=',$pid)
+        ->pluck('permission_type')->toArray();
+        return $respons;
+    }
+
     public function EditProject()
     {
         $result = '';
@@ -1871,7 +1904,13 @@ class ProjectController extends Controller
             {
                 return $this->SaveNewProject();
             }
-
+            $pid = deCode(Request::input('p_id'));
+            $permission = self::TakeProjectPermissions($pid);
+            if(!in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission)){
+                $result['error'] = trans('projects.no_permissions');
+                $result['success'] = false;
+                return json_encode($result);
+            }
             $date = new jDateTime();
             date_default_timezone_set('Asia/Tehran');
             $date_to_split = explode('-', Request::input('start_date'));
@@ -1887,7 +1926,7 @@ class ProjectController extends Controller
             $respite_timestsmp = $date->mktime('0', '0', '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
             $state_date = $respite_timestsmp;
 
-            $pid = \Session::get('pid');
+//            $pid = \Session::get('pid');
             $project = task_project::find($pid);
             $project->uid = Auth::id();
             $project->title = Request::input('p_title');

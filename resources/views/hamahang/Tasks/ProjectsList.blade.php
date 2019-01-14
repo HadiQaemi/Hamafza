@@ -304,7 +304,7 @@
                                         sub_title = sub_title + ' ...';
                                     }
                                 });
-                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='" + full.title + "'>"+ sub_title +"</a>";
+                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='" + full.title + "'>"+ sub_title +"</a>";
                             },
                             "width": "40%"
                         },
@@ -352,7 +352,7 @@
                         {
                             "data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.id +"' title='حذف'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
+                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.pid +"' title='حذف'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
                             },
                             "width": "10%"
                         }
@@ -500,10 +500,14 @@
                 dataType:'json',
                 success :function(data)
                 {
-                    $('#form_filter_priority').addClass('hidden');
-                    $('#ProjectInfoList').html(data.content);
-                    $('#fieldset_info').removeClass('hidden');
-                    $('#fieldset').addClass('hidden');
+                    if (data.success == false) {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        $('#form_filter_priority').addClass('hidden');
+                        $('#ProjectInfoList').html(data.content);
+                        $('#fieldset_info').removeClass('hidden');
+                        $('#fieldset').addClass('hidden');
+                    }
                 }
             });
         }
@@ -513,18 +517,26 @@
             $('#form_filter_priority').removeClass('hidden');
         });
         $(document).on('click', ".task_project_remove", function () {
-            var id = $(this).attr('rel');
+            var tid = $(this).attr('t');
+            var pid = $(this).attr('pid');
             confirmModal({
                 title: 'حذف ارتباط',
                 message: 'آیا از حذف مطمئن هستید؟',
                 onConfirm: function () {
-                    if (id != null) {
+                    if (tid != null && pid != null) {
                         $.ajax({
                             type: "POST",
                             url: '{{ URL::route('hamahang.project.delete_task_project') }}',
                             dataType: "json",
-                            data: {id:$(this).attr('t')},
+                            data: {tid:tid, pid:pid},
                             success: function (data) {
+                                if (data.success == true) {
+                                    $('#create_rapid_task_title').val('');
+                                    $('#create_rapid_task_multi_selected_users').val('');
+                                    loadTasks({p_id: pid,pid: pid});
+                                }else{
+                                    messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                                }
                             }
                         });
                     }
@@ -564,7 +576,11 @@
                         dataType: "json",
                         data: {id:id},
                         success: function (data) {
-                            window.ProjectList.ajax.reload();
+                            if (data.success == true) {
+                                window.ProjectList.ajax.reload();
+                            }else{
+                                messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                            }
                         }
                     });
                 },
@@ -627,7 +643,14 @@
                 dataType:'json',
                 success :function(data)
                 {
-                    $('#project_progress').html(data);
+                    if (data.success == true) {
+                        if(data.project>0) {
+                            $('#project_progress').html(data.project);
+                        }
+                        messageModal('success', '{{trans('app.operation_is_success')}}', '{{trans('app.operation_is_success')}}');
+                    }else{
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.message);
+                    }
                 }
             });
         });

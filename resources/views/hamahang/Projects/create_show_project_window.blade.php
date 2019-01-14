@@ -15,12 +15,6 @@
         <div class="tab-pane active tab-view" id="tab_t1">
             <div class="col-xs-12">
                 <div id="tab" class="table-bordered">
-                    {{--<ul class="nav nav-tabs">--}}
-                        {{--<li>--}}
-                               {{--<a href="#t1" data-toggle="tab" class="active">{{trans('projects.define')}}</a>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                    {{--<div class="tab-content">--}}
                         @php
                             $ProjectInfo = json_decode($ProjectInfo);
                             $project_tasks = $ProjectInfo[0];
@@ -36,19 +30,13 @@
                         <div class="tab-pane active" id="t1">
                             <div class="col-xs-12 line-height-35 margin-top-20">
                                 <div class="col-xs-2">{{trans('projects.title')}}</div>
+                                <input type="hidden" name="edit_pid" id="edit_pid" value="{{enCode($project_info->project_id)}}" />
                                 <div class="col-xs-10">
                                     <input type="text" class="col-xs-9 form-control" id="p_title" value="{{$project_info->title}}" placeholder="{{trans('projects.title')}}"/>
                                     <input type="radio" class="" name="p_type" id="p_type0" value="0" {{$project_info->type==0 ? '' : 'checked'}}/><label for="p_type0">{{trans('projects.official')}}</label>
                                     <input type="radio" class="" name="p_type" id="p_type1" value="1" {{$project_info->type==1 ? '' : 'checked'}}/><label for="p_type1">{{trans('projects.unofficial')}}</label>
                                 </div>
                             </div>
-
-                            {{--<div class="col-xs-12 line-height-35 margin-top-20">--}}
-                                {{--<div class="col-xs-2">{{trans('projects.top_purpose')}}</div>--}}
-                                {{--<div class="col-xs-10">--}}
-                                    {{--<input type="text" class="form-control" id="p_top_goals"/>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
                             <div class="col-xs-12 line-height-35 margin-top-20">
                                 <div class="col-xs-2">{{trans('projects.describe')}}</div>
                                 <div class="col-xs-10">
@@ -80,13 +68,6 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
-                                    {{--<div class="col-sm-5 noPadding">--}}
-                                        {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
-                                            {{--<option value=""></option>--}}
-                                        {{--</select>--}}
-                                        {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
-                                    {{--</div>--}}
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
@@ -101,13 +82,6 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
-                                    {{--<div class="col-sm-5 noPadding">--}}
-                                        {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
-                                            {{--<option value=""></option>--}}
-                                        {{--</select>--}}
-                                        {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
-                                    {{--</div>--}}
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
@@ -122,13 +96,6 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    {{--<div class="col-xs-2 line-height-35">{{trans('projects.organizational_unit')}}</div>--}}
-                                    {{--<div class="col-sm-5 noPadding">--}}
-                                        {{--<select name="p_org_unit[]" id="p_org_unit" class="select2_auto_complete_org_unit col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
-                                            {{--<option value=""></option>--}}
-                                        {{--</select>--}}
-                                        {{--<span style="position: absolute; left: 20px; top: 10px;" class="fa fa-sitemap"></span>--}}
-                                    {{--</div>--}}
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-10">

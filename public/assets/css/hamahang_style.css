@@ -1419,9 +1419,11 @@ body {
     margin-right: 5px;
     margin-left: 5px;
 }
-
 .color_red {
     color: #ff6162;
+}
+.color_green {
+    color: #2ebd5e;
 }
 .table_td_title{
     width:250px;

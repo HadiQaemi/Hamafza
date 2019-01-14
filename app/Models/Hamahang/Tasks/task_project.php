@@ -15,9 +15,10 @@ class task_project extends Model
 
     public static function project_info($pid)
     {
+        $decode_pid = deCode($pid);
         $project = DB::table('hamahang_project')
 //            ->select('hamahang_project.title' , 'hamahang_calendar.title as c_title' , 'hamahang_project.start_date' , 'hamahang_project.end_date' , 'hamahang_project.schedule_on' , 'hamahang_project.type' ,'hamahang_project.desc',DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
-            ->select('*', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
+            ->select('*','hamahang_project.id as project_id', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
 //            ->join('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
 //            ->join('hamahang_calendar' , 'hamahang_calendar.id' , '=', 'hamahang_project.base_calendar')
 //            ->join('user','user.id','=','hamahang_project_responsible.user_id')
@@ -25,14 +26,13 @@ class task_project extends Model
 //            ->join('hamahang_subject_ables','hamahang_subject_ables.target_id' ,'=','hamahang_project.id')
 //            ->where('hamahang_subject_ables.target_type' , '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
 //            ->whereNull('hamahang_project_responsible.deleted_at')
-            ->where('hamahang_project.id','=',$pid)
+            ->where('hamahang_project.id','=',$decode_pid)
             ->get();
-//        $date = new jDateTime();
-//dd($date->getdate($project->state_date));
+
         $pages = DB::table('hamahang_subject_ables')
             ->select('hamahang_subject_ables.subject_id','subjects.title')
             ->join('subjects' , 'subjects.id' , '=','hamahang_subject_ables.subject_id')
-            ->where('hamahang_subject_ables.target_id','=', $pid)
+            ->where('hamahang_subject_ables.target_id','=', $decode_pid)
             ->where('hamahang_subject_ables.target_type' , '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
             ->whereNull('hamahang_subject_ables.deleted_at')
             ->get();
@@ -46,41 +46,41 @@ class task_project extends Model
         $project_tasks = DB::table('hamahang_project_task')
             ->join('hamahang_project', 'hamahang_project.id', '=','hamahang_project_task.project_id')
             ->join('hamahang_task', 'hamahang_task.id', '=','hamahang_project_task.task_id')
-            ->where('hamahang_project_task.project_id', '=', $pid)
+            ->where('hamahang_project_task.project_id', '=', $decode_pid)
             ->whereNull('hamahang_project_task.deleted_at')
             ->select('hamahang_task.title', 'hamahang_task.id')
             ->get();
 
         $project_keywords = keywords::select('keywords.title', 'keywords.id')
             ->join('hamahang_project_keyword', 'keywords.id', '=','hamahang_project_keyword.keyword_id')
-            ->where('hamahang_project_keyword.project_id', '=', $pid)
+            ->where('hamahang_project_keyword.project_id', '=', $decode_pid)
             ->whereNull('hamahang_project_keyword.deleted_at')
             ->get();
 //
 
         $responsibles = DB::table('hamahang_project_responsible')
-            ->where('project_id', '=', $pid)
+            ->where('project_id', '=', $decode_pid)
             ->join('user','user.id','=','hamahang_project_responsible.user_id')
             ->whereNull('hamahang_project_responsible.deleted_at')
             ->select('hamahang_project_responsible.permission_type', 'hamahang_project_responsible.user_id', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
             ->get();
 
         $role_permission = DB::table('hamahang_project_role_permission')
-            ->where('project_id', '=', $pid)
+            ->where('project_id', '=', $decode_pid)
             ->join('roles','roles.id','=','hamahang_project_role_permission.role_id')
             ->whereNull('hamahang_project_role_permission.deleted_at')
             ->select('roles.id', 'roles.display_name', 'hamahang_project_role_permission.permission_type')
             ->get();
 
         $user_permission = DB::table('hamahang_project_user_permission')
-            ->where('project_id', '=', $pid)
+            ->where('project_id', '=', $decode_pid)
             ->join('user','user.id','=','hamahang_project_user_permission.user_id')
             ->whereNull('hamahang_project_user_permission.deleted_at')
             ->select('hamahang_project_user_permission.user_id', 'hamahang_project_user_permission.permission_type', DB::raw('CONCAT(user.Name,\'  \',user.Family ) as full_name'))
             ->get();
 
         $first_tasks = DB::table('hamahang_project_task_relations')
-            ->where('project_id', '=', $pid)
+            ->where('project_id', '=', $decode_pid)
             ->whereNull('hamahang_project_task_relations.deleted_at')
             ->select('hamahang_project_task_relations.first_task_id')
             ->get();

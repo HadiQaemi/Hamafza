@@ -62,7 +62,7 @@
         <div class="col-xs-1 center_text_align">
             <a class="btn btn-primary pull-left" id="{{isset($pid) ? 'create_rapid_task_to_project_btn_submit' : 'create_rapid_task_btn_submit'}}"><i ></i> {{trans('app.confirm')}}</a>
         </div>
-        <input type="hidden" name="pid" id="pid" value="{{isset($pid) ? $pid : ''}}">
+        <input type="hidden" name="pid" id="pid" value="{{isset($pid) ? enCode($pid): ''}}">
     </form>
     <div class="clearfixed"></div>
 

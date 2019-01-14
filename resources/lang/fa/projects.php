@@ -43,6 +43,8 @@ return [
     'final_date'  => 'تاریخ پایان',
     'current_date'  => 'تاریخ جاری',
     'status_date'  => 'تاریخ وضعیت',
+    'no_permissions'  => 'شما دسترسی لازم برای این عملیات را ندارید',
+    'change_weights_permissions'  => 'شما دسترسی تغییر وزن وظایف را دارید.',
     'base_calendar'  => 'تقویم پایه',
     'create_page'  => 'ایجاد صفحه',
     'priority'  => 'اولویت',

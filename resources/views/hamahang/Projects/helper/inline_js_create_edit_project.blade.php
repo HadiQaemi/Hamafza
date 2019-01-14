@@ -123,7 +123,6 @@
         }
     })
     function CheckForm() {
-
 //        if (($('input[name=save_type]:checked').val() == 11 || $('input[name=save_type]:checked').val() == 22) && $('#base_calendar').val() != '') {
         if(1){
         EditProject();
@@ -150,6 +149,7 @@
             p_type: $('input[name=p_type]:checked').val(),
             p_top_goals: $('#p_top_goals').val(),
             p_page: $('#p_page').val(),
+            p_id: $('#edit_pid').val(),
             p_about: $('#p_about').val(),
             p_desc: $('#p_desc').val(),
             p_responsible: $('#p_responsible').val(),

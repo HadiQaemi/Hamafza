@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Http\Controllers\Hamahang\ProjectController;
 use App\Http\Controllers\Hamahang\UserController;
 use App\Models\hamafza\Pages;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\hamahang_project_task;
+use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
 use App\Models\Hamahang\Tasks\task_priority_assigner;
@@ -2476,6 +2478,14 @@ class MyAssignedTaskController extends Controller
     }
     public function rapid_new_task_to_project()
     {
+        $pid = deCode(Request::get('pid'));
+        $permission = ProjectController::TakeProjectPermissions($pid);
+        if(!in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION ,$permission)){
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }
+
         $validator = Validator::make(Request::all(), [
             'immediacy' => 'required|in:0,1',
             'importance' => 'required|in:0,1',
@@ -2504,7 +2514,7 @@ class MyAssignedTaskController extends Controller
                 $task_title = Request::get('task_title');
                 $respite_date = Request::get('respite_date');
                 $selected_users = Request::get('selected_users');
-                $pid = Request::get('pid');
+                $pid = deCode(Request::get('pid'));
                 $respite_duration_timestamp = hamahang_make_task_respite($respite_date, '08:00:00');
 
                 $task = new tasks;
