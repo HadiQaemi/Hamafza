@@ -431,15 +431,16 @@ class ProjectController extends Controller
                 DB::table('hamahang_task')->where('id','=', (int) $key)->update(['progress'=>(float) $progress]);
                 task_status::create_task_status($key, 1, $progress, Auth::id(), time());
             }
-            DB::table('hamahang_project')->where('id','=', (int) Request::input('pid'))->update(['progress'=>(float) $project/100]);
+
             $message = trans('projects.change_weights_permissions');
         }
-        if($doing ==2 )
-            return json_encode(['success'=>true]);
-        else if(trim($message)==trans('projects.no_permissions')){
+        if($doing ==2 ){
+            DB::table('hamahang_project')->where('id','=', (int) deCode(Request::input('pid')))->update(['progress'=>(float) $project/100]);
+            return json_encode(['success'=>true, 'project'=>$project/100, 'message'=>$message]);
+        }else if(trim($message)==trans('projects.no_permissions')){
             return json_encode(['success'=>false, 'message'=>$message]);
         }else{
-            return json_encode(['success'=>false, 'project'=>$project/100, 'message'=>$message]);
+            return json_encode(['success'=>false]);
         }
     }
     public function project_tasks_list($pid)
