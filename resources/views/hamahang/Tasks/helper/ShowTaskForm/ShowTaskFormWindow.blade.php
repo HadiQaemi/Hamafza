@@ -1,161 +1,173 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
-        <li  class="active">
+        <li>
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
-        <li>
-            <a href="#tab_t2" data-toggle="tab">تنظیم</a>
+        <li class="disabled">
+            {{--<a href="#tab_t2" data-toggle="tab">تنظیم</a>--}}
+            <a href="" data-toggle="tab">تنظیم</a>
         </li>
-        <li>
-            <a href="#tab_t3" data-toggle="tab">منابع</a>
+        <li class="disabled">
+            {{--<a href="#tab_t3" data-toggle="tab">منابع</a>--}}
+            <a href="" data-toggle="tab">منابع</a>
         </li>
         <li>
             <a href="#tab_t4" data-toggle="tab">روابط</a>
         </li>
         <li>
-        <a href="#tab_t5" data-toggle="tab">اقدام</a>
+            <a href="#tab_t6" data-toggle="tab">تخصیص</a>
+        </li>
+        <li class="active">
+            <a href="#tab_t5" data-toggle="tab">اقدام</a>
         </li>
         <li>
-        <a href="#tab_t6" data-toggle="tab">گفتگو</a>
+            <a href="#tab_t7" data-toggle="tab">گفتگو</a>
         </li>
         <li>
-        <a href="#tab_t7" data-toggle="tab">سابقه</a>
+            <a href="#tab_t8" data-toggle="tab">سابقه</a>
         </li>
         <li style="float: left">
             <h5 id="task_type" style="color: blue"></h5>
         </li>
     </ul>
-    @php
-    $task = $res['task'];
-    $edit_able = ($res['task_all']->uid != Auth::id() ? true : true);
-    @endphp
-
     {{--<form action="{{ route('hamahang.tasks.save_task') }}" class="" name="ShowTaskForm" id="ShowTaskForm" method="post"--}}
-    <form action="{{ route('hamahang.tasks.update_task') }}" class="" name="ShowTaskForm" id="ShowTaskForm" method="post" enctype="multipart/form-data">
+    <form action="{{ route('hamahang.tasks.update_task') }}" class="" name="ShowTaskForm" id="edit_task_form" method="post" enctype="multipart/form-data">
         <div class="tab-content new-task-form">
-            <div class="tab-pane active" style="padding-top: 8px;margin-top:20px" id="tab_t1">
+                {{--<pre>--}}
+                    @php
+                    $task = $res['task'];
+                    //print_r($task);
+                    $edit_able = true;
+                    @endphp
+                {{--</pre>--}}
+            <div class="tab-pane" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
-                    <div class="col-lg-10">
-                        <div class="row">
-                            <input type="text" class="form-control" {{$edit_able == 1 ? ' name="title" id="title" ' : 'disabled'}} value="{{$task['title']}}"/>
-                            <input type="hidden" name="tid" id="tid" value="{{$res['task_id']}}"/>
-                        </div>
-                        <div class="row">
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" value="0" {{$edit_able == 1 ? ' name="type" id="official" ' : 'disabled'}} {{$task['type'] ==0 ? 'checked' : ''}}/>
-                                <label for="official">{{ trans('app.official') }}</label>
-                                <input type="radio" value="1" {{$edit_able == 1 ? ' name="type" id="unofficial" ' : 'disabled'}} {{$task['type'] ==1 ? 'checked' : ''}}/>
-                                <label for="unofficial">{{ trans('app.unofficial') }}</label>
-                            </div>
-                            {{--<div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">--}}
-                                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>--}}
-                                {{--<label for="kind_activity">{{ trans('tasks.activity') }}</label>--}}
-                                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>--}}
-                                {{--<label for="kind_event">{{ trans('tasks.event')}}</label>--}}
-                            {{--</div>--}}
-                            <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                                <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
-                                <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                                <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task['importance'] ==0 ? 'checked' : ''}}/>
-                                <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
-                            </div>
-                            <div class="pull-right" style="height: 30px;line-height: 30px;">
-                                <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task['immediate'] ==1 ? 'checked' : ''}}/>
-                                <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                                <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task['immediate'] ==0 ? 'checked' : ''}}/>
-                                <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
-                            </div>
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control border-radius task_title" name="title" id="title" value="{{$task['title']}}"/>
+                        <input type="hidden" name="tid" id="tid" value="{{$res['tid']}}"/>
+                        <input type="hidden" name="aid" id="aid" value="{{$res['aid']}}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <input type="radio" value="0" name="type" id="official" {{$task['type'] ==0 ? 'checked' : ''}}/>
+                            <label for="official">{{ trans('app.official') }}</label>
+                            <input type="radio" value="1" name="type" id="unofficial" {{$task['type'] ==1 ? 'checked' : ''}}/>
+                            <label for="unofficial">{{ trans('app.unofficial') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
+                    <div class="col-lg-11">
+                        <div id="for-desc">
+                            <div class="row col-lg-12 header">
+                                <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                            </div>
+                            <div class="row main-desc">
+                                <textarea class="form-control row content_tab_text content_tab" name="task_desc" id="desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{$task['desc']}}</textarea>
+                                <div class="content_tab_view content_tab hidden">
+                                    {!! preg_replace('/img::/','<div><img src="'.route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/',preg_replace('/::img/','"></div>',$task['task_desc'])) !!}
+                                </div>
+                            </div>
+                            @if($edit_able == 1)
+                                <div class="filemanager-buttons-client pull-right bottom-desc">
+                                    <label for="fileToUpload" class="pointer">
+                                        <input type="file" class="fileToUpload form-control" style="display: none;" id="fileToUpload"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                            <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                        </svg>
+                                        <div class="display-inline">{{trans('app.add_file')}}</div>
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
+                    <div class="col-lg-11">
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple" {{$edit_able == 1 ? ' name="pages[]" id="new_task_pages" ' : 'disabled'}} >
-                            @if(!empty($res['task_pages']))
-                                @foreach($res['task_pages'] as $page)
-                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                multiple="multiple"  name="pages[]" id="new_task_pages" >
+                            @if(!empty($task->Pages))
+                                @foreach($task->Pages as $page)
+                                    <option selected="selected" value="{{ $page->id }}">{{ $page->Subject->title}}</option>
                                 @endforeach
                             @endif
                         </select>
                     </div>
                 </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control row" {{$edit_able == 1 ? ' name="task_desc" id="desc" ' : 'disabled'}} value="{{$task['task_desc']}}"/>
-                    </div>
-                </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
-                    <div class="col-lg-10">
-                        <div class="col-sm-6 row" style="padding: 0px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
+                    <div class="col-lg-11">
+                        <div class="col-sm-4 row" style="padding: 0px;">
                             <select class="select2_auto_complete_user col-xs-12"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="users[]" id="new_task_users_responsible" ' : 'disabled'}} >
-                                @if(!empty($res['task_users']))
-                                    @foreach($res['task_users'] as $task_users)
-                                        <option selected="selected" value="{{ $task_users->id }}">{{ $task_users->Name.' '.$task_users->Family }}</option>
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple  name="users[]" id="new_task_users_responsible" >
+                                @if(!empty($task->Assignments))
+                                    @foreach($task->Assignments as $Assignment)
+                                        <option selected="selected" value="{{ $Assignment->Employee->id }}">{{ $Assignment->Employee->Name.' '.$Assignment->Employee->Family }}</option>
                                     @endforeach
                                 @endif
                             </select>
                             <span class=" Chosen-LeftIcon"></span>
                         </div>
-                        <div class="col-sm-6 line-height-35" style="padding-right: 5px;">
+                        <div class="col-sm-8" style="padding-right: 5px;">
 
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users_responsible']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
-                            <input type="radio" {{$edit_able == 1 ? ' name="assign_type" id="use_type1" ' : 'disabled'}} value="1" checked/>
+                            <input type="radio" name="assign_type" id="use_type1" value="1" {{$task['assign_type'] ==1 ? 'checked' : ''}}/>
                             <label class="" for="use_type1">{{ trans('tasks.collective') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="assign_type" id="use_type2" ' : 'disabled'}} class="" value="2"/>
+                            <input type="radio" name="assign_type" id="use_type2" value="2" {{$task['assign_type'] ==2 ? 'checked' : ''}}/>
                             <label class="" for="use_type2">{{ trans('tasks.individual') }}</label>
 
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="send_mail" id="send_mail" ' : 'disabled'}} value="1"/>
+                            <input type="radio" name="assign_type" id="use_type3" disabled=""/>
+                            <label for="use_type2" style="margin-left: 0px;margin-right: 5px">{{ trans('tasks.one_person') }}</label>
+
+                            <input type="checkbox" name="send_mail" id="send_mail" value="1" {{isset($task['send_mail']) ? 'checked' : ''}}/>
                             <label class="" for="send_mail">{{ trans('tasks.send-mail') }}</label>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="send_sms" id="send_sms" ' : 'disabled'}} value="1"/>
+                            <input type="checkbox" name="send_sms" id="send_sms" value="1" {{isset($task['send_sms']) ? 'checked' : ''}}/>
                             <label class="" for="send_sms">{{ trans('tasks.send-sms') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
-                    <div class="col-lg-10">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
+                    <div class="col-lg-11">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select class="select2_auto_complete_transcripts"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="transcripts[]" id="new_task_transcripts" ' : 'disabled'}} >
-                                @if(!empty($res['task_transcripts']))
-                                    @foreach($res['task_transcripts'] as $task_transcripts)
-                                        <option selected="selected" value="{{ $task_transcripts->id }}">{{ $task_transcripts->Name.' '.$task_transcripts->Family }}</option>
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple name="transcripts[]" id="new_task_transcripts">
+                                @if(!empty($task->Transcripts))
+                                    @foreach($task->Transcripts as $transcript)
+                                        <option selected="selected" value="{{ $transcript->user->id }}">{{ $transcript->user->Name.' '.$transcript->user->Family }}</option>
                                     @endforeach
                                 @endif
                             </select>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
                             <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
                                 <span class="icon icon-afzoodane-fard fonts"></span>
                             </a>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_cr" id="report-type1" ' : 'disabled'}} value="1"/>
-                            <label for="report-type1" class="transcript_option">{{ trans('tasks.report_on_task_creation') }}</label>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_co" id="report-type2" ' : 'disabled'}} value="1"/>
-                            <label for="report-type2" class="transcript_option">{{ trans('tasks.report_on_task_completion') }}</label>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_to_manager" id="report-type3" ' : 'disabled'}} value="1"/>
-                            <label for="report-type3" class="transcript_option">{{ trans('tasks.report_on_responsible') }}</label>
+                            <input type="checkbox" name="report_on_cr" id="report-type1" value="1" {{isset($task['report_on_create_point']) ? 'checked' : ''}}/>
+                            <label for="report-type1" class="">{{ trans('tasks.report_on_task_creation') }}</label>
+                            <input type="checkbox" name="report_on_co" id="report-type2" value="1" {{isset($task['report_on_completion_point']) ? 'checked' : ''}}/>
+                            <label for="report-type2" class="">{{ trans('tasks.report_on_task_completion') }}</label>
+                            <input type="checkbox" name="report_to_manager" id="report-type3" value="1" {{isset($task['report_to_managers']) ? 'checked' : ''}}/>
+                            <label for="report-type3" class="">{{ trans('tasks.report_on_responsible') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
+                    <div class="col-lg-11">
                         <select class="select2_auto_complete_keywords"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"
-                                {{$edit_able == 1 ? ' name="keywords[]" id="new_task_keywords" ' : 'disabled'}} >
-                            @if(!empty($res['task_keywords']))
-                                @foreach($res['task_keywords'] as $task_keywords)
-                                    <option selected="selected" value="{{ $task_keywords->id }}">{{ $task_keywords->title }}</option>
+                                multiple="multiple" name="keywords[]" id="new_task_keywords">
+                            @if(!empty($task->Keywords))
+                                @foreach($task->Keywords as $task_keywords)
+                                    <option selected="selected" value="{{ $task_keywords->keyword->id }}">{{ $task_keywords->keyword->title }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -163,52 +175,58 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
                         </div>
                     </div>
-                    <div class="col-lg-10 noRightPadding noLeftPadding line-height-35">
-                        <div class="col-xs-3 noRightPadding noLeftPadding">
-                            <input type="radio" {{$edit_able == 1 ? ' name="respite_timing_type" id="determination_doing_duration" ' : 'disabled'}} onclick="change_normal_task_timing_type(0)" value="0" {{ $task['respite_timing_type']==0 ? '' : 'checked' }}/>
-                            <label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="respite_timing_type" id="determination_end_date" ' : 'disabled'}} onclick="change_normal_task_timing_type(1)" value="1" {{ $task['respite_timing_type']==1 ? '' : 'checked' }}/>
-                            <label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>
+                    <div class="col-lg-11 line-height-35">
+
+                        <div class="col-xs-12 noRightPadding noLeftPadding">
+                            <span class="pull-right;">
+                                {{--<input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=on-time ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? 'checked' : '' }}/>--}}
+                                {{--<label for="on-time">{{ trans('tasks.on-time') }}</label>--}}
+                                <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=no-detemine ' : 'disabled'}} onclick="" value="3" {{ $task['respite_timing_type']==3 ? 'checked' : '' }}/>
+                                <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
+                            </span>
+                            <span class="pull-right;">
+                                <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=determination_doing_duration ' : 'disabled'}} onclick="change_normal_task_timing_type(0)" value="0" {{ $task['respite_timing_type']==0 ? 'checked' : '' }}/>
+                                <label for="determination_doing_duration">{{ trans('tasks.determination_doing_duration') }}</label>
+                                <input type="radio" {{$edit_able == 1 ? ' name=respite_timing_type id=determination_end_date ' : 'disabled'}} onclick="change_normal_task_timing_type(1)" value="1" {{ $task['respite_timing_type']==1 ? 'checked' : '' }}/>
+                                <label for="determination_end_date">{{ trans('tasks.determination_end_date') }}</label>
+                            </span>
+
+                            <span id="normal_task_timing" class="pull-right;line-height-35" style="display: inline-flex">
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_day" id="duration_day" ' : 'disabled'}} value="{{isset($task['duration_day']) ? $task['duration_day'] : ''}}" />
+                                <label class="pull-right">روز</label>
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_hour" id="duration_hour" ' : 'disabled'}} value="{{isset($task['duration_hour']) ? $task['duration_hour'] : ''}}"/>
+                                <label class="pull-right">ساعت</label>
+                                <input class="form-control border-radius col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_min" id="duration_min" ' : 'disabled'}} value="{{isset($task['duration_min']) ? $task['duration_min'] : ''}}"/>
+                                <label class="pull-right">دقیقه</label>
+                            </span>
                         </div>
-                        <div id="normal_task_timing" class="col-xs-5 form-inline noRightPadding noLeftPadding">
-                            <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_day" id="duration_day" ' : 'disabled'}} value="{{isset($task['duration_day']) ? $task['duration_day'] : ''}}" />
-                            <label class="pull-right">روز</label>
-                            <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_hour" id="duration_hour" ' : 'disabled'}} value="{{isset($task['duration_hour']) ? $task['duration_hour'] : ''}}"/>
-                            <label class="pull-right">ساعت</label>
-                            <input class="form-control col-xs-1 pull-right" style="width: 55px" {{$edit_able == 1 ? ' name="duration_min" id="duration_min" ' : 'disabled'}} value="{{isset($task['duration_min']) ? $task['duration_min'] : ''}}"/>
-                            <label class="pull-right">دقیقه</label>
-                        </div>
-                        <div class="col-xs-4 noRightPadding noLeftPadding">
-                            <input type="radio" {{$edit_able == 1 ? ' name="respite_timing_type" id="on-time" ' : 'disabled'}} value="2" {{ $task['respite_timing_type']==2 ? '' : 'checked' }}/>
-                            <label for="on-time">{{ trans('tasks.on-time') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="respite_timing_type" id="no-detemine" ' : 'disabled'}} onclick="" value="3" {{ $task['respite_timing_type']==3 ? '' : 'checked' }}/>
-                            <label for="no-detemine">{{ trans('tasks.no-detemine') }}</label>
-                        </div>
+
                     </div>
                 </div>
-
-                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <label class="line-height-35 pull-right">{{ trans('app.attachments') }}</label>
-                    <div class="row-fluid pull-right">
-                        <div class="filemanager-buttons-client">
-                            <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
-                                <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
-                                <span>{{trans('app.add_file')}}</span>
-                            </div>
-                            {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
-                            {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
-                            {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
-                            {{--</div>--}}
+                <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
-                        <div class="pull-right filemanager-title-client">
-                            {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
+                    </div>
+                    <div class="col-lg-11 line-height-35">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task->Priority->importance ==1 ? 'checked' : ''}}/>
+                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task->Priority->importance ==0 ? 'checked' : ''}}/>
+                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
                         </div>
-                        <div class="clearfix"></div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task->Priority->immediate ==1 ? 'checked' : ''}}/>
+                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task->Priority->immediate ==0 ? 'checked' : ''}}/>
+                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -227,12 +245,12 @@
             </div>
             <div class="tab-pane" style="padding: 8px;margin-top:20px" id="tab_t2">
                 <div class="input-group col-xs-12" style="margin: 0 0 15px 5px;">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <label class="pull-right line-height-35  noRightPadding noLeftPadding" >{{trans('tasks.every')}}</label>
-                        <input type="text" {{$edit_able == 1 ? ' name="task_schedul_num" id="task_schedul_num" ' : 'disabled'}} class="form-control" style="width: 40px;" value="" >
+                    <div class="col-xs-1" style="padding-left: 0px;width: 100px;">
+                        <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
+                        <input type="text" {{$edit_able == 1 ? ' name="task_schedul_num" id="task_schedul_num" ' : 'disabled'}} class="form-control border-radius" style="width: 30px;" value="{{$task['task_schedul_num']}}" >
                     </div>
-                    <div class="col-xs-2 noRightPadding noLeftPadding">
-                        <select {{$edit_able == 1 ? ' name="task_schedul" id="task_schedul" ' : 'disabled'}} class="form-control line-height-35">
+                    <div class="col-xs-2">
+                        <select {{$edit_able == 1 ? ' name=task_schedul id=task_schedul ' : 'disabled'}} class="form-control border-radius line-height-35">
                             <option value="minute" {{$task['task_schedul'] == 'minute' ? 'selected="selected"' : ''}}>{{trans('tasks.minute')}}</option>
                             <option value="hour" {{$task['task_schedul'] == 'hour' ? 'selected="selected"' : ''}}>{{trans('tasks.hour')}}</option>
                             <option value="daily" {{$task['task_schedul'] == 'daily' ? 'selected="selected"' : ''}}>{{trans('tasks.day')}}</option>
@@ -248,12 +266,12 @@
                         <div class="hour col-xs-12 {{($task['task_schedul'] == 'hour') ? '' : 'hidden'}}">
                         </div>
                         <div class="daily col-xs-12 {{($task['task_schedul'] == 'daily') ? '' : 'hidden'}}">
-                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control TimePicker line-height-35']) !!}--}}
+                            {{--                            {!! Form::text('daily_value', null, ['class' => 'form-control border-radius TimePicker line-height-35']) !!}--}}
                         </div>
                         <div class="weekly row {{($task['task_schedul'] == 'weekly') ? '' : 'hidden'}}">
                             @for ($i = 0; $i < 7; $i++)
                                 <div class="input-group pull-right weekly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                    <input {{$edit_able == 1 ? ' name="" id="" ' : 'disabled'}} id="weekly_value_{{$i}}" class="" style="width: 22px;" name="weekly_value[]" type="checkbox" value="{{$i}}">
+                                    <input {{$edit_able == 1 ? ' name=""  ' : 'disabled'}} id="weekly_value_{{$i}}" class="" style="width: 22px;" name="weekly_value[]" type="checkbox" value="{{$i}}" {{isset($task['weekly_value'][$i]) ? 'checked' : ''}}>
                                     <label style="line-height: 10px;" for="{{ "weekly_value_$i" }}">{{trans('tasks.array_weekly_weekdays.'.$i)}}</label>
                                 </div>
                             @endfor
@@ -262,7 +280,7 @@
                             <div class="input-group pull-right monthly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 5; $i++)
                                     <div class="input-group pull-right monthly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input {{$edit_able == 1 ? ' name="monthly_value[]" id="monthly_value_'.$i.'" ' : 'disabled'}} class="" style="width: 22px;" type="checkbox" value="{{$i}}">
+                                        <input {{$edit_able == 1 ? ' name="monthly_value[]" id="monthly_value_'.$i.'" ' : 'disabled'}} class="" style="width: 22px;" type="checkbox" value="{{$i}}" {{isset($task['monthly_value'][$i]) ? 'checked' : ''}}>
                                         <label style="line-height: 10px;" for="{{ "monthly_value_$i" }}">{{trans('tasks.array_monthly_months.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -272,7 +290,7 @@
                             <div class="input-group pull-right seasonly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 4; $i++)
                                     <div class="input-group pull-right seasonly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input  {{$edit_able == 1 ? ' name="seasonly_value[]" id="seasonly_value_'.$i.'" ' : 'disabled'}} class="" style="width: 22px;" type="checkbox" value="{{$i}}">
+                                        <input  {{$edit_able == 1 ? ' name="seasonly_value[]" id="seasonly_value_'.$i.'" ' : 'disabled'}} class="" style="width: 22px;" type="checkbox" value="{{$i}}" {{isset($task['seasonly_value'][$i]) ? 'checked' : ''}}>
                                         <label style="line-height: 10px;" for="{{ "seasonly_value_$i" }}">{{trans('tasks.array_seasonly_seasons.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -282,7 +300,7 @@
                             <div class="input-group pull-right yearly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 12; $i++)
                                     <div class="input-group pull-right yearly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input  {{$edit_able == 1 ? ' name="yearly_num[]" id="yearly_num_'.$i.'" ' : 'disabled'}} class="" style="width: 10px;" type="checkbox" value="{{$i}}">
+                                        <input  {{$edit_able == 1 ? ' name="yearly_num[]" id="yearly_num_'.$i.'" ' : 'disabled'}} class="" style="width: 10px;" type="checkbox" value="{{$i}}" {{isset($task['yearly_num'][$i]) ? 'checked' : ''}}>
                                         <label style="line-height: 10px;" for="{{ "yearly_num_$i" }}">{{trans('tasks.array_yearly_years.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -290,23 +308,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group col-xs-12 noRightPadding noLeftPadding">
-                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding">
+                <div class="input-group col-xs-12">
+                    <div class="col-xs-1 pull-right">
                         <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}</label>
                     </div>
                     <div class="col-xs-2 noRightPadding noLeftPadding">
-                        <input type="text" value="" class="form-control DatePicker" {{$edit_able == 1 ? ' name="schedul_begin_date" id="schedul_begin_date" ' : 'disabled'}} aria-describedby="schedul_begin_date" >
+                        {{--<input type="text" value="{{$task['schedul_begin_date']}}" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >--}}
+                        <input type="text" value="{{$task['schedul_begin_date']}}" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_begin_date id=schedul_begin_date ' : 'disabled'}} aria-describedby="schedul_begin_date" >
                     </div>
                 </div>
-                <div class="col-xs-12 noRightPadding noLeftPadding">
-
+                <div class="input-group col-xs-12">
+                    <div class="col-xs-1 pull-right">
+                        <label for="r2" class="line-height-35">{{ trans('tasks.end') }}</label>
+                    </div>
                     <div class="col-xs-10 noRightPadding noLeftPadding">
-                        <div class="daily col-xs-1 noRightPadding noLeftPadding">
-                            <label for="r2" class=" line-height-35">{{ trans('tasks.end') }}</label>
-                        </div>
                         <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
                                 <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                    <input type="radio" {{$edit_able == 1 ? ' name="schedul_end_date" id="schedul_end_date_none" ' : 'disabled'}} value="schedul_end_date_none" {{ $task['schedul_end_date']=='schedul_end_date_none' ? 'checked="checked"' : '' }} />
+                                    <input type="radio" {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_none ' : 'disabled'}} value="schedul_end_date_none" {{ $task['schedul_end_date']=='schedul_end_date_none' ? 'checked="checked"' : '' }} />
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
                                     <label for="schedul_end_date_none">{{ trans('tasks.none') }}</label>
@@ -314,13 +332,13 @@
                         </div>
                         <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
                                 <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="radio" {{$edit_able == 1 ? ' name="schedul_end_date" id="schedul_end_date_events" ' : 'disabled'}} value="schedul_end_date_events" {{ $task['schedul_end_date']=='schedul_end_date_events' ? 'checked="checked"' : '' }} />
+                                    <input type="radio" {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_events ' : 'disabled'}} value="schedul_end_date_events" {{ $task['schedul_end_date']=='schedul_end_date_events' ? 'checked="checked"' : '' }} />
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
                                     <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text"  {{$edit_able == 1 ? ' name="schedul_end_num_events" id="schedul_end_date_events_" ' : 'disabled'}} class="form-control" style="width: 40px;" value="" >
+                                    <input type="text"  {{$edit_able == 1 ? ' name=schedul_end_num_events id=schedul_end_date_events_ ' : 'disabled'}} class="form-control border-radius" style="width: 40px;" value="{{isset($task['schedul_end_num_events']) ? $task['schedul_end_num_events'] : ''}}" >
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
                                     <label for="schedul_end_date_events_">{{ trans('tasks.event') }}</label>
@@ -328,7 +346,7 @@
                         </div>
                         <div class="daily col-xs-2" style="margin: 0 0 5px 5px;">
                                 <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
-                                    <input type="radio"  {{$edit_able == 1 ? ' name="schedul_end_date" id="schedul_end_date_date" ' : 'disabled'}} value="schedul_end_date_date" {{ $task['schedul_end_date']=='schedul_end_date_date' ? 'checked="checked"' : '' }} checked/>
+                                    <input type="radio"  {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_date ' : 'disabled'}} value="schedul_end_date_date" {{ $task['schedul_end_date']=='schedul_end_date_date' ? 'checked="checked"' : '' }} />
                                 </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
                                     <label for="schedul_end_date_date">{{ trans('tasks.in-date') }}</label>
@@ -336,15 +354,14 @@
                         </div>
                         <div class="daily col-xs-3" style="margin: 0 0 5px 5px;">
                                 <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                    <input type="text" class="form-control DatePicker_end_date_date" {{$edit_able == 1 ? ' name="schedul_end_date_date" id="schedul_end_date_" ' : 'disabled'}} aria-describedby="schedul_end_date_date" >
+                                    <input type="text" class="form-control border-radius DatePicker" {{$edit_able == 1 ? ' name=schedul_end_date id=schedul_end_date_ ' : 'disabled'}} aria-describedby="schedul_end_date_date"  value="{{$task['schedul_end_date']}}"/>
                                 </span>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-xs-12 noRightPadding noLeftPadding" style="border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
-                    <div class="col-xs-1 noRightPadding noLeftPadding margin-top-10">
-                        <label class="line-height-35">{{ trans('tasks.form') }}</label>
+                <div class="input-group col-xs-12" style="border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
+                    <div class="col-xs-1 pull-right">
+                        <label for="r2" class="line-height-35">{{ trans('tasks.form') }}</label>
                     </div>
                     <div class="col-xs-11 margin-top-10">
                         <select class="select2_auto_complete_user col-xs-12"
@@ -355,11 +372,11 @@
                         <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                     </div>
                 </div>
-                <div class="col-xs-12 noRightPadding noLeftPadding">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.here-help') }}</label>
+                <div class="input-group col-xs-12" style="border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
+                    <div class="col-xs-1 pull-right">
+                        <label for="r2" class="line-height-35">{{ trans('tasks.here-help') }}</label>
                     </div>
-                    <div class="col-xs-11">
+                    <div class="col-xs-11 margin-top-10">
                         <select class="select2_auto_complete_user col-xs-12"
                                 data-placeholder="{{trans('tasks.select_some_options')}}" multiple
                                 {{$edit_able == 1 ? ' name="users[]" id="new_task_users_" ' : 'disabled'}}>
@@ -368,22 +385,28 @@
                         <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                     </div>
                 </div>
-                <div class="col-xs-12 noRightPadding noLeftPadding" style="border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" {{$edit_able == 1 ? ' name="end_on_assigner_accept" id="end_on_assigner_accept" ' : 'disabled'}} style="height: 20px"/>
+                <div class="input-group col-xs-12" style="border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
+                    <div class="col-xs-1 pull-right">
+                        <input type="checkbox" {{$edit_able == 1 ? ' name=end_on_assigner_accept id=end_on_assigner_accept ' : 'disabled'}} {{ isset($task['end_on_assigner_accept']) ? 'checked="checked"' : '' }} style="height: 20px"/>
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-xs-11 margin-top-10">
                         <label for="end_on_assigner_accept">{{ trans('tasks.modal_task_details_assignor_accept_or_ended') }}</label>
                     </div>
                 </div>
-                <div class="col-xs-12 noRightPadding noLeftPadding">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" {{$edit_able == 1 ? ' name="transferable" id="transferable" ' : 'disabled'}} style="height: 20px"/>
+                <div class="input-group col-xs-12">
+                    <div class="col-xs-1 pull-right">
+                        <input type="checkbox" {{$edit_able == 1 ? ' name=transferable id=transferable ' : 'disabled'}} {{ isset($task['transferable']) ? 'checked="checked"' : '' }} style="height: 20px"/>
                     </div>
-                    <div class="col-xs-11">
+                    <div class="col-xs-11 margin-top-10">
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>
                     </div>
                 </div>
+                {{--<div class="pull-right col-xs-12" style="height: 30px;line-height: 30px;">--}}
+                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_activity" ' : 'disabled'}}  value="1" {{$task['kind'] ==1 ? 'checked' : ''}}/>--}}
+                {{--<label for="kind_activity">{{ trans('tasks.activity') }}</label>--}}
+                {{--<input type="radio" {{$edit_able == 1 ? ' name="kind" id="kind_event" ' : 'disabled'}} value="0" {{$task['kind'] ==0 ? 'checked' : ''}}/>--}}
+                {{--<label for="kind_event">{{ trans('tasks.event')}}</label>--}}
+                {{--</div>--}}
             </div>
             <div class="tab-pane" id="tab_t3" style="padding-top: 8px;margin-top:20px">
                 @if($edit_able == 1)
@@ -400,10 +423,10 @@
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
                         <div class="col-xs-1">
-                            <input type="text" id="new_task_resources_amount" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.amount') }}"/>
+                            <input type="text" id="new_task_resources_amount" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.amount') }}"/>
                         </div>
                         <div class="col-xs-1">
-                            <input type="text" id="new_task_resources_cost" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
+                            <input type="text" id="new_task_resources_cost" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.cost') }}"/>
                         </div>
                         <div class="col-xs-1">
                             <span class="btn btn-primary fa fa-plus" id="add_resource_task"></span>
@@ -418,7 +441,7 @@
                             <th class="col-xs-5">{{ trans('tasks.resource') }}</th>
                             <th class="col-xs-1">{{ trans('tasks.amount') }}</th>
                             <th class="col-xs-2">{{ trans('tasks.cost') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                            {{--                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>--}}
                         </tr>
                         </thead>
                         <tbody id="resources_task_list">
@@ -445,9 +468,9 @@
                                             <input name="new_task_resources_cost[]" type="hidden" value="{{$res['task']['new_task_resources_cost'][$k]}}"/>
                                         </label>
                                     </td>
-                                    <td>
-                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
-                                    </td>
+                                    {{--<td>--}}
+                                    {{--<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         @endif
@@ -470,7 +493,7 @@
                             <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
                         </div>
                         {{--<div class="col-xs-1 no-padding-left no-padding-right">--}}
-                            {{--<input type="text" id="new_task_weight" class="form-control noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
+                        {{--<input type="text" id="new_task_weight" class="form-control border-radius noRightPadding noLeftPadding text-center" placeholder="{{ trans('tasks.weight') }}" />--}}
                         {{--</div>--}}
                         <div class="col-xs-1">
                             <span class="btn btn-primary" id="add_rel_task">{{ trans('app.add') }}</span>
@@ -486,7 +509,7 @@
                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                             <th class="col-xs-2">{{ trans('tasks.relation') }}</th>
                             <th class="col-xs-3">{{ trans('tasks.delay') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                            {{--<th class="col-xs-1">{{ trans('tasks.action') }}</th>--}}
                         </tr>
                         </thead>
                         <tbody id="rel_task_list">
@@ -504,11 +527,11 @@
                                     <td>
                                         <label class="input-group pull-right">
                                             {{$res['task']['new_task_weight'][$k]}}
-                                            <input {{$edit_able == 1 ? ' name="new_task_weight[]" id="" ' : 'disabled'}} type="hidden" value="{{$res['task']['new_task_weight'][$k]}}"/>
+                                            <input {{$edit_able == 1 ? ' name="new_task_weight[]"  ' : 'disabled'}} type="hidden" value="{{$res['task']['new_task_weight'][$k]}}"/>
                                         </label>
                                     </td>
                                     <td>
-                                        <select class="form-control" {{$edit_able == 1 ? ' name="new_task_relation[]" id="" ' : 'disabled'}}>
+                                        <select class="form-control border-radius" {{$edit_able == 1 ? ' name="new_task_relation[]"  ' : 'disabled'}}>
                                             {{--<option value="end_start" {{$res['task']['new_task_relation'][$k] == 'end_start' ? 'selected="selected"' :''}}>پایان به شروع</option>--}}
                                             {{--<option value="start_start" {{$res['task']['new_task_relation'][$k] == 'start_start' ? 'selected="selected"' :''}}>شروع به شروع</option>--}}
                                             {{--<option value="start_end" {{$res['task']['new_task_relation'][$k] == 'start_end' ? 'selected="selected"' :''}}>شروع به پایان</option>--}}
@@ -522,10 +545,10 @@
                                     <td>
                                         <label class="input-group pull-right">
                                             <div class="col-xs-6">
-                                                <input {{$edit_able == 1 ? ' name="new_task_delay_num[]" id="" ' : 'disabled'}} value="{{$res['task']['new_task_delay_num'][$k]}}" type="text" class="form-control" placeholder="وقفه"/>
+                                                <input {{$edit_able == 1 ? ' name="new_task_delay_num[]"  ' : 'disabled'}} value="{{$res['task']['new_task_delay_num'][$k]}}" type="text" class="form-control border-radius" placeholder="وقفه"/>
                                             </div>
                                             <div class="col-xs-6">
-                                                <select {{$edit_able == 1 ? ' name="new_task_delay_type[]" id="" ' : 'disabled'}} class="form-control" >
+                                                <select {{$edit_able == 1 ? ' name="new_task_delay_type[]"  ' : 'disabled'}} class="form-control border-radius" >
                                                     <option value="day" {{$res['task']['new_task_delay_type'][$k] == 'day' ? 'selected="selected"' :''}}>روز</option>
                                                     <option value="week" {{$res['task']['new_task_delay_type'][$k] == 'week' ? 'selected="selected"' :''}}>هفته</option>
                                                     <option value="month" {{$res['task']['new_task_delay_type'][$k] == 'month' ? 'selected="selected"' :''}}>ماه</option>
@@ -533,8 +556,304 @@
                                             </div>
                                         </label>
                                     </td>
+                                    {{--<td>--}}
+                                    {{--<span class="fa fa-trash btn btn-primary remove_new_task" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>--}}
+                                    {{--</td>--}}
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane active" id="tab_t5" style="padding: 8px;">
+                <div class="row col-lg-12" style="margin-top: 20px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.status') }}</label>
+                    </div>
+                    <div class="col-lg-11 noRightPadding noLeftPadding">
+                        <div class="pull-right noRightPadding noLeftPadding" style="height: 30px;line-height: 30px;">
+                            <input type="radio" name="task_status" id="not_start" value="0"  {{$task->Status->type ==0 ? 'checked' : ''}}/>
+                            <label for="not_start">{{ trans('tasks.not_start') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="on_done" value="1" {{$task->Status->type ==1 ? 'checked' : ''}}/>
+                            <label for="on_done">{{ trans('tasks.on_done')}}</label>
+                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$task->Status->percent}}" >
+                            <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_done" value="2" {{$task->Status->type ==2 ? 'checked' : ''}}/>
+                            <label for="status_done">{{ trans('tasks.status_done') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_finished" value="3" {{$task->Status->type ==3 ? 'checked' : ''}}/>
+                            <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->Status->type ==4 ? 'checked' : ''}}/>
+                            <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-top-15">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
+                    </div>
+                    <div class="col-lg-10 noRightPadding noLeftPadding">
+                        <div id="for-desc">
+                            <div class="row col-lg-12 header">
+                                <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                            </div>
+                            <div class="row main-desc">
+                                <textarea class="form-control row content_tab_text content_tab" name="action_explain" id="explain" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4"></textarea>
+                                <div class="content_tab_view content_tab hidden">
+                                    {!! preg_replace('/img::/','<div><img src="'.route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/',preg_replace('/::img/','"></div>','')) !!}
+                                </div>
+                            </div>
+                            @if($edit_able == 1)
+                                <div class="filemanager-buttons-client pull-right bottom-desc">
+                                    <label for="fileToUpload2" class="pointer">
+                                        <input type="file" class="fileToUpload2 form-control" style="display: none;" id="fileToUpload2"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                            <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                        </svg>
+                                        <div class="display-inline">{{trans('app.add_file')}}</div>
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-top-20">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label for="r2" style="height: 30px;line-height: 30px;">{{ trans('tasks.report') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30">
+                        <label for="determined-time">{{ trans('tasks.set_action_on') }}: </label>
+                        <input type="text" class="form-control border-radius DatePicker" style="display: inline;width: 110px;" id="action_date" name="action_date" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <input type="number" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <select class="form-control" id="action_duration_act_type">
+                            <option value="ساعت">ساعت</option>
+                            <option value="دقیقه">دقیقه</option>
+                        </select>
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="action_time_from" name="action_time_from" aria-describedby="respite_time">
+                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
+                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="action_time_to" name="action_time_to" aria-describedby="respite_time">
+                    </div>
+                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                        <i class="btn btn-primary fa fa-plus" id="add_btn_action"></i>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-bottom-20 border-bottom padding-bottom-20" id="action_list">
+                    @php $k=1; @endphp
+                    {{--@foreach($events->original['data'] as $Aevent)--}}
+                        {{--<div class="col-xs-12 action_list action_list{{$k}}" style="margin-top:10px">--}}
+                            {{--<div class="col-xs-2"> </div>--}}
+                            {{--<div class="col-xs-1">{{trans('tasks.in_date')}} </div>--}}
+                            {{--<div class="col-xs-3">--}}
+                                {{--<span class="margin-right-10"> {{preg_split('/ /',$Aevent['startdate'])[0]}}</span>--}}
+                                {{--<span class="margin-right-10"> {{trans('tasks.duration')}}: </span>--}}
+                                {{--<span class="margin-right-10"> {{$Aevent['dif']}} </span>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-xs-3">--}}
+                                {{--<span class="margin-right-10">{{trans('tasks.from')}}</span>--}}
+                                {{--<span class="margin-right-10">{{preg_split('/ /',$Aevent['startdate'])[1]}}</span>--}}
+                                {{--<span class="margin-right-10">{{ trans('tasks.to') }}</span>--}}
+                                {{--<span class="margin-right-10">{{preg_split('/ /',$Aevent['enddate'])[1]}}</span>--}}
+                                {{--<i class="fa fa-remove pointer margin-right-10" onclick="remove_action('{{$k++}}','{{$Aevent['ctid']}}','{{$Aevent['id']}}')"></i>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--@endforeach--}}
+                </div>
+                <div class="row col-lg-12 margin-top-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
+                        <div class="pull-right">
+                            <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="3" checked/>
+                            <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.action') }}</label>
+                            <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="1" style="display: inline" disabled/>
+                            <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
+                            <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="0" style="display: inline"/>
+                            <label for="reject_assigner1" class="rejected_options" >{{ trans('tasks.reject_to') }}</label>
+                        </div>
+                        <div class="pull-right width-400">
+                            <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts assingned_options"
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple disabled=""></select>
+                            <span class=" Chosen-LeftIcon"></span>
+                        </div>
+                        <div class="pull-right margin-right-10 line-height-35">
+                            <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels assingned_options" title="{{ trans('tasks.selecet_user') }}">
+                                <span class="icon icon-afzoodane-fard fonts"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 margin-top-15 margin-bottom-20 border-bottom padding-bottom-20">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.description') }}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" class="rejected_options form-control border-radius" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
+
+                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.ready') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <label for="">{{ trans('tasks.ready_body')}}</label>
+
+                            <input type="radio" name="ready_body" id="ready_body_0" value="0" checked/>
+                            <label for="ready_body_0">{{ trans('tasks.low') }}</label>
+
+                            <input type="radio" name="ready_body" id="ready_body_l" value="1"/>
+                            <label for="ready_body_l">{{ trans('tasks.high') }}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 50px">
+                            <label for="on_done">{{ trans('tasks.ready_mental')}}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0" checked/>
+                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
+
+                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
+                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.predict_duration') }}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                            <input type="text" class="form-control border-radius display-inline" name="action_duration" id="action_duration" value="1"/>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <select id="action_time_type" name="action_time_type" class="form-control border-radius">
+                                <option value="1">{{trans('tasks.hour')}}</option>
+                                <option value="24">{{trans('tasks.day')}}</option>
+                                <option value="168">{{trans('tasks.week')}}</option>
+                                <option value="720">{{trans('tasks.month')}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
+                    <div class="row col-lg-12 noLeftPadding noRightPadding">
+                        <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                            <label class="line-height-35">{{ trans('tasks.timing') }}</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="pull-right">
+                                <input type="radio" name="timing_type" id="timing_automatic" value="automatic" disabled/>
+                                <label class="line-height-35" for="timing_automatic">{{ trans('tasks.automatic') }}</label>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
+                                <input type="radio" name="timing_type" id="timing_manual" value="manual" checked/>
+                                <label class="line-height-35" for="timing_manual">{{ trans('tasks.manual') }}</label>
+                            </div>
+
+                            {{--<div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">--}}
+                            {{--<input type="radio" name="done_time" id="not-determine" value="not-determine"/>--}}
+                            {{--<label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>--}}
+                            {{--</div>--}}
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 noLeftPadding noRightPadding time_manual">
+                        <div class="col-lg-12 noLeftPadding noRightPadding">
+                            <div class="col-lg-2 noLeftPadding noRightPadding"></div>
+                            <div class="pull-right">
+                                <label>{{ trans('tasks.begin') }}: </label>
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date_begin" aria-describedby="respite_date">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 noLeftPadding noRightPadding">
+                            <div class="col-lg-2 noLeftPadding noRightPadding"></div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
+                                <label>{{ trans('tasks.end') }}: </label>
+                                <input type="radio" name="done_time" id="to_end" value="to_end" checked/>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
+                                <label for="to_end">{{ trans('tasks.to') }}</label>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
+                                <select id="task_schedul_" name="to_end" class="form-control border-radius">
+                                    <option value="daily">{{trans('tasks.today')}}</option>
+                                    <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
+                                    <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
+                                </select>
+                            </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;">
+                                <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
+                                <label for="determined-time">{{ trans('tasks.in') }}</label>
+                                <input type="text" class="form-control border-radius DatePicker" style="display: inline" id="action_date_" name="action_date_" aria-describedby="respite_date">
+                                <label for="determined-time">{{ trans('tasks.hour') }}</label>
+                                <input type="text" class="form-control border-radius TimePicker" style="display: inline" id="action_time" name="action_time" aria-describedby="respite_time">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12" style="margin-top: 10px;margin-bottom: 20px;border-bottom: #ccc solid 1px;">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">{{ trans('tasks.keywords') }}</label>
+                    </div>
+                    <div class="col-lg-11">
+                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple"></select>
+                        <span class=" Chosen-LeftIcon"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
+                <div class="col-xs-12 margin-bottom-30">
+                    <div class="col-xs-11">
+                        <input type="text" id="message" class="form-control border-radius" placeholder="پیام"/>
+                        <input type="hidden" id="user" class="form-control border-radius" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
+                    </div>
+                    <div class="col-xs-1 pointer line-height-35">
+                        <a id="add_message_task" class="btn btn-primary">{{trans('app.submit')}}</a>
+                    </div>
+
+                </div>
+                <div class="col-xs-12">
+                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th class="col-xs-2">کاربر</th>
+                            <th class="col-xs-10">پیام</th>
+                        </tr>
+                        </thead>
+                        <tbody id="message_task_list">
+                        @if(isset($res['task']['message_username']))
+                            @foreach($res['task']['message_username'] as $k=>$message_username)
+                                <tr id="add_resource_task{{$k.'show'}}">
                                     <td>
-                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task({{$k.'show'}})" for="r2"></span>
+                                        <label class="pull-right" for="r2">{{$res['task']['message_username'][$k]}}</label>
+                                        <input name="message_username[]" type="hidden" value="{{$res['task']['message_username'][$k]}}"/>
+                                    </td>
+                                    <td>
+                                        <label class="input-group pull-right">
+                                            {{$res['task']['messages'][$k]}}
+                                            <input name="messages[]" type="hidden" value="{{$res['task']['messages'][$k]}}"/>
+                                        </label>
                                     </td>
                                 </tr>
                             @endforeach
@@ -543,395 +862,32 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_t5" style="padding: 8px;">
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.form') }}</label>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.status') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="not_start" value="not_start" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not_start">{{ trans('tasks.not_start') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-3">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="radio" name="task_status" id="on_done" value="on_done"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
-                            <label for="on_done">{{ trans('tasks.on_done').' '.trans('tasks.precent_progress') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" id="num_event" class="form-control" style="width: 40px;" name="num_day" value="" >
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_done" value="status_done" />
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="status_done">{{ trans('tasks.status_done') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_finished" value="status_finished"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="task_status" id="status_suspended" value="status_suspended"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label for="r2">{{ trans('tasks.reject') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="checkbox" name="reject_assigner" id="reject_assigner" value="reject_assigner"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="reject_assigner">{{ trans('tasks.reject_assigner') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-9">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" class="form-control" placeholder="توضیح ..." name="explain_reject" id="explain_reject" value=""/>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.reject_to') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-10">
-                        <select id="assigns_new" name="assigns_new[]" class="select2_auto_complete_transcripts"
-                                data-placeholder="{{trans('tasks.select_some_options')}}" multiple></select>
-                        <span class=" Chosen-LeftIcon"></span>
-                    </div>
-                    <div class="col-xs-1 pull_right">
-                        <span class="input-group-addon edited-addon pull_right" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'assigns_new']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.keyword') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-11">
-                        <select id="new_task_keywords_" class="select2_auto_complete_keywords" name="assigns_keywords[]"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"></select>
-                        <span class=" Chosen-LeftIcon"></span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready_body') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_body" id="ready_body_0" value="0" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_body_0">{{ trans('tasks.low') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_body" id="ready_body_l" value="1"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_body_l">{{ trans('tasks.high') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.ready_mental') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_mental" id="ready_mental_0" value="0" checked/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_mental_0">{{ trans('tasks.low') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="padding: 10px 0px">
-                    <div class="col-xs-3" style="padding: 0px;margin: 0px;">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.duration') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="text" class="form-control" name="action_duration" id="action_duration" value="1" style="width: 70px;text-align: center;"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <select id="action_time_type" name="action_time_type" class="form-control">
-                                <option value="hour">{{trans('tasks.hour')}}</option>
-                                <option value="daily">{{trans('tasks.day')}}</option>
-                                <option value="weekly">{{trans('tasks.week')}}</option>
-                                <option value="monthly">{{trans('tasks.month')}}</option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="col-xs-1" style="padding: 0px; margin-right: 10px;">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <label class="line-height-35">{{ trans('tasks.done_time') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-2" style="padding: 0px; margin: 0px;">
-                        <div class="col-xs-3" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="done_time" id="to_end" value="to_end"/>
-                            </span>
-                        </div>
-                        <div class="col-xs-3" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <label for="to_end">{{ trans('tasks.to_end') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-6" style="padding: 0px; margin: 0px;">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <select id="task_schedul_" name="task_schedul_" class="form-control">
-                                    <option value="daily">{{trans('tasks.this')}} {{trans('tasks.day')}}</option>
-                                    <option value="weekly">{{trans('tasks.this')}} {{trans('tasks.week')}}</option>
-                                    <option value="monthly">{{trans('tasks.this')}} {{trans('tasks.month')}}</option>
-                                </select>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="done_time" id="determined-time" value="determined-time"/>
-                            </span>
-                        </div>
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <label for="determined-time">{{ trans('tasks.in') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-5">
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <input type="text" class="form-control DatePicker" name="action_date" aria-describedby="respite_date">
-                            </span>
-                        </div>
-                        <div class="col-xs-1">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                {{ trans('tasks.hour') }}
-                            </span>
-                        </div>
-                        <div class="col-xs-4">
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <input type="text" class="form-control TimePicker" name="action_time" aria-describedby="respite_time">
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="done_time" id="not-determine" value="not-determine"/>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{trans('tasks.description')}}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-11">
-                        <input type="text" name="action_explain" id="explain" class="form-control" placeholder="{{trans('tasks.description')}}"/>
-                    </div>
-                </div>
-                <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">
-                    <div class="col-xs-1">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="not-determine">{{ trans('tasks.quality_done') }}</label>
-                        </span>
-                    </div>
-                    <div class="col-xs-9">
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-excelent" value="excelent"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-excelent">{{ trans('tasks.excelent') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-well" value="well"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-well">{{ trans('tasks.well') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-average" value="average"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-average">{{ trans('tasks.average') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-week" value="week"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-week">{{ trans('tasks.week') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
-                            </span>
-                        </div>
-                        <div class="col-xs-2">
-                            <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                                <input type="radio" name="quality_done" id="quality-not_determined" value="not_determined" checked/>
-                            </span>
-                            <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-not_determined">{{ trans('tasks.not_determined') }}</label>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <label for="quality-not_determined">{{ trans('tasks.score') }}</label>
-                        </span>
-                        <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="text" name="quality_score" id="quality-score" value="" class="form-control"/>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="tab_t6" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane" id="tab_t8" style="padding-top: 8px;margin-top:20px">
                 <div class="col-xs-12">
-                    <div class="col-xs-3">
-                        <label class="line-height-3">گفتگو</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input type="text" id="message" class="form-control" placeholder="پیام"/>
-                        <input type="hidden" id="user" class="form-control" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
-                    </div>
-                    <div class="col-xs-1">
-                        <span class="btn btn-primary fa fa-plus" id="add_message_task"></span>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                    <table id="ChildsGrid" class="table dt-responsive nowrap display dataTable no-footer" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
+                            <th class="col-xs-2">زمان</th>
                             <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-10">پیام</th>
+                            <th class="col-xs-8">اقدام</th>
                         </tr>
                         </thead>
                         <tbody id="message_task_list">
-                            @if(isset($res['task']['message_username']))
-                                @foreach($res['task']['message_username'] as $k=>$message_username)
-                                    <tr id="add_resource_task{{$k.'show'}}">
-                                        {{--<td>--}}
-                                        {{--<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>--}}
-                                        {{--</td>--}}
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$res['task']['message_username'][$k]}}</label>
-                                            <input name="message_username[]" type="hidden" value="{{$res['task']['message_username'][$k]}}"/>
-                                        </td>
-                                        <td>
-                                            <label class="input-group pull-right">
-                                                {{$res['task']['messages'][$k]}}
-                                                <input name="messages[]" type="hidden" value="{{$res['task']['messages'][$k]}}"/>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
-                <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-striped table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-5">اقدام</th>
-                            <th class="col-xs-5">زمان</th>
-                        </tr>
-                        </thead>
-                        <tbody id="message_task_list">
-                            @if(isset($res['task_history']))
-                                @foreach($res['task_history'] as $k=>$task_history)
-                                    <tr id="add_resource_task{{$k.'show'}}">
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$task_history->Name.' '.$task_history->Family}}</label>
-                                        </td>
-                                        <td>
-                                            <label class="pull-right" for="r2">{{ trans('tasks.'.$task_history->operation_type) }}</label>
-                                        </td>
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$task_history->created_at}}</label>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                        @if(isset($task->History))
+                            @foreach($task->History as $k=>$task_history)
+                                <tr id="add_resource_task{{$k.'show'}}">
+                                    <td style="border-bottom: 1px solid #999;text-align: center">
+                                        {{$task_history->created_at}}
+                                    </td>
+                                    <td style="border-bottom: 1px solid #999;text-align: center">
+                                        {{$task_history->user->Name.' '.$task_history->user->Family}}
+                                    </td>
+                                    <td style="border-bottom: 1px solid #999;text-align: center">
+                                        {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -940,328 +896,7 @@
         </div>
     </form>
 </div>
-
-{{--<div class="col-xs-12 col-md-12">--}}
-{{--<form action="{{ route('hamahang.tasks.save_task') }}" class="" name="create_new_task" id="create_new_task" method="post"--}}
-{{--enctype="multipart/form-data">--}}
-{{--<table class="table col-xs-12">--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('tasks.title') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="row">--}}
-{{--<div class="col-sm-7">--}}
-{{--<input type="text" class="form-control" name="title" id="title"/>--}}
-{{--</div>--}}
-{{--<div class="clearfixed"></div>--}}
-{{--</div>--}}
-{{--<div class="row">--}}
-{{--<div class="col-xs-12 line-height-35">--}}
-{{--<div class="pull-right" style="margin: 0 0 0 10px;">--}}
-{{--<input type="radio" name="type" value="0" checked/>--}}
-{{--<label for="r1">{{ trans('app.official') }}</label>--}}
-{{--<input type="radio" name="type" value="1"/>--}}
-{{--<label for="r2">{{ trans('app.unofficial') }}</label>--}}
-{{--</div>--}}
-{{--<div class="pull-right" style="margin: 0 10px;">--}}
-{{--<input type="radio" name="importance" value="1"/>--}}
-{{--<label>{{ trans('tasks.important') }}</label>--}}
-{{--<input type="radio" name="importance" value="0" checked/>--}}
-{{--<label>{{ trans('tasks.unimportant')}}</label>--}}
-{{--</div>--}}
-
-{{--<div class="pull-right" style="margin: 0 10px;">--}}
-{{--<input type="radio" name="immediate" value="1"/>--}}
-{{--<label>{{ trans('tasks.immediate') }}</label>--}}
-{{--<input type="radio" name="immediate" value="0" checked/>--}}
-{{--<label>{{ trans('tasks.Non-urgent') }}</label>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('tasks.importance') }}--}}
-{{--{{ trans('tasks.immediacy') }}--}}
-{{--</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">--}}
-{{--<div class="row">--}}
-{{--<div class="col-xs-6">--}}
-{{--<label>{{ trans('tasks.importance') }} :</label>--}}
-{{--<span class="input-group">--}}
-{{--<input type="radio" name="importance" value="1"/>--}}
-{{--<label>{{ trans('tasks.important') }}</label>--}}
-{{--<input type="radio" name="importance" value="0" checked/>--}}
-{{--<label>{{ trans('tasks.unimportant')}}</label>--}}
-{{--</span>--}}
-{{--</div>--}}
-{{--<div class="col-xs-6">--}}
-{{--<label>{{ trans('tasks.immediacy') }} :</label>--}}
-{{--<span class="input-group">--}}
-{{--<input type="radio" name="immediate" value="1"/>--}}
-{{--<label>{{ trans('tasks.immediate') }}</label>--}}
-{{--<input type="radio" name="immediate" value="0" checked/>--}}
-{{--<label>{{ trans('tasks.Non-urgent') }}</label>--}}
-{{--</span>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td>{{ trans('tasks.task_type') }}</td>--}}
-{{--<td>--}}
-{{--<div class="row">--}}
-{{--<table class="table no-margin no-padding">--}}
-{{--<tr>--}}
-{{--<td style="border-top: none;">--}}
-{{--<input type="radio" id="use_type0" name="use_type" value="0" onclick="change_respite_type(0)" checked/>  <!-------- normal task  ---->--}}
-{{--<label for="r1">{{ trans('tasks.ordinary_task') }}</label>--}}
-{{--<input type="radio" id="use_type1" name="use_type" value="1" onclick="change_respite_type(1)"/>          <!-------- project task  ---->--}}
-{{--<label for="r2">{{ trans('tasks.project_task') }}</label>--}}
-{{--<input type="radio" id="use_type2" name="use_type" value="2" onclick="change_respite_type(2)"/>          <!-------- process task  ---->--}}
-{{--<label for="r2">{{ trans('tasks.process_task') }}</label>--}}
-{{--</td>--}}
-{{--<td style="border-top: none;">--}}
-{{--<div id="project_span" class="pull-right"></div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--</table>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('tasks.do_respite') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div id="respite_span">--}}
-{{--<table class="table col-xs-12 no-padding no-margin">--}}
-{{--<tr>--}}
-{{--<td style="border-top: none;">--}}
-{{--<input type="radio" name="respite_timing_type" onclick="change_normal_task_timing_type(0)" value="0" checked/>--}}
-{{--<label for="r2">{{ trans('tasks.determination_doing_duration') }}</label>--}}
-{{--<input type="radio" name="respite_timing_type" onclick="change_normal_task_timing_type(1)" value="1"/>--}}
-{{--<label for="r1">{{ trans('tasks.determination_end_date') }}</label>--}}
-{{--</td>--}}
-{{--<td style="border-top: none;">--}}
-{{--<div id="normal_task_timing">--}}
-{{--<div class="row-fluid">--}}
-{{--<div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-sm-12 col-xs-12 form-inline">--}}
-{{--<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="1"/>--}}
-{{--<label class="pull-right">روز</label>--}}
-{{--<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0"/>--}}
-{{--<label class="pull-right">ساعت</label>--}}
-{{--<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0"/>--}}
-{{--<label class="pull-right">دقیقه</label>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--</table>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('tasks.responsible') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-sm-7 row" style="padding-left: 0px;">--}}
-{{--<select id="new_task_users" name="users[]" class="select2_auto_complete_user col-xs-12"--}}
-{{--data-placeholder="{{trans('tasks.select_some_options')}}" multiple>--}}
-{{--<option value=""></option>--}}
-{{--</select>--}}
-{{--<span style=" position: absolute; left: 20px; top: 10px;" class=""></span>--}}
-
-
-{{--</div>--}}
-{{--<div class="col-sm-5 line-height-35" style="padding-right: 5px;">--}}
-
-{{--<a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">--}}
-{{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
-{{--</a>--}}
-{{--<input type="radio" name="assign_type" id="use_type1" class="person_option" value="1" checked/>--}}
-{{--<label class="person_option" for="use_type1">{{ trans('tasks.collective') }}</label>--}}
-{{--<input type="radio" name="assign_type" id="use_type2" class="person_option" value="2"/>--}}
-{{--<label class="person_option" for="use_type2">{{ trans('tasks.individual') }}</label>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('app.transcript') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 row" style="padding-left: 0px;">--}}
-{{--<select id="new_task_transcripts" name="transcripts[]" class="select2_auto_complete_transcripts"--}}
-{{--data-placeholder="{{trans('tasks.select_some_options')}}" multiple></select>--}}
-{{--<span class=" Chosen-LeftIcon"></span>--}}
-{{--</div>--}}
-{{--<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">--}}
-{{--<a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">--}}
-{{--<span class="icon icon-afzoodane-fard fonts"></span>--}}
-{{--</a>--}}
-{{--<input type="checkbox" name="report_on_cr" id="report-type1"/>--}}
-{{--<label for="">{{ trans('tasks.report_on_task_creation') }}</label>--}}
-{{--<input type="checkbox" name="report_on_co" id="report-type2"/>--}}
-{{--<label for="">{{ trans('tasks.report_on_task_completion') }}</label>--}}
-{{--<input type="checkbox" name="report_to_manager" id="report-type3"/>--}}
-{{--<label for="">اطلاع به مسئولان</label>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('app.about') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 row">--}}
-{{--<select id="new_task_pages" class="select2_auto_complete_page " name="pages[]"--}}
-{{--data-placeholder="{{trans('tasks.can_select_some_options')}}"--}}
-{{--multiple="multiple">--}}
-{{--@if($sid)--}}
-{{--<option value="{{$sid}}" selected>{{$subject->title}}</option>--}}
-{{--@endif--}}
-{{--</select>--}}
-{{--<span class="fa fa-sticky-note Chosen-LeftIcon"></span>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('tasks.keywords') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 row">--}}
-{{--<select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"--}}
-{{--data-placeholder="{{trans('tasks.can_select_some_options')}}"--}}
-{{--multiple="multiple"></select>--}}
-{{--<span class=" Chosen-LeftIcon"></span>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td></td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">--}}
-{{--<div class="form-inline">--}}
-{{--<input type="checkbox" class="form-control" name="end_on_assigner_accept" id="manager"/>--}}
-{{--<label for="date">{{ trans('tasks.modal_task_details_assignor_accept_or_ended') }}</label>--}}
-{{--<input type="checkbox" class="form-control" name="transferable" id="manager"/>--}}
-{{--<label for="date">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120 ">--}}
-{{--<label class="line-height-35">{{ trans('app.attachments') }}</label>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="filemanager-buttons-client">--}}
-{{--<div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">--}}
-{{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
-{{--<span>{{trans('app.add_file')}}</span>--}}
-{{--</div>--}}
-{{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
-{{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
-{{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--<div class="pull-right filemanager-title-client">--}}
-{{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
-{{--</div>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--{!! $HFM_CN_Task['ShowResultArea']['CreateNewTask'] !!}--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--<tr>--}}
-{{--<td class="width-120">--}}
-{{--<label class="line-height-35">{{ trans('app.description') }}</label>--}}
-{{--</td>--}}
-{{--<td>--}}
-{{--<div class="row-fluid">--}}
-{{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 line-height-35">--}}
-{{--<input type="text" class="form-control row" name="task_desc" id="desc" value="{{@$sel}}"/>--}}
-{{--<div class="clearfix"></div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</td>--}}
-{{--</tr>--}}
-{{--</table>--}}
-{{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
-{{--<input type="hidden" name="draft" id="draft" value="0"/>--}}
-{{--<input type="hidden" name="first_m" id="first_m" value="0"/>--}}
-{{--<input type="hidden" name="first_u" id="first_u" value="0"/>--}}
-{{--<input type="hidden" name="assigner_id" value="125"/>--}}
-{{--<input type="hidden" id="save_type" name="save_type" value="0"/>--}}
-{{--</form>--}}
-{{--{!! $HFM_CN_Task['UploadForm'] !!}--}}
-{{--</div>--}}
 <script>
-    $.ajax({
-        url: '{{ URL::route('auto_complete.get_user_calendar')}}',
-        type: 'Post', // Send post dat
-        dataType:'json',
-        success: function (s) {
-
-            var options = '';
-            $('select[name="event_cid"]').empty();
-            for (var i = 0; i < s.length; i++) {
-                if(s[i].is_default ==1)
-                {
-                    options += '<option  selected=true value="' + s[i].id + '">' + s[i].title + '</option>';
-                }
-                else{
-                    options += '<option value="' + s[i].id + '">' + s[i].title + '</option>';
-                }
-
-
-            }
-
-            $('select[name="event_cid"]').append(options);
-            $('select[name="event_cid"]').select2({
-                dir: "rtl",
-                width: '100%',
-            });
-        }
-    });
     $(document).ready(function()
     {
         $(".fileToUpload").on('change', function() {
@@ -1280,11 +915,39 @@
                 contentType: false,
                 success: function(data)
                 {
-                    console.log(data);
                     if (data.success)
                     {
                         $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
-                        $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                        if($('#desc').val() != undefined)
+                            $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                    } else
+                    {
+                        messageModal('fail', 'خطا', data.result);
+                    }
+                }
+            });
+        });
+        $(".fileToUpload2").on('change', function() {
+            var formElement = $( '.fileToUpload2' )[0].files[0];
+            var data = new FormData();
+            data.append('image',formElement);
+            data.append('pid','{{rand(1,100).rand(1,100)}}');
+            data.append('form_type','form');
+            $.ajax
+            ({
+                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data)
+                {
+                    if (data.success)
+                    {
+                        $('#explain').val($('#explain').val() + "\nimg::" + data.FileID + "::img");
+                        if($('#explain').val() != undefined)
+                            $('.content_tab_view').html($('#explain').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
                     } else
                     {
                         messageModal('fail', 'خطا', data.result);
@@ -1306,11 +969,10 @@
         });
     });
 </script>
-
 <script type="text/javascript" src="{{URL::to('assets/Packages/DataTables/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/bootstrap/js/bootstrap-filestyle.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-date.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js')}}"></script>
 
-@include('hamahang.Tasks.helper.CreateNewTask.inline_js')
+@include('hamahang.Tasks.helper.ShowAssignTaskForm.inline_js')
 {!! $HFM_CN_Task['JavaScripts'] !!}

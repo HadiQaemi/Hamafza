@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Hamahang\Tasks;
 use App\Http\Controllers\Hamahang\ProjectController;
 use App\Http\Controllers\Hamahang\UserController;
 use App\Models\hamafza\Pages;
+use App\Models\Hamahang\hamahang_subject_able;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\hamahang_project_task;
 use App\Models\Hamahang\Tasks\projects;
@@ -1276,6 +1277,7 @@ class MyAssignedTaskController extends Controller
         }
         else {
             $result = '';
+            $respite_duration_timestamp = 0;
             if (Request::input('respite_timing_type') == 1)
             {
                 $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
@@ -1292,7 +1294,7 @@ class MyAssignedTaskController extends Controller
                 $sec_no = 0;//Request::input('duration_sec');
                 $respite_duration_timestamp = hamahang_convert_respite_to_timestamp(0, 0, $day_no, $hour_no, $min_no, $sec_no);
             }
-            $task = tasks::where('id','=',deCode(Request::input('tid')))->first();
+            $task = tasks::find(deCode(Request::input('tid')));
 
             if(Request::exists('task_form_action')==1)
             {
@@ -1328,10 +1330,7 @@ class MyAssignedTaskController extends Controller
                 }
                 if (Request::exists('pages'))
                 {
-                    DB::table('hamahang_subject_ables')
-                        ->where('hamahang_subject_ables.target_id','=', deCode(Request::input('tid')))
-                        ->whereNull('deleted_at')
-                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    hamahang_subject_able::where('hamahang_subject_ables.target_id','=', deCode(Request::input('tid')))->delete();
                     foreach (Request::input('pages') as $page_id)
                     {
                         hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');
@@ -1351,10 +1350,7 @@ class MyAssignedTaskController extends Controller
                 }
                 if (Request::exists('transcripts'))
                 {
-                    DB::table('hamahang_task_transcript')
-                        ->where('hamahang_task_transcript.task_id','=', deCode(Request::input('tid')))
-                        ->whereNull('deleted_at')
-                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    task_transcripts::where('hamahang_task_transcript.task_id','=', deCode(Request::input('tid')))->delete();
                     if(Request::input('report_on_cr')==1)
                     {
                         foreach (Request::input('transcripts') as $transcript)
@@ -1395,8 +1391,8 @@ class MyAssignedTaskController extends Controller
                         ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
                     foreach (Request::input('users') as $key => $value_employee_id)
                     {
-                        if(Request::input('assign_type') == 1 )
-                        {
+//                        if(Request::input('assign_type') == 1 )
+//                        {
                             if($key == 0)
                             {
                                 $staff = Request::input('users')[0];
@@ -1406,15 +1402,26 @@ class MyAssignedTaskController extends Controller
                             {
                                 task_assignments::create_task_assignment(Request::input('users')[$key] ,$staff ,$task->id);
                             }
-                        }
-                        elseif(Request::input('assign_type') == 2)
-                        {
-                            task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
-                        }
+//                        }
+//                        elseif(Request::input('assign_type') == 2)
+//                        {
+//                            task_assignments::create_task_assignment(Request::input('users')[$key] ,Request::input('users')[$key] ,$task->id);
+//                        }
+                        task_priority::delete_priority($task->id,0, $value_employee_id );
                         task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[0] , $value_employee_id);
                         task_status::create_task_status($task->id, 0, 0, $value_employee_id, time());
                     }
                 }
+                task_priority::delete_priority($task->id,1);
+                task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[1] , Auth::id());
+
+
+                task_action::create_task_action($task->id, Request::input('task_status'), Request::input('progress'), '',Request::input('explain_reject'),
+                    Request::input('ready_mental'), Request::input('ready_body'), Request::exists('quality'), Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
+                task_status::where('uid', '=', Auth::id())
+                    ->where('task_id', '=', $task->id)
+                    ->delete();
+                task_status::create_task_status($task->id, Request::input('task_status'), Request::input('progress'));
             }
 
             $task->form_data = serialize(Request::all());
@@ -1425,6 +1432,7 @@ class MyAssignedTaskController extends Controller
             $task->type = Request::input('type');
             $task->kind = Request::input('kind');
             $task->is_save = Request::input('save_type');
+            $task->progress = (float) Request::input('progress');
             $task->task_status = Request::input('task_status');
             $task->duration_timestamp = $respite_duration_timestamp;
             $task->use_type = Request::input('use_type');
@@ -2473,6 +2481,8 @@ class MyAssignedTaskController extends Controller
                     'respite_days' => $respite_date,
                     'type' => $status->type
                 ];
+            task_history::create_task_history($task->id, 'create', serialize(Request::all()));
+
             return response()->json($res);
         }
     }
@@ -2542,7 +2552,7 @@ class MyAssignedTaskController extends Controller
                 }
 
                 $status = task_status::create_task_status($task->id);
-                $priority = task_priority::create_task_priority($task->id, $immediacy, $importance);
+                $priority = task_priority::create_task_priority($task->id, $immediacy, $importance, 1);
                 $employee = User::find($staff);
 
                 $respite_date = hamahang_respite_remain(strtotime($task->schedule_time), $task->duration_timestamp);
@@ -2555,6 +2565,7 @@ class MyAssignedTaskController extends Controller
                     $task->respite_days = $respite_date[0]['day_no'];
                 }
                 hamahang_project_task::create_task_project($task->id, $pid, 0);
+
             });
 
             $res =
@@ -2565,6 +2576,8 @@ class MyAssignedTaskController extends Controller
                     'respite_days' => $respite_date,
                     'type' => $status->type
                 ];
+            task_history::create_task_history($task->id, 'create', serialize(Request::all()));
+
             return response()->json($res);
         }
     }

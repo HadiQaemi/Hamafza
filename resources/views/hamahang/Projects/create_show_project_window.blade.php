@@ -70,7 +70,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+                            <div class="col-xs-12 margin-top-10">
                                 <div class="col-xs-2 line-height-35">{{trans('projects.project_observer')}}</div>
                                 <div class="col-xs-10">
                                     <select name="p_observer[]" id="p_observer" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
@@ -84,7 +84,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+                            <div class="col-xs-12 margin-top-10">
                                 <div class="col-xs-2 line-height-35">{{trans('projects.project_supervisor')}}</div>
                                 <div class="col-xs-10">
                                     <select name="p_supervisor[]" id="p_supervisor" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
@@ -98,7 +98,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 margin-top-10">
+                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
                                 <div class="col-xs-2 line-height-35">{{trans('projects.keywords')}}</div>
                                 <div class="col-xs-10 nput-group pull-right">
                                     <select class="select2_auto_complete_keywords " name="p_keyword[]" id="p_keyword" data-placeholder="{{trans('projects.keywords')}}" multiple="multiple">

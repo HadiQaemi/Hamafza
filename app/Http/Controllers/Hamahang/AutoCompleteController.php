@@ -453,7 +453,7 @@ class AutoCompleteController extends Controller
         }
         else
         {
-            $data = Subject::select("id", DB::raw('CONCAT(title) AS text'))
+            $data = Subject::select("id", DB::raw('CONCAT(title,", ",id) AS text'))
                 ->where("title", "LIKE", "%" . $x['term'] . "%")
                 ->get();
         }

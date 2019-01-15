@@ -19,4 +19,30 @@ class task_transcripts extends Model
         $transcript->user_id = $user_id;
         $transcript->save();
     }
+
+    /*------------------------------- relations ----------------------------------------*/
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
+
+    public function Transcripter()
+    {
+        return $this->hasMany('App\User', 'id', 'user_id');
+    }
+
+    public function Transmitter()
+    {
+        return $this->hasOne('App\User', 'id', 'transmitter_id');
+    }
+
+    public function TransferredTo()
+    {
+        return $this->hasOne('App\User', 'id', 'transferred_to_id');
+    }
+
+    public function Task()
+    {
+        return $this->belongsTo('App\Models\Hamahang\Tasks\tasks', 'task_id', 'id');
+    }
 }

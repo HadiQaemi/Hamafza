@@ -31,9 +31,38 @@ use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
+    public static $_ROLE_CREATOR = 'creator';
+    public static $_ROLE_ASSIGNER = 'assign';
+    public static $_ROLE_TRANSCRIPTION = 'transcript';
     public function ScheduleTaskCopy()
     {
         tasks::ScheduleTaskCopy(1, date('Y-m-d H:i:s'));
+    }
+
+    public static function TakeTaskRoles($tid){
+        db::enableQueryLog();
+        $task_creator = DB::table('hamahang_task')
+            ->where('hamahang_task.id','=',$tid)
+            ->where('hamahang_task.uid','=',Auth::id())
+            ->whereNull('hamahang_task.deleted_at')
+            ->select(DB::RAW('"creator" as role_type'));
+        $task_assign = DB::table('hamahang_task_assignments')
+            ->whereNull('hamahang_task_assignments.deleted_at')
+            ->where('hamahang_task_assignments.task_id','=',$tid)
+            ->where(function($q) {
+                $q->where('hamahang_task_assignments.uid', Auth::id())
+                    ->orWhere('hamahang_task_assignments.assigner_id', Auth::id())
+                    ->orWhere('hamahang_task_assignments.employee_id', Auth::id())
+                    ->orWhere('hamahang_task_assignments.staff_id', Auth::id())
+                ;
+            })->select(DB::RAW('"assign" as role_type'));
+        $task_trans = DB::table('hamahang_task_transcript')
+            ->whereNull('hamahang_task_transcript.deleted_at')
+            ->where('hamahang_task_transcript.task_id','=',$tid)
+            ->where('hamahang_task_transcript.user_id', Auth::id())
+            ->select(DB::RAW('"transcript" as role_type'))
+        ;
+        return $task_assign->unionAll($task_creator)->unionAll($task_trans)->pluck('role_type')->toArray();
     }
 
     public function TaskInfo()

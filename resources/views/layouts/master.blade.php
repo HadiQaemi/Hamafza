@@ -472,9 +472,7 @@
                         $('#task_of_action').val('fffffffffffffff');
                         var $this = $(this);
                         var form_id = $this.data('form_id');
-                        var form_id = $this.data('form_id');
                         var save_again = $this.data('again_save');
-
                         UpdateTask(form_id, save_again,1);
                     });
                     $(document).on('click', '.save_task', function () {

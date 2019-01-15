@@ -22,4 +22,9 @@ class task_keywords extends Model
 
         return 120;
     }
+    /*------------------------------- relations ----------------------------------------*/
+    public function keyword()
+    {
+        return $this->hasOne('App\Models\Hamahang\keywords', 'id', 'keyword_id');
+    }
 }

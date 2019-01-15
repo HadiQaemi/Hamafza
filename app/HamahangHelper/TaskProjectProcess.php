@@ -123,7 +123,7 @@ if (!function_exists('hamahang_make_task_respite'))
         date_default_timezone_set('Asia/Tehran');
         $date_to_split = explode('-', $input_date);
         $time_to_split = explode(':', $input_time);
-        $respite_timestsmp = $date->mktime($time_to_split[0], $time_to_split[1], '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
+        $respite_timestsmp = $date->mktime(isset($time_to_split[0]) ? $time_to_split[0] : 0, isset($time_to_split[1]) ? $time_to_split[1] : 0, '0', $date_to_split['1'], $date_to_split[2], $date_to_split[0]);
         $timestamp_diff = $respite_timestsmp - $cTime;
         //array_push($arr,['respite'=>$timestamp_diff]);
         return $timestamp_diff;

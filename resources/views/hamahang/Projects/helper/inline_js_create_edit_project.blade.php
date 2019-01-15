@@ -86,7 +86,7 @@
         dir: "rtl",
         width: '100%',
         ajax: {
-            url: "{{ route('auto_complete.pages') }}",
+            url: "{{ route('auto_complete.subjects') }}",
             dataType: 'json',
             type: "POST",
             quietMillis: 50,

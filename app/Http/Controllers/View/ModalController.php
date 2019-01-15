@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\View;
 
+use App\Http\Controllers\Hamahang\ProjectController;
 use App\Models\hamafza\Keyword;
 use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
@@ -1026,6 +1027,89 @@ class ModalController extends Controller
         ]);
     }
 
+    public function ViewTaskForm()
+    {
+        $res = $this->getParams(['tid','pid','aid']);
+        $projectRole = [];
+        $taskRole = [];
+        if(trim($res['pid'])!=='')
+        {
+            $pid = deCode($res['pid']);
+            $projectRole = ProjectController::TakeProjectPermissions($pid);
+        }
+        if(trim($res['tid'])!=='')
+        {
+            $tid = deCode($res['tid']);
+            $taskRole = \App\Http\Controllers\Hamahang\Tasks\TaskController::TakeTaskRoles($tid);
+        }
+        if(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
+            return $this->ShowTaskFormOwnerMode();
+        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
+
+        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
+
+        }elseif(in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_MANAGE_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_VIEW_PROJECT_PERMISSSION,$projectRole)){
+
+        }
+        dd($res);
+        $task = array();
+        if ($res['tid'])
+        {
+            $res['tid'] = deCode($res['tid']);
+            $aid = deCode($res['aid']);
+
+            $task = DB::table('hamahang_task_assignments as t')
+                ->leftJoin('hamahang_task', 'hamahang_task.id', '=', 't.task_id')
+                ->leftJoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
+                ->leftjoin('hamahang_task_transcript', 'hamahang_task_transcript.task_id', '=', 'hamahang_task.id')
+                ->select('hamahang_task.*','hamahang_task_status.type as task_status','hamahang_task_status.percent as percent')
+                ->where('t.task_id','=', $res['tid'])
+                ->where('t.id','=', $aid)
+                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+                ->whereNull('hamahang_task_status.deleted_at')
+                ->where(function($q) {
+                    $q->where('t.assigner_id', Auth::id())
+                        ->orWhere('t.employee_id', Auth::id())
+                        ->orWhere('t.employee_id', Auth::id())
+                        ->orWhere('t.uid', Auth::id());
+                })
+                ->first();
+        }
+        $res = $this->TakeTaskInfo($res,$task);
+        $res['task_status'] = $task->task_status;
+        $res['events'] = DB::table('hamahang_calendar_events_task as t')->where('t.task_id','=',$res['tid'])
+            ->leftJoin('hamahang_calendar_user_events as e','e.id','=','t.event_id')
+            ->whereNull('t.deleted_at')
+            ->whereNull('e.deleted_at')
+            ->select(DB::Raw('t.id as ctid,e.*, TIMEDIFF(e.enddate, e.startdate) as dif'))->get();
+        $res['events'] = (Datatables::of($res['events'])
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('ctid', function ($data)
+            {
+                return enCode($data->ctid);
+            })->make(true));
+
+        $res['task_status'] = $task->task_status;
+        $res['percent'] = $task->percent;
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowAssignTaskForm.ShowAssignTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ShowAssignTaskForm')->render()
+        ]);
+    }
+
     public function ShowTranscriptTaskForm()
     {
         $res = $this->getParams(['tid','sid','aid']);
@@ -1069,6 +1153,37 @@ class ModalController extends Controller
             'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', '')->render()
         ]);
     }
+
+    public function ShowTaskFormOwnerMode()
+    {
+        $res = $this->getParams(['tid','sid','aid']);
+        $tid = deCode($res['tid']);
+        $task = tasks::where('id','=',$tid)
+            ->with('Keywords')->with('Status')
+            ->with('Subjects')->with('Pages')
+            ->with('Priority')->with('Assignments')
+            ->with('Transcripts')
+            ->with('History')
+            ->first();
+        $res['task'] = $task;
+
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
+        ]);
+    }
+
+
     public function ShowTaskForm()
     {
         $res = $this->getParams(['tid','sid','aid']);

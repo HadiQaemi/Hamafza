@@ -502,7 +502,7 @@ class tasks extends Model
         }
         $task_info[0]->history = $arr9;
         $arr15 = [];
-        DB::enableQueryLog();
+//        DB::enableQueryLog();
 
 
 //        $progress = task_inheritance::where('parent_task_id', $task_info[0]->id)
@@ -1172,13 +1172,8 @@ class tasks extends Model
                 ->leftjoin('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
                 ->leftjoin('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->leftjoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-//                ->whereNull('hamahang_task_assignments.transmitter_id')
-//                ->where('hamahang_task_assignments.status','=',0)
-//                ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->whereNull('hamahang_task_assignments.deleted_at')
-                ->where('hamahang_task_priority.is_assigner', '=', 1)
                 ->where('hamahang_task.uid', '=', $uid);
-
             $title = Request::exists('title') ? Request::input('title') : '';
             if (trim($title))
             {
@@ -1266,20 +1261,21 @@ class tasks extends Model
 //                ->where('hamahang_subject_ables.subject_id', '=',$arr['filter_subject_id'])
 //                ->whereNull('hamahang_subject_ables.deleted_at');
             }
+//            dd($result->get(),db::getQueryLog());
+
             if ($task_final)
             {
-                $result->whereIn('hamahang_task.is_save', $task_final)
-                    ->whereNull('hamahang_task.deleted_at');
+//                $result->whereIn('hamahang_task.is_save', $task_final)
+//                    ->whereNull('hamahang_task.deleted_at');
             }
             else
             {
-                $result->whereIn('hamahang_task.is_save', [11]);
+//                $result->whereIn('hamahang_task.is_save', [11]);
             }
             if ($official_type)
             {
                 $result->whereIn('hamahang_task.type', $official_type)
                     ->whereNull('hamahang_task.deleted_at');
-//            dd($immediate);
             }
             else
             {
@@ -1290,34 +1286,7 @@ class tasks extends Model
             {
                 $result->whereIn('hamahang_task_status.type', $status_filter)
                     ->whereNull('hamahang_task_status.deleted_at');
-//            dd($immediate);
             }
-            else
-            {
-//                $result->whereIn('hamahang_task_status.type', [11]);
-            }
-
-//            if ($immediate)
-//            {
-//                $result->whereIn('hamahang_task_priority.immediate', $immediate)
-//                    ->whereNull('hamahang_task_priority.deleted_at');
-////            dd($immediate);
-//            }
-//            else
-//            {
-//                $result->whereIn('hamahang_task_priority.immediate', [11]);
-//            }
-//
-//            if ($important)
-//            {
-//                $result->whereIn('hamahang_task_priority.importance', $important)
-//                    ->whereNull('hamahang_task_priority.deleted_at');
-////            dd($important);
-//            }
-//            else
-//            {
-//                $result->whereIn('hamahang_task_priority.importance', [11]);
-//            }
             if(is_array($task_final))
             {
                 if(count($task_final)>1)
@@ -1451,7 +1420,6 @@ class tasks extends Model
                 $query->where('immediate', $immediate)->where('importance', $importance)->whereNull('deleted_at');
             });
         }
-//        dd($type,$tasks_immediate_importance->get());
 
         if ($status_filter)
         {
@@ -1527,8 +1495,8 @@ class tasks extends Model
             }
         if ($task_final)
         {
-            $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_final)
-                ->whereNull('hamahang_task.deleted_at');
+//            $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_final)
+//                ->whereNull('hamahang_task.deleted_at');
         }
         else
         {
@@ -1552,8 +1520,8 @@ class tasks extends Model
             $task_final = Request::input('task_final');
             if ($status_filter)
             {
-                $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_final)
-                    ->whereNull('hamahang_task.deleted_at');
+//                $tasks_immediate_importance->whereIn('hamahang_task.is_save', $task_final)
+//                    ->whereNull('hamahang_task.deleted_at');
             }
             else
             {
@@ -2819,6 +2787,11 @@ class tasks extends Model
     }
 
     /*---------------------------------------------- relations --------------------------------------------*/
+    public function Transcripts()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_transcripts', 'task_id', 'id');
+    }
+
     public function Keywords()
     {
         return $this->hasMany('App\Models\Hamahang\Tasks\task_keywords', 'task_id', 'id');
@@ -2833,6 +2806,8 @@ class tasks extends Model
     {
 //        return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id')->whereNull('transmitter_id')->whereNull('transferred_to_id');
         return $this->hasOne('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id');//->where('status','=',0);//->whereNull('assigner_id');
+
+//        return $this->morphToMany('App\User', '','hamahang_task_assignments','task_id','employee_id');
     }
 
     public function Priorities()
@@ -2848,6 +2823,11 @@ class tasks extends Model
     public function Priority()
     {
         return $this->hasOne('App\Models\Hamahang\Tasks\task_priority', 'task_id', 'id')->where('user_id',auth()->id());
+    }
+
+    public function History()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_history', 'task_id', 'id');
     }
 
     public function AssignerPriority()
@@ -2877,7 +2857,7 @@ class tasks extends Model
 
     public function Pages()
     {
-        return $this->morphToMany('App\Models\hamafza\Pages', 'target','hamahang_subject_ables','target_id','subject_id');
+        return $this->morphToMany('App\Models\hamafza\Pages', 'target','hamahang_subject_ables','target_id','subject_id')->whereNull('hamahang_subject_ables.deleted_at');
     }
     /* public function getPriorityAttribute()
      {

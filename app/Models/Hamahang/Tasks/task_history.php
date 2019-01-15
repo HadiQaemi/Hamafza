@@ -37,4 +37,9 @@ class task_history extends Model
 
         return $total;
     }
+    /*------------------------------- relations ----------------------------------------*/
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'uid');
+    }
 }
