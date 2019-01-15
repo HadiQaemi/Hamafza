@@ -36,7 +36,8 @@
                 {{--<pre>--}}
                     @php
                     $task = $res['task'];
-                    //print_r($task);
+                    //print_r($task->AbroadPriority);
+                    //die();
                     $edit_able = true;
                     @endphp
                 {{--</pre>--}}
@@ -216,15 +217,15 @@
                     </div>
                     <div class="col-lg-11 line-height-35">
                         <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task->Priority->importance ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task->AbroadPriority->importance ==1 ? 'checked' : ''}}/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task->Priority->importance ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task->AbroadPriority->importance ==0 ? 'checked' : ''}}/>
                             <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task->Priority->immediate ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task->AbroadPriority->immediate ==1 ? 'checked' : ''}}/>
                             <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task->Priority->immediate ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task->AbroadPriority->immediate ==0 ? 'checked' : ''}}/>
                             <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
                         </div>
                     </div>
@@ -573,25 +574,25 @@
                     </div>
                     <div class="col-lg-11 noRightPadding noLeftPadding">
                         <div class="pull-right noRightPadding noLeftPadding" style="height: 30px;line-height: 30px;">
-                            <input type="radio" name="task_status" id="not_start" value="0"  {{$task->Status->type ==0 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="not_start" value="0"  {{$task->task_status ==0 ? 'checked' : ''}}/>
                             <label for="not_start">{{ trans('tasks.not_start') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="on_done" value="1" {{$task->Status->type ==1 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="on_done" value="1" {{$task->task_status ==1 ? 'checked' : ''}}/>
                             <label for="on_done">{{ trans('tasks.on_done')}}</label>
-                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$task->Status->percent}}" >
+                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$task->progress}}" >
                             <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_done" value="2" {{$task->Status->type ==2 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_done" value="2" {{$task->task_status ==2 ? 'checked' : ''}}/>
                             <label for="status_done">{{ trans('tasks.status_done') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_finished" value="3" {{$task->Status->type ==3 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_finished" value="3" {{$task->task_status ==3 ? 'checked' : ''}}/>
                             <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->Status->type ==4 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->task_status ==4 ? 'checked' : ''}}/>
                             <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
                         </div>
                     </div>
@@ -899,6 +900,10 @@
 <script>
     $(document).ready(function()
     {
+        <?php if(isset($disabled)) { ?>
+            $('input, textarea, select').attr('disabled', 'disabled');
+        <?php }?>
+
         $(".fileToUpload").on('change', function() {
             var formElement = $( '.fileToUpload' )[0].files[0];
             var data = new FormData();

@@ -1044,12 +1044,12 @@ class ModalController extends Controller
         }
         if(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
             return $this->ShowTaskFormOwnerMode();
-        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
-
-        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
-
+        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_ASSIGNER,$taskRole)){
+            return $this->ShowTaskFormAbroadMode();
+        }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_TRANSCRIPTION,$taskRole)){
+            return $this->ShowTaskFormAbroadMode();
         }elseif(in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_MANAGE_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_VIEW_PROJECT_PERMISSSION,$projectRole)){
-
+            return $this->ShowTaskFormAbroadMode();
         }
         dd($res);
         $task = array();
@@ -1159,9 +1159,37 @@ class ModalController extends Controller
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
-            ->with('Keywords')->with('Status')
-            ->with('Subjects')->with('Pages')
-            ->with('Priority')->with('Assignments')
+            ->with('Keywords', 'Status', 'Subjects', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+        $res['task'] = $task;
+
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
+        ]);
+    }
+
+
+    public function ShowTaskFormAbroadMode()
+    {
+        $res = $this->getParams(['tid','sid','aid']);
+        $tid = deCode($res['tid']);
+        $task = tasks::where('id','=',$tid)
+            ->with('Keywords')
+            ->with('Status')
+            ->with('Subjects')
+            ->with('Pages')
+            ->with('AbroadPriority')
+            ->with('Assignments')
             ->with('Transcripts')
             ->with('History')
             ->first();
@@ -1178,8 +1206,8 @@ class ModalController extends Controller
         return json_encode([
             'header' => trans('tasks.show_task'),
             'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
-                ->with('res', $res)->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
+                ->with('res', $res)->with('disabled', 'disabled')->render(),
+//            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
         ]);
     }
 

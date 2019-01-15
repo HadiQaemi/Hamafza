@@ -280,6 +280,7 @@
                     // "scrollY": 400,
                     "serverSide": true,
                     "pageLength": 25,
+                    "processing": true,
                     "language": LangJson_DataTables,
                     // "dom": '<"bottom">rt<"bottom"ipl><"clear">',
                     "ajax": {
