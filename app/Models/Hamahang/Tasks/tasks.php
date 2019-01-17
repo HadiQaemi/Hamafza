@@ -2827,7 +2827,7 @@ class tasks extends Model
 
     public function AbroadPriority()
     {
-        return $this->hasOne('App\Models\Hamahang\Tasks\task_priority', 'task_id', 'id')->where('is_assigner',1)->whereNull('deleted_at');
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_priority', 'task_id', 'id')->whereNull('deleted_at');
     }
 
     public function History()

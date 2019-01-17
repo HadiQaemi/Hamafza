@@ -217,15 +217,15 @@
                     </div>
                     <div class="col-lg-11 line-height-35">
                         <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task->AbroadPriority->importance ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{isset($task->AbroadPriority->importance) ? $task->AbroadPriority->importance==1 : '' ? 'checked' : ''}}/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task->AbroadPriority->importance ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{isset($task->AbroadPriority->importance) ? $task->AbroadPriority->importance==0 : '' ? 'checked' : ''}}/>
                             <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task->AbroadPriority->immediate ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{isset($task->AbroadPriority->immediate) ? $task->AbroadPriority->immediate==1 : ''}}/>
                             <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task->AbroadPriority->immediate ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{isset($task->AbroadPriority->immediate) ? $task->AbroadPriority->immediate==0 : ''}}/>
                             <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
                         </div>
                     </div>
