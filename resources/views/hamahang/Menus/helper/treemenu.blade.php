@@ -192,7 +192,7 @@
             @endif
         },
         success: function(msg){
-            console.log(msg);
+            // console.log(msg);
             $('.container-menu').html(msg);
         },
     });

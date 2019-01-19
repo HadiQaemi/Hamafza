@@ -245,9 +245,15 @@
             $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
                 filter_tasks_priority();
             });
-            $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"], input[name="task_important_immediate[]"]').on('keyup change', function () {
+            $('.task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"], input[name="task_important_immediate[]"]').on('keyup change', function () {
                 filter_tasks_priority();
             });
+            $('#title').on('keypress', function () {
+                if($('#title').val().length >= 3){
+                    filter_tasks_priority();
+                }
+            });
+
             // $('#new_task_keywords').on('change', function () {
             //     filter_tasks_priority();
             // });
@@ -259,6 +265,7 @@
             readTable($("#form_filter_priority").serializeObject());
 
             function  readTable(send_info) {
+                runWaitMe($('#master_inner_rtl_div'));
                 if($('#new_task_keywords').val())
                 {
                     send_info["search_task_keywords"]= $('#new_task_keywords').val();
@@ -289,10 +296,6 @@
                         "data": send_info
                     },
                     columns: [
-                        {
-                            "data": "id",
-                            "visible": false
-                        },
                         {
                             "data": "title",
                             "mRender": function (data, type, full) {
@@ -372,6 +375,7 @@
                         // }
                     }
                 });
+                // $('#master_inner_rtl_div').waitMe('hide');
             }
 
             $(document).on('click', '#create_rapid_task_to_project_btn_submit', function () {

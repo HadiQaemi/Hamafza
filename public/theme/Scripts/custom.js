@@ -33,6 +33,29 @@ $(document).click(function (event) {
         }
     }
 });
+function runWaitMe(el, type = 1, effect = 'pulse') {
+    message = 'لطفا شکیبا باشید ...';
+    fontSize = '';
+    /* More types such as vertical presentation can be added */
+    switch (type) {
+        case 1:
+            maxSize = '';
+            textPos = 'vertical';
+    }
+    el.waitMe({
+        effect: effect,
+        text: message,
+        bg: 'rgba(255,255,255,0.7)',
+        color: '#000',
+        maxSize: maxSize,
+        waitTime: -1,
+        source: 'img.svg',
+        textPos: textPos,
+        fontSize: fontSize,
+        onClose: function (el) {
+        }
+    });
+}
 function parseArabic(str) {
     return str.replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2').replace(/۳/g, '3').replace(/۴/g, '4').replace(/٤/g, '4').replace(/۵/g, '5').replace(/۶/g, '6').replace(/۷/g, '7').replace(/٧/g, '7').replace(/۸/g, '8').replace(/٩/g, '9').replace(/۹/g, '9');
 }

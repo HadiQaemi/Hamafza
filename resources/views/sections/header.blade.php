@@ -33,6 +33,7 @@
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/bootstrap-rtl.min.css"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/style.css"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/tipsy.css"/>
+<link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/waitMe.css"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/homslider/animate.css"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/homslider/bootslider.css"/>
 <link rel="stylesheet" href="{{App::make('url')->to('/')}}/theme/bootstrap/css/bootstrap-image-gallery.min.css"/>
@@ -54,6 +55,7 @@
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.tipsy.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/custom.js"></script>
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/waitMe.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/public.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.bsvalidate.js"></script>
 <script src="{{App::make('url')->to('/')}}/theme/Scripts/mobile-detect.min.js"></script>
