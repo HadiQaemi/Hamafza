@@ -265,7 +265,7 @@
             readTable($("#form_filter_priority").serializeObject());
 
             function  readTable(send_info) {
-                runWaitMe($('#master_inner_rtl_div'));
+                // runWaitMe($('#master_inner_rtl_div'));
                 if($('#new_task_keywords').val())
                 {
                     send_info["search_task_keywords"]= $('#new_task_keywords').val();
