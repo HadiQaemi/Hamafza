@@ -612,11 +612,11 @@
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                                 <input type="radio" name="quality_done" id="quality-week" value="week"/>
-                                <label for="quality-week">{{ trans('tasks.week') }}</label>
+                                <label for="quality-week">{{ trans('tasks.weak') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                                 <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
-                                <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
+                                <label for="quality-very_week">{{ trans('tasks.very_weak') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                                 <input type="radio" name="quality_done" id="quality-not_determined" value="not_determined" checked/>

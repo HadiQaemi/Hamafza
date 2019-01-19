@@ -1100,14 +1100,15 @@ class ProjectController extends Controller
             ->whereNull('hamahang_project.deleted_at')
             ->where('hamahang_project_user_permission.user_id','=',Auth::id())
             ->unionAll($projects_roles)
-            ->pluck('hamahang_project.id')->toArray();
-        $projects_user_new = [];
-        foreach($projects_user as $project){
-            if(!in_array($project,$projects_user_new))
-                $projects_user_new[] = $project;
-        }
+            ->pluck('hamahang_project.id')->unique()->toArray();
+//        $projects_user_new = [];
+//        foreach($projects_user as $project){
+//            if(!in_array($project,$projects_user_new))
+//                $projects_user_new[] = $project;
+//        }
+//        dd($projects_user, $projects_user_new);
 
-        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user_new)
+        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')

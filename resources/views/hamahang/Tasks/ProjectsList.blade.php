@@ -148,7 +148,6 @@
                            style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th></th>
                             <th>{{trans('projects.title')}}</th>
                             <th>{{trans('projects.project_manager')}}</th>
                             <th>{{trans('projects.start_date')}}</th>
@@ -299,16 +298,16 @@
                         {
                             "data": "title",
                             "mRender": function (data, type, full) {
-                                split = full.title.split(' ');
-                                sub_title = '';
-                                $.each(split,function(i,val){
-                                    if(i<=7){
-                                        sub_title = sub_title + ' ' + val;
-                                    }else if(i==8){
-                                        sub_title = sub_title + ' ...';
-                                    }
-                                });
-                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='" + full.title + "'>"+ sub_title +"</a>";
+                                // split = full.title.split(' ');
+                                // sub_title = '';
+                                // $.each(split,function(i,val){
+                                //     if(i<=7){
+                                //         sub_title = sub_title + ' ' + val;
+                                //     }else if(i==8){
+                                //         sub_title = sub_title + ' ...';
+                                //     }
+                                // });
+                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='" + full.title + "'>"+ full.title +"</a>";
                             },
                             "width": "40%"
                         },

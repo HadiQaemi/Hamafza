@@ -842,7 +842,7 @@
                                 <input type="radio" name="quality_done" id="quality-week" value="week"/>
                             </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-week">{{ trans('tasks.week') }}</label>
+                                <label for="quality-week">{{ trans('tasks.weak') }}</label>
                             </span>
                         </div>
                         <div class="col-xs-2">
@@ -850,7 +850,7 @@
                                 <input type="radio" name="quality_done" id="quality-very_week" value="very_week"/>
                             </span>
                             <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                                <label for="quality-very_week">{{ trans('tasks.very_week') }}</label>
+                                <label for="quality-very_week">{{ trans('tasks.very_weak') }}</label>
                             </span>
                         </div>
                         <div class="col-xs-2">
