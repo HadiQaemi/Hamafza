@@ -6,29 +6,26 @@
     <meta name="csrf-token" content="{{ $csrf}}">
 @include('layouts.helpers.common.sections.meta')
 <?php
-    if(session('Uname')!=null)
-    {
-        if(trim(session('Uname'))!='')
-        {
-            header("Location: ".App::make('url')->to('/').'/'.session('Uname')."/desktop");
-            die();
-        }
-    }
+//if(session('Uname')!=null)
+//{
+//    if(trim(session('Uname'))!='')
+//    {
+//        header("Location: ".App::make('url')->to('/').'/'.session('Uname')."/desktop");
+//        die();
+//    }
+//}
 ?>
 <!---------------**Main Style**-------------->
-
 <!---------------**Specific Plugin Style**-------------->
 @include('layouts.homepages.helpers.general.assets.style.specific_plugin_style')
 
-<!---------------**Inline Style**-------------->
-@include('layouts.homepages.helpers.general.assets.style.inline_style')
-    <link type="text/css" rel="stylesheet" href="{{url('theme/Content/css/style.css')}}"/>
+    <!---------------**Inline Style**-------------->
+    @include('layouts.homepages.helpers.general.assets.style.inline_style')
     <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/main.css"/>
-    {{--<link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/bootstrap.min.css"/>--}}
-    <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap/css/bootstrap.css')}}"/>
-    <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap/css/bootstrap-rtl.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/behzisti/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<!---------------**Main Scripts**-------------->
+    <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
     @include('hamahang.master.alert')
     @include('hamahang.master.confirm')
@@ -53,6 +50,18 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+        body{
+            text-align: right !important;
+        }
+        input, .input-group-addon{
+            border-radius: 0px !important;
+        }
+        .form-control{
+            font-size: 14px !important;
+        }
+        input[type=password]{
+            padding: 10px !important;
+        }
     </style>
 </head>
 <!doctype html>
@@ -64,13 +73,12 @@
 
     <!-- Bootstrap CSS -->
 
-    <title>سامانه دانش
-        معلولیت و ناتوانی </title>
+    <title>سامانه دانش معلولیت و ناتوانی </title>
 </head>
 <body>
 <div class="container-fluid  h-100" style="background-color: #119b9d;">
     <div class="row height-100-vh" >
-        <div class="col-xs-2 rigth_box text-justify" style="margin-top: 1rem;" >
+        <div class="col-2 rigth_box text-justify" style="margin-top: 1rem;" >
             <div class="rigth_box_head row justify-content-md-center">
                 <p class="text-center">
                     سامانه دانش
@@ -79,52 +87,55 @@
                 </p>
             </div>
             <div class="rigth_box_body row justify-content-md-center">
-                <div class="text-center linkde" style="margin-right: 30%;">
-                    <div class="pointer" href="#" style="margin-top: 10px;cursor: pointer">راهنما</div>
-                    <div class="pointer" href="#" style="margin-top: 10px;cursor: pointer">ارتباط با ما</div>
-                    <div class="pointer" href="#" style="margin-top: 10px;margin-bottom: 10px;cursor: pointer">درباره ما</div>
-                </div>
+                <nav class="nav flex-column text-center linkde" >
+                    <a class="nav-link" href="{{App::make('url')->to('/')}}/17">راهنما</a>
+                    <a class="nav-link" href="{{App::make('url')->to('/')}}/33380">ارتباط با ما</a>
+                    <a class="nav-link" href="{{App::make('url')->to('/')}}/33390">درباره ما</a>
+
+                </nav>
                 <div class="col-xs-12 justify-content-md-center text-center">
                     @if (auth()->check())
                         <div class="col-xs-12 margin-left-10">
                             <a href="{{App::make('url')->to('/')}}/{{session('Uname')}}/wall" class="wall">دیوار @if(session('WallNotificaton')>0)<span class="badge">{{session('WallNotificaton')}}</span>@endif</a>
-                            <a href="{{App::make('url')->to('/')}}/{{session('Uname')}}/desktop" class="wall">میز کار @if(session('DesktopNotificaton')>0)<span class="badge DesktopNotificaton">{{session('DesktopNotificaton')}}</span>@endif</a>
+                            / <a href="{{App::make('url')->to('/')}}/{{session('Uname')}}/desktop" class="wall">صفحه اصلی @if(session('DesktopNotificaton')>0)<span class="badge DesktopNotificaton">{{session('DesktopNotificaton')}}</span>@endif</a>
                             @include('sections.homeright-general')
                         </div>
                     @else
-                        <div class="col-xs-12 background-white margin-left-10">
+                        <div class="col-xs-12 background-white">
                             <div class="homepage_login_div">
-                                <div class="homepage_inner_login_div">
-                                    <form id="homepage_form_login" name="form-login" class="form_login clearfix" method="post">
+                                <div class="homepage_inner_login_div text-center">
+                                    <form id="homepage_form_login" name="form-login" class="form_login clearfix text-center" method="post">
                                         {{ csrf_field() }}
-                                        <div id="homepage_login_fail_request_errors" style="font-family: IranSharp; font-size: 12px; color: red; text-align: center; margin-bottom: 10px;"></div>
+                                        <div id="homepage_login_fail_request_errors" style="font-family: sans; font-size: 12px; color: red; text-align: center; margin-bottom: 10px;"></div>
                                         <table style="width:100%;margin-top: 30px;">
                                             <tbody>
                                             <tr>
-                                                <td style="padding: 2px;padding-left: 15px;">
-                                                   <div id="homepage_username_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                    <input type="text" name="username" id="exampleInputEmail1" placeholder="نام کاربری" autofocus="" class="form-control required" style="direction: ltr; font-family: Arial;">
+                                                <td style="padding: 2px;">
+                                                    <div id="homepage_username_request_errors" style="font-family: sans; font-size: 12px; color: red"></div>
+                                                    <input type="text" name="username" id="exampleInputEmail1" placeholder="نام کاربری" autofocus="" class="form-control required" style=" font-family: sans;">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding: 2px;width:100%;padding-left: 15px;">
-                                                    <div id="homepage_password_request_errors" style="font-family: Arial; font-size: 12px; color: red"></div>
-                                                    <input type="password" id="passwords" name="password" placeholder="رمز عبور" class="form-control required" style="direction: ltr;" autocomplete="off">
+                                                <td style="padding: 2px;width:100%;">
+                                                    <div id="homepage_password_request_errors" style="font-family: sans; font-size: 12px; color: red"></div>
+                                                    <input type="password" id="passwords" name="password" placeholder="رمز عبور" class="form-control required" >
                                                 </td>
                                             </tr>
                                             @if (!config('app.debug'))
                                                 <tr>
-                                                    <td style="padding: 2px;padding-left: 15px;">
-                                                        <label>کد امنیتی</label>
+                                                    <td style="padding: 2px;">
+
                                                         <div id="captcha_code" class="form-group input-group">
-                                                            <div id="homepage_captcha_request_errors" style="font-family: IranSharp; font-size: 12px; color: red"></div>
-                                                            <input type="text" name="captcha_code" class="form-control" tabindex="1" style="direction: ltr; font-family: arial;" autocomplete="off">
+                                                            <input type="text" name="captcha_code" class="form-control" placeholder="کد امنیتی" tabindex="1" style=" font-family: sans;">
+                                                        </div>
+                                                        <div id="captcha_code" class="form-group input-group" style="width: 150px;">
+                                                            <div id="homepage_captcha_request_errors" style="font-family: sans; font-size: 12px; color: red"></div>
                                                         </div>
 
-                                                        <div class="homepage_login_captcha_refresh captcha-refresh-style" style="">
+                                                        <div class="homepage_login_captcha_refresh captcha-refresh-style" >
                                                             <i style="color: black; margin-top: 9px;" class="fa fa-refresh"></i>
                                                         </div>
-                                                        <div style="float: right;">
+                                                        <div >
                                                             <img style="height: 34px;" class="homepage_login_captcha_image" src="{{ route('captcha', 'login') }}">
                                                         </div>
                                                         <div class="clearfixed"></div>
@@ -134,19 +145,23 @@
                                             <tr style="margin-top: 20px">
                                                 <td class="homepage_login" style="padding: 2px; padding-left: 15px;">
 
-                                                    {{--<div class="forgetpas homepage_forget_password_user" data-target="#forgetpas" data-toggle="modal" data-dismiss="modal" style="display: table; margin: auto;">رمز عبور را فراموش کرده‌ام</div>--}}
+                                                    {{--<div class="forgetpas homepage_forget_password_user" data-target="#forgetpas" data-toggle="modal" data-dismiss="modal" style="display: table; margin: auto;">Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø±Ø§ ÙØ±Ø§Ù…ÙˆØ´ Ú©Ø±Ø¯Ù‡â€ŒØ§Ù…</div>--}}
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
 
-                                        <div class="col-xs-12 noLeftPadding noRightPadding margin-top-15">
-                                            <div class="col-xs-6 display-inline width-50-pre">
-                                                <input type="button" id="btn_homepage_login_form" class="btn btn-primary pull-right" value="ورود"/>
+                                        <div class="col-xs-12 margin-top-15" style="padding: 0px !important;margin: 0px !important;;">
+                                            <div class="col-xs-2"></div>
+                                            <div class="col-xs-8" style="padding: 0px !important;margin: 0px !important;;">
+                                                <div class="col-xs-6 display-inline pull-left" style="padding: 0px !important;margin: 0px !important;;">
+                                                    <span class="register btn btn-default" data-toggle="modal" data-target="#register">عضویت</span>
+                                                </div>
+                                                <div class="col-xs-6 display-inline pull-right" style="padding: 0px !important;margin: 0px !important;;">
+                                                    <input type="button" id="btn_homepage_login_form" class="btn btn-primary" value="ورود"/>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-6 display-inline width-50-pre" style="padding-top: 8px;">
-                                                <a class="register res-a" data-toggle="modal" data-target="#register">ثبت نام</a>
-                                            </div>
+                                            <div class="col-xs-2"></div>
                                         </div>
                                     </form>
                                 </div>
@@ -157,85 +172,66 @@
                 <div class="col-xs-12" style="margin-top: 3rem;border-top: 1px solid #a49f93;">
                     <div class="flink row">پیوند های مرتبط:</div>
                     <div class="hlink">
-                        <a href="">سازمان بهزیستی</a>
+                        <a href="http://www.behzisti.ir/">سازمان بهزیستی</a>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="col--xs-10 left_box"  style="margin-top: 1rem;">
+        <div class="col-10 left_box h-100"  style="margin-top: 1rem;">
             <div style="background-color: rgba(33, 33, 36, 0.3);">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 0.4rem;padding-top: 0.6rem;">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills1" aria-selected="true">معلولان </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills2" aria-selected="false">سالمندان</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills3" aria-selected="false">کارشناسان</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills4" aria-selected="false">سازمان‌های مردم نهاد</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills5" aria-selected="false">سازمان‌های مسئول</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills6" aria-selected="false">مراکز غیر دولتی</a>
-                    </li>
-                </ul>
+
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="row justify-content-md-center text-center" style="padding-top: 1rem;">
+                    <div class="" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="row justify-content-md-center text-center" style="padding-top: 0.5rem;">
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/2">
                                     <img src="theme/behzisti/img/danesh.png" class="img-fluid "  alt="Responsive image">
                                     <p class="subtitle">دانشنامه</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/33310">
                                     <img src="theme/behzisti/img/rul.png" class="img-fluid"  alt="Responsive image">
                                     <p class="subtitle">قوانین و مقررات</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/33320">
                                     <img src="theme/behzisti/img/noghbeh.png" class="img-fluid"  alt="Responsive image">
                                     <p class="subtitle">نخبگان معلول</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/33330">
                                     <img src="theme/behzisti/img/komaki.png" class="img-fluid"  alt="Responsive image">
-                                    <p class="subtitle"> وسائل کمکی</p>
+                                    <p class="subtitle">  وسائل کمکی</p>
                                 </a>
                             </div>
 
 
                         </div>
-                        <div class="row justify-content-md-center text-center" style="padding-top: 1rem;">
+                        <div class="row justify-content-md-center text-center" style="padding-top: 0rem;">
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/445000">
                                     <img src="theme/behzisti/img/ideh.png" class="img-fluid"  alt="Responsive image">
                                     <p class="subtitle">ایده ها</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/445010">
                                     <img src="theme/behzisti/img/expers.png" class="img-fluid"  alt="Responsive image">
                                     <p class="subtitle">اشتراک تجربیات</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/6">
                                     <img src="theme/behzisti/img/question.png" class="img-fluid"  alt="Responsive image">
-                                    <p class="subtitle">پرسش و پاسخ </p>
+                                    <p class="subtitle">پرسش و پاسخ</p>
                                 </a>
                             </div>
                             <div class="col-sm">
-                                <a href="">
+                                <a href="{{App::make('url')->to('/')}}/4">
                                     <img src="theme/behzisti/img/socail.png" class="img-fluid"  alt="Responsive image">
                                     <p class="subtitle"> شبکه اجتماعی </p>
                                 </a>
@@ -243,9 +239,39 @@
 
 
                         </div>
+
+
+                        <div class="row justify-content-md-center text-center" style="padding-top: 0rem;">
+                            <div class="col-sm">
+                                <a href="{{App::make('url')->to('/')}}/33340">
+                                    <img src="theme/behzisti/img/expert.png" class="img-fluid"  alt="Responsive image">
+                                    <p class="subtitle">کارشناسان</p>
+                                </a>
+                            </div>
+                            <div class="col-sm">
+                                <a href="{{App::make('url')->to('/')}}/33360">
+                                    <img src="theme/behzisti/img/management.png" class="img-fluid"  alt="Responsive image">
+                                    <p class="subtitle">سازمان‌های مسئول</p>
+                                </a>
+                            </div>
+                            <div class="col-sm">
+                                <a href="{{App::make('url')->to('/')}}/33370">
+                                    <img src="theme/behzisti/img/people.png" class="img-fluid"  alt="Responsive image">
+                                    <p class="subtitle">سازمان های مردم نهاد</p>
+                                </a>
+                            </div>
+                            <div class="col-sm">
+                                <a href="{{App::make('url')->to('/')}}/33350">
+                                    <img src="theme/behzisti/img/oldman.png" class="img-fluid"  alt="Responsive image">
+                                    <p class="subtitle">سالمندان</p>
+                                </a>
+                            </div>
+
+
+                        </div>
+
                     </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">bb</div>
-                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">cc</div>
+
                 </div>
 
             </div>
@@ -254,15 +280,14 @@
                     <p>
                         سامانه عمومی هم افزا مبتنی بر
                         <a href="">هم افزا</a> |
-                        پشتیبانی :
-                        <a href="">فناوران مدیریت علم هم افزا </a>
+                        پشتیبانی:<a href="">فناوران مدیریت علم هم افزا</a>
                     </p>
                 </div>
                 <div class="col-sm">
                     <nav class=" text-left">
-                        <a class="" href="#">درباره ما</a> |
-                        <a class="" href="#">تماس با ما</a> |
-                        <a class="" href="#">معرفی</a>
+                        <a class="" href="http://hamafza.co/106/%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87-%D9%85%D8%A7-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D8%B9%D9%84%D9%85-%D9%87%D9%85-%D8%A7%D9%81%D8%B2%D8%A7/">درباره ما</a> |
+                        <a class="" href="http://hamafza.co/contact-us/">تماس با ما</a> |
+                        <a class="" href="http://hamafza.co/">معرفی</a>
                     </nav>
                 </div>
 
@@ -271,8 +296,6 @@
     </div>
 
 </div>
-
-
 <!---------------**Specific Plugin Scripts**-------------->
 @include('layouts.homepages.helpers.general.assets.script.specific_plugin_scripts')
 
@@ -293,6 +316,3 @@
     @include('layouts.helpers.common.sections.helpers.nav_bar.auth_modals')
     </div>
 </body>
-<script>
-    $('.homepage_login_captcha_image,.login_captcha_image').attr('src', '{{ route('captcha', 'login') }}' + '?' + Math.random());
-</script>

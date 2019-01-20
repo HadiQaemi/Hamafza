@@ -133,10 +133,10 @@
                                     <div id="reg_captcha_request_errors" class="modal_register_error_inputs" style="font-family: IranSharp; font-size: 12px; color: blue"></div>
                                 @endif
                             <div class="row col-md-12 pull-left" style="margin-top: 12px;">
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#forgetpas" class="help-block forgetpas">فراموشی رمز عبور</div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#login" class="login">ورود</div>
                                 </div>
                                 <div class="col-md-5">

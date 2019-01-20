@@ -222,15 +222,15 @@
                         $Steps: 1                                       //[Optional] Steps to go for each navigation request, default value is 1
                     }
                 };
-            var jssor_slider1 = new $JssorSlider$("slider2_container", options);
+            // var jssor_slider1 = new $JssorSlider$("slider2_container", options);
             //responsive code begin
             //you can remove responsive code if you don't want the slider scales while window resizes
             function ScaleSlider() {
-                var parentWidth = jssor_slider1.$Elmt.parentNode.clientWidth;
-                if (parentWidth)
-                    jssor_slider1.$SetScaleWidth(Math.min(parentWidth, 792));
-                else
-                    window.setTimeout(ScaleSlider, 30);
+                // var parentWidth = jssor_slider1.$Elmt.parentNode.clientWidth;
+                // if (parentWidth)
+                //     jssor_slider1.$SetScaleWidth(Math.min(parentWidth, 792));
+                // else
+                //     window.setTimeout(ScaleSlider, 30);
             }
             ScaleSlider();
             if (!navigator.userAgent.match(/(iPhone|iPod|iPad|BlackBerry|IEMobile)/)) {

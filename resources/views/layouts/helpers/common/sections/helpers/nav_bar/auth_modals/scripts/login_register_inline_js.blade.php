@@ -18,6 +18,7 @@
         });
 
         $(document).on("click", ".homepage_register_user", function () {
+            alert('asdasdasda');
             $('#register').modal('show');
             // calendarModal = $.jsPanel({
             //     position: {my: "center-top", at: "center-top", offsetY: 80},
