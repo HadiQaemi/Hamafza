@@ -900,7 +900,7 @@ class MyAssignedTaskController extends Controller
                     $output .= ' و غیرمهم ';
                     $output_new .= '0';
                 }
-                return $output_new;
+                return ['output'=>$output,'output_image'=>$output_new];
             })
             ->addColumn('pages', function ($data)
             {

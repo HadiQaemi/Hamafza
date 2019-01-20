@@ -182,6 +182,7 @@
                 "data": send_info
             },
             "bSort": true,
+            "order": [[ 2, "asc" ]],
             "aaSorting": [],
             "bSortable": true,
             "autoWidth": false,
@@ -195,17 +196,18 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        split = full.title.split(' ');
-                        sub_title = '';
-                        $.each(split,function(i,val){
-                            if(i<=3){
-                                sub_title = sub_title + ' ' + val;
-                            }else if(i==4){
-                                sub_title = sub_title + ' ...';
-                            }
-                        });
-                        return "<a class='cursor-pointer jsPanels " + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>"+sub_title+"</a>";
-                    }
+                        // split = full.title.split(' ');
+                        // sub_title = '';
+                        // $.each(split,function(i,val){
+                        //     if(i<=10){
+                        //         sub_title = sub_title + ' ' + val;
+                        //     }else if(i==11){
+                        //         sub_title = sub_title + ' ...';
+                        //     }
+                        // });
+                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                    },
+                    "width": "50%"
                 },
                 {
                     "data": "employee",
@@ -217,30 +219,34 @@
                             data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                         });
                         return "<div class='" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "'>"+full.employee+"</div><div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
-                    }},
+                    },
+                    "width": "30%"
+                },
                 {"data": "assignment_created_at"},
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     },
-                    "width": 10
+                    "width": "5%"
                 },
                 {"data": "respite",
                     "mRender": function (data, type, full) {
                         return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
                     },
-                    "width": 10
+                    "width": "5%"
                 },
                 {"data": "type",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
                     },
-                    "width": 10
+                    "width": "5%"
                 },
                 {"data": "operation",
                     "mRender": function (data, type, full) {
                         return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task color_red" data-toggle="tooltip" title="حذف"></a>';
-                    }}
+                    },
+                    "width": "5%"
+                }
 
 //            , {
 //                "data": "id", "width": "8%",

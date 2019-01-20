@@ -904,7 +904,7 @@ class tasks extends Model
             ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
             ->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
             ->where('hamahang_subject_ables.subject_id', '=',$filter_subject_id)
-            ->whereNull('hamahang_subject_ables.deleted_at');
+//            ->whereNull('hamahang_subject_ables.deleted_at')
         ;
         $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)) ');
 

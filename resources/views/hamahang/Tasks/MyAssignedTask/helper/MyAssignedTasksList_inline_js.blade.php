@@ -135,13 +135,6 @@
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_sended')}}';
         window.table_chart_grid3 = $('#MyAssignedTasksTable').DataTable({
-            columnDefs: [
-                { "width": "10%", "targets": [2,3,4,5,6] },
-                { "width": "20%", "targets": 1 },
-                { "width": "50%", "targets": 0 },
-                { "width": "15%", "targets": 2 },
-                {"className": "dt-center", "targets": "_all"}
-            ],
             "dom": window.CommonDom_DataTables,
             "serverSide": true,
             "ajax": {
@@ -162,18 +155,18 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        split = full.title.split(' ');
-                        sub_title = '';
-                        $.each(split,function(i,val){
-                            if(i<=3){
-                                sub_title = sub_title + ' ' + val;
-                            }else if(i==4){
-                                sub_title = sub_title + ' ...';
-                            }
-                        });
-                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>"+sub_title+"</a>";
-                    }
+                        // split = full.title.split(' ');
+                        // sub_title = '';
+                        // $.each(split,function(i,val){
+                        //     if(i<=3){
+                        //         sub_title = sub_title + ' ' + val;
+                        //     }else if(i==4){
+                        //         sub_title = sub_title + ' ...';
+                        //     }
+                        // });
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                    },
+                    "width": "60%"
                 },
                 {
                     "data": "employee",
@@ -185,23 +178,32 @@
                             data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
-                    }},
-                {"data": "created_at"},
+                    },
+                    "width": "20%"
+                },
+                {
+                    "data": "created_at",
+                    "width": "5%"
+                },
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate+".png'/>";
-                    }},
+                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
+                    },
+                    "width": "5%"
+                },
                 {
                     "data": "respite",
                     "mRender": function (data, type, full) {
                         return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
-                    }
+                    },
+                    "width": "5%"
                 },
                 {
                     "data": "type",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
-                    }
+                    },
+                    "width": "5%"
                 },
                 {
                     "data": "id", "width": "8%",
@@ -211,8 +213,8 @@
                         var id = full.id;
                         // return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
                         return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>') + "<a class='fa fa-trash margin-right-10 pointer remove_task color_red' data-toggle='tooltip' title='حذف' rel='" + full.id + "'></a>" +"<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
-
-                    }
+                    },
+                    "width": "5%"
                 }
                 // , {
                 //     "data": "id",

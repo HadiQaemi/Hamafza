@@ -50,20 +50,6 @@
             </div>
             <div class="row opacity-7">
                 <div class="form-inline" style="" >
-                    {{--<div class="checkbox pull-right">--}}
-                        {{--<div class="form-inline" style="margin-top: 20px">--}}
-                            {{--<div class="checkbox">--}}
-                                {{--<label>--}}
-                                    {{--<input type="checkbox" class="form-check-input" name="official_type[]" value="0" id="official" checked>--}}
-                                    {{--<span>{{trans('tasks.official')}}</span>--}}
-                                {{--</label>--}}
-                                {{--<label>--}}
-                                    {{--<input type="checkbox" class="form-check-input" name="official_type[]" value="1" id="unofficial" checked>--}}
-                                    {{--<span>{{trans('tasks.unofficial')}}</span>--}}
-                                {{--</label>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                     <div class="pull-right" style="margin-top: 10px;">
                         <label class="container-checkmark">
                             <input type="checkbox" checked="checked" class="form-check-input" name="official_type[]" value="0" id="official" checked>

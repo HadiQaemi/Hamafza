@@ -3788,7 +3788,7 @@ input{
     margin-top: 5px;
 }
 .no-task-div{
-    padding: 80px 35%;
+    padding: 80px;
     text-align: center;
 }
 .no-task-div-buttons{
@@ -4155,4 +4155,7 @@ input::-webkit-inner-spin-button {
 }
 .help-view p #tab_t1{
     padding: 10px;
+}
+.white-space{
+    white-space:normal
 }

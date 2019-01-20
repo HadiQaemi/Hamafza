@@ -301,13 +301,13 @@
                                 // split = full.title.split(' ');
                                 // sub_title = '';
                                 // $.each(split,function(i,val){
-                                //     if(i<=7){
+                                //     if(i<=10){
                                 //         sub_title = sub_title + ' ' + val;
-                                //     }else if(i==8){
+                                //     }else if(i==11){
                                 //         sub_title = sub_title + ' ...';
                                 //     }
                                 // });
-                                return "<a class='pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='" + full.title + "'>"+ full.title +"</a>";
+                                return "<a class='pointer project_tasks_list white-space' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
                             },
                             "width": "40%"
                         },
@@ -355,7 +355,7 @@
                         {
                             "data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.pid +"' title='حذف'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
+                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='ویرایش'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='وظایف'></a><a class='fa fa-area-chart margin-right-10 pointer project_tasks_chart' data-p_id= '"+ full.id +"' data-toggle='tooltip' title='وظایف'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.pid +"' title='حذف'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
                             },
                             "width": "10%"
                         }
@@ -496,6 +496,33 @@
             }
             loadTasks(send_info);
         });
+        $(document).on('click', ".project_tasks_chart", function () {
+            var send_info = {
+                p_id: $(this).data("p_id"),
+                pid: $(this).data("p_id")
+            }
+            loadTasks(send_info);
+
+        });
+        function loadGanttTasks(send_info){
+            $.ajax({
+                url:'<?php echo e(URL::route('hamahang.project.show_project_gantt_tasks' )); ?>',
+                type:'post',
+                data: send_info,
+                dataType:'json',
+                success :function(data)
+                {
+                    if (data.success == false) {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        $('#form_filter_priority').addClass('hidden');
+                        $('#ProjectInfoList').html(data.content);
+                        $('#fieldset_info').removeClass('hidden');
+                        $('#fieldset').addClass('hidden');
+                    }
+                }
+            });
+        }
         function loadTasks(send_info){
             $.ajax({
                 url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',

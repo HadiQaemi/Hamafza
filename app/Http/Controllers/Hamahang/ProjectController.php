@@ -81,6 +81,22 @@ class ProjectController extends Controller
         }
     }
 
+    public function ProjectTasksGanttWindow()
+    {
+        $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
+        if(in_array(self::$_VIEW_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
+            return json_encode([
+                'success' => true,
+                'header' => trans('tasks.project'),
+                'content' => view('hamahang.Projects.show_project_tasks_gantt_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
+            ]);
+        }else{
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }
+    }
+
     public function DeleteTaskProject()
     {
         $pid = deCode(Request::input('pid'));
@@ -440,7 +456,7 @@ class ProjectController extends Controller
         }else if(trim($message)==trans('projects.no_permissions')){
             return json_encode(['success'=>false, 'message'=>$message]);
         }else{
-            return json_encode(['success'=>false]);
+            return json_encode(['success'=>false, 'message'=>$message]);
         }
     }
     public function project_tasks_list($pid)

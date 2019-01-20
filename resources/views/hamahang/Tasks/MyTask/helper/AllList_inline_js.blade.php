@@ -152,10 +152,19 @@
                     "data": "title",
                     "mRender": function (data, type, full) {
                         var id = full.id;
-                        // return "<a class='task_info cursor-pointer' data-t_id = '"+full.id+"'>"+full.title+"</a>";<a style="float: right;" class="jsPanels" href="/modals/ShowTaskForm?tid='+id+'" title="{{trans('tasks.show_task')}}">{{trans('tasks.show_task')}}</a>
-                        return "<a class='cursor-pointer jsPanels' href='/modals/ShowTranscriptTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>"+full.title+"</a>";
+                        // split = full.title.split(' ');
+                        // sub_title = '';
+                        // $.each(split,function(i,val){
+                        //     if(i<=10){
+                        //         sub_title = sub_title + ' ' + val;
+                        //     }else if(i==11){
+                        //         sub_title = sub_title + ' ...';
+                        //     }
+                        // });
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ShowTranscriptTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
                         // return full.title;
-                    }
+                    },
+                    "width": "60%"
                 },
                 {
                     "data": "employee",
@@ -167,23 +176,27 @@
                             data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
-                    }
+                    },
+                    "width": "15%"
                 },
                 {"data": "assigner"},
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
-                    }
                     },
+                    "width": "15%"
+                },
                 {"data": "respite",
                     "mRender": function (data, type, full) {
                         return "<div class='respite_number "+full.respite.bg+"' data-toggle='tooltip' title='"+full.respite.gdate+"' >"+full.respite.respite_days+"</div>";
-                    }
+                    },
+                    "width": "5%"
                 },
                 {"data": "type",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
-                    }
+                    },
+                    "width": "5%"
                 }
 
 //            , {
