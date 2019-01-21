@@ -494,7 +494,7 @@
                 p_id: $(this).data("p_id"),
                 pid: $(this).data("p_id")
             }
-            loadTasks(send_info);
+            loadTaskList(send_info);
         });
         $(document).on('click', ".project_tasks_chart", function () {
             var send_info = {
@@ -523,7 +523,7 @@
                 }
             });
         }
-        function loadTasks(send_info){
+        function loadTaskList(send_info){
             $.ajax({
                 url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',
                 type:'post',

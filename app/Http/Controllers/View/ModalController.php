@@ -1245,7 +1245,7 @@ class ModalController extends Controller
             'header' => trans('tasks.show_task'),
             'content' => view('hamahang.Tasks.helper.ShowLiberaryTaskForm.ShowLiberaryTaskFormWindow', $arr)
                 ->with('res', $res)->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task_all"]->is_save])->render()
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>1])->render()
         ]);
     }
 

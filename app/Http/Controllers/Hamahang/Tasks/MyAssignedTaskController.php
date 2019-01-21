@@ -1372,14 +1372,14 @@ class MyAssignedTaskController extends Controller
                 }
                 if (Request::exists('project_tasks'))
                 {
-                    DB::table('hamahang_project_task')
-                        ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
-                        ->whereNull('deleted_at')
-                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-                    foreach (Request::input('project_tasks') as $project_id)
-                    {
-                        hamahang_project_task::create_task_project($task->id, $project_id);
-                    }
+//                    DB::table('hamahang_project_task')
+//                        ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
+//                        ->whereNull('deleted_at')
+//                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+//                    foreach (Request::input('project_tasks') as $project_id)
+//                    {
+//                        hamahang_project_task::create_task_project($task->id, $project_id);
+//                    }
                 }
 
                 $staff = '';
