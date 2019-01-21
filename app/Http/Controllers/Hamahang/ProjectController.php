@@ -97,6 +97,56 @@ class ProjectController extends Controller
         }
     }
 
+    public function ProjectFetchGanttTasks()
+    {
+        $jdate = new jDateTime;
+        $result = [];
+        $pid = deCode(Request::input('pid'));
+        $permission = self::TakeProjectPermissions($pid);
+        if(in_array(self::$_VIEW_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
+            $items = DB::table('hamahang_project_task')
+                ->where('project_id', '=', $pid)
+                ->leftjoin('hamahang_task', 'hamahang_task.id', '=', 'hamahang_project_task.task_id')
+                ->whereNull('hamahang_project_task.deleted_at')
+                ->select('hamahang_project_task.*', 'hamahang_task.*', 'hamahang_project_task.id as hp_task')
+                ->get();
+//            dd(count($items));
+            foreach($items as $item){
+                $tasks = [];
+                $start = $jdate ->getdate(strtotime($item->schedule_time) + 0);
+                $start = jDateTime::convertElseNumbers($start['year'].'-'.$start['mon'].'-'.$start['mday']);
+                $end = $jdate ->getdate(strtotime($item->schedule_time) + $item->duration_timestamp);
+                $end = jDateTime::convertElseNumbers($end['year'].'-'.$end['mon'].'-'.$end['mday']);
+//
+                $start = $org_start = preg_split('/-/',$start);
+                $start = $jdate ->Jalali_to_Gregorian($start[0],$start[1],$start[2]);
+                $date = date_create($start[0]."-".$start[1]."-".$start[2]);
+                date_sub($date,date_interval_create_from_date_string("79 days"));
+                $new_start = $org_start[0].'-'.date_format($date,"m-d");
+//
+                $end = $org_end = preg_split('/-/',$end);
+                $end = $jdate ->Jalali_to_Gregorian($end[0],$end[1],$end[2]);
+                $date = date_create($end[0]."-".$end[1]."-".$end[2]);
+                date_sub($date,date_interval_create_from_date_string("79 days"));
+                $new_end = $org_end[0].'-'.date_format($date,"m-d");
+
+                // rows
+                $tasks['id'] = $item->id;
+                $tasks['text'] = htmlspecialchars($item->title);
+                $tasks['start'] = $new_start;
+                $tasks['end'] = $new_end;
+                $tasks['complete'] = $item->progress;
+                $result[] = $tasks;
+            }
+            return json_encode($result);
+        }else{
+            $result['error'] = trans('projects.no_permissions');
+            $result['success'] = false;
+            return json_encode($result);
+        }
+
+    }
+
     public function DeleteTaskProject()
     {
         $pid = deCode(Request::input('pid'));

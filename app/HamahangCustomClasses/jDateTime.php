@@ -532,6 +532,13 @@ class jDateTime
 		return str_replace($english_array, $farsi_array, $matches);
 	}
 
+	public static function convertElseNumbers($matches)
+	{
+		$farsi_array = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+		$english_array = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+		return str_replace($farsi_array, $english_array, $matches);
+	}
+
 	/**
 	 * Division
 	 */
