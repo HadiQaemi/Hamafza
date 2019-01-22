@@ -1051,6 +1051,7 @@ class ModalController extends Controller
         }elseif(in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_MANAGE_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_VIEW_PROJECT_PERMISSSION,$projectRole)){
             return $this->ShowTaskFormAbroadMode();
         }
+
         dd($res);
         $task = array();
         if ($res['tid'])
@@ -1156,11 +1157,15 @@ class ModalController extends Controller
 
     public function ShowTaskFormOwnerMode()
     {
+        $jdate = new jDateTime;
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Subjects', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
+        $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
+
+//        dd($task);
 
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
