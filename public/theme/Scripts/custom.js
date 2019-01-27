@@ -59,7 +59,48 @@ function runWaitMe(el, type = 1, effect = 'pulse') {
 function parseArabic(str) {
     return str.replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2').replace(/۳/g, '3').replace(/۴/g, '4').replace(/٤/g, '4').replace(/۵/g, '5').replace(/۶/g, '6').replace(/۷/g, '7').replace(/٧/g, '7').replace(/۸/g, '8').replace(/٩/g, '9').replace(/۹/g, '9');
 }
+
+
+
+$(document).on('mouseover', '[data-toggle="tooltip"]', function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    // alert('asdasdasd');
+});
+
+///
 $(document).ready(function () {
+    // for task manages +++++++++++++++++++++
+    $(document).on("change", "#create_new_task #new_task_users_responsible", function (e) {
+        var none = $(this).find('option:selected').length;
+        // alert(none);
+        if(none > 1)
+            $('.person_option').show();
+        else
+            $('.person_option').hide();
+        if(none >= 1)
+            $('.send_message').show();
+        else
+            $('.send_message').hide();
+
+        var title = $('#create_new_task #title').val();
+        if(title.trim().length>0 && none>0)
+            $('#new_task_save_type_final').click();
+        else
+            $('#new_task_save_type_draft').click();
+    });
+
+    $(document).on("keyup", "#create_new_task #title", function (e) {
+        var title = $(this).val();
+        // alert(title);
+        var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
+        if(title.trim().length>0 && new_task_users_responsible>0)
+            $('.new_task_save_type_final').click();
+        else
+            $('.new_task_save_type_draft').click();
+    });
+    // +++++++++++++++++++
+
+
     var slider;
 
     $("#scrollReset").stop(true, true).fadeOut();
@@ -154,8 +195,6 @@ $(document).ready(function () {
     }
 
     //------------------------------------------
-
-
     // toolbar SubMenu +++++++++++++++++++++
 
     $(document).on("click", ".MustLogin", function (e) {

@@ -388,7 +388,7 @@
                         if (data.success == 'success') {
                             $('#create_rapid_task_title').val('');
                             $('#create_rapid_task_multi_selected_users').val('');
-                            loadTasks({p_id: $('#pid').val(),pid: $('#pid').val()});
+                            loadTaskList({p_id: $('#pid').val(),pid: $('#pid').val()});
                         }
                         else {
                             messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);

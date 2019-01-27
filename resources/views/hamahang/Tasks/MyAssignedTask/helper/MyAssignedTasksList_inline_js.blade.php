@@ -136,16 +136,20 @@
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_sended')}}';
         window.table_chart_grid3 = $('#MyAssignedTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
-            "serverSide": true,
             "ajax": {
                 "url": "{{ route('hamahang.tasks.my_assigned_tasks.fetch') }}",
                 "type": "POST",
                 "data": send_info,
 
             },
-            "searching": false,
+            "bSort": true,
+            "order": [[ 2, "asc" ]],
+            "aaSorting": [],
+            "bSortable": true,
             "autoWidth": false,
+            "searching": false,
             "pageLength": 25,
+            // "scrollY": 400,
             "language": LangJson_DataTables,
             "processing": true,
             columns: [
@@ -164,7 +168,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ShowTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
                     },
                     "width": "60%"
                 },
@@ -183,11 +187,16 @@
                 },
                 {
                     "data": "created_at",
+                    "name": "created_at",
+                    "mRender": function (data, type, full) {
+                        return "<span class='hidden'>"+full.created_at.num_year+"</span>" + full.created_at.year;
+                    },
                     "width": "5%"
                 },
-                {"data": "immediate",
+                {
+                    "data": "immediate",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
+                        return "<span class='hidden'>"+full.immediate.output_image+"</span><img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     },
                     "width": "5%"
                 },
@@ -201,7 +210,7 @@
                 {
                     "data": "type",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                        return "<span class='hidden'>"+full.type.id+"</span><img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
                     },
                     "width": "5%"
                 },

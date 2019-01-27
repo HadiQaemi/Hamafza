@@ -520,7 +520,7 @@
                     </form>
                 </div>
                 <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table table-bordered dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                    <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}

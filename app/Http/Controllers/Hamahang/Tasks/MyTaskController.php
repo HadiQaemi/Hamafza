@@ -506,8 +506,8 @@ class MyTaskController extends Controller
                 $time = explode(':', $datetime[1]);
                 $g_timestamp = mktime($time[0], $time[1], $time[2], $task_date [1], $task_date [2], $task_date [0]);
                 $jdate = $date->getdate($g_timestamp);
-                $jdate = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
-                return $jdate;
+                $jdateA = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
+                return ['jdate' => $jdateA, 'num_date' => ($date->convertElseNumbers($jdate['year'])*365 + $date->convertElseNumbers($jdate['mon'])*31 + $date->convertElseNumbers($jdate['mday']))];
             })
             ->addColumn('respite', function ($data) use ($date)
             {

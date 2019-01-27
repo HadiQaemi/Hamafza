@@ -1179,7 +1179,7 @@
             });
         }
         function remove_edit_permission(id) {
-            alert(id);
+            // alert(id);
             var sendInfo = {
                 id: id
             };

@@ -275,7 +275,8 @@
                     else {
                         $('.jsPanel-btn-close').click();
                     }
-                    messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                    $('.jsPanel-btn-close').click();
+                    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                 }
                 else {
                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -711,35 +712,7 @@
     {{--});--}}
 
 
-    $('#new_task_users_responsible').on('change', function() {
-        var none = $(this).find('option:selected').length;
-        if(none > 1)
-            $('.person_option').show();
-        else
-            $('.person_option').hide();
-		if(none >= 1)
-            $('.send_message').show();
-        else
-            $('.send_message').hide();
-
-        var title = $('#title').val();
-        if(title.trim().length>0 && none>0)
-            $('#new_task_save_type_final').click();
-        else
-            $('#new_task_save_type_draft').click();
-    });
-
-    $('#task_title').on('keyup', function() {
-
-        var title = $(this).val();
-        var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
-        if(title.trim().length>0 && new_task_users_responsible>0)
-            $('.new_task_save_type_final').click();
-        else
-            $('.new_task_save_type_draft').click();
-    });
-	
-	$('#task_schedul').on('change', function() {
+    $('#task_schedul').on('change', function() {
         var schedul = $(this).val();
         if(schedul=='minute' || schedul=='hour' || schedul=='daily')
             $('.lbl_repeat_in').addClass('hidden');
@@ -764,14 +737,14 @@
 		$('#create_new_task').on('click', function() {
             var title = $('#title').val();
             var new_task_users_responsible = $('#new_task_users_responsible').find('option:selected').length;
-            if(title.trim().length>0 && new_task_users_responsible>0)
-                $('.new_task_save_type_final').click();
-            else
-                $('.new_task_save_type_draft').click();
+            // if(title.trim().length>0 && new_task_users_responsible>0)
+            //     $('.new_task_save_type_final').click();
+            // else
+            //     $('.new_task_save_type_draft').click();
 		});
         new_task_save_type = $("input[name='new_task_save_type']:checked").val();
-        if(new_task_save_type==0)
-            $('.new_task_save_type_draft').click();
+        // if(new_task_save_type==0)
+        //     $('.new_task_save_type_draft').click();
     })
 
 </script>

@@ -1172,8 +1172,9 @@ class tasks extends Model
                 ->leftjoin('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
                 ->leftjoin('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->leftjoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-                ->whereNull('hamahang_task_assignments.deleted_at')
+//                ->whereNull('hamahang_task_assignments.deleted_at')
                 ->where('hamahang_task.uid', '=', $uid);
+//            dd($result->get());
             $title = Request::exists('title') ? Request::input('title') : '';
             if (trim($title))
             {
@@ -2792,6 +2793,11 @@ class tasks extends Model
         return $this->hasMany('App\Models\Hamahang\Tasks\task_transcripts', 'task_id', 'id');
     }
 
+    public function Events()
+    {
+        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Events_Tasks', 'task_id', 'id');
+    }
+
     public function Keywords()
     {
         return $this->hasMany('App\Models\Hamahang\Tasks\task_keywords', 'task_id', 'id');
@@ -2800,6 +2806,25 @@ class tasks extends Model
     public function Assignments()
     {
         return $this->hasMany('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id');
+    }
+
+    public function Projects()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'task_id', 'id');
+    }
+
+    public function Tasks1()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_relations', 'task_id1', 'id');
+    }
+
+    public function Tasks2()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_relations', 'task_id2', 'id');
+    }
+
+    public function allTasks() {
+        return $this->Tasks1->merge($this->Tasks2)->latest();
     }
 
     public function Assignment()

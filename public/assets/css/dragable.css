@@ -41,7 +41,7 @@ labal {
     color: #ccc;
 }
 
-.task_title {
+.div_groups_task .task_title {
     margin-right: 50px;
     margin-left: 50px;
     line-height: 28px;

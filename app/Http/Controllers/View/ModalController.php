@@ -58,6 +58,7 @@ use App\HamafzaViewClasses\PageClass;
 use App\HamafzaViewClasses\AJAX;
 use App\HamafzaViewClasses\GroupClass;
 use App\Http\OpenModalController;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\HamahangCustomClasses\jDateTime;
 use Auth;
@@ -1042,10 +1043,14 @@ class ModalController extends Controller
             $tid = deCode($res['tid']);
             $taskRole = \App\Http\Controllers\Hamahang\Tasks\TaskController::TakeTaskRoles($tid);
         }
+        $act = Input::has('act') ? Input::get('act') : '';
         if(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
-            return $this->ShowTaskFormOwnerMode();
+            if($act=='do')
+                return $this->ShowTaskFormOwnerMode();
+            else
+                return $this->ShowTaskFormOwnerMode();
         }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_ASSIGNER,$taskRole)){
-            return $this->ShowTaskFormAbroadMode();
+            return $this->ShowTaskFormOperatorMode();
         }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_TRANSCRIPTION,$taskRole)){
             return $this->ShowTaskFormAbroadMode();
         }elseif(in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_MANAGE_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_VIEW_PROJECT_PERMISSSION,$projectRole)){
@@ -1161,12 +1166,9 @@ class ModalController extends Controller
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
-            ->with('Keywords', 'Status', 'Subjects', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
-
-//        dd($task);
-
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
                 ['CreateNewTask',
@@ -1174,12 +1176,79 @@ class ModalController extends Controller
                     'Multi']
             ]
         );
+        $date = new jDateTime;
+        $res['respite'] = [];
+        if($task->respite_timing_type == 0){
+            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $res['respite_date'] = [
+                'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
+                'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
+            ];
+            $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
+        }else if($task->respite_timing_type == 1){
+            $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
+            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $res['respite_date'] = [
+                'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
+                'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
+            ];
+        }
         $arr = array_merge($arr, $res);
         return json_encode([
             'header' => trans('tasks.show_task'),
             'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
                 ->with('res', $res)->render(),
-            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$task->is_save])->render()
+        ]);
+    }
+
+    public function ShowTaskFormOperatorMode()
+    {
+        $jdate = new jDateTime;
+        $res = $this->getParams(['tid','sid','aid']);
+        $tid = deCode($res['tid']);
+        $task = tasks::where('id','=',$tid)
+            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+        $res['task'] = $task;
+        $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $date = new jDateTime;
+        $res['respite'] = [];
+        if($task->respite_timing_type == 0){
+            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $res['respite_date'] = [
+                'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
+                'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
+            ];
+            $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
+        }else if($task->respite_timing_type == 1){
+            $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
+            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $res['respite_date'] = [
+                'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
+                'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
+            ];
+        }
+        $arr = array_merge($arr, $res);
+
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormOperatorWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ShowAssignTaskForm')->render()
+        ]);
+
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowAssignTaskForm.ShowAssignTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ShowAssignTaskForm')->render()
         ]);
     }
 
@@ -1219,6 +1288,33 @@ class ModalController extends Controller
 
     public function ShowTaskForm()
     {
+
+        $jdate = new jDateTime;
+        $res = $this->getParams(['tid','sid','aid']);
+        $tid = deCode($res['tid']);
+        $task = tasks::where('id','=',$tid)
+            ->with('Keywords', 'Status', 'Subjects', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+        $res['task'] = $task;
+        $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
+
+//        dd($task);
+
+        $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
+            [
+                ['CreateNewTask',
+                    ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'xls', 'xlsx', 'ppt', 'pptx', 'doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'],
+                    'Multi']
+            ]
+        );
+        $arr = array_merge($arr, $res);
+        return json_encode([
+            'header' => trans('tasks.show_task'),
+            'content' => view('hamahang.Tasks.helper.ShowTaskForm.ShowTaskFormWindow', $arr)
+                ->with('res', $res)->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with(['btn_type'=>'ShowTaskForm','is_save'=>$res["task"]->is_save])->render()
+        ]);
+
+
         $res = $this->getParams(['tid','sid','aid']);
         $task = array();
         if ($res['tid'])

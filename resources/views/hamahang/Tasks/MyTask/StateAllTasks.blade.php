@@ -51,7 +51,7 @@
 @stop
 
 @section('content')
-    <div style="position: relative;height: 100%;width: 100%;">
+    <div style="position: relative;">
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">

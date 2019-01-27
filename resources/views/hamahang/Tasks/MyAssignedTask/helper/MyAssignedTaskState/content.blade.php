@@ -1,6 +1,11 @@
 <script>
     $('.first-fix-box').removeClass('height-100');
 </script>
+<style>
+    .content_task {
+        top: 71px;
+    }
+</style>
 <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
    <div class="text-center div_title_not_started"><h6>{{trans('tasks.status_not_started')}}</h6></div>
     <div class="div_groups_task state_container droppable" id="task_notstarted" >
@@ -9,25 +14,49 @@
                 @foreach($myTasks['not_started'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
-                            <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
-                                    {!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}
-                                </span>
-                            </div>
-                            <div class="span_title" >
+                            <span class="div_img">
+                                @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    @foreach($task->Assignments as $employee)
+                                        <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                            </a>
+                                        </span>
+                                    @endforeach
+                                @else
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                        <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                            <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
+                                        </a>
+                                    </span>
+                                @endif
+                            </span>
+                            <span >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                            $msgTrimmed = preg_split('/ /',$task->title);
+                                            $cnt = 0;
+                                            $sub_title = '';
+                                            foreach($msgTrimmed as $word){
+                                                if($cnt++ <=5){
+                                                    $sub_title .= " $word";
+                                                }else{
+                                                    $sub_title .= '...';
+                                                    break;
+                                                }
+                                            }
                                         @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                                        {{$sub_title}}
                                     </a>
                                 </span>
-                            </div>
+                            </span>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
@@ -44,23 +73,49 @@
                 @foreach($myTasks['started'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
-                            <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
-                            </div>
-                            <div class="span_title" >
+                            <span class="div_img">
+                                @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    @foreach($task->Assignments as $employee)
+                                        <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                            </a>
+                                        </span>
+                                    @endforeach
+                                @else
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                        <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                            <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
+                                        </a>
+                                    </span>
+                                @endif
+                            </span>
+                            <span >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                            $msgTrimmed = preg_split('/ /',$task->title);
+                                            $cnt = 0;
+                                            $sub_title = '';
+                                            foreach($msgTrimmed as $word){
+                                                if($cnt++ <=5){
+                                                    $sub_title .= " $word";
+                                                }else{
+                                                    $sub_title .= '...';
+                                                    break;
+                                                }
+                                            }
                                         @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                                        {{$sub_title}}
                                     </a>
                                 </span>
-                            </div>
+                            </span>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
@@ -77,23 +132,49 @@
                 @foreach($myTasks['done'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
-                            <div class="div_img">
-                            <span class="pull-right" data-toggle="tooltip"
-                                  title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
-                            </div>
-                            <div class="span_title" >
+                            <span class="div_img">
+                                @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    @foreach($task->Assignments as $employee)
+                                        <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                            </a>
+                                        </span>
+                                    @endforeach
+                                @else
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                        <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                            <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
+                                        </a>
+                                    </span>
+                                @endif
+                            </span>
+                            <span >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                            $msgTrimmed = preg_split('/ /',$task->title);
+                                            $cnt = 0;
+                                            $sub_title = '';
+                                            foreach($msgTrimmed as $word){
+                                                if($cnt++ <=5){
+                                                    $sub_title .= " $word";
+                                                }else{
+                                                    $sub_title .= '...';
+                                                    break;
+                                                }
+                                            }
                                         @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                                        {{$sub_title}}
                                     </a>
                                 </span>
-                            </div>
+                            </span>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
@@ -110,23 +191,49 @@
                 @foreach($myTasks['ended'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
                         <div class="header_div_list_task container-fluid prl-1">
-                            <div class="div_img">
-                                <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}{{-- {!!$user->SmallAvatar!!}--}}</span>
-                            </div>
-                            <div class="span_title" >
+                            <span class="div_img">
+                                @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    @foreach($task->Assignments as $employee)
+                                        <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                            </a>
+                                        </span>
+                                    @endforeach
+                                @else
+                                    @php
+                                        $do = 'ViewTaskForm';
+                                    @endphp
+                                    <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                        <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
+                                            <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
+                                        </a>
+                                    </span>
+                                @endif
+                            </span>
+                            <span >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                            $msgTrimmed = preg_split('/ /',$task->title);
+                                            $cnt = 0;
+                                            $sub_title = '';
+                                            foreach($msgTrimmed as $word){
+                                                if($cnt++ <=5){
+                                                    $sub_title .= " $word";
+                                                }else{
+                                                    $sub_title .= '...';
+                                                    break;
+                                                }
+                                            }
                                         @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                                        {{$sub_title}}
                                     </a>
                                 </span>
-                            </div>
+                            </span>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>

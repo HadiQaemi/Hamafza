@@ -35,6 +35,11 @@ class task_assignments extends Model
         return $this->hasOne('App\User', 'id', 'uid');
     }
 
+    public function Employees()
+    {
+        return $this->hasMany('App\User', 'id', 'employee_id');
+    }
+
     public function Employee()
     {
         return $this->hasOne('App\User', 'id', 'employee_id');

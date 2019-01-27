@@ -314,7 +314,7 @@
                     else {
                         $('.jsPanel-btn-close').click();
                     }
-                    messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                 }
                 else {
                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);

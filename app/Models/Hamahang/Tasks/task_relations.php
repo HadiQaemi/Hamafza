@@ -43,4 +43,17 @@ class task_relations extends Model
 
         return 120;
     }
+    /*------------------------------- relations ----------------------------------------*/
+    public function Task1()
+    {
+        return $this->belongsTo('App\Models\Hamahang\Tasks\tasks', 'task_id1', 'id');
+    }
+    public function Task2()
+    {
+        return $this->belongsTo('App\Models\Hamahang\Tasks\tasks', 'task_id2', 'id');
+    }
+
+    public function allTasks() {
+        return $this->Task1->merge($this->Task2);
+    }
 }

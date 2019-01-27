@@ -326,7 +326,7 @@
                             dataType: "json",
                             data: form_data,
                             success: function (result) {
-                                console.log(result);
+                                // console.log(result);
                                 // result = JSON.parse(result);
                                 if (result.success == true) {
                                     if (again == 1) {
@@ -334,6 +334,9 @@
                                     }
                                     else {
                                         $('.jsPanel-btn-close').click();
+                                    }
+                                    if( window.table_chart_grid2 == undefined){
+                                        return false;
                                     }
                                     {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                                     window.table_chart_grid2.ajax.reload();
@@ -468,8 +471,8 @@
                     // });
 
                     $(document).on('click', '.update_task', function () {
-                        var save_type = $("input[name='new_task_save_type']:checked").val();
-                        $('#task_of_action').val('fffffffffffffff');
+                        var save_type = $("input[name='show_task_save_type']:checked").val();
+                        $('#save_type').val(save_type);
                         var $this = $(this);
                         var form_id = $this.data('form_id');
                         var save_again = $this.data('again_save');

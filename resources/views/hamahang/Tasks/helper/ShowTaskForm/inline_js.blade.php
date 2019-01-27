@@ -8,15 +8,162 @@
         document.getElementById('date1').disabled = true;
         document.getElementById('time1').disabled = true;
     }
+    function remove_new_task(num_add_rel_task) {
+        $('#num_add_rel_task' + num_add_rel_task).remove();
+    }
+    $(".select2_auto_complete_projects").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.projects')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    var num_add_rel_task = 100;
+    $("#add_rel_task").click(function () {
+        if($('#new_task_projects').val()>0)
+        {
+            var project_span = '' +
+                '   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
+                //			'       <td>\n' +
+                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+                //			'       </td>\n' +
+                '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
+                '       </td>\n' +
+                '       <td>\n' +
+                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       </td>\n' +
+                '       <td>\n' +
+                '           <label class="input-group pull-right">\n' +
+                '       		<input name="new_project_weight[]" class="form-control" type="text" value="0"/>' +
+                '           </label>\n' +
+                '       </td>\n' +
+                '       <td>\n' +
+                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+                '       </td>\n' +
+                '    </tr>\n';
+            $('#task_project').trigger("reset");
+            $('#rel_task_list').prepend(project_span);
+        }
+        if($('#new_task_rel').val()>0)
+        {
+            var project_span = '' +
+                '   <div id="num_add_rel_task'+num_add_rel_task+'">\n' +
+                //			'       <td>\n' +
+                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+                //			'       </td>\n' +
+                '       <div class="col-xs-5">\n' +
+                '       	<select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this,' + num_add_rel_task + ')" style="width: 150px;">\n' +
+                '				<option value="end_start">پایان به شروع</option>\n' +
+                '				<option value="start_start">شروع به شروع</option>\n' +
+                '				<option value="start_end">شروع به پایان</option>\n' +
+                '				<option value="end_end">پایان به پایان</option>\n' +
+                '				<option value="up">بالادستی</option>\n' +
+                '				<option value="down">پایین دستی</option>\n' +
+                // '				<option value="after">گردش کار - بعدی</option>\n' +
+                // '				<option value="previous">گردش کار - قبلی</option>\n' +
+                '			</select>\n' +
+                '           <label class="input-group pull-right intrupt_div" style="width: 150px;">\n' +
+                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
+                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><select name="new_task_delay_type[]" class="form-control" >\n' +
+                '					<option value="day">روز</option>\n' +
+                '					<option value="week">هفته</option>\n' +
+                '					<option value="month">ماه</option>\n' +
+                '				</select></div>\n' +
+                '           </label>\n' +
+                '       </div>\n' +
+                '       <div class="col-xs-5">\n' +
+                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       	<label class="pull-right line-height-30" for="r2">وظیفه: '+$('#select2-new_task_rel-container').attr('title')+'</label>\n' +
+                '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_rel').val()+ '"/>' +
+                '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_rel-container').attr('title')+ '"/>' +
+                '       </div>\n' +
+                '       <div class="col-xs-1">\n' +
+                '           <input name="new_task_weight[]" class="form-control hidden new_task_weight'+num_add_rel_task+'" type="text" value="0"/>' +
+                '       </div>\n' +
+                '       <div class="col-xs-1">\n' +
+                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+                '       </div>\n' +
+                '    </div>\n';
+            $('#task_project').trigger("reset");
+            $('#rel_task_list').append(project_span);
+        }
+    });
+    function new_task_relation(t,num) {
+        if($(t).val() == 'up' || $(t).val() == 'down'){
+            $(t).next().addClass('hidden');
+            $('.new_task_weight'+(num)).removeClass('hidden');
+        }
+        else{
+            $(t).next().removeClass('hidden');
+            $('.new_task_weight'+(num)).addClass('hidden');
+        }
 
+    }
+    var num_add_resource_task = 1;
+    $("#add_resource_task").click(function () {
+        var project_span = '' +
+            '   <tr id="add_resource_task'+num_add_resource_task+'">\n' +
+            //			'       <td>\n' +
+            //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+            //			'       </td>\n' +
+            '       <td>\n' +
+            '       	<label class="pull-right" for="r2">'+$('#select2-new_task_resources-container').attr('title')+'</label>\n' +
+            '       		<input name="new_task_resources_h[]" type="hidden" value="' +($('#select2-new_task_resources-container').val().trim()=='' ? $('#select2-new_task_resources-container').attr('title') : $('#select2-new_task_resources-container').val())+ '"/>' +
+            '       		<input name="new_task_resources_t[]" type="hidden" value="' +$('#select2-new_task_resources-container').attr('title')+ '"/>' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#new_task_resources_amount').val() +
+            '       		<input name="new_task_resources_amount[]" type="hidden" value="' +$('#new_task_resources_amount').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '           <label class="input-group pull-right">\n' +
+            $('#new_task_resources_cost').val() +
+            '       		<input name="new_task_resources_cost[]" type="hidden" value="' +$('#new_task_resources_cost').val()+ '"/>' +
+            '           </label>\n' +
+            '       </td>\n' +
+            '       <td>\n' +
+            '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_resource_task++)+')" for="r2"></span>\n' +
+            '       </td>\n' +
+            '    </tr>\n';
+        $('#resources_task_list').append(project_span);
+    });
     function change_normal_task_timing_type(id) {
 
         if (id == 1) {
             var txt = '' +
                 '<label class="line-height-30 pull-right">تاریخ</label>' +
-                '<input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">' +
+                '<input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date" value="{{isset($res['respite_date']['date']) ? $res['respite_date']['date'] : ''}}">' +
                 '<label class="line-height-30 pull-right">ساعت</label>' +
-                '<input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">' +
+                '<input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time" value="{{isset($res['respite_date']['hour']) ? $res['respite_date']['hour'] : ''}}">' +
                 '';
             $('#normal_task_timing').html(txt);
             $(".TimePicker").persianDatepicker({
@@ -34,11 +181,11 @@
             });
         }else if (id == 0) {
             var txt = '' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="{{isset($res['respite']['day']) ? $res['respite']['day'] : ''}}"/>\n' +
                 '<label class="pull-right">روز</label>\n' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="{{isset($res['respite']['hour']) ? $res['respite']['hour'] : ''}}" />\n' +
                 '<label class="pull-right">ساعت</label>\n' +
-                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
+                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="{{isset($res['respite']['min']) ? $res['respite']['min'] : ''}}" />\n' +
                 '<label class="pull-right">دقیقه</label>';
 
             $('#normal_task_timing').html(txt);
@@ -65,12 +212,12 @@
                 '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35" id="normal_task_timing">\n' +
                 '       <div class="row-fluid">\n' +
                 '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
-                '               <label class="pull-right">روز</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0" />\n' +
-                '               <label class="pull-right">ساعت</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0" />\n' +
-                '               <label class="pull-right">دقیقه</label>\n' +
+                                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="{{isset($res['respite']['day']) ? $res['respite']['day'] : ''}}"/>\n' +
+                                '<label class="pull-right">روز</label>\n' +
+                                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="{{isset($res['respite']['hour']) ? $res['respite']['hour'] : ''}}" />\n' +
+                                '<label class="pull-right">ساعت</label>\n' +
+                                '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="{{isset($res['respite']['min']) ? $res['respite']['min'] : ''}}" />\n' +
+                                '<label class="pull-right">دقیقه</label>' +
                 '           </div>\n' +
                 '       </div>\n' +
                 '   </div>\n' +
@@ -101,12 +248,12 @@
                 '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
                 '       <div class="row-fluid">\n' +
                 '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day"/>\n' +
-                '               <label class="pull-right">روز</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="00" />\n' +
-                '               <label class="pull-right">ساعت</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="00" />\n' +
-                '               <label class="pull-right">دقیقه</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="{{isset($res['respite']['day']) ? $res['respite']['day'] : ''}}"/>\n' +
+                            '<label class="pull-right">روز</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="{{isset($res['respite']['hour']) ? $res['respite']['hour'] : ''}}" />\n' +
+                            '<label class="pull-right">ساعت</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="{{isset($res['respite']['min']) ? $res['respite']['min'] : ''}}" />\n' +
+                            '<label class="pull-right">دقیقه</label>' +
                 '           </div>\n' +
                 '       </div>\n' +
                 '   </div>\n' +
@@ -167,12 +314,12 @@
                 '   <div class=" col-md-12 col-sm-12 col-xs-12 form-inline line-height-35">\n' +
                 '       <div class="row-fluid">\n' +
                 '           <div class="col-sm-12 col-xs-12 form-inline">\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="0"/>\n' +
-                '               <label class="pull-right">روز</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="0"/>\n' +
-                '               <label class="pull-right">ساعت</label>\n' +
-                '               <input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="0"/>\n' +
-                '               <label class="pull-right">دقیقه</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_day" id="duration_day" value="{{isset($res['respite']['day']) ? $res['respite']['day'] : ''}}"/>\n' +
+                            '<label class="pull-right">روز</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_hour" id="duration_hour" value="{{isset($res['respite']['hour']) ? $res['respite']['hour'] : ''}}" />\n' +
+                            '<label class="pull-right">ساعت</label>\n' +
+                            '<input class="form-control col-xs-1 pull-right" style="width: 55px" name="duration_min" id="duration_min" value="{{isset($res['respite']['min']) ? $res['respite']['min'] : ''}}" />\n' +
+                            '<label class="pull-right">دقیقه</label>' +
                 '           </div>\n' +
                 '       </div>\n' +
                 '   </div>\n' +
@@ -273,7 +420,8 @@
                     else {
                         $('.jsPanel-btn-close').click();
                     }
-                    messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});
+                    $('.jsPanel-btn-close').click();
+                    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                 }
                 else {
                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -313,53 +461,7 @@
     function remove_new_task(num_add_rel_task) {
         $('#num_add_rel_task' + num_add_rel_task).remove();
     }
-    var num_add_rel_task = 1;
-    $("#add_rel_task").click(function () {
-//	    alert($('#new_task_tasks').val());
-        var project_span = '' +
-            '   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
-            //			'       <td>\n' +
-            //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-            //			'       </td>\n' +
-            '       <td>\n' +
-            '       	<label class="pull-right" for="r2">'+$('#select2-new_task_tasks-container').attr('title')+'</label>\n' +
-            '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_tasks').val()+ '"/>' +
-            '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_tasks-container').attr('title')+ '"/>' +
-            '       </td>\n' +
-            '       <td>\n' +
-            '           <label class="input-group pull-right">\n' +
-            $('#new_task_weight').val() +
-            '       		<input name="new_task_weight[]" type="text" value="0"/>' +
-            '           </label>\n' +
-            '       </td>\n' +
-            '       <td>\n' +
-            '       	<select name="new_task_relation[]" class="form-control" >\n' +
-            // '				<option value="end_start">پایان به شروع</option>\n' +
-            // '				<option value="start_start">شروع به شروع</option>\n' +
-            // '				<option value="start_end">شروع به پایان</option>\n' +
-            // '				<option value="end_end">پایان به پایان</option>\n' +
-            '				<option value="up">بالادستی</option>\n' +
-            '				<option value="down">پایین دستی</option>\n' +
-            // '				<option value="after">گردش کار - بعدی</option>\n' +
-            // '				<option value="previous">گردش کار - قبلی</option>\n' +
-            '			</select>\n' +
-            '       </td>\n' +
-            '		<td>\n' +
-            '           <label class="input-group pull-right">\n' +
-            '       		<div class="col-xs-6"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
-            '       		<div class="col-xs-6"><select name="new_task_delay_type[]" class="form-control" >\n' +
-            '					<option value="day">روز</option>\n' +
-            '					<option value="week">هفته</option>\n' +
-            '					<option value="month">ماه</option>\n' +
-            '				</select></div>\n' +
-            '           </label>\n' +
-            '       </td>\n' +
-            '       <td>\n' +
-            '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
-            '       </td>\n' +
-            '    </tr>\n';
-        $('#rel_task_list').append(project_span);
-    });
+
     var num_add_resource_task = 1;
     $("#add_resource_task").click(function () {
         var project_span = '' +

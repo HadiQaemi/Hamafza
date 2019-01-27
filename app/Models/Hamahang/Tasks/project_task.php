@@ -19,4 +19,10 @@ class project_task extends Model
         $project_task->save();
         return $project_task;
     }
+
+    /*------------------------------- relations ----------------------------------------*/
+    public function Project()
+    {
+        return $this->hasOne('App\Models\Hamahang\Tasks\projects', 'id', 'project_id');
+    }
 }

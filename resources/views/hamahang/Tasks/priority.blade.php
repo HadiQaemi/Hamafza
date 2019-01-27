@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div id="base_items_div" style="margin-top: 100px;">
+    <div id="base_items_div" style="margin-top: 75px;">
        @include('hamahang.Tasks.helper.priority.content')
     </div>
 

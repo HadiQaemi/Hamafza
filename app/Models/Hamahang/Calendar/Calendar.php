@@ -21,6 +21,20 @@ class Calendar extends Model
         $list = DB::table("hamahang_calendar")->where('user_id','=',$uid)->get();
         return $list;
     }
+
+    public static function CreateCalendar($title='', $type='', $is_default='', $is_optional='', $description='', $user_id='', $uid='')
+    {
+        $calendar = new Calendar();
+        $calendar->title = $title !='' ? '' : trans('calendar.my_calendar');
+        $calendar->type = $type !='' ? '' : Calendar::$PERSONAL;
+        $calendar->is_default = $is_default !='' ? '' : 1;
+        $calendar->is_optional = $is_optional !='' ? '' : 1;
+        $calendar->description = $description !='' ? '' : trans('calendar.my_calendar');
+        $calendar->user_id = $user_id !='' ? '' : Auth::id();
+        $calendar->uid = $uid !='' ? '' : Auth::id();
+        $calendar->save();
+        return $calendar;
+    }
     /**
      * @param $cid int
      * @param $type string

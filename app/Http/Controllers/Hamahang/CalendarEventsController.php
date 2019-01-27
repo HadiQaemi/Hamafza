@@ -388,8 +388,11 @@ class CalendarEventsController extends Controller
         else
         {
             if(Request::input('hcid') == ''){
-                $Calendar = Calendar::Where('uid','=',$uid)->Where('is_default','=',1)->whereNull('deleted_at')->get();
-                $hcid = $Calendar[0]->id;
+                $Calendar = Calendar::Where('uid','=',$uid)->Where('is_default','=',1)->whereNull('deleted_at')->first();
+                if(!$Calendar){
+                    $Calendar = Calendar::CreateCalendar();
+                }
+                $hcid = $Calendar->id;
             }else{
                 $hcid = Request::input('hcid');
             }

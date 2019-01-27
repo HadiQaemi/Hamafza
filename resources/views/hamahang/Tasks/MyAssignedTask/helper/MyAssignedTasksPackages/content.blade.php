@@ -31,14 +31,21 @@
                             <div class="header_div_list_task container-fluid prl-1">
                                 <div class="span_title" >
                                     <span data-toggle="tooltip" title="{{$task->title}}">
-                                        <a class='cursor-pointer jsPanels' href='/modals/ShowTaskForm?tid={{enCode($task->task_id)}}'>
+                                        <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->task_id)}}'>
                                             @php
-                                                $msgTrimmed = mb_substr($task->title,0,25);
-                                                $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                                $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                                $title = mb_substr($msgTrimmed,0,$lastSpace);
+                                                $msgTrimmed = preg_split('/ /',$task->title);
+                                                $cnt = 0;
+                                                $sub_title = '';
+                                                foreach($msgTrimmed as $word){
+                                                    if($cnt++ <=5){
+                                                        $sub_title .= " $word";
+                                                    }else{
+                                                        $sub_title .= '...';
+                                                        break;
+                                                    }
+                                                }
                                             @endphp
-                                            {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                                            {{$sub_title}}
                                         </a>
                                     </span>
                                 </div>

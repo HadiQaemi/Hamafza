@@ -37,7 +37,7 @@
     }
 
     .draggable .respite_number {
-        right: 5px;
+        right: 92%;
         color: #fff;
         width: 32px;
         height: 32px;
@@ -79,7 +79,7 @@
 
     .draggable .referrer {
         position: absolute;
-        left: 10px;
+        right: 10px;
         top: 5px;
         width: 25px;
         text-align: center;

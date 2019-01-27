@@ -35,7 +35,7 @@
             padding-bottom: 50px;
         }
     </style>
-    <div style="position: relative;height: 100%;width: 100%;">
+    <div style="position: relative;">
         <div class="header_task">
             <div class="space-4"></div>
             <div class="row" style="position: relative;">
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div id="base_items_div" style="margin-top: 100px;">
+    <div id="base_items_div" style="margin-top: 75px;">
         @include('hamahang.Tasks.helper.priority.content')
     </div>
     @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['function'=>'filter_tasks_priority'])

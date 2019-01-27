@@ -205,7 +205,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ShowAssignTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
                     },
                     "width": "50%"
                 },
@@ -222,10 +222,15 @@
                     },
                     "width": "30%"
                 },
-                {"data": "assignment_created_at"},
+                {
+                    "data": "assignment_created_at",
+                    "mRender": function (data, type, full) {
+                       return '<span class="hidden">' + full.assignment_created_at.num_date + '</span>' + full.assignment_created_at.jdate;
+                    },
+                    "width": "5%"},
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
+                        return "<span class='hidden'>" + full.immediate.output + "</span><img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     },
                     "width": "5%"
                 },
@@ -237,7 +242,7 @@
                 },
                 {"data": "type",
                     "mRender": function (data, type, full) {
-                        return "<img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
+                        return "<span class='hidden'>" + full.type.status_name + "</span><img class='immediate-pic' src='/assets/images/task"+full.type.id+".png' title='"+full.type.status_name+"' data-toggle='tooltip'/>";
                     },
                     "width": "5%"
                 },

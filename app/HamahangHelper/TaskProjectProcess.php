@@ -114,6 +114,25 @@ if (!function_exists('hamahang_convert_respite_to_timestamp'))
         return ($mon * 30 + $week * 7 + $day) * 86400 + ($hour * 3600) + ($min * 60) + $sec;
     }
 }
+if (!function_exists('hamahang_convert_timestamp_to_respite'))
+{
+    /*
+     * @param int $mon
+     * @param int $week
+     * @param int $day
+     * @param int $hour
+     * @param int $min
+     * @param int $sec
+     */
+    function hamahang_convert_timestamp_to_respite($timestamp)
+    {
+        $day = floor($timestamp / 86400);
+        $hour = floor(($timestamp - $day*86400) / 3600);
+        $min = floor(($timestamp - $day*86400 - $hour*3600) / 60);
+        $sec = floor(($timestamp - $day*86400 - $hour*3600 - $min*60));
+        return ['day'=>$day, 'hour'=>$hour, 'min'=>$min, 'sec'=>$sec];
+    }
+}
 if (!function_exists('hamahang_make_task_respite'))
 {
     function hamahang_make_task_respite($input_date, $input_time)

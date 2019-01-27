@@ -75,9 +75,10 @@ class MyAssignedTaskController extends Controller
             ->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_task.id')
             ->where('hamahang_task_assignments.uid', '=', $uname)
             ->whereNull('hamahang_task_assignments.reject_description')
+            ->whereNull('hamahang_task_assignments.deleted_at')
             ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
             ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')
-            ->groupBy('hamahang_task.id');
+            ->groupBy('hamahang_task_assignments.id');
 
         if(Request::input('package_type')=='persons')
         {
@@ -867,7 +868,7 @@ class MyAssignedTaskController extends Controller
             {
                 $date = new jDateTime;
                 $r = $date->getdate(strtotime($data->created_at));
-                return $r['year'].'/'.$r['mon'].'/'.$r['mday'];
+                return ['year' => $r['year'].'/'.$r['mon'].'/'.$r['mday'], 'num_year' => ($date::convertElseNumbers($r['year'])*365 + $date::convertElseNumbers($r['mon'])*31 + $date::convertElseNumbers($r['mday']))];
             })
             ->addColumn('keywords', function ($data)
             {
@@ -1259,6 +1260,7 @@ class MyAssignedTaskController extends Controller
 
     public function update_task()
     {
+//        dd(Request::all());
         $validator = Validator::make(Request::all(), [
             'title' => 'required|string',
             'users' => 'required|array',
@@ -1370,16 +1372,43 @@ class MyAssignedTaskController extends Controller
                         task_keywords::create_task_keyword($task->id, hamahang_add_keyword(hamahang_get_keyword_value($kw)));
                     }
                 }
-                if (Request::exists('project_tasks'))
+
+                DB::table('hamahang_project_task')
+                    ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                if (Request::exists('new_task_projects_'))
                 {
-//                    DB::table('hamahang_project_task')
-//                        ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
-//                        ->whereNull('deleted_at')
-//                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-//                    foreach (Request::input('project_tasks') as $project_id)
-//                    {
-//                        hamahang_project_task::create_task_project($task->id, $project_id);
-//                    }
+                    $new_project_weight = Request::input('new_project_weight');
+                    foreach (Request::input('new_task_projects_') as $k=>$project_id)
+                    {
+                        hamahang_project_task::create_task_project($task->id, $project_id, $new_project_weight[$k]);
+                    }
+                }
+
+                task_relations::where('hamahang_task_relations.task_id1','=', deCode(Request::input('tid')))
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+
+                task_relations::where('hamahang_task_relations.task_id2','=', deCode(Request::input('tid')))
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                if (Request::exists('new_task_tasks_t1'))
+                {
+                    $tasks_t2 = Request::input('new_task_tasks_t2');
+                    foreach (Request::input('new_task_tasks_t1') as $k=>$task_id)
+                    {
+                        task_relations::create_task_relation($task_id, $tasks_t2[$k], Request::input('new_task_delay_num')[$k], Request::input('new_task_delay_type')[$k], Request::input('new_task_relation')[$k], Request::input('new_task_weight')[$k]);
+                    }
+                }
+
+                if (Request::exists('rel_tasks'))
+                {
+                    foreach (Request::input('rel_tasks') as $p)
+                    {
+                        if(strlen(trim($p))>0)
+                            hamahang_project_task::create_task_project($task->id, $p);
+                    }
                 }
 
                 $staff = '';
