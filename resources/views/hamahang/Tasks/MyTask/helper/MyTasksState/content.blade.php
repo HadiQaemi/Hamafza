@@ -9,14 +9,14 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
+                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
                                     {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
@@ -45,14 +45,14 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
+                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
                                     {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
@@ -81,14 +81,14 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
+                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
                                     {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
                             <div class="span_title" >
                                 <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = mb_substr($task->title,0,25);
                                             $lastSpace = strrpos($msgTrimmed, ' ', 0);
@@ -117,14 +117,14 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
+                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
                                     {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
                             <div class="span_title" >
                             <span data-toggle="tooltip" title="{{$task->title}}">
-                                <a class='cursor-pointer jsPanels' href='/modals/ShowAssignTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                     @php
                                         $msgTrimmed = mb_substr($task->title,0,25);
                                         $lastSpace = strrpos($msgTrimmed, ' ', 0);

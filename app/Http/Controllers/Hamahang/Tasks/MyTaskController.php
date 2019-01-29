@@ -85,24 +85,25 @@ class MyTaskController extends Controller
             })
             ->editColumn('immediate', function ($data)
             {
-                if ($data->immediate == 1)
+                if ($data->importance == 1)
                 {
-                    $output = 'فوری';
+                    $output = 'مهم ';
                     $output_num = 'priority1';
                 }
                 else
                 {
-                    $output = 'غیرفوری';
+                    $output = 'غیرمهم ';
                     $output_num = 'priority0';
                 }
-                if ($data->importance == 1)
+
+                if ($data->immediate == 1)
                 {
-                    $output .= ' و مهم';
+                    $output .= 'و فوری';
                     $output_num .= '1';
                 }
                 else
                 {
-                    $output .= ' و غیرمهم ';
+                    $output .= 'و غیرفوری';
                     $output_num .= '0';
                 }
                 return ['output'=>$output,'output_image'=>$output_num];
@@ -536,24 +537,25 @@ class MyTaskController extends Controller
             })
             ->editColumn('immediate', function ($data)
             {
-                if ($data->immediate == 1)
+                if ($data->importance == 1)
                 {
-                    $output = 'فوری';
+                    $output = 'مهم ';
                     $output_num = 'priority1';
                 }
                 else
                 {
-                    $output = 'غیرفوری';
+                    $output = 'غیرمهم ';
                     $output_num = 'priority0';
                 }
-                if ($data->importance == 1)
+
+                if ($data->immediate == 1)
                 {
-                    $output .= ' و مهم';
+                    $output .= 'و فوری';
                     $output_num .= '1';
                 }
                 else
                 {
-                    $output .= ' و غیرمهم ';
+                    $output .= 'و غیرفوری';
                     $output_num .= '0';
                 }
                 return ['output'=>$output,'output_image'=>$output_num];

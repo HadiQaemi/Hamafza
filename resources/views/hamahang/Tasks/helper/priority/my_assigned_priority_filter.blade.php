@@ -53,7 +53,7 @@
             {{--</label>--}}
         {{--</div>--}}
         <div class="pull-right" style="margin-top: 10px;">
-            <span>{{trans('tasks.draft')}}</span>
+            {{--<span>{{trans('tasks.draft')}}</span>--}}
         </div>
         @if(isset($filter_subject_id))
             <input type="hidden" value="{{$filter_subject_id}}" name="filter_subject_id" id="filter_subject_id"/>

@@ -6,6 +6,12 @@
         visibility: hidden;
     }
 </style>
+<div id="related_links" class="disabled" style="top: 2px;background: #eee;">
+    <a class="@if( Route::currentRouteName() == 'pgs.desktop.hamahang.tasks.my_tasks.package') current_page @endif" href="#"><span><i class="fa fa-dropbox" data-toggle="tooltip" title="{{ trans('projects.MyTaskPackages') }}"></i></span></a>
+    <a class="@if( Route::currentRouteName() == 'pgs.desktop.hamahang.tasks.my_tasks.state') current_page @endif" href="#"><span><i class="fa fa-bar-chart" data-toggle="tooltip" title="{{ trans('projects.levels') }}"></i></span></a>
+    <a class="@if( Route::currentRouteName() == 'hamahang.project.show_project_gantt_tasks') current_page @endif" href="#" data-p_id="{{Request::input('pid')}}"><span><i class="fa fa-retweet" data-toggle="tooltip" title="{{ trans('projects.gantt') }}"></i></span></a>
+    <a class="@if( Route::currentRouteName() == 'hamahang.project.show_project_tasks_list') current_page @endif project_tasks_list" href="#" data-p_id="{{Request::input('pid')}}" href="#"><span><i class="fa fa-list-alt" data-toggle="tooltip" title="{{ trans('projects.hierarchical') }}"></i></span></a>
+</div>
 <div style="padding-top: 70px">
     <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/daypilot-all.min.js"></script>
     <div class="shadow"></div>

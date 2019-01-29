@@ -10,6 +10,7 @@ use App\Models\Hamahang\Tasks\hamahang_project_task;
 use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\project_role_permission;
 use App\Models\Hamahang\Tasks\task_status;
+use App\Models\Hamahang\Tasks\tasks;
 use App\User;
 use Datatables;
 use DB;
@@ -400,22 +401,30 @@ class ProjectController extends Controller
     public static function MyProjectsPriority($arr, $status_filter = false, $title_filter = false, $respite_filter = false, $official_type = false)
     {
         $projects_roles = DB::table('hamahang_project')
-            ->where(function($query) {
-                $query->where(function($query) {
-                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
-                        $query->select('role_user.role_id')->from('role_user')
-                            ->Where('role_user.user_id','=',Auth::id());
-                    })->whereNull('hamahang_project.deleted_at');
-                })
-                    ->orWhere(function($query) {
-                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-                            ->whereNull('hamahang_project.deleted_at');
-                    });
-            })
-            ->select('hamahang_project.*')
+            ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+            ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
+            ->whereNull('hamahang_project_role_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->select('hamahang_project.id');
+        $projects_user = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_user_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project_user_permission.user_id','=',Auth::id())
+            ->unionAll($projects_roles)
+            ->pluck('hamahang_project.id')->unique()->toArray();
+//        $projects_user_new = [];
+//        foreach($projects_user as $project){
+//            if(!in_array($project,$projects_user_new))
+//                $projects_user_new[] = $project;
+//        }
+//        dd($projects_user, $projects_user_new);
+
+        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
-            ->whereNull('hamahang_project_responsible.deleted_at')
+//            ->whereNull('hamahang_project_responsible.deleted_at')
             ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
@@ -426,13 +435,15 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+
+        $projects = $projects_roles->groupBy('hamahang_project.id')->orderBy('hamahang_project.id', 'desc')->get();
         $res['projects_immediate_importance'] = [];
         $res['projects_not_immediate_importance'] = [];
         $res['projects_immediate_not_importance'] = [];
         $res['projects_not_immediate_not_importance'] = [];
         foreach($projects as $project)
         {
+            //project_info
             if($project->immediate==1 && $project->importance==1)
             {
                 $res['projects_immediate_importance'][] = $project;
@@ -488,7 +499,7 @@ class ProjectController extends Controller
                 }
                 $cnt ++;
             }
-            $message = trans('projects.change_weights_permissions');
+            $message = trans('projects.change_progress_permissions');
         }
         if(in_array(self::$_PROJECT_MANAGER, $responsibes)) {
             $doing++;
@@ -511,6 +522,7 @@ class ProjectController extends Controller
     }
     public function project_tasks_list($pid)
     {
+        $hashed_id = $pid;
         $pid = deCode($pid);
         date_default_timezone_set('Asia/Tehran');
 
@@ -554,9 +566,8 @@ class ProjectController extends Controller
             }
         }
 
-        $hamahang_project_task = DB::table('hamahang_project_task')
+        $hamahang_project_task = tasks::leftjoin('hamahang_project_task', 'hamahang_project_task.task_id', '=', 'hamahang_task.id')
             ->where('project_id', '=', $pid)
-            ->leftjoin('hamahang_task', 'hamahang_task.id', '=', 'hamahang_project_task.task_id')
             ->whereNull('hamahang_project_task.deleted_at')
             ->select('hamahang_project_task.*', 'hamahang_task.*', 'hamahang_project_task.id as hp_task')
             ->get();
@@ -572,6 +583,8 @@ class ProjectController extends Controller
         $res['hamahang_project_task'] =  $hamahang_project_task;
         $res['ordered_project_tasks'] =  $project_tasks;
         $res['pid'] =  $pid;
+        $res['hashed_id'] =  $hashed_id;
+//        dd($res['hamahang_project_task'][0]->Assignment->Employee);
         return $res;
     }
 
@@ -1357,24 +1370,25 @@ class ProjectController extends Controller
             })
             ->editColumn('immediate', function ($data)
             {
-                if ($data->immediate == 1)
+                if ($data->importance == 1)
                 {
-                    $output = 'فوری';
+                    $output = 'مهم ';
                     $output_num = 'priority1';
                 }
                 else
                 {
-                    $output = 'غیرفوری';
+                    $output = 'غیرمهم ';
                     $output_num = 'priority0';
                 }
-                if ($data->importance == 1)
+
+                if ($data->immediate == 1)
                 {
-                    $output .= ' و مهم';
+                    $output .= 'و فوری';
                     $output_num .= '1';
                 }
                 else
                 {
-                    $output .= ' و غیرمهم ';
+                    $output .= 'و غیرفوری';
                     $output_num .= '0';
                 }
                 return ['output'=>$output,'output_image'=>$output_num];
@@ -1455,22 +1469,23 @@ class ProjectController extends Controller
     private function my_project_in_status($arr =[],$user = false)
     {
         $projects_roles = DB::table('hamahang_project')
-            ->where(function($query) {
-                $query->where(function($query) {
-                    $query->whereIn('hamahang_project_role_permission.role_id', function($query){
-                        $query->select('role_user.role_id')->from('role_user')
-                            ->Where('role_user.user_id','=',Auth::id());
-                    })->whereNull('hamahang_project.deleted_at');
-                })
-                    ->orWhere(function($query) {
-                        $query->where('hamahang_project_user_permission.user_id', '=', Auth::id())
-                            ->whereNull('hamahang_project.deleted_at');
-                    });
-            })
-            ->select('hamahang_project.*')
+            ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+            ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
+            ->whereNull('hamahang_project_role_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->select('hamahang_project.id');
+        $projects_user = DB::table('hamahang_project')
+            ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->whereNull('hamahang_project_user_permission.deleted_at')
+            ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project_user_permission.user_id','=',Auth::id())
+            ->unionAll($projects_roles)
+            ->pluck('hamahang_project.id')->unique()->toArray();
+
+        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
-            ->whereNull('hamahang_project_responsible.deleted_at')
             ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
         ;
@@ -1481,7 +1496,8 @@ class ProjectController extends Controller
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
-        $projects = $projects_roles->distinct()->orderBy('hamahang_project.id', 'desc')->get();
+
+        $projects = $projects_roles->groupBy('hamahang_project.id')->orderBy('hamahang_project.id', 'desc')->get();
         $myProjects=[];
         foreach($projects as $project){
             if($project->progress == 0)
@@ -1498,8 +1514,7 @@ class ProjectController extends Controller
     {
         $validator = Validator::make(Request::all(),
             [
-                'type' => 'required|in:important_and_immediate,important_and_not_immediate,not_important_and_immediate,not_important_and_not_immediate',
-                'project_id' => 'required|exists:hamahang_project,id',
+                'type' => 'required|in:important_and_immediate,important_and_not_immediate,not_important_and_immediate,not_important_and_not_immediate'
             ]);
         if ($validator->fails())
         {
@@ -1509,9 +1524,17 @@ class ProjectController extends Controller
         }
         else
         {
-            $project_id = Request::get('project_id');
+            $project_id = deCode(Request::get('project_id'));
+            $permissions = self::TakeProjectPermissions($project_id);
+            $responsibes = self::TakeProjectResponsible($project_id);
             $project = projects::find($project_id);
             $user = auth()->user();
+
+            if(!(in_array(self::$_MANAGE_PROJECT_PERMISSSION , $permissions) || in_array(self::$_PROJECT_MANAGER, $responsibes))) {
+                $result['error'] = trans('projects.no_permissions');
+                $result['success'] = false;
+                return json_encode($result);
+            }
             $roles = $user->MyProjects()->where('permission_type','=',3)->where('project_id','=',$project_id)->get()->count();
             if($roles>0)
             {
@@ -1932,6 +1955,7 @@ class ProjectController extends Controller
             ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
             ->whereNull('hamahang_project_user_permission.deleted_at')
             ->whereNull('hamahang_project.deleted_at')
+            ->where('hamahang_project_user_permission.user_id', Auth::id())
             ->where('hamahang_project.id','=',$pid)
         ->unionAll($projects_roles)->pluck('permission_type')->toArray();
         return $projects_user;

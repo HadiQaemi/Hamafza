@@ -429,6 +429,8 @@ class CalendarEventsController extends Controller
                 $taskObj->task_id = Request::input('task_id') ? (is_numeric(Request::input('task_id')) ? Request::input('task_id') : deCode(Request::input('task_id'))) : $info['task_id'];
                 if ($taskObj->save())
                 {
+                    task_status::where('task_id', '=', $taskObj->task_id)
+                        ->delete();
                     task_status::create_task_status($taskObj->task_id, 1, 0);
 
                     if (Request::input('mode') == 'edit')

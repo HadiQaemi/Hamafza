@@ -18,14 +18,15 @@
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
                                         $do = 'ViewTaskForm';
+                                        $employee = $task->Assignments[0];
                                     @endphp
-                                    @foreach($task->Assignments as $employee)
+{{--                                    @foreach($task->Assignments as $employee)--}}
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                             <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                                 <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
                                             </a>
                                         </span>
-                                    @endforeach
+                                    {{--@endforeach--}}
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';
@@ -77,14 +78,15 @@
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
                                         $do = 'ViewTaskForm';
+                                        $employee = $task->Assignments[0];
                                     @endphp
-                                    @foreach($task->Assignments as $employee)
+                                    {{--@foreach($task->Assignments as $employee)--}}
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                             <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                                 <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
                                             </a>
                                         </span>
-                                    @endforeach
+                                    {{--@endforeach--}}
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';
@@ -136,14 +138,15 @@
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
                                         $do = 'ViewTaskForm';
+                                        $employee = $task->Assignments[0];
                                     @endphp
-                                    @foreach($task->Assignments as $employee)
+                                    {{--@foreach($task->Assignments as $employee)--}}
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                             <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                                 <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
                                             </a>
                                         </span>
-                                    @endforeach
+                                    {{--@endforeach--}}
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';
@@ -195,14 +198,15 @@
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
                                         $do = 'ViewTaskForm';
+                                        $employee = $task->Assignments[0];
                                     @endphp
-                                    @foreach($task->Assignments as $employee)
+                                    {{--@foreach($task->Assignments as $employee)--}}
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                             <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
                                                 <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
                                             </a>
                                         </span>
-                                    @endforeach
+                                    {{--@endforeach--}}
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';

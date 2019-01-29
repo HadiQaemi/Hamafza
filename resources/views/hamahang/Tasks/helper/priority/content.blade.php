@@ -8,7 +8,7 @@
                     <ul class="task_items droppable" id="important_and_immediate">
                         <div style="direction: rtl;">
                             @foreach($tasks_immediate_importance as $task)
-                                <li class="draggable" data-action="task" data-task_id="{{$task->id}}">
+                                <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                     @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
                                         @php
                                             $do = 'ViewTaskForm?';
@@ -57,7 +57,7 @@
                 <ul class="task_items droppable" id="not_important_and_immediate">
                     <div style="direction: rtl;">
                         @foreach($tasks_immediate_not_importance as $task)
-                            <li class="draggable" data-action="task" data-task_id="{{$task->id}}">
+                            <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                 @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
                                     @php
                                         $do = 'ViewTaskForm?';
@@ -108,7 +108,7 @@
                 <ul class="task_items droppable" id="important_and_not_immediate">
                     <div style="direction: rtl;">
                         @foreach($tasks_not_immediate_importance as $task)
-                            <li class="draggable" data-action="task" data-task_id="{{$task->id}}">
+                            <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                 @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
                                     @php
                                         $do = 'ViewTaskForm?';
@@ -157,7 +157,7 @@
                 <ul class="task_items droppable" id="not_important_and_not_immediate">
                     <div style="direction: rtl;">
                         @foreach($tasks_not_immediate_not_importance as $task)
-                            <li class="draggable" data-action="task" data-task_id="{{$task->id}}">
+                            <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                 @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
                                     @php
                                         $do = 'ViewTaskForm?';

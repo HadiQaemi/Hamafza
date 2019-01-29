@@ -250,24 +250,25 @@ class MyAssignedTaskController extends Controller
             })
             ->editColumn('immediate', function ($data)
             {
-                if ($data->immediate == 1)
+                if ($data->importance == 1)
                 {
-                    $output = 'فوری';
+                    $output = 'مهم ';
                     $output_num = 'priority1';
                 }
                 else
                 {
-                    $output = 'غیرفوری';
+                    $output = 'غیرمهم ';
                     $output_num = 'priority0';
                 }
-                if ($data->importance == 1)
+
+                if ($data->immediate == 1)
                 {
-                    $output .= ' و مهم';
+                    $output .= 'و فوری';
                     $output_num .= '1';
                 }
                 else
                 {
-                    $output .= ' و غیرمهم ';
+                    $output .= 'و غیرفوری';
                     $output_num .= '0';
                 }
                 return ['output'=>$output,'output_image'=>$output_num];
@@ -881,24 +882,25 @@ class MyAssignedTaskController extends Controller
             })
             ->editColumn('immediate', function ($data)
             {
-                if ($data->immediate == 1)
+                if ($data->importance == 1)
                 {
-                    $output = 'فوری';
+                    $output = 'مهم ';
                     $output_new = 'priority1';
                 }
                 else
                 {
-                    $output = 'غیرفوری';
+                    $output = 'غیرمهم ';
                     $output_new = 'priority0';
                 }
-                if ($data->importance == 1)
+
+                if ($data->immediate == 1)
                 {
-                    $output .= ' و مهم';
+                    $output .= 'و فوری';
                     $output_new .= '1';
                 }
                 else
                 {
-                    $output .= ' و غیرمهم ';
+                    $output .= 'و غیرفوری';
                     $output_new .= '0';
                 }
                 return ['output'=>$output,'output_image'=>$output_new];
@@ -1577,8 +1579,7 @@ class MyAssignedTaskController extends Controller
             }
             task_action::create_task_action($task_id, Request::input('task_status'), Request::input('progress'), $action,$reject_description,
                 $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
-            task_status::where('uid', '=', Auth::id())
-                ->where('task_id', '=', $task_id)
+            task_status::where('task_id', '=', $task_id)
                 ->delete();
             task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
             DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
@@ -2518,7 +2519,9 @@ class MyAssignedTaskController extends Controller
     public function rapid_new_task_to_project()
     {
         $pid = deCode(Request::get('pid'));
+//        db::enableQueryLog();
         $permission = ProjectController::TakeProjectPermissions($pid);
+//        dd(db::getQueryLog(), $permission);
         if(!in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION ,$permission)){
             $result['error'] = trans('projects.no_permissions');
             $result['success'] = false;

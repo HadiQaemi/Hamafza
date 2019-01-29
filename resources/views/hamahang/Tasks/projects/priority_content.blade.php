@@ -5,26 +5,14 @@
             <ul class="task_items droppable" id="important_and_immediate">
                 <div style="direction: rtl;">
                     @foreach($projects_immediate_importance as $project)
-
-                        <li class="draggable" data-action="project" data-project_id="{{$project->id}}">
-
+                        <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h5 class="text_ellipsis">
-                                    <a class='cursor-pointer ' href='#'>
-                                        @php
-                                            $title = $project->title;
-                                            if(mb_strlen($title,'UTF-8')>30){
-                                                $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                $content .= '…';
-                                            }else{
-                                                $content = strip_tags($title);
-                                            }
-                                        @endphp
-                                        {{$content}}
+                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                        {{$project->title}}
                                     </a>
                                 </h5>
                             </div>
-
                         </li>
                     @endforeach
                 </div>
@@ -35,24 +23,14 @@
             <ul class="task_items droppable" id="not_important_and_immediate">
                 <div style="direction: rtl;">
                     @foreach($projects_immediate_not_importance as $project)
-                        <li class="draggable" data-action="project" data-project_id="{{$project->id}}">
+                        <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h5 class="text_ellipsis">
-                                    <a class='cursor-pointer ' href='#'>
-                                        @php
-                                            $title = $project->title;
-                                            if(mb_strlen($title,'UTF-8')>30){
-                                                $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                $content .= '…';
-                                            }else{
-                                                $content = strip_tags($title);
-                                            }
-                                        @endphp
-                                        {{$content}}
+                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                        {{$project->title}}
                                     </a>
                                 </h5>
                             </div>
-
                         </li>
                     @endforeach
                 </div>
@@ -65,20 +43,11 @@
             <ul class="task_items droppable" id="important_and_not_immediate">
                 <div style="direction: rtl;">
                     @foreach($projects_not_immediate_importance as $project)
-                        <li class="draggable" data-action="project" data-project_id="{{$project->id}}">
+                        <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h5 class="text_ellipsis">
-                                    <a class='cursor-pointer ' href='#'>
-                                        @php
-                                            $title = $project->title;
-                                            if(mb_strlen($title,'UTF-8')>30){
-                                                $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                $content .= '…';
-                                            }else{
-                                                $content = strip_tags($title);
-                                            }
-                                        @endphp
-                                        {{$content}}
+                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                        {{$project->title}}
                                     </a>
                                 </h5>
                             </div>
@@ -92,21 +61,11 @@
             <ul class="task_items droppable" id="not_important_and_not_immediate">
                 <div style="direction: rtl;">
                     @foreach($projects_not_immediate_not_importance as $project)
-
-                        <li class="draggable" data-action="project" data-project_id="{{$project->id}}">
+                        <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h5 class="text_ellipsis">
-                                    <a class='cursor-pointer ' href='#'>
-                                        @php
-                                            $title = $project->title;
-                                            if(mb_strlen($title,'UTF-8')>30){
-                                                $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                $content .= '…';
-                                            }else{
-                                                $content = strip_tags($title);
-                                            }
-                                        @endphp
-                                        {{$content}}
+                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                        {{$project->title}}
                                     </a>
                                 </h5>
                             </div>

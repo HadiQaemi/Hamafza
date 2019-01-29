@@ -20,7 +20,7 @@
         cursor: move;
         background-color: #fff;
         padding-right: 10px;
-        border-right: 3px solid #ff6162 !important;
+        /*border-right: 3px solid #ff6162 !important;*/
     }
 
     .droppable {
