@@ -20,5 +20,7 @@ Route::post('AddProjectTask', ['as' => 'hamahang.project.add_project_task', 'use
 Route::post('FetchRelation', ['as' => 'hamahang.project.fetch_relation', 'uses' => 'ProjectController@FetchRelation', 'middleware' => ['dynamic_permission:posts.hamahang.project.fetch_relation']]);
 Route::post('AddProjectTaskRelation', ['as' => 'hamahang.project.add_project_task_relation', 'uses' => 'ProjectController@AddProjectTaskRelation', 'middleware' => ['dynamic_permission:posts.hamahang.project.add_project_task_relation']]);
 Route::post('RemoveProjectTaskRelation', ['as' => 'hamahang.project.remove_project_task_relation', 'uses' => 'ProjectController@RemoveProjectTaskRelation', 'middleware' => ['dynamic_permission:posts.hamahang.project.remove_project_task_relation']]);
+Route::post('ProjectFilterPriority', ['as' => 'hamahang.project.project_filter_priority', 'uses' => 'ProjectController@ProjectsPriorityFilter', 'middleware' => ['dynamic_permission:posts.hamahang.project.list']]);
+
 /* ??? */Route::post('FetchList', ['as' => 'hamahang.project.list', 'uses' => 'ProjectController@FetchProject', 'middleware' => ['dynamic_permission:posts.hamahang.project.fetch_project']]);
 /* ??? */Route::post('FetchRelations/{id}', ['as' => 'hamahang.project.fetch_relations', 'uses' => 'ProjectController@FetchRelations', 'middleware' => ['dynamic_permission:posts.hamahang.project.fetch_relations']]);

@@ -35,17 +35,17 @@
         });
         initDraggable();
         $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
-            filter_tasks_priority();
+            filter_projects_priority();
         });
         $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
-            filter_tasks_priority();
+            filter_projects_priority();
         });
 
         // $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
-        //     filter_tasks_priority();
+        //     filter_projects_priority();
         // });
         $('#form_filter_priority_time').on('keyup change', 'input, select, textarea', 'checkbox', function () {
-            filter_tasks_priority_time();
+            filter_projects_priority_time();
         });
         $("#states-multi-select-users").select2({
             minimumInputLength: 1,
@@ -146,16 +146,15 @@
         $(".droppable").sortable();
     }
 
-    function filter_tasks_priority(data) {
+    function filter_projects_priority(data) {
         var form_filter_priority = $("#form_filter_priority").serialize() + '&filter_subject_id=' + $('#filter_subject_id').val() + '&act=' + $('#act_form').val();
-        console.log(data);
         $.ajax({
-            url: '{{ route('hamahang.tasks.priority.filter') }}',
+            url: '{{ route('hamahang.project.project_filter_priority') }}',
             method: 'POST',
             dataType: "json",
             data: form_filter_priority,
             success: function (res) {
-                //console.log(res.success);
+                console.log(res.data);
                 if (res.success == true) {
                     $('#priority_content_area').html(res.data);
                     initDraggable();
@@ -166,7 +165,7 @@
             }
         });
     }
-    function filter_tasks_priority_time(data) {
+    function filter_projects_priority_time(data) {
         console.log(data);
         $.ajax({
             url: '{{ route('hamahang.tasks.priority.filter_time') }}',

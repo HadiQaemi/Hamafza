@@ -88,10 +88,10 @@
                     <div class="col-lg-11">
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple" {{$edit_able == 1 ? ' name="pages[]" id="new_task_pages" ' : 'disabled'}} >
-                            @if(!empty($res['task_pages']))
-                                @foreach($res['task_pages'] as $page)
-                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                multiple="multiple"  name="pages[]" id="new_task_pages" >
+                            @if(!empty($task->Pages))
+                                @foreach($task->Pages as $page)
+                                    <option selected="selected" value="{{ $page->id }}">{{ $page->Subject->title}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -102,10 +102,10 @@
                     <div class="col-lg-11">
                         <div class="col-sm-4 row" style="padding: 0px;">
                             <select class="select2_auto_complete_user col-xs-12"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="users[]" id="new_task_users_responsible" ' : 'disabled'}} >
-                                @if(!empty($res['task_users']))
-                                    @foreach($res['task_users'] as $task_users)
-                                        <option selected="selected" value="{{ $task_users->id }}">{{ $task_users->Name.' '.$task_users->Family }}</option>
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple  name="users[]" id="new_task_users_responsible" >
+                                @if(!empty($task->Assignments))
+                                    @foreach($task->Assignments as $Assignment)
+                                        <option selected="selected" value="{{ $Assignment->Employee->id }}">{{ $Assignment->Employee->Name.' '.$Assignment->Employee->Family }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -136,10 +136,10 @@
                     <div class="col-lg-11">
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
                             <select class="select2_auto_complete_transcripts"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple {{$edit_able == 1 ? ' name="transcripts[]" id="new_task_transcripts" ' : 'disabled'}} >
-                                @if(!empty($res['task_transcripts']))
-                                    @foreach($res['task_transcripts'] as $task_transcripts)
-                                        <option selected="selected" value="{{ $task_transcripts->id }}">{{ $task_transcripts->Name.' '.$task_transcripts->Family }}</option>
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple name="transcripts[]" id="new_task_transcripts">
+                                @if(!empty($task->Transcripts))
+                                    @foreach($task->Transcripts as $transcript)
+                                        <option selected="selected" value="{{ $transcript->user->id }}">{{ $transcript->user->Name.' '.$transcript->user->Family }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -162,11 +162,10 @@
                     <div class="col-lg-11">
                         <select class="select2_auto_complete_keywords"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"
-                                {{$edit_able == 1 ? ' name="keywords[]" id="new_task_keywords" ' : 'disabled'}} >
-                            @if(!empty($res['task_keywords']))
-                                @foreach($res['task_keywords'] as $task_keywords)
-                                    <option selected="selected" value="{{ $task_keywords->id }}">{{ $task_keywords->title }}</option>
+                                multiple="multiple" name="keywords[]" id="new_task_keywords">
+                            @if(!empty($task->Keywords))
+                                @foreach($task->Keywords as $task_keywords)
+                                    <option selected="selected" value="{{ $task_keywords->keyword->id }}">{{ $task_keywords->keyword->title }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -215,15 +214,15 @@
                     </div>
                     <div class="col-lg-11 line-height-35">
                         <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_yes" ' : 'disabled'}} value="1" {{$task['importance'] ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{isset($task->Priority->importance) ? $task->Priority->importance==1 : '' ? 'checked' : 'checked'}}/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="importance" id="importance_no" ' : 'disabled'}} value="0" {{$task['importance'] ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{isset($task->Priority->importance) ? $task->Priority->importance==0 : '' ? 'checked' : ''}}/>
                             <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_yes" ' : 'disabled'}} value="1" {{$task['immediate'] ==1 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_yes ' : 'disabled'}} value="1" {{isset($task->Priority->immediate) ? $task->Priority->immediate==1 : '' ? 'checked' : 'checked'}}/>
                             <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name="immediate" id="immediate_no" ' : 'disabled'}} value="0"  {{$task['immediate'] ==0 ? 'checked' : ''}}/>
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_no ' : 'disabled'}} value="0"  {{isset($task->Priority->immediate) ? $task->Priority->immediate==0 : '' ? 'checked' : ''}}/>
                             <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
                         </div>
                     </div>
@@ -240,7 +239,6 @@
                 <input type="hidden" name="task_form_action" id="task_form_action" value=""/>
                 <input type="hidden" id="save_type" name="save_type" value="0"/>
                 {!! $HFM_CN_Task['UploadForm'] !!}
-
             </div>
             <div class="tab-pane" style="padding: 8px;margin-top:20px" id="tab_t2">
                 <div class="input-group col-xs-12" style="margin: 0 0 15px 5px;">

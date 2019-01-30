@@ -242,22 +242,22 @@
         })(jQuery);
         $(document).ready(function () {
             $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
-                filter_tasks_priority();
+                filter_project_list();
             });
             $('.task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"], input[name="task_important_immediate[]"]').on('keyup change', function () {
-                filter_tasks_priority();
+                filter_project_list();
             });
-            $('#title').on('keypress', function () {
+            $('#title').on('keypress change', function () {
                 if($('#title').val().length >= 3){
-                    filter_tasks_priority();
+                    filter_project_list();
                 }
             });
 
             // $('#new_task_keywords').on('change', function () {
-            //     filter_tasks_priority();
+            //     filter_project_list();
             // });
 
-            function filter_tasks_priority(data) {
+            function filter_project_list(data) {
                 window.ProjectList.destroy();
                 readTable($("#form_filter_priority").serializeObject());
             }

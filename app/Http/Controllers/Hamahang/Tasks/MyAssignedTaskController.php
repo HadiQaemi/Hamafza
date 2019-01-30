@@ -2564,6 +2564,7 @@ class MyAssignedTaskController extends Controller
                 $task->duration_timestamp = $respite_duration_timestamp;
                 $task->schedule_time = date('Y-m-d H:i:s');
                 $task->use_type = 0;
+                $task->is_save = 1;
                 $task->type = 0;
                 $task->uid = Auth::id();
                 $task->save();
