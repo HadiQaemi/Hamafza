@@ -7,11 +7,11 @@
                     @foreach($projects_immediate_importance as $project)
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
-                                <h5 class="text_ellipsis">
+                                <h6 class="text_ellipsis">
                                     <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
-                                </h5>
+                                </h6>
                             </div>
                         </li>
                     @endforeach
@@ -25,11 +25,11 @@
                     @foreach($projects_immediate_not_importance as $project)
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
-                                <h5 class="text_ellipsis">
+                                <h6 class="text_ellipsis">
                                     <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
-                                </h5>
+                                </h6>
                             </div>
                         </li>
                     @endforeach
@@ -45,11 +45,11 @@
                     @foreach($projects_not_immediate_importance as $project)
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
-                                <h5 class="text_ellipsis">
+                                <h6 class="text_ellipsis">
                                     <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
-                                </h5>
+                                </h6>
                             </div>
                         </li>
                     @endforeach
@@ -63,11 +63,11 @@
                     @foreach($projects_not_immediate_not_importance as $project)
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
-                                <h5 class="text_ellipsis">
+                                <h6 class="text_ellipsis">
                                     <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
-                                </h5>
+                                </h6>
                             </div>
                         </li>
                     @endforeach
