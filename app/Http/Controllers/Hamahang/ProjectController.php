@@ -1662,15 +1662,14 @@ class ProjectController extends Controller
             $responsibes = self::TakeProjectResponsible($project_id);
             $project = projects::find($project_id);
             $user = auth()->user();
-
-            if(!(in_array(self::$_MANAGE_PROJECT_PERMISSSION , $permissions) || in_array(self::$_PROJECT_MANAGER, $responsibes))) {
+            if(!(in_array(self::$_MANAGE_PROJECT_PERMISSSION, $permissions) || in_array(self::$_PROJECT_BASKET_MANAGER, $responsibes))) {
                 $result['error'] = trans('projects.no_permissions');
                 $result['success'] = false;
                 return json_encode($result);
             }
-            $roles = $user->MyProjects()->where('permission_type','=',3)->where('project_id','=',$project_id)->get()->count();
-            if($roles>0)
-            {
+//            $roles = $user->MyProjects()->where('permission_type','=',3)->where('project_id','=',$project_id)->get()->count();
+//            if($roles>0)
+//            {
                 switch (Request::get('type'))
                 {
                     case 'important_and_immediate':
@@ -1704,10 +1703,10 @@ class ProjectController extends Controller
                 }
                 $project->save();
                 $result['success'] = true;
-            }else{
-                $result['success'] = false;
-                $result['error'] = trans('projects.no_permissioned');
-            }
+//            }else{
+//                $result['success'] = false;
+//                $result['error'] = trans('projects.no_permissioned');
+//            }
             return json_encode($result);
         }
     }

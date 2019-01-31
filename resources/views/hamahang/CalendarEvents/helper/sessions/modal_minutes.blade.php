@@ -119,10 +119,10 @@
                                             <td class="col-md-8">
                                                 <div class=" form-inline" id="t_radio" style="">
                                                     <span style="background-color: #eeeeee;">
-                                                        <input type="radio" class="form-control" name="importance" id="importance" value="1"/>
-                                                        <label for="">{{trans('calendar_events.ce_modal_minutes_importance1')}}</label>
-                                                        <input type="radio" class="form-control" name="importance" id="importance" value="0"/>
-                                                        <label for="">{{trans('calendar_events.ce_modal_minutes_importance2')}}</label>
+                                                        <input type="radio" class="form-control" name="importance" id="importance_1" value="1"/>
+                                                        <label for="importance_1">{{trans('calendar_events.ce_modal_minutes_importance1')}}</label>
+                                                        <input type="radio" class="form-control" name="importance" id="importance_0" value="0"/>
+                                                        <label for="importance_0">{{trans('calendar_events.ce_modal_minutes_importance2')}}</label>
                                                     </span>
                                                     <span style="">|</span>
                                                     <span style="background-color: #eeeeee">

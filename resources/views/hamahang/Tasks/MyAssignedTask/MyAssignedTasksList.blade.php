@@ -294,16 +294,16 @@
                                                     <td>
                                                         <div class="form-inline" id="t_radio" style="">
                                                             <span style="background-color: #eeeeee;">
-                                                                <input type="radio" class="form-control" name="importance" id="importance" value="1"/>
-                                                                <label for="">مهم</label>
-                                                                <input type="radio" class="form-control" name="importance" id="importance" value="0"/>
-                                                                <label for="">غیرمهم</label>
+                                                                <input type="radio" class="form-control" name="importance" id="importance_1" value="1"/>
+                                                                <label for="importance_1">مهم</label>
+                                                                <input type="radio" class="form-control" name="importance" id="importance_0" value="0"/>
+                                                                <label for="importance_0">غیرمهم</label>
                                                             </span>
                                                             <span style="">|</span>
                                                             <span style="background-color: #eeeeee">
-                                                                <input type="radio" class="form-control" name="immediate" id="immediate" value="1"/>
+                                                                <input type="radio" class="form-control" name="immediate" id="immediate_1" value="1"/>
                                                                 <label for="">فوری</label>
-                                                                <input type="radio" class="form-control" name="immediate" id="immediate" value="0"/>
+                                                                <input type="radio" class="form-control" name="immediate" id="immediate_0" value="0"/>
                                                                 <label for="">غیرفوری</label>
                                                             </span>
                                                         </div>

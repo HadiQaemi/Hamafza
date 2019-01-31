@@ -290,6 +290,9 @@
         $('#new_task_pages').val('');
         $('#new_task_keywords').val('');
         $('#create_new_task').trigger("reset");
+        $('#determination_end_date').trigger("click");
+        $('#new_task_save_type_final').trigger("click");
+        $('#rel_task_list').html('');
     }
     $(".TimePicker").persianDatepicker({
         format: "HH:mm:ss a",

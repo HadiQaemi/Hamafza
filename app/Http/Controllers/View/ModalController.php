@@ -1046,7 +1046,7 @@ class ModalController extends Controller
         $act = Input::has('act') ? Input::get('act') : '';
         if(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_CREATOR,$taskRole)){
             if($act=='do')
-                return $this->ShowTaskFormOwnerMode();
+                return $this->ShowTaskFormOperatorMode();
             else
                 return $this->ShowTaskFormOwnerMode();
         }elseif(in_array(\App\Http\Controllers\Hamahang\Tasks\TaskController::$_ROLE_ASSIGNER,$taskRole)){
@@ -1168,6 +1168,7 @@ class ModalController extends Controller
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
+        dd($task->Projects[0],$task->Projects[0]->Project);
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
@@ -1210,6 +1211,7 @@ class ModalController extends Controller
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
+        dd($task->Projects[0],$task->Projects[0]->Project);
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [

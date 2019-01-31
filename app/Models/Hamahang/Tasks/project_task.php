@@ -23,6 +23,11 @@ class project_task extends Model
     /*------------------------------- relations ----------------------------------------*/
     public function Project()
     {
-        return $this->hasOne('App\Models\Hamahang\Tasks\projects', 'id', 'project_id');
+        return $this->hasOne('App\Models\Hamahang\Tasks\task_project', 'id', 'project_id');
+    }
+
+    public function Task()
+    {
+        return $this->hasOne('App\Models\Hamahang\Tasks\tasks', 'id', 'task_id');
     }
 }

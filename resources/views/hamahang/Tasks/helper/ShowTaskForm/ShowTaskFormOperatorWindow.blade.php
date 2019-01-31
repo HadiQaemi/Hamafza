@@ -230,7 +230,6 @@
                 <div class="row-fluid">
                     {!! $HFM_CN_Task['ShowResultArea']['CreateNewTask'] !!}
                 </div>
-
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <input type="hidden" name="draft" id="draft" value="0"/>
                 <input type="hidden" name="first_m" id="first_m" value="0"/>
@@ -493,12 +492,13 @@
                         <div id="rel_task_list">
                             @if(isset($task->Projects))
                                 @foreach($task->Projects as $k => $project)
+                                    {{dd($project,$project->Project)}}
                                     <div id="num_add_rel_task{{$k+1}}">
                                         <div class="col-xs-5 text-right">پایین دستی</div>
                                         <div class="col-xs-5 text-right">
-                                            {{$project->Project->title}}
-                                            <input name="new_task_projects_[]" type="hidden" value="{{$project->Project->id}}"/>
-                                            <input name="new_task_projects_t[]" type="hidden" value="{{$project->Project->title}}"/>
+                                            {{$project->title}}
+                                            <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
+                                            <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
                                         </div>
                                         <div class="col-xs-1">{{$project->weight}}</div>
                                     </div>
@@ -887,6 +887,7 @@
                     </table>
                 </div>
             </div>
+
 
         </div>
     </form>
