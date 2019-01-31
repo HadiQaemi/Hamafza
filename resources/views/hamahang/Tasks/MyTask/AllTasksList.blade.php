@@ -26,7 +26,7 @@
 
 @section('content')
     <div style="position: absolute;top:10px; width: 250px;left:0px;">
-        {{--@include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')--}}
+        @include('hamahang.Tasks.MyTask.helper.task_related_pages_to_all_tasks')
     </div>
     <div class="row opacity-7" style="margin-top: -10px;background: #eee">
         <form id="form_filter_priority">

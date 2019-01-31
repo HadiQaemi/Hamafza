@@ -4,13 +4,24 @@
 @stop
 @section('content')
     <style>
-        #related_links {
-            padding: 1px;
-            left: 15px;
-            position: absolute;
-            top: -15px !important;
-            left:27px;
-            z-index:11;
+        .hd-body{
+            overflow: hidden !important;
+        }
+
+        #priority_content_area{
+            margin-top: 75px !important;
+        }
+        #priority_content_area{
+            height: 75vh;
+        }
+        #priority_content_area .row{
+            height: 45%;
+        }
+        #priority_content_area .task_items{
+            height: 85%;
+        }
+        #base_items_div{
+            padding-bottom: 50px;
         }
     </style>
     <div style="position: relative;">

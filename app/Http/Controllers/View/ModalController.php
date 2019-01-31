@@ -1168,7 +1168,6 @@ class ModalController extends Controller
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
-        dd($task->Projects[0],$task->Projects[0]->Project);
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [
@@ -1211,7 +1210,6 @@ class ModalController extends Controller
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
-        dd($task->Projects[0],$task->Projects[0]->Project);
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
             [

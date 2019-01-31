@@ -13,11 +13,13 @@
     </div>
     <div class="row col-lg-12" style="border-top: 1px solid #eee;padding-top: 10px;">
         آیا این راهنما مفید بود؟
-        <span class="margin-right-10"><label for="yes">بله</label><input type="radio" id="yes"></span>
-        <span><label for="no">خیر</label><input type="radio" id="no"></span>
+        <span class="margin-right-10"><input type="radio" name="help_status" value="yes" id="good_help" checked><label for="yes">بله</label></span>
+        <span><input type="radio" name="help_status" value="no" id="bad_help"><label for="no">خیر</label></span>
     </div>
-    <div class="row col-lg-12">
+    <div class="row col-lg-12 help_comment hidden">
         <textarea class="form-control" rows="5" id="coment_help" placeholder="پیشنهاد شما برای بهتر شدن این راهنما چیست؟"></textarea>
+        <br/>
+        <button class="btn btn-primary">ارسال</button>
     </div>
 </div>
 

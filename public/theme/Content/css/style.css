@@ -4159,3 +4159,26 @@ input::-webkit-inner-spin-button {
 .white-space{
     white-space:normal
 }
+.related-icons{
+    height: 21px;
+    width: 21px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    border: solid 1px #999;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.priority-icon{
+    background-image: url("/assets/images/priority00.png");
+}
+.steps-icon{
+    background-image: url("/assets/images/task0.png");
+}
+.card-icon{
+    background-image: url("/assets/images/card.png");
+}
+.table-icon{
+    background-image: url("/assets/images/table.png");
+}

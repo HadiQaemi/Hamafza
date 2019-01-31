@@ -205,7 +205,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
                     },
                     "width": "50%"
                 },

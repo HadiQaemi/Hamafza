@@ -35,7 +35,7 @@ return [
     'delete'  => 'حذف',
     'page'  => 'صفحه',
     'gantt'  => 'نمای گانت',
-    'levels'  => 'نمای ماحل',
+    'levels'  => 'نمای مرحله',
     'MyTaskPackages'  => 'نمای کارتی',
     'check_weight_progress'  => 'تایید وزن و پیشرفت',
     'delete_task_project'  => 'حذف وظیفه از پروژه',

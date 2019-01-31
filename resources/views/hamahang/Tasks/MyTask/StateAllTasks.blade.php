@@ -7,45 +7,23 @@
 
 @section('inline_style')
     <style type="text/css">
+
         hr {
             margin-top: 5px;
             margin-bottom: 5px;
             margin-left: 10px;
             margin-right: 10px;
         }
-
-        .header_task {
-            position: absolute;
-            top: -9px;
-            z-index: 10;
-            width: 100%;
-            background-color: #ffffff;
+        .state_container {
         }
-
-        .footer_task {
-            position: absolute;
-            background-color: #ffffff;
-            z-index: 10;
-            bottom: 0px;
-            padding-bottom: 10px;
-            width: 100%;
-        }
-
-        .content_task {
-            position: relative;
-            width: 100%;
-            top: 85px;
-            /*height: 430px;*/
-            height: 74vh;
-        }
-
-        .scrlbig {
+        .scrlbig{
             overflow-y: hidden !important;
         }
-
-        #master_inner_rtl_div
-        {
-            height: 100%;
+        .panel-light{
+            /*height: 73.4vh;*/
+        }
+        .hd-body{
+            overflow: hidden !important;
         }
     </style>
 @stop

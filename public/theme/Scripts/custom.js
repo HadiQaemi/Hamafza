@@ -232,6 +232,12 @@ $(document).ready(function () {
     });
     //-------------------------------------
     // full screen ++++++++++++++++++++++++
+    $(document).on("click", "#bad_help", function (e) {
+        $('.help_comment').removeClass('hidden');
+    });
+    $(document).on("click", "#good_help", function (e) {
+        $('.help_comment').addClass('hidden');
+    });
     $(document).on("click", "#fa-angle-double-left", function (e) {
         $(".fa-angle-double-left").addClass("hidden");
         $(".fa-angle-double-left").addClass("deactive");
