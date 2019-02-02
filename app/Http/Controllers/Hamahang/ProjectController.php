@@ -1300,19 +1300,25 @@ class ProjectController extends Controller
 
     public function FetchProjects()
     {
-        $projects_roles = DB::table('hamahang_project')
-            ->leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+        $projects_roles = task_project::leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
             ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
             ->whereNull('hamahang_project_role_permission.deleted_at')
-            ->whereNull('hamahang_project.deleted_at')
-            ->select('hamahang_project.id');
-        $projects_user = DB::table('hamahang_project')
-            ->leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
+            ->whereNull('hamahang_project.deleted_at')->groupBy('hamahang_project.id')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id');
+        $projects_roles = task_project::leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+//            ->whereNull('hamahang_project_responsible.deleted_at')
+            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->whereNull('hamahang_project_user_permission.deleted_at')
             ->whereNull('hamahang_project.deleted_at')
-            ->where('hamahang_project_user_permission.user_id','=',Auth::id())
+            ->where('hamahang_project_user_permission.user_id','=',Auth::id())->groupBy('hamahang_project.id')
             ->unionAll($projects_roles)
-            ->pluck('hamahang_project.id')->unique()->toArray();
+        ;
+//            ->pluck('hamahang_project.id')->unique()->toArray();
 //        $projects_user_new = [];
 //        foreach($projects_user as $project){
 //            if(!in_array($project,$projects_user_new))
@@ -1320,14 +1326,14 @@ class ProjectController extends Controller
 //        }
 //        dd($projects_user, $projects_user_new);
 
-        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
-            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
-            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
-            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
-//            ->whereNull('hamahang_project_responsible.deleted_at')
-            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
-            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
-        ;
+//        $projects_roles = task_project::whereIn('hamahang_project.id',$projects_user)
+//            ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
+//            ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
+//            ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
+////            ->whereNull('hamahang_project_responsible.deleted_at')
+//            ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
+//            ->leftJoin('hamahang_project_user_permission','hamahang_project_user_permission.project_id','=','hamahang_project.id')
+//        ;
         if (Request::exists('subject_id'))
         {
             $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
@@ -1458,7 +1464,7 @@ class ProjectController extends Controller
             }
         });
 
-        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles->groupBy('hamahang_project.id', 'desc'))
+        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles)
             ->editColumn('start_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
