@@ -182,7 +182,7 @@
                 "data": send_info
             },
             "bSort": true,
-            "order": [[ 2, "asc" ]],
+            "order": [[ 2, "desc" ]],
             "aaSorting": [],
             "bSortable": true,
             "autoWidth": false,

@@ -54,6 +54,17 @@ class MyTaskController extends Controller
             {
                 return enCode($data->id);
             })
+            ->editColumn('assignment_created_at', function ($data)
+            {
+                $date = new jDateTime;
+                $datetime = explode(' ', $data->assignment_created_at);
+                $task_date = explode('-', $datetime[0]);
+                $time = explode(':', $datetime[1]);
+                $g_timestamp = mktime($time[0], $time[1], $time[2], $task_date [1], $task_date [2], $task_date [0]);
+                $jdate = $date->getdate($g_timestamp);
+                $jdateA = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'];
+                return ['jdate' => $jdateA, 'num_date' => ($date->convertElseNumbers($jdate['year'])*365 + $date->convertElseNumbers($jdate['mon'])*31 + $date->convertElseNumbers($jdate['mday']))];
+            })
             ->editColumn('use_type', function ($data)
             {
                 return hamahang_get_task_use_type_name($data->use_type);

@@ -896,7 +896,7 @@ class tasks extends Model
         $title = Request::get('title');
         $filter_subject_id = Request::get('subject_id');
         $result = DB::table('hamahang_task')
-            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "to.Uname as t_uname", "to.Name as t_name", "to.Family as t_family", "from.Uname as f_uname", "from.Name as f_name", "from.Family as f_family", "to.Uname", "to.Name", "to.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
+            ->select("hamahang_task_assignments.id as assignment_id","hamahang_task_assignments.created_at as assignment_created_at","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "to.Uname as t_uname", "to.Name as t_name", "to.Family as t_family", "from.Uname as f_uname", "from.Name as f_name", "from.Family as f_family", "to.Uname", "to.Name", "to.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
             ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
             ->leftjoin('user as to', 'to.id', '=', 'hamahang_task_assignments.employee_id')

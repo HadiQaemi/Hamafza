@@ -145,6 +145,7 @@
             },
             "searching": false,
             "autoWidth": false,
+            "order": [[ 3, "desc" ]],
             "language": LangJson_DataTables,
             "processing": true,
             columns: [
@@ -164,7 +165,7 @@
                         return "<a class='cursor-pointer jsPanels white-space' href='/modals/ShowTranscriptTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
                         // return full.title;
                     },
-                    "width": "60%"
+                    "width": "70%"
                 },
                 {
                     "data": "employee",
@@ -177,14 +178,21 @@
                         });
                         return full.employee+"<div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                     },
-                    "width": "15%"
+                    "width": "10%"
                 },
                 {"data": "assigner"},
+                {
+                    "data": "assignment_created_at",
+                    "mRender": function (data, type, full) {
+                        return '<span class="hidden">' + full.assignment_created_at.num_date + '</span>' + full.assignment_created_at.jdate;
+                    },
+                    "width": "5%"
+                },
                 {"data": "immediate",
                     "mRender": function (data, type, full) {
                         return "<img class='immediate-pic' src='/assets/images/"+full.immediate.output_image+".png' title='"+full.immediate.output+"' data-toggle='tooltip'/>";
                     },
-                    "width": "15%"
+                    "width": "5%"
                 },
                 {"data": "respite",
                     "mRender": function (data, type, full) {

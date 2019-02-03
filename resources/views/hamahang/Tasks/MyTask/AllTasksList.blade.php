@@ -128,6 +128,7 @@
                             <th style="text-align: right;">عنوان</th>
                             <th style="text-align: right;">واگذارنده</th>
                             <th style="text-align: right;">مسئول</th>
+                            <th style="text-align: right;">زمان ارجاع</th>
                             <th style="text-align: right;">اولویت</th>
                             <th style="text-align: right;">مهلت</th>
                             <th style="text-align: right;">وضعیت</th>
