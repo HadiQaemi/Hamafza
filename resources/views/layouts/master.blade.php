@@ -335,12 +335,12 @@
                                     else {
                                         $('.jsPanel-btn-close').click();
                                     }
-                                    if( window.table_chart_grid2 == undefined){
-                                        return false;
+                                    if(window.table_chart_grid2 != undefined){
+                                        window.table_chart_grid2.ajax.reload();
                                     }
-                                    {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
-                                    window.table_chart_grid2.ajax.reload();
-                                    window.table_chart_grid3.ajax.reload();
+                                    if(window.table_chart_grid3 != undefined){
+                                        window.table_chart_grid3.ajax.reload();
+                                    }
                                     eventInfo = (result.event);
                                     (function ($) {
                                         $("#calendar").fullCalendar('addEventSource', [{
@@ -374,8 +374,12 @@
                                 if (result.success == true) {
                                     $('.jsPanel-btn-close').click();
                                     {{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
-                                    window.table_chart_grid2.ajax.reload();
-                                    window.table_chart_grid3.ajax.reload();
+                                    if(window.table_chart_grid2 != undefined){
+                                        window.table_chart_grid2.ajax.reload();
+                                    }
+                                    if(window.table_chart_grid3 != undefined){
+                                        window.table_chart_grid3.ajax.reload();
+                                    }
                                 }
                                 else {
                                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -399,6 +403,12 @@
                                     }
                                     else {
                                         $('.jsPanel-btn-close').click();
+                                        if(window.table_chart_grid2 != undefined){
+                                            window.table_chart_grid2.ajax.reload();
+                                        }
+                                        if(window.table_chart_grid3 != undefined){
+                                            window.table_chart_grid3.ajax.reload();
+                                        }
                                     }
                                     {{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                                 }
@@ -423,6 +433,12 @@
                                     }
                                     else {
                                         $('.jsPanel-btn-close').click();
+                                        if(window.table_chart_grid2 != undefined){
+                                            window.table_chart_grid2.ajax.reload();
+                                        }
+                                        if(window.table_chart_grid3 != undefined){
+                                            window.table_chart_grid3.ajax.reload();
+                                        }
                                     }
                                     {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                                 }
@@ -563,8 +579,13 @@
                             success: function (result) {
                                 console.log(result);
                                 if (result.success == true) {
+                                    if(window.table_chart_grid2 != undefined){
+                                        window.table_chart_grid2.ajax.reload();
+                                    }
+                                    if(window.table_chart_grid3 != undefined){
+                                        window.table_chart_grid3.ajax.reload();
+                                    }
                                     $('.jsPanel-btn-close').click();
-                                    {{--messageModal('success','{{trans('tasks.submit_action')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
                                 }
                                 else {
                                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
