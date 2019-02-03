@@ -1990,6 +1990,7 @@ class MyAssignedTaskController extends Controller
             }
             task_history::create_task_history($task->id, 'create', serialize(Request::all()));
             task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[1]);
+            task_status::create_task_status($task->id, 0, 0);
 //            task_priority_assigner::create_task_priority_assigner($task->id, Request::input('immediate') ,Request::input('importance'));
         }
         if (Request::input('event_type') == "task")
