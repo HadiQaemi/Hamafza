@@ -39,14 +39,14 @@ class DynamicPermission
                     }
                     else
                     {
-//                        echo '<hr/>'.($permission).'<hr/>';
+                        echo '<hr/>'.($permission).'<hr/>';
                         return response()->view('errors.403');
                         //abort('403');
                     }
                 }
                 else
                 {
-//                    echo '<hr/>'.($permission).'<hr/>';
+                    echo '<hr/>'.($permission).'<hr/>';
                     return response()->view('errors.403');
                     //abort('403');
                 }
