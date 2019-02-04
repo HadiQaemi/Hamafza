@@ -514,12 +514,12 @@ class MyAssignedTaskController extends Controller
                 }
                 case 'task_ended':
                 {
-                    if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
-                        $result['success'] = false;
-                        $result['error']= trans('tasks.cant_end_this_task');
-                        return $result;
-                    }
-                    else{
+//                    if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
+//                        $result['success'] = false;
+//                        $result['error']= trans('tasks.cant_end_this_task');
+//                        return $result;
+//                    }
+//                    else{
                         $task->Status()->delete();
                         $task->Statuses()->create([
                             'uid' => auth()->id(),
@@ -530,7 +530,7 @@ class MyAssignedTaskController extends Controller
                             'timestamp' => time(),
                         ]);
                         $result['success'] = true;
-                    }
+//                    }
                     break;
                 }
                 default :
@@ -1586,13 +1586,13 @@ class MyAssignedTaskController extends Controller
 
             task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : '').(trim(Request::input('action_explain'))!= '' ? '، '.Request::input('action_explain') : ''));
 
-            if (Request::exists('keywords'))
-            {
-                foreach (Request::input('keywords') as $kw)
-                {
-                    task_keywords::create_task_keyword($task_id, hamahang_add_keyword($kw));
-                }
-            }
+//            if (Request::exists('keywords'))
+//            {
+//                foreach (Request::input('keywords') as $kw)
+//                {
+//                    task_keywords::create_task_keyword($task_id, hamahang_add_keyword($kw));
+//                }
+//            }
         }
 
         $result['success'] = true;

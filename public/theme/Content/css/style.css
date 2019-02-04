@@ -3985,6 +3985,9 @@ input{
 .bookmark_page li:hover .HazfBookmark{
     display: inline !important;
 }
+.bookmark_subject li:hover .HazfBookmark{
+    display: inline !important;
+}
 #calendar_myCalendar .panel-heading, #calendar_myCalendar .panel-body, #calendar_myCalendar .dataTables_filter input{
     background: #eee;
 }

@@ -528,22 +528,48 @@ class UserController extends Controller
     public function register_user(Request $request)
     {
         $captcha = config('app.debug') ? '' : 'required|check_captcha:register';
+        if ('kmkz' == config('constants.DefIndexView'))
+        {
+            $validator = Validator::make($request->all(),
+                [
+                    'captcha_code' => $captcha,
+                    //'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
+                    'username' => 'required|unique:user,Uname|unique:user_group,link|valid_username|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
+                    'email' => 'required|email|min:6|max:255|unique:user,Email',
+                    'password' => 'required|confirmed|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
+                    'name' => 'required|max:20',
+                    'family' => 'required|max:20',
+                    'relevant_organization' => 'required|max:50',
+                    'province' => 'required|max:2',
+                    'city' => 'required|max:2',
+                    'mobile' => 'required|regex:/^\d{10,11}$/',
+                    'phone' => 'required|regex:/^\d{10,11}$/',
+                    'education' => 'required|max:2',
+                ],
+                [
+                    'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
+                    'valid_username' => 'نام کاربری معتبر نمی‌باشد.',
+                    'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
+                    'relevant_organization' => 'سازمان مربوطه الزامی می‌باشد.',
+                ]);
 
-        $validator = Validator::make($request->all(),
-        [
-            'captcha_code' => $captcha,
-            //'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
-            'username' => 'required|unique:user,Uname|unique:user_group,link|valid_username|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
-            'email' => 'required|email|min:6|max:255|unique:user,Email',
-            'password' => 'required|confirmed|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
-            'name' => 'required',
-            'family' => 'required',
-        ],
-        [
-            'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
-            'valid_username' => 'نام کاربری معتبر نمی‌باشد.',
-            'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
-        ]);
+        }else{
+            $validator = Validator::make($request->all(),
+                [
+                    'captcha_code' => $captcha,
+                    //'username' => 'required|unique:user,Uname|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
+                    'username' => 'required|unique:user,Uname|unique:user_group,link|valid_username|regex:/^(?!.*__)^(?!.*\.\.)^(?!_)^(?!\.)(?!^\d+$)^[a-zA-Z\d-_.]{3,64}$/',
+                    'email' => 'required|email|min:6|max:255|unique:user,Email',
+                    'password' => 'required|confirmed|min:8|max:100', //|regex:/^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/
+                    'name' => 'required|max:20',
+                    'family' => 'required|max:20',
+                ],
+                [
+                    'password.regex' => 'کلمه عبور باید حداقل 8 کاراکتر باشد.',
+                    'valid_username' => 'نام کاربری معتبر نمی‌باشد.',
+                    'username.regex' => 'نام کاربری معتبر نمی‌باشد.',
+                ]);
+        }
 
         if ($validator->fails())
         {

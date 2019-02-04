@@ -44,14 +44,14 @@
                                             <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province pull-right' style="width: 50%">
                                                 @if($provinces)
                                                     @foreach($provinces as $province)
-                                                        <option value="{{ $province->id }}" @if($province->id==$user->profile->Province) selected="selected" @endif>{{ $province->name }}</option>
+                                                        <option value="{{ $province->id }}" @if($province->id==isset($user->profile->Province) ? $user->profile->Province : '') selected="selected" @endif>{{ $province->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                             <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city pull-left' style="width: 49%">
                                                 @if($cities)
                                                     @foreach($cities as $city)
-                                                        <option value="{{ $city->id }}" @if($city->id==$user->profile->City) selected="selected" @endif>{{ $city->name }}</option>
+                                                        <option value="{{ isset($city->id) ? $city->id : '' }}" @if($city->id==(isset($user->profile->City) ? $user->profile->City : '')) selected="selected" @endif>{{ $city->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -130,7 +130,7 @@
                                         <div>دیدگاه</div>
                                     </div>
                                     <div class="col-xs-11">
-                                        <input type="text" name="comment" class="text form-control" id="comment" placeholder="دیدگاه" value="{{ $user->profile->Comment }}">
+                                        <input type="text" name="comment" class="text form-control" id="comment" placeholder="دیدگاه" value="{{ isset($user->profile->Comment) ? $user->profile->Comment : '' }}">
                                     </div>
                                 </div>
                                 {{--<div class="col-xs-12 margin-top-10">--}}

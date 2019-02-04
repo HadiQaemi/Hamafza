@@ -218,7 +218,7 @@
                         <div id="toolbar">
                             @if(isset($Title))
                                 <div class="pull-right right-detail col-md-10">
-                                    <h1>{!!$Title!!}</h1>
+                                    <h1>{{$Title}}</h1>
                                 </div>
                             @endif
                             <div class="clearfix"></div>

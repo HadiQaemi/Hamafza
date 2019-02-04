@@ -23,7 +23,7 @@ Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middlewar
     Route::post('allPermissions', ['as' => 'auto_complete.all_permissions', 'uses' => 'AutoCompleteController@allPermissions', 'middleware' => ['dynamic_permission:auto_complete.all_permissions']]);
     Route::post('provinces', ['as' => 'auto_complete.provinces', 'uses' => 'AutoCompleteController@provinces', 'middleware' => ['dynamic_permission:auto_complete.provinces']]);
     Route::post('cities', ['as' => 'auto_complete.cities', 'uses' => 'AutoCompleteController@cities', 'middleware' => ['dynamic_permission:auto_complete.cities']]);
-    Route::post('hamahang_cities', ['as' => 'auto_complete.hamahang_cities', 'uses' => 'AutoCompleteController@hamahang_cities', 'middleware' => ['dynamic_permission:auto_complete.hamahang_cities']]);
+//    Route::post('hamahang_cities', ['as' => 'auto_complete.hamahang_cities', 'uses' => 'AutoCompleteController@hamahang_cities', 'middleware' => ['dynamic_permission:auto_complete.hamahang_cities']]);
     Route::post('getUserCalendar', ['as' => 'auto_complete.get_user_calendar', 'uses' => 'AutoCompleteController@getUserCalendar', 'middleware' => ['dynamic_permission:auto_complete.get_user_calendar']]);
     Route::post('acl_users', ['as' => 'auto_complete.acl_users', 'uses' => 'AutoCompleteController@aclUsers', 'middleware' => ['dynamic_permission:auto_complete.acl_users']]);
     Route::post('acl_categories', ['as' => 'auto_complete.acl_categories', 'uses' => 'AutoCompleteController@aclCategories', 'middleware' => ['dynamic_permission:auto_complete.acl_categories']]);
@@ -31,4 +31,8 @@ Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middlewar
     Route::post('keywordsWithSubjects', ['as' => 'auto_complete.keywords_with_subjects', 'uses' => 'AutoCompleteController@keywordsWithSubjects', 'middleware' => ['dynamic_permission:auto_complete.keywords_with_subjects']]);
     Route::post('subjects', ['as' => 'auto_complete.subjects', 'uses' => 'AutoCompleteController@subjects', 'middleware' => ['dynamic_permission:auto_complete.subjects']]);
     Route::post('help', ['as' => 'auto_complete.help', 'uses' => 'AutoCompleteController@help']);
+});
+Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang'], function ()
+{
+    Route::post('hamahang_cities', ['as' => 'auto_complete.hamahang_cities', 'uses' => 'AutoCompleteController@hamahang_cities']);
 });

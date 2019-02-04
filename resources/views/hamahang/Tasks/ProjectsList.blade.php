@@ -113,11 +113,11 @@
                         <label for="done_tasks" class="done"></label>
                     </div>
                     <div class="checkboxVertical completed pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}">
-                        <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="completed_tasks"/>
+                        <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks"/>
                         <label for="completed_tasks" class="completed"></label>
                     </div>
                     <div class="checkboxVertical pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_suspended')}}">
-                        <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="stoped_tasks"/>
+                        <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks"/>
                         <label for="stoped_tasks"></label>
                     </div>
                 </div>

@@ -117,6 +117,7 @@ return [
         'family'                  => 'نام خانوادگی',
         'username'              => 'نام کاربری',
         'email'                 => 'پست الکترونیکی',
+        'relevant_organization'                 => 'سازمان مربوطه',
         'first_name'            => 'نام',
         'last_name'             => 'نام خانوادگی',
         'password'              => 'رمز عبور',

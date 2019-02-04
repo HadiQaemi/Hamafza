@@ -7,8 +7,12 @@
                 </div>
                 <div style="display: inline;">
                     <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style=";color:#FFF;">
-                        @if($dashboard['Eghdam']>0)
-                            {{$dashboard['Eghdam']}}  وظیفه جدید دارید.
+                        @if(isset($dashboard['Eghdam']))
+                            @if($dashboard['Eghdam']>0)
+                                {{$dashboard['Eghdam']}}  وظیفه جدید دارید.
+                            @else
+                                وظیفه جدیدی ندارید
+                            @endif
                         @else
                             وظیفه جدیدی ندارید
                         @endif
@@ -21,8 +25,12 @@
                 </div>
                 <div style="display: inline;">
                     <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style=";color:#FFF;">
-                        @if($dashboard['Email']>0)
-                            {{$dashboard['Email']}}  پیام جدید دارید.
+                        @if(isset($dashboard['Email']))
+                            @if($dashboard['Email']>0)
+                                {{$dashboard['Email']}}  پیام جدید دارید.
+                            @else
+                                پیام جدیدی ندارید
+                            @endif
                         @else
                             پیام جدیدی ندارید
                         @endif
@@ -35,15 +43,23 @@
                 </div>
                 <div style="display: inline;">
                     <a href="{{ auth()->user()->Uname }}/desktop/showgroups" style=";color:#FFF;">
-                        @if($dashboard['Group']>0)
-                            عضو {{$dashboard['Group']}} گروه بوده
+                        @if(isset($dashboard['Group']))
+                            @if($dashboard['Group']>0)
+                                عضو {{$dashboard['Group']}} گروه بوده
+                            @else
+                                عضو هیچ گروه نمی باشید
+                            @endif
                         @else
                             عضو هیچ گروه نمی باشید
                         @endif
 
-                        @if($dashboard['User']>0)
-                            و با {{$dashboard['User']}} کاربر مرتبط هستید.
-                        @else
+                        @if(isset($dashboard['User']))
+                            @if($dashboard['User']>0)
+                                و با {{$dashboard['User']}} کاربر مرتبط هستید.
+                            @else
+                                و با هیچ کاربری مرتبط نیستید.
+                            @endif
+                         @else
                             و با هیچ کاربری مرتبط نیستید.
                         @endif
                     </a>
@@ -55,13 +71,21 @@
                 </div>
                 <div style="display: inline;">
                     <a href="{{ auth()->user()->Uname }}/desktop/files/Created_ME" style=";color:#FFF;">
-                        @if($dashboard['Post']>0)
-                            {{$dashboard['Post']}} مطلب نوشته اید،
+                        @if(isset($dashboard['Post']))
+                            @if($dashboard['Post']>0)
+                                {{$dashboard['Post']}} مطلب نوشته اید،
+                            @else
+                                تا کنون مطلبی ننوشته اید
+                            @endif
                         @else
                             تا کنون مطلبی ننوشته اید
                         @endif
-                        @if($dashboard['Page']>0)
-                            و {{$dashboard['Page']}} صفحه ایجاد کرده‌اید.
+                        @if(isset($dashboard['Page']))
+                            @if($dashboard['Page']>0)
+                                و {{$dashboard['Page']}} صفحه ایجاد کرده‌اید.
+                            @else
+                                و هیچ صفحه ای ایجاد نکرده اید
+                            @endif
                         @else
                             و هیچ صفحه ای ایجاد نکرده اید
                         @endif

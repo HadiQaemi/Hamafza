@@ -255,6 +255,42 @@
                         else {
                             $('#reg_family_request_errors').html('');
                         }
+                        if (result.error.relevant_organization) {
+                            $('#reg_relevant_organization_request_errors').html(result.error.relevant_organization);
+                        }
+                        else {
+                            $('#reg_relevant_organization_request_errors').html('');
+                        }
+                        if (result.error.phone) {
+                            $('#reg_phone_request_errors').html(result.error.phone);
+                        }
+                        else {
+                            $('#reg_phone_request_errors').html('');
+                        }
+                        if (result.error.mobile) {
+                            $('#reg_mobile_request_errors').html(result.error.mobile);
+                        }
+                        else {
+                            $('#reg_mobile_request_errors').html();
+                        }
+                        if (result.error.email) {
+                            $('#reg_email_request_errors').html(result.error.email);
+                        }
+                        else {
+                            $('#reg_email_request_errors').html('');
+                        }
+                        if (result.error.city) {
+                            $('#reg_city_request_errors').html(result.error.city);
+                        }
+                        else {
+                            $('#reg_city_request_errors').html('');
+                        }
+                        if (result.error.province) {
+                            $('#reg_province_request_errors').html(result.error.province);
+                        }
+                        else {
+                            $('#reg_province_request_errors').html('');
+                        }
                     }
 //                        messageModal('alert', 'خطا در ثبت نام', result.error);
                 }
