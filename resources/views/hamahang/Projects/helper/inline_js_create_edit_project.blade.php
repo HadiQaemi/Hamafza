@@ -199,7 +199,7 @@
                             }
                             {{--messageModal('success', '{{trans('projects.project')}}', {0: '{{trans('projects.project_created_successfully')}}'});--}}
                             // location.reload();
-                            window.ProjectList.ajax.reload();
+                            // window.ProjectList.ajax.reload();
                             $('.jsPanel-btn-close').click();
                         }else{
                             messageModal('error', '{{trans('app.operation_is_failed')}}', res.error);

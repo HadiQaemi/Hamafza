@@ -667,50 +667,52 @@ class UserController extends Controller
             $group_limit = $request->input('group_limit');
             if ($tmpFileName != '')
             {
-                $sql = "UPDATE
-                                        user_group
-                                SET
-                                        `name`  = '{$group_title}' ,
-                                        `summary` = '{$group_summary}' ,
-                                        `descrip`  = '{$group_descrip}' ,
-                                        `type`  = '{$group_type}' ,
-                                        `target`  = '{$group_target}' ,
-                                        `audience`  = '{$group_audience}' ,
-                                        `strategy`  = '{$group_strategy}' ,`activity`  = '{$group_activity}' ,
-                                        `description`  = '{$description}' ,
-                                        `edit` = '{$group_limit}' ,
-                                        `subject` = '{$subject}' ,
-                                        `tel` = '{$tel}' ,
-                                        `address` = '{$address}' ,
-                                        `url` = '{$url}' ,
-                                        `email` = '{$email}' ,
-                                        `pic` = '{$picname}'   
-                                WHERE 
-                                        id = {$gid} ";
+                DB::table('user_group')
+                    ->where('id', $gid)
+                    ->update(
+                        [
+                            'name'  => $group_title,
+                            'summary' =>$group_summary,
+                            'descrip'  => $group_descrip,
+                            'type'  => $group_type,
+                            'target'  => $group_target,
+                            'audience'  => $group_audience,
+                            'strategy'  => $group_strategy,
+                            'description'  => $description,
+                            'edit' => $group_limit,
+                            'subject' => $subject,
+                            'tel' => $tel,
+                            'address' => $address,
+                            'url' => $url,
+                            'url' => $url,
+                            'pic' => $picname
+                        ]
+                    );
             }
             else
             {
-                $sql = "UPDATE
-                                        user_group
-                                SET
-                                        `name`  = '{$group_title}' ,
-                                        `summary` = '{$group_summary}' ,
-                                        `descrip`  = '{$group_descrip}' ,
-                                        `type`  = '{$group_type}' ,
-                                        `target`  = '{$group_target}' ,
-                                        `audience`  = '{$group_audience}' ,
-                                        `strategy`  = '{$group_strategy}' ,`activity`  = '{$group_activity}' ,
-                                        `description`  = '{$description}' ,
-                                        `edit` = '{$group_limit}' ,
-                                        `subject` = '{$subject}' ,
-                                        `tel` = '{$tel}' ,
-                                        `address` = '{$address}' ,
-                                        `url` = '{$url}' ,
-                                        `email` = '{$email}' 
-                                WHERE 
-                                        id = {$gid}";
+                DB::table('user_group')
+                    ->where('id', $gid)
+                    ->update(
+                        [
+                            'name'  => $group_title,
+                            'summary' =>$group_summary,
+                            'descrip'  => $group_descrip,
+                            'type'  => $group_type,
+                            'target'  => $group_target,
+                            'audience'  => $group_audience,
+                            'strategy'  => $group_strategy,
+                            'activity'  => $group_activity,
+                            'description'  => $description,
+                            'edit' => $group_limit,
+                            'subject' => $subject,
+                            'tel' => $tel,
+                            'address' => $address,
+                            'url' => $url,
+                            'email' => $email
+                        ]
+                    );
             }
-            DB::select(DB::raw($sql));
             DB::table('user_group_key')->where('gid', $gid)->delete();
             $myArray = explode(',', $Groupkeywords);
             foreach ($myArray as &$value)

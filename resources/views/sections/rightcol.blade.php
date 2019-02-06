@@ -192,9 +192,9 @@
 @endif
 @if (is_array($RightCol))
     @foreach($RightCol as $item)
-        <div class="panel-heading panel-heading-darkblue">{!!$item[0] !!} </div>
+        <div class="panel-heading panel-heading-darkblue">{{$item[0] }} </div>
         <div class="panel panel-light panel-list padding-remove">
-        <!--<div class="panel-heading panel-heading-darkblue">{!!$item[0] !!}</div>-->
+        <!--<div class="panel-heading panel-heading-darkblue">{{$item[0] }}</div>-->
             <div class="panel-body new-list">
                 <?php
                 $item[1] = json_encode($item[1]);
@@ -228,9 +228,9 @@
                                         }
                                         ?>
                                         <tr>
-                                            <td style="width: 30px;"><a class="stooltip title-button1 status " data-placement="top" data-toggle="tooltip" page="user" href="{!!App::make('url')->to('/')!!}/{!!$link2!!}"><img
-                                                            title="{!!$name!!}" class="CircleImage" src="{!!$pics!!}"/></a></td>
-                                            <td style="text-align: right;"><a href="{!!App::make('url')->to('/')!!}/{!!$link!!}">{!!$items->title!!}</a></td>
+                                            <td style="width: 30px;"><a class="stooltip title-button1 status " data-placement="top" data-toggle="tooltip" page="user" href="{{App::make('url')->to('/')}}/{{$link2}}"><img
+                                                            title="{{$name}}" class="CircleImage" src="{{$pics}}"/></a></td>
+                                            <td style="text-align: right;"><a href="{{App::make('url')->to('/')}}/{{$link}}">{{$items->title}}</a></td>
                                         </tr>
                                     @elseif($item[2]=='userwall')
                                         <?php
@@ -242,29 +242,29 @@
                                         ?>
                                         @if($items->isorgan=='0')
                                             <tr>
-                                                <td style="width: 30px;"><img class="CircleImage" src="{!!App::make('url')->to('/')!!}/{!!$pic!!}"/></td>
-                                                <td style="text-align: right;"><a target="b_blank" href="{!!App::make('url')->to('/')!!}/{!!$items->link!!}?tab=contents">{!!$items->name!!}</a></td>
+                                                <td style="width: 30px;"><img class="CircleImage" src="{{App::make('url')->to('/')}}/{{$pic}}"/></td>
+                                                <td style="text-align: right;"><a target="b_blank" href="{{App::make('url')->to('/')}}/{{$items->link}}?tab=contents">{{$items->name}}</a></td>
                                             </tr>
                                         @else
                                             <tr>
-                                                <td style="width: 30px;"><img class="CircleImage" src="{!!App::make('url')->to('/')!!}/{!!$pic!!}"/></td>
-                                                <td style="text-align: right;"><a target="b_blank" href="{!!App::make('url')->to('/')!!}/{!!$items->link!!}?tab=contents" style="color:#424F5A">{!!$items->name!!}</a></td>
+                                                <td style="width: 30px;"><img class="CircleImage" src="{{App::make('url')->to('/')}}/{{$pic}}"/></td>
+                                                <td style="text-align: right;"><a target="b_blank" href="{{App::make('url')->to('/')}}/{{$items->link}}?tab=contents" style="color:#424F5A">{{$items->name}}</a></td>
                                             </tr>
                                         @endif
                                     @elseif($item[2]=='alerts')
                                         <tr>
-                                            <td style="text-align: right;">@if($items->read==0) <b>@endif <a target="b_blank" href="{!!$items->link!!}/contents">{!!$items->subject2!!}</a>@if($items->read==0) </b>@endif</td>
+                                            <td style="text-align: right;">@if($items->read==0) <b>@endif <a target="b_blank" href="{{$items->link}}/contents">{{$items->subject2}}</a>@if($items->read==0) </b>@endif</td>
                                         </tr>
                                     @elseif($item[2]=='usernot')
                                         @if ( array_key_exists('link', $items) && $items->link!= '')
                                             <tr>
                                                 <td style="width: 30px;"></td>
-                                                <td style="text-align: right;"><a href="{!! $items->link!!}">{!! $items['subject']!!}</a></td>
+                                                <td style="text-align: right;"><a href="{{ $items->link}}">{{ $items['subject']}}</a></td>
                                             </tr>
                                         @else
                                             <tr>
                                                 <td style="width: 30px;"></td>
-                                                <td style="text-align: right;"><a href="viewnotif.php?NotID={!! $items['id']!!}" rel="nofollow">{!! $items['subject']!!}</a></td>
+                                                <td style="text-align: right;"><a href="viewnotif.php?NotID={{ $items['id']}}" rel="nofollow">{{ $items['subject']}}</a></td>
                                             </tr>
                                         @endif
                                     @else
@@ -274,8 +274,8 @@
                                             $pics = 'pics/user/' . $items->Pic;
                                         ?>
                                         <tr>
-                                            <td style="width: 30px;"><img class="CircleImage" src="{!!$pics!!}"/></td>
-                                            <td style="text-align: right;"><a href="{!!App::make('url')->to('/')!!}/forum/{!!$items->sid!!}">{!!$items->title!!}</a></td>
+                                            <td style="width: 30px;"><img class="CircleImage" src="{{$pics}}"/></td>
+                                            <td style="text-align: right;"><a href="{{App::make('url')->to('/')}}/forum/{{$items->sid}}">{{$items->title}}</a></td>
                                         </tr>
                                     @endif
                                 </table>
@@ -284,7 +284,7 @@
                     </ul>
                 @else
                     @if(!is_array($item[1]))
-                        {!!$item[1]!!}
+                        {{$item[1]}}
                     @endif
                 @endif
             </div>

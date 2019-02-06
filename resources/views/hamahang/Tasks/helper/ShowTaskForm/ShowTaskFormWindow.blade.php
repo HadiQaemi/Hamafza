@@ -40,6 +40,7 @@
                     $act = Illuminate\Support\Facades\Input::has('act') ? Illuminate\Support\Facades\Input::get('act') : '';
                     @endphp
                 {{--</pre>--}}
+
             <div class="tab-pane" style="padding-top: 8px;margin-top:20px" id="tab_t1">
                 <div class="row col-lg-12">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.title') }}</label></div>
@@ -167,7 +168,7 @@
                                 multiple="multiple" name="keywords[]" id="new_task_keywords">
                             @if(!empty($task->Keywords))
                                 @foreach($task->Keywords as $task_keywords)
-                                    <option selected="selected" value="{{ $task_keywords->keyword->id }}">{{ $task_keywords->keyword->title }}</option>
+                                    <option selected="selected" value="{{ isset($task_keywords->keyword->id) ? $task_keywords->keyword->id : '' }}">{{ isset($task_keywords->keyword->title) ? $task_keywords->keyword->title : '' }}</option>
                                 @endforeach
                             @endif
                         </select>

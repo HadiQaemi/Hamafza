@@ -40,23 +40,28 @@ $(document).ready(function() {
 </script>
 
 <form enctype="multipart/form-data" id="form_group" method="post" action="{{ route('hamafza.new_org_group') }}">
-                   <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('groups.name')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6"><input type="text" id="group_title" class="form-control required" value="" name="group_title" placeholder="{{trans('groups.name')}}"/></div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('groups.url')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6 no-margin-left"><input type="text" id="group_link" class="form-control required inline" value="" name="group_link" placeholder="{{trans('groups.url')}}"></div>
+        <div class="pull-right dir_ltr line-height-30">{{App::make('url')->to('/')}}/</div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('groups.brief_description')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6"><input type="form-control" style="width:388px" dir="rtl" id="group_summary" class="form-control" value="" name="group_summary" placeholder="{{trans('groups.brief_description')}}"></div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('groups.keyword')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6"><input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12" placeholder="{{trans('groups.keyword')}}"/></div>
+    </div>
     <table style="background-color:#fff" class="table">
-        <tbody><tr>
-                <td width="160">نام گروه <font color="red">*</font></td>
-                <td>
-                    <input type="form-control" style="width:388px" dir="rtl" id="group_title" class="form-control required" value="" name="group_title">
-                </td>
-            </tr>
+        <tbody>
             <tr>
-                <td>نشانی در وب <font color="red">*</font></td>
-                <td style="direction:ltr">
-                    <div style="display: inline"> {{App::make('url')->to('/')}}/</div><input type="form-control" style="width:388px;text-align:left;display: inline" dir="ltr" id="group_link" class="form-control required" value="" name="group_link">
-                </td>
-            </tr>
-            <tr>
-                <td>معرفی اجمالی</td>
+                <td></td>
                 <td>
                     <input type="form-control" style="width:388px" dir="rtl" id="group_summary" class="form-control" value="" name="group_summary">
                 </td>
@@ -65,29 +70,29 @@ $(document).ready(function() {
             <tr>
                 <td>
 
-                    کلیدواژه ها
+
                 </td>
 
                 <td>
-<input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12"  />
+
 
                 </td>
             </tr>
-            <tr>
-                <td>نوع</td>
-                <td>
-                    <select  class="form-control" data-placeholder="انتخاب کنید" id="group_type" name="group_type">
-                        <option value="0" ></option>
-                        <option value="1">کانون تفکر</option>
-                        <option value="2">اجتماع یادگیری</option>
-                        <option value="3">اجتماع عمل</option>
-                        <option value="4">مدیریت پروژه</option>
-                        <option value="5">هم دوره ای ها</option>
-                        <option value="6">سایر</option>
-                    </select>
-                    <input type="hidden" value="0" name="isorgan">
-                </td>
-            </tr>
+            {{--<tr>--}}
+                {{--<td>نوع</td>--}}
+                {{--<td>--}}
+                    {{--<select  class="form-control" data-placeholder="انتخاب کنید" id="group_type" name="group_type">--}}
+                        {{--<option value="0" ></option>--}}
+                        {{--<option value="1">کانون تفکر</option>--}}
+                        {{--<option value="2">اجتماع یادگیری</option>--}}
+                        {{--<option value="3">اجتماع عمل</option>--}}
+                        {{--<option value="4">مدیریت پروژه</option>--}}
+                        {{--<option value="5">هم دوره ای ها</option>--}}
+                        {{--<option value="6">سایر</option>--}}
+                    {{--</select>--}}
+                    {{--<input type="hidden" value="0" name="isorgan">--}}
+                {{--</td>--}}
+            {{--</tr>--}}
             {{--<tr>--}}
                 {{--<td>تصویر</td>--}}
                 {{--<td>--}}

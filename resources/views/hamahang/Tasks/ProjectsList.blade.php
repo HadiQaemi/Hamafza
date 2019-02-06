@@ -610,7 +610,7 @@
                         data: {pid:id},
                         success: function (data) {
                             if (data.success == true) {
-                                window.ProjectList.ajax.reload();
+                                // window.ProjectList.ajax.reload();
                             }else{
                                 messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
                             }

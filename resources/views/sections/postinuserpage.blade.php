@@ -271,7 +271,6 @@
             }
             // portal_idW_val = portal_idW.val();
             portal_idW_val = $('#post_typeW').val();
-            alert(portal_idW_val);
             rewardW_val = rewardW.val();
             var allVals = [];
             $('.Checke dGroup :checked').each(function () {
@@ -324,19 +323,20 @@
                         //                        stay: false,
                         //                        type: 'success'
                         //                    });
-                        @if(isset(auth()->user()->avatar))
-                            var pic = "{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode((int)(isset(auth()->user()->avatar) ? auth()->user()->avatar : ''))])}}";
-                            var name = "{{Session::get('Name')}}" + "  " + "{{Session::get('Family')}}";
-                            var newcom = '<div class="comment-contain"><div class="comment-box"><img class="avatar mCS_img_loaded" src="' + CurPics + '">';
-                            newcom = newcom + '<div class="name">' + name + '</div><div class="text">';
-                            newcom = newcom + title + '<br>' + desc + '<div style="margin:5px; "></div></div><div class="clear"></div></div><div class="like-box40">';
-                            newcom = newcom + '<div class="firstRow"><span postid="' + id + '" like="1" class="PostLike">پسند </span>- <span class="Comment_Foc" postid="Comment_' + id + '">اظهار نظر</span> - <span>بازنشر</span><div class="pull-left left-detail">';
-                            newcom = newcom + ' 0 ثانیه قبل</div></div></div><div class="addcomment"> <input type="hidden" value="' + id + '" class="Postid">';
-                            newcom = newcom + ' <img src="' + CurPics + '" class="imgContain mCS_img_loaded">';
-                            newcom = newcom + '  <div class="txtContain"><input type="text " place h older="نظرتان را بنویسی د " id="Comment_' + id + '" p o stid="' + id + '" class="CommentSend" onkeypress="CommentSend(this,event);"></div>';
-                            newcom = newcom + '  </div></div></div>';
-                        @endif
-                        $(newcom).insertBefore(".comment-contain:first");
+                        window.location.reload();
+                        {{--@if(isset(auth()->user()->avatar))--}}
+                            {{--var pic = "{{route('FileManager.DownloadFile',['type'=>'ID','id'=>enCode((int)(isset(auth()->user()->avatar) ? auth()->user()->avatar : ''))])}}";--}}
+                            {{--var name = "{{Session::get('Name')}}" + "  " + "{{Session::get('Family')}}";--}}
+                            {{--var newcom = '<div class="comment-contain"><div class="comment-box"><img class="avatar mCS_img_loaded" src="' + CurPics + '">';--}}
+                            {{--newcom = newcom + '<div class="name">' + name + '</div><div class="text">';--}}
+                            {{--newcom = newcom + title + '<br>' + desc + '<div style="margin:5px; "></div></div><div class="clear"></div></div><div class="like-box40">';--}}
+                            {{--newcom = newcom + '<div class="firstRow"><span postid="' + id + '" like="1" class="PostLike">پسند </span>- <span class="Comment_Foc" postid="Comment_' + id + '">اظهار نظر</span> - <span>بازنشر</span><div class="pull-left left-detail">';--}}
+                            {{--newcom = newcom + ' 0 ثانیه قبل</div></div></div><div class="addcomment"> <input type="hidden" value="' + id + '" class="Postid">';--}}
+                            {{--newcom = newcom + ' <img src="' + CurPics + '" class="imgContain mCS_img_loaded">';--}}
+                            {{--newcom = newcom + '  <div class="txtContain"><input type="text " place h older="نظرتان را بنویسی د " id="Comment_' + id + '" p o stid="' + id + '" class="CommentSend" onkeypress="CommentSend(this,event);"></div>';--}}
+                            {{--newcom = newcom + '  </div></div></div>';--}}
+                        {{--@endif--}}
+                        {{--$(newcom).insertBefore(".comment-contain:first");--}}
                     } else {
                         jQuery.noticeAdd({
                             text: 'مشکل در انجام عملیات',

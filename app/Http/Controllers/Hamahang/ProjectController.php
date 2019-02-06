@@ -1316,7 +1316,7 @@ class ProjectController extends Controller
             ->whereNull('hamahang_project_user_permission.deleted_at')
             ->whereNull('hamahang_project.deleted_at')
             ->where('hamahang_project_user_permission.user_id','=',Auth::id())->groupBy('hamahang_project.id')
-            ->unionAll($projects_roles)
+            ->union($projects_roles)
         ;
 //            ->pluck('hamahang_project.id')->unique()->toArray();
 //        $projects_user_new = [];

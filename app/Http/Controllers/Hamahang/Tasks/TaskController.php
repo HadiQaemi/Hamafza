@@ -1104,7 +1104,7 @@ class TaskController extends Controller
             $filter_subject_id = Request::input('filter_subject_id') != "undefined" ? Request::input('filter_subject_id') : '';
 //            DB::enableQueryLog();
             $with_array = tasks::MyTasksPriority(['filter_subject_id'=>$filter_subject_id],$task_status, $task_title, $respite, $official_type,$source);
-//            dd(DB::getQueryLog());
+//            dd($with_array,DB::getQueryLog());
             $result['data'] = view('hamahang.Tasks.helper.priority.content')->with($with_array)->render();
             $result['success'] = true;
             return json_encode($result);

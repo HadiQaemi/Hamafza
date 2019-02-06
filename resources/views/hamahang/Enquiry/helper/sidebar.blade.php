@@ -21,11 +21,11 @@
                             <tr>
                                 <td style="width: 90%;">
                                     <a href="#" class="h-tag" data-tagid="{!! $keyword->id !!}" data-tagtitle="{!! $keyword->title !!}" style="margin: 0; padding: 0;">
-                                        {!! $keyword->title !!}
+                                        {{$keyword->title}}
                                     </a>
                                 </td>
                                 <td style="width: 10%; text-align: center;">
-                                    {!! $keyword->questions_count !!}
+                                    {{$keyword->questions_count}}
                                 </td>
                             </tr>
                         @endforeach

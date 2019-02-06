@@ -29,8 +29,8 @@ class GroupClass
     public function total_html($title, $html)
     {
         $Res = '<div class="total"><h1 class="heading" id="b5">
-                 <span class="icon icon-open"></span>' . $title . '</h1>
-                 <div class="inner">' . $html . '</div></div>';
+                 <span class="icon icon-open"></span>' . htmlspecialchars($title) . '</h1>
+                 <div class="inner">' . htmlspecialchars($html) . '</div></div>';
         return $Res;
     }
 

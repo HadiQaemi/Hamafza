@@ -33,6 +33,7 @@
                 "autoWidth": false,
                 "ordering": true,
                 "scrollX": true,
+                // "serverSide": true,
                 // "scrollY": 200,
                 "language": window.LangJson_DataTables,
                 ajax: {
@@ -119,19 +120,19 @@
 
                     },
                     {
-                        className: "relevant_organization", data: "relevant_organization",
+                        className: "relevant_organization", data: "user_profile.relevant_organization",
                         mRender: function (data, type, full) {
                             return full['relevant_organization'];
                         }
                     },
                     {
-                        className: "Mobile", data: "Mobile",
+                        className: "Mobile", data: "user_profile.Mobile",
                         mRender: function (data, type, full) {
                             return full['Mobile'];
                         }
                     },
                     {
-                        className: "Tel_number", data: "Tel_number",
+                        className: "Tel_number", data: "user_profile.Tel_number",
                         mRender: function (data, type, full) {
                             return full['Tel_number'];
                         }

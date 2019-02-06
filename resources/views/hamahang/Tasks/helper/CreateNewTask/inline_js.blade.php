@@ -285,14 +285,16 @@
         });
     }
     function ResetForm() {
-        $('#new_task_users').val('');
-        $('#new_task_transcripts').val('');
-        $('#new_task_pages').val('');
-        $('#new_task_keywords').val('');
-        $('#create_new_task').trigger("reset");
-        $('#determination_end_date').trigger("click");
-        $('#new_task_save_type_final').trigger("click");
-        $('#rel_task_list').html('');
+        // $('#new_task_users').val('');
+        // $('#new_task_transcripts').val('');
+        // $('#new_task_pages').val('');
+        // $('#new_task_keywords').val('');
+        // $('#create_new_task').trigger("reset");
+        // $('#determination_end_date').trigger("click");
+        // $('#new_task_save_type_final').trigger("click");
+        // $('#rel_task_list').html('');
+        $('#create_new_task #title').val('');
+        $('#create_new_task #desc').val('');
     }
     $(".TimePicker").persianDatepicker({
         format: "HH:mm:ss a",

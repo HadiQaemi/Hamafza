@@ -21,11 +21,13 @@
                                         $employee = $task->Assignments[0];
                                     @endphp
 {{--                                    @foreach($task->Assignments as $employee)--}}
-                                        <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
-                                            </a>
-                                        </span>
+                                        @if(isset($employee->Employee))
+                                            <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                    <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                                </a>
+                                            </span>
+                                        @endif
                                     {{--@endforeach--}}
                                 @else
                                     @php
@@ -81,11 +83,13 @@
                                         $employee = $task->Assignments[0];
                                     @endphp
                                     {{--@foreach($task->Assignments as $employee)--}}
+                                    @if(isset($employee->Employee))
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
-                                            </a>
-                                        </span>
+                                                <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                    <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                                </a>
+                                            </span>
+                                    @endif
                                     {{--@endforeach--}}
                                 @else
                                     @php
@@ -140,13 +144,13 @@
                                         $do = 'ViewTaskForm';
                                         $employee = $task->Assignments[0];
                                     @endphp
-                                    {{--@foreach($task->Assignments as $employee)--}}
+                                    @if(isset($employee->Employee))
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
-                                            </a>
-                                        </span>
-                                    {{--@endforeach--}}
+                                                <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                    <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                                </a>
+                                            </span>
+                                    @endif
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';
@@ -200,13 +204,13 @@
                                         $do = 'ViewTaskForm';
                                         $employee = $task->Assignments[0];
                                     @endphp
-                                    {{--@foreach($task->Assignments as $employee)--}}
+                                    @if(isset($employee->Employee))
                                         <span class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '.$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                            <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
-                                                <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
-                                            </a>
-                                        </span>
-                                    {{--@endforeach--}}
+                                                <a href="{{url($employee->Employee->Uname)}}" title="{{$employee->Employee->Name . ' ' . $employee->Employee->Family}}">
+                                                    <i >{!! $employee->Employee->BetweenSmallandBig !!}</i>
+                                                </a>
+                                            </span>
+                                    @endif
                                 @else
                                     @php
                                         $do = 'ViewTaskForm';

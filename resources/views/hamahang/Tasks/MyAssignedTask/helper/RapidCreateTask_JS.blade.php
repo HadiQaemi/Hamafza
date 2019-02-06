@@ -79,8 +79,8 @@
                     @endif
                     );--}}
                         //reload_mytask();
-                    $('#form_create_rapid_task').trigger("reset");
-                    $('#create_rapid_task_multi_selected_users').empty().trigger('change');
+                    $('#create_rapid_task_title').html("");
+                    // $('#create_rapid_task_multi_selected_users').empty().trigger('change');
                     window.table_chart_grid2.ajax.reload();
                     window.table_chart_grid3.ajax.reload();
                 }
