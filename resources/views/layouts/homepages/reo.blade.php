@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html ng-app="hamafza" class="@yield('html_class')">
 <head lang="en">
-@php($csrf = csrf_token())
-<!---------------**Meta**-------------->
+    @php($csrf = csrf_token())
+    <!---------------**Meta**-------------->
     <meta name="csrf-token" content="{{ $csrf}}">
-@include('layouts.helpers.common.sections.meta')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133904506-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-<!---------------**Main Style**-------------->
-@include('layouts.helpers.common.assets.style.main_style')
-@include('layouts.homepages.helpers.general.assets.style.after_main_style')
+        gtag('config', 'UA-133904506-3');
+    </script>
+    @include('layouts.helpers.common.sections.meta')
 
-<!---------------**Specific Plugin Style**-------------->
-@include('layouts.homepages.helpers.general.assets.style.specific_plugin_style')
+    <!---------------**Main Style**-------------->
+    @include('layouts.helpers.common.assets.style.main_style')
+    @include('layouts.homepages.helpers.general.assets.style.after_main_style')
 
-<!---------------**Inline Style**-------------->
-@include('layouts.homepages.helpers.general.assets.style.inline_style')
+    <!---------------**Specific Plugin Style**-------------->
+    @include('layouts.homepages.helpers.general.assets.style.specific_plugin_style')
 
-<!---------------**Main Scripts**-------------->
+    <!---------------**Inline Style**-------------->
+    @include('layouts.homepages.helpers.general.assets.style.inline_style')
+
+    <!---------------**Main Scripts**-------------->
     @include('layouts.helpers.common.assets.script.main_scripts')
     @include('hamahang.master.alert')
     @include('hamahang.master.confirm')
