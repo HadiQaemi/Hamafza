@@ -636,14 +636,14 @@ class ModalController extends Controller
     public function newGroup()
     {
         $content = view('modals.newgroup')->render();
-        return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
+        return json_encode(['header' => '', 'content' => $content, 'footer' => '<input type="submit" value="تایید " class="btn btn-primary FloatLeft" name="addUserGroup" id="addUserGroupBtn">']);
 
     }
 
     public function newOrgan()
     {
         $content = view('modals.neworgan')->render();
-        return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
+        return json_encode(['header' => '', 'content' => $content, 'footer' => '<input type="submit" value="تایید " class="btn btn-primary FloatLeft" name="addUserGroup" id="addUserOrganBtn">']);
 
     }
 

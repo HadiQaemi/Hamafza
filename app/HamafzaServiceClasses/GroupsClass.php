@@ -482,7 +482,7 @@ class GroupsClass
         if ($uid != '0')
         {
             $us = DB::table('user_group as ug')->join('user_group_member as ugm', 'ugm.gid', '=', 'ug.id')
-                ->where('ug.link', $name)->where('ugm.uid', $uid)->whereIn('ugm.relation', ['1','2'])->select('ug.id')->count();
+                ->where('ug.link', $name)->where('ugm.uid', $uid)->whereIn('ugm.relation', ['2'])->select('ug.id')->count();
             if ($us > 0)
             {
                 $Group->Ismember = '1';

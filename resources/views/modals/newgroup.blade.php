@@ -9,21 +9,21 @@ $(document).ready(function() {
         onAdd: function(item) {
         //add the new label into the database
         if (parseInt(item.id) == 0) {
-        name = $("tester").text();
-                if (name != null) {
-        $.ajax({
-        type: "POST",
-                url: "tagmergeaction.php",
-                dataType: 'html',
-                data: ({New: 'OK', Name: name}),
-                success: function(theResponse) {
-                if (theResponse != 'NOK')
+            var name = $("tester").text();
+            if (name != null) {
+                $.ajax({
+                type: "POST",
+                    url: "tagmergeaction.php",
+                    dataType: 'html',
+                    data: ({New: 'OK', Name: name}),
+                    success: function(theResponse) {
+                    if (theResponse != 'NOK')
                         alert('بر چسب جدید با موفقیت تعریف شد');
                         $("#input-plugin-methods").tokenInput("remove", {name: name});
                         $("#input-plugin-methods").tokenInput("add", {id: theResponse, name: name});
-                }
-        });
-        }
+                    }
+                });
+            }
         }
         },
         onResult: function(item) {
@@ -39,7 +39,7 @@ $(document).ready(function() {
 });
 </script>
 
-<form enctype="multipart/form-data" id="form_group" method="post" action="{{ route('hamafza.new_org_group') }}">
+<form enctype="multipart/form-data" id="addUserGroupFrm" method="post" action="{{ route('hamafza.new_org_group') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <div class="col-xs-12 margin-top-10">
         <div class="col-xs-2">{{trans('groups.name')}}<span class="color_red">*</span></div>
@@ -51,33 +51,25 @@ $(document).ready(function() {
         <div class="pull-right dir_ltr line-height-30">{{App::make('url')->to('/')}}/</div>
     </div>
     <div class="col-xs-12 margin-top-10">
-        <div class="col-xs-2">{{trans('groups.brief_description')}}<span class="color_red">*</span></div>
-        <div class="col-xs-6"><input type="form-control" style="width:388px" dir="rtl" id="group_summary" class="form-control" value="" name="group_summary" placeholder="{{trans('groups.brief_description')}}"></div>
+        <div class="col-xs-2">{{trans('groups.brief_description')}}</div>
+        <div class="col-xs-6"><input type="text" id="group_summary" class="form-control" value="" name="group_summary" placeholder="{{trans('groups.brief_description')}}"></div>
     </div>
     <div class="col-xs-12 margin-top-10">
-        <div class="col-xs-2">{{trans('groups.keyword')}}<span class="color_red">*</span></div>
+        <div class="col-xs-2">{{trans('groups.keyword')}}</div>
         <div class="col-xs-6"><input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12" placeholder="{{trans('groups.keyword')}}"/></div>
     </div>
-    <table style="background-color:#fff" class="table">
-        <tbody>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="form-control" style="width:388px" dir="rtl" id="group_summary" class="form-control" value="" name="group_summary">
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-
-
-                </td>
-
-                <td>
-
-
-                </td>
-            </tr>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2 noLeftPadding">{{trans('groups.member_permission')}}</div>
+        <div class="col-xs-6">
+            <input type="radio" checked="" value="0" name="group_limit" id="group_limit_0">
+            <label for="group_limit_0">{{trans('groups.no')}}</label>
+            <input type="radio" value="1" name="group_limit" id="group_limit_1">
+            <input type="hidden" value="0" name="group_type" id="group_type">
+            <label for="group_limit_1">{{trans('groups.yes')}}</label>
+        </div>
+    </div>
+    {{--<table style="background-color:#fff" class="table">--}}
+        {{--<tbody>--}}
             {{--<tr>--}}
                 {{--<td>نوع</td>--}}
                 {{--<td>--}}
@@ -102,10 +94,9 @@ $(document).ready(function() {
                     {{--<span style="display: none;" class="descr"> عنوان فایل <input value="" style="width:200px" class="form-control" name="ftitle[1]"></span>--}}
                 {{--</td>--}}
             {{--</tr>--}}
-            <tr>
-                <td colspan="2">عضویت  افراد نیاز به تایید مدیر گروه
-                    <input type="radio" checked="" value="0" name="group_limit">ندارد
-                    <input type="radio" value="1" name="group_limit">دارد
-                    <input type="submit" value="تایید " class="btn btn-primary FloatLeft" name="addUserGroup" id="submit"></td></tr>
-        </tbody></table>
+            {{--<tr>--}}
+                {{--<td colspan="2">--}}
+
+                    {{--<input type="submit" value="تایید " class="btn btn-primary FloatLeft" name="addUserGroup" id="submit"></td></tr>--}}
+        {{--</tbody></table>--}}
 </form>

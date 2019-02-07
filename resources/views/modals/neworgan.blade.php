@@ -39,58 +39,43 @@
     });
 </script>
 
-<form enctype="multipart/form-data" id="form_group" method="post" action="{{ route('hamafza.new_org_group') }}">
+<form enctype="multipart/form-data" id="addUserOrganFrm" method="post" action="{{ route('hamafza.new_org_group') }}">
                  <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-
-    <table style="background-color:#fff" class="table">
-        <tbody><tr>
-                <td width="160">نام کانال <font color="red">*</font></td>
-                <td>
-                    <input type="form-control" style="width:388px" dir="rtl" id="group_title" class="form-control required" value="" name="group_title">
-                </td>
-            </tr>
-            <tr>
-                <td>نشانی در وب <font color="red">*</font></td>
-                <td style="direction:ltr">
-                    <div style="display: inline"> {{App::make('url')->to('/')}}/</div><input type="form-control" style="width:388px;text-align:left;display: inline" dir="ltr" id="group_link" class="form-control required" value="" name="group_link">
-                </td>
-            </tr>
-            <tr>
-                <td>معرفی اجمالی</td>
-                <td>
-                    <input type="form-control" style="width:388px" dir="rtl" id="group_summary" class="form-control" value="" name="group_summary">
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-
-                    کلیدواژه ها
-                </td>
-
-                <td>
-                    <input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12"  />
-
-                </td>
-            </tr>
-
-            <tr>
-                <td>تصویر</td>
-                <td>
-                    <span class="btn btn-default btn-file">
-                        انتخاب فایل <input type="file" onchange="FileName(this);" style="width:388px" dir="rtl" id="group_pic" class="form-control" value="" name="pic">
-                    </span>
-                    <span style="display: none;" class="descr"> عنوان فایل <input value="" style="width:200px" class="form-control" name="ftitle[1]"></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">عضویت  افراد نیاز به تایید مدیر کانال     
-                    <input type="radio" checked="" value="0" name="group_limit">ندارد
-                    <input type="radio" value="1" name="group_limit">دارد
-
-                    <input type="hidden" value="0" name="group_type">
-
-                    <input type="hidden" value="1" name="isorgan">
-                    <input type="submit" value="تایید " class="btn btn-primary FloatLeft" name="addUserGroup" id="submit"></td></tr>
-        </tbody></table>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('canals.name')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6"><input type="text" id="group_title" class="form-control required" value="" name="group_title" placeholder="{{trans('groups.name')}}"/></div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('canals.url')}}<span class="color_red">*</span></div>
+        <div class="col-xs-6 no-margin-left"><input type="text" id="group_link" class="form-control required inline" value="" name="group_link" placeholder="{{trans('groups.url')}}"></div>
+        <div class="pull-right dir_ltr line-height-30">{{App::make('url')->to('/')}}/</div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('canals.brief_description')}}</div>
+        <div class="col-xs-6"><input type="text" id="group_summary" class="form-control" value="" name="group_summary" placeholder="{{trans('groups.brief_description')}}"></div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2">{{trans('canals.keyword')}}</div>
+        <div class="col-xs-6"><input type="text" id="Groupkeywords" name="Groupkeywords" ttype="12" placeholder="{{trans('groups.keyword')}}"/></div>
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        {{--<div class="col-xs-2">{{trans('canals.picture')}}</div>--}}
+        {{--<div class="col-xs-6">--}}
+            {{--<span class="btn btn-default btn-file">--}}
+                 {{--{{trans('canals.choose_file')}}<input type="file" onchange="FileName(this);" style="width:388px" dir="rtl" id="group_pic" class="form-control" value="" name="pic">--}}
+            {{--</span>--}}
+            {{--<span style="display: none;" class="descr">{{trans('canals.name_file')}}<input value="" style="width:200px" class="form-control" name="ftitle[1]"></span>--}}
+        {{--</div>--}}
+    </div>
+    <div class="col-xs-12 margin-top-10">
+        <div class="col-xs-2 noLeftPadding">{{trans('canals.member_permission')}}</div>
+        <div class="col-xs-6">
+            <input type="radio" checked="" value="0" name="group_limit" id="group_limit_0">
+            <label for="group_limit_0">{{trans('groups.no')}}</label>
+            <input type="radio" value="1" name="group_limit" id="group_limit_1">
+            <input type="hidden" value="0" name="group_type" id="group_type">
+            <label for="group_limit_1">{{trans('groups.yes')}}</label>
+            <input type="hidden" value="1" name="isorgan">
+        </div>
+    </div>
 </form>

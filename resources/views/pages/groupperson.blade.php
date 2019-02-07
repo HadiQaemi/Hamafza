@@ -19,7 +19,7 @@
                                 <tbody>
                                 <tr>
                                     <td style="width: 30px;">
-                                        <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}"> <img src="{{App::make('url')->to('/')}}/pics/user/{{ $item->Pic}}" class="CircleImage mCS_img_loaded" style="width: 55px;height: 55px;"></a>
+                                        <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}"> <img src="{{App::make('url')->to('/')}}{{ trim($item->Pic) !='' ? '/pics/user/'.$item->Pic : '/FileManager/DownloadFile/ID/gdW4gh0N5To/user_avatar.png'}}" class="CircleImage mCS_img_loaded" style="width: 55px;height: 55px;"></a>
                                     </td>
                                     <td style="text-align: right;">
                                         <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}">{{$item->Name}} {{$item->Family}}  </a>
@@ -47,7 +47,7 @@
                                 <tbody>
                                 <tr>
                                     <td style="width: 30px;">
-                                        <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}"> <img src="{{App::make('url')->to('/')}}/pics/user/{{$item->Pic}}" class="CircleImage mCS_img_loaded" style="width: 55px;height: 55px;"></a>
+                                        <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}"> <img src="{{App::make('url')->to('/')}}{{ trim($item->Pic) !='' ? '/pics/user/'.$item->Pic : '/FileManager/DownloadFile/ID/gdW4gh0N5To/user_avatar.png'}}" class="CircleImage mCS_img_loaded" style="width: 55px;height: 55px;"></a>
                                     </td>
                                     <td style="text-align: right;">
                                         <a href="{{App::make('url')->to('/')}}/{{$item->Uname}}">{{$item->Name}} {{$item->Family}}  </a>

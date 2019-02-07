@@ -1128,6 +1128,24 @@ $(document).on('click', 'ul.navbar-nav [href="#tab2"], ul.navbar-navtabs [href="
     });
 });
 
+$(document).on('click', '#addUserGroupBtn', function () {
+    group_title = $('#group_title').val();
+    group_link = $('#group_link').val();
+    if(group_title =='' || group_link ==''){
+
+    }else{
+        $('#addUserGroupFrm').submit();
+    }
+});
+$(document).on('click', '#addUserOrganBtn', function () {
+    group_title = $('#group_title').val();
+    group_link = $('#group_link').val();
+    if(group_title =='' || group_link ==''){
+
+    }else{
+        $('#addUserOrganFrm').submit();
+    }
+});
 $(document).on('click', '.jsPanelsLive', function () {
     eval_header = $(this).attr('data-header-function')
     header = eval_header ? eval(eval_header) : $(this).attr('data-header')

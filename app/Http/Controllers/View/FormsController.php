@@ -496,7 +496,6 @@ class FormsController extends Controller
             $group_summary = $request->input('group_summary');
             $group_type = $request->input('group_type');
             $group_limit = $request->input('group_limit');
-            $group_limit = $request->input('group_limit');
             $isorgan = $request->input('isorgan');
             $Groupkeywords = $request->input('Groupkeywords');
             $file = $request->file('pic');

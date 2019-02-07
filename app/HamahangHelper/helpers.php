@@ -45,7 +45,7 @@ if (!function_exists('isGroupMemeber'))
 
     function isGroupMemeber($gid)
     {
-        return DB::table('user_group_member')->where('uid', Auth::id())->where('gid', $gid)->whereRaw("(relation='1' or relation='2')")->count();
+        return DB::table('user_group_member')->where('uid', Auth::id())->where('gid', $gid)->whereRaw("(relation='2')")->count();
     }
 
 }
@@ -136,7 +136,7 @@ if (!function_exists('PageTabs'))
                 $groups['tabs']['link']['9'] = 'desktop';
                 $group = \App\Models\hamafza\Groups::find($item);
                 $us = DB::table('user_group as ug')->join('user_group_member as ugm', 'ugm.gid', '=', 'ug.id')
-                    ->where('ug.id', $item)->where('ugm.uid', Auth::id())->whereIn('ugm.relation', ['1','2'])->select('ug.id')->count();
+                    ->where('ug.id', $item)->where('ugm.uid', Auth::id())->whereIn('ugm.relation', ['2'])->select('ug.id')->count();
                 $Uname = $group->link;
                 if ($group->id != '')
                 {
@@ -1889,7 +1889,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                 'active' => '1',
                                                 'title' => 'اعضا',
                                                 'new' => '-1',
-                                                'value' => DB::table('user_group_member')->where('gid', $Group->id)->count() . "",
+                                                'value' => DB::table('user_group_member')->where('gid', $Group->id)->where('relation', '=', 2)->count() . "",
                                                 'icon' => 'fa-bookmark-o',
                                                 'url' => route('ugc.persons', ['$username' => $gname])
                                             ],
