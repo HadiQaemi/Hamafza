@@ -726,7 +726,7 @@ preventDuplicates: true,
                 }
                 $subWord = $this->substr_word($value->summary,100);
 //                $subWord = ($value->summary);
-                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->link . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->link . '">' . $value->name . '</a></div><div class="person-moredetail text-align-right text-justify">' . $subWord . '</div><div class="person-relation"></div></div></li>';
+                $res .= '<li  class="selected" id="SelUser_181" types="multi" ><a  target="_blank" href="' . url('/') . '/' . $value->link . '"><img class="person-avatar mCS_img_loaded" src="' . $pic . '"></a><div class="person-detail"><div class="close"></div><div class="person-name"><a target="_blank" href="' . url('/') . '/' . $value->link . '">' . $value->name . ' ('.$value->post_view_count()->count().')' . '</a></div><div class="person-moredetail text-align-right text-justify">' . $subWord. '</div><div class="person-relation"></div></div></li>';
             }
         }
         return $res . '</ul>';

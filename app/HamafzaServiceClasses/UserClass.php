@@ -2,6 +2,7 @@
 
 namespace App\HamafzaServiceClasses;
 
+use App\Models\hamafza\UserGroup;
 use Request;
 use Illuminate\Support\Facades\DB;
 use App\HamafzaPublicClasses\FunctionsClass;
@@ -193,14 +194,31 @@ class UserClass
         }
         if ($type == 2)
         {
-            $Groups = DB::table('user_group')->whereRaw("(link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%') and isorgan='0'")
-                ->select('id', 'name', 'link', 'summary', 'pic')->get();
+            $Groups = UserGroup::select('user_group.id', 'user_group.name', 'user_group.link', 'user_group.summary', 'user_group.pic')
+                ->where('isorgan', 0)
+                ->where(function ($query) use ($term) {
+                    $query->where('link', 'like', "%$term%")
+                        ->orWhere('name', 'LIKE', "%$term%")
+                        ->orWhere('summary', 'LIKE', "%$term%");
+                })
+                ->with('post_view_count')
+                ->take(4)->get();
+
+//            $Groups = DB::table('user_group')->whereRaw("(link LIKE '%$term%' OR name  '%$term%' OR summary LIKE '%$term%') and isorgan='0'")
+//                ->select('id', 'name', 'link', 'summary', 'pic')->get();
             return $Groups;
         }
         if ($type == 3)
         {
-            $Organs = DB::table('user_group')->whereRaw("(link LIKE '%$term%' OR name LIKE '%$term%' OR summary LIKE '%$term%') and isorgan='1'")
-                ->select('id', 'name', 'link', 'summary', 'pic')->get();
+            $Organs = UserGroup::select('user_group.id', 'user_group.name', 'user_group.link', 'user_group.summary', 'user_group.pic')
+                    ->where('isorgan', 1)
+                ->where(function ($query) use ($term) {
+                    $query->where('link', 'like', "%$term%")
+                        ->orWhere('name', 'LIKE', "%$term%")
+                    ->orWhere('summary', 'LIKE', "%$term%");
+                })
+                    ->with('post_view_count')
+                    ->take(4)->get();
             return $Organs;
         }
     }

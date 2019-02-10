@@ -4,6 +4,7 @@ namespace App\HamafzaServiceClasses;
 
 use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
+use App\Models\hamafza\UserGroup;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -5315,7 +5316,10 @@ var id = data.node.id;
         $f = $ress . $res . '</span> </div> ';
         $res = '';
         $type = 'group';
-        $user_groups = DB::table('user_group')->select('id', 'name', 'link', 'summary', 'pic')->where('isorgan', '0')->orderBy('reg_date', 'desc')
+
+        $user_groups = UserGroup::select('user_group.id', 'user_group.name', 'user_group.link', 'user_group.reg_date')
+            ->where('isorgan', 0)
+            ->with('post_view_count')
             ->take(4)->get();
         $Uscount = DB::table('user_group')->select('id')->where('isorgan', '0')->count();
         $i = 1;
@@ -5349,7 +5353,8 @@ var id = data.node.id;
             $link = config('constants.SiteAddress') . $link;
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
-						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
+						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
+                        <div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;">'.$UserS->post_view_count()->count().'</div>
 					</div>';
 
             $i++;
@@ -5359,7 +5364,9 @@ var id = data.node.id;
 
         $res = '';
         $type = 'group';
-        $user_groups = DB::table('user_group')->select('id', 'name', 'link', 'summary', 'pic')->where('isorgan', 1)->orderBy('reg_date', 'desc')
+        $user_groups = UserGroup::select('user_group.id', 'user_group.name', 'user_group.link', 'user_group.reg_date')
+            ->where('isorgan', 1)
+            ->with('post_view_count')
             ->take(4)->get();
         $Uscount = DB::table('user_group')->select('id')->where('isorgan', 1)->count();
         $i = 1;
@@ -5390,6 +5397,7 @@ var id = data.node.id;
 			
 			<div class="CountDiVBordered-content">
 				<div class="CountDiVBordered-content-li">';
+
         foreach ($user_groups as $UserS)
         {
             $tid = $UserS->id;
@@ -5405,7 +5413,8 @@ var id = data.node.id;
 
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
-						<div class="col-xs-9 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
+						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
+						<div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;">'.$UserS->post_view_count()->count().'</div>
 					</div>';
             $i++;
         }

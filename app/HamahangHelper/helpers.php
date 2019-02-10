@@ -1506,7 +1506,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                     [
                                         [
                                             'active' => '1',
-                                            'primary' => '0',
+                                            'primary' => '1',
                                             'title' => 'یادداشت‌ها',
                                             'new' => '-1',
                                             'value' => "$auth_user->AnnouncesCount",
@@ -1515,7 +1515,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         ],
                                         [
                                             'active' => '1',
-                                            'primary' => '0',
+                                            'primary' => '1',
                                             'title' => 'علامت گذاری‌ها',
                                             'new' => '-1',
                                             'value' => "$auth_user->HighlightsCount",
@@ -1524,12 +1524,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         ],
                                         [
                                             'active' => '1',
-                                            'primary' => '0',
+                                            'primary' => '1',
                                             'title' => 'گروه ها و کانال ها',
-                                            'new' => '-1',
+                                            'new' => User::UserPostsOfGroupsANDChannelsCount(),
                                             'value' => "$auth_user->ApiUserGroupsCount",
                                             'icon' => 'fa-users',
-                                            'url' => '#'
+                                            'url' => '/4'
                                         ]
                                     ]
                             ],

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\hamafza\PostView;
+use DB;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,6 +37,11 @@ class User extends Authenticatable
 //    }
     public function org_charts(){
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts');
+    }
+    public static function UserPostsOfGroupsANDChannelsCount()
+    {
+        return PostView::leftJoin('user_group_member', 'post_view.gid', '=', 'user_group_member.gid')
+            ->where('user_group_member.uid', '=', auth()->id())->get()->count();
     }
     public function chart_items_posts(){
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_posts');
@@ -352,7 +359,6 @@ class User extends Authenticatable
         return $res;
     }
 
-
     public function follower_persons()
     {
         return $this->belongsToMany('App\User', 'user_friend', 'uid', 'fid')->select('user.id');
@@ -640,8 +646,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Hamahang\Bookmark')->where('user_id', $uid);
     }
-    
-    
+
+    public function get_user_groups_posts($uid)
+    {
+        return $this->hasMany('App\Models\Hamahang\Bookmark')->where('user_id', $uid);
+    }
+
+
 
     public function bookmarks($term)
     {

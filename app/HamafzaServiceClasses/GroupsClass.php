@@ -2,6 +2,7 @@
 
 namespace App\HamafzaServiceClasses;
 
+use App\Models\hamafza\UserGroup;
 use DB;
 
 class GroupsClass
