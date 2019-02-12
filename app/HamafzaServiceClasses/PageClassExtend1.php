@@ -5354,7 +5354,7 @@ var id = data.node.id;
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
 						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
-                        <div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;">'.$UserS->post_view_count()->count().'</div>
+                        <div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">'.$UserS->post_view_count()->count().'</span></div>
 					</div>';
 
             $i++;
@@ -5414,7 +5414,7 @@ var id = data.node.id;
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
 						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . htmlspecialchars($link) . '">' . htmlspecialchars($title) . '</a></div>
-						<div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;">'.$UserS->post_view_count()->count().'</div>
+						<div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">'.$UserS->post_view_count()->count().'</span></div>
 					</div>';
             $i++;
         }

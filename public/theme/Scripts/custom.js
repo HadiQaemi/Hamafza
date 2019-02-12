@@ -1156,7 +1156,7 @@ $(document).on('click', '.jsPanelsLive', function () {
     after = $(this).attr('data-after-function');
     var jsPanelsLive = $.jsPanel
     ({
-        paneltype: 'modal',
+        // paneltype: 'modal',
         headerTitle: 'modal jsPanel',
         theme: 'default',
         show: 'animated fadeInDownBig',

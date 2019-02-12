@@ -2716,7 +2716,20 @@ a .navbar-brand{
   padding: 3px 7px;
   border-radius: 10px;
 }
-
+.badge-red {
+    display: inline-block;
+    min-width: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: red;
+    padding: 3px 7px;
+    border-radius: 10px;
+}
 
 .CountDiVBordered {
     border: 2px solid #eeeeee;
