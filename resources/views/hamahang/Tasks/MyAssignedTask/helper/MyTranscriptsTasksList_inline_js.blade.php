@@ -128,7 +128,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ShowTranscriptTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
                     },
                     "width": "60%"
                 },

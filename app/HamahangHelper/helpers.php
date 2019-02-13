@@ -892,7 +892,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                             return 403;
                         }
                         $Title_page = $pageM->subject->title;
-                        $pre_title = $pageM->subject->subject_type->pretitle;
+                        $pre_title = isset($pageM->subject->subject_type->pretitle) ? $pageM->subject->subject_type->pretitle : '';
                         $Title = $pre_title . ' ' . $Title_page;
                         $PC = new \App\HamafzaViewClasses\PageClass();
 

@@ -8,9 +8,9 @@
         <li class="active" id="define">
             <a href="#tab_t1" data-toggle="tab">تعریف</a>
         </li>
-        <li class="disabled">
-            {{--<a href="#tab_t2" data-toggle="tab">تنظیم</a>--}}
-            <a href="#" data-toggle="tab">تنظیم</a>
+        <li>
+            <a href="#tab_t2" data-toggle="tab">تنظیم</a>
+            {{--<a href="#" data-toggle="tab">تنظیم</a>--}}
         </li>
         <li class="disabled">
             {{--<a href="#tab_t3" data-toggle="tab">منابع</a>--}}
@@ -79,21 +79,6 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.top') }}</label></div>
-                    <div class="col-lg-11">
-                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
-                            @if($sid)
-                                <option value="{{$sid}}" selected>{{$subject->title}}</option>
-                            @endif
-                            @if(isset($task['pages']))
-                                @foreach($task['pages'] as $page)
-                                    <option value="{{$page->id}}" selected>{{$page->title}}</option>
-                                @endforeach
-                            @endif
-                        </select>
                     </div>
                 </div>
                 {{--<div class="row col-lg-12">--}}
@@ -176,8 +161,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12 noRightPadding " style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding "><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
+                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
                     <div class="col-lg-11">
                         <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                 data-placeholder="{{trans('tasks.select_some_keywords')}}"
@@ -195,7 +180,22 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
+                    <div class="col-lg-11">
+                        <select id="new_task_pages" class="select2_auto_complete_page " name="pages[]" data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
+                            @if($sid)
+                                <option value="{{$sid}}" selected>{{$subject->title}}</option>
+                            @endif
+                            @if(isset($task['pages']))
+                                @foreach($task['pages'] as $page)
+                                    <option value="{{$page->id}}" selected>{{$page->title}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
@@ -216,7 +216,7 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
                             <label class="noRightPadding noLeftPadding">{{ trans('tasks.do_respite') }}</label>
                         </div>
@@ -268,10 +268,10 @@
                         <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
                     </div>
                     <div class="col-xs-1">
-                        <input type="text" id="task_schedul_num" class="form-control" style="" name="task_schedul_num" value="" >
+                        <input type="text" id="task_schedul_num" class="form-control" style="" name="task_schedul_num" value="" disabled>
                     </div>
                     <div class="col-xs-2 noRightPadding noLeftPadding">
-                        <select id="task_schedul" name="task_schedul" class="form-control line-height-35 border-radius">
+                        <select id="task_schedul" name="task_schedul" class="form-control line-height-35 border-radius" disabled>
                             {{--<option value="minute">{{trans('tasks.minute')}}</option>--}}
                             {{--<option value="hour">{{trans('tasks.hour')}}</option>--}}
                             <option value="daily">{{trans('tasks.day')}}</option>
@@ -297,7 +297,7 @@
                         <div class="weekly row">
                             @for ($i = 0; $i < 7; $i++)
                                 <div class="input-group pull-right weekly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                    <input id="weekly_value_{{$i}}" class="" style="width: 22px;" name="weekly_value[]" type="checkbox" value="{{$i}}">
+                                    <input id="weekly_value_{{$i}}" class="" style="width: 22px;" name="weekly_value[]" type="checkbox" value="{{$i}}" disabled>
                                     <label style="line-height: 10px;" for="{{ "weekly_value_$i" }}">{{trans('tasks.array_weekly_weekdays.'.$i)}}</label>
                                 </div>
                             @endfor
@@ -306,7 +306,7 @@
                             <div class="input-group pull-right monthly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 5; $i++)
                                     <div class="input-group pull-right monthly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input id="monthly_value_{{$i}}" class="" style="width: 22px;" name="monthly_value[]" type="checkbox" value="{{$i}}">
+                                        <input id="monthly_value_{{$i}}" class="" style="width: 22px;" name="monthly_value[]" type="checkbox" value="{{$i}}" disabled>
                                         <label style="line-height: 10px;" for="{{ "monthly_value_$i" }}">{{trans('tasks.array_monthly_months.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -316,7 +316,7 @@
                             <div class="input-group pull-right seasonly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 4; $i++)
                                     <div class="input-group pull-right seasonly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input id="seasonly_value_{{$i}}" class="" style="width: 22px;" name="seasonly_value[]" type="checkbox" value="{{$i}}">
+                                        <input id="seasonly_value_{{$i}}" class="" style="width: 22px;" name="seasonly_value[]" type="checkbox" value="{{$i}}" disabled>
                                         <label style="line-height: 10px;" for="{{ "seasonly_value_$i" }}">{{trans('tasks.array_seasonly_seasons.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -326,7 +326,7 @@
                             <div class="input-group pull-right yearly col-xs-12" style="padding: 5px;height: 52px;">
                                 @for ($i = 0; $i < 12; $i++)
                                     <div class="input-group pull-right yearly col-lg-2 col-md-3 col-sm-4 col-xs-4" style="margin: 0 0 5px 5px;">
-                                        <input id="yearly_num_{{$i}}" class="" style="width: 10px;" name="yearly_num[]" type="checkbox" value="{{$i}}">
+                                        <input id="yearly_num_{{$i}}" class="" style="width: 10px;" name="yearly_num[]" type="checkbox" value="{{$i}}" disabled>
                                         <label style="line-height: 10px;" for="{{ "yearly_num_$i" }}">{{trans('tasks.array_yearly_years.'.$i)}}</label>
                                     </div>
                                 @endfor
@@ -339,10 +339,10 @@
                         <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}</label>
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" class="form-control DatePicker_begin_date pull-right" name="schedul_begin_date" aria-describedby="schedul_begin_date" id="schedul_begin_date">
+                        <input type="text" class="form-control DatePicker_begin_date pull-right" name="schedul_begin_date" aria-describedby="schedul_begin_date" id="schedul_begin_date" disabled>
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" class="form-control TimePicker pull-right" name="schedul_begin_time" id="schedul_begin_time" aria-describedby="schedul_begin_time">
+                        <input type="text" class="form-control TimePicker pull-right" name="schedul_begin_time" id="schedul_begin_time" aria-describedby="schedul_begin_time" disabled>
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
@@ -351,7 +351,7 @@
                     </div>
                     <div class="daily col-xs-5 noLeftPadding line-height-35" style="margin: 0 0 5px 5px;">
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;height: 34px !important;">
-                            <input type="radio" name="schedul_end_date" value="schedul_end_date_none" id="schedul_end_date_none"/>
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_none" id="schedul_end_date_none" disabled/>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
                             <label for="schedul_end_date_none">{{ trans('tasks.none') }}</label>
@@ -359,13 +359,13 @@
                     {{--</div>--}}
                     {{--<div class="daily col-xs-2" style="margin: 0 0 5px 5px;">--}}
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="radio" name="schedul_end_date" value="schedul_end_date_events" id="schedul_end_date_events"/>
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_events" id="schedul_end_date_events" disabled/>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
                             <label for="schedul_end_date_events">{{ trans('tasks.after') }}</label>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" >
+                            <input type="text" id="schedul_end_date_events_" class="form-control" style="width: 40px;" name="schedul_end_num_events" value="" disabled>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0px; margin: 0px;">
                             <label for="schedul_end_date_events_">{{ trans('tasks.repeat') }}</label>
@@ -373,7 +373,7 @@
                     {{--</div>--}}
                     {{--<div class="daily col-xs-1" style="margin: 0 0 5px 5px;">--}}
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
-                            <input type="radio" name="schedul_end_date" value="schedul_end_date_date" id="schedul_end_date_date" checked/>
+                            <input type="radio" name="schedul_end_date" value="schedul_end_date_date" id="schedul_end_date_date" checked disabled/>
                         </span>
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;height: 34px">
                             <label for="schedul_end_date_date">{{ trans('tasks.in-date') }}</label>
@@ -381,12 +381,12 @@
                     </div>
                     <div class="daily col-xs-2 noRightPadding" style="margin: 0 0 5px 5px;">
                         <span class="input-group-addon edited-addon noRightPadding" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" class="form-control DatePicker_end_date_date" name="schedul_end_date_date" aria-describedby="schedul_end_date_date" id="schedul_end_date_">
+                            <input type="text" class="form-control DatePicker_end_date_date" name="schedul_end_date_date" aria-describedby="schedul_end_date_date" id="schedul_end_date_" disabled>
                         </span>
                     </div>
                     <div class="daily col-xs-2 noRightPadding" style="margin: 0 0 5px 5px;">
                         <span class="input-group-addon edited-addon" style="padding: 0 5px 0 5px; margin: 0 5px 0 5px;">
-                            <input type="text" class="form-control TimePicker" name="schedul_end_date_time" aria-describedby="schedul_end_date_time" id="schedul_end_date_time">
+                            <input type="text" class="form-control TimePicker" name="schedul_end_date_time" aria-describedby="schedul_end_date_time" id="schedul_end_date_time" disabled>
                         </span>
                     </div>
                 </div>
@@ -396,7 +396,7 @@
                         <label class="line-height-35">{{ trans('tasks.form') }}</label>
                     </div>
                     <div class="col-xs-11 margin-top-10">
-                        <select id="new_task_users" name="users[]" class="select2_auto_complete_user col-xs-12"
+                        <select id="new_task_users" name="users[]" class="select2_auto_complete_user col-xs-12" disabled
                                 data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
                             <option value=""></option>
                         </select>
@@ -408,7 +408,7 @@
                         <label class="line-height-35">{{ trans('tasks.here-help') }}</label>
                     </div>
                     <div class="col-xs-11">
-                        <select id="new_task_users_" name="users[]" class="select2_auto_complete_user col-xs-12"
+                        <select id="new_task_users_" name="users[]" class="select2_auto_complete_user col-xs-12" disabled
                                 data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
                             <option value=""></option>
                         </select>
@@ -417,7 +417,7 @@
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
                     <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" class="" name="end_on_assigner_accept" id="end_on_assigner_accept" style="height: 20px"/>
+                        <input type="checkbox" class="" name="end_on_assigner_accept" id="end_on_assigner_accept" style="height: 20px" disabled/>
                     </div>
                     <div class="col-xs-10">
                         <label for="end_on_assigner_accept">{{ trans('tasks.modal_task_details_assignor_accept_or_ended') }}</label>
@@ -425,7 +425,7 @@
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
                     <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" class="" name="transferable" id="transferable" style="height: 20px"/>
+                        <input type="checkbox" class="" name="transferable" id="transferable" style="height: 20px" disabled/>
                     </div>
                     <div class="col-xs-11">
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>
