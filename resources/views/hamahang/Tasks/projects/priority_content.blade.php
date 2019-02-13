@@ -8,7 +8,7 @@
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h6 class="text_ellipsis">
-                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                    <a class='cursor-pointer project_tasks_list' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
                                 </h6>
@@ -26,7 +26,7 @@
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h6 class="text_ellipsis">
-                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                    <a class='cursor-pointer project_tasks_list' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
                                 </h6>
@@ -46,7 +46,7 @@
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h6 class="text_ellipsis">
-                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                    <a class='cursor-pointer project_tasks_list' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
                                 </h6>
@@ -64,7 +64,7 @@
                         <li class="draggable" data-action="project" data-project_id="{{enCode($project->id)}}">
                             <div class="project_title">
                                 <h6 class="text_ellipsis">
-                                    <a class='cursor-pointer project_info' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
+                                    <a class='cursor-pointer project_tasks_list' href='#' data-p_id="{{enCode($project->id)}}" data-toggle="tooltip" title="{{ $project->title }}">
                                         {{$project->title}}
                                     </a>
                                 </h6>
