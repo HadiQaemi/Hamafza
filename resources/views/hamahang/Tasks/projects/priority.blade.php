@@ -184,10 +184,15 @@
             {{--</div>--}}
         </form>
     </div>
-
-    <div id="base_items_div">
-        @include('hamahang.Tasks.projects.priority_content')
-    </div>
+    <fieldset id="fieldset_info" class="hidden">
+        <div class="col-xs-12"><i class="fa fa-arrow-left pointer" id="BackToProjects" style="margin-top: 10px;"></i></div>
+        <div id="ProjectInfoList"></div>
+    </fieldset>
+    <fieldset id="fieldset">
+        <div id="base_items_div">
+            @include('hamahang.Tasks.projects.priority_content')
+        </div>
+    </fieldset>
 {{--    @include('hamahang.Tasks.MyAssignedTask.helper.RapidCreateTask',['function'=>'filter_tasks_priority'])--}}
 @stop
 

@@ -2,7 +2,7 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
-            <a href="#tab_t1" data-toggle="tab">تعریف</a>
+            <a href="#tab_t1" data-toggle="tab">عمومی</a>
         </li>
         <li>
             <a href="#tab_t2" data-toggle="tab">دسترسی</a>
@@ -44,19 +44,7 @@
                                     <textarea class="form-control" id="p_desc" cols="30" rows="4" placeholder="{{trans('projects.describe')}}">{{$project_info->desc}}</textarea>
                                 </div>
                             </div>
-                            <div class="col-xs-12 margin-top-60">
-                                <div class="col-xs-2 line-height-35">{{trans('projects.top')}}</div>
-                                <div class="col-xs-10">
-                                    <select class="js-data-example-ajax form-control" id="page_id" name="page_id[]" multiple  data-placeholder="{{trans('projects.can_select_some_options')}}">
-                                        @if(!empty($pages->pages))
-                                            @foreach($pages->pages as $page_res)
-                                                <option selected="selected" value="{{ $page_res->subject_id }}">{{ $page_res->title }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+                            <div class="col-xs-12 margin-top-60" style="border-top: #ccc solid 1px;padding-top: 10px">
                                 <div class="col-xs-2 line-height-35">{{trans('projects.project_manager')}}</div>
                                 <div class="col-xs-10">
                                     <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
@@ -109,6 +97,18 @@
                                         @endif
                                     </select>
                                     <span class="Chosen-LeftIcon"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 margin-top-10">
+                                <div class="col-xs-2 line-height-35">{{trans('projects.page')}}</div>
+                                <div class="col-xs-10">
+                                    <select class="js-data-example-ajax form-control" id="page_id" name="page_id[]" multiple  data-placeholder="{{trans('projects.can_select_some_options')}}">
+                                        @if(!empty($pages->pages))
+                                            @foreach($pages->pages as $page_res)
+                                                <option selected="selected" value="{{ $page_res->subject_id }}">{{ $page_res->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xs-12 line-height-35 margin-top-20" style="border-top: #ccc solid 1px;padding-top: 10px">

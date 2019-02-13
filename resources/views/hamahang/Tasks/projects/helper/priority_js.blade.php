@@ -6,6 +6,66 @@
     });
 
     $(document).ready(function () {
+        $(document).on('click', ".project_tasks_list", function () {
+            var send_info = {
+                p_id: $(this).data("p_id"),
+                pid: $(this).data("p_id")
+            }
+            $('#base_items_div').css('overflow-y','hidden');
+            loadTaskList(send_info);
+        });
+        $(document).on('click', ".project_tasks_chart", function () {
+            var send_info = {
+                p_id: $(this).data("p_id"),
+                pid: $(this).data("p_id")
+            }
+            loadGanttTasks(send_info);
+
+        });
+        function loadGanttTasks(send_info){
+            $.ajax({
+                url:'{{ URL::route('hamahang.project.show_project_gantt_tasks') }}',
+                type:'post',
+                data: send_info,
+                dataType:'json',
+                success :function(data)
+                {
+                    if (data.success == false) {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        $('#form_filter_priority').addClass('hidden');
+                        $('#base_items_div').html(data.content);
+                        $('#fieldset_info').removeClass('hidden');
+                        $('#fieldset').addClass('hidden');
+                    }
+                }
+            });
+        }
+        function loadTaskList(send_info){
+            $.ajax({
+                url:'<?php echo e(URL::route('hamahang.project.show_project_tasks_list' )); ?>',
+                type:'post',
+                data: send_info,
+                dataType:'json',
+                success :function(data)
+                {
+                    if (data.success == false) {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        $('#form_filter_priority').addClass('hidden');
+                        $('#ProjectInfoList').html(data.content);
+                        $('#fieldset_info').removeClass('hidden');
+                        $('#fieldset').addClass('hidden');
+                    }
+                }
+            });
+        }
+        $(document).on('click', "#BackToProjects", function () {
+            $('#fieldset').removeClass('hidden');
+            $('#fieldset_info').addClass('hidden');
+            $('#form_filter_priority').removeClass('hidden');
+            $('#base_items_div').css('overflow-y','scroll');
+        });
         $(".select2_auto_complete_user").select2({
             minimumInputLength: 3,
             dir: "rtl",

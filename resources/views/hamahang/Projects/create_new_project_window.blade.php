@@ -2,7 +2,7 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
-            <a href="#tab_t1" data-toggle="tab">تعریف</a>
+            <a href="#tab_t1" data-toggle="tab">عمومی</a>
         </li>
         <li>
             <a href="#tab_t2" data-toggle="tab">دسترسی</a>
@@ -34,14 +34,7 @@
                     <textarea class="form-control" id="p_desc" cols="30" rows="4" placeholder="{{trans('projects.describe')}}"></textarea>
                 </div>
             </div>
-            <div class="col-xs-12 margin-top-60">
-                <div class="col-xs-2 line-height-35"><label>{{trans('projects.top')}}</label></div>
-                <div class="col-xs-10">
-                    <select class="js-data-example-ajax form-control" id="page_id" name="page_id[]" multiple  data-placeholder="{{trans('projects.can_select_some_options')}}"></select>
-                    {{--<span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>--}}
-                </div>
-            </div>
-            <div class="col-xs-12 margin-top-10" style="border-top: #ccc solid 1px;padding-top: 10px">
+            <div class="col-xs-12 margin-top-60" style="border-top: #ccc solid 1px;padding-top: 10px">
                 <div class="col-xs-2 line-height-35"><label>{{trans('projects.project_manager')}}</label></div>
                 <div class="col-xs-10">
                     <select name="p_responsible[]" id="p_responsible" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('tasks.select_some_options')}}" multiple>
@@ -91,6 +84,13 @@
                 <div class="col-xs-10 nput-group pull-right">
                     <select class="select2_auto_complete_keywords " name="p_keyword[]" id="p_keyword" data-placeholder="{{trans('projects.keywords')}}" multiple="multiple"></select>
                     <span class="Chosen-LeftIcon"></span>
+                </div>
+            </div>
+            <div class="col-xs-12 margin-top-10">
+                <div class="col-xs-2 line-height-35"><label>{{trans('projects.page')}}</label></div>
+                <div class="col-xs-10">
+                    <select class="js-data-example-ajax form-control" id="page_id" name="page_id[]" multiple  data-placeholder="{{trans('projects.can_select_some_options')}}"></select>
+                    {{--<span style="position: absolute; left: 20px; top: 10px;" class="glyphicon glyphicon-file"></span>--}}
                 </div>
             </div>
             <div class="col-xs-12 line-height-35 margin-top-20" style="border-top: #ccc solid 1px;padding-top: 10px">

@@ -125,6 +125,7 @@ return [
     'modal_calendar_edit_header_title'=>'ویرایش تقویم',
     'modal_calendar_no_sharing'=>'عدم اشتراک',
     'modal_calendar_define'=>'تعریف',
+    'modal_calendar_general'=>'عمومی',
     'modal_calendar_time_template'=>'قالب زمانی',
     'modal_calendar_new_time_border'=>'بازه زمانی جدید',
     'modal_calendar_time_border'=>'بازه زمانی',

@@ -3,7 +3,7 @@
     <ul class="nav nav-tabs">
         <li class="active">
             <a href="#t1" id="pan_t1" data-toggle="tab">
-                <span>{{trans("calendar.modal_calendar_define")}}</span>
+                <span>{{trans("calendar.modal_calendar_general")}}</span>
             </a>
         </li>
         {{--<li>--}}

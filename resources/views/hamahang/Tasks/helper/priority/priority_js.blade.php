@@ -190,7 +190,7 @@
             dataType: "json",
             data: form_filter_priority,
             success: function (res) {
-                //console.log(res.success);
+                console.log(res);
                 if (res.success == true) {
                     $('#priority_content_area').html(res.data);
                     initDraggable();

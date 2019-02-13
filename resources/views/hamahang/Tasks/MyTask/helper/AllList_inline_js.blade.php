@@ -148,6 +148,7 @@
             "order": [[ 3, "desc" ]],
             "language": LangJson_DataTables,
             "processing": true,
+            "pageLength": 25,
             columns: [
                 {
                     "data": "title",
