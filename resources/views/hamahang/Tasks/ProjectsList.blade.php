@@ -518,6 +518,7 @@
                     }else{
                         $('#form_filter_priority').addClass('hidden');
                         $('#ProjectInfoList').html(data.content);
+                        $(".for-dynamic-help").html(data.HelpLink);
                         $('#fieldset_info').removeClass('hidden');
                         $('#fieldset').addClass('hidden');
                     }
@@ -537,6 +538,7 @@
                     }else{
                         $('#form_filter_priority').addClass('hidden');
                         $('#ProjectInfoList').html(data.content);
+                        $(".for-dynamic-help").html(data.HelpLink);
                         $('#fieldset_info').removeClass('hidden');
                         $('#fieldset').addClass('hidden');
                     }

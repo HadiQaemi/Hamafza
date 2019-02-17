@@ -1084,7 +1084,7 @@ class FormsController extends Controller
                 if($request->exists('add_to_alef'))
                 {
                     $target_type = 'App\Models\hamafza\Subject';
-                    Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $id, 'user_id' => $uid,]);
+                    Bookmark::create(['title' => $title, 'target_table' => $target_type, 'target_id' => $id / 10, 'user_id' => $uid,]);
                 }
                 score_unregister('App\Models\hamafza\Subject', $id / 10, config('score.8'));
 

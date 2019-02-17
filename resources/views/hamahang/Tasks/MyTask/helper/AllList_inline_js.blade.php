@@ -65,16 +65,22 @@
             return json;
         };
     })(jQuery);
-    $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
-        filter_tasks_priority();
+    $('#form_filter_priority').on('keyup', '#title', function () {
+        filter_tasks_list();
+    });
+    $('input:checkbox').change(function () {
+        filter_tasks_list();
+    });
+    $('#form_filter_priority').on('change', 'select', function () {
+        filter_tasks_list();
     });
     // $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
-    //     filter_tasks_priority();
+    //     filter_tasks_list();
     // });
     // $('#form_filter_priority').on('keyup', 'input, select, textarea', 'checkbox', function () {
-    //     filter_tasks_priority();
+    //     filter_tasks_list();
     // });
-    function filter_tasks_priority(data) {
+    function filter_tasks_list(data) {
         window.table_chart_grid2.destroy();
         readTable($("#form_filter_priority").serializeObject());
         {{--$.ajax({--}}

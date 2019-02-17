@@ -1389,6 +1389,7 @@ strong.ui-state-error {
     padding-top: 7px;
     position: relative;
     margin-right: 35px;
+    margin-left: 35px;
 }
 
 .captcha-refresh-style {

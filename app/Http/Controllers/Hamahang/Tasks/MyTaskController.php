@@ -184,9 +184,16 @@ class MyTaskController extends Controller
                 break;
         }
     }
+
+    public function FilterAllTaskState($uname){
+        $arr = variable_generator('page', 'desktop', $uname);
+        $arr['filter_subject_id'] = $arr["sid"];
+        $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
+        return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
+    }
+
     public function ListAllTaskState($uname){
         $packages = task_packages::where('uid', Auth::id())->get();
-//        dd(\Route::currentRouteName());
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_state':

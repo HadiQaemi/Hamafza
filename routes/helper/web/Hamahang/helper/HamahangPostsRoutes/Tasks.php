@@ -19,6 +19,8 @@ Route::post('change_priority', ['as' => 'hamahang.tasks.priority.change', 'uses'
 Route::post('filter_priority', ['as' => 'hamahang.tasks.priority.filter', 'uses' => 'TaskController@filter_task_priority', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.priority.filter']]); ////filter task priority using ajax
 Route::post('all_task_filter', ['as' => 'hamahang.tasks.priority.all_task_filter', 'uses' => 'MyTaskController@filter_all_task_priority', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.priority.filter']]); ////filter task priority using ajax
 Route::post('filter_priority_time', ['as' => 'hamahang.tasks.priority.filter_time', 'uses' => 'TaskController@filter_task_priority_time', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.priority.filter']]); ////filter task priority using ajax
+Route::post('AllListState', ['as' => 'hamahang.tasks.my_tasks.filter_all_task_state', 'uses' => 'MyTaskController@FilterAllTaskState', 'middleware' => ['dynamic_permission:pgs.desktop.hamahang.tasks.my_tasks.list']]);
+
 Route::post('change_task_state', ['as' => 'hamahang.tasks.change_task_state', 'uses' => 'TaskController@change_task_state', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.change_task_state']]); ///change task state using ajax
 Route::post('show_tasks_custom', ['as' => 'hamahang.tasks.custom_tasks_priority', 'uses' => 'MyTaskController@ShowCustomMyTasks', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.custom_tasks_priority']]); /// search tasks in priority
 Route::post('TaskInfo', ['as' => 'hamahang.tasks.task_info', 'uses' => 'TaskController@TaskInfo', 'middleware' => ['dynamic_permission:posts.hamahang.tasks.task_info']]);

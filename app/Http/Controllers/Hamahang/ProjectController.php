@@ -68,12 +68,14 @@ class ProjectController extends Controller
 
     public function ProjectTasksListWindow()
     {
+        $help_link = shortToolsGenerator('User', Auth::id(), ['uid' => Auth::id(), 'sessid' => Auth::id(), 'userid' => Auth::id()], ['pageid' => 0, 'tagname' => 0, 'id' => 0])->render();
         $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
         if(in_array(self::$_VIEW_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
             return json_encode([
                 'success' => true,
                 'header' => trans('tasks.project'),
-                'content' => view('hamahang.Projects.show_project_tasks_list_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
+                'HelpLink' => $help_link,
+                'content' => view('hamahang.Projects.show_project_tasks_list_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->with('HelpLink', $help_link)->render()
             ]);
         }else{
             $result['error'] = trans('projects.no_permissions');
@@ -84,11 +86,13 @@ class ProjectController extends Controller
 
     public function ProjectTasksGanttWindow()
     {
+        $help_link = shortToolsGenerator('User', Auth::id(), ['uid' => Auth::id(), 'sessid' => Auth::id(), 'userid' => Auth::id()], ['pageid' => 0, 'tagname' => 0, 'id' => 0])->render();
         $permission = self::TakeProjectPermissions(deCode(Request::input('pid')));
         if(in_array(self::$_VIEW_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_PROJECT_PERMISSSION,$permission) || in_array(self::$_MANAGE_TASK_PROJECT_PERMISSSION,$permission)) {
             return json_encode([
                 'success' => true,
                 'header' => trans('tasks.project'),
+                'HelpLink' => $help_link,
                 'content' => view('hamahang.Projects.show_project_tasks_gantt_window')->with('ProjectInfo', $this->project_tasks_list(Request::input('pid')))->render()
             ]);
         }else{

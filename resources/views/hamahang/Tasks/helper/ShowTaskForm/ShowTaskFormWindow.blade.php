@@ -167,9 +167,9 @@
                         <select class="select2_auto_complete_page"
                                 data-placeholder="{{trans('tasks.can_select_some_options')}}"
                                 multiple="multiple"  name="pages[]" id="new_task_pages" >
-                            @if(!empty($task->Pages))
-                                @foreach($task->Pages as $page)
-                                    <option selected="selected" value="{{ $page->id }}">{{ $page->Subject->title}}</option>
+                            @if(!empty($task->Subjects))
+                                @foreach($task->Subjects as $page)
+                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title}}</option>
                                 @endforeach
                             @endif
                         </select>

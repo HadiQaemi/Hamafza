@@ -1,4 +1,3 @@
-{{--{{dd($myTasks['not_started'])}}--}}
 <div class="col-xs-12 col-md-3 col-sm-6 pdrl-2">
     <div class="text-center div_title_not_started"><h6>{{trans('tasks.status_not_started')}}</h6></div>
     <div class="div_groups_task state_container droppable" id="task_notstarted">
@@ -9,21 +8,15 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
-                                    {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
+                                      title="{{trans('tasks.reffered').': '.(isset($task->Assignment->Assigner->Name) ? $task->Assignment->Assigner->Name : '') }} {{isset($task->Assignment->Assigner->Family) ? $task->Assignment->Assigner->Family : ''}}">
+                                    {!! isset($task->Assignment->Assigner->BetweenSmallandBig) ? $task->Assignment->Assigner->BetweenSmallandBig : '' !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
-                            <div class="span_title" >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
-                                        @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                            <div class="span_title text_ellipsis" >
+                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </div>
@@ -45,21 +38,15 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
-                                    {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
+                                      title="{{trans('tasks.reffered').': '.(isset($task->Assignment->Assigner->Name) ? $task->Assignment->Assigner->Name : '') }} {{isset($task->Assignment->Assigner->Family) ? $task->Assignment->Assigner->Family : ''}}">
+                                    {!! isset($task->Assignment->Assigner->BetweenSmallandBig) ? $task->Assignment->Assigner->BetweenSmallandBig : '' !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
-                            <div class="span_title" >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
-                                        @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                            <div class="span_title text_ellipsis" >
+                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </div>
@@ -81,25 +68,19 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
-                                    {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
+                                      title="{{trans('tasks.reffered').': '.(isset($task->Assignment->Assigner->Name) ? $task->Assignment->Assigner->Name : '') }} {{isset($task->Assignment->Assigner->Family) ? $task->Assignment->Assigner->Family : ''}}">
+                                    {!! isset($task->Assignment->Assigner->BetweenSmallandBig) ? $task->Assignment->Assigner->BetweenSmallandBig : '' !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
-                            <div class="span_title" >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
-                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = mb_substr($task->title,0,25);
-                                            $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                            $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                            $title = mb_substr($msgTrimmed,0,$lastSpace);
-                                        @endphp
-                                        {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
+                            <div class="span_title text_ellipsis" >
+                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </div>
-                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
                 @endforeach
@@ -117,23 +98,17 @@
                         <div class="header_div_list_task container-fluid prl-1">
                             <div class="div_img">
                                 <span class="pull-right" data-toggle="tooltip"
-                                      title="{{trans('tasks.reject_to').': '.$task->Assignment->Assigner->Name }} {{$task->Assignment->Assigner->Family}}">
-                                    {!! $task->Assignment->Assigner->BetweenSmallandBig !!}
+                                      title="{{trans('tasks.reffered').': '.(isset($task->Assignment->Assigner->Name) ? $task->Assignment->Assigner->Name : '') }} {{isset($task->Assignment->Assigner->Family) ? $task->Assignment->Assigner->Family : ''}}">
+                                    {!! isset($task->Assignment->Assigner->BetweenSmallandBig) ? $task->Assignment->Assigner->BetweenSmallandBig : '' !!}
                                     {{--{!!$user->SmallAvatar!!}--}}
                                 </span>
                             </div>
-                            <div class="span_title" >
-                            <span data-toggle="tooltip" title="{{$task->title}}">
-                                <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                    @php
-                                        $msgTrimmed = mb_substr($task->title,0,25);
-                                        $lastSpace = strrpos($msgTrimmed, ' ', 0);
-                                        $lastSpace = $lastSpace > 0 ? $lastSpace : 20;
-                                        $title = mb_substr($msgTrimmed,0,$lastSpace);
-                                    @endphp
-                                    {{$title.(mb_strlen($title)<mb_strlen($task->title) ? '...' : '')}}
-                                </a>
-                            </span>
+                            <div class="span_title text_ellipsis" >
+                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                    <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
+                                        {{$task->title}}
+                                    </a>
+                                </span>
                             </div>
                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
                         </div>

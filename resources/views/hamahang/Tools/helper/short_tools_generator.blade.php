@@ -117,6 +117,41 @@
                     $help_code = 'dH_t4i3vxZE';
                     break;
                 }
+                case 'hamahang.project.show_project_tasks_list':
+                {
+                    $help_code = enCode('312');
+                    break;
+                }
+                case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_list':
+                {
+                    $help_code = enCode('263');
+                    break;
+                }
+                case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_priority':
+                {
+                    $help_code = enCode('263');
+                    break;
+                }
+                case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_state':
+                {
+                    $help_code = enCode('263');
+                    break;
+                }
+                case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_tasks',false) ):
+                {
+                    $help_code = enCode('170');
+                    break;
+                }
+                case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_assigned_tasks.transcripts',false) ):
+                {
+                    $help_code = enCode('262');
+                    break;
+                }
+                case (	strstr($route_name,'ugc.desktop.hamahang.tasks.library',false) ):
+                {
+                    $help_code = enCode('264');
+                    break;
+                }
 				case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_tasks',false) ):
                 {
                     $help_code = 'S6FryAHtxyg';
@@ -127,17 +162,52 @@
                     $help_code = 'O5e86Vdno5c';
                     break;
                 }
+                case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_tasks',false) ):
+                {
+                    $help_code = enCode('170');
+                    break;
+                }
+                case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_assigned_tasks.transcripts',false) ):
+                {
+                    $help_code = enCode('262');
+                    break;
+                }
+                case (	strstr($route_name,'pgs.desktop.hamahang.tasks.library',false) ):
+                {
+                    $help_code = enCode('264');
+                    break;
+                }
+				case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_tasks',false) ):
+                {
+                    $help_code = 'S6FryAHtxyg';
+                    break;
+                }
+				case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_assigned_tasks',false) ):
+                {
+                    $help_code = 'O5e86Vdno5c';
+                    break;
+                }
 				case 'ugc.desktop.hamahang.tasks.Packages':
                 {
                     $help_code = '1HmFWYC26cI';
                     break;
                 }
-				case 'ugc.desktop.hamahang.project.list':
+				case  (	strstr($route_name,'ugc.desktop.hamahang.project',false) ):
                 {
-                    $help_code = '0breATQ_KYA';
+                    $help_code = enCode('313');
+                    break;
+                }
+				case 'pgs.desktop.hamahang.project.list':
+                {
+                    $help_code = enCode('313');
                     break;
                 }
 				case 'ugc.desktop.hamahang.process.list':
+                {
+                    $help_code = 'lZ9G783RBgE';
+                    break;
+                }
+				case 'pgs.desktop.hamahang.process.list':
                 {
                     $help_code = 'lZ9G783RBgE';
                     break;
@@ -278,72 +348,73 @@
         //dd($route_name);
     }
 @endphp
-
-<div class="btn-group pull-right frst-wdt mr"><button type="button" id="rSubMenuBtn" class="btn  fa fa-align-justify icon-reorder" data-icon="U+E0CC" data-toggle="tooltip" data-placement="top" title="ابزارها"></button></div>
-@if (auth()->check())
-    @if ('Page' == $type)
-        @if ('0' == $vals['like'])
-            <div class="btn-group pull-right mr">
-                <button id="LikePage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_like') !!}" type="button" class="btn fa fa-anchor icon-pasandidan" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.Like') }}"></button>
-            </div>
-        @elseif ('1' == $vals['like'])
-            <div class="btn-group pull-right mr">
-                <button id="LikePage" type="subject" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_like') !!}" type="button" class="btnActive  fa fa-anchor icon-pasandidan" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.disLike') }}"></button>
-            </div>
-        @endif
-        @if ('0' == $vals['follow'])
-            <div class="btn-group pull-right mr">
-                <button id="FollowPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_follow') !!}"  type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
-            </div>
-        @elseif ('1' == $vals['follow'])
-            <div class="btn-group pull-right mr">
-                <button id="FollowPage" type="subject" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_follow') !!}"  type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
-            </div>
-        @endif
-        @if ('page.forum' != $route_name)
-            <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
-                <button id="CommentPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
-            </div>
-        @endif
-        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&type='.$type.'&sid='.$params['sid'])}}" title="وظیفه جدید"></a>
-{{--        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$params['sid'].'&pid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>--}}
-    @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
-        @if ('0' == $vals['follow'])
-            <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
-                <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
-            </div>
-            @if ('page.forum' != $route_name)
+<span class="for-dynamic-help">
+    <div class="btn-group pull-right frst-wdt mr"><button type="button" id="rSubMenuBtn" class="btn  fa fa-align-justify icon-reorder" data-icon="U+E0CC" data-toggle="tooltip" data-placement="top" title="ابزارها"></button></div>
+    @if (auth()->check())
+        @if ('Page' == $type)
+            @if ('0' == $vals['like'])
                 <div class="btn-group pull-right mr">
-                    <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+                    <button id="LikePage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_like') !!}" type="button" class="btn fa fa-anchor icon-pasandidan" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.Like') }}"></button>
+                </div>
+            @elseif ('1' == $vals['like'])
+                <div class="btn-group pull-right mr">
+                    <button id="LikePage" type="subject" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_like') !!}" type="button" class="btnActive  fa fa-anchor icon-pasandidan" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.disLike') }}"></button>
                 </div>
             @endif
-        @elseif ('1' == $vals['follow'])
-            <div class="btn-group pull-right mr">
-                <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
-            </div>
-            <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
+            @if ('0' == $vals['follow'])
+                <div class="btn-group pull-right mr">
+                    <button id="FollowPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_follow') !!}"  type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
+                </div>
+            @elseif ('1' == $vals['follow'])
+                <div class="btn-group pull-right mr">
+                    <button id="FollowPage" type="subject" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{!! route('hamafza.page_follow') !!}"  type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
+                </div>
+            @endif
+            @if ('page.forum' != $route_name)
+                <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
+                    <button id="CommentPage" type="subject" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+                </div>
+            @endif
+            <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&type='.$type.'&sid='.$params['sid'])}}" title="وظیفه جدید"></a>
+    {{--        <a style="float: right;float: right;color: #fff;position: relative;top: 21px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&sid='.$params['sid'].'&pid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>--}}
+        @elseif ('Group' == $type || ('User' == $type && $id != Auth::id())) {{--TODO:Check Group Owner--}}
+            @if ('0' == $vals['follow'])
+                <div class="btn-group pull-right mr"{!! $hide_type || 'enquiry.view' == $route_name ? 'style="visibility: hidden;"' : null !!}>
+                    <button id="FollowPage" type="User" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btn  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.follow') }}"></button>
+                </div>
+                @if ('page.forum' != $route_name)
+                    <div class="btn-group pull-right mr">
+                        <button id="CommentPage" val="1" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach type="button" class="btn  fa fa-anchor icon-ezhare-nazar comment" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+                    </div>
+                @endif
+            @elseif ('1' == $vals['follow'])
+                <div class="btn-group pull-right mr">
+                    <button id="FollowPage" type="User" val="0" @foreach($params as $k => $v) {{ $k }} = "{{ $v }}" @endforeach data-href="{{route('hamafza.page_follow')}}" type="button" class="btnActive  fa fa-anchor icon-rss" data-toggle="tooltip" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
+                </div>
+                <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
+            @endif
+        @else
+            <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
+        @endif
+        @if ('[REMOVE]' != $help_code)
+            <div class="btn-group help-btn" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
         @endif
     @else
-        <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
-    @endif
-    @if ('[REMOVE]' != $help_code)
-        <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
-    @endif
-@else
-    @if ('Page' == $type)
+        @if ('Page' == $type)
+            <div class="btn-group pull-right mr">
+                <button type="button" class="btn fa fa-anchor icon-pasandidan login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.Like') }}"></button>
+            </div>
+        @endif
         <div class="btn-group pull-right mr">
-            <button type="button" class="btn fa fa-anchor icon-pasandidan login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.Like') }}"></button>
+            <button type="button" class="btn fa fa-anchor icon-rss login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
         </div>
+        @if ('page.forum' != $route_name)
+            <div class="btn-group pull-right mr">
+                <button type="button" class="btn fa fa-anchor icon-ezhare-nazar login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.comment') }}"></button>
+            </div>
+        @endif
+        @if ('[REMOVE]' != $help_code)
+            <div class="btn-group help-btn" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
+        @endif
     @endif
-    <div class="btn-group pull-right mr">
-        <button type="button" class="btn fa fa-anchor icon-rss login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.unfollow') }}"></button>
-    </div>
-    @if ('page.forum' != $route_name)
-        <div class="btn-group pull-right mr">
-            <button type="button" class="btn fa fa-anchor icon-ezhare-nazar login" data-toggle="modal" data-target="#loginWmessage" data-placement="top" title="{{ trans('labels.comment') }}"></button>
-        </div>
-    @endif
-    @if ('[REMOVE]' != $help_code)
-        <div class="btn-group" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>
-    @endif
-@endif
+</span>

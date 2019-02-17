@@ -1332,9 +1332,9 @@ class MyAssignedTaskController extends Controller
                     task_schedule::create_task_schedule($task->id, Request::input('task_schedul'),serialize($schedul),
                         Request::input('schedul_begin_date'), Request::input('schedul_end_date'), Request::input('schedul_end_date_date'), Request::input('schedul_end_num_events'));
                 }
+                hamahang_subject_able::where('hamahang_subject_ables.target_id','=', deCode(Request::input('tid')))->delete();
                 if (Request::exists('pages'))
                 {
-                    hamahang_subject_able::where('hamahang_subject_ables.target_id','=', deCode(Request::input('tid')))->delete();
                     foreach (Request::input('pages') as $page_id)
                     {
                         hamahang_subject_ables::create_items_page($page_id, $task->id,  'App\Models\Hamahang\Tasks\tasks');

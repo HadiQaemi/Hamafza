@@ -661,7 +661,22 @@ class MenusController extends Controller
                 $menus = $menus;
             }
 //            $treeMenu = \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));
-            $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url'));
+            $current_url = \Request::input('current_url');
+            if(strstr(\Request::input('current_url'),'Task/MyTasks/transcripts'))
+                $current_url = \Request::input('current_url');
+            else if(strstr(\Request::input('current_url'),'Tasks/MyAssignedTasks'))
+                    $current_url = preg_replace('/Tasks\/MyAssignedTasks\/.*/','Tasks/MyAssignedTasks/list',\Request::input('current_url'));
+            else if(strstr(\Request::input('current_url'),'Task/MyTasks/All'))
+                $current_url = preg_replace('/Task\/MyTasks\/All.*/','Task/MyTasks/AllList',\Request::input('current_url'));
+            else if(strstr(\Request::input('current_url'),'Tasks/MyTasks/'))
+                $current_url = preg_replace('/Tasks\/MyTasks\/.*/','Tasks/MyTasks/list',\Request::input('current_url'));
+            else if(strstr(\Request::input('current_url'),'Task/MyTasks/'))
+                $current_url = preg_replace('/Task\/MyTasks\/.*/','Task/MyTasks/list',\Request::input('current_url'));
+            else if(strstr(\Request::input('current_url'),'Task/MyAssignedTasks'))
+                $current_url = preg_replace('/Task\/MyAssignedTasks\/.*/','Task/MyAssignedTasks/list',\Request::input('current_url'));
+            else if(strstr(\Request::input('current_url'),'/Project/'))
+                $current_url = preg_replace('/Project\/.*/','Project/list',\Request::input('current_url'));
+            $treeMenu = buildMenuTree($menus, 'parent_id', $subject_id, $current_url);
 
             \Cache::store('file')->put(auth()->user()->Uname.'-'.$_SERVER['HTTP_REFERER'], $treeMenu, Carbon::now()->addMonth(1));
             return $treeMenu;

@@ -888,6 +888,7 @@ class tasks extends Model
 
     public static function ListAllAssignedTasks($user_id = false, $subject_id = false, $api = false)
     {
+//        dd(Request::all());
         $status_filter = Request::get('task_status');
         $official_type = Request::get('official_type');
         $important = Request::get('task_important');
@@ -1258,9 +1259,7 @@ class tasks extends Model
 //                ->whereNull('hamahang_subject_ables.deleted_at');
             }
 //            dd($result->get(),db::getQueryLog());
-            $task_final[] = 1;
-            if(in_array('10',$status_filter))
-                $task_final[] = 0;
+
 //            $result->whereIn('hamahang_task.is_save', $task_final);
 
             if ($official_type)
@@ -1272,8 +1271,11 @@ class tasks extends Model
             {
                 $result->whereIn('hamahang_task.type', [11]);
             }
+            $task_final[] = 1;
             if (is_array($status_filter))
             {
+                if(in_array('10',$status_filter))
+                    $task_final[] = 0;
                 $result->whereIn('hamahang_task_status.type', $status_filter)
                     ->whereNull('hamahang_task_status.deleted_at');
                 if(in_array(10, $status_filter)){
@@ -1281,16 +1283,18 @@ class tasks extends Model
                 }else{
                     $result->whereRaw('is_save in (1)');
                 }
-            }
-            if(is_array($task_final))
-            {
-                if(count($task_final)>1)
-                    $result->whereRaw('(( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0))', [Auth::id()]);
-                else if(in_array(10,$task_final))
-                    $result->whereRaw('is_save in (0)');
             }else{
-                $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) ', [Auth::id()]);
+                $result->whereIn('hamahang_task_status.type', [11]);
             }
+//            if(is_array($task_final))
+//            {
+//                if(count($task_final)>1)
+//                    $result->whereRaw('(( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) OR is_save in (0))', [Auth::id()]);
+//                else if(in_array(10,$task_final))
+//                    $result->whereRaw('is_save in (0)');
+//            }else{
+//                $result->whereRaw('( hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id ) AND hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and uid = ? and is_assigner=1)) ', [Auth::id()]);
+//            }
 //            $result = $result->tosql();
 //            dd($result);
 
@@ -1531,10 +1535,14 @@ class tasks extends Model
     public static function all_task_in_status($arr = false, $user = false)
     {
 
+
+
         $official_type = [0,1];
         $importance = [0,1];
         $immediate = [0,1];
 
+
+//        dd(Request::all());
         if (!$user)
         {
             $user = auth()->user();
@@ -1564,16 +1572,69 @@ class tasks extends Model
         });
         $myTasks['not_started'] = $myTasks['not_started']->get();
 
+        ////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance)
+        {
+            $query->whereIn('immediate', $immediate)->whereIn('importance', $importance)->whereNull('deleted_at');
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
+        }
         $myTasks['started'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 1);
         });
         $myTasks['started'] = $myTasks['started']->get();
 
+        ///////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance)
+        {
+            $query->whereIn('immediate', $immediate)->whereIn('importance', $importance)->whereNull('deleted_at');
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
+        }
         $myTasks['done'] =$tasks_status->whereHas('Status', function ($q){
             $q->where('type', 2);
         });
         $myTasks['done'] = $myTasks['done']->get();
 
+        ///////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $arr['filter_subject_id'])
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance)
+        {
+            $query->whereIn('immediate', $immediate)->whereIn('importance', $importance)->whereNull('deleted_at');
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
+        }
         $myTasks['ended'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 3);
         });
@@ -1709,35 +1770,13 @@ class tasks extends Model
     }
     public static function AllTasksStatus($filter_subject_id=false,$importance=false,$immediate=false, $title_filter = false, $respite_filter = false, $official_type = false)
     {
-        $user = auth()->user();
-        $myTasks = [];
-        $myTasks['not_started'] = '';
-        $myTasks['started'] = '';
-        $myTasks['done'] = '';
-        $myTasks['ended'] = '';
+        $importance = [0,1];
+        $immediate = [0,1];
+        $keywords = Request::exists('keywords') ? Request::input('keywords') : [];
+        $users = Request::exists('users') ? Request::input('users') : [];
+        $task_important_immediate = Request::input('task_important_immediate');
         $title = Request::exists('title') ? Request::input('title') : '';
-        $keywords = Request::exists('keywords') ? Request::input('keywords') : '';
-        $users = Request::exists('users') ? Request::input('users') : '';
-
-        if (empty($official_type)) {
-            $official_type[0] = 11;
-            $official_type[1] = 12;
-        }
-        if (empty($importance)) {
-            $importance[0] = 11;
-            $importance[1] = 12;
-        }
-        if (empty($immediate)) {
-            $immediate[0] = 11;
-            $immediate[1] = 12;
-        }
-
-        if (!$user) {
-            $user = auth()->user();
-        }
-        $tasks_status = [];
-
-
+        $user = auth()->user();
         if (!$user)
         {
             $user = auth()->user();
@@ -1749,24 +1788,9 @@ class tasks extends Model
                 ->whereNull('hamahang_subject_ables.deleted_at');
         });
 
-        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance)
-        {
-            $query->whereIn('immediate', $immediate)->whereIn('importance', $importance)->whereNull('deleted_at');
-        });
-
-        if ($official_type)
-        {
-            $tasks_status = $tasks_status->whereIn('type', $official_type);
-        }else
-        {
-            $tasks_status = $tasks_status->whereIn('type', [11]);
+        if(trim($title)!=''){
+            $tasks_status->where('title','like','%'.$title.'%');
         }
-
-        if(trim($title)!='')
-        {
-            $tasks_status = $tasks_status->where('title','like','%'.$title.'%');
-        }
-
         if($keywords)
         {
             $search_task_keywords = [];
@@ -1776,7 +1800,7 @@ class tasks extends Model
             }
             if ($search_task_keywords)
             {
-                $tasks_immediate_importance = $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
                 {
                     $query->whereIn('keyword_id', $search_task_keywords);
                 });
@@ -1784,7 +1808,6 @@ class tasks extends Model
         }
         if($users)
         {
-//            $tasks_immediate_importance->whereIn('hamahang_task.uid', $users);
             $tasks_status->where(function ($result) use ($users){
                 $result
                     ->whereIn('hamahang_task.uid', $users)
@@ -1800,37 +1823,350 @@ class tasks extends Model
                     {
                         $query->whereIn('employee_id', $users);
                     });
-
-//                    ->orWhereIn('hamahang_task_assignments.uid', $users)
-//                    ->orWhereIn('hamahang_task_assignments.assigner_id', $users)
-//                    ->orWhereIn('hamahang_task_assignments.employee_id', $users)
-                ;
             });
+        }
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance,$task_important_immediate)
+        {
+            $query->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
         }
 
         $myTasks['not_started'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 0);
         });
 
-        $myTasks['not_started'] = $myTasks['not_started']->get();
+        $myTasks['not_started'] = $myTasks['not_started']->groupBy('hamahang_task.id')->get();
 
+
+        ////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($filter_subject_id) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        if(trim($title)!=''){
+            $tasks_status->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $tasks_status->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance,$task_important_immediate)
+        {
+            $query->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
+        });
+
+        if ($official_type)
+        {
+            $tasks_status = $tasks_status->whereIn('type', $official_type);
+        }else
+        {
+            $tasks_status = $tasks_status->whereIn('type', [11]);
+        }
         $myTasks['started'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 1);
         });
-        $myTasks['started'] = $myTasks['started']->get();
 
-        $myTasks['done'] =$tasks_status->whereHas('Status', function ($q){
+        $myTasks['started'] = $myTasks['started']->groupBy('hamahang_task.id')->get();
+
+        ///////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($filter_subject_id) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        if(trim($title)!=''){
+            $tasks_status->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $tasks_status->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance,$task_important_immediate)
+        {
+            $query->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
+        });
+        $myTasks['done'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 2);
         });
-        $myTasks['done'] = $myTasks['done']->get();
+        $myTasks['done'] = $myTasks['done']->groupBy('hamahang_task.id')->get();
 
+        ///////////////
+        $tasks_status = self::whereHas('Subjects', function ($query) use ($filter_subject_id) {
+            $query->where('hamahang_subject_ables.subject_id', '=', $filter_subject_id)
+                ->whereNull('hamahang_subject_ables.deleted_at');
+        });
+
+        if(trim($title)!=''){
+            $tasks_status->where('title','like','%'.$title.'%');
+        }
+        if($keywords)
+        {
+            $search_task_keywords = [];
+            foreach($keywords as $keyword)
+            {
+                $search_task_keywords[] = preg_replace('/exist_in/','',$keyword);
+            }
+            if ($search_task_keywords)
+            {
+                $tasks_status->whereHas('Keywords', function ($query) use ($search_task_keywords)
+                {
+                    $query->whereIn('keyword_id', $search_task_keywords);
+                });
+            }
+        }
+        if($users)
+        {
+            $tasks_status->where(function ($result) use ($users){
+                $result
+                    ->whereIn('hamahang_task.uid', $users)
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('uid', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('assigner_id', $users);
+                    })
+                    ->orWhereHas('Assignments', function ($query) use ($users)
+                    {
+                        $query->whereIn('employee_id', $users);
+                    });
+            });
+        }
+
+        $tasks_status = $tasks_status->whereHas('AllPriority', function ($query) use ($immediate, $importance,$task_important_immediate)
+        {
+            $query->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 0)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_task_priority.immediate', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at')
+                                ->where('hamahang_task_priority.importance', 1)
+                                ->whereNull('hamahang_task_priority.deleted_at');
+                        });
+                    }
+                }
+            });
+        });
         $myTasks['ended'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 3);
         });
-        $myTasks['ended'] = $myTasks['ended']->get();
-
-
+        $myTasks['ended'] = $myTasks['ended']->groupBy('hamahang_task.id')->get();
         return $myTasks;
+
     }
     public static function MyTasksStatus($filter_subject_id=false,$importance=false,$immediate=false, $title_filter = false, $respite_filter = false, $official_type = false)
     {
@@ -2876,7 +3212,7 @@ class tasks extends Model
 
     public function Subjects()
     {
-        return $this->morphToMany('App\Models\hamafza\Subject', 'target','hamahang_subject_ables','target_id','subject_id');
+        return $this->morphToMany('App\Models\hamafza\Subject', 'target','hamahang_subject_ables','target_id','subject_id')->whereNull('hamahang_subject_ables.deleted_at');
     }
 
     public function Pages()

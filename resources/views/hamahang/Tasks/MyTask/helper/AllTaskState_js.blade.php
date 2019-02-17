@@ -10,12 +10,17 @@
         // $('#form_filter_priority').on('keyup change', 'input, select, textarea', 'checkbox', function () {
         //     filter_mytask();
         // });
-        $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
+
+        $('#form_filter_priority').on('keyup', '#title', function () {
             filter_mytask();
         });
-        $('#title, .task_status, .task_immediate, .task_important, .official_type, input[name="task_status[]"], input[name="task_final[]"], input[name="task_immediate[]"], input[name="official_type[]"], input[name="task_important[]"]').on('keyup change', function () {
+        $('input:checkbox').change(function () {
             filter_mytask();
         });
+        $('#form_filter_priority').on('change', 'select', function () {
+            filter_mytask();
+        });
+
     });
 </script>
 <script>

@@ -33,16 +33,7 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
-                                            @php
-                                                $title = $task->title;
-                                                if(mb_strlen($title,'UTF-8')>30){
-                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                    $content .= '…';
-                                                }else{
-                                                    $content = strip_tags($title);
-                                                }
-                                            @endphp
-                                            {{$content}}
+                                            {{$task->title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -82,16 +73,7 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
-                                            @php
-                                                $title = $task->title;
-                                                if(mb_strlen($title,'UTF-8')>30){
-                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                    $content .= '…';
-                                                }else{
-                                                    $content = strip_tags($title);
-                                                }
-                                            @endphp
-                                            {{$content}}
+                                            {{$task->title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -133,16 +115,7 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
-                                            @php
-                                                $title = $task->title;
-                                                if(mb_strlen($title,'UTF-8')>30){
-                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                    $content .= '…';
-                                                }else{
-                                                    $content = strip_tags($title);
-                                                }
-                                            @endphp
-                                            {{$content}}
+                                            {{$task->title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -182,16 +155,7 @@
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
                                         <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
-                                            @php
-                                                $title = $task->title;
-                                                if(mb_strlen($title,'UTF-8')>30){
-                                                    $content = mb_substr(strip_tags($title), 0, 30,'UTF-8');
-                                                    $content .= '…';
-                                                }else{
-                                                    $content = strip_tags($title);
-                                                }
-                                            @endphp
-                                            {{$content}}
+                                            {{$task->title}}
                                         </a>
                                     </h5>
                                 </div>
@@ -220,7 +184,7 @@
                                                 if(isset($pos[1]))
                                                     $title = substr($words, 1, $pos[1]) . '...';
                                             @endphp
-                                            {{$title}}
+                                            {{$task->title}}
                                         </a>
                                     </h5>
                                 </div>

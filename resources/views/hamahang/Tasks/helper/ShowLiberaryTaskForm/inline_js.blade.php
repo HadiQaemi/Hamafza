@@ -503,7 +503,7 @@
         width: "100%",
         tags: false,
         ajax: {
-            url: "{{route('auto_complete.pages')}}",
+            url: "{{route('auto_complete.subjects')}}",
             dataType: "json",
             type: "POST",
             quietMillis: 150,
