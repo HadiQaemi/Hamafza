@@ -530,12 +530,12 @@
                                 <div id="num_add_rel_task{{$k+1}}">
                                     <div class="col-xs-5 text-right">پایین دستی</div>
                                     <div class="col-xs-5 text-right">
-                                        {{$project->title}}
-                                        <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
-                                        <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
+                                        {{$project->Project->title}}
+                                        <input name="new_task_projects_[]" type="hidden" value="{{$project->Project->id}}"/>
+                                        <input name="new_task_projects_t[]" type="hidden" value="{{$project->Project->title}}"/>
                                     </div>
                                     <div class="col-xs-1">
-                                        <input name="new_project_weight[]" class="form-control" type="text" value="{{isset($project->weight) ? $project->weight : 0}}"/>
+                                        <input name="new_project_weight[]" class="form-control" type="text" value="{{$project->weight}}"/>
                                     </div>
                                     <div class="col-xs-1">
                                         <span class="fa fa-trash remove_new_task pointer line-height-35" onclick="remove_new_task({{$k+1}})" for="r2"></span>
