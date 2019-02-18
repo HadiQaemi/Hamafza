@@ -4198,3 +4198,8 @@ input::-webkit-inner-spin-button {
 .table-icon{
     background-image: url("/assets/images/table.png");
 }
+.preloader{
+    margin-right:45%;
+    width: 10%;
+    max-height: 100px;
+}

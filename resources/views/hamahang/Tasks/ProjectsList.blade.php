@@ -262,7 +262,33 @@
                 readTable($("#form_filter_priority").serializeObject());
             }
             readTable($("#form_filter_priority").serializeObject());
-
+            $(".select2_auto_complete_keywords").select2({
+                minimumInputLength: 3,
+                dir: "rtl",
+                width: "100%",
+                tags: true,
+                ajax: {
+                    url: "{{route('auto_complete.keywords')}}",
+                    dataType: "json",
+                    type: "POST",
+                    quietMillis: 150,
+                    data: function (term) {
+                        return {
+                            term: term
+                        };
+                    },
+                    results: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.text,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    }
+                }
+            });
             function  readTable(send_info) {
                 // runWaitMe($('#master_inner_rtl_div'));
                 if($('#new_task_keywords').val())
@@ -276,24 +302,24 @@
                 @endif
                 LangJson_DataTables = window.LangJson_DataTables;
                 LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
+                LangJson_DataTables.sLoadingRecords = '<img class="preloader" src="/assets/images/lg.preloader.gif" >';
                 window.ProjectList = $('#ProjectList').DataTable({
-                    dom: window.CommonDom_DataTables,
-                    "bSort": true,
-                    "aaSorting": [],
-                    "bSortable": true,
-                    "autoWidth": false,
-                    "searching": false,
-                    // "scrollY": 400,
-                    "serverSide": true,
-                    "pageLength": 25,
-                    "processing": true,
-                    "language": LangJson_DataTables,
-                    // "dom": '<"bottom">rt<"bottom"ipl><"clear">',
+                    "dom": '<"bottom">rt<"bottom"ipl><"clear">',
                     "ajax": {
                         "url": "{{ route('hamahang.projects.list') }}",
                         "type": "POST",
                         "data": send_info
                     },
+                    "bSort": true,
+                    "order": [[ 2, "desc" ]],
+                    "aaSorting": [],
+                    "bSortable": true,
+                    "autoWidth": false,
+                    "searching": false,
+                    "pageLength": 25,
+                    // "scrollY": 400,
+                    "language": LangJson_DataTables,
+                    "processing": false,
                     columns: [
                         {
                             "data": "title",

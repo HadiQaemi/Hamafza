@@ -134,6 +134,7 @@
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_sended')}}';
+        LangJson_DataTables.sLoadingRecords = '<img class="preloader" src="/assets/images/lg.preloader.gif" >';
         window.table_chart_grid3 = $('#MyAssignedTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "ajax": {
@@ -151,7 +152,7 @@
             "pageLength": 25,
             // "scrollY": 400,
             "language": LangJson_DataTables,
-            "processing": true,
+            "processing": false,
             columns: [
                 // {"data": "id", "width": "5%"},
                 // {"data": "use_type", "width": "5%"},
@@ -366,6 +367,33 @@
         }
 
     }
+    $(".select2_auto_complete_keywords").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: true,
+        ajax: {
+            url: "{{route('auto_complete.keywords')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
     $("#states-multi-select-users").select2({
         minimumInputLength: 1,
         tags: false,

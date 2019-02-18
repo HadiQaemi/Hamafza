@@ -662,7 +662,9 @@ class MenusController extends Controller
             }
 //            $treeMenu = \Response::json(buildMenuTree($menus, 'parent_id', $subject_id, \Request::input('current_url')));
             $current_url = \Request::input('current_url');
-            if(strstr(\Request::input('current_url'),'Task/MyTasks/transcripts'))
+            if(strstr(\Request::input('current_url'),'Tasks/MyAssignedTasks/transcripts'))
+                $current_url = \Request::input('current_url');
+            else if(strstr(\Request::input('current_url'),'Task/MyTasks/transcripts'))
                 $current_url = \Request::input('current_url');
             else if(strstr(\Request::input('current_url'),'Tasks/MyAssignedTasks'))
                     $current_url = preg_replace('/Tasks\/MyAssignedTasks\/.*/','Tasks/MyAssignedTasks/list',\Request::input('current_url'));
