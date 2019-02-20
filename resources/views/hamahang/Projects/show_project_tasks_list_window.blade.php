@@ -132,11 +132,11 @@
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_start_date.'</div>';
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_end_date.'</div>';
-            echo '<div class="col-xs-2">
+            echo '<div class="col-xs-2 noRightPadding noLeftPadding">
                 <input type="text" class="text-project-weight child_of_'.$id.' weight-'.$id.'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->weight) ? $ordered_project_tasks[$sub_task['id']]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_weight[child-'.$sub_task['rel'].']" autocomplete="off"/>
                 <input type="text" class="text-project-progress child_of_'.$id.' progress-'.$sub_task['id'].'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->progress) ? $ordered_project_tasks[$sub_task['id']]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_progress['.$ordered_project_tasks[$sub_task['id']]->id.']" autocomplete="off"/>
                 <i class="fa fa-check color_green task_project_save_status pointer margin-left-10" hp_task="'.(isset($ordered_project_tasks['hp_task']) ? enCode($ordered_project_tasks['hp_task']) : '').'" tp="child" rel="'.$sub_task['rel'].'" t="'.enCode($ordered_project_tasks[$sub_task['id']]->id).'" pid="'.enCode($pid).'" parent="'.$id.'"></i></div>';
-            echo '<div class="col-xs-1">
+            echo '<div class="col-xs-1 noRightPadding noLeftPadding">
                     <i class="fa fa-remove task_project_remove color_red pointer margin-left-10" rel="'.enCode($sub_task['rel']).'" t="'.enCode($ordered_project_tasks[$sub_task['id']]->id).'" pid="'.enCode($pid).'"></i>
                     <i class="fa fa-trash task_remove pointer margin-left-10" rel="'.enCode($sub_task['rel']).'" t="'.$ordered_project_tasks[$sub_task['id']]->id.'"></i>
             </div>';
