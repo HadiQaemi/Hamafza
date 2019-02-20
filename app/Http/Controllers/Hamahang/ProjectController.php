@@ -709,8 +709,13 @@ class ProjectController extends Controller
             ->select('hamahang_project_task.*', 'hamahang_task.*', 'hamahang_project_task.id as hp_task')
             ->get();
         $project_tasks = [];
+        $date = new jDateTime;
         foreach($hamahang_project_task as $task)
         {
+            $r = $date->getdate(strtotime($task->schedule_time));
+            $task->jalali_start_date = $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
+            $r = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
+            $task->jalali_end_date = $r['year'] . '/' . $r['mon'] . '/' . $r['mday'];
             $project_tasks[$task->id] = $task;
         }
         $res['end_start'] =  $end_start;
