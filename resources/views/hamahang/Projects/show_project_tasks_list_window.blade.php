@@ -90,9 +90,9 @@
                             echo '<div class="row col-xs-12 noLeftPadding noRightPadding process'.$task->id.'">';
                         }
                         echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->id.'</div>';
-                        echo '<div class="col-xs-5 noRightPadding noLeftPadding">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+                        echo '<div class="col-xs-4 noRightPadding noLeftPadding">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
                             '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($task->id).'&pid='.enCode($pid).'"  data-toggle="tooltip" title="'.$task->title."\n".$task->desc.'">'.$task->title.'</a></div>';
-                        echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->Assignment->Employee->Name.' '.$task->Assignment->Employee->Family.'</div>';
+                        echo '<div class="col-xs-2 noRightPadding noLeftPadding">'.$task->Assignment->Employee->Name.' '.$task->Assignment->Employee->Family.'</div>';
                         echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->jalali_start_date.'</div>';
                         echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->jalali_end_date.'</div>';
                         echo '<div class="col-xs-2 noRightPadding noLeftPadding">
@@ -127,9 +127,9 @@
                 echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
             }
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
-            echo '<div class="col-xs-5" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+            echo '<div class="col-xs-4" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
                 '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($ordered_project_tasks[$sub_task['id']]->id).'&pid='.enCode($pid).'">'.$ordered_project_tasks[$sub_task['id']]->title.'</a></div>';
-            echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
+            echo '<div class="col-xs-2 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_start_date.'</div>';
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_end_date.'</div>';
             echo '<div class="col-xs-2 noRightPadding noLeftPadding">
