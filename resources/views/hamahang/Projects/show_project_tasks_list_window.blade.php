@@ -126,7 +126,7 @@
             }else{
                 echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
             }
-            echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
+            echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
             echo '<div class="col-xs-5" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
                 '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($ordered_project_tasks[$sub_task['id']]->id).'&pid='.enCode($pid).'">'.$ordered_project_tasks[$sub_task['id']]->title.'</a></div>';
             echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
