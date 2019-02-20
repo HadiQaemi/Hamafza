@@ -1341,17 +1341,30 @@ class MyAssignedTaskController extends Controller
                     }
                 }
 
+                task_relations::where('hamahang_task_relations.task_id1','=', deCode(Request::input('tid')))
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+
+                task_relations::where('hamahang_task_relations.task_id2','=', deCode(Request::input('tid')))
+                    ->whereNull('deleted_at')
+                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+
                 if (Request::exists('new_task_tasks_'))
                 {
-                    DB::table('hamahang_task_relations')
-                        ->where('hamahang_task_relations.task_id1','=', deCode(Request::input('tid')))
-                        ->whereNull('deleted_at')
-                        ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
                     foreach (Request::input('new_task_tasks_') as $k=>$task_id)
                     {
                         task_relations::create_task_relation($task->id, $task_id, Request::input('new_task_delay_num')[$k], Request::input('new_task_delay_type')[$k], Request::input('new_task_relation')[$k], Request::input('new_task_weight')[$k]);
                     }
                 }
+
+                if (Request::exists('new_task_tasks_t1'))
+                {
+                    foreach (Request::input('new_task_tasks_t1') as $k=>$task_id)
+                    {
+                        task_relations::create_task_relation($task_id, Request::input('new_task_tasks_t2')[$k], Request::input('new_task_delay_num_old')[$k], Request::input('new_task_delay_type_old')[$k], Request::input('new_task_relation_old')[$k], Request::input('new_task_weight_old')[$k]);
+                    }
+                }
+
                 if (Request::exists('transcripts'))
                 {
                     task_transcripts::where('hamahang_task_transcript.task_id','=', deCode(Request::input('tid')))->delete();
@@ -1363,6 +1376,7 @@ class MyAssignedTaskController extends Controller
                         }
                     }
                 }
+
                 if (Request::exists('keywords'))
                 {
                     DB::table('hamahang_task_keywords')
@@ -1385,22 +1399,6 @@ class MyAssignedTaskController extends Controller
                     foreach (Request::input('new_task_projects_') as $k=>$project_id)
                     {
                         hamahang_project_task::create_task_project($task->id, $project_id, $new_project_weight[$k]);
-                    }
-                }
-
-                task_relations::where('hamahang_task_relations.task_id1','=', deCode(Request::input('tid')))
-                    ->whereNull('deleted_at')
-                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-
-                task_relations::where('hamahang_task_relations.task_id2','=', deCode(Request::input('tid')))
-                    ->whereNull('deleted_at')
-                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-                if (Request::exists('new_task_tasks_t1'))
-                {
-                    $tasks_t2 = Request::input('new_task_tasks_t2');
-                    foreach (Request::input('new_task_tasks_t1') as $k=>$task_id)
-                    {
-                        task_relations::create_task_relation($task_id, $tasks_t2[$k], Request::input('new_task_delay_num')[$k], Request::input('new_task_delay_type')[$k], Request::input('new_task_relation')[$k], Request::input('new_task_weight')[$k]);
                     }
                 }
 

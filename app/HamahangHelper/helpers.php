@@ -520,6 +520,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     if(!$canView){
                         return 403;
                     }
+                    $auth_user = auth()->user();
                     $Title = $subject->title;
                     $PageType = 'subject';
                     $current_tab = $sid . '/desktop';
@@ -538,11 +539,177 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             [
                                                 [
                                                     'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'برنامه امروز',
+                                                    'new' => '-1',
+                                                    'value' => "0",
+                                                    'icon' => 'fa-calendar',
+                                                    'subData' => [
+                                                        [
+                                                            "title" => "روز",
+                                                            "icon" => "",
+                                                            "url" => ""
+                                                        ],
+                                                        [
+                                                            "title" => "هفته",
+                                                            "icon" => "",
+                                                            "url" => ""
+                                                        ],
+                                                        [
+                                                            "title" => "ماه",
+                                                            "icon" => "",
+                                                            "url" => route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])
+                                                        ]
+                                                    ],
+                                                    'url' => '#'
+                                                ],
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
                                                     'title' => 'وظایف من',
                                                     'new' => '-1',
-                                                    'value' =>\App\Models\Hamahang\Tasks\tasks::MyTasks($pid, false, true). "",
+                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks($pid, Auth::id(), true),
                                                     'icon' => 'fa-tasks',
-                                                    'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid])
+                                                    'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid]),
+                                                    'subData' => [
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => 'table-icon related-icons related-icons-desktop',
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_tasks.list',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "priority-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_tasks.priority',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "steps-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_tasks.state',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "card-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_tasks.package',['sid' => $sid])
+                                                        ]
+                                                    ]
+                                                ],
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'وظایف بدون وقت',
+                                                    'new' => '-1',
+                                                    'value' => "0",
+                                                    'icon' => 'fa-list-alt',
+                                                    'url' => '#',
+                                                    'subData' => [
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => 'table-icon related-icons related-icons-desktop',
+                                                            "url" => ''
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "priority-icon related-icons related-icons-desktop",
+                                                            "url" => ''
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "steps-icon related-icons related-icons-desktop",
+                                                            "url" => ''
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "card-icon related-icons related-icons-desktop",
+                                                            "url" => ''
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                    ],
+                                    [
+                                        'type' => 'tasks',
+                                        'title' => 'وظایف',
+                                        'order' => '1',
+                                        'data' =>
+                                            [
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'واگذاری‌های من',
+                                                    'new' => '-1',
+                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyAssignedTasks(Auth::id(), $pid)->count(),
+                                                    'icon' => 'fa-list-alt',
+                                                    'subData' => [
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => 'table-icon related-icons related-icons-desktop',
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_assigned_tasks.list',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "priority-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_assigned_tasks.priority',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "steps-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_assigned_tasks.state',['sid' => $sid])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "card-icon related-icons related-icons-desktop",
+                                                            "url" => route('pgs.desktop.hamahang.tasks.my_assigned_tasks.package',['sid' => $sid])
+                                                        ]
+                                                    ],
+                                                    'url' => route('pgs.desktop.hamahang.tasks.my_assigned_tasks.list', ['sid' => $sid])
+                                                ],
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'پیگیری‌ها',
+                                                    'new' => '-1',
+                                                    'value' => "0",
+                                                    'icon' => 'fa-list-alt',
+                                                    'url' => '#'
+                                                ],
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'وظایف پیش‌نویس',
+                                                    'new' => '-1',
+                                                    'value' => "0",
+                                                    'icon' => 'fa-pencil-square ',
+                                                    'url' => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts',['username'=>$auth_user->Uname]),
+                                                    'subData' => [
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => 'table-icon related-icons related-icons-desktop',
+                                                            "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts',['username'=>$auth_user->Uname])
+                                                        ],
+                                                        [
+                                                            "title" => "",
+                                                            "icon" => "priority-icon related-icons related-icons-desktop",
+                                                            "url" => ''
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                    ],
+                                    [
+                                        'type' => 'tasks',
+                                        'title' => 'وظایف',
+                                        'order' => '1',
+                                        'data' =>
+                                            [
+                                                [
+                                                    'active' => '1',
+                                                    'primary' => '1',
+                                                    'title' => 'یادآوری‌ها',
+                                                    'new' => '-1',
+                                                    'value' => "0",
+                                                    'icon' => 'fa fa-bell-o',
+                                                    'url' => '#'
                                                 ],
                                                 [
                                                     'active' => '1',
@@ -1276,28 +1443,28 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'primary' => '1',
                                             'title' => 'وظایف من',
                                             'new' => '-1',
-                                            'value' => "$auth_user->MyTasksCount",
+                                            'value' => $auth_user->MyTasksCount(),
                                             'icon' => 'fa-tasks',
                                             'url' => route('ugc.desktop.hamahang.tasks.my_tasks.list', ['username' => $auth_user->Uname]),
                                             'subData' => [
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-list-alt",
+                                                    "icon" => 'table-icon related-icons related-icons-desktop',
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_tasks.list',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-retweet",
+                                                    "icon" => "priority-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_tasks.priority',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-bar-chart",
+                                                    "icon" => "steps-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_tasks.state',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-dropbox",
+                                                    "icon" => "card-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_tasks.package',['username'=>$auth_user->Uname])
                                                 ]
                                             ],
@@ -1313,22 +1480,22 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'subData' => [
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-list-alt",
+                                                    "icon" => 'table-icon related-icons related-icons-desktop',
                                                     "url" => ''
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-retweet",
+                                                    "icon" => "priority-icon related-icons related-icons-desktop",
                                                     "url" => ''
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-bar-chart",
+                                                    "icon" => "steps-icon related-icons related-icons-desktop",
                                                     "url" => ''
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-dropbox",
+                                                    "icon" => "card-icon related-icons related-icons-desktop",
                                                     "url" => ''
                                                 ]
                                             ]
@@ -1393,27 +1560,27 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'primary' => '1',
                                             'title' => 'واگذاری‌های من',
                                             'new' => '-1',
-                                            'value' => "$auth_user->MyAssignedTasksCount",
+                                            'value' => $auth_user->MyAssignedTasksCount(),
                                             'icon' => 'fa-list-alt',
                                             'subData' => [
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-list-alt",
+                                                    "icon" => 'table-icon related-icons related-icons-desktop',
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.list',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-retweet",
+                                                    "icon" => "priority-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.priority',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-bar-chart",
+                                                    "icon" => "steps-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.state',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-dropbox",
+                                                    "icon" => "card-icon related-icons related-icons-desktop",
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.package',['username'=>$auth_user->Uname])
                                                 ]
                                             ],
@@ -1439,12 +1606,12 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'subData' => [
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-list-alt",
+                                                    "icon" => 'table-icon related-icons related-icons-desktop',
                                                     "url" => route('ugc.desktop.hamahang.tasks.my_assigned_tasks.show_drafts',['username'=>$auth_user->Uname])
                                                 ],
                                                 [
                                                     "title" => "",
-                                                    "icon" => "fa fa-retweet",
+                                                    "icon" => "priority-icon related-icons related-icons-desktop",
                                                     "url" => ''
                                                 ]
                                             ]

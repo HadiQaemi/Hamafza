@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\hamafza\PostView;
+use App\Models\Hamahang\Tasks\tasks;
 use DB;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -490,6 +491,16 @@ class User extends Authenticatable
         }
 
         return $res;
+    }
+
+    public function MyAssignedTasksCount()
+    {
+        return tasks::MyAssignedTasks()->count();
+    }
+
+    public function MyTasksCount()
+    {
+        return tasks::MyTasks()->count();
     }
 
     public function MyTasks()

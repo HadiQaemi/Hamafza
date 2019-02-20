@@ -32,7 +32,7 @@
                                 @endif
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
-                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
+                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
                                             {{$task->title}}
                                         </a>
                                     </h5>
@@ -72,7 +72,7 @@
                                 @endif
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
-                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
+                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
                                             {{$task->title}}
                                         </a>
                                     </h5>
@@ -114,7 +114,7 @@
                                 @endif
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
-                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
+                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
                                             {{$task->title}}
                                         </a>
                                     </h5>
@@ -154,7 +154,7 @@
                                 @endif
                                 <div class="task_title">
                                     <h5 class="text_ellipsis">
-                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
+                                        <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
                                             {{$task->title}}
                                         </a>
                                     </h5>

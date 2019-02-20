@@ -6,7 +6,7 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
-            <a href="#tab_t1" data-toggle="tab">تعریف</a>
+            <a href="#tab_t1" data-toggle="tab">عمومی</a>
         </li>
         <li>
             <a href="#tab_t2" data-toggle="tab">تنظیم</a>

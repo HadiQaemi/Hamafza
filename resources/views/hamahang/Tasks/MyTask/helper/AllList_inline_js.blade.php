@@ -169,7 +169,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'>" + full.title + "</a>";
                         // return full.title;
                     },
                     "width": "70%"

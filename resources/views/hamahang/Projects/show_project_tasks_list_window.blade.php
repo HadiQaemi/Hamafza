@@ -36,7 +36,7 @@
     <div class="col-xs-12">
         <div class="pull-right">{{trans('projects.title')}}: </div>
         <div class="pull-right margin-right-10">
-            <a class='pointer project_info cursor-pointer' data-p_id= '{{enCode($pid)}}' data-toggle='tooltip' title='ویرایش'>{{$project_info->title}}</a>
+            <a class='pointer project_info cursor-pointer' data-p_id= '{{enCode($pid)}}' data-toggle='tooltip' title='{{$project_info->title}}'>{{$project_info->title}}</a>
         </div>
     </div>
 
@@ -67,8 +67,10 @@
     <div class="col-xs-12 line-height-35 margin-top-20 border-top-lg" style="height: 500px;overflow: auto">
         <div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 padding-bottom-10 border-bottom">
             <div class="col-xs-1 noRightPadding noLeftPadding">شماره</div>
-            <div class="col-xs-6 noRightPadding noLeftPadding">عنوان</div>
-            <div class="col-xs-2 noRightPadding noLeftPadding">مسئول</div>
+            <div class="col-xs-5 noRightPadding noLeftPadding">عنوان</div>
+            <div class="col-xs-1 noRightPadding noLeftPadding">مسئول</div>
+            <div class="col-xs-1 noRightPadding noLeftPadding">شروع</div>
+            <div class="col-xs-1 noRightPadding noLeftPadding">اتمام</div>
             <div class="col-xs-2 noRightPadding noLeftPadding">وزن/پیشرفت</div>
             <div class="col-xs-1 noRightPadding noLeftPadding">عملیات</div>
         </div>
@@ -88,9 +90,11 @@
                             echo '<div class="row col-xs-12 noLeftPadding noRightPadding process'.$task->id.'">';
                         }
                         echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->id.'</div>';
-                        echo '<div class="col-xs-6 noRightPadding noLeftPadding">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
-                            '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($task->id).'&pid='.enCode($pid).'">'.$task->title.'</a></div>';
-                        echo '<div class="col-xs-2 noRightPadding noLeftPadding">'.$task->Assignment->Employee->Name.' '.$task->Assignment->Employee->Family.'</div>';
+                        echo '<div class="col-xs-5 noRightPadding noLeftPadding">'.(isset($parents[$task->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+                            '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($task->id).'&pid='.enCode($pid).'"  data-toggle="tooltip" title="'.$task->title."\n".$task->desc.'">'.$task->title.'</a></div>';
+                        echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->Assignment->Employee->Name.' '.$task->Assignment->Employee->Family.'</div>';
+                        echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->jalali_start_date.'</div>';
+                        echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$task->jalali_end_date.'</div>';
                         echo '<div class="col-xs-2 noRightPadding noLeftPadding">
                             <input type="text" class="text-project-weight weight-'.$task->id.'" value="'.(isset($task->weight) ? $task->weight : '').'" rel="'.$task->id.'" name="task_project_weight[parent-'.$task_project[$task->id].'-'.$task->id.']" autocomplete="off"/>
                             <input type="text" class="text-project-progress progress-'.$task->id.'" value="'.(isset($task->progress) ? $task->progress : '').'" rel="'.$task->id.'" name="task_project_progress['.$task->id.']" autocomplete="off"/>
@@ -123,9 +127,11 @@
                 echo '<div class="row col-xs-12 noLeftPadding noRightPadding margin-top-10 process'.$ordered_project_tasks[$sub_task['id']]->id.'">';
             }
             echo '<div class="col-xs-1">'.$ordered_project_tasks[$sub_task['id']]->id.'</div>';
-            echo '<div class="col-xs-6" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
+            echo '<div class="col-xs-5" style="padding-right: '.(30*$cnt).'px !important">'.(isset($parents[$ordered_project_tasks[$sub_task['id']]->id]) ? '<i class="fa fa-caret-left padding-left-10" aria-hidden="true"></i>' : '' ).
                 '<a class="cursor-pointer jsPanels" href="/modals/ViewTaskForm?tid='.enCode($ordered_project_tasks[$sub_task['id']]->id).'&pid='.enCode($pid).'">'.$ordered_project_tasks[$sub_task['id']]->title.'</a></div>';
-            echo '<div class="col-xs-2 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
+            echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Name.' '.$ordered_project_tasks[$sub_task['id']]->Assignment->Employee->Family.'</div>';
+            echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_start_date.'</div>';
+            echo '<div class="col-xs-1 noRightPadding noLeftPadding">'.$ordered_project_tasks[$sub_task['id']]->jalali_end_date.'</div>';
             echo '<div class="col-xs-2">
                 <input type="text" class="text-project-weight child_of_'.$id.' weight-'.$id.'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->weight) ? $ordered_project_tasks[$sub_task['id']]->weight : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_weight[child-'.$sub_task['rel'].']" autocomplete="off"/>
                 <input type="text" class="text-project-progress child_of_'.$id.' progress-'.$sub_task['id'].'" value="'.(isset($ordered_project_tasks[$sub_task['id']]->progress) ? $ordered_project_tasks[$sub_task['id']]->progress : '').'" rel="'.$ordered_project_tasks[$sub_task['id']]->id.'" name="task_project_progress['.$ordered_project_tasks[$sub_task['id']]->id.']" autocomplete="off"/>

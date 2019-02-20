@@ -578,8 +578,8 @@
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                             <input type="radio" name="task_status" id="on_done" value="1" {{$res['task_status'] ==1 ? 'checked' : ''}}/>
                             <label for="on_done">{{ trans('tasks.on_done')}}</label>
-                            <input type="text" id="num_event" class="form-control border-radius" style="width: 40px;display: inline" name="progress" value="{{$res['percent']}}" >
-                            <label for="on_done">{{ trans('tasks.precent_progress') }}</label>
+                            <input type="text" id="num_event" class="form-control border-radius" placeholder="{{ trans('tasks.precent_progress') }}" style="width: 40px;display: inline" name="progress" value="{{$res['percent']}}" >
+                            {{--<label for="on_done">{{ trans('tasks.precent_progress') }}</label>--}}
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
                             <input type="radio" name="task_status" id="status_done" value="2" {{$res['task_status'] ==2 ? 'checked' : ''}}/>
@@ -680,7 +680,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
                         <div class="pull-right">
                             <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="3" checked/>
-                            <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.action') }}</label>
+                            <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.accept') }}</label>
                             <input type="radio" name="reject_assigner" id="reject_assigner0" class="" value="1" style="display: inline" disabled/>
                             <label for="reject_assigner0" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.reject') }}</label>
                             <input type="radio" name="reject_assigner" id="reject_assigner1" class="" value="0" style="display: inline"/>

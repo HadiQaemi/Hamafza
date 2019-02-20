@@ -14,7 +14,7 @@
                                 </span>
                             </div>
                             <div class="span_title text_ellipsis" >
-                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
                                         {{$task->title}}
                                     </a>
@@ -44,7 +44,7 @@
                                 </span>
                             </div>
                             <div class="span_title text_ellipsis" >
-                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
                                         {{$task->title}}
                                     </a>
@@ -74,7 +74,7 @@
                                 </span>
                             </div>
                             <div class="span_title text_ellipsis" >
-                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
                                         {{$task->title}}
                                     </a>
@@ -104,7 +104,7 @@
                                 </span>
                             </div>
                             <div class="span_title text_ellipsis" >
-                                <span data-toggle="tooltip" title="{{$task->title}}" class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
                                         {{$task->title}}
                                     </a>

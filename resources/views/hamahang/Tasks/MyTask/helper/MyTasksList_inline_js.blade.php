@@ -166,7 +166,7 @@
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
-        LangJson_DataTables.sLoadingRecords = '<img class="immediate-pic" style="margin-right:45%;width: 10%" src="/assets/images/lg.preloader.gif" >';
+        LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         console.log(LangJson_DataTables);
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             // columnDefs: [
@@ -206,7 +206,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + "'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip'  data-html='true' title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'>" + full.title + "</a>";
                     },
                     "width": "50%"
                 },

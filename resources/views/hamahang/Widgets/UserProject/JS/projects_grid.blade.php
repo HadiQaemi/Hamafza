@@ -8,7 +8,7 @@
         };
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
-        LangJson_DataTables.sLoadingRecords = '<img class="preloader" src="/assets/images/lg.preloader.gif" >';
+        LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         window.ProjectList = $('#personalProjectsGrid').DataTable({
             "fnDrawCallback": function(oSettings) {
                 if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {

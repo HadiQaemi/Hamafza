@@ -302,7 +302,7 @@
                 @endif
                 LangJson_DataTables = window.LangJson_DataTables;
                 LangJson_DataTables.emptyTable = '{{trans('projects.no_project_inserted')}}';
-                LangJson_DataTables.sLoadingRecords = '<img class="preloader" src="/assets/images/lg.preloader.gif" >';
+                LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
                 window.ProjectList = $('#ProjectList').DataTable({
                     "dom": '<"bottom">rt<"bottom"ipl><"clear">',
                     "ajax": {
@@ -381,7 +381,7 @@
                         {
                             "data": "end_date",
                             "mRender": function (data, type, full) {
-                                return "<a class='fa fa-edit margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.settings')}}'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.hierarchical')}}'></a><a class='fa fa-area-chart margin-right-10 pointer project_tasks_chart' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.MyTaskPackages')}}'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="{{trans('projects.page')}}" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.pid +"' title='{{trans('projects.delete')}}'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' data-toggle='tooltip' title='{{trans('tasks.create_new_task')}}'></a>";
+                                return "<a class='fa fa-cog margin-right-10 pointer project_info cursor-pointer' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.settings')}}'></a><a class='fa fa-list margin-right-10 pointer pointer project_tasks_list' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.hierarchical')}}'></a><a class='fa fa-area-chart margin-right-10 pointer project_tasks_chart' data-p_id= '"+ full.pid +"' data-toggle='tooltip' title='{{trans('projects.MyTaskPackages')}}'></a>"+ (full.pages[0] != undefined ? '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="{{trans('projects.page')}}" href="/'+ full.pages[0] +'"></a>' : '<a class="fa fa-file margin-right-10 pointer" data-toggle="tooltip" title="صفحه"></a>')+"<a class='fa fa-trash margin-right-10 pointer color_red delete_project' data-toggle='tooltip' pid='"+ full.pid +"' title='{{trans('projects.delete')}}'></a>" + "<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' data-toggle='tooltip' title='{{trans('tasks.create_new_task')}}'></a>";
                             },
                             "width": "10%"
                         }

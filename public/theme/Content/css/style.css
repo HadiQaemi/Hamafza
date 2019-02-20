@@ -2665,7 +2665,7 @@ a .navbar-brand{
 }
 
 .desktop-tool {
-    border-radius: 8px;
+    border-radius: 0px;
     background: #fff;
     height: 100%;
 }
@@ -3966,6 +3966,8 @@ input{
 }
 .ui-tooltip-content{
     color: #FFF;
+    white-space: pre-line;
+    line-height: normal;
 }
 .ui-widget-shadow{
     color: #888 !important;
@@ -4199,7 +4201,10 @@ input::-webkit-inner-spin-button {
     background-image: url("/assets/images/table.png");
 }
 .preloader{
-    margin-right:45%;
-    width: 10%;
-    max-height: 100px;
+    position: initial !important;
+    margin: 50px auto !important;;
+}
+.related-icons-desktop{
+    height: 15px;
+    width: 15px;
 }

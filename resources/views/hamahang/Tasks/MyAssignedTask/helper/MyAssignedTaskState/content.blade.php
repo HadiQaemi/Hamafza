@@ -40,8 +40,8 @@
                                     </span>
                                 @endif
                             </span>
-                            <span >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
+                            <span class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = preg_split('/ /',$task->title);
@@ -103,7 +103,7 @@
                                 @endif
                             </span>
                             <span >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = preg_split('/ /',$task->title);
@@ -163,7 +163,7 @@
                                 @endif
                             </span>
                             <span >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = preg_split('/ /',$task->title);
@@ -223,7 +223,7 @@
                                 @endif
                             </span>
                             <span >
-                                <span data-toggle="tooltip" title="{{$task->title}}">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                         @php
                                             $msgTrimmed = preg_split('/ /',$task->title);

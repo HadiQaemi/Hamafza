@@ -127,7 +127,7 @@
         }
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
-        LangJson_DataTables.sLoadingRecords = '<img class="preloader" src="/assets/images/lg.preloader.gif" >';
+        LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         window.table_chart_grid3 = $('#MyAssignedTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
             "serverSide": true,
@@ -163,7 +163,7 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space' href='/modals/ViewTaskForm?tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip' title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'>" + full.title + "</a>";
                     },
                     "width": "60%"
                 },
