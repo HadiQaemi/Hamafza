@@ -726,15 +726,14 @@
                             <input type="radio" name="ready_mental" id="ready_mental_l" value="1"/>
                             <label for="ready_mental_l">{{ trans('tasks.high') }}</label>
                         </div>
-
                     </div>
                 </div>
                 <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;">
                     <div class="row col-lg-12 noLeftPadding noRightPadding">
-                        <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
-                            <label class="line-height-35">{{ trans('tasks.timing') }}</label>
-                        </div>
-                        <div class="col-lg-10">
+                        <div class="col-lg-2 noRightPadding noLeftPadding">
+                            <div class="pull-right">
+                                <label class="line-height-35">{{ trans('tasks.timing') }}</label>
+                            </div>
                             <div class="pull-right">
                                 <input type="radio" name="timing_type" id="timing_automatic" value="automatic" disabled/>
                                 <label class="line-height-35" for="timing_automatic">{{ trans('tasks.automatic') }}</label>
@@ -743,12 +742,14 @@
                                 <input type="radio" name="timing_type" id="timing_manual" value="manual" checked/>
                                 <label class="line-height-35" for="timing_manual">{{ trans('tasks.manual') }}</label>
                             </div>
+                        </div>
+                        <div class="col-lg-10 noRightPadding noLeftPadding">
 
                             {{--<div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 30px">--}}
                                 {{--<input type="radio" name="done_time" id="not-determine" value="not-determine"/>--}}
                                 {{--<label for="not-determine">{{ trans('tasks.no-just-detemine') }}</label>--}}
                             {{--</div>--}}
-                            <div class="pull-right">
+                            <div class="pull-right margin-right-20">
                                 <label>{{ trans('tasks.begin') }}: </label>
                                 <input type="text" class="form-control border-radius DatePicker" style="display: inline" name="action_date_begin" id="action_date_begin" aria-describedby="respite_date">
                             </div>
@@ -787,8 +788,12 @@
                                 {{--<label for="determined-time">{{ trans('tasks.hour') }}</label>--}}
                                 {{--<input type="text" class="form-control border-radius TimePicker" style="display: inline" id="action_time" name="action_time" aria-describedby="respite_time">--}}
                             </div>
+                            <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 20px">
+                                <a class="btn btn-primary fa fa-plus line-height-30 height-30 noBottomPadding noTopPadding" id="add_schedul" ></a>
+                            </div>
                         </div>
                     </div>
+                    <div id="schedul_list"></div>
                     {{--<div class="row col-lg-12 noLeftPadding noRightPadding time_manual">--}}
                         {{--<div class="col-lg-12 noLeftPadding noRightPadding">--}}
 

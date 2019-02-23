@@ -34,6 +34,9 @@
         $('#action_duration').val(days);
         $('#action_time_type').val('24');
     });
+    $('#add_schedul').click(function () {
+        $('#schedul_list').append('<div class="col-xs-12 noRightPadding noLeftPadding"><div class="col-lg-2 noRightPadding noLeftPadding"></div><div class="col-lg-5 noRightPadding noLeftPadding margin-right-20"><div class="col-lg-4 noRightPadding noLeftPadding"><label>{{ trans('tasks.begin') }}: </label>' + $('#action_date_begin').val() + ' </div><div class="col-lg-4 noRightPadding noLeftPadding"><label>{{ trans('tasks.predict_duration') }}: </label>' + $('#action_duration').val() + ' </div><div class="col-lg-4 noRightPadding noLeftPadding"><label>{{ trans('tasks.end') }}: </label>' + $('#action_date_').val() + '</div></div><div class="col-lg-2 noRightPadding noLeftPadding"><a class="btn btn-danger fa fa-remove"></a></div></div>');
+    });
     function change_normal_task_timing_type(id) {
         if (id == 1) {
             var txt = '' +

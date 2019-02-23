@@ -1204,6 +1204,15 @@ li {
 .noLeftPadding {
     padding-left: 0 !important;
 }
+
+.noTopPadding {
+    padding-top: 0 !important;
+}
+
+.noBottomPadding {
+    padding-bottom: 0 !important;
+}
+
 /*footer*/
 
 div.footerPage {
