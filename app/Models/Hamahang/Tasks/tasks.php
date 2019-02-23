@@ -569,7 +569,7 @@ class tasks extends Model
         return $task;
     }
 
-    public static function MyTasks($subject_id = false, $user_id = false, $justCount = false)
+    public static function MyTasks($subject_id = false, $user_id = false, $justCount = 0)
     {
         if ($user_id)
         {
@@ -602,12 +602,10 @@ class tasks extends Model
                 ->whereNull('hamahang_subject_ables.deleted_at');
         }
 
-
         $title = Request::exists('title') ? Request::get('title') : '';
-        $status_filter = Request::exists('task_status') ? Request::get('task_status') : [0,1];
-        $official_type = Request::exists('official_type') ? Request::get('official_type') : [0,1];
+        $status_filter = Request::exists('task_status') ? Request::get('task_status') :  ($justCount!=0 ? [0,1] : [12]);
+        $official_type = Request::exists('official_type') ? Request::get('official_type') : ($justCount!=0 ? [0,1] : [12]);
         $task_important_immediate = Request::exists('task_important_immediate') ? Request::input('task_important_immediate') : [0,1,2,3];
-
 
         if ($title)
         {
@@ -1064,7 +1062,7 @@ class tasks extends Model
         return $result;
     }
 
-    public static function MyAssignedTasks($user_id = false, $subject_id = false, $api = false)
+    public static function MyAssignedTasks($user_id = false, $subject_id = false, $justCount = false, $api = false)
     {
         if ($user_id)
         {
@@ -1146,9 +1144,9 @@ class tasks extends Model
                         ->orWhereIn('hamahang_task_assignments.employee_id', Request::input('users'));
                 });
             }
-            $status_filter = Request::exists('task_status') ? Request::get('task_status') : [0,1];
-            $official_type = Request::exists('official_type') ? Request::get('official_type') : [0,1];
-            $task_important_immediate = Request::exists('task_important_immediate') ? Request::get('task_important_immediate') : [0,1,2,3];
+            $status_filter = Request::exists('task_status') ? Request::get('task_status') : ($justCount ? [0,1] : [12]);
+            $official_type = Request::exists('official_type') ? Request::get('official_type') : ($justCount ? [0,1] : [12]);
+            $task_important_immediate = Request::exists('task_important_immediate') ? Request::get('task_important_immediate') : ($justCount ? [0,1,2,3] : [12]);
 
             $filter_subject_id = Request::get('filter_subject_id');
 

@@ -495,12 +495,12 @@ class User extends Authenticatable
 
     public function MyAssignedTasksCount()
     {
-        return tasks::MyAssignedTasks()->count();
+        return tasks::MyAssignedTasks(false, false, true)->count();
     }
 
     public function MyTasksCount()
     {
-        return tasks::MyTasks()->count();
+        return tasks::MyTasks(false,false,1);
     }
 
     public function MyTasks()

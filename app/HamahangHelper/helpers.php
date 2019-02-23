@@ -568,7 +568,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                     'primary' => '1',
                                                     'title' => 'وظایف من',
                                                     'new' => '-1',
-                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks($pid, Auth::id(), true),
+                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyTasks($pid, Auth::id(), 1),
                                                     'icon' => 'fa-tasks',
                                                     'url' => route('pgs.desktop.hamahang.tasks.my_tasks.list', ['sid' => $sid]),
                                                     'subData' => [
@@ -638,7 +638,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                     'primary' => '1',
                                                     'title' => 'واگذاری‌های من',
                                                     'new' => '-1',
-                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyAssignedTasks(Auth::id(), $pid)->count(),
+                                                    'value' => \App\Models\Hamahang\Tasks\tasks::MyAssignedTasks(Auth::id(), $pid, true)->count(),
                                                     'icon' => 'fa-list-alt',
                                                     'subData' => [
                                                         [
