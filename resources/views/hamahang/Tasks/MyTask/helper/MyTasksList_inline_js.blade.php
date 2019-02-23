@@ -167,7 +167,7 @@
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
         LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
-        console.log(LangJson_DataTables);
+        // console.log(LangJson_DataTables);
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             // columnDefs: [
             //     { "width": "10%", "targets": [2,3,4,5,6] },

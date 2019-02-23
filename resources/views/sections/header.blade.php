@@ -69,6 +69,8 @@
 {{--<script src="{{App::make('url')->to('/')}}/theme/Scripts/highcharts.js"></script>--}}
 <script src="{{App::make('url')->to('/')}}/theme/Scripts/exporting.js"></script>
 <script src="{{App::make('url')->to('/')}}/theme/Scripts/jquery.ui.datepicker-cc.all.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/assets/Packages/calendar/lib/moment/moment.js"></script>
+<script type="text/javascript" src="{{App::make('url')->to('/')}}/assets/Packages/calendar/lib/moment/moment-jalaali.js"></script>
 <script>
     @if (Session::has('Login') && session('Login') == 'TRUE')
         var CurPic = "{{auth()->user()->avatar}}";

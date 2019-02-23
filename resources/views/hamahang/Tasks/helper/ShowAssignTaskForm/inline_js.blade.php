@@ -21,6 +21,19 @@
         $('.div-schedul div').addClass('hidden');
         $('.'+schedul).removeClass('hidden');
     });
+    $("#action_duration").keyup(function(){
+        m = moment($('#action_date_begin').val(), 'jYYYY-jM-jD');
+        m.add((($('#action_time_type').val()*$(this).val())/24), 'day');
+        $('#action_date_').val(m.format('jYYYY-jM-jD'));
+    });
+    $("#action_date_,#action_date_begin").change(function(){
+        m1 = moment($('#action_date_begin').val(), 'jYYYY-jM-jD');
+        m2 = moment($('#action_date_').val(), 'jYYYY-jM-jD');
+        var duration = moment.duration(m2.diff(m1));
+        var days = duration.asDays();
+        $('#action_duration').val(days);
+        $('#action_time_type').val('24');
+    });
     function change_normal_task_timing_type(id) {
         if (id == 1) {
             var txt = '' +
