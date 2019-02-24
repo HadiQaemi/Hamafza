@@ -676,7 +676,7 @@ class User extends Authenticatable
         if ($term)
         {
             $user->where('title', 'like', "%$term%");
-            $page->where('title', 'like', "%$term%");
+            $page->where('subjects.title', 'like', "%$term%");
             $subject->where('title', 'like', "%$term%");
             $group->where('title', 'like', "%$term%");
             $channel->where('title', 'like', "%$term%");
