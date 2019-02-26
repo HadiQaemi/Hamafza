@@ -116,7 +116,7 @@
         {{--</div>--}}
         {{--</nav>--}}
     </div>
-    <div id="main" style="overflow: auto;height: 100Vh;">
+    <div id="main" style="overflow: auto;height: 100Vh;z-index:0">
         <!-- New HTMl -->
         {{--<div id="scrollReset">--}}
             {{--<a href="#" class="up glyphicon glyphicon-chevron-up"></a>--}}

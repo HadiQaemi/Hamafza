@@ -58,7 +58,6 @@
                     title: '<span style="height:30px" class=" btn  fa fa-anchor icon-porsesh1"></span>پرسش',
                     onClick: function (text, offset) {
                         $(".question").trigger("click");
-                        console.log(text);
                         $("#NewPost").val(text);
                         $(".textassist").hide();
                         return false;

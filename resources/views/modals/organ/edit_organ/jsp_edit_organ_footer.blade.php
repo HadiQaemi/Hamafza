@@ -1,6 +1,6 @@
 <div class="col-xs-12">
     <div class="col-xs-12 " >
-        <button class="btn btn-info pull-left"id="btn_edit_organ">ثبت</button>
+        <button class="btn btn-primary pull-left"id="btn_edit_organ">{{trans('app.confirm')}}</button>
     </div>
 </div>
 </div>
