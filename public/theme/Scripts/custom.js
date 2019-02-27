@@ -674,6 +674,10 @@ $(document).on("click", "#toolbar .comment", function () {
             $("#mainContainer").css("height", 'auto');
         }
     });
+    if($('.sendComment').css("display") == 'block')
+        $('.sendComment').css('display','none');
+    else
+        $('.sendComment').css('display','block');
 });
 
 var editorHeight = "200px";

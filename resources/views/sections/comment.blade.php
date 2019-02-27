@@ -18,7 +18,7 @@ $hide_type = false;
         var hide_type = '{!! $hide_type !!}';
     </script>
 @endif
-<div class="sendComment">
+<div class="sendComment" id="sendComment">
     @if(session('uid') !='')
         <div class="col-md-10 col-md-push-1 TitleHeads">
             <h1 id="TitleHeads" class="pull-right"></h1>
