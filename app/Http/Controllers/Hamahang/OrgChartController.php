@@ -77,6 +77,14 @@ class OrgChartController extends Controller
         return $tree;
     }
 
+    public function OrgansList($username)
+    {
+        $arr = variable_generator('user','desktop',$username);
+        $arr['Uname'] = $username;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.OrgansList', $arr);
+    }
+
     public function OrgOrgansList($username)
     {
         $arr = variable_generator('user','desktop',$username);
@@ -93,20 +101,23 @@ class OrgChartController extends Controller
     }
     public function AjaxOrgOrgans()
     {
-        $data = DB::table('hamahang_org_organs AS organs')
-            ->leftJoin('user', 'user.id', '=', 'organs.uid')
-            ->leftJoin('hamahang_org_organs AS ParentOrg', 'ParentOrg.id', '=', 'organs.parent_id')
-            ->leftJoin('hamahang_org_charts AS ChartsOrg', 'ChartsOrg.org_organs_id', '=', 'organs.id')
+        $data = org_organs::leftJoin('user', 'user.id', '=', 'hamahang_org_organs.uid')
+            ->leftJoin('hamahang_org_organs AS ParentOrg', 'ParentOrg.id', '=', 'hamahang_org_organs.parent_id')
+            ->leftJoin('hamahang_org_charts AS ChartsOrg', 'ChartsOrg.org_organs_id', '=', 'hamahang_org_organs.id')
             ->select(
                 'user.Uname AS CreatorUserName',
                 'user.Name AS CreatorName',
                 'ChartsOrg.id AS ChartID',
                 'user.Family AS CreatorFamily',
                 'ParentOrg.title AS ParentTitle',
-                'organs.*'
-            )->whereNull('organs.deleted_at')->groupBy('id')
-            ->get();
-        //return DB::getQueryLog();
+                'hamahang_org_organs.*'
+            )->whereNull('hamahang_org_organs.deleted_at')->groupBy('id');
+        return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+            ->addColumn('oid', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->make(true);
         $data = collect($data)->map(function ($x)
         {
             return (array)$x;
@@ -261,9 +272,90 @@ class OrgChartController extends Controller
         $arr['Chart'] = $Chart;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgChartShow', $arr);
-        //}
+    }
+    public function OrgListShow($username,$chart_id)
+    {
+        /* $validator = Validator::make([$username,$chart_id],
+              [
+                'chart_id'=>'required'
+              ],
+              [],
+              [
+                  'new_item_title' => 'عنوان ',
+                  'new_item_title' => 'عنوان ',
+              ]
+          );
+          if ($validator->fails())
+          {
 
+              $result['error'] = $validator->errors();
+              $result['success'] = false;
+              return json_encode($result);
+          }
+          else
+          {*/
+        $Chart = org_charts::findOrFail($chart_id);
+        $arr = variable_generator('user', 'desktop', $username);
+        $arr['chart_id'] = $chart_id;
+        $arr['Chart'] = $Chart;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.OrgListShow', $arr);
+    }
+    public function ShowJobList($username,$chart_id)
+    {
+        /* $validator = Validator::make([$username,$chart_id],
+              [
+                'chart_id'=>'required'
+              ],
+              [],
+              [
+                  'new_item_title' => 'عنوان ',
+                  'new_item_title' => 'عنوان ',
+              ]
+          );
+          if ($validator->fails())
+          {
 
+              $result['error'] = $validator->errors();
+              $result['success'] = false;
+              return json_encode($result);
+          }
+          else
+          {*/
+        $Chart = org_charts::findOrFail($chart_id);
+        $arr = variable_generator('user', 'desktop', $username);
+        $arr['chart_id'] = $chart_id;
+        $arr['Chart'] = $Chart;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.ShowJobList', $arr);
+    }
+    public function ShowPostList($username,$chart_id)
+    {
+        /* $validator = Validator::make([$username,$chart_id],
+              [
+                'chart_id'=>'required'
+              ],
+              [],
+              [
+                  'new_item_title' => 'عنوان ',
+                  'new_item_title' => 'عنوان ',
+              ]
+          );
+          if ($validator->fails())
+          {
+
+              $result['error'] = $validator->errors();
+              $result['success'] = false;
+              return json_encode($result);
+          }
+          else
+          {*/
+        $Chart = org_charts::findOrFail($chart_id);
+        $arr = variable_generator('user', 'desktop', $username);
+        $arr['chart_id'] = $chart_id;
+        $arr['Chart'] = $Chart;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.ShowPostList', $arr);
     }
 
     public function ModifyChartInfo()
@@ -665,11 +757,19 @@ class OrgChartController extends Controller
             $organ_title = Request::get('organ_title');
             $organ_description = Request::get('organ_description');
             $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
-            org_organs::create([
+            $organs = org_organs::create([
                 'uid' => auth()->id(),
                 'parent_id' => $organ_parent,
                 'title' => $organ_title,
                 'description' => $organ_description,
+            ]);
+            $organs_id = $organs->id;
+            org_charts::create([
+                'uid' => auth()->id(),
+                'org_organs_id' => $organs_id,
+                'title' => $organ_title,
+                'description' => $organ_parent,
+
             ]);
             $result['success'] = true;
         }
@@ -698,10 +798,9 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
         else{
-
             $organ_title = Request::get('organ_title');
             $organ_description = Request::get('organ_description');
-            $organ_id=4;
+            $organ_id = deCode(Request::get('org_id'));
             $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
             $organ=org_organs::find($organ_id);
             $organ->title=$organ_title;

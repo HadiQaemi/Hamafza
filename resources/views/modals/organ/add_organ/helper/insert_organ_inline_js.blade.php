@@ -31,11 +31,8 @@
                 data: $('#Form_Add_Organ').serialize(),
                 success: function (result) {
                     if (result.success == true) {
-                        var msg='سازمان جدید ایجاد گردید';
-                        messageBox('success',msg,'',{ 'id' :'alert_insert'});
-                        $('#root_item_title').val('');
-                        $('#organ_parent').val('');
-                        $('#organ_description').val('');
+                        $('.jsPanel-btn-close').click();
+                        window.table_organs_grid.ajax.reload();
                     }
                     else {
                         messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');

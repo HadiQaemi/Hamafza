@@ -1213,6 +1213,17 @@ li {
     padding-bottom: 0 !important;
 }
 
+.noRightMargin {
+    margin-right: 0 !important;
+}
+
+.noLeftMargin {
+    margin-left: 0 !important;
+}
+
+.padding-top-20{
+    padding-top: 20px !important;
+}
 /*footer*/
 
 div.footerPage {
@@ -4216,4 +4227,9 @@ input::-webkit-inner-spin-button {
 .related-icons-desktop{
     height: 15px;
     width: 15px;
+}
+.current_page {
+    background-color: #32cd328a;
+    padding: 3px;
+    border-radius: 5px;
 }

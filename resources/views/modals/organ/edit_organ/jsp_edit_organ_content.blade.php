@@ -9,16 +9,17 @@
                         <span>{{ trans('app.title') }}</span>
                     </label>
                     <input name="organ_title" id="root_item_title" class="form-control" required value="{{$title}}"/>
+                    <input type="hidden" name="org_id" id="org_id" class="form-control" required value="{{$org_id}}"/>
                 </div>
-                <div class="form-group col-md-12">
-                    <label>
-                        <span class="required">*</span>
-                        <span>{{ trans('org_chart.parent') }}</span>
-                    </label>
-                    <select id="organ_parent" name="parent_organ" class="js-states form-control">
+                {{--<div class="form-group col-md-12">--}}
+                    {{--<label>--}}
+                        {{--<span class="required">*</span>--}}
+                        {{--<span>{{ trans('org_chart.parent') }}</span>--}}
+                    {{--</label>--}}
+                    {{--<select id="organ_parent" name="parent_organ" class="js-states form-control">--}}
 
-                    </select>
-                </div>
+                    {{--</select>--}}
+                {{--</div>--}}
                 <div class="form-group col-md-12">
                     <label> <span>{{ trans('app.description') }}</span></label>
                     <textarea name="organ_description" id="organ_description" class="form-control">{{$description}}</textarea>

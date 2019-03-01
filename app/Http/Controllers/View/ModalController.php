@@ -2849,6 +2849,39 @@ class ModalController extends Controller
         ]);
     }
 
+    public function add_new_organ(Request $request)
+    {
+        return json_encode([
+            'header' => trans('org_chart.add_new_organization'),
+            'content' => view('modals.organ.add_organ.jsp_add_new_organ_content')
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_add_organ_footer')
+                ->render()
+        ]);
+    }
+
+    public function add_new_post(Request $request)
+    {
+        return json_encode([
+            'header' => trans('org_chart.add_new_post'),
+            'content' => view('modals.organ.add_organ.jsp_add_new_post_content')
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_add_post_footer')
+                ->render()
+        ]);
+    }
+
+    public function add_new_organ_form(Request $request)
+    {
+        return json_encode([
+            'header' => trans('org_chart.add_new_post'),
+            'content' => view('modals.organ.add_organ.jsp_add_new_organ_form')
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_add_post_footer')
+                ->render()
+        ]);
+    }
+
     public function add_organ(Request $request)
     {
         return json_encode([

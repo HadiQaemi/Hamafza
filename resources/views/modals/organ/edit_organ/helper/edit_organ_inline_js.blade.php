@@ -31,8 +31,7 @@
                 data: $('#Form_edit_Organ').serialize(),
                 success: function (result) {
                     if (result.success == true) {
-                        var msg='ویرایش شد';
-                        messageBox('success',msg,'',{ 'id' :'alert_insert'});
+                        $('.jsPanel-btn-close').click();
                         window.table_organs_grid.destroy();
                         organs_grid();
 

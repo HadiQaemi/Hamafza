@@ -17,33 +17,45 @@
         <div class="space-10"></div>
         <div class="col-xs-12">
             <fieldset>
-                <legend>
-                    <h3>
-                        <span>{{ trans('org_chart.organizations_list') }}</span>
-                        <a href="{!! route('modals.add_organ') !!}" class="jsPanels btn btn-default pull-left jspa" >
-                            <i ></i>
-                            <span>{{ trans('org_chart.add_organization') }}</span>
-                        </a>
+                <div id="OrgList">
+                    <legend>
+                        <h3>
+                            <span>{{ trans('org_chart.organizations_list') }}</span>
+                            <a href="{!! route('modals.add_new_organ') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>
+                            <div class="clearfix"></div>
+                        </h3>
+                    </legend>
+                    <div class="row-fluid">
+                        <div class="col-lg-12">
+                            <table id="OrgOrgansGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>{{ trans('app.id') }}</th>
+                                    <th>{{ trans('org_chart.creator') }}</th>
+                                    <th>{{ trans('org_chart.organ') }}</th>
+                                    <th>{{ trans('app.title') }}</th>
+                                    <th>{{ trans('app.description') }}</th>
+                                    <th>{{ trans('org_chart.create') }}</th>
+                                    <th>{{ trans('app.action') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
                         <div class="clearfix"></div>
-                    </h3>
-                </legend>
-                <div class="row-fluid">
-                    <div class="col-lg-12">
-                        <table id="OrgOrgansGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%" style="font-size: 10px;">
-                            <thead>
-                            <tr>
-                                <th>{{ trans('app.id') }}</th>
-                                <th>{{ trans('org_chart.creator') }}</th>
-                                <th>{{ trans('org_chart.organ') }}</th>
-                                <th>{{ trans('app.title') }}</th>
-                                <th>{{ trans('app.description') }}</th>
-                                <th>{{ trans('org_chart.create') }}</th>
-                                <th>{{ trans('app.action') }}</th>
-                            </tr>
-                            </thead>
-                        </table>
                     </div>
-                    <div class="clearfix"></div>
+                </div>
+                <div class="hidden">
+                    <div class="col-xs-12 noLeftPadding noRightPadding">
+                        <div class="col-xs-1"><i class="fa fa-arrow-left pointer" id="BackToOrgans" style="margin-top: 10px;"></i></div>
+                        <div class="col-xs-9"></div>
+                        <div class="col-xs-2 text-left">
+                            <span class="fa fa-sitemap pointer showOrgChart relatedOrg" style="margin-right: 10px;font-size: 20px" data-toggle="tooltip" title="{{trans('org_chart.chart_view')}}"></span>
+                            <span class="fa fa-table pointer showOrglist relatedOrg" style="margin-right: 10px;font-size: 20px" data-toggle="tooltip" title="{{trans('org_chart.table_view')}}"></span>
+                            <span class="fa fa-vcard pointer showJoblist relatedOrg" style="margin-right: 10px;font-size: 20px" data-toggle="tooltip" title="{{trans('org_chart.job_view')}}"></span>
+                            <span class="fa fa-laptop pointer showPostlist relatedOrg" style="margin-right: 10px;font-size: 20px" data-toggle="tooltip" title="{{trans('org_chart.position_view')}}"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 noLeftPadding noRightPadding" id="OtherView"></div>
                 </div>
             </fieldset>
         </div>
@@ -250,14 +262,26 @@
 
         }
         function organs_grid() {
+            LangJson_DataTables = window.LangJson_DataTables;
+            LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
+            LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
             window.table_organs_grid = $('#OrgOrgansGrid').DataTable({
                 "dom": window.CommonDom_DataTables,
+                "serverSide": false,
                 "ajax": {
                     "url": "{!! URL::route('hamahang.org_chart.org_organs.ajax_org_organs',['username'=>$UName]) !!}",
                     "type": "POST"
                 },
+                "bSort": true,
+                "order": [[ 5, "desc" ]],
+                "aaSorting": [],
+                "bSortable": true,
+                "autoWidth": false,
+                "searching": false,
+                "pageLength": 25,
+                // "scrollY": 400,
                 "language": LangJson_DataTables,
-                "processing": true,
+                "processing": false,
                 columns: [
                     {"data": "id"},
                     {
@@ -279,22 +303,21 @@
                         "bSortable": false,
                         "mRender": function (data, type, full) {
                             var id = full.id;
+                            var oid = full.oid;
                             var title = full.title;
                             var description=full.description;
 
                             window.RowData[id] = full;
                             return "" +
-                                '<a class="link_pointer" style="font-size: 10px" onclick="RemoveOrg(' + id + ')">' +
-                                '   <i class="fa fa-trash"></i>' +
-                                '</a>' +
-                                '<span> | </span>' +
-                                '<a class="jsPanels edit_btn" href="{!! route('modals.edit_organ')!!}?org_id='+id+'&org_title='+title+'&org_description='+description+'"' +
-                                '   <i class="fa fa-edit"></i>' +
-                                '   <span>{{ trans('app.edit') }}</span>' +
-                                '</a>' +
-                                '<span> | </span>' +
-                                (full.ChartID==null ? '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+id+'"><i class="fa fa-object-group"></i><span style="margin-right:4px;">{{ trans('org_chart.create_chart') }}</span></a>' :
-                                    '<a href="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'"   ><span>{{ trans('org_chart.view_edit') }}</span></a>')
+                                '<a class="link_pointer fa fa-trash color_red margin-right-10" style="font-size: 10px"  onclick="RemoveOrg(' + oid + ')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>' +
+                                '<a class="jsPanels fa fa-edit gray_light_color edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
+                                (full.ChartID==null ?
+                                    '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+oid+'"><i class="fa fa-object-group"></i></a>' :
+                                    '<a class="fa fa-sitemap margin-right-10 showOrgChart pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.chart_view')}}"></a>' +
+                                    '<a class="fa fa-table margin-right-10 showOrglist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.table_view')}}"></a>' +
+                                    '<a class="fa fa-vcard margin-right-10 showJoblist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_job_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.job_view')}}"></a>' +
+                                    '<a class="fa fa-laptop margin-right-10 showPostlist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_post_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.position_view')}}"></a>'
+                                )
 
                                 /*'<a style="font-size: 10px" onClick="OpenModalListOrganCharts(' + id + ',' + '"' + title + '"' + ')">' +
                                 '   <i class="fa fa-object-group"></i>' +
@@ -335,6 +358,86 @@
             });
 
         }
+        $(document).on('click', '.showOrgChart', function () {
+            var url = '{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
+            $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "html",
+                data: {},
+                success: function (data) {
+                    $('#OtherView').html(data);
+                    $('#OtherView').parent().removeClass('hidden');
+                    $('#OrgList').addClass('hidden');
+                    $('.relatedOrg.showOrgChart').attr('add',$(this).attr('add'));
+                    $('.relatedOrg').attr('rel',$(this).attr('rel'));
+                    $('.relatedOrg').removeClass('current_page');
+                    $('.relatedOrg.showOrgChart').addClass('current_page');
+                }
+            });
+        });
+        $(document).on('click', '.showOrglist', function () {
+            var url = '{!! route('ugc.desktop.hamahang.org_chart.show_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
+            $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "html",
+                data: {},
+                success: function (data) {
+                    $('#OtherView').html(data);
+                    $('#OtherView').parent().removeClass('hidden');
+                    $('#OrgList').addClass('hidden');
+                    $('.relatedOrg.showOrglist').attr('add',$(this).attr('add'));
+                    $('.relatedOrg').attr('rel',$(this).attr('rel'));
+                    $('.relatedOrg').removeClass('current_page');
+                    $('.relatedOrg.showOrglist').addClass('current_page');
+                }
+            });
+        });
+        $(document).on('click', '.showJoblist', function () {
+            var url = '{!! route('ugc.desktop.hamahang.org_chart.show_job_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
+            $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "html",
+                data: {},
+                success: function (data) {
+                    $('#OtherView').html(data);
+                    $('#OtherView').parent().removeClass('hidden');
+                    $('#OrgList').addClass('hidden');
+                    $('.relatedOrg.showJoblist').attr('add',$(this).attr('add'));
+                    $('.relatedOrg').attr('rel',$(this).attr('rel'));
+                    $('.relatedOrg').removeClass('current_page');
+                    $('.relatedOrg.showJoblist').addClass('current_page');
+                }
+            });
+        });
+        $(document).on('click', '.showPostlist', function () {
+            var url = '{!! route('ugc.desktop.hamahang.org_chart.show_post_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
+            $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "html",
+                data: {},
+                success: function (data) {
+                    $('#OtherView').html(data);
+                    $('#OtherView').parent().removeClass('hidden');
+                    $('#OrgList').addClass('hidden');
+                    $('.relatedOrg.showPostlist').attr('add',$(this).attr('add'));
+                    $('.relatedOrg').attr('rel',$(this).attr('rel'));
+                    $('.relatedOrg').removeClass('current_page');
+                    $('.relatedOrg.showPostlist').addClass('current_page');
+                }
+            });
+        });
+        $(document).on('click', '#BackToOrgans', function () {
+            $('#OtherView').parent().addClass('hidden');
+            $('#OrgList').removeClass('hidden');
+        });
         function OpenModalAddChart(id) {
 
             cur_org_id = id;

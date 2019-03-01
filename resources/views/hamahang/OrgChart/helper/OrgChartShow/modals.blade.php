@@ -267,10 +267,7 @@
                 </div>
                 <div class="modal-footer">
                     <div id="current_item_info">
-                        <button class="btn btn-info" type="button" onclick="create_new_root_item()">
-                            <i ></i>
-                            <span>ثبت و ذخیره سازی</span>
-                        </button>
+                        <button class="btn btn-primary" type="button" onclick="create_new_root_item()">{{trans('app.confirm')}}</button>
                     </div>
                 </div>
             </form>

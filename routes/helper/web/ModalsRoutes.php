@@ -58,6 +58,9 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     Route::post( 'add_user_view', ['as' => 'modals.add_user_view', 'uses' => 'View\ModalController@add_user_view', 'middleware' => ['dynamic_permission:modals.add_user_view']]);
     Route::post( 'manager_charts', ['as' => 'modals.manager_charts', 'uses' => 'View\ModalController@manager_charts', 'middleware' => ['dynamic_permission:modals.manager_charts']]);
     Route::post( 'add_organ', ['as' => 'modals.add_organ', 'uses' => 'View\ModalController@add_organ', 'middleware' => ['dynamic_permission:modals.add_organ']]);
+    Route::post( 'add_new_organ', ['as' => 'modals.add_new_organ', 'uses' => 'View\ModalController@add_new_organ', 'middleware' => ['dynamic_permission:modals.add_organ']]);
+    Route::post( 'add_new_post', ['as' => 'modals.add_new_post', 'uses' => 'View\ModalController@add_new_post', 'middleware' => ['dynamic_permission:modals.add_organ']]);
+    Route::post( 'add_new_organ_form', ['as' => 'modals.add_new_organ_form', 'uses' => 'View\ModalController@add_new_organ_form', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'edit_organ', ['as' => 'modals.edit_organ', 'uses' => 'View\ModalController@edit_organ', 'middleware' => ['dynamic_permission:modals.edit_organ']]);
     Route::post( 'edit_chart', ['as' => 'modals.edit_chart', 'uses' => 'View\ModalController@edit_chart', 'middleware' => ['dynamic_permission:modals.edit_chart']]);
     Route::post('basicdata_get_users_scores', ['as' => 'modals.basicdata_get_users_scores', 'uses' => 'View\ModalController@basicdataGetUsersScores', 'middleware' => ['dynamic_permission:modals.basicdata_get_users_scores']]);
