@@ -20,7 +20,7 @@
                 <div id="OrgList">
                     <legend>
                         <h3>
-                            <span>{{ trans('org_chart.organizations_list') }}</span>
+{{--                            <span>{{ trans('org_chart.organizations_list') }}</span>--}}
                             <a href="{!! route('modals.add_new_organ') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>
                             <div class="clearfix"></div>
                         </h3>
@@ -30,9 +30,9 @@
                             <table id="OrgOrgansGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>{{ trans('app.id') }}</th>
-                                    <th>{{ trans('org_chart.creator') }}</th>
-                                    <th>{{ trans('org_chart.organ') }}</th>
+                                    {{--<th>{{ trans('app.id') }}</th>--}}
+                                    {{--<th>{{ trans('org_chart.creator') }}</th>--}}
+                                    {{--<th>{{ trans('org_chart.organ') }}</th>--}}
                                     <th>{{ trans('app.title') }}</th>
                                     <th>{{ trans('app.description') }}</th>
                                     <th>{{ trans('org_chart.create') }}</th>
@@ -273,7 +273,7 @@
                     "type": "POST"
                 },
                 "bSort": true,
-                "order": [[ 5, "desc" ]],
+                // "order": [[ 5, "desc" ]],
                 "aaSorting": [],
                 "bSortable": true,
                 "autoWidth": false,
@@ -283,18 +283,18 @@
                 "language": LangJson_DataTables,
                 "processing": false,
                 columns: [
-                    {"data": "id"},
-                    {
-                        "data": ["CreatorName"],
-                        "mRender": function (data, type, full) {
-                            //console.log(full.CreatorName);
-                            if(full.CreatorName)
-                                return full.CreatorName + " " + full.CreatorFamily;
-                            else
-                                return '';
-                        }
-                    },
-                    {"data": "ParentTitle"},
+                    // {"data": "id"},
+                    // {
+                    //     "data": ["CreatorName"],
+                    //     "mRender": function (data, type, full) {
+                    //         //console.log(full.CreatorName);
+                    //         if(full.CreatorName)
+                    //             return full.CreatorName + " " + full.CreatorFamily;
+                    //         else
+                    //             return '';
+                    //     }
+                    // },
+                    // {"data": "ParentTitle"},
                     {"data": "title"},
                     {"data": "description"},
                     {"data": "created_at"},
@@ -380,6 +380,7 @@
         $(document).on('click', '.showOrglist', function () {
             var url = '{!! route('ugc.desktop.hamahang.org_chart.show_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
             $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            var rel = $(this).attr('rel');
             $.ajax({
                 type: "GET",
                 url: url,
@@ -393,12 +394,46 @@
                     $('.relatedOrg').attr('rel',$(this).attr('rel'));
                     $('.relatedOrg').removeClass('current_page');
                     $('.relatedOrg.showOrglist').addClass('current_page');
+                },
+                complete: function (data) {
+                    showOrglist(rel);
                 }
             });
         });
+        function  showOrglist(organ_id) {
+            var send_info = {
+                organ_id: organ_id
+            };
+            $('#ShowOrglistGrid').DataTable({
+                "dom": window.CommonDom_DataTables,
+                "ajax": {
+                    "url": "{{ route('hamahang.org_chart.fetch_org_list') }}",
+                    "type": "POST",
+                    "data": send_info
+                },
+                "searching": false,
+                "language": LangJson_DataTables,
+                "processing": false,
+                columns: [
+                    {"data": "title"},
+                    {"data": "description"},
+                    {"data": "created_at"},
+                    {
+                        "data": "id",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            var id = full.id;
+                            return "<i class='fa fa-remove margin-left-10'></i> <i class='fa fa-edit'></i>";
+                        }
+                    }
+                ]
+            });
+        }
         $(document).on('click', '.showJoblist', function () {
             var url = '{!! route('ugc.desktop.hamahang.org_chart.show_job_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
             $('.relatedOrg').attr('rel',$(this).attr('rel'));
+            var rel = $(this).attr('rel');
             $.ajax({
                 type: "GET",
                 url: url,
@@ -412,11 +447,46 @@
                     $('.relatedOrg').attr('rel',$(this).attr('rel'));
                     $('.relatedOrg').removeClass('current_page');
                     $('.relatedOrg.showJoblist').addClass('current_page');
+                },
+                complete: function (data) {
+                    ShowJoblist(rel);
                 }
             });
         });
+        function  ShowJoblist(organ_id) {
+            var send_info = {
+                organ_id: organ_id
+            };
+            $('#ShowJoblistGrid').DataTable({
+                "dom": window.CommonDom_DataTables,
+                "ajax": {
+                    "url": "{{ route('hamahang.org_chart.fetch_job_list') }}",
+                    "type": "POST",
+                    "data": send_info
+                },
+                "searching": false,
+                "language": LangJson_DataTables,
+                "processing": false,
+                columns: [
+                    {"data": "title"},
+                    {"data": "title_item"},
+                    {"data": "describ"},
+                    {"data": "amount"},
+                    {
+                        "data": "id",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            var id = full.id;
+                            return "<i class='fa fa-remove margin-left-10'></i> <i class='fa fa-edit'></i>";
+                        }
+                    }
+                ]
+            });
+        }
         $(document).on('click', '.showPostlist', function () {
             var url = '{!! route('ugc.desktop.hamahang.org_chart.show_post_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');
+            var rel = $(this).attr('rel');
             $('.relatedOrg').attr('rel',$(this).attr('rel'));
             $.ajax({
                 type: "GET",
@@ -431,9 +501,45 @@
                     $('.relatedOrg').attr('rel',$(this).attr('rel'));
                     $('.relatedOrg').removeClass('current_page');
                     $('.relatedOrg.showPostlist').addClass('current_page');
+                },
+                complete: function (data) {
+                    showPostlist(rel);
                 }
             });
         });
+        function  showPostlist(organ_id) {
+            var send_info = {
+                organ_id: organ_id
+            };
+            $('#ShowPostlistGrid').DataTable({
+                "dom": window.CommonDom_DataTables,
+                "ajax": {
+                    "url": "{{ route('hamahang.org_chart.fetch_post_list') }}",
+                    "type": "POST",
+                    "data": send_info
+                },
+                "searching": false,
+                "language": LangJson_DataTables,
+                "processing": false,
+                columns: [
+                    {"data": "extra_title"},
+                    {"data": "title_item"},
+                    {"data": "title_job"},
+                    {"data": "location"},
+                    {"data": "share_performance"},
+                    {"data": "outsourcing"},
+                    {
+                        "data": "id",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+                            var id = full.id;
+                            return "<i class='fa fa-remove margin-left-10'></i> <i class='fa fa-edit'></i>";
+                        }
+                    }
+                ]
+            });
+        }
         $(document).on('click', '#BackToOrgans', function () {
             $('#OtherView').parent().addClass('hidden');
             $('#OrgList').removeClass('hidden');
@@ -633,6 +739,80 @@
                 url: "{{ route('auto_complete.organs') }}"
             });
             window.table_chart_grid = $('#OrgOrgansChartGrid').DataTable();
+        });
+
+        var JS_Panel_2 ;
+        $(document).on("click", ".jsPanelsPositions", function () {
+            link = "{{route('modals.add_new_post')}}";
+            title = $(this).attr('title');
+            item = $(this).attr('item');
+            modal = 'modal' == $(this).attr('modal') ? 'modal' : '';
+            //get_height = $(this).attr('height');
+            if (link.indexOf('share?sid') > 0)
+                title = 'بازنشر';
+            if (link.indexOf('print?sid') > 0)
+                title = 'چاپ';
+            var h = $(window).height();
+            var w = $(window).width();
+            JS_Panel_2 = $.jsPanel({
+                contentAjax: {
+                    url: link,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {item_id: item},
+                    done: function (data, textStatus, jqXHR, panel) {
+                        //  this.content.append(jqXHR.responseText);
+                        //console.log(data.content);
+                        panel.headerTitle(data.header);
+                        panel.content.html(data.content);
+                        panel.toolbarAdd('footer', [{item: data.footer}]);
+                        //panel.content.css({"width": "800px", "max-height": "550px", "height": hei, 'overflow-y': 'auto'});  ;
+                    }
+                },
+                headerControls: {
+                    minimize: 'disable',
+                    smallify: 'disable'
+                },
+                headerTitle: title,
+                contentOverflow: {horizontal: 'hidden', vertical: 'auto'},
+                panelSize: {width: w * 0.7, height: h * 0.7},
+                // contentSize: {width: "800px", height: hei},
+                // position: {top: h, left: w},
+                // position: 'center',
+                theme: 'default',
+                paneltype: modal,
+            });
+            //JS_Panel.resize('1000px','500px');
+            JS_Panel_2.content.html('<div class="loader"></div>');
+            return false
+        });
+        $(document).on("click", "#btn_insert_post", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.org_chart.insert_posts')}}',
+                dataType: "json",
+                data: $('#add_new_post_frm').serialize(),
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        $('#list_positions').append('<tr>'+
+                                '<td class="col-xs-3">' + result.post.extra_title + '</td>'+
+                                '<td class="col-xs-3">' + result.post.location + '</td>'+
+                                '<td class="col-xs-3">' + result.post.share_performance + '</td>'+
+                                '<td class="col-xs-2">' + result.post.outsourcing + '</td>' +
+                                '<td class="col-xs-1">' +
+                                    '<i class="fa fa-remove remove_post margin-left-10" rel="' + result.post.id + '"></i>' +
+                                    '<i class="fa fa-edit edit_post margin-left-10" rel="' + result.post.id + '"></i>' +
+                                '</td>' +
+                            '</tr>');
+                        JS_Panel_2.close();
+                    } else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                    setTimeout(function(){$("#alert_insert").html('') }, 4000);
+                }
+            });
         });
     </script>
 @stop

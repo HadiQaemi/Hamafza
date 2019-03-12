@@ -107,7 +107,11 @@ class HomeController extends Controller
         {
             case 'hamafza':
             {
-                if (config('constants.DefIndexView') == 'hamafza_1')
+                if (config('constants.DefIndexView') == 'hamafza_2')
+                {
+                    $index_view = 'layouts.homepages.hamafza_2';
+                }
+                elseif (config('constants.DefIndexView') == 'hamafza_1')
                 {
                     $index_view = 'layouts.homepages.hamafza_1';
                 }

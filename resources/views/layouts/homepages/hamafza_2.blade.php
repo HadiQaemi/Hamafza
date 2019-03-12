@@ -22,7 +22,9 @@
     @endif
     <title>{{ $SiteTitle }}</title>
     @include('layouts.homepages.helpers.hamafza_2.assets.style.main_style')
-
+    @include('layouts.homepages.helpers.hamafza_2.assets.script.main_scripts')
+    @include('layouts.homepages.helpers.hamafza_2.assets.script.inline_scripts')
+    @include('layouts.helpers.common.sections.helpers.nav_bar.auth_modals')
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 </head>
@@ -40,7 +42,9 @@
                 </button>
                 <a class="navbar-brand rtl-brand" href="#">هم افزا</a>
             </div>
-
+        @php ($logged_in = session('Login') && session('Login') == 'TRUE')
+        @php ($style = $logged_in ? null : 'display: none')
+        @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul id="custom-navbar-right" class="nav navbar-nav navbar-right col-xs-9">
@@ -49,58 +53,47 @@
                     <li><a href="{{ url('/2') }}">دانشنامه</a></li>
                     <li><a href="{{ url('/1') }}">قرآن کریم</a></li>
                 </ul>
-                <div class="navbar-left col-xs-12 col-sm-4">
-                    <ul id="header-icons" class="nav navbar-nav col-xs-5 col-md-4 header-icons">
-                        <li style="border: none;"><a aria-controls="side-search-tab-1" href="#side-search-tab-1" role="tab" data-toggle="tab"><span style="font-size: 20px; color: white;" class="icon-search-1"></span></a></li>
-                        <li style="border: none;"><a aria-controls="side-search-tab-2" href="#side-search-tab-2" role="tab" data-toggle="tab"><span style="font-size: 20px; color: white;" class="icon-tag"></span></a></li>
-                        <li style="border: none;"><a aria-controls="side-search-tab-3" href="#side-search-tab-3" role="tab" data-toggle="tab"><span style="font-size: 20px; color: white;" class="icon-dargah"></span></a></li>
-                    </ul>
-                    <div id="login" class="login pull-left col-xs-5 col-md-6" style="overflow-y: hidden">
-                        <img src="{{ url('theme/hamafza/index_2/img/avatar.png') }}">
-                        <div class="inner-login col-xs-9" style="padding: 0%">
+                <div class="navbar-left col-xs-12 col-sm-4" style="overflow: hidden">
+                    <div style="position: relative;right: 20px;">
+                        <ul class="nav navbar-nav col-xs-5 col-md-4 header-icons quick-links" style="    position: relative !important;left: -120px;top: 12px;padding: 0px;">
+                            {{--<li href="#tab1" {!! $style !!}><a><span class="icon-choobalefnazok" title="چوب‌های الف" data-placement="top" data-toggle="tooltip"></span></a></li>--}}
+                            <li class="no-border" href="#tab1" style="{{$style}}"><a><span class="icon-choobalefnazok" style="font-size: 20px; color: white;"></span></a></li>
+                            <li class="no-border" href="#tab2"><a><span class="icon-dargah icon-dargah-click"  style="font-size: 20px; color: white;"></span></a></li>
+                            <li class="no-border" href="#tab3"><a><span class="icon-tag"  style="font-size: 20px; color: white;"></span></a></li>
+                            <li class="no-border" href="#tab4"><a><span class="icon-search-1"  style="font-size: 20px; color: white;"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="login pull-left col-xs-5 col-md-6" style="    overflow-y: hidden;position: relative;left: -65px;">
+                        <img src="{{ url('theme/hamafza/index_2/img/avatar.png') }}" style="float:right">
+                        <div class="inner-login" style="padding: 0%">
                             @if(auth()->check())
-                                <a href="#">{{ auth()->user()->Name .' '. auth()->user()->Family }}</a>
+                                <a href="#" style="color: #fff;font-weight: lighter;">{{ auth()->user()->Name .' '. auth()->user()->Family }}</a>
                                 <ul id="ul-nav">
-                                    <li><a href="{{ url(auth()->user()->Uname . '/wall') }}">دیوار@if(user_notifications_count('wall', auth()->id()) > 0) <span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span> @endif</a>
+                                    <li style="position: relative;top: 2px;"><a href="{{ url(auth()->user()->Uname . '/wall') }}" style="font-size: x-small;color: #fff;font-size: x-small;font-weight: lighter;">دیوار@if(user_notifications_count('wall', auth()->id()) > 0) <span class="badge" style="color: #fff;font-weight: lighter;">{{ user_notifications_count('wall', auth()->id()) }}</span> @endif</a>
                                     </li>
-                                    <li><a style="padding-right: 5px;" href="{{ url(auth()->user()->Uname . '/desktop') }}">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span
+                                    <li style="position: relative;top: 2px;right: 5px;"><a style="color: #fff;font-size: x-small;font-weight: lighter;padding-right: 5px;" href="{{ url(auth()->user()->Uname . '/desktop') }}">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span
                                                     class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a></li>
-                                    <li style="margin-left: 4%; padding-right: 5px;"><a href="{{ url(auth()->user()->Uname . '/cart') }}">خرید @if(user_notifications_count('bazaar', auth()->id()) > 0)<span
-                                                    class="badge DesktopNotificaton">{{ user_notifications_count('bazaar', auth()->id()) }}</span>@endif</a></li>
-                                    <li class="dropdown custom-dropdown" style="margin:0 2px 4px 0">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <div class="col-lg-12">
-                                                <img src="img/avatar.png">
-                                                <h3><b>عضو سایت</b></h3>
-                                                <h5 style="color: #9e9e9e">example@yahoo.com</h5>
-                                                <input type="submit" name="about" tabindex="4" class="btn custom-btn center-block btn-success" value="درباره" onclick="window.location='about.html'">
-                                            </div>
-                                            <div class="exit">
-                                                <a href="#"><i class="icon fa-power-off" aria-hidden="true"></i></a>
-                                                <a href="#">خروج</a>
-                                            </div>
-                                        </ul>
+                                    <li style="position: relative;top: 3px;right: 10px;color: #fff;font-weight: lighter;padding-right: 5px;">
+                                        <a href="{{App::make('url')->to('/')}}/Logout" class="exit fa fa-power-off" style="color: #fff;font-weight: lighter;font-size: x-small;font-size: 12pt;"></a>
                                     </li>
+
                                 </ul>
                             @else
-                                <a class="homepage_modal_login_form" href="#">ورود</a>
-                                <a class="homepage_modal_register_form" href="#">ثبت نام</a>
+                                <a class="homepage_modal_login_form" href="#" style="color: #fff;font-weight: lighter;">ورود</a>
+                                <a class="homepage_modal_register_form" href="#" style="color: #fff;font-weight: lighter;">ثبت نام</a>
                             @endif
                         </div>
                     </div>
                 </div><!-- /.navbar-left -->
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->
+        @include('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_h_sid')
     </nav>
     <div class="footer-top">
         @include('layouts.homepages.helpers.hamafza_2.index_content')
     </div>
     @include('layouts.homepages.helpers.hamafza_2.sections.footer')
 
-    @include('layouts.homepages.helpers.hamafza_2.assets.script.main_scripts')
-    @include('layouts.homepages.helpers.hamafza_2.assets.script.inline_scripts')
-    @include('layouts.helpers.common.sections.helpers.nav_bar.auth_modals')
 </div>
 </body>
 </html>

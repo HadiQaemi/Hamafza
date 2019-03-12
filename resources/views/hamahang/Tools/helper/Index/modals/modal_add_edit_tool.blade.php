@@ -1,4 +1,4 @@
-<div>
+<div class="tab-content">
     <div class="container" style="width: 95%">
         <div id="tools-form-errMsg"></div>
         <form id="new-tool-form">

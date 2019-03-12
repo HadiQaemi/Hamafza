@@ -24,8 +24,8 @@
     <div class="row" style="height:25px;"></div>
     <div class="col-xs-12">
     <div>
-        <span class="span_title">{{ trans('org_chart.edit_organization_chart') }} </span>
-        <span  class="span_title" id="ChartTitle">{{$Chart->title}}</span>
+{{--        <span class="span_title">{{ trans('org_chart.edit_organization_chart') }} </span>--}}
+        {{--<span  class="span_title" id="ChartTitle">{{$Chart->title}}</span>--}}
         <a href="{!! route('modals.edit_chart',['chart_title'=>$Chart->title,'chart_id'=>$Chart->id])!!}" class="jsPanels pull-left btn btn-default"  >
             <span>{{ trans('org_chart.edit_chart_main_info') }}</span>
         </a>
@@ -74,6 +74,118 @@
     window.ItemChildrenGrid = $('#ItemChildrenGrid').DataTable();
     $(document).ready(function () {
     });
+
+    var datatable_list_item_chart;
+    var chart_datatable;
+
+    $(document).ready(function () {
+        $("#tab_charts").click(function(){
+            $(".footer_base_div_btn").html('' +
+                '<button class="btn btn-info pull-left" onclick="update_chart_item(\'close\')" id="btn_update_chart_item">ذخیره وبستن</button>'+
+                '<button class="btn btn-info pull-left" onclick="update_chart_item(\'notclose\')" id="btn_update_chart_item">ذخیره </button>'
+            );
+        });
+        $("#tab_insert_post").click(function(){
+            $(".footer_base_div_btn").html('' +
+                '<button class="btn btn-info pull-left" onclick="insert_post(\'close\')" >ثبت وبستن</button>'+
+                '<button class="btn btn-info pull-left" onclick="insert_post(\'notclose\')" >ثبت سمت</button>'
+            );
+        });
+        $("#tab_insert_items").click(function(){
+            $(".footer_base_div_btn").html('' +
+                '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'close\')">ثبت وبستن</button>'+
+                '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'notclose\')">ثبت</button>'
+            );
+        });
+        $("#tab_post").click(function(){
+            $(".footer_base_div_btn").html('');
+        });
+        $("#tab_item").click(function(){
+            $(".footer_base_div_btn").html('');
+        });
+        chart_datatable = $('#list_post').DataTable({
+            "dom": window.CommonDom_DataTables,
+            processing: true,
+            language: LangJson_DataTables,
+            serverSide: true,
+            ajax: {
+                url: '{!! route('Hamahang.charts.ListPost',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',
+                type: 'post'
+            },
+            columns: [
+                {data: 'title', name: 'title'},
+                {
+                    data: 'employee.Family', name: 'employee', "orderable": "false", searchable: false,
+                    "mRender": function (data, type, full) {
+                        if (data) {
+                            return data;
+                        }
+                        else return '';
+                        //return data;
+                    }
+                },
+                {
+                    data: 'user_id', name: '', "orderable": "false", searchable: false, width: '280px',
+
+                    "mRender": function (data, type, full) {
+                        if (data == 0) {
+                            return '<span id="span_add_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">انتخاب</span>' +
+
+                                '<div id="div_base_' + full.id + '"></div>';
+                        }
+                        else {
+                            return '<span id="span_edit_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">ویرایش/حذف</span>' +
+                                '<div id="div_base_' + full.id + '"></div>';
+
+                        }
+                    }
+                }
+            ]
+        });
+        datatable_list_item_chart = $("#datatable_ItemChildrenGrid").DataTable({
+            "dom": window.CommonDom_DataTables,
+            language: LangJson_DataTables,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{!! route('Hamahang.charts.ListOrganChartItem',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',
+                type: 'post'
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'title', name: 'title'},
+                {data: 'description', name: 'description'},
+            ]
+        });
+    });
+    function update_chart_item(stata1){
+        $.ajax({
+            type: "POST",
+            url: '{{ route('hamahang.org_chart.update_one_chart_item')}}',
+            dataType: "json",
+            data: $('#Form_Update_Item').serialize(),
+            success: function (result) {
+                if (result.success == true) {
+                    var msg = 'انجام شد';
+                    messageBox('success', msg, '', {'id': 'alert_edit'});
+                    chart_datatable.ajax.reload();
+                    $("#insert_new_post_title").val('');
+                    $("#insert_new_post_description").val('');
+                    if(stata1=='close'){
+                        $('.jsglyph-close').click();
+                    }
+                    load_orgchart();
+                }
+                else {
+                    messageBox('error', '', result.error, {'id': 'alert_insert_post'}, 'hide_modal');
+
+                }
+                setTimeout(function () {
+                    $("#alert_insert_post").html('')
+                }, 4000);
+            }
+        });
+    }
 </script>
 @include('hamahang.OrgChart.helper.OrgChartShow.InlineJS')
 

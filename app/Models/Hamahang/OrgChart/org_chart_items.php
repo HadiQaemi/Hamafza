@@ -19,8 +19,14 @@ class org_chart_items extends Model
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_chart_items_posts','chart_item_id','id');
     }
 
+    public function jobs()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_chart_items_jobs','chart_item_id','id');
+    }
+
     public function chart()
     {
         return $this->belongsTo('App\Models\Hamahang\OrgChart\org_charts','chart_id','id');
     }
+
 }

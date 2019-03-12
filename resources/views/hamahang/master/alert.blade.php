@@ -60,20 +60,14 @@
         var className = (option == 'success') ? 'alert  alert-success' : 'alert alert-danger';
         var modalTitleClassName = (option == 'success') ? 'bg-success' : 'bg-danger';
         var msg = messages;
-        var msgStr = '';
-        if ($.isArray(messages))
-			msgStr = '<ul>';
+        var msgStr = '<ul>';
         for (m in msg) {
             if (msg.hasOwnProperty(m)) {
-				if ($.isArray(messages))
-					msgStr += '<li>' + msg[m] + '</li>';
-				else
-					msgStr += msg[m];
+                msgStr += '<li>' + msg[m] + '</li>';
             }
             $('#' + formId + ' input[name="' + m + '"]').css('borderColor', 'red');
         }
-        if ($.isArray(messages))
-			msgStr += '</ul>';
+        msgStr += '</ul>';
         var html = '<div id="alertMsg" class="' + className + ' fade in alert-dismissable" role="alert">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>' +
             '<strong>' + lable + '</strong>' + msgStr + '</div>';

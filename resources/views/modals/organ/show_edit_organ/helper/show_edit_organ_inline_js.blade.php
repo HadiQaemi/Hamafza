@@ -27,30 +27,30 @@
     var chart_datatable;
 
     $(document).ready(function () {
-        $("#tab_charts").click(function(){
-            $(".footer_base_div_btn").html('' +
-                '<button class="btn btn-info pull-left" onclick="update_chart_item(\'close\')" id="btn_update_chart_item">ذخیره وبستن</button>'+
-                 '<button class="btn btn-info pull-left" onclick="update_chart_item(\'notclose\')" id="btn_update_chart_item">ذخیره </button>'
-            );
-        });
-        $("#tab_insert_post").click(function(){
-            $(".footer_base_div_btn").html('' +
-                '<button class="btn btn-info pull-left" onclick="insert_post(\'close\')" >ثبت وبستن</button>'+
-                '<button class="btn btn-info pull-left" onclick="insert_post(\'notclose\')" >ثبت سمت</button>'
-            );
-        });
-        $("#tab_insert_items").click(function(){
-            $(".footer_base_div_btn").html('' +
-                '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'close\')">ثبت وبستن</button>'+
-                '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'notclose\')">ثبت</button>'
-                );
-        });
-        $("#tab_post").click(function(){
-            $(".footer_base_div_btn").html('');
-        });
-        $("#tab_item").click(function(){
-            $(".footer_base_div_btn").html('');
-        });
+        // $("#tab_charts").click(function(){
+        //     $(".footer_base_div_btn").html('' +
+        //         '<button class="btn btn-info pull-left" onclick="update_chart_item(\'close\')" id="btn_update_chart_item">ذخیره وبستن</button>'+
+        //          '<button class="btn btn-info pull-left" onclick="update_chart_item(\'notclose\')" id="btn_update_chart_item">ذخیره </button>'
+        //     );
+        // });
+        // $("#tab_insert_post").click(function(){
+        //     $(".footer_base_div_btn").html('' +
+        //         '<button class="btn btn-info pull-left" onclick="insert_post(\'close\')" >ثبت وبستن</button>'+
+        //         '<button class="btn btn-info pull-left" onclick="insert_post(\'notclose\')" >ثبت سمت</button>'
+        //     );
+        // });
+        // $("#tab_insert_items").click(function(){
+        //     $(".footer_base_div_btn").html('' +
+        //         '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'close\')">ثبت وبستن</button>'+
+        //         '<button class="btn btn-info pull-left" onclick="insert_chart_item(\'notclose\')">ثبت</button>'
+        //         );
+        // });
+        // $("#tab_post").click(function(){
+        //     $(".footer_base_div_btn").html('');
+        // });
+        // $("#tab_item").click(function(){
+        //     $(".footer_base_div_btn").html('');
+        // });
         chart_datatable = $('#list_post').DataTable({
             "dom": window.CommonDom_DataTables,
             processing: true,
@@ -169,35 +169,75 @@
     }
     function cancel_add_employ(id) {
 
-    var chart_datatable= $('#Chart_Datatable').DataTable({
-        //scrollY:200,
-        processing: true,
-        serverSide: true,
-        //dom: 'Bfrtip',
-        ajax:
-            {
-                url:'{!! route('hamahang.charts.list_charts') !!}',
-                type:'post'
-            },
-        columns: [
-            { data: 'id', name: 'id' },
-            {  data: 'creator.Family', name: 'creator.Family',
-                "mRender": function ( data, type, full ) {
-                    if(full.hasOwnProperty('Family'))
-                    {
-                        return full.Family;
+        var chart_datatable= $('#Chart_Datatable').DataTable({
+            "dom": window.CommonDom_DataTables,
+            language:LangJson_DataTables,
+            processing: true,
+            serverSide: true,
+            //dom: 'Bfrtip',
+            ajax:
+                {
+                    url:'{!! route('hamahang.charts.list_charts',['org_id'=>'']) !!}'+org_id+'',
+                    type:'post'
+                },
+            columns: [
+                { data: 'id', name: 'id' },
+                {  data: 'creator.Family', name: 'creator.Family',
+                    "mRender": function ( data, type, full ) {
+                        if(full.hasOwnProperty('Family'))
+                        {
+                            return full.Family;
+                        }
+                        if(full.hasOwnProperty('creator') ){
+                            return full.creator.Family
+                        }
                     }
+                },
+                { data: 'title', name: 'title' },
+                { data: 'description', name: 'description'
+                },
+                { data: 'description', name: 'description',
 
-                }
-                else {
-                    messageBox('error', '', result.error, {'id': 'alert_insert_organ'}, 'hide_modal');
+                    "mRender": function ( data, type, full ) {
+                        // return '<button onclick="charts_location_href('+full.id+')" class="btn btn-info" ><span>مشاهده / ویرایش</span></button>';
+                        return '<a href="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.id+'"   ><span>مشاهده / ویرایش</span></a>'+
+                            '<span style="color:#337ab7; cursor:pointer;" class="mr-10 btn_delete_chart" data_username="<?php echo auth()->user()->Uname?>" data_chart_id="'+full.id+'" >حذف  </span>';
 
+
+                    }
                 }
-                setTimeout(function () {
-                    $("#alert_insert_organ").html('')
-                }, 4000);
-            }
+
+
+            ]
         });
+    {{--var chart_datatable= $('#Chart_Datatable').DataTable({--}}
+        {{--//scrollY:200,--}}
+        {{--processing: true,--}}
+        {{--serverSide: true,--}}
+        {{--//dom: 'Bfrtip',--}}
+        {{--ajax:--}}
+            {{--{--}}
+                {{--url:'{!! route('hamahang.charts.list_charts') !!}',--}}
+                {{--type:'post'--}}
+            {{--},--}}
+        {{--columns: [--}}
+            {{--{ data: 'id', name: 'id' },--}}
+            {{--{  data: 'creator.Family', name: 'creator.Family',--}}
+                {{--"mRender": function ( data, type, full ) {--}}
+                    {{--if(full.hasOwnProperty('Family'))--}}
+                    {{--{--}}
+                        {{--return full.Family;--}}
+                    {{--}--}}
+
+                {{--}else {--}}
+                    {{--messageBox('error', '', result.error, {'id': 'alert_insert_organ'}, 'hide_modal');--}}
+                {{--}--}}
+                {{--setTimeout(function () {--}}
+                    {{--$("#alert_insert_organ").html('')--}}
+                {{--}, 4000);--}}
+            {{--}--}}
+            {{--}--}}
+        {{--});--}}
     }
     function insert_post(state){
 
@@ -257,5 +297,31 @@
             }
         });
     }
-
+    $(".select2_auto_complete_onet_jobs").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.onet_jobs')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
 </script>

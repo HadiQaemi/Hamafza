@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_access;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime;
 use DB;
 
 use Request;
@@ -273,7 +280,7 @@ class OrgChartController extends Controller
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgChartShow', $arr);
     }
-    public function OrgListShow($username,$chart_id)
+    public function OrgListShow($username,$organ_id)
     {
         /* $validator = Validator::make([$username,$chart_id],
               [
@@ -294,12 +301,158 @@ class OrgChartController extends Controller
           }
           else
           {*/
-        $Chart = org_charts::findOrFail($chart_id);
+        $Chart = org_charts::findOrFail($organ_id);
         $arr = variable_generator('user', 'desktop', $username);
-        $arr['chart_id'] = $chart_id;
+        $arr['organ_id'] = $organ_id;
         $arr['Chart'] = $Chart;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgListShow', $arr);
+    }
+    public function FetchOrgList()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+//                'organ_id'=>'required|exists:hamahang_org_organs,id'
+                'organ_id'=>'required|numeric'
+            ],[],
+            [
+                'new_item_title' => 'عنوان ',
+                'new_item_title' => 'عنوان ',
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else {
+            $organ_id = Request::get('organ_id');
+            $data = org_chart_items::where('chart_id', '=', $organ_id)->whereNull('deleted_at');
+            return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+                ->addColumn('oid', function ($data)
+                {
+                    return enCode($data->id);
+                })
+                ->make(true);
+        }
+    }
+    public function FetchJobList()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+//                'organ_id'=>'required|exists:hamahang_org_organs,id'
+                'organ_id'=>'required|numeric'
+            ],[],
+            [
+                'new_item_title' => 'عنوان ',
+                'new_item_title' => 'عنوان ',
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else {
+            $organ_id = Request::get('organ_id');
+            $data = org_chart_items::with('jobs')->where('chart_id', '=', $organ_id)->whereNull('deleted_at')->get();
+            $job_lists = [];
+            foreach ($data as $item)
+            {
+                foreach ($item->jobs as $job){
+                    $job_lists [] = [
+                        'title_item' => $item->title,
+                        'title' => isset($job->job->title) ? $job->job->title : '',
+                        'describ' => $job->description,
+                        'amount' => $job->amount
+                    ];
+                }
+            }
+            $result['data'] = $job_lists;
+            return json_encode($result);
+        }
+    }
+    public function staff($username)
+    {
+        $arr = variable_generator('user','desktop',$username);
+        $arr['Uname'] = $username;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.StaffList', $arr);
+    }
+
+    public function fetchStaff()
+    {
+        $data = org_charts_items_jobs_posts_users::whereNull('deleted_at');
+
+        return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+            ->addColumn('user', function ($data)
+            {
+                return $data->user->Name.' '.$data->user->Family;
+            })
+            ->addColumn('post', function ($data)
+            {
+                return $data->post->extra_title;
+            })
+            ->addColumn('charts', function ($data)
+            {
+                return $data->post->job;
+            })
+            ->addColumn('job', function ($data)
+            {
+                return $data->post->job->job->title;
+            })
+            ->addColumn('item', function ($data)
+            {
+                return $data->post->job->item->title;
+            })
+            ->addColumn('org', function ($data)
+            {
+                return $data->post->job->item->chart->title;
+            })
+            ->make(true);
+    }
+    public function FetchPostList()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+//                'organ_id'=>'required|exists:hamahang_org_organs,id'
+                'organ_id'=>'required|numeric'
+            ],[],
+            [
+                'new_item_title' => 'عنوان ',
+                'new_item_title' => 'عنوان ',
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else {
+            $organ_id = Request::get('organ_id');
+            $data = org_chart_items::with('jobs')->where('chart_id', '=', $organ_id)->whereNull('deleted_at')->get();
+            $post_lists = [];
+            foreach ($data as $item)
+            {
+                foreach ($item->jobs as $job){
+                    foreach($job->posts as $post){
+                        $post_lists [] = [
+                            'title_item' => $item->title,
+                            'title_job' => isset($job->job->title) ? $job->job->title : '',
+                            'extra_title' => $post->extra_title,
+                            'location' => $post->location,
+                            'share_performance' => $post->share_performance,
+                            'outsourcing' => $post->outsourcing
+                        ];
+                    }
+                }
+            }
+            $result['data'] = $post_lists;
+            return json_encode($result);
+        }
     }
     public function ShowJobList($username,$chart_id)
     {
@@ -733,8 +886,102 @@ class OrgChartController extends Controller
     {
         return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->select('id', 'title as text')->get();
     }
+    public function insert_posts()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'mens_num' => 'required|integer',
+                'share_payment' => 'required|integer',
+                'female_num' => 'required|integer',
+                'outsourced_num' => 'required|integer',
+                'job_items'=>'exists:hamahang_org_charts_items_jobs,id',
+                'need_successor_users'=>'exists:user,id',
+                'working_hours.*' => 'in:full_time,working_part_time,working_shift,private_room',
+                'access.*' => 'in:financial_auth,financial_server,accounting',
+                'advantages.*' => 'in:private_room,shared_room,driver,car,labtop,launch,dinner,insurance,swim',
+                'work_place' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u'],
+                'extra_title' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u']
+            ],
+            [],
+            [
+                'extra_title'=>'عنوان تکمیلی',
+                'mens_num'=>'تعداد مورد نیاز مرد',
+                'female_num'=>'تعداد مورد نیاز زن',
+                'outsourced_num'=>'تعداد قابل برون‌سپاری',
+                'share_payment'=>'سهم عملکرد در پرداخت'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else{
+
+            $org_charts_items_jobs_posts = org_charts_items_jobs_posts::create([
+                'uid' => auth()->id(),
+                'chart_item_job_id' => Request::get('job_items'),
+                'extra_title' => Request::get('extra_title'),
+                'men' => Request::get('mens_num'),
+                'women' => Request::get('female_num'),
+                'outsourcing' => Request::get('outsourced_num'),
+                'location' => Request::get('work_place'),
+                'share_performance' => Request::get('share_payment'),
+                'share_performance' => Request::get('share_payment'),
+            ]);
+            if($org_charts_items_jobs_posts->save()){
+                if(Request::exists('access')){
+                    foreach(Request::get('access') as $access)
+                        org_charts_items_jobs_posts_access::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
+                            'type'=>$access,
+                        ]);
+                }
+                if(Request::exists('advantages')){
+                    foreach(Request::get('advantages') as $advantage)
+                        org_charts_items_jobs_posts_adventage::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
+                            'type'=>$advantage,
+                        ]);
+                }
+                if(Request::exists('working_hours')){
+                    foreach(Request::get('working_hours') as $working_hours)
+                        org_charts_items_jobs_posts_worktime::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
+                            'type'=>$working_hours,
+                        ]);
+                }
+                if(Request::exists('need_successor_users')){
+                    foreach(Request::get('need_successor_users') as $need_successor_users)
+                        org_charts_items_jobs_posts_alternate_users::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
+                            'user_id'=>$need_successor_users,
+                        ]);
+                }
+                if(Request::exists('add_users')){
+                    foreach(Request::get('add_users') as $users)
+                        org_charts_items_jobs_posts_users::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
+                            'user_id'=>$users,
+                        ]);
+                }
+            }
+            $result['success'] = true;
+            $org_charts_items_jobs_posts->id = enCode($org_charts_items_jobs_posts->id);
+            $result['post'] = $org_charts_items_jobs_posts;
+        }
+        return json_encode($result);
+    }
+
     public function insert_organs()
     {
+
         $validator = Validator::make(Request::all(),
             [
                 'organ_title' => 'required',
@@ -894,6 +1141,39 @@ class OrgChartController extends Controller
             if($chart_item->save())
                 $result['success'] = true;
             else $result['success']=false;
+        }
+        return $result;
+    }
+    public function  add_job_post(){
+        $validator = Validator::make(Request::all(),
+            [
+                'unit_id' => 'required|numeric',
+                'job' => 'required|numeric',
+                'amount' => 'required|numeric|min:0|max:100',
+                'comment' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u']
+            ],
+            [
+                'job_post' => trans('org_chart.job'),
+                'job_comment' => trans('org_chart.comment'),
+                'job_amount' => trans('org_chart.amount')
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else{
+            $org_chart_items_jobs = new org_chart_items_jobs();
+            $org_chart_items_jobs->chart_item_id = Request::get('unit_id');
+            $org_chart_items_jobs->job_id = Request::get('job');
+            $org_chart_items_jobs->amount = Request::get('amount');
+            $org_chart_items_jobs->description = Request::get('comment');
+            if($org_chart_items_jobs->save()){
+                $result['success'] = true;
+                $result['job_item'] = enCode($org_chart_items_jobs->id);
+            } else $result['success']=false;
         }
         return $result;
     }

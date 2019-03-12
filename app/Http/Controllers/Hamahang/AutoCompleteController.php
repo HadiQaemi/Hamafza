@@ -108,6 +108,50 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+    public function onet_jobs_items(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = DB::table('hamafza_onet_job')
+                ->join('hamahang_org_charts_items_jobs', 'hamafza_onet_job.id', '=', 'hamahang_org_charts_items_jobs.job_id')
+                ->where('hamahang_org_charts_items_jobs.chart_item_id', "=", $request->item_id)
+                ->select('title as text', 'hamahang_org_charts_items_jobs.id')
+                ->get();
+        }
+        else
+        {
+            $data = DB::table('hamafza_onet_job')
+                ->join('hamahang_org_charts_items_jobs', 'hamafza_onet_job.id', '=', 'hamahang_org_charts_items_jobs.job_id')
+                ->where('hamahang_org_charts_items_jobs.chart_item_id', "=", $request->item_id)
+                ->where('hamafza_onet_job.title', "LIKE", "%" . $x['term'] . "%")
+                ->select('hamafza_onet_job.title as text', 'hamahang_org_charts_items_jobs.id')
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function onet_jobs(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = DB::table('hamafza_onet_job')
+                ->select('title as text', 'id')
+                ->get();
+        }
+        else
+        {
+            $data = DB::table('hamafza_onet_job')
+                ->where('hamafza_onet_job.title', "LIKE", "%" . $x['term'] . "%")
+                ->select('hamafza_onet_job.title as text', 'id')
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
     public function organs(Request $request)
     {
         $x = $request->data;

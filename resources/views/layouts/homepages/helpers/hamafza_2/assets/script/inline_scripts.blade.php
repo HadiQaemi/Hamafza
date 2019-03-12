@@ -44,28 +44,28 @@
                     $('.inner_login_div').show();
                     login_captcha_refresh();
                     if(result.error.captcha_code){
-                        $('#captcha_request_errors').html(result.error.captcha_code);
+                        $('#captcha_request_errors_ham2').html(result.error.captcha_code);
                     }
                     else{
-                        $('#captcha_request_errors').html('');
+                        $('#captcha_request_errors_ham2').html('');
                     }
                     if(result.error.username){
-                        $('#username_request_errors').html(result.error.username);
+                        $('#username_request_errors_ham2').html(result.error.username);
                     }
                     else{
-                        $('#username_request_errors').html('');
+                        $('#username_request_errors_ham2').html('');
                     }
                     if(result.error.password){
-                        $('#password_request_errors').html(result.error.password);
+                        $('#password_request_errors_ham2').html(result.error.password);
                     }
                     else{
-                        $('#password_request_errors').html('');
+                        $('#password_request_errors_ham2').html('');
                     }
                     if(result.error.login_failed){
-                        $('#login_fail_request_errors').html(result.error.login_failed);
+                        $('#login_fail_request_errors_ham2').html(result.error.login_failed);
                     }
                     else{
-                        $('#login_fail_request_errors').html('');
+                        $('#login_fail_request_errors_ham2').html('');
                     }
 //                        messageModal('alert', 'خطا در ورود', result.error);
                 }

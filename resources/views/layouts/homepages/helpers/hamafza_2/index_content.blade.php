@@ -1,15 +1,18 @@
 <aside class="footer-top-sidebar col-xs-2">
     <img src="{{ url('theme/hamafza/index_2/img/logo.png') }}">
     <ul class="guide col-xs-12">
-        <li class="steps"><img src="{{ url('theme/hamafza/index_2/img/guideicone4.png') }}"><a href="{{ url('21/1') }}">گام های آغاز</a></li>
-        <li class="here"><img src="{{ url('theme/hamafza/index_2/img/guideicone3.png') }}" style="padding-right: 5%; padding-left: 5%"><a href="modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a></li>
+        <li class="steps"><img src="{{ url('theme/hamafza/index_2/img/guideicone4.png') }}"><a href="{{ url('21') }}">گام های آغاز</a></li>
+        <li class="here"><img src="{{ url('theme/hamafza/index_2/img/guideicone3.png') }}" style="padding-right: 5%; padding-left: 5%">
+            {{--<a href="modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a>--}}
+            <a class="jsPanels " title="راهنمای اینجا" href="{{App::make('url')->to('/')}}/modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a>
+        </li>
         <li class="dargah"><img src="{{ url('theme/hamafza/index_2/img/guideicone2.png') }}"><a href="{{ url('/20') }}">درگاه راهنما</a></li>
     </ul>
 </aside>
 <div class="row col-xs-9">
     <div class="footer-top-content">
         <div class="row first">
-            <div class="col-xs-12 col-md-4 tumbnail1" style="margin-left: .8%; padding-bottom: .5%">
+            <div class="col-xs-12 col-md-4 tumbnail1" style="height: 208px;margin-left: .8%; padding-bottom: .5%">
                 @if(auth()->check())
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 1.1% 16% 1.1% 0%">
@@ -40,10 +43,14 @@
                     </div>
                 @else
                     <form id="homepage_login_form" class="form-signin" style="margin: 3.5% 3% 3.5%">
+                        {{ csrf_field() }}
                         <input style="height: 30px;" type="text" class="form-control" name="username" placeholder="رایانامه یا نام کاربری" required="" autofocus=""/>
+                        <div id="username_request_errors_ham2" style="font-size: 12px;color: #ef9393;position: relative;top: -8px;"></div>
                         <input style="height: 30px;" type="password" class="form-control" name="password" placeholder="رمزعبور" required=""/>
+                        <div id="password_request_errors_ham2" style="font-size: 12px;color: #ef9393;position: relative;top: -8px;"></div>
                         <div class="col-md-6">
                             <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off">
+                            <div id="captcha_request_errors_ham2" style="font-family: Arial; font-size: 12px; color: red"></div>
                         </div>
                         <div class="col-md-6">
                             <div class="captcha-refresh-style login_captcha_refresh" style="cursor: pointer; width: 39px; height: 30px;">
@@ -59,17 +66,14 @@
                     </form>
                 @endif
             </div>
-            <div class="col-xs-12 col-md-7 tumbnail2" style="padding: 0 1%">
+            <div class="col-xs-12 col-md-7 tumbnail2" style="height: 208px;padding: 0 1%">
                 <div class="container-fluid">
                     @include('layouts.homepages.helpers.hamafza_2.sections.main_slider_1')
                 </div>
             </div>
         </div>
         <div class="row second">
-            <script type="text/javascript">
-                $("[data-toggle=tooltip]").tooltip();
-            </script>
-            <div class="col-xs-12 col-md-4 tumbnail3" style="padding-bottom: 2px; margin-left: .8%" data-toggle="tooltip" data-placement="right" data-html="true"
+            <div class="col-xs-12 col-md-4 tumbnail3" style="height:135px;padding-bottom: 2px; margin-left: .8%;" data-toggle="tooltip" data-placement="right" data-html="true"
                  title="تاریخ قمری <br> تاریخ میلادی <br> ساعت <br> اذان صبح <br> اذان ظهر <br> اذان مغرب <br> نیمه شب شرعی">
                 <div class="text-center" style="margin-bottom: 2%;font-size: 1.2em">
                     <ul style="display: inline; padding-right: 0;">
@@ -135,7 +139,7 @@
                     <input type="range" name="points" min="1" max="10" class="range-input">
                 </form>
             </div>
-            <div class="col-xs-12 col-md-7 tumbnail4" style="padding: 0 1%; height: 124px">
+            <div class="col-xs-12 col-md-7 tumbnail4" style="height:135px;padding: 0 1%;">
                 <div class="container-fluid">
                 @include('layouts.homepages.helpers.hamafza_2.sections.main_slider_2')
                 <!-- End Carousel -->

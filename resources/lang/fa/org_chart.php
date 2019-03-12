@@ -51,9 +51,16 @@ return [
     'shift'   => 'شیفت',
     'mens_num'   => 'تعداد مورد نیاز مرد',
     'female_num'   => 'تعداد مورد نیاز زن',
-    'need_successor_users'   => 'افزودن فرد',
+    'need_successor_users'   => 'افزودن جانشین',
+    'add_users'   => 'افزودن فرد',
+    'clerk'   => 'کارمند',
+    'organization'   => 'سازمان',
 //    'outsourced_num'   => 'تعداد قابل برون‌سپاری از مجموع سمت‌های تعریف شده',
     'outsourced_num'   => 'تعداد قابل برون‌سپاری',
     'choose_job'   => 'انتخاب شغل',
+    'job'   => 'شغل',
+    'amount'   => 'مقدار',
+    'post'   => 'سمت',
+    'comment'   => 'توضیحات',
 
 ];

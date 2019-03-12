@@ -1839,3 +1839,13 @@ th{
 #form_filter_priority label{
     margin-left:2px;
 }
+.list-search{
+    width: 100% !important;
+}
+.carousel-control{
+    background-image:none !important;
+    background-image:none !important;
+}
+.tumbnail4 .slider-controler{
+    position: relative;
+}

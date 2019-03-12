@@ -16,15 +16,15 @@
         <div class="tab-content">
             <div id="edit" class="tab-pane fade in active">
                 <div id="alert_edit" class="mt-5"></div>
-                <form id="Form_Update_Item" method="post" action="#" id="">
+                <form id="Form_Update_ItemForm_Update_Item" method="post" action="#" id="">
                     <div class="margin-top-20">
                         <div class="form-group col-xs-12">
                             <input type="hidden" value="{{$item_id}}" name="item_id" />
-                            <div class="col-xs-1 line-height-30">{{trans('app.title')}}</div>
+                            <div class="col-xs-1 line-height-30"><label for="item_title">{{trans('app.title')}}</label></div>
                             <div class="col-xs-11"><input type="text" name="item_title" id="item_title" class="form-control" value="{{$title}}"/></div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30">{{trans('org_chart.up')}}</div>
+                            <div class="col-xs-1 line-height-30"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
                             <div class="col-xs-11">
                                 <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
                                     <option value="{{$parent[0]}}">{{$parent[1]}}</option>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30">{{trans('org_chart.missions')}}</div>
+                            <div class="col-xs-1 line-height-30"><label for="item_parent_id">{{trans('org_chart.missions')}}</label></div>
                             <div class="col-xs-11">
                                 <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
                                     <option value="{{$parent[0]}}">{{$parent[1]}}</option>
@@ -40,9 +40,7 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30">
-                                {{trans('app.description')}}
-                            </div>
+                            <div class="col-xs-1 line-height-30"><label for="item_description">{{trans('app.description')}}</label></div>
                             <div class="col-xs-11 line-height-30">
                                 <textarea type="text" name="item_description" id="item_description" class="form-control">{{$description}}</textarea>
                             </div>
@@ -51,42 +49,74 @@
                 </form>
             </div>
             <div id="jobs" class="tab-pane fade">
-                <div class="col-xs-12">
-                    <form id="Form_Update_Item" method="post" action="#" id="">
-                        <div class="margin-top-20">
-                            <div class="col-xs-12 form-group noLeftPadding noRightPadding">
-                                <div class="col-xs-11 noLeftPadding noRightPadding">
-                                    <div class="col-xs-6 noLeftPadding noRightPadding"><input type="text" name="item_title" id="item_title" class="form-control" placeholder="{{trans('app.title')}}"/></div>
-                                    <div class="col-xs-6 noLeftPadding noRightPadding"><input type="text" name="item_title" id="item_title" class="form-control" placeholder="{{trans('app.amount')}}"/></div>
-                                </div>
-                                <div class="col-xs-1 line-height-35"><a class="btn btn-primary fa fa-plus"></a></div>
+                <form id="add_job_post_frm" method="post" action="#" id="">
+                    <div class="col-xs-12 form-group margin-top-20">
+                        <div class="col-xs-1 line-height-30"><label for="item_title">شغل</label></div>
+                        <div class="col-xs-11">
+                            <div class="pull-right col-xs-10 noPadding">
+                                <input type="hidden" value="{{$item_id}}" name="unit_id" />
+                                <select name="job" id="job" class="form-control select2_auto_complete_onet_jobs line-height-35 height-35"></select>
                             </div>
-                            <div class="col-xs-12 form-group noLeftPadding noRightPadding">
-                                <textarea class="form-control" rows="2" name="" id="" placeholder="{{trans('app.description')}}"></textarea>
+                            <div class="pull-right margin-right-10 line-height-35 height-35 ">
+                                <label for="item_title" class="pull-right">{{trans('app.amount')}}</label>
+                            </div>
+                            <div class="pull-right margin-right-10">
+                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="{{trans('app.amount')}}"/>
+                            </div>
+                            <div class="pull-left line-height-35 margin-right-10">
+                                <a class="btn btn-primary fa fa-plus add_job_post"></a>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-1 line-height-30"><label for="item_title">{{trans('app.description')}}</label></div>
+                        <div class="col-xs-11 line-height-30"><textarea class="form-control" rows="2" name="comment" id="comment" placeholder="{{trans('app.description')}}"></textarea></div>
+                    </div>
+                </form>
+                <div class="col-xs-12 form-group margin-top-20">
+                    <table id="list_job_post" class="table">
+                        <thead>
+                            <tr>
+                                <td class="col-xs-7 border-bottom">{{trans('app.title')}}</td>
+                                <td class="col-xs-4 border-bottom">{{trans('org_chart.num_post')}}</td>
+                                <td class="col-xs-1 border-bottom">{{trans('app.operations')}}</td>
+                            </tr>
+                        </thead>
+                        @foreach($jobs as $job)
+                            <tr>
+                                <td class="col-xs-7 border-bottom">{{$job->Job->title}}</td>
+                                <td class="col-xs-4 border-bottom">{{$job->amount}}</td>
+                                <td class="col-xs-1 border-bottom"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer edit_job" ref="{{$job->id}}" ></i></td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
-                <table id="list_post" class="table table-striped 2 dataTable no-footer" style="width: 100%;">
-                    <thead>
-                        <th class="col-xs-4">{{trans('app.title')}}</th>
-                        <th class="col-xs-7">{{trans('org_chart.num_post')}}</th>
-                        <th class="col-xs-1">{{trans('app.operations')}}</th>
-                    </thead>
-                </table>
             </div>
             <div id="position" class="tab-pane fade">
                 <div class="col-xs-12 margin-top-10">
-                    <a href="{!! route('modals.add_new_post') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>
+                    <a href="{!! route('modals.add_new_post') !!}" class="jsPanelsPositions btn btn-default pull-left jspa btn-primary btn fa fa-plus" item="{{$item_id}}"></a>
                 </div>
-                <table id="list_post" class="table table-striped 2 dataTable no-footer" style="width: 100%;">
+                <table class="table" style="width: 100%;">
                     <thead>
-                    <th class="col-xs-3">{{trans('org_chart.extra_title')}}</th>
-                    <th class="col-xs-3">{{trans('org_chart.work_place')}}</th>
-                    <th class="col-xs-3">{{trans('org_chart.share_payment')}}</th>
-                    <th class="col-xs-2">{{trans('org_chart.working_hours')}}</th>
-                    <th class="col-xs-1">{{trans('app.operations')}}</th>
+                        <td class="col-xs-3">{{trans('org_chart.extra_title')}}</td>
+                        <td class="col-xs-3">{{trans('org_chart.work_place')}}</td>
+                        <td class="col-xs-3">{{trans('org_chart.share_payment')}}</td>
+                        <td class="col-xs-2">{{trans('org_chart.outsourced')}}</td>
+                        <td class="col-xs-1">{{trans('app.operations')}}</td>
                     </thead>
+                    <tbody id="list_positions">
+                    @foreach($jobs as $job)
+                        @foreach($job->posts as $post)
+                            <tr>
+                                <td class="col-xs-3">{{$post->extra_title}}</td>
+                                <td class="col-xs-3">{{$post->location}}</td>
+                                <td class="col-xs-3">{{$post->share_performance}}</td>
+                                <td class="col-xs-2">{{$post->outsourcing}}</td>
+                                <td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer edit_job" ref="{{$job->id}}" ></i></td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                    </tbody>
                 </table>
             </div>
             <div id="add_position" class="tab-pane fade">
@@ -114,7 +144,7 @@
             </div>
             <div id="organs" class="tab-pane fade">
                 <div class="bas_inside_tabs container-fluid">
-                <table id="datatable_ItemChildrenGrid" class="table table-striped col-xs-12 dataTable no-footer">
+                <table id="datatable_ItemChildrenGrid" class="table">
                     <thead>
                     <th>ردیف</th>
                     <th>عنوان</th>
@@ -151,9 +181,6 @@
                 </div>
 
             </div>
-
-
         </div>
     </div>
 </div>
-

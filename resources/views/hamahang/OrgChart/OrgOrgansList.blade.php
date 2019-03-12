@@ -19,7 +19,7 @@
             <fieldset>
                 <legend>
                     <h3>
-                        <span>{{ trans('org_chart.organizations_list') }}</span>
+{{--                        <span>{{ trans('org_chart.organizations_list') }}</span>--}}
                         <a href="{!! route('modals.add_organ') !!}" class="jsPanels btn btn-default pull-left jspa" >
                             <i ></i>
                             <span>{{ trans('org_chart.add_organization') }}</span>

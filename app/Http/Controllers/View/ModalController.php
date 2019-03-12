@@ -2860,11 +2860,34 @@ class ModalController extends Controller
         ]);
     }
 
+    public function assign_new_staff(Request $request)
+    {
+        return json_encode([
+            'header' => trans('org_chart.assign_new_staff'),
+            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_assign_new_staff_footer')
+                ->render()
+        ]);
+    }
+
     public function add_new_post(Request $request)
     {
+        $item = org_chart_items::with('chart', 'jobs')->where('id', $request->item_id)->first();
+        $items = '';
+        foreach($item->jobs as $job){
+            $items[] = [
+                'id' => $job->id,
+                'text' => $job->job->title
+                ];
+        }
+
         return json_encode([
             'header' => trans('org_chart.add_new_post'),
             'content' => view('modals.organ.add_organ.jsp_add_new_post_content')
+                ->with('jobs', $item->jobs)
+                ->with('item_id', $request->item_id)
+                ->with('items', json_encode(['results'=>$items]))
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_add_post_footer')
                 ->render()
@@ -2913,7 +2936,8 @@ class ModalController extends Controller
     {
         $parent_id = 0;
         $parent_title = '';
-        $item = org_chart_items::with('chart')->where('id', $request->item_id)->first();
+        $item = org_chart_items::with('chart', 'jobs')->where('id', $request->item_id)->first();
+
         if (isset($item->parent_id) && ($item->parent_id != 0))
         {
             $item_parent_title = org_chart_items::find($item->parent_id);
@@ -2921,7 +2945,6 @@ class ModalController extends Controller
             $parent_id = $item->parent_id;
         }
         $organ_title = org_organs::find($item->chart->org_organs_id)->title;
-
         return json_encode([
             'header' => view('modals.organ.show_edit_organ.jsp_show_edit_organ_header')
                 ->with('title', $item->title)
@@ -2930,6 +2953,7 @@ class ModalController extends Controller
                 ->with('item_id', $item->id)
                 ->with('chart_id', $item->chart_id)
                 ->with('title', $item->title)
+                ->with('jobs', $item->jobs)
                 ->with('description', $item->description)
                 ->with('parent', [$parent_id, $parent_title])
                 ->render(),
