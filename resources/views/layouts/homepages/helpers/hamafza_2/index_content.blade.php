@@ -53,7 +53,7 @@
                             <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off">
                             <div id="captcha_request_errors_ham2" class="error-login"></div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 noLeftPadding noRightPadding">
                             <div class="captcha-refresh-style login_captcha_refresh" style="cursor: pointer; width: 39px; height: 30px;">
                                 <i style="color: black; margin-top: 10px;" class="fa fa-refresh"></i>
                             </div>
