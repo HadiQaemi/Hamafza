@@ -3,6 +3,7 @@
 return [
     'add_organization'   => 'افزودن سازمان',
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
+    'assign_new_staff'   => 'تخصیص کارمند',
     'add_new_post'   => 'افزودن سمت جدید',
     'add_new_chart'   => 'افزودن چارت جدید',
     'edit_organization_chart'   => 'ویرایش چارت سازمانی::',

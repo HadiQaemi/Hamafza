@@ -4236,3 +4236,6 @@ input::-webkit-inner-spin-button {
     padding: 3px;
     border-radius: 5px;
 }
+.footer-top {
+    top: 50% !important;
+}

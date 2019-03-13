@@ -45,12 +45,13 @@
                     <form id="homepage_login_form" class="form-signin" style="margin: 3.5% 3% 3.5%">
                         {{ csrf_field() }}
                         <input style="height: 30px;" type="text" class="form-control" name="username" placeholder="رایانامه یا نام کاربری" required="" autofocus=""/>
-                        <div id="username_request_errors_ham2" style="font-size: 12px;color: #ef9393;position: relative;top: -8px;"></div>
+                        <div id="username_request_errors_ham2" class="error-login"></div>
                         <input style="height: 30px;" type="password" class="form-control" name="password" placeholder="رمزعبور" required=""/>
-                        <div id="password_request_errors_ham2" style="font-size: 12px;color: #ef9393;position: relative;top: -8px;"></div>
+                        <div id="password_request_errors_ham2" class="error-login"></div>
+                        <div id="login_fail_request_errors_ham2" class="error-login"></div>
                         <div class="col-md-6">
                             <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off">
-                            <div id="captcha_request_errors_ham2" style="font-family: Arial; font-size: 12px; color: red"></div>
+                            <div id="captcha_request_errors_ham2" class="error-login"></div>
                         </div>
                         <div class="col-md-6">
                             <div class="captcha-refresh-style login_captcha_refresh" style="cursor: pointer; width: 39px; height: 30px;">

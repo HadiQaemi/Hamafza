@@ -1,31 +1,54 @@
 @php
     $subjects = \App\Models\hamafza\Subject::where('kind', config('constants.HOMEPAGE_SECOND_SLIDER_TYPE'))->take(5)->get();
+    $slider_values = App\Models\Hamahang\BasicdataValue::where('parent_id', 7)->get();
 @endphp
 <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
     <div class="carousel-inner">
-        @if(isset($subjects))
+        @if($slider_values)
             @php $i = 1; @endphp
-            @foreach($subjects as $subject)
+            @foreach($slider_values as $slide)
+                {{--                {{ dd($slide) }}--}}
                 @php
                     if($i == 1) {$class = 'active';}
                     else {$class = '';}
                 @endphp
-                @if(isset($subject->pages) && isset($subject->pages[0]))
-                    <div class="item {{ $class }}">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-xs-2" style="margin-right: 1%"><img src="{{route('FileManager.DownloadFile',['type'=>'ID', 'id'=>enCode($subject->pages[0]->defimage)]) }}" class="img-responsive"></div>
-                                <div class="col-xs-9" style="margin-right: 2%; margin-top: -3%">
-                                    <a href="{{ route('page', $subject->pages[0]->id) }}"><h3 style="font-size: 16px; color: #FFF;">{{ $subject->title }}</h3></a>
-                                    <p style="text-align: justify">{{ $subject->pages[0]->description }}</p>
-                                </div>
+                <div class="item {{ $class }}">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-2" style="margin-right: 1%"><img style="height: 80px;" src="{{route('FileManager.DownloadFile',['ID', enCode($slide->attrs()->where('basicdata_attribute_id', 8)->withPivot('value')->first()->pivot->value)]) }}" class="img-responsive"></div>
+                            <div class="col-xs-9" style="margin-right: 2%; margin-top: -3%">
+                                <h3 style="font-size: 18px;">{{$slide->title}}</h3>
+                                <p style="text-align: justify">{{$slide->comment}}</p>
                             </div>
                         </div>
                     </div>
-                @endif
+                </div>
                 @php $i++; @endphp
             @endforeach
         @endif
+        {{--@if(isset($subjects))--}}
+            {{--@php $i = 1; @endphp--}}
+            {{--@foreach($subjects as $subject)--}}
+                {{--@php--}}
+                    {{--if($i == 1) {$class = 'active';}--}}
+                    {{--else {$class = '';}--}}
+                {{--@endphp--}}
+                {{--@if(isset($subject->pages) && isset($subject->pages[0]))--}}
+                    {{--<div class="item {{ $class }}">--}}
+                        {{--<div class="container-fluid">--}}
+                            {{--<div class="row">--}}
+                                {{--<div class="col-xs-2" style="margin-right: 1%"><img src="{{route('FileManager.DownloadFile',['type'=>'ID', 'id'=>enCode($subject->pages[0]->defimage)]) }}" class="img-responsive"></div>--}}
+                                {{--<div class="col-xs-9" style="margin-right: 2%; margin-top: -3%">--}}
+                                    {{--<a href="{{ route('page', $subject->pages[0]->id) }}"><h3 style="font-size: 16px; color: #FFF;">{{ $subject->title }}</h3></a>--}}
+                                    {{--<p style="text-align: justify">{{ $subject->pages[0]->description }}</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--@endif--}}
+                {{--@php $i++; @endphp--}}
+            {{--@endforeach--}}
+        {{--@endif--}}
     </div>
     <!-- Controls -->
     <div class="slider-controler">
