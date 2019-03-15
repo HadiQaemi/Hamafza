@@ -5,6 +5,7 @@ return [
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
     'assign_new_staff'   => 'تخصیص کارمند',
     'add_new_post'   => 'افزودن سمت جدید',
+    'edit_job_unit'   => 'ویرایش شغل',
     'add_new_chart'   => 'افزودن چارت جدید',
     'edit_organization_chart'   => 'ویرایش چارت سازمانی::',
     'edit_organization'   => 'ویرایش سازمان::',

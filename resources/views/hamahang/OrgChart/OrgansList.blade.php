@@ -786,6 +786,52 @@
             JS_Panel_2.content.html('<div class="loader"></div>');
             return false
         });
+        var JS_Panel_3 ;
+        $(document).on("click", ".jsPanelsEditJob", function () {
+            link = "{{route('modals.edit_job_unit')}}";
+            job_id = $(this).attr('ref');
+            title = $(this).attr('title');
+            item = $(this).attr('item');
+            modal = 'modal' == $(this).attr('modal') ? 'modal' : '';
+            //get_height = $(this).attr('height');
+            if (link.indexOf('share?sid') > 0)
+                title = 'بازنشر';
+            if (link.indexOf('print?sid') > 0)
+                title = 'چاپ';
+            var h = $(window).height();
+            var w = $(window).width();
+            JS_Panel_2 = $.jsPanel({
+                contentAjax: {
+                    url: link,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {job_id: job_id},
+                    done: function (data, textStatus, jqXHR, panel) {
+                        //  this.content.append(jqXHR.responseText);
+                        //console.log(data.content);
+                        panel.headerTitle(data.header);
+                        panel.content.html(data.content);
+                        panel.toolbarAdd('footer', [{item: data.footer}]);
+                        //panel.content.css({"width": "800px", "max-height": "550px", "height": hei, 'overflow-y': 'auto'});  ;
+                    }
+                },
+                headerControls: {
+                    minimize: 'disable',
+                    smallify: 'disable'
+                },
+                headerTitle: title,
+                contentOverflow: {horizontal: 'hidden', vertical: 'auto'},
+                panelSize: {width: w * 0.7, height: h * 0.7},
+                // contentSize: {width: "800px", height: hei},
+                // position: {top: h, left: w},
+                // position: 'center',
+                theme: 'default',
+                paneltype: modal,
+            });
+            //JS_Panel.resize('1000px','500px');
+            JS_Panel_2.content.html('<div class="loader"></div>');
+            return false
+        });
         $(document).on("click", "#btn_insert_post", function (e) {
             e.preventDefault();
             $.ajax({

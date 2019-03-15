@@ -28,6 +28,7 @@ use App\Models\Hamahang\Menus\MenuItem;
 use App\Models\Hamahang\Menus\Menus;
 use App\Models\Hamahang\Options;
 use App\Models\Hamahang\OrgChart\org_chart_items;
+use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts;
 use App\Models\Hamahang\OrgChart\org_organs;
 use App\Models\Hamahang\PaymentGatewayRawLogs;
@@ -2890,6 +2891,28 @@ class ModalController extends Controller
                 ->with('items', json_encode(['results'=>$items]))
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_add_post_footer')
+                ->render()
+        ]);
+    }
+    public function edit_job_unit(Request $request)
+    {
+        $item = org_chart_items_jobs::with('job')->where('id', $request->job_id)->first();
+//        $items = '';
+//        foreach($item->jobs as $job){
+//            $items[] = [
+//                'id' => $job->id,
+//                'text' => $job->job->title
+//                ];
+//        }
+
+        return json_encode([
+            'header' => trans('org_chart.edit_job_unit'),
+            'content' => view('modals.organ.add_organ.jsp_edit_job_unit_content')
+//                ->with('jobs', $item->jobs)
+                ->with('job_id', $request->job_id)
+//                ->with('items', json_encode(['results'=>$items]))
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_edit_job_unit_footer')
                 ->render()
         ]);
     }

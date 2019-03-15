@@ -60,10 +60,10 @@
                             <div class="pull-right margin-right-10 line-height-35 height-35 ">
                                 <label for="item_title" class="pull-right">{{trans('app.amount')}}</label>
                             </div>
-                            <div class="pull-right margin-right-10">
+                            <div class="pull-right">
                                 <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="{{trans('app.amount')}}"/>
                             </div>
-                            <div class="pull-left line-height-35 margin-right-10">
+                            <div class="pull-left line-height-35">
                                 <a class="btn btn-primary fa fa-plus add_job_post"></a>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             <tr>
                                 <td class="col-xs-7 border-bottom">{{$job->Job->title}}</td>
                                 <td class="col-xs-4 border-bottom">{{$job->amount}}</td>
-                                <td class="col-xs-1 border-bottom"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer edit_job" ref="{{$job->id}}" ></i></td>
+                                <td class="col-xs-1 border-bottom"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer jsPanelsEditJob" ref="{{$job->id}}"  href="{!! route('modals.add_new_post') !!}"></i></td>
                             </tr>
                         @endforeach
                     </table>
