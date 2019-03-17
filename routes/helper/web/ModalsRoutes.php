@@ -61,6 +61,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     Route::post( 'add_new_organ', ['as' => 'modals.add_new_organ', 'uses' => 'View\ModalController@add_new_organ', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'assign_new_staff', ['as' => 'modals.assign_new_staff', 'uses' => 'View\ModalController@assign_new_staff', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'add_new_post', ['as' => 'modals.add_new_post', 'uses' => 'View\ModalController@add_new_post', 'middleware' => ['dynamic_permission:modals.add_organ']]);
+    Route::post( 'edit_show_post', ['as' => 'modals.edit_show_post', 'uses' => 'View\ModalController@edit_show_post', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'edit_job_unit', ['as' => 'modals.edit_job_unit', 'uses' => 'View\ModalController@edit_job_unit', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'add_new_organ_form', ['as' => 'modals.add_new_organ_form', 'uses' => 'View\ModalController@add_new_organ_form', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'edit_organ', ['as' => 'modals.edit_organ', 'uses' => 'View\ModalController@edit_organ', 'middleware' => ['dynamic_permission:modals.edit_organ']]);

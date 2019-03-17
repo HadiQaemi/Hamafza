@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Hamahang;
 
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_alternate_users;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_access;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage;
@@ -978,6 +980,131 @@ class OrgChartController extends Controller
         }
         return json_encode($result);
     }
+    public function edit_post()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'share_payment' => 'required|integer',
+                'need_successor_users'=>'exists:user,id',
+                'working_hours.*' => 'in:full_time,working_part_time,working_shift,private_room',
+                'access.*' => 'in:financial_auth,financial_server,accounting',
+                'advantages.*' => 'in:private_room,shared_room,driver,car,labtop,launch,dinner,insurance,swim',
+                'work_place' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u'],
+                'extra_title' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u']
+            ],
+            [],
+            [
+                'extra_title'=>'عنوان تکمیلی',
+                'mens_num'=>'تعداد مورد نیاز مرد',
+                'female_num'=>'تعداد مورد نیاز زن',
+                'outsourced_num'=>'تعداد قابل برون‌سپاری',
+                'share_payment'=>'سهم عملکرد در پرداخت'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else{
+
+            $post = org_charts_items_jobs_posts::find(deCode(Request::input('post_id')));
+
+            $post->extra_title = Request::input('extra_title');
+            $post->location = Request::input('work_place');
+            $post->share_performance = Request::input('share_payment');
+
+            if($post->save()){
+                org_charts_items_jobs_posts_access::where('chart_item_post_job_id', '=', $post->id)->delete();
+                org_charts_items_jobs_posts_adventage::where('chart_item_post_job_id', '=', $post->id)->delete();
+                org_charts_items_jobs_posts_worktime::where('chart_item_post_job_id', '=', $post->id)->delete();
+                org_charts_items_jobs_posts_users::where('chart_item_post_job_id', '=', $post->id)->delete();
+                if(Request::exists('access')){
+                    foreach(Request::get('access') as $access)
+                        org_charts_items_jobs_posts_access::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$post->id,
+                            'type'=>$access,
+                        ]);
+                }
+                if(Request::exists('advantages')){
+                    foreach(Request::get('advantages') as $advantage)
+                        org_charts_items_jobs_posts_adventage::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$post->id,
+                            'type'=>$advantage,
+                        ]);
+                }
+                if(Request::exists('working_hours')){
+                    foreach(Request::get('working_hours') as $working_hours)
+                        org_charts_items_jobs_posts_worktime::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$post->id,
+                            'type'=>$working_hours,
+                        ]);
+                }
+                if(Request::exists('add_users')){
+                    foreach(Request::get('add_users') as $users)
+                        org_charts_items_jobs_posts_users::create([
+                            'uid' => auth()->id(),
+                            'chart_item_post_job_id'=>$post->id,
+                            'user_id'=>$users,
+                        ]);
+                }
+            }
+            $result['success'] = true;
+            $post->id = enCode($post->id);
+            $result['post'] = $post;
+        }
+        return json_encode($result);
+    }
+    public function edit_job_unit()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'mens_num' => 'required|integer',
+                'female_num' => 'required|integer',
+                'outsourced_num' => 'required|integer',
+                'need_successor_users'=>'exists:user,id'
+            ],
+            [],
+            [
+                'mens_num'=>'تعداد مورد نیاز مرد',
+                'female_num'=>'تعداد مورد نیاز زن',
+                'outsourced_num'=>'تعداد قابل برون‌سپاری'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        else{
+            $job_id = deCode(Request::input('job_id'));
+            $org_charts_items_jobs = org_charts_items_jobs::find($job_id);
+            $org_charts_items_jobs->amount = Request::input('amount');
+            $org_charts_items_jobs->description = Request::input('comment');
+            $org_charts_items_jobs->women = Request::input('female_num');
+            $org_charts_items_jobs->men = Request::input('mens_num');
+            $org_charts_items_jobs->outsourcing = Request::input('outsourced_num');
+            $org_charts_items_jobs->save();
+            org_charts_items_jobs_alternate_users::where('chart_item_job_id', '=',$job_id)->delete();
+            if(Request::exists('need_successor_users')){
+                foreach(Request::get('need_successor_users') as $need_successor_users)
+                    org_charts_items_jobs_alternate_users::create([
+                        'uid' => auth()->id(),
+                        'chart_item_job_id'=>$job_id,
+                        'user_id'=>$need_successor_users,
+                    ]);
+            }
+            $result['success'] = true;
+            $org_charts_items_jobs->id = enCode($org_charts_items_jobs->id);
+            $result['post'] = $org_charts_items_jobs;
+        }
+        return json_encode($result);
+    }
 
     public function insert_organs()
     {
@@ -1171,8 +1298,15 @@ class OrgChartController extends Controller
             $org_chart_items_jobs->amount = Request::get('amount');
             $org_chart_items_jobs->description = Request::get('comment');
             if($org_chart_items_jobs->save()){
+                for($i=0; $i<Request::get('amount'); $i++){
+                    $org_charts_items_jobs_posts = new org_charts_items_jobs_posts();
+                    $org_charts_items_jobs_posts->uid = auth()->id();
+                    $org_charts_items_jobs_posts->chart_item_job_id= $org_chart_items_jobs->id;
+                    $org_charts_items_jobs_posts->save();
+                }
                 $result['success'] = true;
                 $result['job_item'] = enCode($org_chart_items_jobs->id);
+
             } else $result['success']=false;
         }
         return $result;

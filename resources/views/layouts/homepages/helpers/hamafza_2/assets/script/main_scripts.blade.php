@@ -1,10 +1,8 @@
-<script type="text/javascript" src="{{URL::asset('assets/js/Jquery/jquery-3.2.1.min.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/Jquery/jquery-migrate-3.0.0.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/Packages/bootstrap/js/bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/Packages/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/Jquery/jquery-3.2.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/Jquery/jquery-migrate-3.0.0.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/Packages/bootstrap/js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/Packages/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js')}}"></script>
 
-<!--<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/bootstrap/js/bootstrap.min.js"></script>-->
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/Scripts/bootstrap-show-password.min.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/homslider/jquery.touchSwipe.min.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/theme/homslider/jquery.mousewheel.min.js"></script>
@@ -25,7 +23,6 @@
 <script src="{{URL::asset('theme/hamafza/index_2/js/collapse.js')}}"></script>
 <script src="{{URL::asset('theme/hamafza/index_2/js/transition.js')}}"></script>
 <script src="{{URL::asset('theme/hamafza/index_2/js/tooltip.js')}}"></script>
-<script src="{{URL::asset('theme/hamafza/index_2/js/modal.js')}}"></script>
 <script src="{{URL::asset('theme/hamafza/index_2/js/carousel.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/Packages/select2/dist/js/select2.full.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/Packages/select2/dist/js/i18n/fa.js')}}"></script>

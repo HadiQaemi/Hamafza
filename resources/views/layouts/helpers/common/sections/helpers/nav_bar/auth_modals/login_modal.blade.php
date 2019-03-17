@@ -60,7 +60,7 @@
                                     <div data-dismiss="modal" data-toggle="modal" data-target="#register" class="register">ثبت نام</div>
                                 </div>
 								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <button type="button" class="btn btn-primary" id="btn_modal_login">ورود</button>
+                                    <button type="button" class="btn btn-success" id="btn_modal_login">ورود</button>
                                 </div>
                             </div>
                         </form>

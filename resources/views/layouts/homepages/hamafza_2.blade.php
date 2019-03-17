@@ -59,6 +59,56 @@
             position: relative;
             top: -8px;
         }
+        #homepage_login_form input{
+            font-size: 15px !important;
+            height: 35px !important;
+            direction: rtl !important;
+        }
+        #homepage_login_form button{
+            height: 30px;
+            font-size: large !important;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .tumbnail1 input {
+            margin-bottom: 9px !important;
+        }
+        .login_captcha_image{
+            height: 35px;
+            width: 120%;
+            line-height: 35px;
+        }
+        .inner_register_div .btn_modal_register{
+            font-size: 20px !important;
+        }
+        .inner_register_div .login{
+            font-size: 20px !important;
+        }
+        #modal_login_form button{
+            font-size: 20px !important;
+        }
+        #modal_remember_pass_form button{
+            font-size: 20px !important;
+        }
+        #modal_remember_pass_form button{
+            padding: 5px;
+        }
+        #modal_remember_pass_form .help-block{
+            font-size: 20px !important;
+        }
+        #modal_remember_pass_form .help-block.register{
+            font-size: 15px !important;
+        }
+        #modal_remember_pass_form input{
+            font-size: 15px !important;
+            height: 35px !important;
+            direction: rtl !important;
+        }
+        #modal_login_form input{
+            font-size: 15px !important;
+            height: 35px !important;
+            direction: rtl !important;
+        }
     </style>
 </head>
 <body class="mstr-clr responsive-theme">
@@ -110,7 +160,7 @@
                                         </div>
                                     @else
                                         <div class="homepage_modal_login_form pointer" href="#" style="color: #fff;font-weight: lighter;padding: 5px 0px;">ورود</div>
-                                        <div class="homepage_modal_register_form pointer" href="#" style="color: #fff;font-weight: lighter;padding: 5px 0px;">ثبت نام</div>
+                                        <div class="register homepage_register_user pointer" href="#" style="color: #fff;font-weight: lighter;padding: 5px 0px;">ثبت نام</div>
                                     @endif
                                 </div>
                             </div>

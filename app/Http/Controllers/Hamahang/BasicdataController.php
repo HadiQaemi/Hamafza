@@ -469,8 +469,7 @@ class BasicdataController extends Controller
     {
 //        dd(Request::all());
         $validator = Validator::make(Request::all(), [
-            'title' => 'required',
-            'url_address' => 'required',
+            'title' => 'required'
         ]);
 
 
@@ -485,6 +484,7 @@ class BasicdataController extends Controller
             $basic_data_value->parent_id = Request::input('parent_id');
             $basic_data_value->title = Request::input('title');
             $basic_data_value->inactive = Request::input('inactive');
+            $basic_data_value->comment= Request::input('comment');
             $basic_data_value->save();
 
             $basic_data_attribute_value = new BasicdataAttributesValues();
@@ -508,10 +508,8 @@ class BasicdataController extends Controller
 
     public function updateSliderSetting()
     {
-//        dd(Request::all());
         $validator = Validator::make(Request::all(), [
-            'title' => 'required',
-            'url_address' => 'required',
+            'title' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -522,6 +520,7 @@ class BasicdataController extends Controller
             $basic_data_value = BasicdataValue::find(Request::input('item_id'));
             $basic_data_value->title = Request::input('title');
             $basic_data_value->inactive = Request::input('inactive');
+            $basic_data_value->comment= Request::input('comment');
             $basic_data_value->save();
 
             $basic_data_attribute_url = $basic_data_value->attrs()->where('basicdata_attribute_id', 5)->withPivot('value')->first();

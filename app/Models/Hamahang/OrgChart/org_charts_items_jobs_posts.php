@@ -26,21 +26,26 @@ class org_charts_items_jobs_posts extends Model
 
     public function accesses()
     {
-        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_access','chart_item_job_id','id');
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_access','chart_item_post_job_id','id');
     }
 
     public function adventages()
     {
-        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage','chart_item_job_id','id');
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage','chart_item_post_job_id','id');
     }
 
     public function alternate_users()
     {
-        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users','chart_item_job_id','id');
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users','chart_item_post_job_id','id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users','chart_item_post_job_id','id');
     }
 
     public function worktime()
     {
-        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime','chart_item_job_id','id');
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime','chart_item_post_job_id','id');
     }
 }

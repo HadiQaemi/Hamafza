@@ -18,28 +18,39 @@
             {{--</div>--}}
         {{--</div>--}}
         <div class="col-xs-12 form-group">
-            <div class="col-xs-4 noRightPadding noLeftPadding">
-                <div class="col-xs-6 line-height-35">
+            <div class="col-xs-6 noRightPadding noLeftPadding">
+                <div class="col-xs-4 line-height-35">
+                    <label for="amount" class="pull-right">{{trans('app.amount')}}</label>
+                </div>
+                <div class="col-xs-8">
+                    <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30" placeholder="{{trans('app.amount')}}" value="{{$job->amount}}"/>
+                    <input type="hidden" name="job_id" id="job_id" value="{{enCode($job->id)}}"/>
+                </div>
+            </div>
+            <div class="col-xs-6 noRightPadding noLeftPadding">
+                <div class="col-xs-4 line-height-35">
                     <label for="mens_num">{{trans('org_chart.mens_num')}}</label>
                 </div>
-                <div class="col-xs-6">
-                    <input type="text" name="mens_num" id="mens_num" class="form-control" placeholder="{{trans('org_chart.mens_num')}}"/>
+                <div class="col-xs-8">
+                    <input type="text" name="mens_num" id="mens_num" class="form-control" placeholder="{{trans('org_chart.mens_num')}}" value="{{$job->men}}"/>
                 </div>
             </div>
-            <div class="col-xs-4 noRightPadding noLeftPadding">
-                <div class="col-xs-6 line-height-35">
+        </div>
+        <div class="col-xs-12 form-group">
+            <div class="col-xs-6 noRightPadding noLeftPadding">
+                <div class="col-xs-4 line-height-35">
                     <label for="female_num">{{trans('org_chart.female_num')}}</label>
                 </div>
-                <div class="col-xs-6">
-                    <input type="text" name="female_num" id="female_num" class="form-control" placeholder="{{trans('org_chart.female_num')}}"/>
+                <div class="col-xs-8">
+                    <input type="text" name="female_num" id="female_num" class="form-control" placeholder="{{trans('org_chart.female_num')}}" value="{{$job->women}}"/>
                 </div>
             </div>
-            <div class="col-xs-4 noRightPadding noLeftPadding">
-                <div class="col-xs-6 line-height-35">
+            <div class="col-xs-6 noRightPadding noLeftPadding">
+                <div class="col-xs-4 line-height-35">
                     <label for="female_num">{{trans('org_chart.outsourced_num')}}</label>
                 </div>
-                <div class="col-xs-6">
-                    <input type="text" name="outsourced_num" id="outsourced_num" class="form-control" placeholder="{{trans('org_chart.outsourced_num')}}"/>
+                <div class="col-xs-8">
+                    <input type="text" name="outsourced_num" id="outsourced_num" class="form-control" placeholder="{{trans('org_chart.outsourced_num')}}" value="{{$job->outsourcing}}"/>
                 </div>
             </div>
         </div>
@@ -48,8 +59,18 @@
                 <label for="need_successor_users">{{trans('org_chart.need_successor_users')}}</label>
             </div>
             <div class="col-xs-10">
-                <select name="need_successor_users[]" id="need_successor_users" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('org_chart.need_successor_users')}}" multiple></select>
+                <select name="need_successor_users[]" id="need_successor_users" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('org_chart.need_successor_users')}}" multiple>
+                    @if(!empty($job->alternate_users))
+                        @foreach($job->alternate_users as $user)
+                            <option selected="selected" value="{{ $user->user->id }}">{{ $user->user->Name.' '.$user->user->Family }}</option>
+                        @endforeach
+                    @endif
+                </select>
             </div>
+        </div>
+        <div class="col-xs-12 form-group">
+            <div class="col-xs-2 line-height-30"><label for="item_title">{{trans('app.description')}}</label></div>
+            <div class="col-xs-10 line-height-30"><textarea class="form-control" rows="2" name="comment" id="comment" placeholder="{{trans('app.description')}}">{{$job->description}}</textarea></div>
         </div>
         {{--<div class="col-xs-12 form-group">--}}
             {{--<div class="col-xs-2 line-height-35">--}}

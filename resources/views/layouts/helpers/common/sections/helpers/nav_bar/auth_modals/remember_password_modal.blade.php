@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row col-md-7 pull-left">
+                        <div class="row col-md-12 pull-left">
                             <div class="col-md-4">
                                 <div data-dismiss="modal" data-toggle="modal" data-target="#register" class="help-block register" style="cursor: pointer">ثبت نام</div>
                             </div>

@@ -93,26 +93,26 @@
                 </div>
             </div>
             <div id="position" class="tab-pane fade">
-                <div class="col-xs-12 margin-top-10">
-                    <a href="{!! route('modals.add_new_post') !!}" class="jsPanelsPositions btn btn-default pull-left jspa btn-primary btn fa fa-plus" item="{{$item_id}}"></a>
-                </div>
-                <table class="table" style="width: 100%;">
+                {{--<div class="col-xs-12 margin-top-10">--}}
+                    {{--<a href="{!! route('modals.add_new_post') !!}" class="jsPanelsPositions btn btn-default pull-left jspa btn-primary btn fa fa-plus" item="{{$item_id}}"></a>--}}
+                {{--</div>--}}
+                <table class="table margin-top-10" style="width: 100%;">
                     <thead>
-                        <td class="col-xs-3">{{trans('org_chart.extra_title')}}</td>
-                        <td class="col-xs-3">{{trans('org_chart.work_place')}}</td>
-                        <td class="col-xs-3">{{trans('org_chart.share_payment')}}</td>
-                        <td class="col-xs-2">{{trans('org_chart.outsourced')}}</td>
+                        <td class="col-xs-4">{{trans('org_chart.job_title')}}</td>
+                        <td class="col-xs-3">{{trans('org_chart.clerk')}}</td>
+                        <td class="col-xs-2">{{trans('org_chart.extra_title')}}</td>
+                        <td class="col-xs-2">{{trans('org_chart.work_place')}}</td>
                         <td class="col-xs-1">{{trans('app.operations')}}</td>
                     </thead>
                     <tbody id="list_positions">
                     @foreach($jobs as $job)
                         @foreach($job->posts as $post)
                             <tr>
-                                <td class="col-xs-3">{{$post->extra_title}}</td>
-                                <td class="col-xs-3">{{$post->location}}</td>
-                                <td class="col-xs-3">{{$post->share_performance}}</td>
-                                <td class="col-xs-2">{{$post->outsourcing}}</td>
-                                <td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer edit_job" ref="{{$job->id}}" ></i></td>
+                                <td class="col-xs-4">{{$job->job->title}}</td>
+                                <td class="col-xs-3">{{isset($post->users[0]) ? $post->users[0]->user->Name.' '.$post->users[0]->user->Family : ''}}</td>
+                                <td class="col-xs-2">{{$post->extra_title}}</td>
+                                <td class="col-xs-2">{{$post->location}}</td>
+                                <td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$post->id}}" ></i><i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="{{enCode($post->id)}}" ></i></td>
                             </tr>
                         @endforeach
                     @endforeach

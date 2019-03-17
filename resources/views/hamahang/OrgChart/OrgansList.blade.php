@@ -741,6 +741,38 @@
             window.table_chart_grid = $('#OrgOrgansChartGrid').DataTable();
         });
 
+        var JS_Panel_1 ;
+        $(document).on("click", ".jsPanelsEditPositions", function () {
+            link = "{{route('modals.edit_show_post')}}";
+            title = $(this).attr('title');
+            item = $(this).attr('post');
+            var h = $(window).height();
+            var w = $(window).width();
+            JS_Panel_2 = $.jsPanel({
+                contentAjax: {
+                    url: link,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {post: item},
+                    done: function (data, textStatus, jqXHR, panel) {
+                        panel.headerTitle(data.header);
+                        panel.content.html(data.content);
+                        panel.toolbarAdd('footer', [{item: data.footer}]);
+                    }
+                },
+                headerControls: {
+                    minimize: 'disable',
+                    smallify: 'disable'
+                },
+                headerTitle: title,
+                contentOverflow: {horizontal: 'hidden', vertical: 'auto'},
+                panelSize: {width: w * 0.7, height: h * 0.7},
+                theme: 'default',
+            });
+            //JS_Panel.resize('1000px','500px');
+            JS_Panel_2.content.html('<div class="loader"></div>');
+            return false
+        });
         var JS_Panel_2 ;
         $(document).on("click", ".jsPanelsPositions", function () {
             link = "{{route('modals.add_new_post')}}";
@@ -792,12 +824,6 @@
             job_id = $(this).attr('ref');
             title = $(this).attr('title');
             item = $(this).attr('item');
-            modal = 'modal' == $(this).attr('modal') ? 'modal' : '';
-            //get_height = $(this).attr('height');
-            if (link.indexOf('share?sid') > 0)
-                title = 'بازنشر';
-            if (link.indexOf('print?sid') > 0)
-                title = 'چاپ';
             var h = $(window).height();
             var w = $(window).width();
             JS_Panel_2 = $.jsPanel({
@@ -821,7 +847,7 @@
                 },
                 headerTitle: title,
                 contentOverflow: {horizontal: 'hidden', vertical: 'auto'},
-                panelSize: {width: w * 0.7, height: h * 0.7},
+                panelSize: {width: w * 0.7, height: h * 0.5},
                 // contentSize: {width: "800px", height: hei},
                 // position: {top: h, left: w},
                 // position: 'center',
@@ -837,6 +863,52 @@
             $.ajax({
                 type: "POST",
                 url: '{{ route('hamahang.org_chart.insert_posts')}}',
+                dataType: "json",
+                data: $('#add_new_post_frm').serialize(),
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        $('#list_positions').append('<tr>'+
+                                '<td class="col-xs-3">' + result.post.extra_title + '</td>'+
+                                '<td class="col-xs-3">' + result.post.location + '</td>'+
+                                '<td class="col-xs-3">' + result.post.share_performance + '</td>'+
+                                '<td class="col-xs-2">' + result.post.outsourcing + '</td>' +
+                                '<td class="col-xs-1">' +
+                                    '<i class="fa fa-remove remove_post margin-left-10" rel="' + result.post.id + '"></i>' +
+                                    '<i class="fa fa-edit edit_post margin-left-10" rel="' + result.post.id + '"></i>' +
+                                '</td>' +
+                            '</tr>');
+                        JS_Panel_2.close();
+                    } else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                    setTimeout(function(){$("#alert_insert").html('') }, 4000);
+                }
+            });
+        });
+        $(document).on("click", "#btn_edit_post", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.org_chart.edit_post')}}',
+                dataType: "json",
+                data: $('#add_new_post_frm').serialize(),
+                success: function (result) {
+                    console.log(result);
+                    if (result.success == true) {
+                        JS_Panel_2.close();
+                    } else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                    setTimeout(function(){$("#alert_insert").html('') }, 4000);
+                }
+            });
+        });
+        $(document).on("click", "#btn_edit_job_unit", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.org_chart.send_edit_job_unit')}}',
                 dataType: "json",
                 data: $('#add_new_post_frm').serialize(),
                 success: function (result) {

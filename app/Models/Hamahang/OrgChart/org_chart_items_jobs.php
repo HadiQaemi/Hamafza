@@ -23,4 +23,9 @@ class org_chart_items_jobs extends Model
     {
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts','chart_item_job_id','id');
     }
+
+    public function alternate_users()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_alternate_users','chart_item_job_id','id');
+    }
 }

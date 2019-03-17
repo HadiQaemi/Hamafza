@@ -30,6 +30,7 @@ use App\Models\Hamahang\Options;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_organs;
 use App\Models\Hamahang\PaymentGatewayRawLogs;
 use App\Models\Hamahang\ProvinceCity\City;
@@ -2872,6 +2873,22 @@ class ModalController extends Controller
         ]);
     }
 
+    public function edit_show_post(Request $request)
+    {
+        $post = org_charts_items_jobs_posts::with('job', 'accesses', 'adventages', 'worktime')->where('id', deCode($request->post))->first();
+
+        return json_encode([
+            'header' => trans('org_chart.edit_show_post'),
+            'content' => view('modals.organ.add_organ.jsp_edit_show_post_content')
+                ->with('post', $post)
+//                ->with('item_id', $request->item_id)
+//                ->with('items', json_encode(['results'=>$items]))
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_edit_show_post_footer')
+                ->render()
+        ]);
+    }
+
     public function add_new_post(Request $request)
     {
         $item = org_chart_items::with('chart', 'jobs')->where('id', $request->item_id)->first();
@@ -2896,21 +2913,12 @@ class ModalController extends Controller
     }
     public function edit_job_unit(Request $request)
     {
-        $item = org_chart_items_jobs::with('job')->where('id', $request->job_id)->first();
-//        $items = '';
-//        foreach($item->jobs as $job){
-//            $items[] = [
-//                'id' => $job->id,
-//                'text' => $job->job->title
-//                ];
-//        }
-
+        $job = org_chart_items_jobs::with('job', 'alternate_users')->where('id', $request->job_id)->first();
         return json_encode([
             'header' => trans('org_chart.edit_job_unit'),
             'content' => view('modals.organ.add_organ.jsp_edit_job_unit_content')
-//                ->with('jobs', $item->jobs)
+                ->with('job', $job)
                 ->with('job_id', $request->job_id)
-//                ->with('items', json_encode(['results'=>$items]))
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_edit_job_unit_footer')
                 ->render()
