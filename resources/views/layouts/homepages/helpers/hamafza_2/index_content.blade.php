@@ -171,8 +171,8 @@
                 </div>
                 <div class="row timer col-xs-12 noRightPadding noLeftPadding">
                     <div class="time col-xs-12" style="font-size: 1.6em;">
-                        <div class="col-xs-4">{{ date('H:m') }}</div>
-                        <div id="reminder" class="col-xs-8 noLeftPadding noRightPadding"></div>
+                        <div class="col-xs-3">{{ date('H:m') }}</div>
+                        <div id="reminder" class="col-xs-9 noLeftPadding noRightPadding"></div>
                     </div>
                     @php
                         $date = HDate_GtoJ(time(), "m/d", true);

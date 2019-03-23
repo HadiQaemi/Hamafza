@@ -281,7 +281,7 @@ function shownow()
         hh = Math.floor(diff / (60));
         ss = diff - (hh * 60)
         document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</span>";
-        document.getElementById("reminder").innerHTML = "<div class='col-xs-8' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</div><div class='col-xs-4' >" + hh + ":" + ss + "</div>";
+        document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</div><div class='col-xs-2 noRightPadding noLeftPadding' >" + hh + ":" + ss + "</div>";
         donokh_show();
 
     }
@@ -315,7 +315,7 @@ function shownow()
                 hh = Math.floor(diff / (60));
                 ss = diff - (hh * 60)
                 document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1591;&#1604;&#1608;&#1593; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</span>";
-                document.getElementById("reminder").innerHTML = "<div class='col-xs-8' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1591;&#1604;&#1608;&#1593; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</div><div class='col-xs-4' >" + hh + ":" + ss + "</div>";
+                document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1591;&#1604;&#1608;&#1593; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</div><div class='col-xs-2 noRightPadding noLeftPadding4' >" + hh + ":" + ss + "</div>";
                 donokh_show();
 
             }
@@ -348,7 +348,7 @@ function shownow()
                         hh = Math.floor(diff / (60));
                         ss = diff - (hh * 60)
                         document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1592;&#1607;&#1585;</span>";
-                        document.getElementById("reminder").innerHTML = "<div class='col-xs-8' >&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1592;&#1607;&#1585;</div><div class='col-xs-4' >" + hh + ":" + ss + "</div>";
+                        document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' >&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1592;&#1607;&#1585;</div><div class='col-xs-2' >" + hh + ":" + ss + "</div>";
                         donokh_show();
                     }
 
@@ -383,7 +383,7 @@ function shownow()
                                 hh = Math.floor(diff / (60));
                                 ss = diff - (hh * 60)
                                 document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1594;&#1585;&#1608;&#1576; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</span>";
-                                document.getElementById("reminder").innerHTML = "<div class='col-xs-8' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1594;&#1585;&#1608;&#1576; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</div><div class='col-xs-4' >" + hh + ":" + ss +"</div>";
+                                document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1594;&#1585;&#1608;&#1576; &#1582;&#1608;&#1585;&#1588;&#1740;&#1583;</div><div class='col-xs-2 noRightPadding noLeftPadding' >" + hh + ":" + ss +"</div>";
                                 donokh_show();
                             }
                             else
@@ -411,7 +411,7 @@ function shownow()
                                         hh = Math.floor(diff / (60));
                                         ss = diff - (hh * 60)
                                         document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1605;&#1594;&#1585;&#1576;</span>";
-                                        document.getElementById("reminder").innerHTML = "<div class='col-xs-8' >&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1605;&#1594;&#1585;&#1576;</div><div class='col-xs-4' >" + hh + ":" + ss +"</div>";
+                                        document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' >&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1605;&#1594;&#1585;&#1576;</div><div class='col-xs-2 noRightPadding noLeftPadding' >" + hh + ":" + ss +"</div>";
                                         donokh_show();
                                     }
                                     else
@@ -448,7 +448,7 @@ function shownow()
                                             ss += Math.floor(document.getElementById("azan_mt1").value);
 
                                             document.getElementById("azanazan").innerHTML = hh + ":" + ss + "<br><span style='font-size:8pt;'> &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</span>";
-                                            document.getElementById("reminder").innerHTML = "<div class='col-xs-8' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</div><div class='col-xs-4' >" + hh + ":" + ss +"</div>" ;
+                                            document.getElementById("reminder").innerHTML = "<div class='col-xs-10 noRightPadding noLeftPadding' > &#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; &#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;</div><div class='col-xs-2 noRightPadding noLeftPadding' >" + hh + ":" + ss +"</div>" ;
                                             donokh_show();
                                         }
                                     }
