@@ -95,10 +95,10 @@
                             <div id="captcha_request_errors_ham2" class="error-login"></div>
                         </div>
                         <div class="col-md-6 noLeftPadding noRightPadding">
-                            <div class="col-md-8">
+                            <div class="col-md-7 noLeftPadding noRightPadding">
                                 <img style="height: 30px;" class="login_captcha_image" src="{{ route('captcha', 'login') }}">
                             </div>
-                            <div class="captcha-refresh-style login_captcha_refresh col-md-4" style="cursor: pointer; width: 39px; height: 30px;margin-right: 15px;border-radius: 5px;">
+                            <div class="captcha-refresh-style login_captcha_refresh pull-left noLeftPadding noRightPadding" style="cursor: pointer; width: 39px; height: 30px;margin-right: 15px;border-radius: 5px;">
                                 <i style="color: black; margin-top: 10px;" class="fa fa-refresh"></i>
                             </div>
                         </div>
