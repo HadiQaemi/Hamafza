@@ -17,18 +17,35 @@
                 <form id="Form_Add_Organ" >
                     <div class="row col-lg-12 margin-top-20">
                         <div class="form-group col-xs-1 col-md-1 col-sm-1 line-height-35">
-                            {{ trans('app.title') }}
+                            <label for="item_title">{{ trans('app.title') }}</label>
                         </div>
                         <div class="form-group col-xs-11 col-md-11 col-sm-11">
-                            <input placeholder="{{ trans('app.title') }}" name="organ_title" id="item_title" class="form-control" required placeholder=""/>
+                            <input placeholder="{{ trans('app.title') }}" name="organ_title" id="item_title" class="form-control"/>
                         </div>
                     </div>
                     <div class="row col-lg-12">
                         <div class="form-group col-xs-1 col-md-1 col-sm-1 line-height-35">
-                            {{ trans('org_chart.description') }}
+                            <label for="">{{ trans('org_chart.level') }}</label>
                         </div>
                         <div class="form-group col-xs-11 col-md-11 col-sm-11">
-                            <textarea placeholder="{{ trans('org_chart.description') }}" rows="4" name="organ_description" id="item_organ_description" class="form-control" required placeholder=""></textarea>
+                            <input type="radio" placeholder="{{ trans('org_chart.level') }} 1" name="organ_level" id="level1" value="1"/>
+                            <label for="level1">{{ trans('org_chart.level') }} 1</label>
+                            <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 2" name="organ_level" id="level2" value="2"/>
+                            <label for="level2">{{ trans('org_chart.level') }} 2</label>
+                            <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 3" name="organ_level" id="level3" value="3"/>
+                            <label for="level3">{{ trans('org_chart.level') }} 3</label>
+                            <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 4" name="organ_level" id="level4" value="4"/>
+                            <label for="level4">{{ trans('org_chart.level') }} 4</label>
+                            <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 5" name="organ_level" id="level5" value="5"/>
+                            <label for="level5">{{ trans('org_chart.level') }} 5</label>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="form-group col-xs-1 col-md-1 col-sm-1 line-height-35">
+                            <label for="item_organ_description">{{ trans('org_chart.description') }}</label>
+                        </div>
+                        <div class="form-group col-xs-11 col-md-11 col-sm-11">
+                            <textarea placeholder="{{ trans('org_chart.description') }}" rows="4" name="organ_description" id="item_organ_description" class="form-control"></textarea>
                         </div>
                     </div>
                 </form>

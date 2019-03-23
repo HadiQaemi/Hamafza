@@ -59,6 +59,7 @@ return [
     'add_users'   => 'افزودن فرد',
     'clerk'   => 'کارمند',
     'organization'   => 'سازمان',
+    'level'   => 'سطح',
 //    'outsourced_num'   => 'تعداد قابل برون‌سپاری از مجموع سمت‌های تعریف شده',
     'outsourced_num'   => 'تعداد قابل برون‌سپاری',
     'choose_job'   => 'انتخاب شغل',

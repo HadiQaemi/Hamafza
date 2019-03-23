@@ -4,22 +4,7 @@
         type: 'POST',
         url: "{{ route('autocomplete') }}"
     });--}}
-    $(document).on('click', '.add_job_post', function () {
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.org_chart.add_job_post')}}',
-            dataType: "json",
-            data: $('#add_job_post_frm').serialize(),
-            success: function (result) {
-                if (result.success == true) {
-                    $('#list_job_post').append('<tr><td class="col-xs-7">'+$('#select2-job-container').html()+'</td><td class="col-xs-4">'+$('#amount').val()+'</td><td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" rel="'+$('#job').val()+'" ref="'+result.job_item+'" ></i><i class="fa fa-edit pointer edit_job" rel="'+$('#amount').val()+'" ref="'+result.job_item+'" ></i></td></tr>');
-                }
-                else {
-                    messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
-                }
-            }
-        });
-    });
+
 
     $('#modify_chart_info').on('click',function () {
 

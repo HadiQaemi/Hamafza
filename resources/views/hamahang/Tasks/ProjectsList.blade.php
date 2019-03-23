@@ -290,6 +290,7 @@
                 }
             });
             function  readTable(send_info) {
+                alert('asdasdasd');
                 // runWaitMe($('#master_inner_rtl_div'));
                 if($('#new_task_keywords').val())
                 {

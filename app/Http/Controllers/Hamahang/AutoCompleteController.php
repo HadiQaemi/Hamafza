@@ -152,6 +152,26 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+    public function missions_job(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = DB::table('hamafza_org_osi')
+                ->select('title as text', 'id')
+                ->get();
+        }
+        else
+        {
+            $data = DB::table('hamafza_org_osi')
+                ->where('hamafza_org_osi.title', "LIKE", "%" . $x['term'] . "%")
+                ->select('hamafza_org_osi.title as text', 'id')
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
     public function organs(Request $request)
     {
         $x = $request->data;

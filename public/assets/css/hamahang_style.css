@@ -240,7 +240,7 @@ strong.ui-state-error {
 }
 
 .margin-top-20 {
-    margin-top: 20px;
+    margin-top: 20px !important;
 }
 
 .margin-top-25 {

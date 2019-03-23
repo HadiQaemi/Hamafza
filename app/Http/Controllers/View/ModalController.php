@@ -2956,6 +2956,7 @@ class ModalController extends Controller
             'content' => view('modals.organ.edit_organ.jsp_edit_organ_content')
                 ->with('title', $request->org_title)
                 ->with('description', $request->org_description)
+                ->with('level', $request->level)
                 ->with('org_id', $request->org_id)
                 ->render(),
             'footer' => view('modals.organ.edit_organ.jsp_edit_organ_footer')

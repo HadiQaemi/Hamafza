@@ -10,7 +10,7 @@ class org_organs extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'hamahang_org_organs';
-    protected $fillable = ['uid','parent_id','title','description'];
+    protected $fillable = ['uid','parent_id','title','level','description'];
 
     public function charts()
     {

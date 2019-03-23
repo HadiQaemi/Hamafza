@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\Models\Hamahang\OrgChart\onet_job;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_alternate_users;
@@ -11,6 +12,7 @@ use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime;
+use App\Models\Hamahang\OrgChart\org_charts_items_missions;
 use DB;
 
 use Request;
@@ -1108,16 +1110,17 @@ class OrgChartController extends Controller
 
     public function insert_organs()
     {
-
         $validator = Validator::make(Request::all(),
             [
                 'organ_title' => 'required',
+                'organ_level' => 'numeric|min:0|max:5',
                 'parent_organ'=>'exists:hamahang_org_organs,id'
             ],
             [],
             [
                 'organ_title' => 'عنوان ',
                 'parent_organ' => 'سازمان ',
+                'organ_level' => 'سطح سازمان ',
                 'organ_description'=>'توضیحات'
             ]
         );
@@ -1129,14 +1132,17 @@ class OrgChartController extends Controller
         }
         else{
             $organ_title = Request::get('organ_title');
+            $organ_level = Request::get('organ_level');
             $organ_description = Request::get('organ_description');
             $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
             $organs = org_organs::create([
                 'uid' => auth()->id(),
                 'parent_id' => $organ_parent,
+                'level' => $organ_level,
                 'title' => $organ_title,
                 'description' => $organ_description,
             ]);
+
             $organs_id = $organs->id;
             org_charts::create([
                 'uid' => auth()->id(),
@@ -1154,6 +1160,7 @@ class OrgChartController extends Controller
         $validator = Validator::make(Request::all(),
             [
                 'organ_title' => 'required',
+                'organ_level' => 'numeric|min:0|max:5',
                 'parent_organ'=>'exists:hamahang_org_organs,id'
                 /*'id_organ'=>'required|exists:hamahang_org_organs,id'*/
             ],
@@ -1175,10 +1182,12 @@ class OrgChartController extends Controller
             $organ_title = Request::get('organ_title');
             $organ_description = Request::get('organ_description');
             $organ_id = deCode(Request::get('org_id'));
+            $organ_level = Request::get('organ_level');
             $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
             $organ=org_organs::find($organ_id);
             $organ->title=$organ_title;
             $organ->description=$organ_description;
+            $organ->level=$organ_level;
             $organ->parent_id=$organ_parent;
             $organ->save();
             $result['success'] = true;
@@ -1292,20 +1301,27 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
         else{
+            $job = onet_job::find(Request::get('job'));
             $org_chart_items_jobs = new org_chart_items_jobs();
             $org_chart_items_jobs->chart_item_id = Request::get('unit_id');
             $org_chart_items_jobs->job_id = Request::get('job');
             $org_chart_items_jobs->amount = Request::get('amount');
             $org_chart_items_jobs->description = Request::get('comment');
             if($org_chart_items_jobs->save()){
+                $semats = [];
                 for($i=0; $i<Request::get('amount'); $i++){
                     $org_charts_items_jobs_posts = new org_charts_items_jobs_posts();
                     $org_charts_items_jobs_posts->uid = auth()->id();
                     $org_charts_items_jobs_posts->chart_item_job_id= $org_chart_items_jobs->id;
                     $org_charts_items_jobs_posts->save();
+                    $semats[] = [
+                        'title' => $job->title,
+                        'jobId' => enCode($org_charts_items_jobs_posts->id)
+                    ];
                 }
                 $result['success'] = true;
-                $result['job_item'] = enCode($org_chart_items_jobs->id);
+                $result['job_item'] = $org_chart_items_jobs->id;
+                $result['semats'] = $semats;
 
             } else $result['success']=false;
         }
@@ -1404,7 +1420,6 @@ class OrgChartController extends Controller
     }
     public function update_one_chart_item(){
         {
-
             $validator = Validator::make(Request::all(),
                 [
                     'item_title'=>'required',
@@ -1431,8 +1446,17 @@ class OrgChartController extends Controller
                 $chart_item->title=(Request::get('item_title'));
                 $chart_item->description=(Request::get('item_description'));
                 $chart_item->parent_id=(Request::get('item_parent_id'));
-                if($chart_item->save())
+                if($chart_item->save()){
                     $result['success'] = true;
+                    org_charts_items_missions::where('chart_item_id', '=', $chart_item->id)->delete();
+                    foreach (Request::get('unit_missions') as $missions){
+                        org_charts_items_missions::create([
+                            'uid' => auth()->id(),
+                            'chart_item_id' => $chart_item->id,
+                            'mission_id' => $missions
+                        ]);
+                    }
+                }
                 else $result['success']=false;
             }
             return json_encode($result);

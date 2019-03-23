@@ -306,11 +306,12 @@
                             var oid = full.oid;
                             var title = full.title;
                             var description=full.description;
+                            var level=full.level;
 
                             window.RowData[id] = full;
                             return "" +
                                 '<a class="link_pointer fa fa-trash color_red margin-right-10" style="font-size: 10px"  onclick="RemoveOrg(' + oid + ')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>' +
-                                '<a class="jsPanels fa fa-edit gray_light_color edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
+                                '<a class="jsPanels fa fa-edit gray_light_color edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'&level='+level+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
                                 (full.ChartID==null ?
                                     '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+oid+'"><i class="fa fa-object-group"></i></a>' :
                                     '<a class="fa fa-sitemap margin-right-10 showOrgChart pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.chart_view')}}"></a>' +
@@ -376,6 +377,31 @@
                     $('.relatedOrg.showOrgChart').addClass('current_page');
                 }
             });
+        });
+        $(document).on('click', '.add_job_post', function () {
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.org_chart.add_job_post')}}',
+                dataType: "json",
+                data: $('#add_job_post_frm').serialize(),
+                success: function (result) {
+                    if (result.success == true) {
+                        $('#list_job_post').append('<tr><td class="col-xs-7">'+$('#select2-job-container').html()+'</td><td class="col-xs-4">'+$('#amount').val()+'</td><td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" rel="'+$('#job').val()+'" ref="'+result.job_item+'" ></i><i class="fa fa-edit pointer jsPanelsEditJob" href="{!! route('modals.add_new_post') !!}" rel="'+$('#amount').val()+'" ref="'+result.job_item+'" ></i></td></tr>');
+                        $.each(result.semats, function (index, semat) {
+                            $('#list_positions').append('<tr><td class="col-xs-4">' + semat.title + '</td><td class="col-xs-3"></td><td class="col-xs-2"></td><td class="col-xs-2"></td><td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="'+semat.id+'" ></i><i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="'+semat.jobId+'" ></i></td></tr>');
+                        });
+                    }
+                    else {
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                    }
+                }
+            });
+        });
+        $(document).on('click', '.remove_mission', function () {
+            $(this).parent().parent().remove();
+        });
+        $(document).on('click', '#add_mission', function () {
+            $('#mission_list').append('<div class="col-xs-12 margin-top-10"><div class="col-xs-2"></div><div class="col-xs-8"><input class="hidden" name="unit_missions[]" value="'+$('#mission').val()+'"/>'+$('#select2-mission-container').attr('title')+'</div><div class="col-xs-2"><i class="fa fa-remove remove_mission pointer"></i></div></div>')
         });
         $(document).on('click', '.showOrglist', function () {
             var url = '{!! route('ugc.desktop.hamahang.org_chart.show_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}' + '/' + $(this).attr('rel');

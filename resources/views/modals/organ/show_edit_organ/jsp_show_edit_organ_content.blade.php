@@ -16,43 +16,45 @@
         <div class="tab-content">
             <div id="edit" class="tab-pane fade in active">
                 <div id="alert_edit" class="mt-5"></div>
-                <form id="Form_Update_ItemForm_Update_Item" method="post" action="#" id="">
+                <form id="Form_Update_Item" method="post" action="#" id="">
                     <div class="margin-top-20">
-                        <div class="form-group col-xs-12">
+                        <div class="form-group col-xs-12 noRightPadding noLeftPadding">
                             <input type="hidden" value="{{$item_id}}" name="item_id" />
-                            <div class="col-xs-1 line-height-30"><label for="item_title">{{trans('app.title')}}</label></div>
-                            <div class="col-xs-11"><input type="text" name="item_title" id="item_title" class="form-control" value="{{$title}}"/></div>
+                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_title">{{trans('app.title')}}</label></div>
+                            <div class="col-xs-11 noRightPadding noLeftPadding"><input type="text" name="item_title" id="item_title" class="form-control" value="{{$title}}"/></div>
                         </div>
-                        <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
-                            <div class="col-xs-11">
-                                <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
-                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30"><label for="item_parent_id">{{trans('org_chart.missions')}}</label></div>
-                            <div class="col-xs-11">
-                                <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
-                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <div class="col-xs-1 line-height-30"><label for="item_description">{{trans('app.description')}}</label></div>
-                            <div class="col-xs-11 line-height-30">
+                        <div class="form-group col-xs-12 noRightPadding noLeftPadding">
+                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_description">{{trans('app.description')}}</label></div>
+                            <div class="col-xs-11 line-height-30 noRightPadding noLeftPadding">
                                 <textarea type="text" name="item_description" id="item_description" class="form-control">{{$description}}</textarea>
                             </div>
                         </div>
+                        <div class="form-group col-xs-12 margin-top-20 noRightPadding noLeftPadding">
+                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
+                            <div class="col-xs-11 noRightPadding noLeftPadding">
+                                <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
+                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 noRightPadding noLeftPadding">
+                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.missions')}}</label></div>
+                            <div class="col-xs-10 noRightPadding noLeftPadding">
+                                <select id="mission" name="mission" class="form-control select2_auto_complete_missions line-height-35 height-35">
+                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-1"><a class="btn btn-primary fa fa-plus" id="add_mission"></a></div>
+                        </div>
+                        <div class="form-group col-xs-12" id="mission_list"></div>
                     </div>
                 </form>
             </div>
             <div id="jobs" class="tab-pane fade">
                 <form id="add_job_post_frm" method="post" action="#" id="">
-                    <div class="col-xs-12 form-group margin-top-20">
-                        <div class="col-xs-1 line-height-30"><label for="item_title">شغل</label></div>
-                        <div class="col-xs-11">
+                    <div class="col-xs-12 form-group margin-top-20 noRightPadding noLeftPadding">
+                        <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_title">شغل</label></div>
+                        <div class="col-xs-11 noRightPadding noLeftPadding">
                             <div class="pull-right col-xs-10 noPadding">
                                 <input type="hidden" value="{{$item_id}}" name="unit_id" />
                                 <select name="job" id="job" class="form-control select2_auto_complete_onet_jobs line-height-35 height-35"></select>
@@ -61,20 +63,20 @@
                                 <label for="item_title" class="pull-right">{{trans('app.amount')}}</label>
                             </div>
                             <div class="pull-right">
-                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="{{trans('app.amount')}}"/>
+                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="سمت"/>
                             </div>
                             <div class="pull-left line-height-35">
                                 <a class="btn btn-primary fa fa-plus add_job_post"></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 form-group">
-                        <div class="col-xs-1 line-height-30"><label for="item_title">{{trans('app.description')}}</label></div>
-                        <div class="col-xs-11 line-height-30"><textarea class="form-control" rows="2" name="comment" id="comment" placeholder="{{trans('app.description')}}"></textarea></div>
+                    <div class="col-xs-12 form-group noRightPadding noLeftPadding">
+                        <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_title">{{trans('app.description')}}</label></div>
+                        <div class="col-xs-11 line-height-30 noRightPadding noLeftPadding"><textarea class="form-control" rows="2" name="comment" id="comment" placeholder="{{trans('app.description')}}"></textarea></div>
                     </div>
                 </form>
-                <div class="col-xs-12 form-group margin-top-20">
-                    <table id="list_job_post" class="table">
+                <div class="col-xs-12 form-group margin-top-20 noRightPadding noLeftPadding">
+                    <table id="list_job_post" class="table noRightPadding noLeftPadding">
                         <thead>
                             <tr>
                                 <td class="col-xs-7 border-bottom">{{trans('app.title')}}</td>

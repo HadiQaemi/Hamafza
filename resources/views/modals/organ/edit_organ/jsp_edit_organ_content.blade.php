@@ -24,6 +24,23 @@
                             <input name="organ_title" id="root_item_title" class="form-control" required value="{{$title}}"/>
                             <input type="hidden" name="org_id" id="org_id" class="form-control" required value="{{$org_id}}"/>
                         </div>
+                        <div class="row col-lg-12">
+                            <div class="form-group col-xs-1 col-md-1 col-sm-1">
+                                <label for="">{{ trans('org_chart.level') }}</label>
+                            </div>
+                            <div class="form-group col-xs-11 col-md-11 col-sm-11">
+                                <input type="radio" placeholder="{{ trans('org_chart.level') }} 1" name="organ_level" id="level1" value="1" {{$level==1 ? 'checked' : ''}}/>
+                                <label for="level1">{{ trans('org_chart.level') }} 1</label>
+                                <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 2" name="organ_level" id="level2" value="2" {{$level==2 ? 'checked' : ''}}/>
+                                <label for="level2">{{ trans('org_chart.level') }} 2</label>
+                                <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 3" name="organ_level" id="level3" value="3" {{$level==3 ? 'checked' : ''}}/>
+                                <label for="level3">{{ trans('org_chart.level') }} 3</label>
+                                <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 4" name="organ_level" id="level4" value="4" {{$level==4 ? 'checked' : ''}}/>
+                                <label for="level4">{{ trans('org_chart.level') }} 4</label>
+                                <input class="margin-right-20" type="radio" placeholder="{{ trans('org_chart.level') }} 5" name="organ_level" id="level5" value="5" {{$level==5 ? 'checked' : ''}}/>
+                                <label for="level5">{{ trans('org_chart.level') }} 5</label>
+                            </div>
+                        </div>
                         {{--<div class="form-group col-md-12">--}}
                             {{--<label>--}}
                                 {{--<span class="required">*</span>--}}

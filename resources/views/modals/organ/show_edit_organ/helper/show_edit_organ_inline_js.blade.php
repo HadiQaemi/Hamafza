@@ -1,5 +1,4 @@
 <script>
-
     $("#item_parent_id").select2({
         ajax: {
             type: "POST",
@@ -51,60 +50,60 @@
         // $("#tab_item").click(function(){
         //     $(".footer_base_div_btn").html('');
         // });
-        chart_datatable = $('#list_post').DataTable({
-            "dom": window.CommonDom_DataTables,
-            processing: true,
-            language: LangJson_DataTables,
-            serverSide: true,
-            ajax: {
-                url: '{!! route('Hamahang.charts.ListPost',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',
-                type: 'post'
-            },
-            columns: [
-                {data: 'title', name: 'title'},
-                {
-                    data: 'employee.Family', name: 'employee', "orderable": "false", searchable: false,
-                    "mRender": function (data, type, full) {
-                        if (data) {
-                            return data;
-                        }
-                        else return '';
-                        //return data;
-                    }
-                },
-                {
-                    data: 'user_id', name: '', "orderable": "false", searchable: false, width: '280px',
+        {{--chart_datatable = $('#list_post').DataTable({--}}
+            {{--"dom": window.CommonDom_DataTables,--}}
+            {{--processing: true,--}}
+            {{--language: LangJson_DataTables,--}}
+            {{--serverSide: true,--}}
+            {{--ajax: {--}}
+                {{--url: '{!! route('Hamahang.charts.ListPost',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',--}}
+                {{--type: 'post'--}}
+            {{--},--}}
+            {{--columns: [--}}
+                {{--{data: 'title', name: 'title'},--}}
+                {{--{--}}
+                    {{--data: 'employee.Family', name: 'employee', "orderable": "false", searchable: false,--}}
+                    {{--"mRender": function (data, type, full) {--}}
+                        {{--if (data) {--}}
+                            {{--return data;--}}
+                        {{--}--}}
+                        {{--else return '';--}}
+                        {{--//return data;--}}
+                    {{--}--}}
+                {{--},--}}
+                {{--{--}}
+                    {{--data: 'user_id', name: '', "orderable": "false", searchable: false, width: '280px',--}}
 
-                    "mRender": function (data, type, full) {
-                        if (data == 0) {
-                            return '<span id="span_add_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">انتخاب</span>' +
+                    {{--"mRender": function (data, type, full) {--}}
+                        {{--if (data == 0) {--}}
+                            {{--return '<span id="span_add_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">انتخاب</span>' +--}}
 
-                                '<div id="div_base_' + full.id + '"></div>';
-                        }
-                        else {
-                            return '<span id="span_edit_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">ویرایش/حذف</span>' +
-                                '<div id="div_base_' + full.id + '"></div>';
+                                {{--'<div id="div_base_' + full.id + '"></div>';--}}
+                        {{--}--}}
+                        {{--else {--}}
+                            {{--return '<span id="span_edit_employee' + full.id + '" class="cursor-pointer color_red" onclick="show_add_form(' + full.id + ')">ویرایش/حذف</span>' +--}}
+                                {{--'<div id="div_base_' + full.id + '"></div>';--}}
 
-                        }
-                    }
-                }
-            ]
-        });
-        datatable_list_item_chart = $("#datatable_ItemChildrenGrid").DataTable({
-            "dom": window.CommonDom_DataTables,
-            language: LangJson_DataTables,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '{!! route('Hamahang.charts.ListOrganChartItem',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',
-                type: 'post'
-            },
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'title', name: 'title'},
-                {data: 'description', name: 'description'},
-            ]
-        });
+                        {{--}--}}
+                    {{--}--}}
+                {{--}--}}
+            {{--]--}}
+        {{--});--}}
+        {{--datatable_list_item_chart = $("#datatable_ItemChildrenGrid").DataTable({--}}
+            {{--"dom": window.CommonDom_DataTables,--}}
+            {{--language: LangJson_DataTables,--}}
+            {{--processing: true,--}}
+            {{--serverSide: true,--}}
+            {{--ajax: {--}}
+                {{--url: '{!! route('Hamahang.charts.ListOrganChartItem',['chart_item_id'=>'']) !!}' + $("#input_add_item_id").val() + '',--}}
+                {{--type: 'post'--}}
+            {{--},--}}
+            {{--columns: [--}}
+                {{--{data: 'id', name: 'id'},--}}
+                {{--{data: 'title', name: 'title'},--}}
+                {{--{data: 'description', name: 'description'},--}}
+            {{--]--}}
+        {{--});--}}
     });
 
     function show_add_form(id) {
@@ -304,6 +303,33 @@
         tags: false,
         ajax: {
             url: "{{route('auto_complete.onet_jobs')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    $(".select2_auto_complete_missions").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.missions_job')}}",
             dataType: "json",
             type: "POST",
             quietMillis: 150,
