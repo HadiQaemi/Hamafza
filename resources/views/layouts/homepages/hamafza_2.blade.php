@@ -32,7 +32,8 @@
             background: #1b658aa3;
         }
         #custom-navbar-right li {
-            height: 25px;
+            height: 23px;
+            line-height: 15px;
         }
         .tab-content input{
             font-size: large !important;

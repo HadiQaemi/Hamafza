@@ -3,7 +3,8 @@
     <ul class="guide col-xs-12">
         <li class="here"><img src="{{ url('theme/hamafza/index_2/img/guideicone3.png') }}" style="padding-right: 5%; padding-left: 5%">
             {{--<a href="modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a>--}}
-            <a class="jsPanels " title="راهنمای اینجا" href="{{App::make('url')->to('/')}}/modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a>
+            {{--<a class="jsPanels " title="راهنمای اینجا" href="{{App::make('url')->to('/')}}/modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">راهنمای اینجا</a>--}}
+            <a class="jsPanels " title="راهنمای اینجا" href="{!! url('/modals/helpview?code=').enCode(26) !!}">راهنمای اینجا</a>
             {{--<a style="margin-left: 10px; font-family: naskh; color:#555;" class="jsPanels" title=" راهنمای اینجا" href="modals/helpview?id=21&amp;tagname=rahnamamozei&amp;hid=57&amp;pid=25">--}}
         </li>
         <li class="steps"><img src="{{ url('theme/hamafza/index_2/img/guideicone4.png') }}"><a href="{{ url('21') }}">گام های آغاز</a></li>
@@ -117,8 +118,15 @@
             <div class="col-xs-12 col-md-4 tumbnail3" style="height:135px;padding-bottom: 2px; margin-left: .8%;" data-toggle="tooltip" data-placement="right" data-html="true" id="azan_daiily"
                  title="Morning_prayerSunriseNoon_noonsunsetevening_prayer" old-title="Morning_prayerSunriseNoon_noonsunsetevening_prayer">
                 <div class="text-center" style="margin-bottom: 2%;font-size: 1.2em">
-                    <ul style="display: inline; padding-right: 0;">
-                        <li>{{ HDate_GtoJ(date('Y-m-d'), 'l j F Y') }}</li>
+                    <ul style="display: inline; padding-right: 0;font-size: 20px">
+                        <li>
+                            <span class="margin-left-10">
+                                {{ HDate_GtoJ(date('Y-m-d'), 'l j F Y') }}
+                            </span>
+                            <span class="margin-right-10">
+                                {{ date('H:m') }}
+                            </span>
+                        </li>
                     </ul>
                     <div class="button-setting">
                         <button data-toggle="modal" data-target="#squarespaceModal" style="float: left;display: flex;"><i class="fa fa-cog" aria-hidden="true"></i></button>
@@ -128,7 +136,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                    <h3 class="modal-title" id="lineModalLabel">آدرس</h3>
+                                    <h3 class="modal-title" id="lineModalLabel">افق</h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="OghatHome">
@@ -151,26 +159,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="row timer col-xs-12 noRightPadding noLeftPadding">
-                    <div class="time col-xs-12" style="font-size: 1.6em;">
-                        <div class="col-xs-3">{{ date('H:m') }}</div>
-                        <div id="reminder" class="col-xs-9 noLeftPadding noRightPadding"></div>
-                    </div>
-
-
-                    <div style="text-align: center;" class="col-xs-12 mainOghat">
-                        <div class="OghatHome">
-                            <div>
-                                <script type="text/javascript" language="javascript" src="{{ url('/theme/Scripts/oghat.js') }}"></script>
-                                <script language="javascript">
-                                    var CurrentDate = new Date();
-                                    var JAT = {!! $jat !!};
-                                    function pz() {};
-                                    init();
-                                    document.getElementById('cities').selectedIndex = 27;
-                                    coord();
-                                    main();
-                                </script>
+                <div class="row timer col-xs-12 noRightPadding noLeftPadding text-center">
+                    <div class="time col-xs-12" style="padding: 0% 8%;font-size: 1.6em;">
+                        <div id="reminder" class="pull-right noLeftPadding noRightPadding margin-top-20"></div>
+                        <div style="text-align: center;" class="pull-right mainOghat margin-right-15">
+                            <div class="OghatHome">
+                                <div>
+                                    <script type="text/javascript" language="javascript" src="{{ url('/theme/Scripts/oghat.js') }}"></script>
+                                    <script language="javascript">
+                                        var CurrentDate = new Date();
+                                        var JAT = {!! $jat !!};
+                                        function pz() {};
+                                        init();
+                                        document.getElementById('cities').selectedIndex = 27;
+                                        coord();
+                                        main();
+                                    </script>
+                                </div>
                             </div>
                         </div>
                     </div>

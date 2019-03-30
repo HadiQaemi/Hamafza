@@ -25,7 +25,11 @@
         .change_score{
             /*margin-right: 10px;*/
         }
+        .DTFC_LeftBodyLiner{overflow-y:unset !important}
+        .DTFC_RightBodyLiner{overflow-y:unset !important}
     </style>
+
+    <link href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
     <div class="row-fluid">
         <div class="space-10"></div>
         <div class="col-xs-12">
@@ -92,14 +96,16 @@
             </fieldset>
         </div>
         <div class="clearfix"></div>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
     </div>
 @stop
-
 @section('specific_plugin_scripts')
     <script type="text/javascript" src="{{URL::to('assets/Packages/DataTables/datatables.min.js')}}"></script>
     <script type="text/javascript" src="{{URL::to('assets/Packages/ChosenAjax/js/chosen.jquery.js')}}"></script>
     <script type="text/javascript" src="{{URL::to('assets/Packages/ChosenAjax/js/chosen.ajaxaddition.jquery.js')}}"></script>
 @stop
+
 @section('inline_scripts')
     <script>
         var table_organs_grid = "";
@@ -130,6 +136,10 @@
                 "destroy": true,
                 "language": LangJson_DataTables,
                 "processing": false,
+                "fixedColumns":   {
+                    leftColumns: 1,
+                    rightColumns: 0
+                },
                 "columnDefs": [
                     {
                         className: 'dt-body-nowrap dt-head-nowrap'
