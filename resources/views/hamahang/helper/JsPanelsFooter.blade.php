@@ -75,6 +75,11 @@
         {{--<i ></i>--}}
         {{--{{trans('tasks.ok')}}--}}
     {{--</a>--}}
+@elseif($btn_type == 'changeScore')
+    <a data-form_id = "change_score_form" data-again_save = "1" class="btn btn-primary pull-left change-score-btn" id="">
+        <i ></i>
+        {{trans('tasks.ok')}}
+    </a>
 @elseif($btn_type == 'ShowLiberaryTaskForm')
     <div>
         <input type="radio" name="liberary_task_save_type" class="liberary_task_save_public_library liberary_task_save_type" id="liberary_task_save_public_library" value="2" {{$type == 'public' ? 'checked' : ''}}/>

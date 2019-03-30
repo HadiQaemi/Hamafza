@@ -57,6 +57,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     Route::post( 'task_time', ['as' => 'modals.task_time', 'uses' => 'View\ModalController@task_time', 'middleware' => ['dynamic_permission:modals.multi_task']]);
     Route::post( 'add_user_view', ['as' => 'modals.add_user_view', 'uses' => 'View\ModalController@add_user_view', 'middleware' => ['dynamic_permission:modals.add_user_view']]);
     Route::post( 'manager_charts', ['as' => 'modals.manager_charts', 'uses' => 'View\ModalController@manager_charts', 'middleware' => ['dynamic_permission:modals.manager_charts']]);
+    Route::post( 'change_score', ['as' => 'modals.change_score', 'uses' => 'View\ModalController@changeScore', 'middleware' => ['dynamic_permission:modals.manager_charts']]);
     Route::post( 'add_organ', ['as' => 'modals.add_organ', 'uses' => 'View\ModalController@add_organ', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'add_new_organ', ['as' => 'modals.add_new_organ', 'uses' => 'View\ModalController@add_new_organ', 'middleware' => ['dynamic_permission:modals.add_organ']]);
     Route::post( 'assign_new_staff', ['as' => 'modals.assign_new_staff', 'uses' => 'View\ModalController@assign_new_staff', 'middleware' => ['dynamic_permission:modals.add_organ']]);

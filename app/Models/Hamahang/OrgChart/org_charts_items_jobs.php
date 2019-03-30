@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class org_charts_items_jobs extends Model
 {
-
     use SoftDeletes;
 
     protected $guarded = [];
@@ -16,11 +15,18 @@ class org_charts_items_jobs extends Model
 
     public function job()
     {
-        return $this->hasOne('App\Models\Hamahang\OrgChart\onet_job', 'id', 'job_id');
+//        return $this->hasOne('App\Models\Hamahang\OrgChart\onet_job', 'id', 'job_id');
+        return $this->belongsTo('App\Models\Hamahang\OrgChart\onet_job', 'job_id', 'id');
+
     }
 
     public function item()
     {
         return $this->belongsTo('App\Models\Hamahang\OrgChart\org_chart_items', 'chart_item_id', 'id');
+    }
+
+    public function wage()
+    {
+        return $this->hasOne('App\Models\Hamahang\OrgChart\org_charts_items_jobs_wages', 'chart_item_job_id', 'id');
     }
 }

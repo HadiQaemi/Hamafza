@@ -34,50 +34,44 @@
     .tooltip.top .tooltip-inner {
         text-align: right;
     }
-
+    .modal-body .OghatHome .select_city{
+        color: #000;
+    }
 </style>
 <div class="row col-xs-9">
     <div class="footer-top-content">
         <div class="row first">
             <div class="col-xs-12 col-md-4 tumbnail1" style="height: 208px;margin-left: .8%; padding-bottom: .5%">
                 @if(auth()->check())
+                    @php
+                        $auth_user = auth()->user();
+                    @endphp
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 1.1% 16% 1.1% 0%">
-
                             <p style="display: block">{{$dashboard['Eghdam']}}</p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">
-                                    وظایف من
-                                </a>
+                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">وظایف من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 1.1% 0 1.1% 16%; float: left;">
-
-                            <p style="display: block">{{$dashboard['Email']}}</p>
+                            <p style="display: block">0</p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">پیام‌های من</a>
+                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">برنامه امروز</a>
                             </p>
                             {{--<span class="badge" style="position: absolute; left: 16%; top: 2%">{{$dashboard['Email']}}</span>--}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 0.1% 16% 1.1% 0%">
-
-                            <p style="display: block">{{$dashboard['User']}}</p>
+                            <p style="display: block">{{$dashboard['Email']}}</p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/showgroups" style="font-size: small;color:#FFF;">
-                                    گروه‌های من
-                                </a>
+                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">پیام‌های من</a>
                             </p>
                         </div>
-
                         <div class="inner-tumbnail1" style="margin: 0.1% 0 1.1% 16%; float: left;">
-
-                            <p style="display: block">{{$dashboard['Post']}}</p>
+                            <p style="display: block">0</p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/files/Created_ME" style="font-size: small;color:#FFF;">
-                                   مطالب من
-                                </a>
+                                <a href="#" style="font-size: small;color:#FFF;">یادآوری‌ها</a>
                             </p>
                         </div>
 
@@ -114,6 +108,11 @@
                 </div>
             </div>
         </div>
+        @php
+            $date = HDate_GtoJ(time(), "m/d", true);
+            list ($m, $d) = explode('/', $date);
+            $jat = (int) !((6 == (int) $m && 31 == (int) $m) || $m > 6);
+        @endphp
         <div class="row second">
             <div class="col-xs-12 col-md-4 tumbnail3" style="height:135px;padding-bottom: 2px; margin-left: .8%;" data-toggle="tooltip" data-placement="right" data-html="true" id="azan_daiily"
                  title="Morning_prayerSunriseNoon_noonsunsetevening_prayer" old-title="Morning_prayerSunriseNoon_noonsunsetevening_prayer">
@@ -121,9 +120,9 @@
                     <ul style="display: inline; padding-right: 0;">
                         <li>{{ HDate_GtoJ(date('Y-m-d'), 'l j F Y') }}</li>
                     </ul>
-                    {{--<div class="button-setting">--}}
-                        {{--<button data-toggle="modal" data-target="#squarespaceModal" style="float: left;display: flex;"><i class="fa fa-cog" aria-hidden="true"></i></button>--}}
-                    {{--</div>--}}
+                    <div class="button-setting">
+                        <button data-toggle="modal" data-target="#squarespaceModal" style="float: left;display: flex;"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                    </div>
                     <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -132,39 +131,22 @@
                                     <h3 class="modal-title" id="lineModalLabel">آدرس</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- content goes here -->
-                                    <div class="col-xs-4">
-                                        <select name="someName">
-                                            <option value="value 1">انتخاب کشور</option>
-                                            <option value="value 2">ایران</option>
-                                            <option value="value 3">آلمان</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <select name="someName">
-                                            <option value="value 1">انتخاب استان</option>
-                                            <option value="value 2">خراسان</option>
-                                            <option value="value 3">مازندران</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <select name="someName">
-                                            <option value="value 1">انتخاب شهر</option>
-                                            <option value="value 2">مشهد</option>
-                                            <option value="value 3">رامسر</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="btn-group btn-group-justified" role="group" aria-label="group button">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" role="button">بستن</button>
-                                        </div>
-                                        <div class="btn-group btn-delete hidden" role="group">
-                                            <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal" role="button">پاک کردن</button>
+                                    <div class="OghatHome">
+                                        <div>
+                                            <script type="text/javascript" language="javascript" src="{{ url('/theme/Scripts/oghat.js') }}"></script>
+                                            <script language="javascript">
+                                                var CurrentDate = new Date();
+                                                var JAT = {!! $jat !!};
+                                                function pz() {};
+                                                init();
+                                                document.getElementById('cities').selectedIndex = 27;
+                                                coord();
+                                                main();
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="modal-footer"></div>
                             </div>
                         </div>
                     </div>
@@ -174,13 +156,9 @@
                         <div class="col-xs-3">{{ date('H:m') }}</div>
                         <div id="reminder" class="col-xs-9 noLeftPadding noRightPadding"></div>
                     </div>
-                    @php
-                        $date = HDate_GtoJ(time(), "m/d", true);
-                        list ($m, $d) = explode('/', $date);
-                        $jat = (int) !((6 == (int) $m && 31 == (int) $m) || $m > 6);
-                    @endphp
 
-                    <div style="text-align: center;" class="col-xs-12">
+
+                    <div style="text-align: center;" class="col-xs-12 mainOghat">
                         <div class="OghatHome">
                             <div>
                                 <script type="text/javascript" language="javascript" src="{{ url('/theme/Scripts/oghat.js') }}"></script>

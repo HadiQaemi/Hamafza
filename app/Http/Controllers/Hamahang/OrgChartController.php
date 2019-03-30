@@ -12,6 +12,7 @@ use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_wages;
 use App\Models\Hamahang\OrgChart\org_charts_items_missions;
 use DB;
 
@@ -26,6 +27,28 @@ use App\Models\Hamahang\OrgChart\org_charts_items_posts;
 
 class OrgChartController extends Controller
 {
+    public function SetScore()
+    {
+        $job_id = deCode(Request::input('job'));
+        $item = Request::input('item');
+        $score = Request::input('score');
+        $job = org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->get();
+        if($job->count() == 0){
+            org_charts_items_jobs_wages::create([
+                'uid' => auth()->id(),
+                'chart_item_job_id' => $job_id,
+                "$item" => $score
+            ]);
+        }else{
+            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->update(["$item" => $score]);
+        }
+        return json_encode([
+            'score' => $score,
+            'job_id' => $job_id,
+            'success' => true,
+            'item' => $item
+        ]);
+    }
     private function check_posts($array)
     {
         $arr = [];
@@ -378,6 +401,114 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
+    public function wagesAllJob()
+    {
+        $data = org_charts_items_jobs::with('job', 'item', 'wage');
+        return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+        ->addColumn('effect_effect', function ($data)
+        {
+            return isset($data->wage->effect_effect) ? $data->wage->effect_effect : '';
+        })
+        ->addColumn('effect_association', function ($data)
+        {
+            return isset($data->wage->effect_association) ? $data->wage->effect_association : '';
+        })
+        ->addColumn('effect_score', function ($data)
+        {
+            return isset($data->wage->effect_score) ? $data->wage->effect_score : '';
+        })
+        ->addColumn('effect_size', function ($data)
+        {
+            return isset($data->wage->effect_size) ? $data->wage->effect_size : '';
+        })
+        ->addColumn('connections_type', function ($data)
+        {
+            return isset($data->wage->connections_type) ? $data->wage->connections_type : '';
+        })
+        ->addColumn('connections_frame', function ($data)
+        {
+            return isset($data->wage->connections_frame) ? $data->wage->connections_frame : '';
+        })
+        ->addColumn('connections_score', function ($data)
+        {
+            return isset($data->wage->connections_score) ? $data->wage->connections_score : '';
+        })
+        ->addColumn('problem_solving_innovation', function ($data)
+        {
+            return isset($data->wage->problem_solving_innovation) ? $data->wage->problem_solving_innovation : '';
+        })
+        ->addColumn('problem_solving_complexity', function ($data)
+        {
+            return isset($data->wage->problem_solving_complexity) ? $data->wage->problem_solving_complexity : '';
+        })
+        ->addColumn('problem_solving_score', function ($data)
+        {
+            return isset($data->wage->problem_solving_score) ? $data->wage->problem_solving_score : '';
+        })
+        ->addColumn('skill_technical_knowledge', function ($data)
+        {
+            return isset($data->wage->skill_technical_knowledge) ? $data->wage->skill_technical_knowledge : '';
+        })
+        ->addColumn('skill_communication_skills', function ($data)
+        {
+            return isset($data->wage->skill_communication_skills) ? $data->wage->skill_communication_skills : '';
+        })
+        ->addColumn('skill_spread', function ($data)
+        {
+            return isset($data->wage->skill_spread) ? $data->wage->skill_spread : '';
+        })
+        ->addColumn('skill_score', function ($data)
+        {
+            return isset($data->wage->skill_score) ? $data->wage->skill_score : '';
+        })
+        ->addColumn('risk_type', function ($data)
+        {
+            return isset($data->wage->risk_type) ? $data->wage->risk_type : '';
+        })
+        ->addColumn('risk_possibility', function ($data)
+        {
+            return isset($data->wage->risk_possibility) ? $data->wage->risk_possibility : '';
+        })
+        ->addColumn('risk_score', function ($data)
+        {
+            return isset($data->wage->risk_score) ? $data->wage->risk_score : '';
+        })
+        ->addColumn('total_score', function ($data)
+        {
+            return isset($data->wage->total_score) ? $data->wage->total_score : '';
+        })
+        ->addColumn('job', function ($data)
+        {
+            return isset($data->job->title) ? $data->job->title : '';
+        })
+        ->addColumn('item', function ($data)
+        {
+            return isset($data->item->title) ? $data->item->title : '';
+        })
+        ->addColumn('organ', function ($data)
+        {
+            return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
+        })
+        ->make(true);
+    }
+    public function fetchAllJob()
+    {
+        $data = org_charts_items_jobs::with('job', 'item');
+        return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+        ->addColumn('job', function ($data)
+        {
+            return isset($data->job->title) ? $data->job->title : '';
+        })
+        ->addColumn('item', function ($data)
+        {
+            return isset($data->item->title) ? $data->item->title : '';
+        })
+        ->addColumn('organ', function ($data)
+        {
+            return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
+        })
+        ->make(true);
+    }
     public function staff($username)
     {
         $arr = variable_generator('user','desktop',$username);
@@ -385,7 +516,20 @@ class OrgChartController extends Controller
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.StaffList', $arr);
     }
-
+    public function jobs($username)
+    {
+        $arr = variable_generator('user','desktop',$username);
+        $arr['Uname'] = $username;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.jobList', $arr);
+    }
+    public function wagesJobs($username)
+    {
+        $arr = variable_generator('user','desktop',$username);
+        $arr['Uname'] = $username;
+        $arr['UName'] = $username;
+        return view('hamahang.OrgChart.wagesJobs', $arr);
+    }
     public function fetchStaff()
     {
         $data = org_charts_items_jobs_posts_users::whereNull('deleted_at');

@@ -42,16 +42,16 @@
             color: #fff;
         }
         ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-            font-size: large !important;
+            font-size: 12px !important;
         }
         ::-moz-placeholder { /* Firefox 19+ */
-            font-size: large !important;
+            font-size: 12px !important;
         }
         :-ms-input-placeholder { /* IE 10+ */
-            font-size: large !important;
+            font-size: 12px !important;
         }
         :-moz-placeholder { /* Firefox 18- */
-            font-size: large !important;
+            font-size: 12px !important;
         }
         .error-login{
             font-size: 12px;
@@ -75,7 +75,7 @@
         }
         .login_captcha_image{
             height: 35px;
-            width: 120%;
+            width: 100%;
             line-height: 35px;
         }
         .inner_register_div .btn_modal_register{
@@ -147,11 +147,11 @@
                                             </div>
                                             <div>
                                                 <div class="col-xs-4 noRightPadding noLeftPadding">
-                                                    <a style="color: #fff;font-size: x-small;font-weight: lighter;" href="{{ url(auth()->user()->Uname . '/desktop') }}">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span
-                                                                class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
+                                                    <a href="{{ url(auth()->user()->Uname . '/wall') }}" style="font-size: x-small;color: #fff;font-size: x-small;font-weight: lighter;">دیوار@if(user_notifications_count('wall', auth()->id()) > 0) <span class="badge" style="color: #fff;font-weight: lighter;">{{ user_notifications_count('wall', auth()->id()) }}</span> @endif</a>
                                                 </div>
                                                 <div class="col-xs-4 noRightPadding noLeftPadding">
-                                                    <a href="{{ url(auth()->user()->Uname . '/wall') }}" style="font-size: x-small;color: #fff;font-size: x-small;font-weight: lighter;">دیوار@if(user_notifications_count('wall', auth()->id()) > 0) <span class="badge" style="color: #fff;font-weight: lighter;">{{ user_notifications_count('wall', auth()->id()) }}</span> @endif</a>
+                                                    <a style="color: #fff;font-size: x-small;font-weight: lighter;" href="{{ url(auth()->user()->Uname . '/desktop') }}">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span
+                                                                class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
                                                 </div>
                                                 <div class="col-xs-4 noRightPadding noLeftPadding">
                                                     <a href="{{App::make('url')->to('/')}}/Logout" class="exit fa fa-power-off" style="color: #fff;font-weight: lighter;font-size: x-small;font-size: 12pt;"></a>
@@ -169,17 +169,17 @@
                             </div>
                         </div>
                         <div class="pull-left quick-links" style="margin-top: 12px;margin-left: 20px;">
-                            <div class="pull-left col-xs-2" style="{{$style}}">
-                                <li class="no-border pointer" href="#tab1"><a><span class="icon-choobalefnazok" style="font-size: 20px; color: white;"></span></a></li>
-                            </div>
                             <div class="pull-left col-xs-2">
-                                <li class="no-border pointer" href="#tab2"><a><span class="icon-dargah icon-dargah-click"  style="font-size: 20px; color: white;"></span></a></li>
+                                <li class="no-border pointer" href="#tab4"><a><span class="icon-search-1"  style="font-size: 20px; color: white;"></span></a></li>
                             </div>
                             <div class="pull-left col-xs-2">
                                 <li class="no-border pointer" href="#tab3"><a><span class="icon-tag"  style="font-size: 20px; color: white;"></span></a></li>
                             </div>
                             <div class="pull-left col-xs-2">
-                                <li class="no-border pointer" href="#tab4"><a><span class="icon-search-1"  style="font-size: 20px; color: white;"></span></a></li>
+                                <li class="no-border pointer" href="#tab2"><a><span class="icon-dargah icon-dargah-click"  style="font-size: 20px; color: white;"></span></a></li>
+                            </div>
+                            <div class="pull-left col-xs-2" style="{{$style}}">
+                                <li class="no-border pointer" href="#tab1"><a><span class="icon-choobalefnazok" style="font-size: 20px; color: white;"></span></a></li>
                             </div>
                         </div>
                         {{--<ul class="nav navbar-nav col-xs-5 col-md-4 header-icons quick-links" style="    position: relative !important;left: -120px;top: 12px;padding: 0px;">--}}

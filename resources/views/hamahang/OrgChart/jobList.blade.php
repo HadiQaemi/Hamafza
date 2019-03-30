@@ -18,23 +18,14 @@
         <div class="col-xs-12">
             <fieldset>
                 <div id="OrgList">
-                    <legend>
-                        <h3>
-{{--                            <span>{{ trans('org_chart.organizations_list') }}</span>--}}
-                            <a href="{!! route('modals.assign_new_staff') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>
-                            <div class="clearfix"></div>
-                        </h3>
-                    </legend>
                     <div class="row-fluid">
                         <div class="col-lg-12">
                             <table id="StaffListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>{{ trans('org_chart.clerk') }}</th>
+                                    <th>{{ trans('org_chart.job') }}</th>
                                     <th>{{ trans('org_chart.organization') }}</th>
                                     <th>{{ trans('org_chart.organizational_unit') }}</th>
-                                    <th>{{ trans('org_chart.job') }}</th>
-                                    <th>{{ trans('org_chart.post') }}</th>
                                     <th>{{ trans('app.action') }}</th>
                                 </tr>
                                 </thead>
@@ -69,11 +60,11 @@
                 "dom": window.CommonDom_DataTables,
                 "serverSide": false,
                 "ajax": {
-                    "url": "{!! URL::route('hamahang.org_chart.fetch_all_staff_list',['username'=>$UName]) !!}",
+                    "url": "{!! URL::route('hamahang.org_chart.fetch_all_job_list',['username'=>$UName]) !!}",
                     "type": "POST"
                 },
                 "bSort": true,
-                "order": [[ 5, "desc" ]],
+                "order": [[ 1, "desc" ]],
                 "aaSorting": [],
                 "bSortable": true,
                 "autoWidth": false,
@@ -83,11 +74,9 @@
                 "language": LangJson_DataTables,
                 "processing": false,
                 columns: [
-                    {"data": "user"},
-                    {"data": "org"},
-                    {"data": "item"},
                     {"data": "job"},
-                    {"data": "post"},
+                    {"data": "organ"},
+                    {"data": "item"},
                     {
                         "bSearchable": false,
                         "bSortable": false,

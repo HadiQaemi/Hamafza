@@ -486,6 +486,31 @@
                     //
                     // });
 
+                    $(document).on('click', '.change-score-btn', function () {
+                        $this = $(this);
+                        var form_id = $this.data('form_id');
+                        var form_data = $('#' + form_id).serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: '{{ route('hamahang.org_chart.set_score')}}',
+                            dataType: "json",
+                            data: form_data,
+                            success: function (result) {
+                                console.log(result);
+                                if (result.success == true) {
+                                    $('.jsPanel-btn-close').click();
+                                    // $('.' + result.item + '.job_' + result.job_id).val(result.score);
+                                    organs_wages_grid();
+                                    {{--messageModal('success','{{trans('tasks.edit_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
+
+                                }
+                                else {
+                                    messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
+                                }
+                            }
+                        });
+                    });
+
                     $(document).on('click', '.update_task', function () {
                         var save_type = $("input[name='show_task_save_type']:checked").val();
                         $('#save_type').val(save_type);
@@ -627,6 +652,7 @@
                     $(document).on('click', ".task_info", function () {
                         show_task_info($(this).data("t_id"));
                     });
+
 
                     $(document).on('click', ".project_info", function () {
                         show_project_info($(this).data("p_id"));

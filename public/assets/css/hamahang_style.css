@@ -1849,3 +1849,11 @@ th{
 .tumbnail4 .slider-controler{
     position: relative;
 }
+.nowrap{
+    white-space: nowrap;
+}
+.job_wages_elements{
+    width: 20px !important;
+    padding: 0px !important;
+    height: 20px !important;
+}
