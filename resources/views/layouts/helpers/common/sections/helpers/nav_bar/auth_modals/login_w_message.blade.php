@@ -48,7 +48,7 @@
                                             <div class="uru_login_captcha_refresh captcha-refresh-style" style="">
                                                 <i style="color: black; margin-top: 9px;" class="fa fa-refresh"></i>
                                             </div>
-                                            <div style="float: right;">
+                                            <div style="float: right;width: 180px;">
                                                 <img style="height: 34px;" class="uru_login_captcha_image" src="{{ route('captcha', 'login') }}">
                                             </div>
                                             <div class="clearfixed"></div>
