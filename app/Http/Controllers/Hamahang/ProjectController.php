@@ -1309,14 +1309,14 @@ class ProjectController extends Controller
 
     public function FetchProjects()
     {
-        $projects_roles = task_project::leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
+        $projects_roles1 = task_project::leftJoin('hamahang_project_role_permission', 'project_id','=','hamahang_project.id')
             ->whereRaw('hamahang_project_role_permission.role_id IN (SELECT role_user.role_id FROM role_user WHERE role_user.user_id = ?)', Auth::id())
             ->whereNull('hamahang_project_role_permission.deleted_at')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
             ->leftJoin('user','user.id','=','hamahang_project_responsible.user_id')
             ->whereNull('hamahang_project.deleted_at')->groupBy('hamahang_project.id')
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id');
-        $projects_roles = task_project::leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
+        $projects_roles2 = task_project::leftJoin('hamahang_project_user_permission', 'project_id','=','hamahang_project.id')
             ->select(DB::raw('CONCAT(Name, " ", Family) AS full_name'), 'hamahang_project.title', 'hamahang_project.draft', 'hamahang_project.status', 'hamahang_project.immediate', 'hamahang_project.progress', 'hamahang_project.importance', 'hamahang_project.end_date', 'hamahang_project.start_date', 'hamahang_project.id')
             ->leftJoin('hamahang_project_role_permission','hamahang_project_role_permission.project_id','=','hamahang_project.id')
             ->leftJoin('hamahang_project_responsible','hamahang_project_responsible.project_id','=','hamahang_project.id')
@@ -1325,7 +1325,6 @@ class ProjectController extends Controller
             ->whereNull('hamahang_project_user_permission.deleted_at')
             ->whereNull('hamahang_project.deleted_at')
             ->where('hamahang_project_user_permission.user_id','=',Auth::id())->groupBy('hamahang_project.id')
-            ->union($projects_roles)
         ;
 //            ->pluck('hamahang_project.id')->unique()->toArray();
 //        $projects_user_new = [];
@@ -1345,7 +1344,11 @@ class ProjectController extends Controller
 //        ;
         if (Request::exists('subject_id'))
         {
-            $projects_roles->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+            $projects_roles1->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
+                ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
+                ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
+                ->whereNull('hamahang_subject_ables.deleted_at');
+            $projects_roles2->join('hamahang_subject_ables', 'hamahang_subject_ables.target_id', '=', 'hamahang_project.id')
                 ->where('hamahang_subject_ables.subject_id', '=',Request::input('subject_id')/10)
                 ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\task_project')
                 ->whereNull('hamahang_subject_ables.deleted_at');
@@ -1353,17 +1356,21 @@ class ProjectController extends Controller
         $title = Request::exists('title') ? Request::input('title') : '';
         if (trim($title))
         {
-            $projects_roles->where('hamahang_project.title', 'like', '%'.$title.'%');
+            $projects_roles1->where('hamahang_project.title', 'like', '%'.$title.'%');
+            $projects_roles2->where('hamahang_project.title', 'like', '%'.$title.'%');
         }
         $official_type = Request::get('official_type');
         if ($official_type)
         {
-            $projects_roles->whereIn('hamahang_project.type', $official_type)
+            $projects_roles1->whereIn('hamahang_project.type', $official_type)
+                ->whereNull('hamahang_project.deleted_at');
+            $projects_roles2->whereIn('hamahang_project.type', $official_type)
                 ->whereNull('hamahang_project.deleted_at');
         }
         else
         {
-            $projects_roles->whereIn('hamahang_project.type', [11]);
+            $projects_roles1->whereIn('hamahang_project.type', [11]);
+            $projects_roles2->whereIn('hamahang_project.type', [11]);
         }
         if(Request::exists('keywords'))
         {
@@ -1374,13 +1381,20 @@ class ProjectController extends Controller
             }
             if ($search_task_keywords)
             {
-                $projects_roles->join('hamahang_project_keyword', 'hamahang_project_keyword.project_id', '=', 'hamahang_project.id')
+                $projects_roles1->join('hamahang_project_keyword', 'hamahang_project_keyword.project_id', '=', 'hamahang_project.id')
+                    ->whereIn('hamahang_project_keyword.keyword_id', $search_task_keywords);
+                $projects_roles2->join('hamahang_project_keyword', 'hamahang_project_keyword.project_id', '=', 'hamahang_project.id')
                     ->whereIn('hamahang_project_keyword.keyword_id', $search_task_keywords);
             }
         }
         if(Request::exists('users'))
         {
-            $projects_roles->where(function ($result) {
+            $projects_roles1->where(function ($result) {
+                $result
+                    ->whereIn('hamahang_project.uid', Request::input('users'))
+                    ->orWhereIn('hamahang_project_responsible.user_id', Request::input('users'));
+            });
+            $projects_roles2->where(function ($result) {
                 $result
                     ->whereIn('hamahang_project.uid', Request::input('users'))
                     ->orWhereIn('hamahang_project_responsible.user_id', Request::input('users'));
@@ -1388,7 +1402,46 @@ class ProjectController extends Controller
         }
         $task_important_immediate = Request::input('task_important_immediate');
         if(is_array(Request::input('task_important_immediate'))){
-            $projects_roles->where(function($q) use ($task_important_immediate) {
+            $projects_roles1->where(function($q) use ($task_important_immediate) {
+                foreach($task_important_immediate as $Atask_important_immediate)
+                {
+                    if($Atask_important_immediate == 0)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 0)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 0)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+
+                    }else if($Atask_important_immediate == 1)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 1)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 0)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 2)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 0)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 1)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }else if($Atask_important_immediate == 3)
+                    {
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.immediate', 1)
+                                ->whereNull('hamahang_project.deleted_at')
+                                ->where('hamahang_project.importance', 1)
+                                ->whereNull('hamahang_project.deleted_at');
+                        });
+                    }
+                }
+            });
+            $projects_roles2->where(function($q) use ($task_important_immediate) {
                 foreach($task_important_immediate as $Atask_important_immediate)
                 {
                     if($Atask_important_immediate == 0)
@@ -1438,15 +1491,18 @@ class ProjectController extends Controller
         }
         if ($task_final)
         {
-            $projects_roles->whereIn('hamahang_project.draft', $task_final)
+            $projects_roles1->whereIn('hamahang_project.draft', $task_final)
+                ->whereNull('hamahang_project.deleted_at');
+            $projects_roles2->whereIn('hamahang_project.draft', $task_final)
                 ->whereNull('hamahang_project.deleted_at');
         }
         else
         {
-            $projects_roles->whereIn('hamahang_task.is_save', [11]);
+            $projects_roles1->whereIn('hamahang_task.is_save', [11]);
+            $projects_roles2->whereIn('hamahang_task.is_save', [11]);
         }
         $task_status = Request::input('task_status');
-        $projects_roles->where(function($q) use ($task_status) {
+        $projects_roles1->where(function($q) use ($task_status) {
             if(is_array($task_status))
                 $task_status = array_diff($task_status, ["10"]);
             if(count($task_status)){
@@ -1472,8 +1528,35 @@ class ProjectController extends Controller
                 });
             }
         });
+        $projects_roles2->where(function($q) use ($task_status) {
+            if(is_array($task_status))
+                $task_status = array_diff($task_status, ["10"]);
+            if(count($task_status)){
+                foreach($task_status as $a_status){
+                    if($a_status == 0){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '=', 0);
+                        });
 
-        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles)
+                    }else if($a_status == 1){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '>', 0)->where('hamahang_project.progress', '<', 100);
+                        });
+                    }else if($a_status == 2){
+                        $q->orWhere(function($q) {
+                            $q->where('hamahang_project.progress', '=', 100);
+                        });
+                    }
+                }
+            }else{
+                $q->orWhere(function($q) {
+                    $q->where('hamahang_project.progress', '=', 200);
+                });
+            }
+        });
+        $projects_roles2->union($projects_roles1);
+
+        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles2)
             ->editColumn('start_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
