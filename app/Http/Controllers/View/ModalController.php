@@ -2862,7 +2862,7 @@ class ModalController extends Controller
                     ['title' => 'عمده و گسترده', 'desc' => 'اصلی ترین فرد و با اختیارات کامل در تعیین اهداف و نتایج کلیدی است']
                 ];
                 break;
-            case 'effect_num':
+            case 'effect_size':
                 $options = [
                     ['title' => 'سطح 1', 'desc' => ''],
                     ['title' => 'سطح 2', 'desc' => ''],

@@ -18,13 +18,13 @@
         <div class="col-xs-12">
             <fieldset>
                 <div id="OrgList">
-                    <legend>
-                        <h3>
+                    {{--<legend>--}}
+                        {{--<h3>--}}
 {{--                            <span>{{ trans('org_chart.organizations_list') }}</span>--}}
-                            <a href="{!! route('modals.add_new_organ') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>
-                            <div class="clearfix"></div>
-                        </h3>
-                    </legend>
+                            {{--<a href="{!! route('modals.add_new_organ') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>--}}
+                            {{--<div class="clearfix"></div>--}}
+                        {{--</h3>--}}
+                    {{--</legend>--}}
                     <div class="row-fluid">
                         <div class="col-lg-12">
                             <table id="OrgOrgansGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">

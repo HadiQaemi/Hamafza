@@ -40,7 +40,157 @@ class OrgChartController extends Controller
                 "$item" => $score
             ]);
         }else{
-            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->update(["$item" => $score]);
+            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)
+                ->update([
+                    "$item" => $score
+                ]);
+            $job = org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->first();
+            $update = [];
+            $totla_score = 0;
+            $map_effect_score = [
+                [5,5,5,5,5],
+                [15,15,15,15,15],
+                [25,25,25,25,25],
+                [40,43,45,48,52],
+                [50,55,61,66,73],
+                [70,78,86,96,105],
+                [85,96,106,120,131],
+                [105,117,129,146,158],
+                [120,135,149,169,184],
+                [140,156,174,195,211],
+                [150,169,191,213,231],
+                [170,191,218,242,264],
+                [185,209,240,265,289],
+                [200,228,262,290,317],
+                [215,248,282,313,342],
+                [235,272,311,343,375],
+                [250,291,331,366,415]
+            ];
+            if(trim($job->effect_effect) != '' && trim($job->effect_association) != ''){
+                $update['effect_first_score'] = ($job->effect_effect-1)*3 + $job->effect_association;
+                if(trim($job->effect_size) != ''){
+                    $update['effect_score'] = $map_effect_score[$update['effect_first_score']-1][$job->effect_size-1];
+                    $totla_score += $update['effect_score'];
+                }
+            }
+            $map_connections_score = [
+                [10,25,30,45],
+                [25,40,45,60],
+                [40,55,60,75],
+                [55,75,80,100],
+                [70,90,95,115]
+            ];
+            if(trim($job->connections_type) != '' && trim($job->connections_frame) != ''){
+                $update['connections_score'] = $map_connections_score[$job->connections_type-1][$job->connections_frame-1];
+                $totla_score += $update['connections_score'];
+            }
+            $map_problem_score = [
+                [10,15,20,25],
+                [25,30,35,40],
+                [40,45,50,55],
+                [65,70,75,80],
+                [90,95,100,105],
+                [115,120,125,130]
+            ];
+            if(trim($job->problem_solving_innovation) != '' && trim($job->problem_solving_complexity) != ''){
+                $update['problem_solving_score'] = $map_problem_score[$job->problem_solving_innovation-1][$job->problem_solving_complexity-1];
+                $totla_score += $update['problem_solving_score'];
+            }
+            $map_skill_score = [
+                [
+                    [15,25,35],
+                    [30,40,50],
+                    [60,70,80],
+                    [90,100,110],
+                    [110,120,130],
+                    [135,145,155],
+                    [160,170,180],
+                    [180,190,200]
+                ],[
+                    [50,60,70],
+                    [65,75,85],
+                    [95,105,115],
+                    [125,135,145],
+                    [140,150,160],
+                    [170,180,190],
+                    [190,200,210],
+                    [215,225,235]
+                ],[
+                    [75,85,95],
+                    [90,100,110],
+                    [120,130,140],
+                    [150,160,170],
+                    [170,180,190],
+                    [195,205,215],
+                    [220,230,240],
+                    [240,250,260]
+                ]
+            ];
+            if(trim($job->skill_technical_knowledge) != '' && trim($job->skill_communication_skills) != '' && trim($job->skill_spread) != ''){
+                $update['skill_score'] = $map_skill_score[$job->skill_communication_skills-1][$job->skill_technical_knowledge-1][$job->skill_spread-1];
+                $totla_score += $update['skill_score'];
+            }
+            $map_risk_score = [
+                [0,0,0],
+                [5,10,15],
+                [15,20,25],
+                [25,30,35]
+            ];
+            if(trim($job->risk_possibility) != '' && trim($job->risk_type) != ''){
+                $update['risk_score'] = $map_risk_score[$job->risk_type-1][$job->risk_possibility-1];
+                $totla_score += $update['risk_score'];
+            }
+            $update['total_score'] = $totla_score;
+            $level_job = 0;
+            if($totla_score>=40 && $totla_score<50){
+                $level_job = 1;
+            }else if($totla_score>=40 && $totla_score<50){
+                $level_job = 2;
+            }else if($totla_score>=50 && $totla_score<60){
+                $level_job = 3;
+            }else if($totla_score>=60 && $totla_score<75){
+                $level_job = 4;
+            }else if($totla_score>=75 && $totla_score<100){
+                $level_job = 5;
+            }else if($totla_score>=100 && $totla_score<125){
+                $level_job = 6;
+            }else if($totla_score>=125 && $totla_score<175){
+                $level_job = 7;
+            }else if($totla_score>=175 && $totla_score<225){
+                $level_job = 8;
+            }else if($totla_score>=225 && $totla_score<275){
+                $level_job = 9;
+            }else if($totla_score>=275 && $totla_score<325){
+                $level_job = 10;
+            }else if($totla_score>=325 && $totla_score<375){
+                $level_job = 11;
+            }else if($totla_score>=375 && $totla_score<425){
+                $level_job = 12;
+            }else if($totla_score>=425 && $totla_score<475){
+                $level_job = 13;
+            }else if($totla_score>=475 && $totla_score<525){
+                $level_job = 14;
+            }else if($totla_score>=525 && $totla_score<575){
+                $level_job = 15;
+            }else if($totla_score>=575 && $totla_score<625){
+                $level_job = 16;
+            }else if($totla_score>=625 && $totla_score<675){
+                $level_job = 17;
+            }else if($totla_score>=675 && $totla_score<725){
+                $level_job = 18;
+            }else if($totla_score>=725 && $totla_score<775){
+                $level_job = 19;
+            }else if($totla_score>=775 && $totla_score<825){
+                $level_job = 20;
+            }else if($totla_score>=825 && $totla_score<875){
+                $level_job = 21;
+            }else if($totla_score>=875 && $totla_score<950){
+                $level_job = 21;
+            }
+
+            $update['level_job'] = $level_job;
+            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)
+                ->update($update);
         }
         return json_encode([
             'score' => $score,
@@ -421,6 +571,10 @@ class OrgChartController extends Controller
         {
             return isset($data->wage->effect_size) ? $data->wage->effect_size : '';
         })
+        ->addColumn('effect_first_score', function ($data)
+        {
+            return isset($data->wage->effect_first_score) ? $data->wage->effect_first_score : '';
+        })
         ->addColumn('connections_type', function ($data)
         {
             return isset($data->wage->connections_type) ? $data->wage->connections_type : '';
@@ -476,6 +630,10 @@ class OrgChartController extends Controller
         ->addColumn('total_score', function ($data)
         {
             return isset($data->wage->total_score) ? $data->wage->total_score : '';
+        })
+        ->addColumn('level_job', function ($data)
+        {
+            return isset($data->wage->level_job) ? $data->wage->level_job : '';
         })
         ->addColumn('job', function ($data)
         {
