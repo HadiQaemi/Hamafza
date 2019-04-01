@@ -3544,7 +3544,7 @@ input{
     margin-right: 1px;
     z-index: 1;
     margin: 0px !important;
-    border-right: 1px solid #ffffff57;
+    border-right: 1px solid #ffffff00;
     position: relative;
     z-index: 1;
     padding-right: 10px;
@@ -4238,4 +4238,23 @@ input::-webkit-inner-spin-button {
 }
 .footer-top {
     top: 50% !important;
+}
+.color-white{
+    color: #fff !important;
+}
+.oghat-date{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.oghat-hour{
+    font-size: 18px;
+    margin-top: 15px;
+}
+.font-time-oghat{
+    font-size: 15px;
+}
+.button-setting{
+    top: 15px;
+    position: relative;
+    z-index: 10;
 }

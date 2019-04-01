@@ -67,6 +67,7 @@
         }
         #homepage_login_form button{
             height: 30px;
+            line-height: 10px;
             font-size: large !important;
             border-radius: 5px;
             margin-bottom: 5px;
