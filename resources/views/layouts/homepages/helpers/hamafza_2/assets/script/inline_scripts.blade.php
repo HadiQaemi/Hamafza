@@ -25,6 +25,13 @@
             $('#login').modal('show');
         });
 
+        $('#homepage_login_form').keypress(function (e) {
+            if (e.which == 13) {
+                $('.btn_homepage_login').click();
+                return false;    //<---- Add this line
+            }
+        });
+
         $(document).on("click", ".btn_homepage_login", function () {
             var form_data = $('#homepage_login_form').serialize();
             $('.inner_login_div').hide();

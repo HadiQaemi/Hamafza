@@ -134,7 +134,7 @@
         @php ($style = $logged_in ? null : 'display: none')
         @php ($unstyle = $logged_in ? null : 'style="width: 32%;"')
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="navbar-collapse-1" style="margin-right: 1.2%;">
                 <ul id="custom-navbar-right" class="nav navbar-nav navbar-right">
                     <ul class="nav navbar-nav navbar-right quick-links-res hidden-xs" style="margin-right: 15px;width: 800px;top: -50px;right: -200px;">
                         {!! menuGenerator(3, 'horizontal') !!}

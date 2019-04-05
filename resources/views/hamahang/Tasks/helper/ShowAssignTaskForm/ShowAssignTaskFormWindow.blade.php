@@ -876,12 +876,12 @@
                                 @foreach($res['task_history'] as $k=>$task_history)
                                     <tr id="add_resource_task{{$k.'show'}}">
                                         <td style="border-bottom: 1px solid #999;text-align: center">
-                                            {{$task_history->created_at}}
+                                            {{$task_history->jalali_created_at}}
                                         </td>
                                         <td style="border-bottom: 1px solid #999;text-align: center">
                                             {{$task_history->Name.' '.$task_history->Family}}
                                         </td>
-                                        <td style="border-bottom: 1px solid #999;text-align: center">
+                                        <td style="border-bottom: 1px solid #999;text-align: right !important;white-space: initial;">
                                             {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}
                                         </td>
                                     </tr>

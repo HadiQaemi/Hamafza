@@ -40,7 +40,7 @@
                             <div class="col-xs-12 form-group noLeftMargin noRightMargin noLeftPadding noLeftPadding">
                                 <div class="col-xs-6 form-group noPadding noLeftMargin noRightMargin noLeftPadding noLeftPadding">
                                     <div class="col-xs-2 noPadding noLeftMargin noRightMargin noLeftPadding noLeftPadding">
-                                        <label for="system_user">کاربران سیستم</label>
+                                        <label for="system_user">کاربران سامانه</label>
                                     </div>
                                     <div class="col-xs-9">
                                         <select id="system_user" class="select2_auto_complete_system_user col-xs-12" data-placeholder="انتخاب از کاربران سیستم"></select>

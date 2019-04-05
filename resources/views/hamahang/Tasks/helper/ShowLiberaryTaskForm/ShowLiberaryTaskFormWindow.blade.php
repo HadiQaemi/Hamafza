@@ -859,7 +859,7 @@
                                         <label class="pull-right" for="r2">{{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}</label>
                                     </td>
                                     <td>
-                                        <label class="pull-right" for="r2">{{$task_history->created_at}}</label>
+                                        <label class="pull-right" for="r2">{{$task_history->jalali_created_at}}</label>
                                     </td>
                                 </tr>
                             @endforeach

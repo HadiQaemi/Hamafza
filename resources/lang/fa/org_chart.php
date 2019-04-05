@@ -3,7 +3,7 @@
 return [
     'add_organization'   => 'افزودن سازمان',
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
-    'assign_new_staff'   => 'تخصیص کارمند',
+    'assign_new_staff'   => 'کارمند جدید',
     'add_new_post'   => 'افزودن سمت جدید',
     'edit_show_post'   => 'ویرایش سمت',
     'edit_job_unit'   => 'ویرایش شغل',
@@ -35,7 +35,7 @@ return [
     'view_edit'   => 'مشاهده / ویرایش',
     'create_chart'   => 'ایجاد چارت',
     'chart_manager'=>'مدیریت چارت ها',
-    'show_edit_organ'=>'نمایش اطلاعات واحد سازمانی',
+    'show_edit_organ'=>'واحد سازمانی',
     'organizational_unit'=>'واحد سازمانی',
     'edit_chart'=>'ویرایش چارت::',
     'delete_organ'=>'حذف سازمان',

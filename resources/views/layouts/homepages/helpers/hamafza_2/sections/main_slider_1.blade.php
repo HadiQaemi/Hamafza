@@ -1,7 +1,7 @@
 @php
     $slider_values = App\Models\Hamahang\BasicdataValue::where('parent_id', 6)->get();
 @endphp
-<div id="custom_carousel_1" class="carousel slide" data-ride="carousel" data-interval="5000">
+<div id="custom_carousel_1" class="carousel slide" data-ride="carousel" data-interval="10000">
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         @if($slider_values)

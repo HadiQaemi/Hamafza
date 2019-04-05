@@ -867,13 +867,13 @@
                         @if(isset($task->History))
                             @foreach($task->History as $k=>$task_history)
                                 <tr id="add_resource_task{{$k.'show'}}">
-                                    <td style="border-bottom: 1px solid #999;text-align: center">
-                                        {{$task_history->created_at}}
+                                    <td style="border-bottom: 1px solid #999;text-align: center" class="col-xs-2">
+                                        {{$task_history->jalali_created_at}}
                                     </td>
-                                    <td style="border-bottom: 1px solid #999;text-align: center">
+                                    <td style="border-bottom: 1px solid #999;text-align: center" class="col-xs-2">
                                         {{$task_history->user->Name.' '.$task_history->user->Family}}
                                     </td>
-                                    <td style="border-bottom: 1px solid #999;text-align: center">
+                                    <td style="border-bottom: 1px solid #999;text-align: right !important;white-space: initial;" class="col-xs-8">
                                         {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}
                                     </td>
                                 </tr>

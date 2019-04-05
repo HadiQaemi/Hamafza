@@ -1169,6 +1169,13 @@ class ModalController extends Controller
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+        if(isset($task->History)){
+            foreach ($task->History as $k => $history){
+                $created_at = preg_split('/ /', $history->created_at);
+                $r = $jdate->getdate(strtotime($history->created_at));
+                $task->History[$k]->jalali_created_at = $r['year'] . '/' . $r['mon'] . '/' . $r['mday'].' - '.$created_at[1];
+            }
+        }
         $res['task'] = $task;
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
@@ -1211,6 +1218,14 @@ class ModalController extends Controller
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
             ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+        if(isset($task->History)){
+            foreach ($task->History as $k => $history){
+                $created_at = preg_split('/ /', $history->created_at);
+                $r = $jdate->getdate(strtotime($history->created_at));
+                $task->History[$k]->jalali_created_at = $r['year'] . '/' . $r['mon'] . '/' . $r['mday'].' - '.$created_at[1];
+            }
+        }
+
         $res['task'] = $task;
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
@@ -1220,10 +1235,10 @@ class ModalController extends Controller
                     'Multi']
             ]
         );
-        $date = new jDateTime;
+
         $res['respite'] = [];
         if($task->respite_timing_type == 0){
-            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $respite_date = $jdate->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
             $res['respite_date'] = [
                 'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
                 'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
@@ -1231,7 +1246,7 @@ class ModalController extends Controller
             $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
         }else if($task->respite_timing_type == 1){
             $res['respite'] = hamahang_convert_timestamp_to_respite($task->duration_timestamp);
-            $respite_date = $date->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
+            $respite_date = $jdate->getdate(strtotime($task->schedule_time) + $task->duration_timestamp, false, false);
             $res['respite_date'] = [
                 'date' => jDateTime::convertElseNumbers($respite_date['year'].'-'.$respite_date['mon'].'-'.$respite_date['mday']),
                 'hour' => jDateTime::convertElseNumbers($respite_date['hours'].':'.$respite_date['minutes'].':'.$respite_date['seconds'])
@@ -1257,6 +1272,7 @@ class ModalController extends Controller
 
     public function ShowTaskFormAbroadMode()
     {
+        $jdate = new jDateTime;
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
@@ -1269,6 +1285,13 @@ class ModalController extends Controller
             ->with('Transcripts')
             ->with('History')
             ->first();
+        if(isset($task->History)){
+            foreach ($task->History as $k => $history){
+                $created_at = preg_split('/ /', $history->created_at);
+                $r = $jdate->getdate(strtotime($history->created_at));
+                $task->History[$k]->jalali_created_at = $r['year'] . '/' . $r['mon'] . '/' . $r['mday'].' - '.$created_at[1];
+            }
+        }
         $res['task'] = $task;
 
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(

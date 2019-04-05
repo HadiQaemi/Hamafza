@@ -241,9 +241,9 @@
                             </span>
                             <span id="normal_task_timing" class="pull-right line-height-35" style="display: inline-flex">
                                 <label class="line-height-30 pull-right">تاریخ</label>
-                                <input type="text" class="form-control DatePicker pull-right" name="respite_date" aria-describedby="respite_date">
+                                <input type="text" class="form-control DatePicker pull-right" name="respite_date" id="respite_date" aria-describedby="respite_date">
                                 <label class="line-height-30 pull-right margin-right-10">ساعت</label>
-                                <input type="text" class="form-control TimePicker pull-right" name="respite_time" aria-describedby="respite_time">
+                                <input type="text" class="form-control TimePicker pull-right" name="respite_time" id="respite_time" aria-describedby="respite_time">
                             </span>
                         </div>
                     </div>
@@ -1285,7 +1285,8 @@
         {
 
         });
-
+        $("#respite_date").val('');
+        $("#respite_time").val('');
     });
 </script>
 

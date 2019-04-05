@@ -106,7 +106,7 @@ h3 {
     line-height: 1.8em;
 }
 .navbar-nav li {
-  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  /*border-left: 1px solid rgba(255, 255, 255, 0.22);*/
 }
 .navbar-right{
   margin: 12px 0;

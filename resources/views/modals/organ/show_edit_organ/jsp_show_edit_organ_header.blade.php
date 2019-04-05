@@ -1,2 +1,2 @@
-{{trans('org_chart.show_edit_organ')}}::{{$title}}
+{{trans('org_chart.show_edit_organ')}}: {{$title}}
 

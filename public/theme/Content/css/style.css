@@ -3544,7 +3544,7 @@ input{
     margin-right: 1px;
     z-index: 1;
     margin: 0px !important;
-    border-right: 1px solid #ffffff00;
+    border-right: 1px solid rgba(255, 255, 255, 0.22);
     position: relative;
     z-index: 1;
     padding-right: 10px;
