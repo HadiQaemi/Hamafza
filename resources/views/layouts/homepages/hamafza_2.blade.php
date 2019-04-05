@@ -125,7 +125,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand rtl-brand" style="color:#fff !important;" href="#">هم افزا</a>
+                <a class="navbar-brand rtl-brand" style="color:#fff !important;" href="#">
+                    <img src="{{ url('theme/hamafza/index_2/img/logo.png') }}" style="height: 50px;float: right;height: 40px;float: right;margin-top: -9px;margin-left: 10px;">
+                    هم‌افزا
+                </a>
             </div>
         @php ($logged_in = session('Login') && session('Login') == 'TRUE')
         @php ($style = $logged_in ? null : 'display: none')
