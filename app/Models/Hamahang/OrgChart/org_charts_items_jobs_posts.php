@@ -41,7 +41,7 @@ class org_charts_items_jobs_posts extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users','chart_item_post_job_id','id');
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff','chart_item_post_job_id','id');
     }
 
     public function worktime()

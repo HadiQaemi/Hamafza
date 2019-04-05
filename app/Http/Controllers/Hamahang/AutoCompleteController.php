@@ -7,6 +7,7 @@ use App\Models\hamafza\keyword;
 use App\Models\hamafza\Subject;
 use App\Models\Hamahang\ACL\AclCategory;
 use App\Models\Hamahang\OrgChart\org_chart_items;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_organs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
@@ -132,6 +133,29 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+
+    public function org_charts_items_posts(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = org_charts_items_jobs_posts::where("chart_item_job_id", "=",$request->item_id)
+                    ->select("id", "extra_title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = org_charts_items_jobs_posts::select("id", "extra_title as text")
+                    ->where("chart_item_job_id", "=",$request->item_id)
+                    ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+    }
+
     public function onet_jobs(Request $request)
     {
         $x = $request->term;
@@ -185,6 +209,32 @@ class AutoCompleteController extends Controller
         }
         $data = array('results' => $data);
         return response()->json($data);
+    }
+
+    public function organ_chart_items(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->whereHas('chart', function ($query) use ($request) {
+                        $query->where('org_organs_id', '=', $request->organ);
+                    })->get();
+            }
+            else
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->whereHas('chart', function ($query) use ($request) {
+                        $query->where('org_organs_id', '=', $request->organ);
+                    })
+                    ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+
     }
 
     public function chart_items(Request $request)

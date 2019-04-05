@@ -56,13 +56,13 @@
                     @endphp
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 1.1% 16% 1.1% 0%">
-                            <p style="display: block">{{$dashboard['Eghdam']}}</p>
+                            <p style="display: block;font-size: 25px">{{$dashboard['Eghdam']}}</p>
                             <p style="display: block">
                                 <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">وظایف من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 1.1% 0 1.1% 16%; float: left;">
-                            <p style="display: block">0</p>
+                            <p style="display: block;font-size: 25px">0</p>
                             <p style="display: block">
                                 <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">برنامه امروز</a>
                             </p>
@@ -71,13 +71,13 @@
                     </div>
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 0.1% 16% 1.1% 0%">
-                            <p style="display: block">{{$dashboard['Email']}}</p>
+                            <p style="display: block;font-size: 25px">{{$dashboard['Email']}}</p>
                             <p style="display: block">
                                 <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">پیام‌های من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 0.1% 0 1.1% 16%; float: left;">
-                            <p style="display: block">0</p>
+                            <p style="display: block;font-size: 25px">0</p>
                             <p style="display: block">
                                 <a href="#" style="font-size: small;color:#FFF;">یادآوری‌ها</a>
                             </p>
@@ -129,7 +129,7 @@
                         {{ HDate_GtoJ(date('Y-m-d'), 'l j F Y') }}
                     </div>
                     <div class="col-xs-12 color-white oghat-hour">
-                        {{ date('H:m') }}
+                        {{ date('H:i:s') }}
                     </div>
                     <div class="button-setting">
                         <button data-toggle="modal" data-target="#squarespaceModal" style="float: left;display: flex;"><i class="fa fa-cog" aria-hidden="true"></i></button>

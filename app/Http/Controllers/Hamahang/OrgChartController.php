@@ -10,10 +10,13 @@ use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_access;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_adventage;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_alternate_users;
-use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_users;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_wages;
 use App\Models\Hamahang\OrgChart\org_charts_items_missions;
+use App\Models\Hamahang\OrgChart\org_staff;
+use App\Models\Hamahang\OrgChart\org_staff_edu;
+use App\Models\Hamahang\OrgChart\org_staff_jobs;
 use DB;
 
 use Request;
@@ -32,164 +35,164 @@ class OrgChartController extends Controller
         $job_id = deCode(Request::input('job'));
         $item = Request::input('item');
         $score = Request::input('score');
-        $job = org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->get();
-        if($job->count() == 0){
+        $job = org_charts_items_jobs_wages::where('chart_item_job_id', '=', $job_id)->get();
+        if ($job->count() == 0) {
             org_charts_items_jobs_wages::create([
                 'uid' => auth()->id(),
                 'chart_item_job_id' => $job_id,
                 "$item" => $score
             ]);
-        }else{
-            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)
+        } else {
+            org_charts_items_jobs_wages::where('chart_item_job_id', '=', $job_id)
                 ->update([
                     "$item" => $score
                 ]);
-            $job = org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)->first();
+            $job = org_charts_items_jobs_wages::where('chart_item_job_id', '=', $job_id)->first();
             $update = [];
             $totla_score = 0;
             $map_effect_score = [
-                [5,5,5,5,5],
-                [15,15,15,15,15],
-                [25,25,25,25,25],
-                [40,43,45,48,52],
-                [50,55,61,66,73],
-                [70,78,86,96,105],
-                [85,96,106,120,131],
-                [105,117,129,146,158],
-                [120,135,149,169,184],
-                [140,156,174,195,211],
-                [150,169,191,213,231],
-                [170,191,218,242,264],
-                [185,209,240,265,289],
-                [200,228,262,290,317],
-                [215,248,282,313,342],
-                [235,272,311,343,375],
-                [250,291,331,366,415]
+                [5, 5, 5, 5, 5],
+                [15, 15, 15, 15, 15],
+                [25, 25, 25, 25, 25],
+                [40, 43, 45, 48, 52],
+                [50, 55, 61, 66, 73],
+                [70, 78, 86, 96, 105],
+                [85, 96, 106, 120, 131],
+                [105, 117, 129, 146, 158],
+                [120, 135, 149, 169, 184],
+                [140, 156, 174, 195, 211],
+                [150, 169, 191, 213, 231],
+                [170, 191, 218, 242, 264],
+                [185, 209, 240, 265, 289],
+                [200, 228, 262, 290, 317],
+                [215, 248, 282, 313, 342],
+                [235, 272, 311, 343, 375],
+                [250, 291, 331, 366, 415]
             ];
-            if(trim($job->effect_effect) != '' && trim($job->effect_association) != ''){
-                $update['effect_first_score'] = ($job->effect_effect-1)*3 + $job->effect_association;
-                if(trim($job->effect_size) != ''){
-                    $update['effect_score'] = $map_effect_score[$update['effect_first_score']-1][$job->effect_size-1];
+            if (trim($job->effect_effect) != '' && trim($job->effect_association) != '') {
+                $update['effect_first_score'] = ($job->effect_effect - 1) * 3 + $job->effect_association;
+                if (trim($job->effect_size) != '') {
+                    $update['effect_score'] = $map_effect_score[$update['effect_first_score'] - 1][$job->effect_size - 1];
                     $totla_score += $update['effect_score'];
                 }
             }
             $map_connections_score = [
-                [10,25,30,45],
-                [25,40,45,60],
-                [40,55,60,75],
-                [55,75,80,100],
-                [70,90,95,115]
+                [10, 25, 30, 45],
+                [25, 40, 45, 60],
+                [40, 55, 60, 75],
+                [55, 75, 80, 100],
+                [70, 90, 95, 115]
             ];
-            if(trim($job->connections_type) != '' && trim($job->connections_frame) != ''){
-                $update['connections_score'] = $map_connections_score[$job->connections_type-1][$job->connections_frame-1];
+            if (trim($job->connections_type) != '' && trim($job->connections_frame) != '') {
+                $update['connections_score'] = $map_connections_score[$job->connections_type - 1][$job->connections_frame - 1];
                 $totla_score += $update['connections_score'];
             }
             $map_problem_score = [
-                [10,15,20,25],
-                [25,30,35,40],
-                [40,45,50,55],
-                [65,70,75,80],
-                [90,95,100,105],
-                [115,120,125,130]
+                [10, 15, 20, 25],
+                [25, 30, 35, 40],
+                [40, 45, 50, 55],
+                [65, 70, 75, 80],
+                [90, 95, 100, 105],
+                [115, 120, 125, 130]
             ];
-            if(trim($job->problem_solving_innovation) != '' && trim($job->problem_solving_complexity) != ''){
-                $update['problem_solving_score'] = $map_problem_score[$job->problem_solving_innovation-1][$job->problem_solving_complexity-1];
+            if (trim($job->problem_solving_innovation) != '' && trim($job->problem_solving_complexity) != '') {
+                $update['problem_solving_score'] = $map_problem_score[$job->problem_solving_innovation - 1][$job->problem_solving_complexity - 1];
                 $totla_score += $update['problem_solving_score'];
             }
             $map_skill_score = [
                 [
-                    [15,25,35],
-                    [30,40,50],
-                    [60,70,80],
-                    [90,100,110],
-                    [110,120,130],
-                    [135,145,155],
-                    [160,170,180],
-                    [180,190,200]
-                ],[
-                    [50,60,70],
-                    [65,75,85],
-                    [95,105,115],
-                    [125,135,145],
-                    [140,150,160],
-                    [170,180,190],
-                    [190,200,210],
-                    [215,225,235]
-                ],[
-                    [75,85,95],
-                    [90,100,110],
-                    [120,130,140],
-                    [150,160,170],
-                    [170,180,190],
-                    [195,205,215],
-                    [220,230,240],
-                    [240,250,260]
+                    [15, 25, 35],
+                    [30, 40, 50],
+                    [60, 70, 80],
+                    [90, 100, 110],
+                    [110, 120, 130],
+                    [135, 145, 155],
+                    [160, 170, 180],
+                    [180, 190, 200]
+                ], [
+                    [50, 60, 70],
+                    [65, 75, 85],
+                    [95, 105, 115],
+                    [125, 135, 145],
+                    [140, 150, 160],
+                    [170, 180, 190],
+                    [190, 200, 210],
+                    [215, 225, 235]
+                ], [
+                    [75, 85, 95],
+                    [90, 100, 110],
+                    [120, 130, 140],
+                    [150, 160, 170],
+                    [170, 180, 190],
+                    [195, 205, 215],
+                    [220, 230, 240],
+                    [240, 250, 260]
                 ]
             ];
-            if(trim($job->skill_technical_knowledge) != '' && trim($job->skill_communication_skills) != '' && trim($job->skill_spread) != ''){
-                $update['skill_score'] = $map_skill_score[$job->skill_communication_skills-1][$job->skill_technical_knowledge-1][$job->skill_spread-1];
+            if (trim($job->skill_technical_knowledge) != '' && trim($job->skill_communication_skills) != '' && trim($job->skill_spread) != '') {
+                $update['skill_score'] = $map_skill_score[$job->skill_communication_skills - 1][$job->skill_technical_knowledge - 1][$job->skill_spread - 1];
                 $totla_score += $update['skill_score'];
             }
             $map_risk_score = [
-                [0,0,0],
-                [5,10,15],
-                [15,20,25],
-                [25,30,35]
+                [0, 0, 0],
+                [5, 10, 15],
+                [15, 20, 25],
+                [25, 30, 35]
             ];
-            if(trim($job->risk_possibility) != '' && trim($job->risk_type) != ''){
-                $update['risk_score'] = $map_risk_score[$job->risk_type-1][$job->risk_possibility-1];
+            if (trim($job->risk_possibility) != '' && trim($job->risk_type) != '') {
+                $update['risk_score'] = $map_risk_score[$job->risk_type - 1][$job->risk_possibility - 1];
                 $totla_score += $update['risk_score'];
             }
             $update['total_score'] = $totla_score;
             $level_job = 0;
-            if($totla_score>=40 && $totla_score<50){
+            if ($totla_score >= 40 && $totla_score < 50) {
                 $level_job = 1;
-            }else if($totla_score>=40 && $totla_score<50){
+            } else if ($totla_score >= 40 && $totla_score < 50) {
                 $level_job = 2;
-            }else if($totla_score>=50 && $totla_score<60){
+            } else if ($totla_score >= 50 && $totla_score < 60) {
                 $level_job = 3;
-            }else if($totla_score>=60 && $totla_score<75){
+            } else if ($totla_score >= 60 && $totla_score < 75) {
                 $level_job = 4;
-            }else if($totla_score>=75 && $totla_score<100){
+            } else if ($totla_score >= 75 && $totla_score < 100) {
                 $level_job = 5;
-            }else if($totla_score>=100 && $totla_score<125){
+            } else if ($totla_score >= 100 && $totla_score < 125) {
                 $level_job = 6;
-            }else if($totla_score>=125 && $totla_score<175){
+            } else if ($totla_score >= 125 && $totla_score < 175) {
                 $level_job = 7;
-            }else if($totla_score>=175 && $totla_score<225){
+            } else if ($totla_score >= 175 && $totla_score < 225) {
                 $level_job = 8;
-            }else if($totla_score>=225 && $totla_score<275){
+            } else if ($totla_score >= 225 && $totla_score < 275) {
                 $level_job = 9;
-            }else if($totla_score>=275 && $totla_score<325){
+            } else if ($totla_score >= 275 && $totla_score < 325) {
                 $level_job = 10;
-            }else if($totla_score>=325 && $totla_score<375){
+            } else if ($totla_score >= 325 && $totla_score < 375) {
                 $level_job = 11;
-            }else if($totla_score>=375 && $totla_score<425){
+            } else if ($totla_score >= 375 && $totla_score < 425) {
                 $level_job = 12;
-            }else if($totla_score>=425 && $totla_score<475){
+            } else if ($totla_score >= 425 && $totla_score < 475) {
                 $level_job = 13;
-            }else if($totla_score>=475 && $totla_score<525){
+            } else if ($totla_score >= 475 && $totla_score < 525) {
                 $level_job = 14;
-            }else if($totla_score>=525 && $totla_score<575){
+            } else if ($totla_score >= 525 && $totla_score < 575) {
                 $level_job = 15;
-            }else if($totla_score>=575 && $totla_score<625){
+            } else if ($totla_score >= 575 && $totla_score < 625) {
                 $level_job = 16;
-            }else if($totla_score>=625 && $totla_score<675){
+            } else if ($totla_score >= 625 && $totla_score < 675) {
                 $level_job = 17;
-            }else if($totla_score>=675 && $totla_score<725){
+            } else if ($totla_score >= 675 && $totla_score < 725) {
                 $level_job = 18;
-            }else if($totla_score>=725 && $totla_score<775){
+            } else if ($totla_score >= 725 && $totla_score < 775) {
                 $level_job = 19;
-            }else if($totla_score>=775 && $totla_score<825){
+            } else if ($totla_score >= 775 && $totla_score < 825) {
                 $level_job = 20;
-            }else if($totla_score>=825 && $totla_score<875){
+            } else if ($totla_score >= 825 && $totla_score < 875) {
                 $level_job = 21;
-            }else if($totla_score>=875 && $totla_score<950){
+            } else if ($totla_score >= 875 && $totla_score < 950) {
                 $level_job = 21;
             }
 
             $update['level_job'] = $level_job;
-            org_charts_items_jobs_wages::where('chart_item_job_id','=', $job_id)
+            org_charts_items_jobs_wages::where('chart_item_job_id', '=', $job_id)
                 ->update($update);
         }
         return json_encode([
@@ -199,16 +202,15 @@ class OrgChartController extends Controller
             'item' => $item
         ]);
     }
+
     private function check_posts($array)
     {
         $arr = [];
         $ps = org_posts::where('parent_unit_id', $array['id'])->get();
         //exit(var_dump($ps));
         //echo '\n';
-        if (sizeof($ps) > 0)
-        {
-            foreach ($ps as $p)
-            {
+        if (sizeof($ps) > 0) {
+            foreach ($ps as $p) {
 //				//array_push($arr, ['title' => $p['title'], 'id' => $p['id'], 'node_type' =
                 $arr['title'] = $p['title'];
                 $arr['node_type'] = 1;
@@ -219,37 +221,30 @@ class OrgChartController extends Controller
         var_dump($arr);
         echo "*$%$$$\n";
 
-        if (isset($array['nodes']))
-        {
+        if (isset($array['nodes'])) {
 
             foreach ($array['nodes'] as $n)
-                if ($n['node_type'] == 0)
-                {
+                if ($n['node_type'] == 0) {
                     //echo $n['id']."***";
                     $this->check_posts($n);
                 }
             $array['nodes'] += $arr;
-        }
-        else
-        {
+        } else {
             $array['nodes'] = $arr;
         }
     }
+
     private function buildTree($flat_array, $pidKey, $parent = 0, $idKey = 'id', $children_key = 'children')
     {
         $grouped = array();
-        foreach ($flat_array as $sub)
-        {
+        foreach ($flat_array as $sub) {
             $grouped[$sub[$pidKey]][] = $sub;
         }
 
-        $fnBuilder = function ($siblings) use (&$fnBuilder, $grouped, $idKey, $children_key)
-        {
-            foreach ($siblings as $k => $sibling)
-            {
+        $fnBuilder = function ($siblings) use (&$fnBuilder, $grouped, $idKey, $children_key) {
+            foreach ($siblings as $k => $sibling) {
                 $id = $sibling[$idKey];
-                if (isset($grouped[$id]))
-                {
+                if (isset($grouped[$id])) {
                     $sibling[$children_key] = $fnBuilder($grouped[$id]);
                 }
                 $siblings[$k] = $sibling;
@@ -261,9 +256,14 @@ class OrgChartController extends Controller
         return $tree;
     }
 
+    public function selectUser()
+    {
+        dd('hi hadi');
+    }
+
     public function OrgansList($username)
     {
-        $arr = variable_generator('user','desktop',$username);
+        $arr = variable_generator('user', 'desktop', $username);
         $arr['Uname'] = $username;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgansList', $arr);
@@ -271,11 +271,12 @@ class OrgChartController extends Controller
 
     public function OrgOrgansList($username)
     {
-        $arr = variable_generator('user','desktop',$username);
+        $arr = variable_generator('user', 'desktop', $username);
         $arr['Uname'] = $username;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgOrgansList', $arr);
     }
+
     public function OrgChartList($UName, $OrgID)
     {
         org_organs::findOrFail($OrgID);
@@ -283,6 +284,7 @@ class OrgChartController extends Controller
         $arr['OrgID'] = $OrgID;
         return view('hamahang.OrgChart.OrgChartsList', $arr);
     }
+
     public function AjaxOrgOrgans()
     {
         $data = org_organs::leftJoin('user', 'user.id', '=', 'hamahang_org_organs.uid')
@@ -297,13 +299,11 @@ class OrgChartController extends Controller
                 'hamahang_org_organs.*'
             )->whereNull('hamahang_org_organs.deleted_at')->groupBy('id');
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
-            ->addColumn('oid', function ($data)
-            {
+            ->addColumn('oid', function ($data) {
                 return enCode($data->id);
             })
             ->make(true);
-        $data = collect($data)->map(function ($x)
-        {
+        $data = collect($data)->map(function ($x) {
             return (array)$x;
         })->toArray();
         $result['data'] = $data;
@@ -317,14 +317,11 @@ class OrgChartController extends Controller
             'organ_parent_id' => 'required'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
+        } else {
             $org = new org_organs;
             $org->uid = Auth::id();
             $org->parent_id = Request::input('organ_parent_id');
@@ -337,6 +334,7 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
+
     public function UpdateOrgan()
     {
         $validator = Validator::make(Request::all(), [
@@ -344,14 +342,11 @@ class OrgChartController extends Controller
             'organ_title' => 'required'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
+        } else {
 
             $org = org_organs::find(Request::input('organ_id'));
             $org->uid = Auth::id();
@@ -365,6 +360,7 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
+
     public function RemoveOrgan()
     {
         DB::table('hamahang_org_organs')
@@ -387,8 +383,7 @@ class OrgChartController extends Controller
                 'Charts.*'
             )
             ->get();
-        $data = collect($data)->map(function ($x)
-        {
+        $data = collect($data)->map(function ($x) {
             return (array)$x;
         })->toArray();
         $result['data'] = $data;
@@ -396,6 +391,7 @@ class OrgChartController extends Controller
         return $result;
         //return $result;
     }
+
     public function AjaxOrgChartDataShow()
     {
 
@@ -404,14 +400,11 @@ class OrgChartController extends Controller
                 'id' => 'required|exists:hamahang_org_charts_items,chart_id|exists:hamahang_org_charts,id',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
+        } else {
             //org_charts::findOrFail(Request::input('id'));
             $Items = DB::table('hamahang_org_charts_items')
                 ->where('chart_id', '=', Request::input('id'))
@@ -419,8 +412,7 @@ class OrgChartController extends Controller
                 ->select('parent_id', 'title AS name', 'description AS title', 'id')
                 ->get();
 
-            $Items = collect($Items)->map(function ($x)
-            {
+            $Items = collect($Items)->map(function ($x) {
                 return (array)$x;
             })->toArray();
             $tree = buildTree($Items, 'parent_id');
@@ -429,7 +421,8 @@ class OrgChartController extends Controller
         }
 
     }
-    public function OrgChartShow($username,$chart_id)
+
+    public function OrgChartShow($username, $chart_id)
     {
         /* $validator = Validator::make([$username,$chart_id],
               [
@@ -457,7 +450,8 @@ class OrgChartController extends Controller
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgChartShow', $arr);
     }
-    public function OrgListShow($username,$organ_id)
+
+    public function OrgListShow($username, $organ_id)
     {
         /* $validator = Validator::make([$username,$chart_id],
               [
@@ -485,60 +479,56 @@ class OrgChartController extends Controller
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.OrgListShow', $arr);
     }
+
     public function FetchOrgList()
     {
         $validator = Validator::make(Request::all(),
             [
 //                'organ_id'=>'required|exists:hamahang_org_organs,id'
-                'organ_id'=>'required|numeric'
-            ],[],
+                'organ_id' => 'required|numeric'
+            ], [],
             [
                 'new_item_title' => 'عنوان ',
                 'new_item_title' => 'عنوان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else {
+        } else {
             $organ_id = Request::get('organ_id');
             $data = org_chart_items::where('chart_id', '=', $organ_id)->whereNull('deleted_at');
             return \Yajra\Datatables\Facades\Datatables::eloquent($data)
-                ->addColumn('oid', function ($data)
-                {
+                ->addColumn('oid', function ($data) {
                     return enCode($data->id);
                 })
                 ->make(true);
         }
     }
+
     public function FetchJobList()
     {
         $validator = Validator::make(Request::all(),
             [
 //                'organ_id'=>'required|exists:hamahang_org_organs,id'
-                'organ_id'=>'required|numeric'
-            ],[],
+                'organ_id' => 'required|numeric'
+            ], [],
             [
                 'new_item_title' => 'عنوان ',
                 'new_item_title' => 'عنوان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else {
+        } else {
             $organ_id = Request::get('organ_id');
             $data = org_chart_items::with('jobs')->where('chart_id', '=', $organ_id)->whereNull('deleted_at')->get();
             $job_lists = [];
-            foreach ($data as $item)
-            {
-                foreach ($item->jobs as $job){
+            foreach ($data as $item) {
+                foreach ($item->jobs as $job) {
                     $job_lists [] = [
                         'title_item' => $item->title,
                         'title' => isset($job->job->title) ? $job->job->title : '',
@@ -551,200 +541,172 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
+
     public function wagesAllJob()
     {
         $data = org_charts_items_jobs::with('job', 'item', 'wage');
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
-        ->addColumn('effect_effect', function ($data)
-        {
-            return isset($data->wage->effect_effect) ? $data->wage->effect_effect : '';
-        })
-        ->addColumn('effect_association', function ($data)
-        {
-            return isset($data->wage->effect_association) ? $data->wage->effect_association : '';
-        })
-        ->addColumn('effect_score', function ($data)
-        {
-            return isset($data->wage->effect_score) ? $data->wage->effect_score : '';
-        })
-        ->addColumn('effect_size', function ($data)
-        {
-            return isset($data->wage->effect_size) ? $data->wage->effect_size : '';
-        })
-        ->addColumn('effect_first_score', function ($data)
-        {
-            return isset($data->wage->effect_first_score) ? $data->wage->effect_first_score : '';
-        })
-        ->addColumn('connections_type', function ($data)
-        {
-            return isset($data->wage->connections_type) ? $data->wage->connections_type : '';
-        })
-        ->addColumn('connections_frame', function ($data)
-        {
-            return isset($data->wage->connections_frame) ? $data->wage->connections_frame : '';
-        })
-        ->addColumn('connections_score', function ($data)
-        {
-            return isset($data->wage->connections_score) ? $data->wage->connections_score : '';
-        })
-        ->addColumn('problem_solving_innovation', function ($data)
-        {
-            return isset($data->wage->problem_solving_innovation) ? $data->wage->problem_solving_innovation : '';
-        })
-        ->addColumn('problem_solving_complexity', function ($data)
-        {
-            return isset($data->wage->problem_solving_complexity) ? $data->wage->problem_solving_complexity : '';
-        })
-        ->addColumn('problem_solving_score', function ($data)
-        {
-            return isset($data->wage->problem_solving_score) ? $data->wage->problem_solving_score : '';
-        })
-        ->addColumn('skill_technical_knowledge', function ($data)
-        {
-            return isset($data->wage->skill_technical_knowledge) ? $data->wage->skill_technical_knowledge : '';
-        })
-        ->addColumn('skill_communication_skills', function ($data)
-        {
-            return isset($data->wage->skill_communication_skills) ? $data->wage->skill_communication_skills : '';
-        })
-        ->addColumn('skill_spread', function ($data)
-        {
-            return isset($data->wage->skill_spread) ? $data->wage->skill_spread : '';
-        })
-        ->addColumn('skill_score', function ($data)
-        {
-            return isset($data->wage->skill_score) ? $data->wage->skill_score : '';
-        })
-        ->addColumn('risk_type', function ($data)
-        {
-            return isset($data->wage->risk_type) ? $data->wage->risk_type : '';
-        })
-        ->addColumn('risk_possibility', function ($data)
-        {
-            return isset($data->wage->risk_possibility) ? $data->wage->risk_possibility : '';
-        })
-        ->addColumn('risk_score', function ($data)
-        {
-            return isset($data->wage->risk_score) ? $data->wage->risk_score : '';
-        })
-        ->addColumn('total_score', function ($data)
-        {
-            return isset($data->wage->total_score) ? $data->wage->total_score : '';
-        })
-        ->addColumn('level_job', function ($data)
-        {
-            return isset($data->wage->level_job) ? $data->wage->level_job : '';
-        })
-        ->addColumn('job', function ($data)
-        {
-            return isset($data->job->title) ? $data->job->title : '';
-        })
-        ->addColumn('item', function ($data)
-        {
-            return isset($data->item->title) ? $data->item->title : '';
-        })
-        ->addColumn('organ', function ($data)
-        {
-            return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
-        })
-        ->make(true);
+            ->addColumn('effect_effect', function ($data) {
+                return isset($data->wage->effect_effect) ? $data->wage->effect_effect : '';
+            })
+            ->addColumn('effect_association', function ($data) {
+                return isset($data->wage->effect_association) ? $data->wage->effect_association : '';
+            })
+            ->addColumn('effect_score', function ($data) {
+                return isset($data->wage->effect_score) ? $data->wage->effect_score : '';
+            })
+            ->addColumn('effect_size', function ($data) {
+                return isset($data->wage->effect_size) ? $data->wage->effect_size : '';
+            })
+            ->addColumn('effect_first_score', function ($data) {
+                return isset($data->wage->effect_first_score) ? $data->wage->effect_first_score : '';
+            })
+            ->addColumn('connections_type', function ($data) {
+                return isset($data->wage->connections_type) ? $data->wage->connections_type : '';
+            })
+            ->addColumn('connections_frame', function ($data) {
+                return isset($data->wage->connections_frame) ? $data->wage->connections_frame : '';
+            })
+            ->addColumn('connections_score', function ($data) {
+                return isset($data->wage->connections_score) ? $data->wage->connections_score : '';
+            })
+            ->addColumn('problem_solving_innovation', function ($data) {
+                return isset($data->wage->problem_solving_innovation) ? $data->wage->problem_solving_innovation : '';
+            })
+            ->addColumn('problem_solving_complexity', function ($data) {
+                return isset($data->wage->problem_solving_complexity) ? $data->wage->problem_solving_complexity : '';
+            })
+            ->addColumn('problem_solving_score', function ($data) {
+                return isset($data->wage->problem_solving_score) ? $data->wage->problem_solving_score : '';
+            })
+            ->addColumn('skill_technical_knowledge', function ($data) {
+                return isset($data->wage->skill_technical_knowledge) ? $data->wage->skill_technical_knowledge : '';
+            })
+            ->addColumn('skill_communication_skills', function ($data) {
+                return isset($data->wage->skill_communication_skills) ? $data->wage->skill_communication_skills : '';
+            })
+            ->addColumn('skill_spread', function ($data) {
+                return isset($data->wage->skill_spread) ? $data->wage->skill_spread : '';
+            })
+            ->addColumn('skill_score', function ($data) {
+                return isset($data->wage->skill_score) ? $data->wage->skill_score : '';
+            })
+            ->addColumn('risk_type', function ($data) {
+                return isset($data->wage->risk_type) ? $data->wage->risk_type : '';
+            })
+            ->addColumn('risk_possibility', function ($data) {
+                return isset($data->wage->risk_possibility) ? $data->wage->risk_possibility : '';
+            })
+            ->addColumn('risk_score', function ($data) {
+                return isset($data->wage->risk_score) ? $data->wage->risk_score : '';
+            })
+            ->addColumn('total_score', function ($data) {
+                return isset($data->wage->total_score) ? $data->wage->total_score : '';
+            })
+            ->addColumn('level_job', function ($data) {
+                return isset($data->wage->level_job) ? $data->wage->level_job : '';
+            })
+            ->addColumn('job', function ($data) {
+                return isset($data->job->title) ? $data->job->title : '';
+            })
+            ->addColumn('item', function ($data) {
+                return isset($data->item->title) ? $data->item->title : '';
+            })
+            ->addColumn('organ', function ($data) {
+                return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
+            })
+            ->make(true);
     }
+
     public function fetchAllJob()
     {
         $data = org_charts_items_jobs::with('job', 'item');
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
-        ->addColumn('job', function ($data)
-        {
-            return isset($data->job->title) ? $data->job->title : '';
-        })
-        ->addColumn('item', function ($data)
-        {
-            return isset($data->item->title) ? $data->item->title : '';
-        })
-        ->addColumn('organ', function ($data)
-        {
-            return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
-        })
-        ->make(true);
+            ->addColumn('job', function ($data) {
+                return isset($data->job->title) ? $data->job->title : '';
+            })
+            ->addColumn('item', function ($data) {
+                return isset($data->item->title) ? $data->item->title : '';
+            })
+            ->addColumn('organ', function ($data) {
+                return isset($data->item->chart->organ->title) ? $data->item->chart->organ->title : '';
+            })
+            ->make(true);
     }
+
     public function staff($username)
     {
-        $arr = variable_generator('user','desktop',$username);
+        $arr = variable_generator('user', 'desktop', $username);
         $arr['Uname'] = $username;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.StaffList', $arr);
     }
+
     public function jobs($username)
     {
-        $arr = variable_generator('user','desktop',$username);
+        $arr = variable_generator('user', 'desktop', $username);
         $arr['Uname'] = $username;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.jobList', $arr);
     }
+
     public function wagesJobs($username)
     {
-        $arr = variable_generator('user','desktop',$username);
+        $arr = variable_generator('user', 'desktop', $username);
         $arr['Uname'] = $username;
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.wagesJobs', $arr);
     }
+
     public function fetchStaff()
     {
-        $data = org_charts_items_jobs_posts_users::whereNull('deleted_at');
+        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at');
 
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
-            ->addColumn('user', function ($data)
-            {
-                return $data->user->Name.' '.$data->user->Family;
+            ->addColumn('user', function ($data) {
+                return $data->user->Name . ' ' . $data->user->Family;
             })
-            ->addColumn('post', function ($data)
-            {
+            ->addColumn('post', function ($data) {
                 return $data->post->extra_title;
             })
-            ->addColumn('charts', function ($data)
-            {
+            ->addColumn('charts', function ($data) {
                 return $data->post->job;
             })
-            ->addColumn('job', function ($data)
-            {
+            ->addColumn('job', function ($data) {
                 return $data->post->job->job->title;
             })
-            ->addColumn('item', function ($data)
-            {
+            ->addColumn('item', function ($data) {
                 return $data->post->job->item->title;
             })
-            ->addColumn('org', function ($data)
-            {
+            ->addColumn('org', function ($data) {
                 return $data->post->job->item->chart->title;
             })
             ->make(true);
     }
+
     public function FetchPostList()
     {
         $validator = Validator::make(Request::all(),
             [
 //                'organ_id'=>'required|exists:hamahang_org_organs,id'
-                'organ_id'=>'required|numeric'
-            ],[],
+                'organ_id' => 'required|numeric'
+            ], [],
             [
                 'new_item_title' => 'عنوان ',
                 'new_item_title' => 'عنوان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else {
+        } else {
             $organ_id = Request::get('organ_id');
             $data = org_chart_items::with('jobs')->where('chart_id', '=', $organ_id)->whereNull('deleted_at')->get();
             $post_lists = [];
-            foreach ($data as $item)
-            {
-                foreach ($item->jobs as $job){
-                    foreach($job->posts as $post){
+            foreach ($data as $item) {
+                foreach ($item->jobs as $job) {
+                    foreach ($job->posts as $post) {
                         $post_lists [] = [
                             'title_item' => $item->title,
                             'title_job' => isset($job->job->title) ? $job->job->title : '',
@@ -760,7 +722,8 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
-    public function ShowJobList($username,$chart_id)
+
+    public function ShowJobList($username, $chart_id)
     {
         /* $validator = Validator::make([$username,$chart_id],
               [
@@ -788,7 +751,8 @@ class OrgChartController extends Controller
         $arr['UName'] = $username;
         return view('hamahang.OrgChart.ShowJobList', $arr);
     }
-    public function ShowPostList($username,$chart_id)
+
+    public function ShowPostList($username, $chart_id)
     {
         /* $validator = Validator::make([$username,$chart_id],
               [
@@ -825,6 +789,7 @@ class OrgChartController extends Controller
         $chart->save();
         return json_encode('ok');
     }
+
     public function AddNewChart()
     {
         $chart = new org_charts;
@@ -835,6 +800,7 @@ class OrgChartController extends Controller
         $chart->save();
         return json_encode('1');
     }
+
     public function item_info()
     {
         $arr = [];
@@ -842,14 +808,10 @@ class OrgChartController extends Controller
             ->whereNull('deleted_at')
             ->where('hamahang_org_charts_items_posts.chart_item_id', '=', Request::input('id'))
             ->get();
-        foreach ($posts as $post)
-        {
-            if ($post->user_id == '')
-            {
+        foreach ($posts as $post) {
+            if ($post->user_id == '') {
                 $post->user_id = 'no';
-            }
-            else
-            {
+            } else {
                 $user = User::where('id', $post->user_id)->first();
                 $post->user_info = $user;
             }
@@ -871,15 +833,12 @@ class OrgChartController extends Controller
 
         $arr[1]['org_title'] = $org_name->org_title;
         $arr[1]['chart_title'] = $org_name->ch_title;
-        if ($org_name->parent != 0)
-        {
+        if ($org_name->parent != 0) {
             $item_parent_name = org_chart_items::where('id', $org_name->parent)->get();
             //die(var_dump($item_parent_name));
             $arr[1]['parent_id'] = $item_parent_name[0]->id;
             $arr[1]['parent_title'] = $item_parent_name[0]->title;
-        }
-        else
-        {
+        } else {
             $arr[1]['parent_id'] = 0;
         }
         $item_posts_count = org_charts_items_posts::where('chart_item_id', '=', Request::input('id'))->count();
@@ -889,8 +848,7 @@ class OrgChartController extends Controller
         $arr[1]['free_post_count'] = $item_posts_count - $item_free_posts_count;
         $item_items = org_chart_items::where('parent_id', Request::input('id'))->get();
 
-        foreach ($item_items as $q)
-        {
+        foreach ($item_items as $q) {
             $c = org_chart_items::where('parent_id', $q->id)->count();
             $q->item_childs_count = $c;
         }
@@ -904,8 +862,7 @@ class OrgChartController extends Controller
             ->select('hamahang_org_charts_items.parent_id', 'hamahang_org_charts_items.title AS name', 'hamahang_org_charts_items.description AS title', 'hamahang_org_charts_items.id')
             ->get();
 
-        $Chart_Items = collect($Chart_Items)->map(function ($x)
-        {
+        $Chart_Items = collect($Chart_Items)->map(function ($x) {
             return (array)$x;
         })->toArray();
 
@@ -913,6 +870,7 @@ class OrgChartController extends Controller
         $arr[1]['item_items_ch'] = json_encode($Chart_Items_tree);
         return $arr;
     }
+
     public function SubmitChange()
     {
         (int)$id = Request::get('draggedNode');
@@ -922,25 +880,22 @@ class OrgChartController extends Controller
         $parent = $target_item->parent_id;
 
         $parents = array();
-        while ($parent !== 0)
-        {
+        while ($parent !== 0) {
             $parents[] = $parent;
             $target_item = org_chart_items::findOrFail($parent);
             $parent = $target_item->parent_id;
         };
 
-        if (!in_array($id, $parents))
-        {
+        if (!in_array($id, $parents)) {
             $item = org_chart_items::findOrFail($id)->update(['parent_id' => $patent_id]);
             $result[] = $item;
-        }
-        else
-        {
+        } else {
             $result[] = False;
         }
 
         return json_encode($result);
     }
+
     public function add_new_node()
     {
         $validator = Validator::make(Request::all(), [
@@ -950,14 +905,11 @@ class OrgChartController extends Controller
             'new_item_description' => 'required',
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
+        } else {
             $node = new org_chart_items;
             $node->uid = Auth::id();
             $node->chart_id = Request::input('chart_id');
@@ -972,6 +924,7 @@ class OrgChartController extends Controller
         }
 
     }
+
     public function create_new_chart_item()
     {
         $request = new Request;
@@ -983,6 +936,7 @@ class OrgChartController extends Controller
         $item->description = $request->get('description');
         $item->save();
     }
+
     public function AddRootChartItem()
     {
         $validator = Validator::make(Request::all(), [
@@ -992,14 +946,11 @@ class OrgChartController extends Controller
             'Charts_ID' => 'required'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else
-        {
+        } else {
             $Charts_ID = Request::input('Charts_ID');
             $current_root = org_chart_items::where('chart_id', '=', $Charts_ID)->where('parent_id', '=', 0)->first();
 
@@ -1011,8 +962,7 @@ class OrgChartController extends Controller
             $node->description = Request::input('root_item_description');
             $node->save();
 
-            if ($current_root)
-            {
+            if ($current_root) {
                 $current_root->parent_id = $node->id;
                 $current_root->save();
             }
@@ -1022,6 +972,7 @@ class OrgChartController extends Controller
             return json_encode($result);
         }
     }
+
     public function UpdateChartItem()
     {
         $result = array();
@@ -1038,6 +989,7 @@ class OrgChartController extends Controller
         $result['item_id'] = $item_id;
         return json_encode($result);
     }
+
     public function RemoveChartItem()
     {
 
@@ -1045,6 +997,7 @@ class OrgChartController extends Controller
         org_chart_items::destroy($ID);
         return json_encode($ID);
     }
+
     public function add_new_post()
     {
         $post = new org_charts_items_posts();
@@ -1058,20 +1011,17 @@ class OrgChartController extends Controller
             ->whereNull('deleted_at')
             ->get();
 
-        foreach ($post as $p)
-        {
-            if ($p->user_id == '')
-            {
+        foreach ($post as $p) {
+            if ($p->user_id == '') {
                 $p->user_id = 'no';
-            }
-            else
-            {
+            } else {
                 $user = User::find($p->user_id)->get();
                 $p->user_info = $user[0];
             }
         }
         return $post;
     }
+
     public function add_post_user()
     {
         $p = org_charts_items_posts::find(Request::input('post_id'));
@@ -1083,14 +1033,10 @@ class OrgChartController extends Controller
             ->where('chart_item_id', '=', $p->chart_item_id)
             ->get();
 
-        foreach ($post as $p)
-        {
-            if ($p->user_id == '')
-            {
+        foreach ($post as $p) {
+            if ($p->user_id == '') {
                 $p->user_id = 'no';
-            }
-            else
-            {
+            } else {
                 $user = User::where('id', $p->user_id)->first();
                 $p->user_info = $user->toArray();
             }
@@ -1098,6 +1044,7 @@ class OrgChartController extends Controller
 //		/die(var_dump($post));
         return $post;
     }
+
     public function remove_post_user()
     {
         $p = org_charts_items_posts::find(Request::input('post_id'));
@@ -1107,20 +1054,17 @@ class OrgChartController extends Controller
             ->whereNull('deleted_at')
             ->where('chart_item_id', '=', $p->chart_item_id)
             ->get();
-        foreach ($post as $p)
-        {
-            if ($p->user_id == '')
-            {
+        foreach ($post as $p) {
+            if ($p->user_id == '') {
                 $p->user_id = 'no';
-            }
-            else
-            {
+            } else {
                 $user = User::find($p->user_id);
                 $p->user_info = $user;
             }
         }
         return $post;
     }
+
     public function GetItemChildren()
     {
         $ID = Request::input('id');
@@ -1131,8 +1075,7 @@ class OrgChartController extends Controller
         $OrgChartItem = new org_chart_items;
         $total = DB::table('hamahang_org_charts_items')->where('parent_id', '=', $ID)->select('title', 'description', 'created_at', 'updated_at', 'id')->get();
         //die(var_dump($total));
-        $data = collect($total)->map(function ($x)
-        {
+        $data = collect($total)->map(function ($x) {
             return (array)$x;
         })->toArray();
         $result['data'] = $data;
@@ -1188,10 +1131,12 @@ class OrgChartController extends Controller
         //return json_encode($total);
 
     }
+
     public function select_list_organs()
     {
-        return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->select('id', 'title as text')->get();
+        return org_organs::where('title', 'Like', '%' . Request::get('term') . '%')->select('id', 'title as text')->get();
     }
+
     public function insert_posts()
     {
         $validator = Validator::make(Request::all(),
@@ -1200,8 +1145,8 @@ class OrgChartController extends Controller
                 'share_payment' => 'required|integer',
                 'female_num' => 'required|integer',
                 'outsourced_num' => 'required|integer',
-                'job_items'=>'exists:hamahang_org_charts_items_jobs,id',
-                'need_successor_users'=>'exists:user,id',
+                'job_items' => 'exists:hamahang_org_charts_items_jobs,id',
+                'need_successor_users' => 'exists:user,id',
                 'working_hours.*' => 'in:full_time,working_part_time,working_shift,private_room',
                 'access.*' => 'in:financial_auth,financial_server,accounting',
                 'advantages.*' => 'in:private_room,shared_room,driver,car,labtop,launch,dinner,insurance,swim',
@@ -1210,20 +1155,18 @@ class OrgChartController extends Controller
             ],
             [],
             [
-                'extra_title'=>'عنوان تکمیلی',
-                'mens_num'=>'تعداد مورد نیاز مرد',
-                'female_num'=>'تعداد مورد نیاز زن',
-                'outsourced_num'=>'تعداد قابل برون‌سپاری',
-                'share_payment'=>'سهم عملکرد در پرداخت'
+                'extra_title' => 'عنوان تکمیلی',
+                'mens_num' => 'تعداد مورد نیاز مرد',
+                'female_num' => 'تعداد مورد نیاز زن',
+                'outsourced_num' => 'تعداد قابل برون‌سپاری',
+                'share_payment' => 'سهم عملکرد در پرداخت'
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
 
             $org_charts_items_jobs_posts = org_charts_items_jobs_posts::create([
                 'uid' => auth()->id(),
@@ -1236,45 +1179,45 @@ class OrgChartController extends Controller
                 'share_performance' => Request::get('share_payment'),
                 'share_performance' => Request::get('share_payment'),
             ]);
-            if($org_charts_items_jobs_posts->save()){
-                if(Request::exists('access')){
-                    foreach(Request::get('access') as $access)
+            if ($org_charts_items_jobs_posts->save()) {
+                if (Request::exists('access')) {
+                    foreach (Request::get('access') as $access)
                         org_charts_items_jobs_posts_access::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
-                            'type'=>$access,
+                            'chart_item_post_job_id' => $org_charts_items_jobs_posts->id,
+                            'type' => $access,
                         ]);
                 }
-                if(Request::exists('advantages')){
-                    foreach(Request::get('advantages') as $advantage)
+                if (Request::exists('advantages')) {
+                    foreach (Request::get('advantages') as $advantage)
                         org_charts_items_jobs_posts_adventage::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
-                            'type'=>$advantage,
+                            'chart_item_post_job_id' => $org_charts_items_jobs_posts->id,
+                            'type' => $advantage,
                         ]);
                 }
-                if(Request::exists('working_hours')){
-                    foreach(Request::get('working_hours') as $working_hours)
+                if (Request::exists('working_hours')) {
+                    foreach (Request::get('working_hours') as $working_hours)
                         org_charts_items_jobs_posts_worktime::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
-                            'type'=>$working_hours,
+                            'chart_item_post_job_id' => $org_charts_items_jobs_posts->id,
+                            'type' => $working_hours,
                         ]);
                 }
-                if(Request::exists('need_successor_users')){
-                    foreach(Request::get('need_successor_users') as $need_successor_users)
+                if (Request::exists('need_successor_users')) {
+                    foreach (Request::get('need_successor_users') as $need_successor_users)
                         org_charts_items_jobs_posts_alternate_users::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
-                            'user_id'=>$need_successor_users,
+                            'chart_item_post_job_id' => $org_charts_items_jobs_posts->id,
+                            'user_id' => $need_successor_users,
                         ]);
                 }
-                if(Request::exists('add_users')){
-                    foreach(Request::get('add_users') as $users)
-                        org_charts_items_jobs_posts_users::create([
+                if (Request::exists('add_users')) {
+                    foreach (Request::get('add_users') as $users)
+                        org_charts_items_jobs_posts_staff::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$org_charts_items_jobs_posts->id,
-                            'user_id'=>$users,
+                            'chart_item_post_job_id' => $org_charts_items_jobs_posts->id,
+                            'user_id' => $users,
                         ]);
                 }
             }
@@ -1284,12 +1227,103 @@ class OrgChartController extends Controller
         }
         return json_encode($result);
     }
+
+    public function insert_staff()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'staff_name' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_last_name' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_national_id' => 'required|numeric',
+                'staff_mobile' => 'required|numeric',
+                'staff_birth_day' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'is_married' => 'required|integer',
+                'gender' => 'required|in:man,woman',
+                'staff_job_corp.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_job_pos.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_job_begin.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_job_end.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_edu_uni.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_edu_grade.*' => 'required|in:diploma,after_diploma,bsc,msc,phd',
+                'staff_edu_major.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_edu_date_grade.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_organ' => 'required|integer',
+                'chart_item' => 'required|integer',
+                'chart_item_job' => 'required|integer',
+                'chart_item_job_position' => 'required|integer'
+            ],
+            [],
+            [
+                'staff_name' => 'نام',
+                'staff_last_name' => 'نام خانوادگی',
+                'staff_national_id' => 'کد ملی',
+                'staff_mobile' => 'موبایل',
+                'staff_birth_day' => 'تاریخ تولد' . Request::input('staff_birth_day'),
+                'is_married' => 'تاهل',
+                'gender' => 'جنسیت',
+                'staff_job_corp.*' => 'نام شرکت',
+                'staff_job_pos.*' => 'سمت',
+                'staff_job_begin.*' => 'تاریخ شروع',
+                'staff_job_end.*' => 'تاریخ پایان',
+                'staff_edu_uni.*' => 'نام دانشگاه',
+                'staff_edu_grade.*' => 'مقطع تحصیلی',
+                'staff_edu_major.*' => 'رشته تحصیلی',
+                'staff_edu_date_grade.*' => 'فارغ التحصیلی',
+                'staff_organ' => 'سازمان',
+                'chart_item' => 'واحد',
+                'chart_item_job' => 'شغل',
+                'chart_item_job_position' => 'سمت'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $staff = org_staff::create([
+                'uid' => auth()->id(),
+                'first_name' => Request::get('staff_name'),
+                'last_name' => Request::get('staff_last_name'),
+                'national_id' => Request::get('staff_national_id'),
+                'mobile' => Request::get('staff_mobile'),
+                'birth_date' => Request::get('staff_birth_day'),
+                'is_married' => Request::get('is_married'),
+                'is_man' => Request::get('gender')
+            ]);
+            if ($staff->save()) {
+                foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
+                    org_staff_edu::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff->id,
+                        'staff_edu_uni' => $staff_edu_uni,
+                        'staff_edu_grade' => Request::get('staff_edu_grade')[$k],
+                        'staff_edu_major' => Request::get('staff_edu_major')[$k],
+                        'staff_edu_date_grade' => Request::get('staff_edu_date_grade')[$k]
+                    ]);
+                }
+                foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
+                    org_staff_jobs::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff->id,
+                        'staff_job_corp' => $staff_job_corp,
+                        'staff_job_pos' => Request::get('staff_job_pos')[$k],
+                        'staff_job_begin' => Request::get('staff_job_begin')[$k],
+                        'staff_job_end' => Request::get('staff_job_end')[$k]
+                    ]);
+                }
+            }
+            $result['success'] = true;
+        }
+        return json_encode($result);
+    }
+
     public function edit_post()
     {
         $validator = Validator::make(Request::all(),
             [
                 'share_payment' => 'required|integer',
-                'need_successor_users'=>'exists:user,id',
+                'need_successor_users' => 'exists:user,id',
                 'working_hours.*' => 'in:full_time,working_part_time,working_shift,private_room',
                 'access.*' => 'in:financial_auth,financial_server,accounting',
                 'advantages.*' => 'in:private_room,shared_room,driver,car,labtop,launch,dinner,insurance,swim',
@@ -1298,20 +1332,18 @@ class OrgChartController extends Controller
             ],
             [],
             [
-                'extra_title'=>'عنوان تکمیلی',
-                'mens_num'=>'تعداد مورد نیاز مرد',
-                'female_num'=>'تعداد مورد نیاز زن',
-                'outsourced_num'=>'تعداد قابل برون‌سپاری',
-                'share_payment'=>'سهم عملکرد در پرداخت'
+                'extra_title' => 'عنوان تکمیلی',
+                'mens_num' => 'تعداد مورد نیاز مرد',
+                'female_num' => 'تعداد مورد نیاز زن',
+                'outsourced_num' => 'تعداد قابل برون‌سپاری',
+                'share_payment' => 'سهم عملکرد در پرداخت'
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
 
             $post = org_charts_items_jobs_posts::find(deCode(Request::input('post_id')));
 
@@ -1319,41 +1351,41 @@ class OrgChartController extends Controller
             $post->location = Request::input('work_place');
             $post->share_performance = Request::input('share_payment');
 
-            if($post->save()){
+            if ($post->save()) {
                 org_charts_items_jobs_posts_access::where('chart_item_post_job_id', '=', $post->id)->delete();
                 org_charts_items_jobs_posts_adventage::where('chart_item_post_job_id', '=', $post->id)->delete();
                 org_charts_items_jobs_posts_worktime::where('chart_item_post_job_id', '=', $post->id)->delete();
-                org_charts_items_jobs_posts_users::where('chart_item_post_job_id', '=', $post->id)->delete();
-                if(Request::exists('access')){
-                    foreach(Request::get('access') as $access)
+                org_charts_items_jobs_posts_staff::where('chart_item_post_job_id', '=', $post->id)->delete();
+                if (Request::exists('access')) {
+                    foreach (Request::get('access') as $access)
                         org_charts_items_jobs_posts_access::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$post->id,
-                            'type'=>$access,
+                            'chart_item_post_job_id' => $post->id,
+                            'type' => $access,
                         ]);
                 }
-                if(Request::exists('advantages')){
-                    foreach(Request::get('advantages') as $advantage)
+                if (Request::exists('advantages')) {
+                    foreach (Request::get('advantages') as $advantage)
                         org_charts_items_jobs_posts_adventage::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$post->id,
-                            'type'=>$advantage,
+                            'chart_item_post_job_id' => $post->id,
+                            'type' => $advantage,
                         ]);
                 }
-                if(Request::exists('working_hours')){
-                    foreach(Request::get('working_hours') as $working_hours)
+                if (Request::exists('working_hours')) {
+                    foreach (Request::get('working_hours') as $working_hours)
                         org_charts_items_jobs_posts_worktime::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$post->id,
-                            'type'=>$working_hours,
+                            'chart_item_post_job_id' => $post->id,
+                            'type' => $working_hours,
                         ]);
                 }
-                if(Request::exists('add_users')){
-                    foreach(Request::get('add_users') as $users)
-                        org_charts_items_jobs_posts_users::create([
+                if (Request::exists('add_users')) {
+                    foreach (Request::get('add_users') as $users)
+                        org_charts_items_jobs_posts_staff::create([
                             'uid' => auth()->id(),
-                            'chart_item_post_job_id'=>$post->id,
-                            'user_id'=>$users,
+                            'chart_item_post_job_id' => $post->id,
+                            'user_id' => $users,
                         ]);
                 }
             }
@@ -1363,6 +1395,7 @@ class OrgChartController extends Controller
         }
         return json_encode($result);
     }
+
     public function edit_job_unit()
     {
         $validator = Validator::make(Request::all(),
@@ -1370,22 +1403,20 @@ class OrgChartController extends Controller
                 'mens_num' => 'required|integer',
                 'female_num' => 'required|integer',
                 'outsourced_num' => 'required|integer',
-                'need_successor_users'=>'exists:user,id'
+                'need_successor_users' => 'exists:user,id'
             ],
             [],
             [
-                'mens_num'=>'تعداد مورد نیاز مرد',
-                'female_num'=>'تعداد مورد نیاز زن',
-                'outsourced_num'=>'تعداد قابل برون‌سپاری'
+                'mens_num' => 'تعداد مورد نیاز مرد',
+                'female_num' => 'تعداد مورد نیاز زن',
+                'outsourced_num' => 'تعداد قابل برون‌سپاری'
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
             $job_id = deCode(Request::input('job_id'));
             $org_charts_items_jobs = org_charts_items_jobs::find($job_id);
             $org_charts_items_jobs->amount = Request::input('amount');
@@ -1394,13 +1425,13 @@ class OrgChartController extends Controller
             $org_charts_items_jobs->men = Request::input('mens_num');
             $org_charts_items_jobs->outsourcing = Request::input('outsourced_num');
             $org_charts_items_jobs->save();
-            org_charts_items_jobs_alternate_users::where('chart_item_job_id', '=',$job_id)->delete();
-            if(Request::exists('need_successor_users')){
-                foreach(Request::get('need_successor_users') as $need_successor_users)
+            org_charts_items_jobs_alternate_users::where('chart_item_job_id', '=', $job_id)->delete();
+            if (Request::exists('need_successor_users')) {
+                foreach (Request::get('need_successor_users') as $need_successor_users)
                     org_charts_items_jobs_alternate_users::create([
                         'uid' => auth()->id(),
-                        'chart_item_job_id'=>$job_id,
-                        'user_id'=>$need_successor_users,
+                        'chart_item_job_id' => $job_id,
+                        'user_id' => $need_successor_users,
                     ]);
             }
             $result['success'] = true;
@@ -1416,27 +1447,25 @@ class OrgChartController extends Controller
             [
                 'organ_title' => 'required',
                 'organ_level' => 'numeric|min:0|max:5',
-                'parent_organ'=>'exists:hamahang_org_organs,id'
+                'parent_organ' => 'exists:hamahang_org_organs,id'
             ],
             [],
             [
                 'organ_title' => 'عنوان ',
                 'parent_organ' => 'سازمان ',
                 'organ_level' => 'سطح سازمان ',
-                'organ_description'=>'توضیحات'
+                'organ_description' => 'توضیحات'
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
             $organ_title = Request::get('organ_title');
             $organ_level = Request::get('organ_level');
             $organ_description = Request::get('organ_description');
-            $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
+            $organ_parent = (Request::get('parent_organ') ? Request::get('parent_organ') : 0);
             $organs = org_organs::create([
                 'uid' => auth()->id(),
                 'parent_id' => $organ_parent,
@@ -1457,79 +1486,81 @@ class OrgChartController extends Controller
         }
         return json_encode($result);
     }
-    public function edit_organs(){
+
+    public function edit_organs()
+    {
 
         $validator = Validator::make(Request::all(),
             [
                 'organ_title' => 'required',
                 'organ_level' => 'numeric|min:0|max:5',
-                'parent_organ'=>'exists:hamahang_org_organs,id'
+                'parent_organ' => 'exists:hamahang_org_organs,id'
                 /*'id_organ'=>'required|exists:hamahang_org_organs,id'*/
             ],
             [],
             [
                 'organ_title' => 'عنوان ',
                 'parent_organ' => 'سازمان ',
-                'organ_description'=>'توضیحات'
+                'organ_description' => 'توضیحات'
 
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
             $organ_title = Request::get('organ_title');
             $organ_description = Request::get('organ_description');
             $organ_id = deCode(Request::get('org_id'));
             $organ_level = Request::get('organ_level');
-            $organ_parent= (Request::get('parent_organ')? Request::get('parent_organ') : 0);
-            $organ=org_organs::find($organ_id);
-            $organ->title=$organ_title;
-            $organ->description=$organ_description;
-            $organ->level=$organ_level;
-            $organ->parent_id=$organ_parent;
+            $organ_parent = (Request::get('parent_organ') ? Request::get('parent_organ') : 0);
+            $organ = org_organs::find($organ_id);
+            $organ->title = $organ_title;
+            $organ->description = $organ_description;
+            $organ->level = $organ_level;
+            $organ->parent_id = $organ_parent;
             $organ->save();
             $result['success'] = true;
         }
         return $result;
     }
-    public function edit_chart(){
+
+    public function edit_chart()
+    {
 
         $validator = Validator::make(Request::all(),
             [
                 'chart_title' => 'required',
-                'chart_id'=>'required|exists:hamahang_org_charts,id'
+                'chart_id' => 'required|exists:hamahang_org_charts,id'
             ],
             [],
             [
                 'organ_title' => 'عنوان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
             $organ_title = Request::get('chart_title');
             $organ_description = Request::get('chart_description');
-            $chart_id=Request::get('chart_id');
-            $chart=org_charts::find($chart_id);
-            $chart->title=$organ_title;
-            $chart->description=$organ_description;
+            $chart_id = Request::get('chart_id');
+            $chart = org_charts::find($chart_id);
+            $chart->title = $organ_title;
+            $chart->description = $organ_description;
             $chart->save();
             $result['success'] = true;
         }
         return $result;
     }
+
     private function get_child($id)
     {
-        $list_child= org_organs::select('id')->where('parent_id',4)->get();
+        $list_child = org_organs::select('id')->where('parent_id', 4)->get();
     }
+
     public function select_list_edit_organs()
     {
         $validator = Validator::make(Request::all(),
@@ -1541,22 +1572,23 @@ class OrgChartController extends Controller
                 'organ_id' => 'سازمان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
         }
-        $list_child= org_organs::select('id')->where('parent_id',4)->get();
+        $list_child = org_organs::select('id')->where('parent_id', 4)->get();
         // dd($list_child->toArray());
-        return org_organs::where('title', 'Like', '%'.Request::get('term').'%')->whereNotIn('id',[$list_child->toArray()])->select('id', 'title as text')->get();
+        return org_organs::where('title', 'Like', '%' . Request::get('term') . '%')->whereNotIn('id', [$list_child->toArray()])->select('id', 'title as text')->get();
     }
-    public function add_chart_item_child(){
+
+    public function add_chart_item_child()
+    {
         $validator = Validator::make(Request::all(),
             [
                 'new_item_title' => 'required',
                 'item_id' => 'required',
-                'chart_id'=>'required|exists:hamahang_org_charts,id'
+                'chart_id' => 'required|exists:hamahang_org_charts,id'
             ],
             [],
             [
@@ -1564,25 +1596,25 @@ class OrgChartController extends Controller
                 'new_item_title' => 'عنوان ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
-            $chart_item=new org_chart_items();
-            $chart_item->title=Request::get('new_item_title');
-            $chart_item->description=Request::get('new_item_description');
-            $chart_item->parent_id=Request::get('item_id');
-            $chart_item->chart_id=Request::get('chart_id');
-            if($chart_item->save())
+        } else {
+            $chart_item = new org_chart_items();
+            $chart_item->title = Request::get('new_item_title');
+            $chart_item->description = Request::get('new_item_description');
+            $chart_item->parent_id = Request::get('item_id');
+            $chart_item->chart_id = Request::get('chart_id');
+            if ($chart_item->save())
                 $result['success'] = true;
-            else $result['success']=false;
+            else $result['success'] = false;
         }
         return $result;
     }
-    public function  add_job_post(){
+
+    public function add_job_post()
+    {
         $validator = Validator::make(Request::all(),
             [
                 'unit_id' => 'required|numeric',
@@ -1596,25 +1628,23 @@ class OrgChartController extends Controller
                 'job_amount' => trans('org_chart.amount')
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
+        } else {
             $job = onet_job::find(Request::get('job'));
             $org_chart_items_jobs = new org_chart_items_jobs();
             $org_chart_items_jobs->chart_item_id = Request::get('unit_id');
             $org_chart_items_jobs->job_id = Request::get('job');
             $org_chart_items_jobs->amount = Request::get('amount');
             $org_chart_items_jobs->description = Request::get('comment');
-            if($org_chart_items_jobs->save()){
+            if ($org_chart_items_jobs->save()) {
                 $semats = [];
-                for($i=0; $i<Request::get('amount'); $i++){
+                for ($i = 0; $i < Request::get('amount'); $i++) {
                     $org_charts_items_jobs_posts = new org_charts_items_jobs_posts();
                     $org_charts_items_jobs_posts->uid = auth()->id();
-                    $org_charts_items_jobs_posts->chart_item_job_id= $org_chart_items_jobs->id;
+                    $org_charts_items_jobs_posts->chart_item_job_id = $org_chart_items_jobs->id;
                     $org_charts_items_jobs_posts->save();
                     $semats[] = [
                         'title' => $job->title,
@@ -1625,11 +1655,13 @@ class OrgChartController extends Controller
                 $result['job_item'] = $org_chart_items_jobs->id;
                 $result['semats'] = $semats;
 
-            } else $result['success']=false;
+            } else $result['success'] = false;
         }
         return $result;
     }
-    public function  add_chart_item_post(){
+
+    public function add_chart_item_post()
+    {
 
         $validator = Validator::make(Request::all(),
             [
@@ -1643,24 +1675,23 @@ class OrgChartController extends Controller
 
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
-            $chart_item_post=new org_charts_items_posts();
-            $chart_item_post->title=Request::get('new_post_title');
-            $chart_item_post->description=Request::get('new_post_description');
-            $chart_item_post->chart_item_id=Request::get('item_id');
-            $chart_item_post->user_id=0;
-            if($chart_item_post->save())
+        } else {
+            $chart_item_post = new org_charts_items_posts();
+            $chart_item_post->title = Request::get('new_post_title');
+            $chart_item_post->description = Request::get('new_post_description');
+            $chart_item_post->chart_item_id = Request::get('item_id');
+            $chart_item_post->user_id = 0;
+            if ($chart_item_post->save())
                 $result['success'] = true;
-            else $result['success']=false;
+            else $result['success'] = false;
         }
         return $result;
     }
+
     public function delete_employ_post()
     {
 
@@ -1674,59 +1705,61 @@ class OrgChartController extends Controller
                 'post_id' => 'آیدی',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
-            $chart_item_post=org_charts_items_posts::find(Request::get('post_id'));
-            $chart_item_post->user_id=0;
-            if($chart_item_post->save())
+        } else {
+            $chart_item_post = org_charts_items_posts::find(Request::get('post_id'));
+            $chart_item_post->user_id = 0;
+            if ($chart_item_post->save())
                 $result['success'] = true;
-            else $result['success']=false;
+            else $result['success'] = false;
         }
         return json_encode($result);
     }
-    public function select_list_employ(){
-        if(!empty(Request::get('term')))
-            return User::where('Uname', 'Like', '%'.Request::get('term').'%')->orwhere('Name', 'Like', '%'.Request::get('term').'%')->orwhere('Family', 'Like', '%'.Request::get('term').'%')->select('id', 'Family as text')->get();
+
+    public function select_list_employ()
+    {
+        if (!empty(Request::get('term')))
+            return User::where('Uname', 'Like', '%' . Request::get('term') . '%')->orwhere('Name', 'Like', '%' . Request::get('term') . '%')->orwhere('Family', 'Like', '%' . Request::get('term') . '%')->select('id', 'Family as text')->get();
     }
-    public function add_employ_for_post(){
+
+    public function add_employ_for_post()
+    {
 
         $validator = Validator::make(Request::all(),
             [
 
-                'post_id'=>'required|exists:hamahang_org_charts_items_posts,id'
+                'post_id' => 'required|exists:hamahang_org_charts_items_posts,id'
             ],
             [],
             [
                 'employ_id' => 'کارمند ',
             ]
         );
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $result['error'] = $validator->errors();
             $result['success'] = false;
             return json_encode($result);
-        }
-        else{
-            $chart_item_post=org_charts_items_posts::find(Request::get('post_id'));
-            $chart_item_post->user_id=(Request::get('employ_id')) ? Request::get('employ_id') : 0;
-            if($chart_item_post->save())
+        } else {
+            $chart_item_post = org_charts_items_posts::find(Request::get('post_id'));
+            $chart_item_post->user_id = (Request::get('employ_id')) ? Request::get('employ_id') : 0;
+            if ($chart_item_post->save())
                 $result['success'] = true;
-            else $result['success']=false;
+            else $result['success'] = false;
         }
         return $result;
     }
-    public function update_one_chart_item(){
+
+    public function update_one_chart_item()
+    {
         {
             $validator = Validator::make(Request::all(),
                 [
-                    'item_title'=>'required',
-                    'item_id'=>'required',
-                    'item_parent_id'=>'required',
+                    'item_title' => 'required',
+                    'item_id' => 'required',
+                    'item_parent_id' => 'required',
                 ],
                 [],
                 [
@@ -1735,31 +1768,28 @@ class OrgChartController extends Controller
                     'item_parent_id'=>'والد',*/
                 ]
             );
-            if ($validator->fails())
-            {
+            if ($validator->fails()) {
                 $result['error'] = $validator->errors();
                 $result['success'] = false;
                 return json_encode($result);
-            }
-            else{
+            } else {
 
-                $chart_item=org_chart_items::find(Request::get('item_id'));
+                $chart_item = org_chart_items::find(Request::get('item_id'));
 
-                $chart_item->title=(Request::get('item_title'));
-                $chart_item->description=(Request::get('item_description'));
-                $chart_item->parent_id=(Request::get('item_parent_id'));
-                if($chart_item->save()){
+                $chart_item->title = (Request::get('item_title'));
+                $chart_item->description = (Request::get('item_description'));
+                $chart_item->parent_id = (Request::get('item_parent_id'));
+                if ($chart_item->save()) {
                     $result['success'] = true;
                     org_charts_items_missions::where('chart_item_id', '=', $chart_item->id)->delete();
-                    foreach (Request::get('unit_missions') as $missions){
+                    foreach (Request::get('unit_missions') as $missions) {
                         org_charts_items_missions::create([
                             'uid' => auth()->id(),
                             'chart_item_id' => $chart_item->id,
                             'mission_id' => $missions
                         ]);
                     }
-                }
-                else $result['success']=false;
+                } else $result['success'] = false;
             }
             return json_encode($result);
         }

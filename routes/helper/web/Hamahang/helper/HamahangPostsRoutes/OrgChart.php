@@ -26,6 +26,8 @@ Route::post('add_root_chart_item/{OrgansID?}', ['as' => 'hamahang.org_chart.add_
 Route::post('select_list_organs', ['as' => 'hamahang.org_chart.select_list_organs', 'uses' => 'OrgChartController@select_list_organs', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.select_list_organs']]);
 Route::post('select_list_edit_organs', ['as' => 'hamahang.org_chart.select_list_edit_organs', 'uses' => 'OrgChartController@select_list_edit_organs', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.select_list_edit_organs']]);
 Route::post('insert_organs', ['as' => 'hamahang.org_chart.insert_organs', 'uses' => 'OrgChartController@insert_organs', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.insert_organs']]);
+Route::post('insert_staff', ['as' => 'hamahang.org_chart.insert_staff', 'uses' => 'OrgChartController@insert_staff', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.insert_organs']]);
+Route::post('select_user', ['as' => 'hamahang.org_chart.select_user', 'uses' => 'OrgChartController@selectUser', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.insert_organs']]);
 Route::post('insert_posts', ['as' => 'hamahang.org_chart.insert_posts', 'uses' => 'OrgChartController@insert_posts', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.insert_organs']]);
 Route::post('edit_post', ['as' => 'hamahang.org_chart.edit_post', 'uses' => 'OrgChartController@edit_post', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.add_new_post']]);
 Route::post('send_edit_job_unit', ['as' => 'hamahang.org_chart.send_edit_job_unit', 'uses' => 'OrgChartController@edit_job_unit', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.insert_organs']]);

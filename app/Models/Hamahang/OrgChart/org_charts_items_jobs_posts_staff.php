@@ -5,13 +5,13 @@ namespace App\Models\Hamahang\OrgChart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class org_charts_items_jobs_posts_users extends Model
+class org_charts_items_jobs_posts_staff extends Model
 {
 
     use SoftDeletes;
 
     protected $guarded = [];
-    protected $table = 'hamahang_org_charts_items_jobs_posts_users';
+    protected $table = 'hamahang_org_charts_items_jobs_posts_staff';
     protected $dates = ['deleted_at'];
 
     public function user()

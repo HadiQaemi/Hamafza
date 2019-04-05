@@ -4243,11 +4243,11 @@ input::-webkit-inner-spin-button {
     color: #fff !important;
 }
 .oghat-date{
-    font-size: 12px;
+    font-size: 10pt;
     margin-bottom: 10px;
 }
 .oghat-hour{
-    font-size: 18px;
+    font-size: 22px;
     margin-top: 15px;
 }
 .font-time-oghat{

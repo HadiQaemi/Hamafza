@@ -2,7 +2,7 @@
     $subjects = \App\Models\hamafza\Subject::where('kind', config('constants.HOMEPAGE_SECOND_SLIDER_TYPE'))->take(5)->get();
     $slider_values = App\Models\Hamahang\BasicdataValue::where('parent_id', 7)->get();
 @endphp
-<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="250000">
     <div class="carousel-inner">
         @if($slider_values)
             @php $i = 1; @endphp
@@ -11,14 +11,22 @@
                 @php
                     if($i == 1) {$class = 'active';}
                     else {$class = '';}
+                    $link = App\Models\Hamahang\BasicdataAttributesValues
+                        ::where('basicdata_value_id', '=', $slide->id)
+                        ->where('basicdata_attribute_id', '=', 7)
+                        ->first();
                 @endphp
                 <div class="item {{ $class }}">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-xs-2" style="margin-right: 1%"><img style="height: 80px;" src="{{route('FileManager.DownloadFile',['ID', enCode($slide->attrs()->where('basicdata_attribute_id', 8)->withPivot('value')->first()->pivot->value)]) }}" class="img-responsive"></div>
+                            <div class="col-xs-2" style="margin-right: 1%">
+                                <a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">
+                                    <img style="height: 80px;" src="{{route('FileManager.DownloadFile',['ID', enCode($slide->attrs()->where('basicdata_attribute_id', 8)->withPivot('value')->first()->pivot->value)]) }}" class="img-responsive">
+                                </a>
+                            </div>
                             <div class="col-xs-9" style="margin-right: 2%; margin-top: -3%">
-                                <h3 style="font-size: 18px;">{{$slide->title}}</h3>
-                                <p style="text-align: justify">{{$slide->comment}}</p>
+                                <h3 style="font-size: 18px;"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->title}}</a></h3>
+                                <p style="text-align: justify;margin: 0px;"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->comment}}</a></p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +59,7 @@
         {{--@endif--}}
     </div>
     <!-- Controls -->
-    <div class="slider-controler">
+    <div class="slider-controler" style="margin-right: 48%;">
         <a class="left carousel-control" href="#custom_carousel" data-slide="prev">
             <span class="fa fa-angle-left fa-2x" aria-hidden="true"></span>
         </a>

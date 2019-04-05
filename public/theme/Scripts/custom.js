@@ -60,6 +60,78 @@ function parseArabic(str) {
     return str.replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2').replace(/۳/g, '3').replace(/۴/g, '4').replace(/٤/g, '4').replace(/۵/g, '5').replace(/۶/g, '6').replace(/۷/g, '7').replace(/٧/g, '7').replace(/۸/g, '8').replace(/٩/g, '9').replace(/۹/g, '9');
 }
 
+$(document).on("click", "#add_job", function () {
+    length = $("#staff_job_list > .col-xs-12").length;
+    $('#staff_job_list').append(
+        '<div class="col-xs-12 noRightPadding noLeftPadding">\n' +
+        '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
+        '   <div class="col-xs-4"><input type="hidden" name="staff_job_corp[]" value="' + $('#staff_job_corp').val() + '">' + $('#staff_job_corp').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="staff_job_pos[]" value="' + $('#staff_job_pos').val() + '">' + $('#staff_job_pos').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="staff_job_begin[]" value="' + $('#staff_job_begin').val() + '">' + $('#staff_job_begin').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="staff_job_end[]" value="' + $('#staff_job_end').val() + '">' + $('#staff_job_end').val() + '</div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-trash pointer remove_job"></i></div>\n' +
+        '</div>'
+    )
+});
+
+$(document).on("click", "#staff_add_edu", function () {
+    length = $("#staff_edu_list > .col-xs-12").length;
+    $('#staff_edu_list').append(
+        '<div class="col-xs-12 noRightPadding noLeftPadding">\n' +
+        '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
+        '   <div class="col-xs-3"><input type="hidden" name="staff_edu_uni[]" value="' + $('#staff_edu_uni').val() + '">' + $('#staff_edu_uni').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="staff_edu_grade[]" value="' + $('#staff_edu_grade').val() + '">' + $('#staff_edu_grade option:selected').text() + '</div>\n' +
+        '   <div class="col-xs-3"><input type="hidden" name="staff_edu_major[]" value="' + $('#staff_edu_major').val() + '">' + $('#staff_edu_major').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="staff_edu_date_grade[]" value="' + $('#staff_edu_date_grade').val() + '">' + $('#staff_edu_date_grade').val() + '</div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-trash pointer staff_remove_edu"></i></div>\n' +
+        '</div>'
+    )
+});
+
+$(document).on("click", "#select_from_system_user", function () {
+    $.ajax({
+        type: "POST",
+        url: $(this).attr('rel'),
+        dataType: "json",
+        success: function (result) {
+            if (result.success == true) {
+                $('.jsPanel-btn-close').click();
+                window.table_organs_grid.ajax.reload();
+            }
+            else {
+                messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
+            }
+            setTimeout(function(){$("#alert_insert").html('') }, 4000);
+        }
+    });
+});
+
+$(document).on("click", ".remove_job", function () {
+    $(this).parent().parent().remove();
+});
+
+$(document).on("click", ".staff_remove_edu", function () {
+    $(this).parent().parent().remove();
+});
+
+$(document).on("click", "#btn_insert_staff", function () {
+    $.ajax({
+        type: "POST",
+        url: $(this).attr('rel'),
+        dataType: "json",
+        data: $('#create_new_staff').serialize(),
+        success: function (result) {
+        if (result.success == true) {
+            $('.jsPanel-btn-close').click();
+            window.table_organs_grid.ajax.reload();
+        }
+        else {
+            messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
+        }
+        setTimeout(function(){$("#alert_insert").html('') }, 4000);
+    }
+});
+});
 
 
 $(document).on('mouseover', '[data-toggle="tooltip"]', function () {

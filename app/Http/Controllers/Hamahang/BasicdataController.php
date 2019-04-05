@@ -406,6 +406,7 @@ class BasicdataController extends Controller
         } else {
             $basic_data_value = BasicdataValue::find(Request::input('item_id'));
             $basic_data_value->title = Request::input('title');
+            $basic_data_value->comment = Request::input('comment');
             $basic_data_value->inactive = Request::input('inactive');
             $basic_data_value->save();
 
@@ -443,6 +444,7 @@ class BasicdataController extends Controller
             $basic_data_value = new BasicdataValue();
             $basic_data_value->parent_id = Request::input('parent_id');
             $basic_data_value->title = Request::input('title');
+            $basic_data_value->comment = Request::input('comment');
             $basic_data_value->inactive = Request::input('inactive');
             $basic_data_value->save();
 
