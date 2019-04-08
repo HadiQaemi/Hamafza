@@ -19,13 +19,17 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">
+                                <a href="{{trim($link->value) != '' ? $link->value : '#'}}" style="color: #fff">
                                     <img src="{{route('FileManager.DownloadFile',['ID', enCode($slide->attrs()->where('basicdata_attribute_id', 6)->withPivot('value')->first()->pivot->value)]) }}" class="img-responsive" style="height: 150px; width: 336px;">
                                 </a>
                             </div>
                             <div class="col-xs-6">
-                                <h3 style="font-size: 18px;"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->title}}</a></h3>
-                                <p style="text-align: justify"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->comment}}</a></p>
+                                <h3 style="font-size: 18px;">
+                                    {!! (trim($link->value) != '' ? '<a href="'.$link->value.'" style="color: #fff">'.$slide->title.'</a>' : $slide->title ) !!}
+                                </h3>
+                                <p style="text-align: justify">
+                                    {!! (trim($link->value) != '' ? '<a href="'.$link->value.'" style="color: #fff">'.$slide->comment.'</a>' : $slide->comment) !!}
+                                </p>
                             </div>
                         </div>
                     </div>

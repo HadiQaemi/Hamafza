@@ -56,13 +56,17 @@
                     @endphp
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 1.1% 16% 1.1% 0%">
-                            <p style="display: block;font-size: 25px">{{$dashboard['Eghdam']}}</p>
+                            <p style="display: block;font-size: 25px">
+                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">{{$dashboard['Eghdam']}}</a>
+                            </p>
                             <p style="display: block">
                                 <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">وظایف من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 1.1% 0 1.1% 16%; float: left;">
-                            <p style="display: block;font-size: 25px">0</p>
+                            <p style="display: block;font-size: 25px">
+                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">0</a>
+                            </p>
                             <p style="display: block">
                                 <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">برنامه امروز</a>
                             </p>
@@ -71,7 +75,9 @@
                     </div>
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 0.1% 16% 1.1% 0%">
-                            <p style="display: block;font-size: 25px">{{$dashboard['Email']}}</p>
+                            <p style="display: block;font-size: 25px">
+                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">{{$dashboard['Email']}}</a>
+                            </p>
                             <p style="display: block">
                                 <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">پیام‌های من</a>
                             </p>
@@ -150,7 +156,7 @@
                                                 var JAT = {!! $jat !!};
                                                 function pz() {};
                                                 init();
-                                                document.getElementById('cities').selectedIndex = 27;
+                                                document.getElementById('cities').selectedIndex = 12;
                                                 coord();
                                                 main();
                                             </script>
@@ -175,7 +181,7 @@
                                             var JAT = {!! $jat !!};
                                             function pz() {};
                                             init();
-                                            document.getElementById('cities').selectedIndex = 27;
+                                            document.getElementById('cities').selectedIndex = 12;
                                             coord();
                                             main();
                                         </script>

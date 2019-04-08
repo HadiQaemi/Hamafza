@@ -20,13 +20,17 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-2" style="margin-right: 1%">
-                                <a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">
+                                <a href="{{trim($link->value) != '' ? $link->value : '#'}}" style="color: #fff">
                                     <img style="height: 80px;" src="{{route('FileManager.DownloadFile',['ID', enCode($slide->attrs()->where('basicdata_attribute_id', 8)->withPivot('value')->first()->pivot->value)]) }}" class="img-responsive">
                                 </a>
                             </div>
                             <div class="col-xs-9" style="margin-right: 2%; margin-top: -3%">
-                                <h3 style="font-size: 18px;"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->title}}</a></h3>
-                                <p style="text-align: justify;margin: 0px;font-size: 1.3em"><a href="{{isset($link->value) ? $link->value : '#'}}" style="color: #fff">{{$slide->comment}}</a></p>
+                                <h3 style="font-size: 18px;">
+                                    {!!(trim($link->value) != '' ? '<a href="'.$link->value.'" style="color: #fff">'.$slide->title.'</a>' : $slide->title )!!}
+                                </h3>
+                                <p style="text-align: justify;margin: 0px;font-size: 1.3em">
+                                    {!!(trim($link->value) != '' ? '<a href="'.$link->value.'" style="color: #fff">'.$slide->comment.'</a>' : $slide->comment)!!}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -60,10 +64,10 @@
     </div>
     <!-- Controls -->
     <div class="slider-controler" style="margin-right: 48%;">
-        <a class="left carousel-control" href="#custom_carousel" data-slide="prev">
+        <a class="left carousel-control" href="#custom_carousel" data-slide="next">
             <span class="fa fa-angle-left fa-2x" aria-hidden="true"></span>
         </a>
-        <a class="right carousel-control" href="#custom_carousel" data-slide="next">
+        <a class="right carousel-control" href="#custom_carousel" data-slide="prev">
             <span class="fa fa-angle-right fa-2x" aria-hidden="true" style="margin-left: 10px;"></span>
         </a>
     </div>
