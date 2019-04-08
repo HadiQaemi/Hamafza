@@ -64,7 +64,7 @@ return [
     'outsourced_num'   => 'تعداد قابل برون‌سپاری',
     'choose_job'   => 'انتخاب شغل',
     'job'   => 'شغل',
-    'amount'   => 'مقدار',
+    'amount'   => 'تعداد',
     'post'   => 'سمت',
     'comment'   => 'توضیحات',
 

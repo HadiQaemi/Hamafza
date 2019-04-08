@@ -14,6 +14,7 @@ use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_worktime;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_wages;
 use App\Models\Hamahang\OrgChart\org_charts_items_missions;
+use App\Models\Hamahang\OrgChart\org_osi;
 use App\Models\Hamahang\OrgChart\org_staff;
 use App\Models\Hamahang\OrgChart\org_staff_edu;
 use App\Models\Hamahang\OrgChart\org_staff_jobs;
@@ -663,6 +664,9 @@ class OrgChartController extends Controller
         $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at');
 
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+            ->addColumn('enId', function ($data) {
+                return enCode($data->id);
+            })
             ->addColumn('user', function ($data) {
                 return $data->user->Name . ' ' . $data->user->Family;
             })
@@ -1618,7 +1622,7 @@ class OrgChartController extends Controller
         $validator = Validator::make(Request::all(),
             [
                 'unit_id' => 'required|numeric',
-                'job' => 'required|numeric',
+                'job' => 'required',
                 'amount' => 'required|numeric|min:0|max:100',
                 'comment' => ['regex:/^(([0-9]|[\x{600}-\x{6FF}\x{200c}])*\s*)*$/u']
             ],
@@ -1633,10 +1637,21 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
-            $job = onet_job::find(Request::get('job'));
+            $job_id = Request::get('job');
+            if (substr($job_id, 0, 8) == 'exist_in')
+            {
+                $job_id = (int)substr($job_id, 8);
+            }else{
+                $new_job = onet_job::create([
+                    'title' => $job_id
+                ]);
+                $job_id = (int)$new_job->id;
+            }
+
+            $job = onet_job::find($job_id);
             $org_chart_items_jobs = new org_chart_items_jobs();
             $org_chart_items_jobs->chart_item_id = Request::get('unit_id');
-            $org_chart_items_jobs->job_id = Request::get('job');
+            $org_chart_items_jobs->job_id = $job_id;
             $org_chart_items_jobs->amount = Request::get('amount');
             $org_chart_items_jobs->description = Request::get('comment');
             if ($org_chart_items_jobs->save()) {
@@ -1782,12 +1797,23 @@ class OrgChartController extends Controller
                 if ($chart_item->save()) {
                     $result['success'] = true;
                     org_charts_items_missions::where('chart_item_id', '=', $chart_item->id)->delete();
-                    foreach (Request::get('unit_missions') as $missions) {
-                        org_charts_items_missions::create([
-                            'uid' => auth()->id(),
-                            'chart_item_id' => $chart_item->id,
-                            'mission_id' => $missions
-                        ]);
+                    if(Request::exists('unit_missions')){
+                        foreach (Request::get('unit_missions') as $missions) {
+                            if (substr($missions, 0, 8) == 'exist_in')
+                            {
+                                $missions = (int)substr($missions, 8);
+                            }else{
+                                $new_missions = org_osi::create([
+                                    'title' => $missions
+                                ]);
+                                $missions = (int)$new_missions->id;
+                            }
+                            org_charts_items_missions::create([
+                                'uid' => auth()->id(),
+                                'chart_item_id' => $chart_item->id,
+                                'mission_id' => $missions
+                            ]);
+                        }
                     }
                 } else $result['success'] = false;
             }

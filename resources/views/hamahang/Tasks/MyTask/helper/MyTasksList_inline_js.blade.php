@@ -206,7 +206,9 @@
                         //         sub_title = sub_title + ' ...';
                         //     }
                         // });
-                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip'  data-html='true' title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'>" + full.title + "</a>";
+                        return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip'  data-html='true' " +
+                            // "title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'" +
+                            ">" + full.title + "</a>";
                     },
                     "width": "50%"
                 },

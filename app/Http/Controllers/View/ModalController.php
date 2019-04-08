@@ -31,6 +31,7 @@ use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff;
 use App\Models\Hamahang\OrgChart\org_organs;
 use App\Models\Hamahang\PaymentGatewayRawLogs;
 use App\Models\Hamahang\ProvinceCity\City;
@@ -1030,6 +1031,19 @@ class ModalController extends Controller
         ]);
     }
 
+    public function ViewStaffForm(){
+        $res = $this->getParams(['sid']);
+        $sid = deCode($res['sid']);
+        $staff = org_charts_items_jobs_posts_staff::find($sid)->with('user');
+        dd($staff);
+        return json_encode([
+            'header' => trans('org_chart.assign_new_staff'),
+            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_assign_new_staff_footer')
+                ->render()
+        ]);
+    }
     public function ViewTaskForm()
     {
         $res = $this->getParams(['tid','pid','aid']);
@@ -3121,7 +3135,6 @@ class ModalController extends Controller
         $parent_id = 0;
         $parent_title = '';
         $item = org_chart_items::with('chart', 'jobs')->where('id', $request->item_id)->first();
-
         if (isset($item->parent_id) && ($item->parent_id != 0))
         {
             $item_parent_title = org_chart_items::find($item->parent_id);

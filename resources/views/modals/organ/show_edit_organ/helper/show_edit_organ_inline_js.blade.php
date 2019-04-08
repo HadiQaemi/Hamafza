@@ -297,10 +297,14 @@
         });
     }
     $(".select2_auto_complete_onet_jobs").select2({
-        minimumInputLength: 3,
         dir: "rtl",
         width: "100%",
-        tags: false,
+        tags: true,
+        minimumInputLength: 2,
+        insertTag: function(data, tag){
+            tag.text = 'جدید: ' + tag.text;
+            data.push(tag);
+        },
         ajax: {
             url: "{{route('auto_complete.onet_jobs')}}",
             dataType: "json",
@@ -327,7 +331,11 @@
         minimumInputLength: 3,
         dir: "rtl",
         width: "100%",
-        tags: false,
+        tags: true,
+        insertTag: function(data, tag){
+            tag.text = 'جدید: ' + tag.text;
+            data.push(tag);
+        },
         ajax: {
             url: "{{route('auto_complete.missions_job')}}",
             dataType: "json",

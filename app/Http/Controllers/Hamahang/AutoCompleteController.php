@@ -173,6 +173,10 @@ class AutoCompleteController extends Controller
                 ->get();
         }
         $data = array('results' => $data);
+        foreach ($data['results'] as $job)
+        {
+            $job->id = ($request->exists('exist_in') ? $request->exist_in : 'exist_in') . $job->id;
+        }
         return response()->json($data);
     }
 
@@ -193,6 +197,11 @@ class AutoCompleteController extends Controller
                 ->get();
         }
         $data = array('results' => $data);
+        foreach ($data['results'] as $mission)
+        {
+            $mission->id = ($request->exists('exist_in') ? $request->exist_in : 'exist_in') . $mission->id;
+        }
+
         return response()->json($data);
     }
 

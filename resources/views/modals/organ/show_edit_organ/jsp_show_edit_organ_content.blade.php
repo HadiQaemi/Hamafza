@@ -2,6 +2,9 @@
     table.dataTable{
         width:100% !important;
     }
+    .item_parent_id .select2.select2-container{
+        width: 100% !important;
+    }
 </style>
 <div class="row">
     <div class="base_tabs" style="padding: 15px;">
@@ -31,20 +34,18 @@
                         </div>
                         <div class="form-group col-xs-12 margin-top-20 noRightPadding noLeftPadding">
                             <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
-                            <div class="col-xs-11 noRightPadding noLeftPadding">
+                            <div class="col-xs-11 noRightPadding noLeftPadding item_parent_id">
                                 <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
                                     <option value="{{$parent[0]}}">{{$parent[1]}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-xs-12 noRightPadding noLeftPadding">
-                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.missions')}}</label></div>
-                            <div class="col-xs-10 noRightPadding noLeftPadding">
-                                <select id="mission" name="mission" class="form-control select2_auto_complete_missions line-height-35 height-35">
-                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
-                                </select>
+                            <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="unit_missions">{{trans('org_chart.missions')}}</label></div>
+                            <div class="col-xs-11 noRightPadding noLeftPadding">
+                                <select id="unit_missions" name="unit_missions[]" class="form-control select2_auto_complete_missions line-height-35 height-35" multiple="multiple"></select>
                             </div>
-                            <div class="col-xs-1"><a class="btn btn-primary fa fa-plus" id="add_mission"></a></div>
+                            {{--<div class="col-xs-1"><a class="btn btn-primary fa fa-plus" id="add_mission"></a></div>--}}
                         </div>
                         <div class="form-group col-xs-12" id="mission_list"></div>
                     </div>
@@ -60,13 +61,13 @@
                                 <select name="job" id="job" class="form-control select2_auto_complete_onet_jobs line-height-35 height-35"></select>
                             </div>
                             <div class="pull-right margin-right-10 line-height-35 height-35 ">
-                                <label for="item_title" class="pull-right">{{trans('app.amount')}}</label>
+                                <label for="item_title" class="pull-right">سمت</label>
                             </div>
                             <div class="pull-right">
-                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="سمت"/>
+                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="{{trans('app.amount')}}"/>
                             </div>
                             <div class="pull-left line-height-35">
-                                <a class="btn btn-primary fa fa-plus add_job_post"></a>
+                                <a class="fa fa-plus pointer add_job_post"></a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +87,7 @@
                         </thead>
                         @foreach($jobs as $job)
                             <tr>
-                                <td class="col-xs-7 border-bottom">{{$job->Job->title}}</td>
+                                <td class="col-xs-7 border-bottom">{{isset($job->job->title) ? $job->job->title : ''}}</td>
                                 <td class="col-xs-4 border-bottom">{{$job->amount}}</td>
                                 <td class="col-xs-1 border-bottom"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer jsPanelsEditJob" ref="{{$job->id}}"  href="{!! route('modals.add_new_post') !!}"></i></td>
                             </tr>
@@ -110,7 +111,7 @@
                     @foreach($jobs as $job)
                         @foreach($job->posts as $post)
                             <tr>
-                                <td class="col-xs-4">{{$job->job->title}}</td>
+                                <td class="col-xs-4">{{isset($job->job->title) ? $job->job->title : ''}}</td>
                                 <td class="col-xs-3">{{isset($post->users[0]) ? $post->users[0]->user->Name.' '.$post->users[0]->user->Family : ''}}</td>
                                 <td class="col-xs-2">{{$post->extra_title}}</td>
                                 <td class="col-xs-2">{{$post->location}}</td>

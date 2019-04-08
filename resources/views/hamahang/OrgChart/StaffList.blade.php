@@ -98,7 +98,8 @@
                             var description=full.description;
 
                             window.RowData[id] = full;
-                            return "<i class='fa fa-remove pointer'></i><i class='fa fa-edit pointer margin-right-10'></i>"
+                            return "<i class='fa fa-remove pointer'></i>" +
+                                "<a class='cursor-pointer jsPanels white-space margin-right-10' href='/modals/ViewStaffForm?sid="+full.enId+"'><i class='fa fa-edit pointer'></i></a>"
                         }
                     }
                 ]
