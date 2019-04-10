@@ -5,24 +5,18 @@ namespace App\Models\Hamahang;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Help2 extends Model
+class Help2SeeAlso extends Model
 {
 
     use softDeletes;
 
-//    protected $table = 'hamahang_helps_new';
-    protected $table = 'hamahang_helps';
+    protected $table = 'hamahang_help_see_alsos';
 
-    protected $fillable =
-    [
-        'title',
-        'created_by',
-        'content',
-    ];
+    protected $guarded =[];
 
-    public function HelpBlocks()
+    public function Help()
     {
-        return $this->hasMany('App\Models\Hamahang\HelpBlock', 'help_id', 'id');
+        return $this->belongsTo('App\Models\Hamahang\Help', 'help_2_id', 'id');
     }
 
     public function getUsagesAttribute()
@@ -32,8 +26,7 @@ class Help2 extends Model
 
     public function SeeAlsos()
     {
-//        return $this->BelongsToMany('App\Models\Hamahang\Help', 'hamahang_help_see_alsos', 'id', 'help_1_id');
-        return $this->hasMany('App\Models\Hamahang\Help2SeeAlso', 'help_1_id', 'id')->whereNull('deleted_at');
+        return $this->BelongsToMany('App\Models\Hamahang\Help', 'hamahang_help_see_alsos', 'help_1_id', 'help_2_id');
     }
 
     public function getBlocksCountAttribute()

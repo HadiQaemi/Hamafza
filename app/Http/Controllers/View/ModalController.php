@@ -3351,9 +3351,6 @@ class ModalController extends Controller
         {
             $MenuItem = MenuItem::find(deCode($request->permitted_users));
         }
-//        dd();
-//        print_r($MenuItem);
-//        die();
         return json_encode([
             'header' => 'فهرست جدید',
             'content' => view('hamahang.Menus.helper.Index.modals.modal_add_edit_menu_items')
@@ -3371,7 +3368,12 @@ class ModalController extends Controller
     public function help_view(Request $request)
     {
         $id = deCode($request->input('id'));
-        $help = Help2::find($id);
+        $help = Help2::whereNull('hamahang_helps.deleted_at')
+            ->where('hamahang_helps.id', '=', $id)
+            ->with('SeeAlsos', 'HelpBlocks')
+            ->first();
+//        dd($help);
+//            ->get();
         return json_encode
         ([
             'header' => trans('محتوای مرتبط'),

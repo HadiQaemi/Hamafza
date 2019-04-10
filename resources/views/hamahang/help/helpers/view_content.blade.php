@@ -15,10 +15,39 @@
     </ul>
     <div class="tab-content help-view">
         <div class="tab-pane active tab-view padding-10" id="tab_t1">
-            {!! $items->content !!}
+            @foreach($items->HelpBlocks as $block)
+                {!! $block->content !!}
+            @endforeach
         </div>
         <div class="tab-pane tab-view padding-10" id="tab_t2">
-            tab_t2
+            <div class="col-xs-12">
+                <div class="col-xs-11">
+                    <select id="see_also_id" class="select2_auto_complete_see_also " name="see_also_id[]"
+                            data-placeholder="{{trans('help.add_see_also')}}"></select>
+                    <input type="hidden" id="help_id" value="{{$id}}">
+                </div>
+                <div class="col-xs-1 line-height-35">
+                    <a class="fa fa-plus pointer" id="add_see_also_help"></a>
+                </div>
+            </div>
+            <div class="col-xs-12 margin-top-20">
+                <div class="row">
+                    <div class="col-xs-1">ردیف</div>
+                    <div class="col-xs-10">عنوان</div>
+                    <div class="col-xs-1">عملیات</div>
+                </div>
+                <div id="see_also_list">
+                    @foreach($items->SeeAlsos as $k=>$also)
+                        <div class="row margin-top-10">
+                            <div class="col-xs-1">{{$k+1}}</div>
+                            <div class="col-xs-10">{{$also->Help->title}}</div>
+                            <div class="col-xs-1">
+                                <i class="fa fa-remove pointer remove_see_also" also="{{enCode($also->id)}}"></i>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         <div class="tab-pane tab-view padding-10" id="tab_t3">
             {!! $id !!}
@@ -26,11 +55,12 @@
         <div class="tab-pane tab-view padding-10" id="tab_t4">
             <div class="col-xs-12">
                 <div class="col-xs-11">
-                    <select id="permission_id" class="select2_auto_complete_permission " name="permission[]" data-placeholder="{{trans('help.select')}}"></select>
+                    <select id="permission_id" class="select2_auto_complete_permission " name="permission[]"
+                            data-placeholder="{{trans('help.select')}}"></select>
                     <input type="hidden" id="help_id" value="{{$id}}">
                 </div>
                 <div class="col-xs-1 line-height-35">
-                   <a class="fa fa-plus pointer" id="add_help_permission"></a>
+                    <a class="fa fa-plus pointer" id="add_help_permission"></a>
                 </div>
             </div>
 

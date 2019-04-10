@@ -1,13 +1,13 @@
 <script>
     $(document).ready(function ()
     {
-        $(".select2_auto_complete_permission").select2({
+        $(".select2_auto_complete_see_also").select2({
             minimumInputLength: 3,
             dir: "rtl",
             width: "100%",
             tags: false,
             ajax: {
-                url: "{{route('auto_complete.permissions')}}",
+                url: "{{route('auto_complete.help')}}",
                 dataType: "json",
                 type: "POST",
                 quietMillis: 150,
@@ -31,6 +31,36 @@
 
         $('.tab_t4').on('click', function() {
             refreshDraftFiles($('#help_id').val());
+        });
+        $('#add_see_also_help').on('click', function() {
+            $.ajax({
+                type: "POST",
+                url: '{{ URL::route('hamahang.help.add_see_also_help') }}',
+                dataType: "json",
+                data: {see_also_id: $('#see_also_id').val(), help_id: $('#help_id').val()},
+                success: function (data) {
+                    if (data.success == false){
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        window.permissions_help_grid.ajax.reload();
+                    }
+                }
+            });
+        });
+        $('.remove_see_also').on('click', function() {
+            $.ajax({
+                type: "POST",
+                url: '{{ URL::route('hamahang.help.remove_see_also_help') }}',
+                dataType: "json",
+                data: {see_also_id: $('#see_also_id').val(), help_id: $('#help_id').val()},
+                success: function (data) {
+                    if (data.success == false){
+                        messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
+                    }else{
+                        $(this).parent().parent().remove();
+                    }
+                }
+            });
         });
         $('#add_help_permission').on('click', function() {
             $.ajax({
