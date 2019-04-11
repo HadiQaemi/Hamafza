@@ -661,14 +661,13 @@ class OrgChartController extends Controller
 
     public function fetchStaff()
     {
-        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at');
-
-        return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at')->with('staff');
+        $staff = \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('enId', function ($data) {
                 return enCode($data->id);
             })
             ->addColumn('user', function ($data) {
-                return $data->user->Name . ' ' . $data->user->Family;
+                return $data->staff->first_name . ' ' . $data->staff->last_name;
             })
             ->addColumn('post', function ($data) {
                 return $data->post->extra_title;
@@ -686,6 +685,7 @@ class OrgChartController extends Controller
                 return $data->post->job->item->chart->title;
             })
             ->make(true);
+        return $staff;
     }
 
     public function FetchPostList()
@@ -1763,6 +1763,122 @@ class OrgChartController extends Controller
             if ($chart_item_post->save())
                 $result['success'] = true;
             else $result['success'] = false;
+        }
+        return $result;
+    }
+
+    public function delete_item_job()
+    {
+
+        $validator = Validator::make(Request::all(),
+            [
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs,id'
+            ],
+            [],
+            [
+                'ref_id' => 'شغل ',
+            ]
+        );
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $job = org_charts_items_jobs::find(Request::get('ref_id'));
+            $job->posts()->delete();
+            if ($job->delete())
+                $result['success'] = true;
+            else $result['success'] = false;
+        }
+        return $result;
+    }
+
+    public function delete_item_job_post()
+    {
+
+        $validator = Validator::make(Request::all(),
+            [
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts,id'
+            ],
+            [],
+            [
+                'ref_id' => 'سمت ',
+            ]
+        );
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $post = org_charts_items_jobs_posts::find(Request::get('ref_id'));
+            $post->adventages()->delete();
+            $post->accesses()->delete();
+            $post->alternate_users()->delete();
+            $post->users()->delete();
+            $post->worktime()->delete();
+            if ($post->delete())
+                $result['success'] = true;
+            else $result['success'] = false;
+        }
+        return $result;
+    }
+
+    public function delete_staff_position()
+    {
+
+        $validator = Validator::make(Request::all(),
+            [
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts,id'
+            ],
+            [],
+            [
+                'ref_id' => 'سمت ',
+            ]
+        );
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+//            $post = org_charts_items_jobs_posts::find(Request::get('ref_id'));
+//            $post->adventages()->delete();
+//            $post->accesses()->delete();
+//            $post->alternate_users()->delete();
+//            $post->users()->delete();
+//            $post->worktime()->delete();
+//            if ($post->delete())
+                $result['success'] = true;
+//            else $result['success'] = false;
+        }
+        return $result;
+    }
+
+    public function delete_staff()
+    {
+
+        $validator = Validator::make(Request::all(),
+            [
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts,id'
+            ],
+            [],
+            [
+                'ref_id' => 'سمت ',
+            ]
+        );
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+//            $post = org_charts_items_jobs_posts::find(Request::get('ref_id'));
+//            $post->adventages()->delete();
+//            $post->accesses()->delete();
+//            $post->alternate_users()->delete();
+//            $post->users()->delete();
+//            $post->worktime()->delete();
+//            if ($post->delete())
+                $result['success'] = true;
+//            else $result['success'] = false;
         }
         return $result;
     }

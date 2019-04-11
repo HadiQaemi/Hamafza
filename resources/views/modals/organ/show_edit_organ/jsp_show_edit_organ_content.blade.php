@@ -89,7 +89,10 @@
                             <tr>
                                 <td class="col-xs-7 border-bottom">{{isset($job->job->title) ? $job->job->title : ''}}</td>
                                 <td class="col-xs-4 border-bottom">{{$job->amount}}</td>
-                                <td class="col-xs-1 border-bottom"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" ></i><i class="fa fa-edit pointer jsPanelsEditJob" ref="{{$job->id}}"  href="{!! route('modals.add_new_post') !!}"></i></td>
+                                <td class="col-xs-1 border-bottom">
+                                    <i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$job->id}}" add="{{ route('hamahang.org_chart.delete_item_job') }}"></i>
+                                    <i class="fa fa-edit pointer jsPanelsEditJob" ref="{{$job->id}}"  href="{!! route('modals.add_new_post') !!}"></i>
+                                </td>
                             </tr>
                         @endforeach
                     </table>
@@ -115,7 +118,10 @@
                                 <td class="col-xs-3">{{isset($post->users[0]) ? $post->users[0]->user->Name.' '.$post->users[0]->user->Family : ''}}</td>
                                 <td class="col-xs-2">{{$post->extra_title}}</td>
                                 <td class="col-xs-2">{{$post->location}}</td>
-                                <td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="{{$post->id}}" ></i><i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="{{enCode($post->id)}}" ></i></td>
+                                <td class="col-xs-1">
+                                    <i class="fa fa-remove margin-left-10 pointer remove_job_post" ref="{{$post->id}}" add="{{ route('hamahang.org_chart.delete_item_job_post') }}"></i>
+                                    <i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="{{enCode($post->id)}}" ></i>
+                                </td>
                             </tr>
                         @endforeach
                     @endforeach

@@ -93,12 +93,10 @@
                         "bSortable": false,
                         "mRender": function (data, type, full) {
                             var id = full.id;
-                            var oid = full.oid;
-                            var title = full.title;
-                            var description=full.description;
 
                             window.RowData[id] = full;
-                            return "<i class='fa fa-remove pointer'></i>" +
+                            return "<i class='fa fa-trash pointer remove_staff'  ref=" + id + " add='{{ route('hamahang.org_chart.delete_staff') }}'></i>" +
+                                "<i class='fa fa-remove pointer margin-right-10 remove_staff_position' ref=" + id + " add='{{ route('hamahang.org_chart.delete_staff_position') }}'></i>" +
                                 "<a class='cursor-pointer jsPanels white-space margin-right-10' href='/modals/ViewStaffForm?sid="+full.enId+"'><i class='fa fa-edit pointer'></i></a>"
                         }
                     }

@@ -106,8 +106,119 @@ $(document).on("click", "#select_from_system_user", function () {
     });
 });
 
+$(document).on("click", ".remove_staff_position", function () {
+    $this = $(this);
+    confirmModal({
+        title: 'حذف شغل کارمند',
+        message: 'آیا از حذف شغل کارمند مطمئن هستید؟',
+        onConfirm: function () {
+            $.ajax({
+                type: "POST",
+                url: $this.attr('add'),
+                dataType: "json",
+                data: {ref_id: $this.attr('ref')},
+                success: function (result) {
+                    if (result.success == true) {
+                        $this.parent().parent().remove();
+                    }
+                    else {
+                        messageBox('error', '', result.error, {'id': 'alert_insert'}, 'hide_modal');
+                    }
+                    setTimeout(function () {
+                        $("#alert_insert").html('')
+                    }, 4000);
+                }
+            });
+
+        },
+        afterConfirm: 'close'
+    });
+});
+
+$(document).on("click", ".remove_staff", function () {
+    $this = $(this);
+    confirmModal({
+        title: 'حذف شغل',
+        message: 'آیا از حذف کارمند مطمئن هستید؟',
+        onConfirm: function () {
+            $.ajax({
+                type: "POST",
+                url: $this.attr('add'),
+                dataType: "json",
+                data: {ref_id: $this.attr('ref')},
+                success: function (result) {
+                    if (result.success == true) {
+                        $this.parent().parent().remove();
+                    }
+                    else {
+                        messageBox('error', '', result.error, {'id': 'alert_insert'}, 'hide_modal');
+                    }
+                    setTimeout(function () {
+                        $("#alert_insert").html('')
+                    }, 4000);
+                }
+            });
+
+        },
+        afterConfirm: 'close'
+    });
+});
 $(document).on("click", ".remove_job", function () {
-    $(this).parent().parent().remove();
+    $this = $(this);
+    confirmModal({
+        title: 'حذف شغل',
+        message: 'آیا از حذف شغل مطمئن هستید؟',
+        onConfirm: function () {
+            $.ajax({
+                type: "POST",
+                url: $this.attr('add'),
+                dataType: "json",
+                data: {ref_id: $this.attr('ref')},
+                success: function (result) {
+                    if (result.success == true) {
+                        $this.parent().parent().remove();
+                    }
+                    else {
+                        messageBox('error', '', result.error, {'id': 'alert_insert'}, 'hide_modal');
+                    }
+                    setTimeout(function () {
+                        $("#alert_insert").html('')
+                    }, 4000);
+                }
+            });
+
+        },
+        afterConfirm: 'close'
+    });
+});
+
+$(document).on("click", ".remove_job_post", function () {
+    $this = $(this);
+    confirmModal({
+        title: 'حذف سمت',
+        message: 'آیا از حذف سمت مطمئن هستید؟',
+        onConfirm: function () {
+            $.ajax({
+                type: "POST",
+                url: $this.attr('add'),
+                dataType: "json",
+                data: {ref_id: $this.attr('ref')},
+                success: function (result) {
+                    if (result.success == true) {
+                        $this.parent().parent().remove();
+                    }
+                    else {
+                        messageBox('error', '', result.error, {'id': 'alert_insert'}, 'hide_modal');
+                    }
+                    setTimeout(function () {
+                        $("#alert_insert").html('')
+                    }, 4000);
+                }
+            });
+
+        },
+        afterConfirm: 'close'
+    });
 });
 
 $(document).on("click", ".staff_remove_edu", function () {
@@ -427,7 +538,7 @@ $(document).ready(function () {
             var str = $('#pcol_32').html();
             $('#mySidenav00').html(str.replace("Fehresrt","Fehresrt-new").replace("list-search","list-search-new"));
         }else{
-            
+
             $('.first-fix-box').toggleClass('ful-fix');
             if ($(".first-fix-box .ful-scrn span").hasClass("icon-nim-safhe"))
             {

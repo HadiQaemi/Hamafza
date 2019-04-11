@@ -20,7 +20,7 @@
                 <div id="OrgList">
                     <div class="row-fluid">
                         <div class="col-lg-12">
-                            <table id="StaffListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
+                            <table id="JobListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
                                     <th>{{ trans('org_chart.job') }}</th>
@@ -56,7 +56,7 @@
             LangJson_DataTables = window.LangJson_DataTables;
             LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
             LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
-            window.table_organs_grid = $('#StaffListGrid').DataTable({
+            window.table_organs_grid = $('#JobListGrid').DataTable({
                 "dom": window.CommonDom_DataTables,
                 "serverSide": false,
                 "ajax": {
@@ -87,7 +87,7 @@
                             var description=full.description;
 
                             window.RowData[id] = full;
-                            return "<i class='fa fa-remove pointer'></i><i class='fa fa-edit pointer margin-right-10'></i>"
+                            return "<i class='fa fa-remove pointer remove_job' ref=" + id + " add='{{ route('hamahang.org_chart.delete_item_job') }}'></i><i class='fa fa-edit pointer margin-right-10'></i>"
                         }
                     }
                 ]

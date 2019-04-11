@@ -386,9 +386,15 @@
                 data: $('#add_job_post_frm').serialize(),
                 success: function (result) {
                     if (result.success == true) {
-                        $('#list_job_post').append('<tr><td class="col-xs-7">'+$('#select2-job-container').html()+'</td><td class="col-xs-4">'+$('#amount').val()+'</td><td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" rel="'+$('#job').val()+'" ref="'+result.job_item+'" ></i><i class="fa fa-edit pointer jsPanelsEditJob" href="{!! route('modals.add_new_post') !!}" rel="'+$('#amount').val()+'" ref="'+result.job_item+'" ></i></td></tr>');
+                        $('#list_job_post').append('<tr><td class="col-xs-7">'+$('#select2-job-container').html()+'</td><td class="col-xs-4">'+$('#amount').val()+'</td><td class="col-xs-1">' +
+                            '<i class="fa fa-remove margin-left-10 pointer remove_job" rel="'+$('#job').val()+'" ref="'+result.job_item+'" ></i>' +
+                            '<i class="fa fa-edit pointer jsPanelsEditJob" href="{!! route('modals.add_new_post') !!}" rel="'+$('#amount').val()+'" ref="'+result.job_item+'" ></i>' +
+                            '</td></tr>');
                         $.each(result.semats, function (index, semat) {
-                            $('#list_positions').append('<tr><td class="col-xs-4">' + semat.title + '</td><td class="col-xs-3"></td><td class="col-xs-2"></td><td class="col-xs-2"></td><td class="col-xs-1"><i class="fa fa-remove margin-left-10 pointer remove_job" ref="'+semat.id+'" ></i><i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="'+semat.jobId+'" ></i></td></tr>');
+                            $('#list_positions').append('<tr><td class="col-xs-4">' + semat.title + '</td><td class="col-xs-3"></td><td class="col-xs-2"></td><td class="col-xs-2"></td><td class="col-xs-1">' +
+                                '<i class="fa fa-remove margin-left-10 pointer remove_job" ref="'+semat.id+'" add="{{ route('hamahang.org_chart.delete_item_job') }}" ></i>' +
+                                '<i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="'+semat.jobId+'" ></i>' +
+                                '</td></tr>');
                         });
                     }
                     else {
