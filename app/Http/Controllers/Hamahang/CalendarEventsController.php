@@ -473,11 +473,11 @@ class CalendarEventsController extends Controller
             'hstartdate' => 'required',
             'henddate' => 'required',
 
-            'hagenda' => 'required|string',
-//            'hevent_id' => 'required|integer',
-            'hlocation' => 'required',
-            'session_voting_users' => 'required_without:session_notvoting_users',
-            'session_notvoting_users' => 'required_without:session_voting_users',
+//            'hagenda' => 'required|string',
+////            'hevent_id' => 'required|integer',
+//            'hlocation' => 'required',
+//            'session_voting_users' => 'required_without:session_notvoting_users',
+//            'session_notvoting_users' => 'required_without:session_voting_users',
         ]);
         //DB::enableQueryLog();
         if ($validator->fails())
