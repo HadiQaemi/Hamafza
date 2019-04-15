@@ -1034,11 +1034,10 @@ class ModalController extends Controller
     public function ViewStaffForm(){
         $res = $this->getParams(['sid']);
         $sid = deCode($res['sid']);
-        $staff = org_charts_items_jobs_posts_staff::find($sid)->with('user');
-        dd($staff);
+        $staff = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('staff', 'staff.edus', 'staff.jobs')->first();
         return json_encode([
             'header' => trans('org_chart.assign_new_staff'),
-            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')
+            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')->with('staff', $staff)
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_assign_new_staff_footer')
                 ->render()

@@ -21,7 +21,7 @@ class org_charts_items_jobs_posts_staff extends Model
 
     public function staff()
     {
-        return $this->belongsTo('App\Models\Hamahang\OrgChart\org_staff','user_id','id');
+        return $this->belongsTo('App\Models\Hamahang\OrgChart\org_staff','staff_id','id');
     }
 
     public function post()

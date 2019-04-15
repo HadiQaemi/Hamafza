@@ -90,18 +90,19 @@ $(document).on("click", "#staff_add_edu", function () {
 
 $(document).on("click", "#select_from_system_user", function () {
     $.ajax({
+        data: {user_id: $('#system_user').val()},
         type: "POST",
         url: $(this).attr('rel'),
         dataType: "json",
         success: function (result) {
             if (result.success == true) {
-                $('.jsPanel-btn-close').click();
-                window.table_organs_grid.ajax.reload();
+                $('#staff_name').val(result.user.Name);
+                $('#staff_last_name').val(result.user.Family);
+                $('#staff_last_name').val(result.user.Family);
             }
             else {
                 messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
             }
-            setTimeout(function(){$("#alert_insert").html('') }, 4000);
         }
     });
 });
@@ -138,7 +139,7 @@ $(document).on("click", ".remove_staff_position", function () {
 $(document).on("click", ".remove_staff", function () {
     $this = $(this);
     confirmModal({
-        title: 'حذف شغل',
+        title: 'حذف کارمند',
         message: 'آیا از حذف کارمند مطمئن هستید؟',
         onConfirm: function () {
             $.ajax({

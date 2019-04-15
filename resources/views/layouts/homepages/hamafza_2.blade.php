@@ -62,7 +62,7 @@
         }
         #homepage_login_form input{
             font-size: 15px !important;
-            height: 35px !important;
+            height: 30px !important;
             direction: rtl !important;
         }
         #homepage_login_form button{

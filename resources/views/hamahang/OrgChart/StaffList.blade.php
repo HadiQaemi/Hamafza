@@ -83,7 +83,7 @@
                 "language": LangJson_DataTables,
                 "processing": false,
                 columns: [
-                    {"data": "user"},
+                    {"data": "staff"},
                     {"data": "org"},
                     {"data": "item"},
                     {"data": "job"},

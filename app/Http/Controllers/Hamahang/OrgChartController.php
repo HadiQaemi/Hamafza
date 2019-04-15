@@ -661,12 +661,12 @@ class OrgChartController extends Controller
 
     public function fetchStaff()
     {
-        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at')->with('staff');
+        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at')->with('staff', 'post');
         $staff = \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('enId', function ($data) {
                 return enCode($data->id);
             })
-            ->addColumn('user', function ($data) {
+            ->addColumn('staff', function ($data) {
                 return $data->staff->first_name . ' ' . $data->staff->last_name;
             })
             ->addColumn('post', function ($data) {
@@ -685,6 +685,7 @@ class OrgChartController extends Controller
                 return $data->post->job->item->chart->title;
             })
             ->make(true);
+
         return $staff;
     }
 
@@ -1296,26 +1297,37 @@ class OrgChartController extends Controller
                 'is_man' => Request::get('gender')
             ]);
             if ($staff->save()) {
-                foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
-                    org_staff_edu::create([
-                        'uid' => auth()->id(),
-                        'staff_id' => $staff->id,
-                        'staff_edu_uni' => $staff_edu_uni,
-                        'staff_edu_grade' => Request::get('staff_edu_grade')[$k],
-                        'staff_edu_major' => Request::get('staff_edu_major')[$k],
-                        'staff_edu_date_grade' => Request::get('staff_edu_date_grade')[$k]
-                    ]);
+                if (Request::exists('staff_edu_uni'))
+                {
+                    foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
+                        org_staff_edu::create([
+                            'uid' => auth()->id(),
+                            'staff_id' => $staff->id,
+                            'staff_edu_uni' => $staff_edu_uni,
+                            'staff_edu_grade' => Request::get('staff_edu_grade')[$k],
+                            'staff_edu_major' => Request::get('staff_edu_major')[$k],
+                            'staff_edu_date_grade' => Request::get('staff_edu_date_grade')[$k]
+                        ]);
+                    }
                 }
-                foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
-                    org_staff_jobs::create([
-                        'uid' => auth()->id(),
-                        'staff_id' => $staff->id,
-                        'staff_job_corp' => $staff_job_corp,
-                        'staff_job_pos' => Request::get('staff_job_pos')[$k],
-                        'staff_job_begin' => Request::get('staff_job_begin')[$k],
-                        'staff_job_end' => Request::get('staff_job_end')[$k]
-                    ]);
+                if (Request::exists('staff_job_corp'))
+                {
+                    foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
+                        org_staff_jobs::create([
+                            'uid' => auth()->id(),
+                            'staff_id' => $staff->id,
+                            'staff_job_corp' => $staff_job_corp,
+                            'staff_job_pos' => Request::get('staff_job_pos')[$k],
+                            'staff_job_begin' => Request::get('staff_job_begin')[$k],
+                            'staff_job_end' => Request::get('staff_job_end')[$k]
+                        ]);
+                    }
                 }
+                org_charts_items_jobs_posts_staff::create([
+                    'uid' => auth()->id(),
+                    'staff_id' => $staff->id,
+                    'chart_item_post_job_id' => Request::get('chart_item_job_position')
+                ]);
             }
             $result['success'] = true;
         }
@@ -1825,14 +1837,13 @@ class OrgChartController extends Controller
 
     public function delete_staff_position()
     {
-
         $validator = Validator::make(Request::all(),
             [
-                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts,id'
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts_staff,id'
             ],
             [],
             [
-                'ref_id' => 'سمت ',
+                'ref_id' => 'شغل ',
             ]
         );
         if ($validator->fails()) {
@@ -1840,29 +1851,46 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
-//            $post = org_charts_items_jobs_posts::find(Request::get('ref_id'));
-//            $post->adventages()->delete();
-//            $post->accesses()->delete();
-//            $post->alternate_users()->delete();
-//            $post->users()->delete();
-//            $post->worktime()->delete();
-//            if ($post->delete())
+            $staff_post = org_charts_items_jobs_posts_staff::find(Request::get('ref_id'));
+            if ($staff_post->delete())
                 $result['success'] = true;
-//            else $result['success'] = false;
+            else $result['success'] = false;
         }
         return $result;
     }
 
-    public function delete_staff()
+    public function get_user_info()
     {
-
         $validator = Validator::make(Request::all(),
             [
-                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts,id'
+                'user_id' => 'required|exists:user,id'
             ],
             [],
             [
-                'ref_id' => 'سمت ',
+                'user_id' => 'کاربر ',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $user = User::find(Request::get('user_id'));
+            $result['success'] = true;
+            $result['user'] = $user;
+        }
+        return $result;
+    }
+    public function delete_staff()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts_staff,id'
+            ],
+            [],
+            [
+                'ref_id' => 'شغل ',
             ]
         );
         if ($validator->fails()) {
@@ -1870,15 +1898,15 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
-//            $post = org_charts_items_jobs_posts::find(Request::get('ref_id'));
-//            $post->adventages()->delete();
-//            $post->accesses()->delete();
-//            $post->alternate_users()->delete();
-//            $post->users()->delete();
-//            $post->worktime()->delete();
-//            if ($post->delete())
+            $staff_post = org_charts_items_jobs_posts_staff::find(Request::get('ref_id'));
+            $staff = org_staff::find($staff_post->staff_id);
+            $staff->edus()->delete();
+            $staff->jobs()->delete();
+            $staff->delete();
+
+            if ($staff_post->delete())
                 $result['success'] = true;
-//            else $result['success'] = false;
+            else $result['success'] = false;
         }
         return $result;
     }

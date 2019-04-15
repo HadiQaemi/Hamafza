@@ -35,6 +35,11 @@
         <div class="tab-content new-task-form">
             <div class="tab-pane active tab-view" id="tab_t1">
                 <div class="row">
+                    {{--<pre>--}}
+                        {{--{{print_r($staff)}}--}}
+                        {{--<hr/>--}}
+                        {{--{{print_r($staff->staff)}}--}}
+                    {{--</pre>--}}
                     <div class="base_tabs">
                         <div class="row-fluid">
                             <div class="col-xs-12 form-group noLeftMargin noRightMargin noLeftPadding noLeftPadding">
@@ -46,7 +51,7 @@
                                         <select id="system_user" class="select2_auto_complete_system_user col-xs-12" data-placeholder="انتخاب از کاربران سیستم"></select>
                                     </div>
                                     <div class="col-xs-1 line-height-35">
-                                        <a class="fa fa-check pointer" id="select_from_system_user" rel="{{route('hamahang.org_chart.insert_staff')}}"></a>
+                                        <a class="fa fa-check pointer" id="select_from_system_user" rel="{{route('hamahang.org_chart.get_user_info')}}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +61,7 @@
                                         <label>نام</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_name" id="staff_name" class="form-control" placeholder="نام"/>
+                                        <input name="staff_name" id="staff_name" class="form-control" placeholder="نام" value="{{isset($staff->staff->first_name) ? $staff->staff->first_name : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -64,7 +69,7 @@
                                         <label>نام خانوادگی</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_last_name" id="staff_last_name" class="form-control" required placeholder="نام خانوادگی"/>
+                                        <input name="staff_last_name" id="staff_last_name" class="form-control" required placeholder="نام خانوادگی" value="{{isset($staff->staff->last_name) ? $staff->staff->last_name : ''}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +79,7 @@
                                         <label>کد ملی</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_national_id" id="staff_national_id" class="form-control" placeholder="کد ملی"/>
+                                        <input name="staff_national_id" id="staff_national_id" class="form-control" placeholder="کد ملی" value="{{isset($staff->staff->national_id) ? $staff->staff->national_id : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -82,7 +87,7 @@
                                         <label>شماره موبایل</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_mobile" id="staff_mobile" class="form-control" required placeholder="شماره موبایل"/>
+                                        <input name="staff_mobile" id="staff_mobile" class="form-control" required placeholder="شماره موبایل" value="{{isset($staff->staff->mobile) ? $staff->staff->mobile : ''}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +97,7 @@
                                         <label>تاریخ تولد</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_birth_day" id="staff_birth_day" class="form-control persianDatepicker" placeholder="تاریخ تولد"/>
+                                        <input name="staff_birth_day" id="staff_birth_day" class="form-control persianDatepicker" placeholder="تاریخ تولد" value="{{isset($staff->staff->birth_date) ? $staff->staff->birth_date : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -102,11 +107,11 @@
                                         </div>
                                         <div class="pull-right line-height-35">
                                             <div class="pull-right">
-                                                <input type="radio" name="is_married" id="single" value="0"/>
+                                                <input type="radio" name="is_married" id="single" value="0" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==0 ? 'checked' : '') : ''}}/>
                                                 <label for="single" class="pointer">مجرد</label>
                                             </div>
                                             <div class="pull-right">
-                                                <input type="radio" name="is_married" id="married" value="1"/>
+                                                <input type="radio" name="is_married" id="married" value="1" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==1 ? 'checked' : '') : ''}}/>
                                                 <label for="married" class="pointer">متاهل</label>
                                             </div>
                                         </div>
@@ -117,11 +122,11 @@
                                         </div>
                                         <div class="pull-right line-height-35">
                                             <div class="pull-right">
-                                                <input type="radio" name="gender" id="man" value="man"/>
+                                                <input type="radio" name="gender" id="man" value="man" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'man' ? 'checked' : '') : ''}}/>
                                                 <label for="man" class="pointer">مرد</label>
                                             </div>
                                             <div class="pull-right">
-                                                <input type="radio" name="gender" id="woman" value="woman"/>
+                                                <input type="radio" name="gender" id="woman" value="woman" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'woman' ? 'checked' : '') : ''}}/>
                                                 <label for="woman" class="pointer">زن</label>
                                             </div>
                                         </div>
@@ -141,7 +146,7 @@
                                     <label>نام شرکت</label>
                                 </div>
                                 <div class="col-xs-10">
-                                    <input id="staff_job_corp" class="form-control" placeholder="نام شرکت"/>
+                                    <input id="staff_job_corp" class="form-control" placeholder="نام شرکت" value=""/>
                                 </div>
                             </div>
                             <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -388,7 +393,7 @@
                 data: function (term) {
                     return {
                         term: term,
-                        item_id: $('#chart_item').val()
+                        item_id: $('#chart_item_job').val()
                     };
                 },
                 results: function (data) {
