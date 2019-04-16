@@ -264,7 +264,7 @@
             </div>
             <div class="tab-pane tab-view" id="tab_t2">
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding">
+                    <div class="col-xs-1 pull-right">
                         <label class="pull-right line-height-35" >{{trans('tasks.every')}}</label>
                     </div>
                     <div class="col-xs-1">
@@ -283,7 +283,7 @@
                     </div>
                 </div>
                 <div class="input-group col-xs-12 " style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding lbl_repeat_in">
+                    <div class="col-xs-1 pull-right lbl_repeat_in">
                         <label for="r2" class="line-height-35">{{ trans('tasks.repeat_in') }}</label>
                     </div>
                     <div class="col-xs-11 div-schedul">
@@ -335,7 +335,7 @@
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 pull-right noRightPadding noLeftPadding">
+                    <div class="col-xs-1 pull-right">
                         <label for="r2" class="line-height-35">{{ trans('tasks.begin') }}</label>
                     </div>
                     <div class="col-xs-2">
@@ -392,7 +392,7 @@
                 </div>
 
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;border-top:1px solid #ccc;margin-top: 10px;padding-top: 10px">
-                    <div class="col-xs-1 noRightPadding noLeftPadding margin-top-10">
+                    <div class="col-xs-1 margin-top-10">
                         <label class="line-height-35">{{ trans('tasks.form') }}</label>
                     </div>
                     <div class="col-xs-11 margin-top-10">
@@ -404,8 +404,8 @@
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <label class="line-height-35">{{ trans('tasks.here-help') }}</label>
+                    <div class="col-xs-1">
+                        <label class="line-height-35">{{ trans('tasks.help') }}</label>
                     </div>
                     <div class="col-xs-11">
                         <select id="new_task_users_" name="users[]" class="select2_auto_complete_user col-xs-12" disabled
@@ -416,16 +416,16 @@
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" class="" name="end_on_assigner_accept" id="end_on_assigner_accept" style="height: 20px" disabled/>
+                    <div class="col-xs-1">
+                        <input type="checkbox" class="" name="end_on_assigner_accept" id="end_on_assigner_accept" style="height: 20px"/>
                     </div>
                     <div class="col-xs-10">
                         <label for="end_on_assigner_accept">{{ trans('tasks.modal_task_details_assignor_accept_or_ended') }}</label>
                     </div>
                 </div>
                 <div class="input-group col-xs-12" style="margin: 0 15px 15px 5px;">
-                    <div class="col-xs-1 noRightPadding noLeftPadding">
-                        <input type="checkbox" class="" name="transferable" id="transferable" style="height: 20px" disabled/>
+                    <div class="col-xs-1">
+                        <input type="checkbox" class="" name="transferable" id="transferable" style="height: 20px" checked/>
                     </div>
                     <div class="col-xs-11">
                         <label for="transferable">{{ trans('tasks.modal_task_details_assignor_to_another') }}</label>

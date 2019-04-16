@@ -16,11 +16,13 @@
                     {{--<li>--}}
                         {{--<a href="#tasks" data-toggle="tab">{{trans('calendar_events.ce_modal_minutes_navbar_nav2')}}</a>--}}
                     {{--</li>--}}
-                    <li>
-                        <a href="#absent" data-toggle="tab">{{trans('calendar_events.ce_modal_minutes_navbar_nav3')}}</a>
+                    <li class="disabled">
+                        {{--<a href="#absent" data-toggle="tab">{{trans('calendar_events.ce_modal_minutes_navbar_nav3')}}</a>--}}
+                        <a data-toggle="tab">{{trans('calendar_events.ce_modal_minutes_navbar_nav3')}}</a>
                     </li>
-                    <li>
-                        <a href="#guest" data-toggle="tab"> {{trans('calendar_events.ce_modal_minutes_navbar_nav4')}} </a>
+                    <li class="disabled">
+{{--                        <a href="#guest" data-toggle="tab"> {{trans('calendar_events.ce_modal_minutes_navbar_nav4')}} </a>--}}
+                        <a data-toggle="tab"> {{trans('calendar_events.ce_modal_minutes_navbar_nav4')}} </a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -38,7 +40,9 @@
                                     <input placeholder="{{trans('calendar_events.ce_description_label').' '.trans('app.decision')}}" name="desc" class="form-control"/>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn btn-primary pull-left" onclick="saveDecision()" type="button">{{trans('calendar_events.saved')}}</a>
+                                    <a class="btn btn-primary pull-left fa fa-plus" onclick="saveDecision()" type="button">
+                                        {{--{{trans('calendar_events.saved')}}--}}
+                                    </a>
                                 </div>
                             </form>
                         </div>

@@ -147,6 +147,7 @@
             autoWidth: false,
             sPaginationType : "bootstrap",
             pageLength: 5,
+            destroy: true,
             lengthChange: false,
             ajax: {
                 url: '{!! route('hamahang.calendar_events.fetch_task_of_events')!!}',
@@ -515,6 +516,7 @@ function deleteDecisions(id)
             pagingType: "numbers",
             autoWidth: false,
             sPaginationType : "bootstrap",
+            destroy: true,
             pageLength: 5,
             lengthChange: false,
             ajax: {

@@ -67,7 +67,7 @@
             };
         })(jQuery);
         $('#form_filter_sessions').on('keyup change', 'input, select, textarea', 'checkbox', function () {
-            $('#sessionsGrid').destroy()
+            $('#sessionsGrid').destroy();
             read_table($("#form_filter_sessions").serializeObject());
         });
         read_table($("#form_filter_sessions").serializeObject());
@@ -76,6 +76,7 @@
                 "dom": window.CommonDom_DataTables,
                 "language": LangJson_DataTables,
                 processing: true,
+                "searching": false,
                 serverSide: true,
                 "destroy": true,
                 "scrollX": true,
@@ -95,14 +96,14 @@
                         width : '15%',
                         mRender :function(data, type, full)
                         {
-                            if(data.length > 8)
-                            {
-                                return data.slice(0,8)+'...';
-                            }
-                            else
-                            {
+                            // if(data.length > 8)
+                            // {
+                            //     return data.slice(0,8)+'...';
+                            // }
+                            // else
+                            // {
                                 return data;
-                            }
+                            // }
                         }
                     },
                     {
@@ -168,9 +169,9 @@
                                         '';
                             // if(full.showMinutesDailog==true)
                             // {
-                            actions += '<a class="cls3 margin-right-10"  alt='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' title='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+'   style="margin: 2px" onclick="minutesDailog('+full.id+')" href="#"><i class="fa fa-building-o"></i></a>';
+                            actions += '<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' title='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' style="margin: 2px" onclick="minutesDailog('+full.id+')" href="#"><i class="fa fa-building-o"></i></a>';
                             // }
-                            actions +='<a class="cls3 margin-right-10"  alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteEvent('+full.id+')" href="#"><i class="fa fa-close"></i></a>';
+                            actions +='<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteEvent('+full.id+')" href="#"><i class="fa fa-close"></i></a>';
                             return actions;
                         }
                     }

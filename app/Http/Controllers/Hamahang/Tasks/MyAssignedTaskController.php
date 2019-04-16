@@ -1721,9 +1721,11 @@ class MyAssignedTaskController extends Controller
 
         }
         $final_result = ['success' => true];
+        $respite_duration_timestamp = '';
         if (Request::input('respite_timing_type') == 1)
         {
-            $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
+            if(trim(Request::input('respite_date')) != '')
+                $respite_duration_timestamp = hamahang_make_task_respite(Request::input('respite_date'), Request::input('respite_time'));
         }
         elseif (Request::input('respite_timing_type') == 2)
         {
