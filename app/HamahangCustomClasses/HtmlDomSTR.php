@@ -15,6 +15,7 @@ class HtmlDomSTR extends Htmldom
             }
             else
             {
+                ini_set('memory_limit', '-1');
                 $this->load($str, $lowercase, $stripRN, $defaultBRText, $defaultSpanText);
             }
         }
