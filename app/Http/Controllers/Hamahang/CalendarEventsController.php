@@ -1067,6 +1067,8 @@ class CalendarEventsController extends Controller
 //                $record = User_Event::find(Request::input('rec_id'));
                 $record = Session_Events::find(Request::input('rec_id'));
                 $record->delete();
+                $record = User_Event::find($record->event_id);
+                $record->delete();
                 if ($record->type == 1)
                 {
                     Session_Events::where('event_id', '=', Request::input('rec_id'))->delete();
@@ -1299,7 +1301,8 @@ class CalendarEventsController extends Controller
         }
         $events = DB::table('hamahang_calendar_user_events as eventTable')
             ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay')
-            ->where('eventTable.cid', '=', $cid);
+            ->where('eventTable.cid', '=', $cid)
+            ->whereNull('deleted_at');
 //        if(trim($startDate)!='')
 //            $events->where('eventTable.startdate', '>=', $startDate);
 //        if(trim($endDate)!='')

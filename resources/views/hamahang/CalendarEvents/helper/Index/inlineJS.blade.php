@@ -209,7 +209,6 @@
         var obj = {};
         obj.rec_id = id;
         if ($('#gridDtataTable').length) {
-
             var table = $('#gridDtataTable').DataTable();
 
             $('#gridDtataTable tbody').on('click', 'tr', function () {
@@ -290,8 +289,9 @@
                                      '<strong></strong> {{trans("calendar_events.ce_inlinejs_this_record_deleted")}}' +
                                      '</div>';*/
                                     //showMsgModal('{{trans("calendar_events.ce_inlinejs_remove_event_label")}}', html);
-                                    reloadGrid();
-                                    messageModal('success', '{{trans("calendar_events.ce_inlinejs_remove_event_label")}}', {0: '{{trans("calendar_events.ce_inlinejs_this_record_deleted")}}'});
+                                    // reloadGrid();
+                                    table.ajax.reload();
+                                    {{--messageModal('success', '{{trans("calendar_events.ce_inlinejs_remove_event_label")}}', {0: '{{trans("calendar_events.ce_inlinejs_this_record_deleted")}}'});--}}
                                     // $('#remove_confirm_modal').modal('hide');
                                     //$('#remove_confirm_modal').modal('hide');
                                 }

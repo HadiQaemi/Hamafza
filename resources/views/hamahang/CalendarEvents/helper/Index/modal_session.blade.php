@@ -333,7 +333,7 @@
                                 <div class="form-check">
                                     <input name="send_Invitation" type="checkbox" id="send_Invitation" class="form-check-input" value="1" disabled>
                                     <label class="form-check-label" for="send_Invitation">{{trans('calendar_events.ce_send_Invitation')}}</label>
-                                    <input name="create_session_page" type="checkbox" id="create_session_page" class="form-check-input" value="1" disabled>
+                                    <input name="create_session_page" type="checkbox" id="create_session_page" class="form-check-input" value="1">
                                     <label class="form-check-label" for="create_session_page">{{trans('calendar_events.ce_create_session_page')}}</label>
                                     <input name="allow_inform_invitees" id="allow_inform_invitees" type="checkbox" class="form-check-input" value="1" disabled>
                                     <label class="form-check-label" for="allow_inform_invitees">{{trans('calendar_events.ce_allow_inform_invitees')}}</label>
