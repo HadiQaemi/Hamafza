@@ -1064,8 +1064,8 @@ class CalendarEventsController extends Controller
             $delete = DB::transaction(function ()
             {
                 //die(dd(Request::input('rec_id')));
-                $record = User_Event::find(Request::input('rec_id'));
-
+//                $record = User_Event::find(Request::input('rec_id'));
+                $record = Session_Events::find(Request::input('rec_id'));
                 $record->delete();
                 if ($record->type == 1)
                 {
@@ -1300,10 +1300,10 @@ class CalendarEventsController extends Controller
         $events = DB::table('hamahang_calendar_user_events as eventTable')
             ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate','eventTable.allDay')
             ->where('eventTable.cid', '=', $cid);
-        if(trim($startDate)!='')
-            $events->where('eventTable.startdate', '>=', $startDate);
-        if(trim($endDate)!='')
-            $events->where('eventTable.enddate', '<=', $endDate);
+//        if(trim($startDate)!='')
+//            $events->where('eventTable.startdate', '>=', $startDate);
+//        if(trim($endDate)!='')
+//            $events->where('eventTable.enddate', '<=', $endDate);
         $events = $events->get();
 
         return json_encode(array('historical_events' => isset($historical_events) ? $historical_events : '',

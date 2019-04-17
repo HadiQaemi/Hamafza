@@ -28,7 +28,7 @@
 
 
 {{--</ul>--}}
-<div id="form-content">
+<div id="form-content" class="padding-bottom-10">
     <div id="sessionMsgBox"></div>
     <form id="sessionForm" role="form" class="form-horizontal">
         <div id="form-session-content">
@@ -54,36 +54,60 @@
                     </a>
                 </li>
             </ul>
-            <div class="tab-content" style="overflow: auto;height: 50vh;padding-bottom: 10vh;">
+            <div class="tab-content" style="overflow: auto;height: 50vh;padding-bottom: 180px;">
                 <div id="s_event" class="tab-pane fade in active">
                     <div class="col-md-12">
                         <div class="">
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
+                                <div class="col-xs-1">
                                     <label>
                                         {{--<span class="required">*</span>--}}
                                         {{trans('calendar_events.ce_modal_events_title_field_lable')}}
                                     </label>
                                 </div>
-                                <div class="col-xs-5">
-                                    <input name="title" class="form-control" placeholder="" value="{{isset($form_data['htitle']) ? $form_data['htitle'] : ''}}">
+                                <div class="col-xs-8">
+                                    <input name="title" id="session_title" class="form-control" placeholder="{{trans('calendar_events.ce_modal_events_title_field_lable')}}" value="{{isset($form_data['htitle']) ? $form_data['htitle'] : ''}}">
 {{--                                    <input type="hidden" {{isset($form_data['htitle']) ? 'name=event_id value='.$form_data["session_id"].'' : ''}}>--}}
                                     <input name="event_type" type="hidden" class="form-control" placeholder="">
                                 </div>
-                                <div class="col-xs-5">
+                                <div class="col-xs-3 line-height-35">
                                     <input type="radio"  name="session_type" id="session_type" value="2" {{isset($form_data['type']) ? ($form_data['type']==2 ? 'checked' : '') : 'checked'}}/><label for="session_type"> {{trans('tasks.official')}}</label>
                                     <input type="radio" name="session_type" id="session_type1" value="1" {{isset($form_data['type']) ? ($form_data['type']==2 ? 'checked' : '') : ''}}/><label for="session_type1"> {{trans('calendar_events.ce_modal_session_personal')}}</label>
                                 </div>
                             </div>
+                            <div class="row col-lg-12 margin-top-20">
+                                <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noLeftPadding noRightPadding"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
+                                <div class="col-lg-11 noLeftPadding noRightPadding">
+                                    <div id="for-desc">
+                                        <div class="row col-lg-12 header">
+                                            <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                            <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                                        </div>
+                                        <div class="row main-desc">
+                                            <textarea class="form-control row content_tab_text content_tab" name="descriotion" id="desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{isset($form_data['description']) ? $form_data['description'] : ''}}</textarea>
+                                            <div class="content_tab_view content_tab hidden">{{isset($form_data['description']) ? $form_data['description'] : ''}}</div>
+                                        </div>
+                                        <div class="filemanager-buttons-client pull-right bottom-desc">
+                                            <label for="fileToUpload" class="pointer">
+                                                <input type="file" class="fileToUpload form-control" style="display: none;" id="fileToUpload"/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                </svg>
+                                                <div class="display-inline">{{trans('app.add_file')}}</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-lg-2">
+                                <div class="col-lg-1">
                                     <label class="line-height-35">
-                                        {{ trans('app.about') }}
+                                        {{ trans('app.page') }}
                                     </label>
                                 </div>
-                                <div class="col-lg-10">
+                                <div class="col-lg-11">
                                     <select id="new_session_pages" class="select2_auto_complete_page " name="new_session_pages[]"
-                                            data-placeholder="{{trans('tasks.can_select_some_options')}}" multiple="multiple">
+                                            data-placeholder="{{trans('calendar_events.can_select_some_options')}}" multiple="multiple">
                                         @if(!empty($form_data['session_pages']))
                                             @if(is_array($form_data['session_pages']))
                                                 @foreach($form_data['session_pages'] as $page)
@@ -94,87 +118,73 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
-                                <div class="col-lg-10">
-                                    <textarea class="form-control row" name="descriotion" id="descriotion" placeholder="{{ trans('tasks.description') }}" cols="30" rows="2">{{isset($form_data['description']) ? $form_data['description'] : ''}}</textarea>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1">
+                                    <label>{{trans('calendar_events.keyword')}}</label>
                                 </div>
-                            </div>
-                            <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                                        <label class="line-height-35 pull-right">{{ trans('calendar_events.ce_attachment') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-10 line-height-35 pull-right">
-                                    <div class="filemanager-buttons-client pull-right">
-                                        <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('CreateNewTask') }}" data-multi_file="Multi" style="margin-right: 0px;">
-                                            <i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>
-                                            <span>{{trans('app.add_file')}}</span>
-                                        </div>
-                                        {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
-                                        {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
-                                        {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
-                                        {{--</div>--}}
-                                    </div>
-                                    <div class="pull-right filemanager-title-client">
-                                        {{--<h4 class="filemanager-title">{{trans('filemanager.attachs')}}</h4>--}}
-                                    </div>
-                                    <div class="clearfix"></div>
+                                <div class="col-xs-11">
+                                    <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
+                                            data-placeholder="{{trans('tasks.select_some_keywords')}}"
+                                            multiple="multiple">
+                                        @if(!empty($form_data['session_pages']))
+                                            @if(is_array($form_data['session_pages']))
+                                                @foreach($form_data['session_pages'] as $page)
+                                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
-                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
+                                <div class="col-xs-1">
+                                    <label>{{trans('calendar_events.ce_place')}}</label>
                                 </div>
-                                <div class="col-xs-10">
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class="input-group pull-right">
-                                            <input type="text" class="form-control DatePicker clsDatePicker col-xs-3" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-xs-2"></div>
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class=' input-group date'>
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}" autocomplete="off" aria-describedby="starttime">
-                                        </div>
-                                    </div>
+                                <div class="col-xs-11">
+                                    <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}" />
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
-                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                                <div class="col-xs-1">
+                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_date_label')}}</label>
                                 </div>
-                                <div class="col-xs-10">
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class="input-group pull-right">
-                                            <input type="text" class="form-control DatePicker  clsDatePicker col-xs-3" value="{{isset($form_data['henddate']) ? $form_data['henddate'] : ''}}" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" autocomplete="off" aria-describedby="enddate-session">
+
+                                <div class="col-xs-9 noLeftPadding noRightPadding">
+                                    <div class="col-xs-6 noLeftPadding noRightPadding">
+                                        <div class="col-xs-2 noLeftPadding noRightPadding">
+                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10 noLeftPadding noRightPadding">
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}" autocomplete="off" aria-describedby="starttime">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 col-xs-2"></div>
-                                    <div class="col-sm-5 col-xs-5">
-                                        <div class=' input-group date'>
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}" name="endtime" autocomplete="off" aria-describedby="endtime">
+                                    <div class="col-xs-6 noLeftPadding noRightPadding">
+                                        <div class="col-xs-2 noLeftPadding noRightPadding">
+                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10 noLeftPadding noRightPadding">
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control DatePicker  clsDatePicker" value="{{isset($form_data['henddate']) ? $form_data['henddate'] : ''}}" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" autocomplete="off" aria-describedby="enddate-session">
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}" name="endtime" autocomplete="off" aria-describedby="endtime">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-2">
-                                    <label> {{trans('calendar_events.ce_term_of_session')}} </label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <div class='col-md-4 form-horizontal input-group date'>
-                                        <input type="text" class="form-control TimePicker" placeholder="" name="term" aria-describedby="term" value="{{isset($form_data['term']) ? $form_data['term'] : ''}}">
+                                    <div class="col-xs-4 noLeftPadding noRightPadding">
+                                        <label class="line-height-30 pull-right">{{trans('calendar_events.ce_term_of_session')}}</label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-2">
-                                    <label>{{trans('calendar_events.ce_location')}}</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <textarea name="location" class="form-control" >{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}</textarea>
+                                    <div class="col-sm-8 col-xs-10 noLeftPadding noRightPadding">
+                                        <input type="text" class="form-control" placeholder="" name="term" aria-describedby="term" value="{{isset($form_data['term']) ? $form_data['term'] : ''}}">
+
+                                    </div>
                                 </div>
                             </div>
                             {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
@@ -420,6 +430,33 @@
             tags: false,
             ajax: {
                 url: "{{route('auto_complete.pages')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_keywords").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: true,
+            ajax: {
+                url: "{{route('auto_complete.keywords')}}",
                 dataType: "json",
                 type: "POST",
                 quietMillis: 150,

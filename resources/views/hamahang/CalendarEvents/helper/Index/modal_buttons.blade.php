@@ -13,9 +13,9 @@
     </button>
 @elseif($btn_type=='session')
     <div>
-        <input type="radio" name="new_session_save_type" class="new_session_save_type_draft" id="new_session_save_type_draft" value="0"/>
+        <input type="radio" name="new_session_save_type" class="new_session_save_type_draft" id="new_session_save_type_draft" value="0" checked/>
         <label for="new_session_save_type_draft" id="new_session_save_type_draft_l">{{ trans('general.draft') }}</label>
-        <input type="radio" name="new_session_save_type" class="new_session_save_type_final" id="new_session_save_type_final" value="1" checked/>
+        <input type="radio" name="new_session_save_type" class="new_session_save_type_final" id="new_session_save_type_final" value="1"/>
         <label for="new_session_save_type_final" id="new_session_save_type_final_l">{{ trans('general.final') }}</label>
     </div>
     <a data-form_id = "create_new_event" data-again_save = "1" class="btn btn-primary pull-left saveSessionUserEvent" do_type="empty-form">

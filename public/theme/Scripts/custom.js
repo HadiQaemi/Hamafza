@@ -273,6 +273,14 @@ $(document).ready(function () {
             $('#new_task_save_type_draft').click();
     });
 
+    $(document).on("change", "#sessionForm #session_title", function (e) {
+        var title = $('#session_title').val();
+        if(title.trim().length>0)
+            $('#new_session_save_type_final_l').click();
+        else
+            $('#new_session_save_type_draft_l').click();
+    });
+
     $(document).on("keyup", "#create_new_task #title", function (e) {
         var title = $(this).val();
         // alert(title);

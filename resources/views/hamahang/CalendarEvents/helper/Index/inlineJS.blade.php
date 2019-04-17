@@ -221,6 +221,7 @@
                     title: 'حذف رویداد',
                     message: msg,
                     onConfirm: function () {
+                        alert('asdasdasd');
                         $.ajax({
                             url: '{{ URL::route('hamahang.calendar_events.delete_event')}}',
                             type: 'POST', // Send post dat
