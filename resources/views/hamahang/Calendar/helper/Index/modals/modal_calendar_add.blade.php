@@ -8,6 +8,11 @@
             </a>
         </li>
         <li>
+            <a href="#t6" id="pan_t2" data-toggle="tab">
+                <span>دسترسی</span>
+            </a>
+        </li>
+        <li>
             <a href="#t5" id="pan_t5" data-toggle="tab">
                 <span>تنظیمات</span>
             </a>
@@ -35,60 +40,103 @@
     </ul>
     <form id="calendar_info_form">
         <div class="tab-content">
-
             <div id="t1"  class="tab-pane fade in active">
-                <div class="panel panel-info col-md-12">
-                    <div class="panel-body" id="item_edit" style="overflow: -webkit-paged-x;">
-                        <input type="hidden" id="form_edit_item_item_id" name="item_id" value=""/>
-                        <div class="row line-height-35 margin-top-10">
-                            <div class="col-xs-1"><label for="item_title">{{trans("calendar.modal_calendar_setting_title")}}</label></div>
-                            <div class="col-xs-3"><input name="title" id="item_title" class="form-control" placeholder=""></div>
-                            <div class="col-xs-3">
-                                <input name="calander_type" type="radio" id="item_type_v1" value="personal">
-                                <label class="" for="item_type_v1">{{trans("calendar.modal_calendar_type_field_ch1")}}</label>
-                                <input name="calander_type" type="radio" id="item_type_v2" value="official">
-                                <label class="" for="item_type_v2">{{trans("calendar.modal_calendar_type_field_ch2")}}</label>
-                            </div>
-                            <div class="col-xs-5">
-                                <label class="" for="is_default"> {{trans("calendar.modal_calendar_default_field_label")}}</label>
-                                <input name="is_default" type="checkbox" id="is_default" class="form-check-input" value="1">
-                            </div>
+                <div class="col-md-12 noLeftPadding noRightPadding margin-top-20">
+                    <input type="hidden" id="form_edit_item_item_id" name="item_id" value=""/>
+                    <div class="col-xs-1"><label for="item_title">{{trans("calendar.modal_calendar_setting_title")}}</label></div>
+                    <div class="col-xs-9"><input name="title" id="item_title" class="form-control" placeholder="{{trans("calendar.modal_calendar_setting_title")}}"></div>
+                    <div class="col-xs-2 line-height-35">
+                        <input name="calander_type" type="radio" id="item_type_v1" value="personal">
+                        <label class="" for="item_type_v1">{{trans("calendar.modal_calendar_type_field_ch1")}}</label>
+                        <input name="calander_type" type="radio" id="item_type_v2" value="official">
+                        <label class="" for="item_type_v2">{{trans("calendar.modal_calendar_type_field_ch2")}}</label>
+                    </div>
+                </div>
+                <div class="col-md-12 noLeftPadding noRightPadding margin-top-20">
+                    <div class="col-xs-1 line-height-35">
+                        <label>{{trans("calendar.modal_calendar_descriotion_field_label")}}</label>
+                    </div>
+                    <div class="col-xs-11">
+                        <textarea name="descriotion" class="form-control" id="item_descriotion" placeholder="{{trans("calendar.modal_calendar_descriotion_field_label")}}"></textarea>
+                    </div>
+                </div>
+                <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
+                    <div class="col-lg-1">
+                        <label class="line-height-35">
+                            {{ trans('app.page') }}
+                        </label>
+                    </div>
+                    <div class="col-lg-11">
+                        <select id="new_session_pages" class="select2_auto_complete_page " name="new_session_pages[]"
+                                data-placeholder="{{trans('calendar_events.can_select_some_options_calendar')}}" multiple="multiple">
+                            @if(!empty($form_data['session_pages']))
+                                @if(is_array($form_data['session_pages']))
+                                    @foreach($form_data['session_pages'] as $page)
+                                        <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                    @endforeach
+                                @endif
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                    <div class="col-xs-1">
+                        <label>{{trans('calendar_events.keyword')}}</label>
+                    </div>
+                    <div class="col-xs-11">
+                        <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
+                                data-placeholder="{{trans('calendar_events.ce_select_some_keywords')}}"
+                                multiple="multiple">
+                            @if(!empty($form_data['session_pages']))
+                                @if(is_array($form_data['session_pages']))
+                                    @foreach($form_data['session_pages'] as $page)
+                                        <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
+                                    @endforeach
+                                @endif
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 margin-top-20">
+                    <div class="row line-height-35 margin-top-10 noLeftPadding noRightPadding">
+                        <div class="col-xs-5 noLeftPadding noRightPadding">
+                            <input name="is_default" type="checkbox" id="is_default" class="form-check-input" value="1">
+                            <label class="" for="is_default"> {{trans("calendar.modal_calendar_default_field_label")}}</label>
                         </div>
-                        <div class="row margin-top-10">
-                            <div class="col-xs-2 line-height-35">
+                    </div>
+                    <div class="row margin-top-10">
+                    </div>
+                </div>
+            </div>
+            <div id="t6"  class="tab-pane fade in">
+                <div class="col-md-12">
+                    <div class="panel-body noLeftPadding noRightPadding" id="item_edit">
+                        <div class="row margin-top-10 noLeftPadding noRightPadding">
+                            <div class="col-xs-1 line-height-35 noLeftPadding noRightPadding">
                                 <label class="" for="">{{trans('calendar.modal_calendar_edit_viewPermissions_field_label')}}</label>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-xs-11">
                                 <select id="states-multi-select-users" name="viewPermissions[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar.calendar_select_user')}}" multiple>
                                     <option value=""></option>
                                     <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                 </select>
                             </div>
                         </div>
-                        <div class="row margin-top-10">
-                            <div class="col-xs-2 line-height-35">
+                        <div class="row margin-top-10 noLeftPadding noRightPadding">
+                            <div class="col-xs-1 line-height-35 noLeftPadding noRightPadding">
                                 <label class="" for="">{{trans('calendar.modal_calendar_edit_editPermissions_field_label')}}</label>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-xs-11">
                                 <select id="states-multi-select-users_edit" name="editPermissions[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar.calendar_select_user')}}" multiple>
                                     <option value=""></option>
                                 </select>
                             </div>
                         </div>
-                        <div class="row margin-top-10">
-                            <div class="col-xs-2 line-height-35">
-                                <label> {{trans("calendar.modal_calendar_descriotion_field_label")}}</label>
-                            </div>
-                            <div class="col-xs-10">
-                                <textarea name="descriotion" class="form-control" id="item_descriotion"></textarea>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
             <div id="t5"  class="tab-pane fade in">
-                <div class="panel panel-info col-md-12">
+                <div class="col-md-12">
                     <div class="panel-body" id="item_edit" style="overflow: -webkit-paged-x;">
                         <div class="row margin-top-10 line-height-35">
                             <div class="col-xs-2">
@@ -255,7 +303,7 @@
                 </div>
             </div>
             <div id="t2" class="tab-pane fade">
-                <div class="panel panel-info col-md-12">
+                <div class="col-md-12">
                     <div class="panel-body" id="item_setting">
                         <form class="form-inline" id="calendar_setting_form">
                             <table class="table table-bordered col-md-12">
@@ -268,7 +316,7 @@
                 </div>
             </div>
             <div id="t3" class="tab-pane fade">
-                <div class="panel panel-info col-md-12">
+                <div class="col-md-12">
                     <div class="panel-body" id="item_permission">
                         <form class="form-inline" id="calendar_permission_form">
                             <div class="row line-height-35 margin-top-10">
@@ -448,7 +496,7 @@
                 </div>
             </div>
             <div id="t4" class="tab-pane fade">
-                <div class="panel panel-info col-md-12">
+                <div class="col-md-12">
                     <div class="panel-body" id="item_permission">
                         <form class="form-inline" id="calendar_sharing_events_form">
                             <div class="row line-height-35">
@@ -857,6 +905,60 @@
 
     }
     $(document).ready(function () {
+        $(".select2_auto_complete_page").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.pages')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_keywords").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: true,
+            ajax: {
+                url: "{{route('auto_complete.keywords')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
         $('.add-calendar').click(function () {
             var postObj = {};
             var form_data = $('#calendar_info_form').serialize();

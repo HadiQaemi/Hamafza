@@ -800,7 +800,7 @@
         }
         sessionModal = $.jsPanel({
             position: {my: "center-top", at: "center-top", offsetY: 120},
-            contentSize: {width: 1000, height: 400},
+            contentSize: {width: 1220, height: 500},
             contentAjax: {
                 url: '{{ URL::route('hamahang.calendar_events.session_modal' )}}',
                 method: 'POST',

@@ -99,6 +99,55 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1">
+                                    <label>{{trans('calendar_events.ce_place')}}</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1">
+                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_time_label')}}</label>
+                                </div>
+
+                                <div class="col-xs-9 noLeftPadding noRightPadding">
+                                    <div class="col-xs-4 noLeftPadding noRightPadding">
+                                        <div class="col-xs-3">
+                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_date_label')}}</label>
+                                        </div>
+                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
+                                            <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 noLeftPadding noRightPadding">
+                                        <div class="col-xs-3">
+                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
+                                        </div>
+                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
+                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}" autocomplete="off" aria-describedby="starttime">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 noLeftPadding noRightPadding">
+                                        <div class="col-xs-3 noLeftPadding noRightPadding">
+                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
+                                        </div>
+                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
+                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}" name="endtime" autocomplete="off" aria-describedby="endtime">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="col-xs-4 noLeftPadding noRightPadding">
+                                        <label class="line-height-30 pull-right">{{trans('calendar_events.ce_term_of_session')}}</label>
+                                    </div>
+                                    <div class="col-sm-8 col-xs-10 noLeftPadding noRightPadding">
+                                        <input type="text" class="form-control" placeholder="" name="term" aria-describedby="term" value="{{isset($form_data['term']) ? $form_data['term'] : ''}}">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-lg-1">
                                     <label class="line-height-35">
@@ -124,7 +173,7 @@
                                 </div>
                                 <div class="col-xs-11">
                                     <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
-                                            data-placeholder="{{trans('tasks.select_some_keywords')}}"
+                                            data-placeholder="{{trans('calendar_events.ce_select_some_keywords')}}"
                                             multiple="multiple">
                                         @if(!empty($form_data['session_pages']))
                                             @if(is_array($form_data['session_pages']))
@@ -136,57 +185,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-1">
-                                    <label>{{trans('calendar_events.ce_place')}}</label>
-                                </div>
-                                <div class="col-xs-11">
-                                    <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}" />
-                                </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-1">
-                                    <label class="line-height-30 pull-right">{{trans('calendar_events.ce_date_label')}}</label>
-                                </div>
 
-                                <div class="col-xs-9 noLeftPadding noRightPadding">
-                                    <div class="col-xs-6 noLeftPadding noRightPadding">
-                                        <div class="col-xs-2 noLeftPadding noRightPadding">
-                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
-                                        </div>
-                                        <div class="col-sm-10 col-xs-10 noLeftPadding noRightPadding">
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}" autocomplete="off" aria-describedby="starttime">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6 noLeftPadding noRightPadding">
-                                        <div class="col-xs-2 noLeftPadding noRightPadding">
-                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
-                                        </div>
-                                        <div class="col-sm-10 col-xs-10 noLeftPadding noRightPadding">
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control DatePicker  clsDatePicker" value="{{isset($form_data['henddate']) ? $form_data['henddate'] : ''}}" name="enddate" placeholder="{{trans('calendar_events.ce_date_label')}}" autocomplete="off" aria-describedby="enddate-session">
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}" name="endtime" autocomplete="off" aria-describedby="endtime">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-2">
-                                    <div class="col-xs-4 noLeftPadding noRightPadding">
-                                        <label class="line-height-30 pull-right">{{trans('calendar_events.ce_term_of_session')}}</label>
-                                    </div>
-                                    <div class="col-sm-8 col-xs-10 noLeftPadding noRightPadding">
-                                        <input type="text" class="form-control" placeholder="" name="term" aria-describedby="term" value="{{isset($form_data['term']) ? $form_data['term'] : ''}}">
-
-                                    </div>
-                                </div>
-                            </div>
                             {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
                                 {{--<div class="col-xs-2">--}}
                                     {{--<label class="form-check-label">{{trans('calendar_events.ce_allday_label')}}</label>--}}
@@ -202,14 +201,14 @@
                 <div id="s_form" class="tab-pane fade">
                     <div class="col-md-12">
                         <div class="">
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>
                                         {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
                                     </label>
                                 </div>
-                                <div class="col-xs-9">
-                                    <select name="cid" class="chosen-rtl">
+                                <div class="col-xs-11">
+                                    <select name="cid" class="chosen-rtl" multiple data-placeholder="{{trans('calendar_events.ce_modal_events_cid_field_lable')}}">
                                         @if(!empty($form_data['hcid']))
                                             @if(!empty($form_data['hcid']))
                                                 @foreach($form_data['hcid'] as $hcid)
@@ -220,19 +219,19 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label><span>{{trans('calendar_events.ce_agenda_label')}}</span></label>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control"/>
+                                <div class="col-xs-11">
+                                    <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>{{trans('calendar_events.ce_moda_session_modal_session_chief')}}</label>
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-11">
                                     <select name="session_chief" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_chief')}}" >
                                         <option value=""></option>
                                         @if(!empty($form_data['session_chief']))
@@ -246,11 +245,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>{{trans('calendar_events.ce_moda_session_modal_session_secretary')}}</label>
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-11">
                                     <select name="session_secretary" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_secretary')}}" >
                                         <option value=""></option>
                                         @if(!empty($form_data['session_secretary']))
@@ -264,11 +263,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
-                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_facilitator')}}</label>
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
+                                    <label>{{trans('calendar_events.ce_moda_session_modal_facilitator')}}</label>
                                 </div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-11">
                                     <select name="session_facilitator" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_facilitator')}}">
                                         <option value=""></option>
                                         @if(!empty($form_data['session_facilitator']))
@@ -282,12 +281,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
-                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_voting_users')}}</label>
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
+                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_voting')}}</label>
                                 </div>
-                                <div class="col-xs-9">
-                                    <select name="session_voting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_selected_users')}}" multiple>
+                                <div class="col-xs-11">
+                                    <select name="session_voting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_voting_users')}}" multiple>
                                         <option value=""></option>
                                         @if(!empty($form_data['session_voting_users']))
                                             @if(is_array($form_data['session_voting_users']))
@@ -300,12 +299,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
-                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_notvoting_users')}}</label>
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
+                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_notvoting')}}</label>
                                 </div>
-                                <div class="col-xs-9">
-                                    <select name="session_notvoting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_selected_users')}}" multiple>
+                                <div class="col-xs-10">
+                                    <select name="session_notvoting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_notvoting_users')}}" multiple>
                                         <option value=""></option>
                                         @if(!empty($form_data['session_notvoting_users']))
                                             @if(is_array($form_data['session_notvoting_users']))
@@ -317,16 +316,21 @@
                                         <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div id="map_canvas" class="col-md-12"></div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-3">
-                                    <label>{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}</label>
+                                <div class="col-xs-1 line-height-35">
+                                    <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users_responsible']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
+                                        <span class="icon icon-afzoodane-fard fonts"></span>
+                                    </a>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="location_phone" value="{{isset($form_data['location_phone']) ? $form_data['location_phone'] : ''}}"/>
+                            </div>
+                            {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
+                                {{--<div id="map_canvas" class="col-md-12"></div>--}}
+                            {{--</div>--}}
+                            <div class="col-xs-12 margin-top-20">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
+                                    <label>{{trans('calendar_events.ce_modal_session_phone')}}</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <input type="text" class="form-control" name="location_phone" value="{{isset($form_data['location_phone']) ? $form_data['location_phone'] : ''}}" placeholder="{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">

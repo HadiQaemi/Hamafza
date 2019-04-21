@@ -23,6 +23,9 @@
          .hd-body{
              overflow: hidden !important;
          }
+        .dataTable th{
+            text-align: right !important;
+        }
     </style>
     @include('hamahang.CalendarEvents.helper.Index.inlineCss.inlineCss')
 @stop
@@ -108,12 +111,13 @@
                 <table id="sessionsGrid" class="{{--table-bordered--}} table dt-responsive nowrap display" style="width:100%">
                 <thead>
                 <tr>
-                    <th class="text-right"> {{trans('calendar_events.ce_rowindex_label')}}</th>
-                    <th class="text-right"> {{trans('calendar_events.ce_agenda_label')}}</th>
-                    <th class="text-right">{{trans('calendar_events.ce_startdate_label')}}</th>
-                    <th class="text-right">{{trans('calendar_events.ce_enddate_label')}}</th>
-                    <th class="text-right">{{trans('calendar_events.ce_calendar_label')}}</th>
-                    <th class="text-right">{{trans('calendar_events.ce_action_label')}}</th>
+                    <th class="text-right" style="width: 10%"> {{trans('calendar_events.ce_rowindex_label')}}</th>
+                    <th class="text-right" style="width: 20%"> {{trans('calendar_events.ce_agenda_label')}}</th>
+                    <th class="text-right" style="width: 20%">{{trans('calendar_events.ce_date_label')}}</th>
+                    <th class="text-right" style="width: 20%">{{trans('calendar_events.ce_startdate_label')}}</th>
+                    <th class="text-right" style="width: 10%">{{trans('calendar_events.ce_enddate_label')}}</th>
+                    <th class="text-right" style="width: 10%">{{trans('calendar_events.ce_calendar_label')}}</th>
+                    <th class="text-right" style="width: 10%">{{trans('calendar_events.ce_action_label')}}</th>
                 </tr>
                 </thead>
             </table>

@@ -5,6 +5,8 @@ return [
     'ce_title'=>'عنوان',
     'ce_startdate_label'=> 'شروع',
     'can_select_some_options' => 'اگر این جلسه مرتبط با صفحه‌هایی است نام آن صفحات را بنویسید',
+    'can_select_some_options_calendar' => 'اگر این تقویم مرتبط با صفحه‌هایی است نام آن صفحات را بنویسید',
+    'ce_select_some_keywords' => 'یک یا چند کلیدواژه برای این تقویم بنویسید ...',
     'ce_enddate_label'=>'پایان',
     'ce_allday_label'=>'در طول روز',
     'ce_type_label'=>'نوع',
@@ -20,6 +22,7 @@ return [
     'no_enter_duration'=>'مدت زمان وارد نشده است',
     'ce_hour_label'=>'ساعت',
     'ce_date_label'=>'تاریخ',
+    'ce_time_label'=>'زمان',
     'ce_delete_label'=>'حذف',
     'ce_edit_label'=>'ویرایش',
     'ce_delete_title1'=>'ایا ازحذف ',
@@ -95,11 +98,15 @@ return [
     'ce_moda_session_modal_session_chief'=>'رئیس جلسه ',
     'ce_moda_session_modal_session_secretary'=>'دبیر جلسه',
     'ce_moda_session_modal_session_facilitator'=>'تسهیل‌گر جلسه',
+    'ce_moda_session_modal_facilitator'=>'تسهیل‌گر',
     'ce_moda_session_modal_session_voting_users'=>'اعضای دارای رای',
+    'ce_moda_session_modal_session_voting'=>'دارای رای',
     'ce_moda_session_modal_session_notvoting_users'=>'اعضای بدون رای',
+    'ce_moda_session_modal_session_notvoting'=>'بدون رای',
     'ce_modal_session_Coordinate_sesion_location'=>' مختصات تشکیل جلسه',
     'ce_modal_session_location_phone'=>'تلفن محل تشکیل جلسه',
     'ce_modal_session_coordination_phone_phone'=>'تلفن هماهنگی جلسه',
+    'ce_modal_session_phone'=>'تلفن',
 /*----------------------------------------------------------------------------------------------------------------------------|
 | calendar_events/helper/index/modal_invitation.blade.php                                                                     |
 -----------------------------------------------------------------------------------------------------------------------------*/

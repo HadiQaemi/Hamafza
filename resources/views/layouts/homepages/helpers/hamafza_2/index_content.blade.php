@@ -56,36 +56,36 @@
                     @endphp
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 1.1% 16% 1.1% 0%">
-                            <p style="display: block;font-size: 25px">
-                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">{{$dashboard['Eghdam']}}</a>
+                            <p style="display: block;font-size: 23px">
+                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: 23px;color:#FFF;">{{$dashboard['Eghdam']}}</a>
                             </p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: small;color:#FFF;">وظایف من</a>
+                                <a href="{{ auth()->user()->Uname }}/desktop/Tasks/MyTasks/list" style="font-size: 18px;color:#FFF;">وظایف من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 1.1% 0 1.1% 16%; float: left;">
-                            <p style="display: block;font-size: 25px">
-                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">0</a>
+                            <p style="display: block;font-size: 23px">
+                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: 23px;color:#FFF;">0</a>
                             </p>
                             <p style="display: block">
-                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: small;color:#FFF;">برنامه امروز</a>
+                                <a href="{{route('ugc.desktop.hamahang.calendar.index',['username'=>$auth_user->Uname])}}" style="font-size: 18px;color:#FFF;">برنامه امروز</a>
                             </p>
                             {{--<span class="badge" style="position: absolute; left: 16%; top: 2%">{{$dashboard['Email']}}</span>--}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="inner-tumbnail1" style="margin: 0.1% 16% 1.1% 0%">
-                            <p style="display: block;font-size: 25px">
-                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">{{$dashboard['Email']}}</a>
+                            <p style="display: block;font-size: 23px">
+                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: 23px;color:#FFF;">{{$dashboard['Email']}}</a>
                             </p>
                             <p style="display: block">
-                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: small;color:#FFF;">پیام‌های من</a>
+                                <a href="{{ auth()->user()->Uname }}/desktop/tickets/inbox" style="font-size: 18px;color:#FFF;">پیام‌های من</a>
                             </p>
                         </div>
                         <div class="inner-tumbnail1" style="margin: 0.1% 0 1.1% 16%; float: left;">
-                            <p style="display: block;font-size: 25px">0</p>
+                            <p style="display: block;font-size: 23px">0</p>
                             <p style="display: block">
-                                <a href="#" style="font-size: small;color:#FFF;">یادآوری‌ها</a>
+                                <a href="#" style="font-size: 18px;color:#FFF;">یادآوری‌ها</a>
                             </p>
                         </div>
 

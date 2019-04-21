@@ -89,11 +89,11 @@
                     {
                         data: 'rowIndex',
                         name: 'rowIndex' ,
-                        width :'8%'
+                        width :'10%'
                     },
                     {   data: 'agenda',
                         name: 'agenda' ,
-                        width : '15%',
+                        width : '20%',
                         mRender :function(data, type, full)
                         {
                             // if(data.length > 8)
@@ -118,30 +118,47 @@
                             //     startdate[1] ='------';
                             // }
                             return  '<table class=col-xs-12"><tr>' +
-                                '<td class="col-xs-6"> <spane>'+startdate[0]+' '+startdate[1]+'</span></td>'+
+                                '<td class="col-xs-6"> <spane>'+startdate[0]+'</span></td>'+
+                                '</tr></table>';
+                        }
+                    },
+                    {
+                        data: 'startdate',
+                        name: 'startdate',
+                        width : '20%',
+                        mRender :function(data, type, full)
+                        {
+                            var startdate = data.split(' ');
+                            // if(startdate[1]=='00:00:00')
+                            // {
+                            //     startdate[1] ='------';
+                            // }
+                            return  '<table class=col-xs-12"><tr>' +
+                                '<td class="col-xs-6"> <spane>'+startdate[1]+'</span></td>'+
                                 '</tr></table>';
                         }
                     },
                     {
                         data: 'enddate',
                         name: 'enddate',
-                        width : '20%',
+                        width : '10%',
                         mRender :function(data, type, full)
                         {
+                            // alert(data);
                             var enddate = data.split(' ');
-                            if(enddate[1]=='00:00:00')
+                            // if(enddate[1]=='00:00:00')
                             // {
                             //     enddate[1] ='------';
                             // }
                                 return  '<table class=col-xs-12"><tr>' +
-                                    '<td class="col-xs-12"> <spane>'+enddate[0]+' '+enddate[1]+'</span></td>'+
+                                    '<td class="col-xs-12"> <spane>'+enddate[1]+'</span></td>'+
                                     '</tr></table>';
                         }
                     },
                     {
                         data: 'title',
                         name: 'title',
-                        width : '20%',
+                        width : '10%',
                         mRender :function(data, type, full)
                         {
                             if(data==null)
@@ -160,7 +177,7 @@
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        width : '16%',
+                        width : '10%',
                         mRender :function (data, type, full)
                         {
                             var actions ='<a class="cls3 margin-right-10"   alt='+'{{trans('calendar_events.ce_edit_label')}}'+' title='+'{{trans('calendar_events.ce_edit_label')}}'+' style="margin: 2px" onclick="editEvent('+full.id+')" href="#"><i class="fa fa-edit"></i></a>'+
@@ -180,7 +197,8 @@
                     $('th').removeClass("sorting");
                     $('th').removeClass("sorting_asc");
                     $('th').removeClass("sorting_desc");
-                    $('td').addClass("text-center");
+                    $('th').addClass("text-right");
+                    $('td').addClass("text-right");
                 }
             });
         }
