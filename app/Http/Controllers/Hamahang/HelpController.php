@@ -22,16 +22,17 @@ class HelpController extends Controller
                 'help_2_id' => \Request::get('see_also_id')
             ]);
         }
-        dd(\Request::all());
+        return [
+            'see_also_id' => enCode(\Request::get('see_also_id')),
+            'success' => true
+        ];
     }
     public function RemoveSeeAlsoHelp()
     {
         $help_id = deCode(\Request::get('help_id'));
-        db::enableQueryLog();
         $help = Help2SeeAlso::where('id', '=', $help_id);
         if($help->delete())
             return json_encode(['status' => true]);
-        dd(db::getQueryLog());
         return json_encode(['status' => false]);
     }
 

@@ -1,6 +1,5 @@
 <script>
-    $(document).ready(function ()
-    {
+    $(document).ready(function () {
         $(".select2_auto_complete_see_also").select2({
             minimumInputLength: 3,
             dir: "rtl",
@@ -29,49 +28,60 @@
             }
         });
 
-        $('.tab_t4').on('click', function() {
+        $('.tab_t4').on('click', function () {
             refreshDraftFiles($('#help_id').val());
         });
-        $('#add_see_also_help').on('click', function() {
+        $('#add_see_also_help').on('click', function () {
+            var num = $('#see_also_list .margin-top-10').length;
             $.ajax({
                 type: "POST",
                 url: '{{ URL::route('hamahang.help.add_see_also_help') }}',
                 dataType: "json",
                 data: {see_also_id: $('#see_also_id').val(), help_id: $('#help_id').val()},
                 success: function (data) {
-                    if (data.success == false){
+                    if (data.success == false) {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
-                    }else{
-                        window.permissions_help_grid.ajax.reload();
+                    } else {
+                        alert($("#see_also_id option:selected").text());
+                        $('#see_also_list').append(
+                            '<div class="row margin-top-10">\n' +
+                            '<div class="col-xs-1">' + (num + 1) + '</div>\n' +
+                            '<div class="col-xs-10">' + $("#see_also_id option:selected").text() + '</div>\n' +
+                            '<div class="col-xs-1">\n' +
+                            '<i class="fa fa-remove pointer remove_see_also" also="' + data.see_also_id + '"></i>\n' +
+                            '</div>\n' +
+                            '</div>' +
+                            '');
                     }
                 }
             });
         });
-        $('.remove_see_also').on('click', function() {
+        $('.remove_see_also').on('click', function () {
+            var $this = $(this);
             $.ajax({
                 type: "POST",
                 url: '{{ URL::route('hamahang.help.remove_see_also_help') }}',
                 dataType: "json",
-                data: {see_also_id: $('#see_also_id').val(), help_id: $('#help_id').val()},
+                data: {help_id: $(this).attr('also')},
                 success: function (data) {
-                    if (data.success == false){
+                    if (data.success == false) {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
-                    }else{
-                        $(this).parent().parent().remove();
+                    } else {
+                        $this.parent().parent().remove();
                     }
                 }
             });
         });
-        $('#add_help_permission').on('click', function() {
+        $('#add_help_permission').on('click', function () {
             $.ajax({
                 type: "POST",
                 url: '{{ URL::route('hamahang.tasks.add_help_permission') }}',
                 dataType: "json",
                 data: {permission_id: $('#permission_id').val(), help_id: $('#help_id').val()},
                 success: function (data) {
-                    if (data.success == false){
+                    if (data.success == false) {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
-                    }else{
+                    } else {
                         window.permissions_help_grid.ajax.reload();
                     }
                 }
