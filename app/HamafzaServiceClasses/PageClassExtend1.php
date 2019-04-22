@@ -4429,6 +4429,7 @@ var id = data.node.id;
      */
     public function Forms($body, $pid, $sid)
     {
+        return $body;
         //dd();
         $html = '';
         if (trim($body) != '')
