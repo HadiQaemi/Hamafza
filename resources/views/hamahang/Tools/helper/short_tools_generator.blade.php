@@ -342,6 +342,11 @@
                     $help_code = 'A7R9nk-ZHk8';
                     break;
                 }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.organs':
+                {
+                    $help_code = 'WDdme-M60Zk';
+                    break;
+                }
 
             }
         }
