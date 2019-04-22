@@ -981,6 +981,7 @@
         $('#lastShring > table tr#row-' + eId).remove();
 
     }
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=4p5iJ97stao') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 
     $(document).ready(function () {
         $(".select2_auto_complete_page").select2({

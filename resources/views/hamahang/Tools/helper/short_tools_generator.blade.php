@@ -347,6 +347,156 @@
                     $help_code = 'WDdme-M60Zk';
                     break;
                 }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.staff':
+                {
+                    $help_code = 'hwFxDSKn5fo';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.jobs':
+                {
+                    $help_code = 'QryiVRWw1kU';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.wages':
+                {
+                    $help_code = 'YDWf9d2W2_4';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tickets.inbox':
+                {
+                    $help_code = 'QXeUPt9AM0Y';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tickets.outbox':
+                {
+                    $help_code = 'Ww0YIMShzcs';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.tickets.outbox':
+                {
+                    $help_code = 'Ww0YIMShzcs';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.Created_ME':
+                {
+                    $help_code = 'ObRo8LTfIf4';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.Edited_ME':
+                {
+                    $help_code = 'E25C3n1SGqg';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.follow_ME':
+                {
+                    $help_code = 'swIkIx9Xc0w';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.like_ME':
+                {
+                    $help_code = 'TUmKk456ShA';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.highlight_ME':
+                {
+                    $help_code = 'Bjx_9GHI9GI';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.ano_ME':
+                {
+                    $help_code = 'FEQgL-hh02I';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.visited_ME':
+                {
+                    $help_code = '3lqRcn4tKys';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.Proc_ME':
+                {
+                    $help_code = 'iP2OxouGV_o';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.ALL_ME':
+                {
+                    $help_code = 'NlOSh_i9xak';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.ALL_Other':
+                {
+                    $help_code = 'KVnWwGeujK8';
+                    break;
+                }
+				case 'ugc.desktop.Hamahang.files.Deleted_pages':
+                {
+                    $help_code = 'GHku1bGeQiY';
+                    break;
+                }
+				case 'ugc.desktop.highlights':
+                {
+                    $help_code = 'vNdPYVsvRHk';
+                    break;
+                }
+				case 'ugc.desktop.form_list.me':
+                {
+                    $help_code = '46FxlbPV8QA';
+                    break;
+                }
+				case 'ugc.desktop.form_list.sent':
+                {
+                    $help_code = 'HK-BFuHwNVw';
+                    break;
+                }
+				case 'ugc.desktop.form_list.drafts':
+                {
+                    $help_code = 'ziHP-kNa_-Y';
+                    break;
+                }
+				case 'ugc.desktop.form_list.all':
+                {
+                    $help_code = 'H4XHrQmHN9E';
+                    break;
+                }
+				case 'ugc.desktop.notifications':
+                {
+                    $help_code = 'qnpuF1Bip10';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.summary.index':
+                {
+                    $help_code = 'V1oBEI0xAQA';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.user_list.index':
+                {
+                    $help_code = 'oX52rdmIqC0';
+                    break;
+                }
+				case 'ugc.desktop.show_groups':
+                {
+                    $help_code = 'pbBz5nSGruc';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.list':
+                {
+                    $help_code = 'Nw_CWdNK2RA';
+                    break;
+                }
+				case 'chart':
+                {
+                    $help_code = 'aIZ-zO986PY';
+                    break;
+                }
+				case 'ugc.desktop.hamahang.acl.index':
+                {
+                    $help_code = 'w72rAsJvVwo';
+                    break;
+                }
+				case 'ugc.desktop.help':
+                {
+                    $help_code = 'Gg6MisWugmo';
+                    break;
+                }
 
             }
         }
