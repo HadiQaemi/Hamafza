@@ -104,7 +104,7 @@
                         {{--<div class="clearfix"></div>--}}
                     {{--</div>--}}
                 {{--</div>--}}
-                <div class="row col-lg-12" style="border-bottom: #ccc solid 1px;margin: 10px 0px;padding-bottom: 10px">
+                <div class="row col-lg-12" style="">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-11">
                         <div class="col-sm-5 row" style="padding: 0px;">

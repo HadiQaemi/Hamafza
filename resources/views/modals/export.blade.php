@@ -19,7 +19,7 @@
                 $(this).attr("href", "");
             }
             else {
-                $(this).attr("href", "Export?type=word&sid={{$sid}}&numbers=" + Numbers + "&pid={{$pid}}&title={{$_GET['title']}}")
+                $(this).attr("href", "Export?type=word&sid={{$sid}}&numbers=" + Numbers + "&pid={{$pid}}&title={{isset($_GET['title']) ? $_GET['title'] : ''}}")
             }
         });
         $("#pdfexport").click(function () {
@@ -38,7 +38,7 @@
                 $(this).attr("href", "");
             }
             else {
-                $(this).attr("href", "Export?type=pdf&sid={{$sid}}&numbers=" + Numbers + "&pid={{$pid}}&title={{$_GET['title']}}")
+                $(this).attr("href", "Export?type=pdf&sid={{$sid}}&numbers=" + Numbers + "&pid={{$pid}}&title={{isset($_GET['title']) ? $_GET['title'] : ''}}")
             }
         });
     });

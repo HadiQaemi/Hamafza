@@ -68,6 +68,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\View\UserController;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Validator;
 
@@ -492,9 +493,25 @@ class ModalController extends Controller
         $content = SubjectClass::subjectExport($res['sid'], $res['pid'], $res['type'])->render();
         $footer = '<span class="FloatLeft">'
             . '<a id="wordexport" class="btn btn-primary">دریافت فایل ورد</a> '
+            . '<a target="_blank" class="btn btn-danger" href="'.route('modals.exportExcel').'"> دریافت فایل اکسل</a>'
             //. ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
             . '</span>';
         return json_encode(['header' => 'بارگیری', 'content' => $content, 'footer' => $footer]);
+    }
+
+    public function exportExcel()
+    {
+        $Tasks = Session::get('MyTasksFetch');
+        return Excel::create('Filename', function($excel) {
+            $excel->sheet('Sheetname', function($sheet) {
+                $Tasks = Session::get('MyTasksFetch');
+                $sheet->fromArray(
+                    $Tasks->original['data']
+                );
+
+            });
+
+        })->download('xls');
     }
 
     public function notification()

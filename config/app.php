@@ -165,6 +165,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
 
     ],
@@ -224,6 +225,7 @@ return [
         'Countries' => Monarobase\CountryList\CountryListFacade::class,
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
     'bazaar_pager_items_per_page' => env('APP_bazaar_pager_items_per_page', 10),
 ];

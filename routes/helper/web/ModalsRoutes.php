@@ -75,6 +75,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     /* ??? */Route::post('announce', ['as' => 'announce', 'uses' => 'View\ModalController@announce', 'middleware' => ['dynamic_permission:modals.announce']]);
     /* ??? */Route::post('print', ['as' => 'print', 'uses' => 'View\ModalController@mPrint', 'middleware' => ['dynamic_permission:modals.print']]);
     /* ??? */Route::post('export', ['as' => 'export', 'uses' => 'View\ModalController@export', 'middleware' => ['dynamic_permission:modals.export']]);
+    /* ??? */Route::get('exportExcel', ['as' => 'modals.exportExcel', 'uses' => 'View\ModalController@exportExcel', 'middleware' => ['dynamic_permission:modals.export']]);
     /* ??? */Route::post('notification', ['as' => 'notification', 'uses' => 'View\ModalController@notification', 'middleware' => ['dynamic_permission:modals.notification']]);
     /* ??? */Route::post('delete', ['as' => 'delete', 'uses' => 'View\ModalController@mDelete', 'middleware' => ['dynamic_permission:modals.mDelete']]);
     /* ??? */Route::post('history', ['as' => 'history', 'uses' => 'View\ModalController@history', 'middleware' => ['dynamic_permission:modals.history']]);

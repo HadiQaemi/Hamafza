@@ -1574,16 +1574,19 @@ class PageClassExtend1
             ->where('p.id', $pid)
             ->select('s.kind')
             ->first();
-        $kind = $page->kind;
-        $tabs = DB::table('pages as p')
-            ->leftJoin("subject_type_tab as stt", 'p.type', '=', 'stt.tid')
-            ->where('p.sid', $sid)
-            ->where('stt.stid', $kind)
-            ->where('stt.view', '1')
-            ->select('p.id as pid', 'stt.name as name')
-            ->orderBy('stt.orders')
-            ->get();
-        return $tabs;
+        if(isset($page->kind))
+        {
+            $kind = $page->kind;
+            $tabs = DB::table('pages as p')
+                ->leftJoin("subject_type_tab as stt", 'p.type', '=', 'stt.tid')
+                ->where('p.sid', $sid)
+                ->where('stt.stid', $kind)
+                ->where('stt.view', '1')
+                ->select('p.id as pid', 'stt.name as name')
+                ->orderBy('stt.orders')
+                ->get();
+            return $tabs;
+        }
     }
 
     public static function export_pdf($html, $title)

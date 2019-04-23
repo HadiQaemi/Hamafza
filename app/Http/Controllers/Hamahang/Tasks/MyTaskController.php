@@ -500,7 +500,7 @@ class MyTaskController extends Controller
         $Tasks = tasks::MyTasks(Request::input('subject_id'));
 //        dd(db::getQueryLog());
         $date = new jDateTime;
-        return Datatables::of($Tasks)
+        $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
                 return GetTaskStatusName($data->task_status);
@@ -600,6 +600,8 @@ class MyTaskController extends Controller
             })
             ->rawColumns(['employee'])
             ->make(true);
+        Session::put('MyTasksFetch', $Tasks);
+        return $Tasks;
     }
 
     public function reject()
