@@ -342,15 +342,15 @@
                                         window.table_chart_grid3.ajax.reload();
                                     }
                                     eventInfo = (result.event);
-                                    (function ($) {
-                                        $("#calendar").fullCalendar('addEventSource', [{
-                                            start: eventInfo.startdate,
-                                            end: eventInfo.enddate,
-                                            title: eventInfo.title,
-                                            color: eventInfo.bgColor,
-                                            block: true
-                                        }]);
-                                    })(jQuery_2);
+                                    // (function ($) {
+                                    //     $("#calendar").fullCalendar('addEventSource', [{
+                                    //         start: eventInfo.startdate,
+                                    //         end: eventInfo.enddate,
+                                    //         title: eventInfo.title,
+                                    //         color: eventInfo.bgColor,
+                                    //         block: true
+                                    //     }]);
+                                    // })(jQuery_2);
                                 }
                                 else {
                                     messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
@@ -553,6 +553,9 @@
                             {{--else--}}
                             {{--alert('{{ trans('tasks.the_save_type_is_not_selected') }}');--}}
                         }
+                        $(".tab-content.new-task-form").animate({
+                            scrollTop: 0
+                        }, 500);
                     });
                     $(document).on('change', '.liberary_task_save_type',function() {
                         if($("input[name='liberary_task_save_type']:checked").val()==2)

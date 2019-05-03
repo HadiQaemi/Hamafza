@@ -36,7 +36,7 @@
         // GeminiScrollbar_Results = new GeminiScrollbar({element: document.querySelector('#Results'), forceGemini: true}).create();
         // GeminiScrollbar_keyWords = new GeminiScrollbar({element: document.querySelector('#keyWords'), forceGemini: true}).create();
         // GeminiScrollbar_BookmarkFehresrt = new GeminiScrollbar({element: document.querySelector('#BookmarkFehresrt')}).create();
-        $(".select2-search__field").attr("placeholder", "{{trans('tasks.search_some_persons')}}").blur();
+        <!--$(".select2-search__field").attr("placeholder", "{{trans('tasks.search_some_persons')}}").blur();-->
     });
 </script>
 @php ($change_color = 'kmkz' == config('constants.IndexView') ? ' style="background-color: #367BAB !important;"' : null)

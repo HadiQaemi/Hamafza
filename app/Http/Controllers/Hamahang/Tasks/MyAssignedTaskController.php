@@ -219,7 +219,7 @@ class MyAssignedTaskController extends Controller
     {
         $Tasks = tasks::MyTranscriptsTasks(Auth::id(), Request::input('subject_id'));
         $date = new jDateTime;
-        return Datatables::of($Tasks)
+        $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
                 return GetTaskStatusName($data->type);
@@ -288,6 +288,8 @@ class MyAssignedTaskController extends Controller
             })
             ->rawColumns(['employee'])
             ->make(true);
+        Session::put('MyTasksFetch', $Tasks);
+        return $Tasks;
     }
     public function get_transcripts($uname)
     {
@@ -829,7 +831,7 @@ class MyAssignedTaskController extends Controller
     public function MyAssignedTasksFetch()
     {
         $Tasks = tasks::MyAssignedTasks(Auth::id(), Request::input('subject_id'));
-        return Datatables::of($Tasks)
+        $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
                 return GetTaskStatusName($data->type);
@@ -927,6 +929,8 @@ class MyAssignedTaskController extends Controller
             })
             ->rawColumns(['employee'])
             ->make(true);
+        Session::put('MyTasksFetch', $Tasks);
+        return $Tasks;
     }
 
     public function RemoveTaskFile()

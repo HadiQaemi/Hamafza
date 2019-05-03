@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'select_org_list'   => 'یک یا چند سازمان را انتخاب کنید',
+    'search_some_unit'   => 'یک یا چند واحد سازمانی را انتخاب کنید',
+    'search_some_staff'   => 'نام یک یا چند کارمند را بنویسید ...',
+    'search_some_job'   => 'نام یک یا چند شغل را بنویسید ...',
+    'search_some_post'   => 'نام یک یا چند پست را بنویسید ...',
     'add_organization'   => 'افزودن سازمان',
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
     'assign_new_staff'   => 'کارمند جدید',

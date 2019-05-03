@@ -34,11 +34,11 @@
         <div class="col-xs-12 margin-top-20 margin-right-15">
             <div class="pull-right">
                 <input type="radio" name="job" id="job" checked/>
-                <label for="job">شغل</label>
+                <label for="job">حق شغل</label>
             </div>
             <div class="pull-right margin-right-15">
                 <input type="radio" name="clerk" id="clerk" disabled/>
-                <label for="clerk">شاغل</label>
+                <label for="clerk">حق شاغل</label>
             </div>
             <div class="pull-right margin-right-15">
                 <input type="radio" name="action" id="action" disabled/>
@@ -50,7 +50,7 @@
             </div>
             <div class="pull-right margin-right-15">
                 <input type="radio" name="whole" id="whole" disabled/>
-                <label for="whole">مجموع</label>
+                <label for="whole">تجمیع</label>
             </div>
         </div>
         <div class="col-xs-12">

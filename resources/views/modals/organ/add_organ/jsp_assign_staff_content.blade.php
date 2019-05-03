@@ -9,6 +9,14 @@
     $(".persianDatepicker").persianDatepicker({
         observer: true,
         autoClose: true,
+        initialValueType: 'persian',
+        format: 'YYYY-MM-DD',
+    });
+    $(".persianDatepicker-bd").persianDatepicker({
+        observer: true,
+        initialValue: true,
+        initialValueType: 'persian',
+        autoClose: true,
         format: 'YYYY-MM-DD',
     });
 </script>
@@ -30,8 +38,9 @@
             <h5 id="task_type" style="color: blue"></h5>
         </li>
     </ul>
-    <form name="create_new_staff" id="create_new_staff" method="post"
+    <form name="staff_form" id="staff_form" method="post"
           enctype="multipart/form-data">
+        <input type="hidden" name="sid" value="{{isset($sid) ? $sid : ''}}">
         <div class="tab-content new-task-form">
             <div class="tab-pane active tab-view" id="tab_t1">
                 <div class="row">
@@ -97,7 +106,7 @@
                                         <label>تاریخ تولد</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_birth_day" id="staff_birth_day" class="form-control persianDatepicker" placeholder="تاریخ تولد" value="{{isset($staff->staff->birth_date) ? $staff->staff->birth_date : ''}}"/>
+                                        <input name="staff_birth_day" id="staff_birth_day" class="form-control persianDatepicker-bd" placeholder="تاریخ تولد" value="{{isset($staff->staff->birth_date) ? $staff->staff->birth_date : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -179,7 +188,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 border-bottom">
+                        <div class="col-xs-12 margin-top-20 border-bottom">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-4">نام شرکت</div>
                             <div class="col-xs-2">سمت</div>
@@ -187,7 +196,21 @@
                             <div class="col-xs-2">پایان</div>
                             <div class="col-xs-1"></div>
                         </div>
-                        <div class="col-xs-12" id="staff_job_list"></div>
+                        @php $cnt = 1; @endphp
+                        <div class="col-xs-12" id="staff_job_list">
+                            @if(!empty($staff->staff->jobs))
+                                @foreach($staff->staff->jobs as $job)
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-1">{{$cnt++}}</div>
+                                        <div class="col-xs-4"><input type="hidden" name="staff_job_corp[]" value="{{$job->staff_job_corp}}"/>{{$job->staff_job_corp}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_pos[]" value="{{$job->staff_job_pos}}"/>{{$job->staff_job_pos}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_begin[]" value="{{$job->staff_job_begin}}"/>{{$job->staff_job_begin}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_end[]" value="{{$job->staff_job_end}}"/>{{$job->staff_job_end}}</div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,7 +270,21 @@
                             <div class="col-xs-2">فارغ التحصیلی</div>
                             <div class="col-xs-1"></div>
                         </div>
-                        <div class="col-xs-12" id="staff_edu_list"></div>
+                        @php $cnt = 1; @endphp
+                        <div class="col-xs-12" id="staff_edu_list">
+                            @if(!empty($staff->staff->edus))
+                                @foreach($staff->staff->edus as $edu)
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-1">{{$cnt++}}</div>
+                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_uni[]" value="{{$edu->staff_edu_uni}}"/>{{$edu->staff_edu_uni}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_grade[]" value="{{$edu->staff_edu_grade}}"/>{{$edu->staff_edu_grade}}</div>
+                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_major[]" value="{{$edu->staff_edu_major}}"/>{{$edu->staff_edu_major}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_date_grade[]" value="{{$edu->staff_edu_date_grade}}"/>{{$edu->staff_edu_date_grade}}</div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,8 +320,27 @@
                                 <label>سمت</label>
                             </div>
                             <div class="col-xs-11">
-                                <select id="chart_item_job_position" name="chart_item_job_position" class="select2_auto_complete_job_position col-xs-12" class="js-states form-control"></select>
+                                <select id="chart_item_job_position" name="chart_item_job_position[]" class="select2_auto_complete_job_position col-xs-12" class="js-states form-control"></select>
                             </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20 border-bottom">
+                            <div class="col-xs-1">ردیف</div>
+                            <div class="col-xs-4">سمت</div>
+                            <div class="col-xs-6">شغل</div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        @php $cnt = 1; @endphp
+                        <div id="staff_position_list">
+                            @if(!empty($staff->posts))
+                                @foreach($staff->posts as $staff->posts)
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-1">{{$cnt++}}</div>
+                                        <div class="col-xs-4">{{isset($staff->posts->extra_title) ? $staff->posts->extra_title : ''}}</div>
+                                        <div class="col-xs-6">{{isset($staff->posts->job->job->title) ? $staff->posts->job->job->title : ''}}</div>
+                                        <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i><input type="hidden" name="chart_item_job_position[]" value="{{$staff->posts->id}}"/></div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

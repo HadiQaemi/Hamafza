@@ -17,7 +17,7 @@ use DB;
 use Auth;
 //use phpDocumentor\Reflection\Project;
 use Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Http\Controllers\Controller;
 use App\HamahangCustomClasses\jDateTime;
@@ -1556,7 +1556,7 @@ class ProjectController extends Controller
         });
         $projects_roles2->union($projects_roles1);
 
-        return \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles2)
+        $Tasks = \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles2)
             ->editColumn('start_date', function ($data)
             {
                 return jDateTime::date('Y-m-d',$data->start_date,1,1);
@@ -1637,6 +1637,8 @@ class ProjectController extends Controller
                 return $pages;
             })
             ->make(true);
+        Session::put('MyTasksFetch', $Tasks);
+        return $Tasks;
     }
 
     public static function ProjectKeywords($pid)

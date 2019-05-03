@@ -30,6 +30,7 @@ use App\Models\Hamahang\Options;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts;
+use App\Models\Hamahang\OrgChart\org_charts_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff;
 use App\Models\Hamahang\OrgChart\org_organs;
@@ -1051,12 +1052,24 @@ class ModalController extends Controller
     public function ViewStaffForm(){
         $res = $this->getParams(['sid']);
         $sid = deCode($res['sid']);
-        $staff = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('staff', 'staff.edus', 'staff.jobs')->first();
+        $staff = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('post', 'staff', 'staff.edus', 'staff.jobs')->first();
         return json_encode([
             'header' => trans('org_chart.assign_new_staff'),
-            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')->with('staff', $staff)
+            'content' => view('modals.organ.add_organ.jsp_assign_staff_content')->with('staff', $staff)->with('sid', $res['sid'])
                 ->render(),
-            'footer' => view('modals.organ.add_organ.jsp_assign_new_staff_footer')
+            'footer' => view('modals.organ.add_organ.jsp_assign_edit_staff_footer')
+                ->render()
+        ]);
+    }
+
+    public function ViewJobForm(){
+        $sid = $this->getParams(['sid']);
+        $data = org_charts_items_jobs::where('id', '=', $sid)->with('posts', 'job', 'item')->first();
+        return json_encode([
+            'header' => trans('org_chart.job'),
+            'content' => view('modals.organ.add_organ.jsp_job_content')->with('job', $data)
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_assign_edit_staff_footer')
                 ->render()
         ]);
     }
@@ -3048,7 +3061,7 @@ class ModalController extends Controller
     {
         return json_encode([
             'header' => trans('org_chart.assign_new_staff'),
-            'content' => view('modals.organ.add_organ.jsp_assign_new_staff_content')
+            'content' => view('modals.organ.add_organ.jsp_assign_staff_content')
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_assign_new_staff_footer')
                 ->render()

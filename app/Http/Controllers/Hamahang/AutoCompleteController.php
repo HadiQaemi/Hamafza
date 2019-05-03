@@ -156,6 +156,27 @@ class AutoCompleteController extends Controller
         }
     }
 
+    public function org_charts_posts(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = org_charts_items_jobs_posts::where("chart_item_job_id", "=",$request->item_id)
+                    ->select("id", "extra_title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = org_charts_items_jobs_posts::select("id", "extra_title as text")
+                    ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+    }
+
     public function onet_jobs(Request $request)
     {
         $x = $request->term;
@@ -220,6 +241,26 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+    public function units(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+
+    }
     public function organ_chart_items(Request $request)
     {
         if (!empty($request->term))

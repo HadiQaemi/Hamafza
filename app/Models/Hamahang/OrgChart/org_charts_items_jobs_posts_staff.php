@@ -29,4 +29,8 @@ class org_charts_items_jobs_posts_staff extends Model
         return $this->belongsTo('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts','chart_item_post_job_id','id');
     }
 
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts','id','chart_item_post_job_id');
+    }
 }

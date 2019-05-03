@@ -102,6 +102,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     /* ??? */Route::post('ShowAssignTaskForm', ['as' => 'modals.show_assign_task_form', 'uses' => 'View\ModalController@ShowAssignTaskForm', 'middleware' => ['dynamic_permission:modals.show_assign_task_form']]);
     /* ??? */Route::post('ViewTaskForm', ['as' => 'modals.view_task_form', 'uses' => 'View\ModalController@ViewTaskForm', 'middleware' => ['dynamic_permission:modals.show_task_form']]);
     /* ??? */Route::post('ViewStaffForm', ['as' => 'modals.view_staff_form', 'uses' => 'View\ModalController@ViewStaffForm', 'middleware' => ['dynamic_permission:modals.show_task_form']]);
+    /* ??? */Route::post('ViewJobForm', ['as' => 'modals.view_job_form', 'uses' => 'View\ModalController@ViewJobForm', 'middleware' => ['dynamic_permission:modals.show_task_form']]);
     /* ??? */Route::post('ShowTranscriptTaskForm', ['as' => 'modals.show_transcipt_task_form', 'uses' => 'View\ModalController@ShowTranscriptTaskForm', 'middleware' => ['dynamic_permission:modals.show_assign_task_form']]);
     /* ??? */Route::post('ShowLiberaryTaskForm', ['as' => 'modals.show_liberary_task_form', 'uses' => 'View\ModalController@ShowLiberaryTaskForm', 'middleware' => ['dynamic_permission:modals.show_liberary_task_form']]);
     /* ??? */Route::post('CreateNewProject', ['as' => 'modals.create_new_project', 'uses' => 'View\ModalController@CreateNewProject', 'middleware' => ['dynamic_permission:modals.create_new_project']]);

@@ -37,7 +37,6 @@
         <hr>
         <div class="panel panel-info" style="border:0px;">
             <div class="panel-body p_body_scrool">
-
                 <div id="chart-container" style="direction: ltr; text-align: center;"></div>
             </div>
         </div>

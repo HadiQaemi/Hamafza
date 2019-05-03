@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Hamahang;
 
+use App\HamahangCustomClasses\jDateTime;
 use App\Models\Hamahang\OrgChart\onet_job;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs;
@@ -1252,10 +1253,10 @@ class OrgChartController extends Controller
                 'staff_edu_grade.*' => 'required|in:diploma,after_diploma,bsc,msc,phd',
                 'staff_edu_major.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
                 'staff_edu_date_grade.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
-                'staff_organ' => 'required|integer',
-                'chart_item' => 'required|integer',
-                'chart_item_job' => 'required|integer',
-                'chart_item_job_position' => 'required|integer'
+                'staff_organ' => 'integer',
+                'chart_item' => 'integer',
+                'chart_item_job' => 'integer',
+                'chart_item_job_position.*' => 'integer'
             ],
             [],
             [
@@ -1277,7 +1278,7 @@ class OrgChartController extends Controller
                 'staff_organ' => 'سازمان',
                 'chart_item' => 'واحد',
                 'chart_item_job' => 'شغل',
-                'chart_item_job_position' => 'سمت'
+                'chart_item_job_position.*' => 'سمت'
             ]
         );
 
@@ -1286,13 +1287,17 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
+            $d = new jDateTime;
+            $date = explode('-', Request::get('staff_birth_day'));
+            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+
             $staff = org_staff::create([
                 'uid' => auth()->id(),
                 'first_name' => Request::get('staff_name'),
                 'last_name' => Request::get('staff_last_name'),
                 'national_id' => Request::get('staff_national_id'),
                 'mobile' => Request::get('staff_mobile'),
-                'birth_date' => Request::get('staff_birth_day'),
+                'birth_date' => $date,
                 'is_married' => Request::get('is_married'),
                 'is_man' => Request::get('gender')
             ]);
@@ -1323,12 +1328,134 @@ class OrgChartController extends Controller
                         ]);
                     }
                 }
-                org_charts_items_jobs_posts_staff::create([
-                    'uid' => auth()->id(),
-                    'staff_id' => $staff->id,
-                    'chart_item_post_job_id' => Request::get('chart_item_job_position')
-                ]);
+                if (Request::exists('chart_item_job_position'))
+                {
+                    foreach (Request::get('chart_item_job_position') as $k=>$chart_item_job_position) {
+                        org_charts_items_jobs_posts_staff::create([
+                            'uid' => auth()->id(),
+                            'staff_id' => $staff->id,
+                            'chart_item_post_job_id' => $chart_item_job_position
+                        ]);
+                    }
+                }
             }
+            $result['success'] = true;
+        }
+        return json_encode($result);
+    }
+
+    public function update_staff()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'staff_name' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_last_name' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_national_id' => 'required|numeric',
+                'staff_mobile' => 'required|numeric',
+                'staff_birth_day' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'is_married' => 'required|integer',
+                'gender' => 'required|in:man,woman',
+                'staff_job_corp.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_job_pos.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_job_begin.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_job_end.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_edu_uni.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_edu_grade.*' => 'required|in:diploma,after_diploma,bsc,msc,phd',
+                'staff_edu_major.*' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'staff_edu_date_grade.*' => 'required|regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'staff_organ' => 'integer',
+                'chart_item' => 'integer',
+                'chart_item_job' => 'integer',
+                'chart_item_job_position.*' => 'integer'
+            ],
+            [],
+            [
+                'staff_name' => 'نام',
+                'staff_last_name' => 'نام خانوادگی',
+                'staff_national_id' => 'کد ملی',
+                'staff_mobile' => 'موبایل',
+                'staff_birth_day' => 'تاریخ تولد' . Request::input('staff_birth_day'),
+                'is_married' => 'تاهل',
+                'gender' => 'جنسیت',
+                'staff_job_corp.*' => 'نام شرکت',
+                'staff_job_pos.*' => 'سمت',
+                'staff_job_begin.*' => 'تاریخ شروع',
+                'staff_job_end.*' => 'تاریخ پایان',
+                'staff_edu_uni.*' => 'نام دانشگاه',
+                'staff_edu_grade.*' => 'مقطع تحصیلی',
+                'staff_edu_major.*' => 'رشته تحصیلی',
+                'staff_edu_date_grade.*' => 'فارغ التحصیلی',
+                'staff_organ' => 'سازمان',
+                'chart_item' => 'واحد',
+                'chart_item_job' => 'شغل',
+                'chart_item_job_position.*' => 'سمت'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+
+            $d = new jDateTime;
+            $date = explode('-', Request::get('staff_birth_day'));
+            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+
+
+            $sid = deCode(Request::get('sid'));
+            $staff_info = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('post', 'staff', 'staff.edus', 'staff.jobs')->first();
+            $staff_info->staff->update([
+                'first_name' => Request::get('staff_name'),
+                'last_name' => Request::get('staff_last_name'),
+                'national_id' => Request::get('staff_national_id'),
+                'mobile' => Request::get('staff_mobile'),
+                'birth_date' => $date,
+                'is_married' => Request::get('is_married'),
+                'is_man' => Request::get('gender')
+            ]);
+            $staff = $staff_info->staff->id;
+            $staff_info->staff->edus()->delete();
+            $staff_info->staff->jobs()->delete();
+            $staff_info->delete();
+
+            if (Request::exists('staff_edu_uni'))
+            {
+                foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
+                    org_staff_edu::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff,
+                        'staff_edu_uni' => $staff_edu_uni,
+                        'staff_edu_grade' => Request::get('staff_edu_grade')[$k],
+                        'staff_edu_major' => Request::get('staff_edu_major')[$k],
+                        'staff_edu_date_grade' => Request::get('staff_edu_date_grade')[$k]
+                    ]);
+                }
+            }
+            if (Request::exists('staff_job_corp'))
+            {
+                foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
+                    org_staff_jobs::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff,
+                        'staff_job_corp' => $staff_job_corp,
+                        'staff_job_pos' => Request::get('staff_job_pos')[$k],
+                        'staff_job_begin' => Request::get('staff_job_begin')[$k],
+                        'staff_job_end' => Request::get('staff_job_end')[$k]
+                    ]);
+                }
+            }
+            if (Request::exists('chart_item_job_position'))
+            {
+                foreach (Request::get('chart_item_job_position') as $k=>$chart_item_job_position) {
+                    org_charts_items_jobs_posts_staff::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff,
+                        'chart_item_post_job_id' => $chart_item_job_position
+                    ]);
+                }
+            }
+
             $result['success'] = true;
         }
         return json_encode($result);
@@ -1478,6 +1605,7 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
+//            insert_organs
             $organ_title = Request::get('organ_title');
             $organ_level = Request::get('organ_level');
             $organ_description = Request::get('organ_description');
@@ -1491,13 +1619,32 @@ class OrgChartController extends Controller
             ]);
 
             $organs_id = $organs->id;
-            org_charts::create([
+            $chart = org_charts::create([
                 'uid' => auth()->id(),
                 'org_organs_id' => $organs_id,
                 'title' => $organ_title,
                 'description' => $organ_parent,
 
             ]);
+
+
+
+            $Charts_ID = $chart->id;
+            $current_root = org_chart_items::where('chart_id', '=', $Charts_ID)->where('parent_id', '=', 0)->first();
+
+            $node = new org_chart_items;
+            $node->uid = auth()->id();
+            $node->chart_id = $Charts_ID;
+            $node->parent_id = 0;
+            $node->title = trans('org_chart.organizational_unit');
+            $node->description = trans('org_chart.organizational_unit');
+            $node->save();
+
+            if ($current_root) {
+                $current_root->parent_id = $node->id;
+                $current_root->save();
+            }
+
             $result['success'] = true;
         }
         return json_encode($result);

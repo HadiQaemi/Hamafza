@@ -10,7 +10,7 @@
 
         $('#modify_chart_info_modal').modal({show: true});
     });
-    $('#add_root_item').on('click',function () {
+    $(document).on("click", ".add_root_item", function () {
         $('#add_root_item_modal').modal({show: true});
     });
     function modify_chart_info() {
@@ -247,9 +247,9 @@
                     'nodeTitle': 'name',
                 'createNode': function ($node, data) {
                     var secondMenuIcon = '<div>\n\
-                            <i onclick="RemoveChartItem(' + data.id + ')" class="cursor-pointer fa fa-remove text-danger"></i>\n\
-                            <a href="{!! route('modals.show_edit_data_organ') !!}?item_id='+data.id+'"  class="jsPanels cursor-pointer fa fa-info-circle text-info"></a>\n\
-                            <i class="fa fa-plus pointer" id="add_root_item"></i>\n\
+                            <i onclick="RemoveChartItem(' + data.id + ')" class="cursor-pointer fa fa-minus text-danger"></i>\n\
+                            <a href="{!! route('modals.show_edit_data_organ') !!}?item_id='+data.id+'"  class="jsPanels cursor-pointer fa fa-edit text-info"></a>\n\
+                            <i class="fa fa-plus pointer add_root_item"></i>\n\
                         </div>';
                     var secondMenu = '';
                     $node.append(secondMenuIcon).append(secondMenu);

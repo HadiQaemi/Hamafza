@@ -15,15 +15,11 @@ class org_charts_items_jobs extends Model
 
     public function job()
     {
-//        return $this->hasOne('App\Models\Hamahang\OrgChart\onet_job', 'id', 'job_id');
         return $this->belongsTo('App\Models\Hamahang\OrgChart\onet_job', 'job_id', 'id');
-
     }
     public function posts()
     {
-//        return $this->hasOne('App\Models\Hamahang\OrgChart\onet_job', 'id', 'job_id');
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts', 'chart_item_job_id', 'id');
-
     }
 
     public function item()

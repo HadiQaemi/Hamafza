@@ -69,7 +69,7 @@ $(document).on("click", "#add_job", function () {
         '   <div class="col-xs-2"><input type="hidden" name="staff_job_pos[]" value="' + $('#staff_job_pos').val() + '">' + $('#staff_job_pos').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="staff_job_begin[]" value="' + $('#staff_job_begin').val() + '">' + $('#staff_job_begin').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="staff_job_end[]" value="' + $('#staff_job_end').val() + '">' + $('#staff_job_end').val() + '</div>\n' +
-        '   <div class="col-xs-1"><i class="fa fa-trash pointer remove_job"></i></div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
         '</div>'
     )
 });
@@ -83,7 +83,7 @@ $(document).on("click", "#staff_add_edu", function () {
         '   <div class="col-xs-2"><input type="hidden" name="staff_edu_grade[]" value="' + $('#staff_edu_grade').val() + '">' + $('#staff_edu_grade option:selected').text() + '</div>\n' +
         '   <div class="col-xs-3"><input type="hidden" name="staff_edu_major[]" value="' + $('#staff_edu_major').val() + '">' + $('#staff_edu_major').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="staff_edu_date_grade[]" value="' + $('#staff_edu_date_grade').val() + '">' + $('#staff_edu_date_grade').val() + '</div>\n' +
-        '   <div class="col-xs-1"><i class="fa fa-trash pointer staff_remove_edu"></i></div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
         '</div>'
     )
 });
@@ -226,25 +226,27 @@ $(document).on("click", ".staff_remove_edu", function () {
     $(this).parent().parent().remove();
 });
 
-$(document).on("click", "#btn_insert_staff", function () {
+$(document).on("click", "#btn_submit_staff", function () {
     $.ajax({
         type: "POST",
         url: $(this).attr('rel'),
         dataType: "json",
-        data: $('#create_new_staff').serialize(),
+        data: $('#staff_form').serialize(),
         success: function (result) {
         if (result.success == true) {
-            $('.jsPanel-btn-close').click();
-            window.table_organs_grid.ajax.reload();
+                $('.jsPanel-btn.jsPanel-btn-close').click();
+                window.table_organs_grid.ajax.reload();
+            }
+            else {
+                messageModal('error', '', result.error);
+            }
+            setTimeout(function(){$("#alert_insert").html('') }, 4000);
         }
-        else {
-            messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
-        }
-        setTimeout(function(){$("#alert_insert").html('') }, 4000);
-    }
+    });
 });
+$(document).on("click", ".remove-staff-item", function () {
+    $(this).parent().parent().remove();
 });
-
 
 $(document).on('mouseover', '[data-toggle="tooltip"]', function () {
     $('[data-toggle="tooltip"]').tooltip();
