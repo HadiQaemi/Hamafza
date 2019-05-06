@@ -635,6 +635,14 @@ class OrgChartController extends Controller
             })
             ->make(true);
     }
+    public function fetchPortalJob()
+    {
+
+        $data = onet_job::with('skill', 'ability', 'knowledge')->limit(10)->get();
+        return json_encode(
+            ['data'=>$data]
+        );
+    }
 
     public function staff($username)
     {

@@ -17,6 +17,7 @@ Route::post('fetch_org_list', ['as' => 'hamahang.org_chart.fetch_org_list', 'use
 Route::post('fetch_job_list', ['as' => 'hamahang.org_chart.fetch_job_list', 'uses' => 'OrgChartController@FetchJobList', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
 Route::post('fetch_all_staff_list', ['as' => 'hamahang.org_chart.fetch_all_staff_list', 'uses' => 'OrgChartController@fetchStaff', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
 Route::post('fetch_all_job_list', ['as' => 'hamahang.org_chart.fetch_all_job_list', 'uses' => 'OrgChartController@fetchAllJob', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
+Route::post('portal_job_list', ['as' => 'hamahang.org_chart.portal_job_list', 'uses' => 'OrgChartController@fetchPortalJob', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
 Route::post('set_score', ['as' => 'hamahang.org_chart.set_score', 'uses' => 'OrgChartController@SetScore', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
 Route::post('wages_all_job', ['as' => 'hamahang.org_chart.wages_all_job', 'uses' => 'OrgChartController@wagesAllJob', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);
 Route::post('fetch_post_list', ['as' => 'hamahang.org_chart.fetch_post_list', 'uses' => 'OrgChartController@FetchPostList', 'middleware' => ['dynamic_permission:posts.hamahang.org_chart.ajax_org_charts']]);

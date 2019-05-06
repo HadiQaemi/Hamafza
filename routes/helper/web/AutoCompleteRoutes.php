@@ -8,6 +8,9 @@ Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middlewar
     Route::post('onet_jobs_items', ['as' => 'auto_complete.onet_jobs_items', 'uses' => 'AutoCompleteController@onet_jobs_items', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
     Route::post('org_charts_items_posts', ['as' => 'auto_complete.org_charts_items_posts', 'uses' => 'AutoCompleteController@org_charts_items_posts', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
     Route::post('org_charts_posts', ['as' => 'auto_complete.org_charts_posts', 'uses' => 'AutoCompleteController@org_charts_posts', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
+    Route::post('onet_skill', ['as' => 'auto_complete.onet_skill', 'uses' => 'AutoCompleteController@onet_skill', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
+    Route::post('onet_ability', ['as' => 'auto_complete.onet_ability', 'uses' => 'AutoCompleteController@onet_ability', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
+    Route::post('onet_knowledge', ['as' => 'auto_complete.onet_knowledge', 'uses' => 'AutoCompleteController@onet_knowledge', 'middleware' => ['dynamic_permission:auto_complete.users_new']]);
     Route::post('tasks', ['as' => 'auto_complete.tasks', 'uses' => 'AutoCompleteController@tasks', 'middleware' => ['dynamic_permission:auto_complete.tasks']]);
     Route::post('resources', ['as' => 'auto_complete.resources', 'uses' => 'AutoCompleteController@resources', 'middleware' => ['dynamic_permission:auto_complete.resources']]);
     Route::post('pages', ['as' => 'auto_complete.pages', 'uses' => 'AutoCompleteController@pages', 'middleware' => ['dynamic_permission:auto_complete.pages']]);

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\hamafza\keyword;
 use App\Models\hamafza\Subject;
 use App\Models\Hamahang\ACL\AclCategory;
+use App\Models\Hamahang\OrgChart\onet_ability;
+use App\Models\Hamahang\OrgChart\onet_knowledge;
+use App\Models\Hamahang\OrgChart\onet_skill;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_organs;
@@ -171,6 +174,66 @@ class AutoCompleteController extends Controller
             {
                 $data = org_charts_items_jobs_posts::select("id", "extra_title as text")
                     ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+    }
+
+    public function onet_skill(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = onet_skill::select("id", "extra_title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = onet_skill::select("id", "label as text")
+                    ->where("label", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+    }
+
+    public function onet_ability(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = onet_ability::select("id", "extra_title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = onet_ability::select("id", "label as text")
+                    ->where("label", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+    }
+
+    public function onet_knowledge(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = onet_knowledge::select("id", "extra_title as text")
+                    ->get();
+            }
+            else
+            {
+                $data = onet_knowledge::select("id", "label as text")
+                    ->where("label", "LIKE", '%' . $request->term['term'] . '%')->get();
             }
             $data = array('results' => $data);
             return response()->json($data);

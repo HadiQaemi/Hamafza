@@ -9,6 +9,12 @@ use App\HamahangCustomClasses\Widgets;
 use App\Models\hamafza\Keyword;
 use App\Models\hamafza\History;
 use App\Models\hamafza\Subject;
+use App\Models\Hamahang\OrgChart\onet_ability;
+use App\Models\Hamahang\OrgChart\onet_job_ability;
+use App\Models\Hamahang\OrgChart\onet_job_knowledge;
+use App\Models\Hamahang\OrgChart\onet_job_skill;
+use App\Models\Hamahang\OrgChart\onet_knowledge;
+use App\Models\Hamahang\OrgChart\onet_skill;
 use App\Models\Hamahang\Score;
 use App\Models\hamafza\Pages;
 use App\User;
@@ -1048,6 +1054,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         return 404;
                     }
                     $Type = $params['Type'];
+
                     if ($pageM)
                     {
                         $pid = $item;
@@ -1105,49 +1112,148 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 $options[13] = [];
 
                         }
-                        
-                        $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
 
+                        $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
                             case '20':
                             {
-                                $sid = $sid == false ? config('constants.default_enquiry_portal_id') : $sid;
-                                $Title = $subject->title;
-                                $sub_kind = Subject::find($sid)->sub_kind;
-                                $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
-                                $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
-                                //$tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
-                                $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
-                                Session::put('enquiry_body',$pageM->body);
-                                if (\Request::exists('tagid'))
+                                if($subject->sub_kind == 5)
                                 {
-                                    $keyword = \App\Models\hamafza\Keyword::find(\Request::get('tagid'));
+//                                    ini_set('max_execution_time', 300000);
+//                                    for($i=551;$i++;$i<=1135)
+//                                    {
+//                                        $job = \App\Models\hamahang\OrgChart\onet_job::where('id','=',$i)->first();
+//                                        if(isset($job->lblKnowledge)){
+//                                            $lblKnowledge = json_decode($job->lblKnowledge);
+//                                            if(is_object($lblKnowledge))
+//                                            {
+//                                                foreach($lblKnowledge as $key => $value)
+//                                                {
+//                                                    if(stristr($key, 'FAElementNameLabel'))
+//                                                    {
+//                                                        $subs = preg_split('/_/', $key);
+//                                                        $des_key = 'dlstKnowledge_FADescriptionLabel_'.$subs[2];
+//                                                        $knowledge = onet_knowledge::where('label', '=', $value)->first();
+//                                                        if(count($knowledge)==0){
+//                                                            $knowledge = onet_knowledge::create([
+//                                                                'label' => $value,
+//                                                                'description' => $lblKnowledge->{$des_key}
+//                                                            ]);
+//                                                        }
+//                                                        onet_job_knowledge::create([
+//                                                            'knowledge_id' => $knowledge->id,
+//                                                            'job_id' => $job->id
+//                                                        ]);
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                        if(isset($job->lblSkill))
+//                                        {
+//                                            $lblSkill = json_decode($job->lblSkill);
+//                                            if(is_object($lblSkill)){
+//                                                foreach($lblSkill as $key => $value)
+//                                                {
+//                                                    if(stristr($key, 'FAElementNameLabel'))
+//                                                    {
+//                                                        $subs = preg_split('/_/', $key);
+//                                                        $des_key = 'dlstSkills_FADescriptionLabel_'.$subs[2];
+//                                                        $skill = onet_skill::where('label', '=', $value)->first();
+//                                                        if(count($skill)==0){
+//                                                            $skill = onet_skill::create([
+//                                                                'label' => $value,
+//                                                                'description' => $lblSkill->{$des_key}
+//                                                            ]);
+//                                                        }
+//                                                        onet_job_skill::create([
+//                                                            'skill_id' => $skill->id,
+//                                                            'job_id' => $job->id
+//                                                        ]);
+//                                                    }
+//                                                }
+//                                            }
+//
+//                                        }
+//                                        if(isset($job->lblAbility))
+//                                        {
+//                                            $lblAbility = json_decode($job->lblAbility);
+//                                            if(is_object($lblAbility))
+//                                            {
+//                                                foreach($lblAbility as $key => $value)
+//                                                {
+//                                                    if(stristr($key, 'dlstAbilities_FAElementNameLabel'))
+//                                                    {
+//                                                        $subs = preg_split('/_/', $key);
+//                                                        $des_key = 'dlstAbilities_FADescriptionLabel_'.$subs[2];
+//                                                        $ability = onet_ability::where('label', '=', $value)->first();
+//                                                        if(count($ability)==0){
+//                                                            $ability = onet_ability::create([
+//                                                                'label' => $value,
+//                                                                'description' => $lblAbility->{$des_key}
+//                                                            ]);
+//                                                        }
+//                                                        onet_job_ability::create([
+//                                                            'ability_id' => $ability->id,
+//                                                            'job_id' => $job->id
+//                                                        ]);
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//
+//                                    echo '<pre>';
+//                                    print_r($lblKnowledge);
+//                                    echo '</pre>';
+//                                    dd($job, ($job->lblDescription), json_decode($job->lblKnowledge), json_decode($job->lblSkill), json_decode($job->lblAbility));
                                     $res =
-                                    [
-                                        'viewname' => 'hamahang.Enquiry.enquiry_index',
-                                        'posts' => $posts,
-                                        'pid' => $pid,
-                                        'body' => $pageM->body,
-                                        'sid' => $sid,
-                                        'sub_kind' => $sub_kind,
-                                        'keywords' => $keywords,
-                                        'current_tab' => $pid,
-                                        'keyword' => $keyword,
-                                    ];
-                                } else
-                                {
-                                    $res =
-                                    [
-                                        'viewname' => 'hamahang.Enquiry.enquiry_index',
-                                        'posts' => $posts,
-                                        'pid' => $pid,
-                                        'body' => $pageM->body,
-                                        'sid' => $sid,
-                                        'sub_kind' => $sub_kind,
-                                        'keywords' => $keywords,
-                                        'current_tab' => $pid,
-                                    ];
+                                        [
+                                            'viewname' => 'hamahang.OrgChart.jobPortal',
+                                            'pid' => $pid,
+                                            'body' => $pageM->body,
+                                            'sid' => $sid,
+//                                            'job' => $job,
+                                            'current_tab' => $pid,
+                                        ];
+                                }else{
+                                    $sid = $sid == false ? config('constants.default_enquiry_portal_id') : $sid;
+                                    $Title = $subject->title;
+                                    $sub_kind = Subject::find($sid)->sub_kind;
+                                    $sub_kind = 0 == $sub_kind ? 2 : $sub_kind;
+                                    $posts = \App\Models\hamafza\Post::where('type', 0 == $sub_kind ? 2 : $sub_kind)->where('portal_id', $sid)->orderBy('reg_date', 'desc')->get();
+                                    //$tools_menu = toolsGenerator([1 => ['uid' => Auth::id(), 'sid' => $sid, 'type' => 'subject', 'pid' => $pid, 'title' => $Title]], 1, 5, ['subject_id' => $sid, 'page_id' => $pid]);
+                                    $keywords = \App\Http\Controllers\Hamahang\EnquiryController::get_keywords($sid, config('constants.enquiry_sidebar_paginate'));
+                                    Session::put('enquiry_body',$pageM->body);
+                                    if (\Request::exists('tagid'))
+                                    {
+                                        $keyword = \App\Models\hamafza\Keyword::find(\Request::get('tagid'));
+                                        $res =
+                                            [
+                                                'viewname' => 'hamahang.Enquiry.enquiry_index',
+                                                'posts' => $posts,
+                                                'pid' => $pid,
+                                                'body' => $pageM->body,
+                                                'sid' => $sid,
+                                                'sub_kind' => $sub_kind,
+                                                'keywords' => $keywords,
+                                                'current_tab' => $pid,
+                                                'keyword' => $keyword,
+                                            ];
+                                    } else
+                                    {
+                                        $res =
+                                            [
+                                                'viewname' => 'hamahang.Enquiry.enquiry_index',
+                                                'posts' => $posts,
+                                                'pid' => $pid,
+                                                'body' => $pageM->body,
+                                                'sid' => $sid,
+                                                'sub_kind' => $sub_kind,
+                                                'keywords' => $keywords,
+                                                'current_tab' => $pid,
+                                            ];
+                                    }
                                 }
                                 break;
                             }
@@ -1929,7 +2035,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $option = 7;
                 }
             }
-            else 
+            else
             {
                  if ($Group->isorgan == "1"){
                     $option = 12;
@@ -1937,7 +2043,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $option = 9;
                 }
             }
-            
+
             $PageType = 'group';
             $tabparam['uid'] = $uid;
             $viewname = 'pages.Desktop';
@@ -1975,13 +2081,13 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 case 'edit':
                 {
-                    
-                    $SP = new \App\HamafzaServiceClasses\GroupsClass; 
-                    $json_a = $SP->about('', $uid, $item); 
-                    $GroupJSon = $json_a; 
-                    $Preview = $GroupJSon['preview']; 
-                    $admin = $Preview['adminid']; 
-                    $Title = 'ویرایش ' . $Preview['PreTitle'] . ' ' . $Preview['name']; 
+
+                    $SP = new \App\HamafzaServiceClasses\GroupsClass;
+                    $json_a = $SP->about('', $uid, $item);
+                    $GroupJSon = $json_a;
+                    $Preview = $GroupJSon['preview'];
+                    $admin = $Preview['adminid'];
+                    $Title = 'ویرایش ' . $Preview['PreTitle'] . ' ' . $Preview['name'];
                     $isorgan = $Preview['isorgan'];
                     $gname = $Preview['link'];
                     $id = $Preview['id'];
@@ -2020,7 +2126,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                 }
                 case 'desktop':
                 {
-                   
+
                     $SN = new \App\HamafzaServiceClasses\GroupsClass();
                     $Preview = $SN->Group_Title($Group);
                     $Title = $Preview['PreTitle'] . ' ' . $Preview['name'];
@@ -2066,7 +2172,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
 
                         'current_tab' => 'desktop',
                     ];
-                    
+
                     break;
                 }
             }
