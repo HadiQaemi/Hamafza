@@ -2,6 +2,7 @@
 
 use App\HamafzaServiceClasses\PageClass;
 use App\HamafzaServiceClasses\PostsClass;
+use App\HamafzaServiceClasses\SubjectsClass;
 use App\HamafzaViewClasses\DesktopClass;
 use App\HamafzaServiceClasses\UserClass;
 use App\HamafzaViewClasses\PublicClass;
@@ -10,6 +11,7 @@ use App\Models\hamafza\Keyword;
 use App\Models\hamafza\History;
 use App\Models\hamafza\Subject;
 use App\Models\Hamahang\OrgChart\onet_ability;
+use App\Models\Hamahang\OrgChart\onet_job;
 use App\Models\Hamahang\OrgChart\onet_job_ability;
 use App\Models\Hamahang\OrgChart\onet_job_knowledge;
 use App\Models\Hamahang\OrgChart\onet_job_skill;
@@ -1116,11 +1118,34 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                         $tools_menu = toolsGenerator($options, 1, 5, ['subject_id' => $sid, 'page_id' => $pid,'target_type'=>'page','target_id'=>$pid]);
                         switch ($subject->kind)
                         {
+                            case '99':
+                            {
+                                $job = onet_job::where('sid', '=', $sid)->with('skill', 'skill.skill', 'ability', 'ability.ability', 'knowledge', 'knowledge.knowledge')->first();
+                                $res =
+                                    [
+                                        'viewname' => 'hamahang.OrgChart.jobItem',
+                                        'pid' => $pid,
+                                        'sid' => $sid,
+                                        'job' => $job,
+                                        'current_tab' => $pid
+                                    ];
+                                break;
+                            }
                             case '20':
                             {
+                                $reg_date = gmdate("Y-m-d H:i:s", time() + 12600);
                                 if($subject->sub_kind == 5)
                                 {
 //                                    ini_set('max_execution_time', 300000);
+//                                    ini_set('memory_limit','160M');
+//                                    $cntId = 10584;
+//                                    for($i=609;$i++;$i<=1135) {
+//                                        $job = onet_job::where('id', '=', $i)->first();
+//                                        $SP = new SubjectsClass();
+//                                        $SP->AddSubject($cntId, null, [0=>1], null, [0=>3], null, 5089, 0, isset($job->title) ? $job->title : '', "on", "99", "", "1", null, null, null, 99, null);
+//                                        $job->sid = $cntId++;
+//                                        $job->save();
+//                                    }
 //                                    for($i=551;$i++;$i<=1135)
 //                                    {
 //                                        $job = \App\Models\hamahang\OrgChart\onet_job::where('id','=',$i)->first();

@@ -285,7 +285,7 @@
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>{{trans('calendar_events.ce_moda_session_modal_session_voting')}}</label>
                                 </div>
-                                <div class="col-xs-11">
+                                <div class="col-xs-10">
                                     <select name="session_voting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_voting_users')}}" multiple>
                                         <option value=""></option>
                                         @if(!empty($form_data['session_voting_users']))
@@ -297,6 +297,11 @@
                                         @endif
                                         <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
+                                </div>
+                                <div class="col-xs-1 line-height-35">
+                                    <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_users_responsible']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
+                                        <span class="icon icon-afzoodane-fard fonts"></span>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-20">

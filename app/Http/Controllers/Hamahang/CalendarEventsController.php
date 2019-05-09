@@ -673,6 +673,10 @@ class CalendarEventsController extends Controller
 
                     }
 
+                    if(Request::input('create_session_page')){
+
+                    }
+
                     if ($sessionObj->save())
                     {
 

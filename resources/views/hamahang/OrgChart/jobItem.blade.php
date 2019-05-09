@@ -13,52 +13,74 @@
             padding: 10px;
         }
     </style>
-    <div class="row" style="margin-top: -10px;background: #eee" >
-        <form id="form_filter_priority">
-            <div class="row padding-bottom-20 opacity-7">
-                <i class="fa fa-search int-icon3"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="onet_skill_search" name="onet_skill_search[]" class="select2_auto_complete_onet_skill col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_onet_skill')}}" multiple>
-                    </select>
+
+    <div class="row-fluid">
+        <div class="tab-pane active tab-view" id="tab_t1">
+            <div class="col-xs-12 form-group margin-top-20">
+                <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding line-height-35">
+                    <label for="item_title">شغل</label>
                 </div>
-                <i class="fa fa-search int-icon2"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="onet_ability_search" class="select2_auto_complete_onet_ability" name="onet_ability_search[]"
-                            data-placeholder="{{trans('org_chart.search_some_onet_ability')}}" multiple></select>
-                </div>
-                <i class="fa fa-search int-icon1"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="onet_knowledge_search" name="onet_knowledge_search[]" class="select2_auto_complete_onet_knowledge col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_onet_knowledge')}}" multiple>
-                    </select>
+                <div class="col-xs-11 noRightPadding noLeftPadding">
+                    {{$job->title}}
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="row-fluid">
-        <div class="space-10"></div>
-        <div class="col-xs-12">
-            <fieldset>
-                <div id="OrgList">
-                    <div class="row-fluid">
-                        <div class="col-lg-12">
-                            <table id="JobListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th>{{ trans('org_chart.job') }}</th>
-                                    <th>{{ trans('org_chart.description') }}</th>
-                                    <th>{{ trans('app.action') }}</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+            <div class="col-xs-12 form-group margin-top-20 ">
+                <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding line-height-35">
+                    <label for="item_title">توضیحات</label>
                 </div>
-            </fieldset>
+                <div class="col-xs-11 noRightPadding noLeftPadding">
+                    {{$job->lblDescription}}
+                </div>
+            </div>
         </div>
-        <div class="clearfix"></div>
+        <div class="tab-pane tab-view" id="tab_t2">
+            <table class="table margin-top-20" style="width: 100%;">
+                <thead>
+                <th class="col-xs-4 text-right">مهارت</th>
+                <th class="col-xs-3 text-right">توضیحات</th>
+                </thead>
+                <tbody id="list_positions">
+                @foreach($job->skill as $skill)
+                    <tr>
+                        <td class="col-xs-4">{{isset($skill->skill->label) ? $skill->skill->label : ''}}</td>
+                        <td class="col-xs-8">{{isset($skill->skill->description) ? $skill->skill->description : ''}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane tab-view" id="tab_t3">
+            <table class="table margin-top-20" style="width: 100%;">
+                <thead>
+                <th class="col-xs-4 text-right">توانایی</th>
+                <th class="col-xs-3 text-right">توضیحات</th>
+                </thead>
+                <tbody id="list_positions">
+                @foreach($job->ability as $ability)
+                    <tr>
+                        <td class="col-xs-4">{{isset($ability->ability->label) ? $ability->ability->label : ''}}</td>
+                        <td class="col-xs-8">{{isset($ability->ability->description) ? $ability->ability->description : ''}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane tab-view" id="tab_t4">
+            <table class="table margin-top-20" style="width: 100%;">
+                <thead>
+                <th class="col-xs-4 text-right">توانایی</th>
+                <th class="col-xs-3 text-right">توضیحات</th>
+                </thead>
+                <tbody id="list_positions">
+                @foreach($job->knowledge as $knowledge)
+                    <tr>
+                        <td class="col-xs-4">{{isset($knowledge->knowledge->label) ? $knowledge->knowledge->label : ''}}</td>
+                        <td class="col-xs-8">{{isset($knowledge->knowledge->description) ? $knowledge->knowledge->description : ''}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @stop
 
@@ -225,5 +247,5 @@
 @stop
 @include('sections.tabs')
 @section('position_right_col_3')
-    {{--@include('sections.desktop_menu')--}}
+    @include('sections.desktop_menu')
 @stop

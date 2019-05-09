@@ -383,7 +383,7 @@ class SubjectsClass
         return $message;
     }
 
-    public static function AddSubject($keywords_list_subject,$roles_list_subject_edit,$users_list_subject_edit,$roles_list_subject_view,$users_list_subject_view,$uid = 0, $session_id = 0, $title, $tem, $kind = 0, $framework = 0, $ispublic, $fields, $TT_ttype, $field_type, $Skind, $keywords)
+    public static function AddSubject($id,$keywords_list_subject,$roles_list_subject_edit,$users_list_subject_edit,$roles_list_subject_view,$users_list_subject_view,$uid = 0, $session_id = 0, $title, $tem, $kind = 0, $framework = 0, $ispublic, $fields, $TT_ttype, $field_type, $Skind, $keywords)
     {
         $skind = $kind;
         $subject_title = PublicsClass::subst($title);
@@ -416,7 +416,7 @@ class SubjectsClass
         $istheme = 0;
 
         $work = DB::table('subjects')->insertGetId(
-            array('admin' => $admin, 'manager' => $managerid, 'supporter' => $supporterid, 'supervisor' => $supervisorid, 'title' => $subject_title
+            array('id' => $id,'admin' => $admin, 'manager' => $managerid, 'supporter' => $supporterid, 'supervisor' => $supervisorid, 'title' => $subject_title
             , 'author' => $subject_author, 'kind' => $skind, 'group' => $group, 'pform' => $pform
             , 'theme' => $istheme, 'frame' => $isframe, 'frameid' => $frameid, 'list' => $list,
                 'graph' => $graph, 'search' => $search, 'top' => $top, 'priority' => $priority

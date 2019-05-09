@@ -27,6 +27,7 @@ use App\Models\Hamahang\keywords;
 use App\Models\Hamahang\Menus\MenuItem;
 use App\Models\Hamahang\Menus\Menus;
 use App\Models\Hamahang\Options;
+use App\Models\Hamahang\OrgChart\onet_job;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_chart_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts;
@@ -1062,6 +1063,17 @@ class ModalController extends Controller
         ]);
     }
 
+    public function ViewJobItem(){
+        $sid = $this->getParams(['sid']);
+        $data = onet_job::where('id', '=', $sid)->with('skill', 'skill.skill', 'ability', 'ability.ability', 'knowledge', 'knowledge.knowledge')->first();
+        return json_encode([
+            'header' => trans('org_chart.job'),
+            'content' => view('modals.organ.add_organ.jsp_job_item_content')->with('job', $data)
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_job_item_footer')
+                ->render()
+        ]);
+    }
     public function ViewJobForm(){
         $sid = $this->getParams(['sid']);
         $data = org_charts_items_jobs::where('id', '=', $sid)->with('posts', 'job', 'item')->first();
