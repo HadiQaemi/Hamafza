@@ -6,7 +6,7 @@
                     <h5 class="state_title">مهم و فوری</h5>
                     <ul class="task_items droppable" id="important_and_immediate">
                         <div style="direction: rtl;">
-                            @if(isset($tasks_immediate_importance))
+                            @if(isset($tasks_immediate_importance) && is_array($tasks_not_immediate_not_importance))
                                 @foreach($tasks_immediate_importance as $task)
                                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                         @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
@@ -50,7 +50,7 @@
                     <h5 class="state_title">غیر مهم و فوری</h5>
                     <ul class="task_items droppable" id="not_important_and_immediate">
                         <div style="direction: rtl;">
-                            @if(isset($tasks_immediate_not_importance))
+                            @if(isset($tasks_immediate_not_importance) && is_array($tasks_not_immediate_not_importance))
                                 @foreach($tasks_immediate_not_importance as $task)
                                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                         @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
@@ -96,7 +96,7 @@
                         <h5 class="state_title">مهم و غیر فوری</h5>
                         <ul class="task_items droppable" id="important_and_not_immediate">
                         <div style="direction: rtl;">
-                            @if(isset($tasks_not_immediate_importance))
+                            @if(isset($tasks_not_immediate_importance) && is_array($tasks_not_immediate_not_importance))
                                 @foreach($tasks_not_immediate_importance as $task)
                                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                         @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
@@ -140,7 +140,7 @@
                     <h5 class="state_title">غیر مهم و غیر فوری</h5>
                     <ul class="task_items droppable" id="not_important_and_not_immediate">
                     <div style="direction: rtl;">
-                        @if(isset($tasks_not_immediate_not_importance))
+                        @if(isset($tasks_not_immediate_not_importance) && is_array($tasks_not_immediate_not_importance))
                             @foreach($tasks_not_immediate_not_importance as $task)
                                 <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-action="task" data-task_id="{{$task->id}}">
                                     @if(strstr(\Route::currentRouteName(),'desktop.hamahang.tasks.my_assigned_tasks.priority'))
