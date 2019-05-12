@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-
+        filter_mytask();
         // initDraggable();
         $(".DatePicker").persianDatepicker({
             observer: true,

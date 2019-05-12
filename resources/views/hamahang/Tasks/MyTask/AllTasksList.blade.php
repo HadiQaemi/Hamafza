@@ -33,18 +33,32 @@
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-calendar-minus-o int-icon3"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="title" name="title" placeholder="{{trans('tasks.search_title')}}" autocomplete="off">
+                    <input type="text" value="{{(Session::get('AllTaskTitle')) ? Session::get('AllTaskTitle') : ''}}" class="form-control int-btm-brd" style="padding: 6px 20px;" id="title" name="title" placeholder="{{trans('tasks.search_title')}}" autocomplete="off">
                 </div>
                 <i class="fa fa-tags int-icon2"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
                     <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
-                            data-placeholder="{{trans('tasks.search_keyword_task')}}" multiple="multiple"></select>
+                            data-placeholder="{{trans('tasks.search_keyword_task')}}" multiple="multiple">
+                        @if(Session::exists('AllTaskTaskKeywords'))
+                            @foreach(Session::get('AllTaskTaskKeywords')  as $key => $value)
+                                @foreach($value  as $index => $option)
+                                    <option value="{{$index}}" selected>{{$option}}</option>
+                                @endforeach
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
                 <i class="fa fa-users int-icon1"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
                     <select id="new_task_users_all_tasks" name="users[]" class="select2_auto_complete_user col-xs-12"
                             data-placeholder="{{trans('tasks.search_some_persons')}}" multiple>
-                        <option value=""></option>
+                        @if(Session::exists('AllTaskTaskUsers'))
+                            @foreach(Session::get('AllTaskTaskUsers')  as $key => $value)
+                                @foreach($value  as $index => $option)
+                                    <option value="{{$index}}" selected>{{$option}}</option>
+                                @endforeach
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>

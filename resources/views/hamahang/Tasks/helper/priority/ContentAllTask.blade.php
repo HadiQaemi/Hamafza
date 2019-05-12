@@ -171,25 +171,27 @@
             <div class="col-xs-12 priority_state_list">
                 <ul class="task_items droppable" id="important_and_immediate">
                     <div style="direction: rtl;">
-                        @foreach($MyTasksPriorityTime as $task)
-                            <li class="draggable task_item_{{$task->id}}" data-action="task_timing" data-title="{{$task->title}}" data-task_id="{{$task->id}}">
-                                <div class="task_title">
-                                    <h5 class="text_ellipsis">
-                                        <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                            @php
-                                                $title = $task->title;
-                                                $words = str_word_count($task->title, 2);
-                                                $pos = array_keys($words);
-                                                $min = min(count($words),3);
-                                                if(isset($pos[1]))
-                                                    $title = substr($words, 1, $pos[1]) . '...';
-                                            @endphp
-                                            {{$task->title}}
-                                        </a>
-                                    </h5>
-                                </div>
-                            </li>
-                        @endforeach
+                        @if(isset($MyTasksPriorityTime))
+                            @foreach($MyTasksPriorityTime as $task)
+                                <li class="draggable task_item_{{$task->id}}" data-action="task_timing" data-title="{{$task->title}}" data-task_id="{{$task->id}}">
+                                    <div class="task_title">
+                                        <h5 class="text_ellipsis">
+                                            <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
+                                                @php
+                                                    $title = $task->title;
+                                                    $words = str_word_count($task->title, 2);
+                                                    $pos = array_keys($words);
+                                                    $min = min(count($words),3);
+                                                    if(isset($pos[1]))
+                                                        $title = substr($words, 1, $pos[1]) . '...';
+                                                @endphp
+                                                {{$task->title}}
+                                            </a>
+                                        </h5>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
                     </div>
                 </ul>
             </div>

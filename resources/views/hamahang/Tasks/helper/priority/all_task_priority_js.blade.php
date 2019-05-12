@@ -8,6 +8,7 @@
     $(document).ready(function () {
 
         // initDraggable();
+        filter_tasks_priority();
         $('#new_task_users_all_tasks, #new_task_keywords').on('change', function () {
             filter_tasks_priority();
         });

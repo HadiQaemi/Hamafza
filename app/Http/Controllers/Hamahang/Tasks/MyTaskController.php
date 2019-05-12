@@ -44,6 +44,38 @@ class MyTaskController extends Controller
 {
     public function FetchAllTaskList(){
         $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
+        Session::put('AllTaskTitle',Request::input('title'));
+        Session::put('AllTaskOfficialType',Request::input('official_type'));
+        Session::put('AllTaskTaskImportantImmediate',Request::input('task_important_immediate'));
+        Session::put('AllTaskTaskImportantTaskStatus',Request::input('task_status'));
+        Session::put('AllTaskTaskUsers',Request::input('users'));
+
+        if(Request::exists('users'))
+        {
+            $users = User::whereIn('id', Request::input('users'))->select('id', 'Name', 'Family')->get();
+            $keyValues = [];
+            foreach ($users as $user)
+            {
+                $keyValues[] = [$user->id => $user->Name.' '.$user->Family];
+            }
+            Session::put('AllTaskTaskUsers', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskUsers', null);
+        }
+
+        if(Request::exists('keywords'))
+        {
+            $keywords = keywords::whereIn('id', str_ireplace('exist_in', '', Request::input('keywords')))->select('id', 'title')->get();
+            $keyValues = [];
+            foreach ($keywords as $keyword)
+            {
+                $keyValues[] = [$keyword->id => $keyword->title];
+            }
+            Session::put('AllTaskTaskKeywords', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskKeywords');
+        }
+
         $date = new jDateTime;
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
@@ -166,7 +198,7 @@ class MyTaskController extends Controller
     public function ListAllTask($uname){
 
         $packages = task_packages::where('uid', Auth::id())->get();
-//        dd(\Route::currentRouteName());
+
         switch (\Route::currentRouteName())
         {
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_list':
@@ -199,13 +231,13 @@ class MyTaskController extends Controller
             case 'pgs.desktop.hamahang.tasks.my_tasks.all_task_state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $arr["sid"];
-                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
+//                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_state':
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $arr["sid"];
-                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
+//                $arr['MyTasksInState'] = tasks::all_task_in_status($arr)->render();
                 return view('hamahang.Tasks.MyTask.StateAllTasks', $arr);
                 break;
         }
@@ -213,6 +245,37 @@ class MyTaskController extends Controller
 
     public function filter_all_task_priority()
     {
+        Session::put('AllTaskTitle',Request::input('title'));
+        Session::put('AllTaskOfficialType',Request::input('official_type'));
+        Session::put('AllTaskTaskImportantImmediate',Request::input('task_important_immediate'));
+        Session::put('AllTaskTaskImportantTaskStatus',Request::input('task_status'));
+        Session::put('AllTaskTaskUsers',Request::input('users'));
+
+        if(Request::exists('users'))
+        {
+            $users = User::whereIn('id', Request::input('users'))->select('id', 'Name', 'Family')->get();
+            $keyValues = [];
+            foreach ($users as $user)
+            {
+                $keyValues[] = [$user->id => $user->Name.' '.$user->Family];
+            }
+            Session::put('AllTaskTaskUsers', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskUsers', null);
+        }
+
+        if(Request::exists('keywords'))
+        {
+            $keywords = keywords::whereIn('id', str_ireplace('exist_in', '', Request::input('keywords')))->select('id', 'title')->get();
+            $keyValues = [];
+            foreach ($keywords as $keyword)
+            {
+                $keyValues[] = [$keyword->id => $keyword->title];
+            }
+            Session::put('AllTaskTaskKeywords', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskKeywords');
+        }
         $Request = Request::all();
         $validator = Validator::make(Request::all(), [
             'task_title' => 'string',
@@ -252,14 +315,14 @@ class MyTaskController extends Controller
                 $arr = variable_generator('page', 'desktop', $uname);
                 $arr['filter_subject_id'] = $arr["sid"];
 //                DB::enableQueryLog();
-                $arr = array_merge($arr, tasks::AllTasksPriority($arr,[0,1],false,false,[0,1]));
+//                $arr = array_merge($arr, tasks::AllTasksPriority($arr,[0,1],false,false,[0,1]));
 //                dd(DB::getQueryLog());
                 return view('hamahang.Tasks.PriorityAllTasks', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
             case 'ugc.desktop.hamahang.tasks.my_tasks.all_task_priority':
                 $arr = variable_generator('user', 'desktop', $uname);
-                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
+//                $arr = array_merge($arr, tasks::MyTasksPriority($arr,[0,1],false,false,[0,1]));
                 return view('hamahang.Tasks.priority', $arr);
                 //return view('hamahang.Tasks.MyTask.MyTasksPriority', $arr);
                 break;
@@ -860,6 +923,37 @@ class MyTaskController extends Controller
 
     public function filter_all_task_state()
     {
+        Session::put('AllTaskTitle',Request::input('title'));
+        Session::put('AllTaskOfficialType',Request::input('official_type'));
+        Session::put('AllTaskTaskImportantImmediate',Request::input('task_important_immediate'));
+        Session::put('AllTaskTaskImportantTaskStatus',Request::input('task_status'));
+        Session::put('AllTaskTaskUsers',Request::input('users'));
+
+        if(Request::exists('users'))
+        {
+            $users = User::whereIn('id', Request::input('users'))->select('id', 'Name', 'Family')->get();
+            $keyValues = [];
+            foreach ($users as $user)
+            {
+                $keyValues[] = [$user->id => $user->Name.' '.$user->Family];
+            }
+            Session::put('AllTaskTaskUsers', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskUsers', null);
+        }
+
+        if(Request::exists('keywords'))
+        {
+            $keywords = keywords::whereIn('id', str_ireplace('exist_in', '', Request::input('keywords')))->select('id', 'title')->get();
+            $keyValues = [];
+            foreach ($keywords as $keyword)
+            {
+                $keyValues[] = [$keyword->id => $keyword->title];
+            }
+            Session::put('AllTaskTaskKeywords', $keyValues);
+        }else{
+            Session::remove('AllTaskTaskKeywords');
+        }
         $user=auth()->user();
         $validator = Validator::make(Request::all(), [
             'task_title' => 'string',
