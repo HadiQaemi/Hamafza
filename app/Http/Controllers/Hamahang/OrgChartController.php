@@ -678,6 +678,9 @@ class OrgChartController extends Controller
             ->addColumn('staff', function ($data) {
                 return $data->staff->first_name . ' ' . $data->staff->last_name;
             })
+            ->addColumn('staffId', function ($data) {
+                return enCode($data->staff->id);
+            })
             ->addColumn('post', function ($data) {
                 return $data->post->extra_title;
             })
@@ -1460,6 +1463,115 @@ class OrgChartController extends Controller
                         'uid' => auth()->id(),
                         'staff_id' => $staff,
                         'chart_item_post_job_id' => $chart_item_job_position
+                    ]);
+                }
+            }
+
+            $result['success'] = true;
+        }
+        return json_encode($result);
+    }
+
+    public function update_doc_staff()
+    {
+        $validator = Validator::make(Request::all(),
+            [
+                'home_type' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'contract_type' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'insurance_num' => 'numeric',
+                'veteran_precent' => 'numeric',
+                'captivity_duration' => 'numeric',
+                'time_war' => 'numeric',
+                'spouse_mobile.*' => 'numeric',
+                'marry_date.*' => 'regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'birth_date.*' => 'regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'spouse_job.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'spouse_lastname.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'spouse_name.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'child_job.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'child_name.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'child_mobile.*' => 'numeric',
+                'child_national_code.*' => 'numeric',
+//                'child_edu_grade.*' => 'numeric',
+                'child_birth_date.*' => 'regex:^([1-1][2-4][0-9][0-9]-[0-1][0-9]-[0-3][0-9])$^',
+                'related_name.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'related_lastname.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'related_post.*' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                'related_code_melli.*' => 'numeric',
+            ],
+            [],
+            [
+                'home_type' => 'نوع مسکن',
+                'contract_type' => 'نوع قرارداد',
+                'insurance_num' => 'شماره بیمه',
+                'veteran_precent' => 'درصد جانبازی',
+                'captivity_duration' => 'مدت اسارت',
+                'time_war' => 'مدت حضور در جبهه',
+                'spouse_mobile.*' => 'موبایل همسر',
+                'marry_date.*' => 'تاریخ ازدواج',
+                'birth_date.*' => 'تاریخ تولد همسر',
+                'spouse_job.*' => 'شغل همسر',
+                'spouse_lastname.*' => 'نام خانوادگی همسر',
+                'spouse_name.*' => 'نام همسر',
+                'child_job.*' => 'شغل فرزند',
+                'child_name.*' => 'نام فرزند',
+                'child_mobile.*' => 'موبایل فرزند',
+                'child_national_code.*' => 'کد ملی فرزند',
+                'child_edu_grade.*' => 'تحصیلات فرزند',
+                'child_birth_date.*' => 'تاریخ تولد فرزند',
+                'related_name.*' => 'نام آشنا',
+                'related_lastname.*' => 'نام خانوادگی آشنا',
+                'related_post.*' => 'سمت آشنا',
+                'related_code_melli.*' => 'کد ملی آشنا'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            $staff = org_staff::find(deCode(Request::get('sid')));
+            $staff->home_type = Request::get('home_type');
+            $staff->contract_type = Request::get('contract_type');
+            $staff->insurance_num = Request::get('insurance_num');
+            $staff->veteran_precent = Request::get('veteran_precent');
+            $staff->captivity_duration = Request::get('captivity_duration');
+            $staff->time_war = Request::get('time_war');
+            if($staff->save())
+            {
+                $staff->spouses()->delete();
+                $staff->childs()->delete();
+                $staff->families()->delete();
+                foreach(Request::get('marry_date') as $k => $marry_date)
+                {
+                    $staff->spouses()->create([
+                        'name' => Request::get('spouse_name')[$k],
+                        'last_name' => Request::get('spouse_lastname')[$k],
+                        'birth_date' => Request::get('birth_date')[$k],
+                        'job' => Request::get('spouse_job')[$k],
+                        'mobile' => Request::get('spouse_mobile')[$k],
+                        'married_date' => Request::get('marry_date')[$k],
+                    ]);
+                }
+                foreach(Request::get('child_name') as $k => $child_name)
+                {
+                    $staff->childs()->create([
+                        'name' => Request::get('child_name')[$k],
+                        'birth_date' => Request::get('child_birth_date')[$k],
+                        'grade' => Request::get('child_edu_grade')[$k],
+                        'national_id' => Request::get('child_national_code')[$k],
+                        'job' => Request::get('child_job')[$k],
+                        'mobile' => Request::get('child_mobile')[$k],
+                    ]);
+                }
+                foreach(Request::get('child_name') as $k => $child_name)
+                {
+                    $staff->families()->create([
+                        'name' => Request::get('related_name')[$k],
+                        'last_name' => Request::get('related_lastname')[$k],
+                        'national_id' => Request::get('related_code_melli')[$k],
+                        'post' => Request::get('related_post')[$k]
                     ]);
                 }
             }

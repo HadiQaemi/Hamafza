@@ -257,33 +257,33 @@
         });
     }
 
-    function UpdateTask(form_id, again,action) {
-        //console.log(form_id);
-		$('#task_form_action').val(action);
-        var form_data = $('#' + form_id).serialize();
-        $.ajax({
-            type: "POST",
-            url: '{{ route('hamahang.tasks.update_task')}}',
-            dataType: "json",
-            data: form_data,
-            success: function (result) {
-                console.log(result);
-                if (result.success == true) {
-                    if (again == 1) {
-                        ResetForm();
-                    }
-                    else {
-                        $('.jsPanel-btn-close').click();
-                    }
-                    $('.jsPanel-btn-close').click();
+    {{--function UpdateTasks(form_id, again,action) {--}}
+        {{--//console.log(form_id);--}}
+		{{--$('#task_form_action').val(action);--}}
+        {{--var form_data = $('#' + form_id).serialize();--}}
+        {{--$.ajax({--}}
+            {{--type: "POST",--}}
+            {{--url: '{{ route('hamahang.tasks.update_task')}}',--}}
+            {{--dataType: "json",--}}
+            {{--data: form_data,--}}
+            {{--success: function (result) {--}}
+                {{--console.log(result);--}}
+                {{--if (result.success == true) {--}}
+                    {{--if (again == 1) {--}}
+                        {{--ResetForm();--}}
+                    {{--}--}}
+                    {{--else {--}}
+                        {{--$('.jsPanel-btn-close').click();--}}
+                    {{--}--}}
+                    {{--$('.jsPanel-btn-close').click();--}}
                     {{--messageModal('success','{{trans('tasks.create_new_task')}}' , {0:'{{trans('app.operation_is_success')}}'});--}}
-                }
-                else {
-                    messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
-                }
-            }
-        });
-    }
+                {{--}--}}
+                {{--else {--}}
+                    {{--messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);--}}
+                {{--}--}}
+            {{--}--}}
+        {{--});--}}
+    {{--}--}}
     function ResetForm() {
         // $('#new_task_users').val('');
         // $('#new_task_transcripts').val('');

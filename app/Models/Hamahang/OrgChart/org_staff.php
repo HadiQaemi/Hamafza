@@ -23,4 +23,19 @@ class org_staff extends Model
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_jobs','staff_id','id');
     }
 
+    public function childs()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_childs','staff_id','id');
+    }
+
+    public function spouses()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_spouses','staff_id','id');
+    }
+
+    public function families()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_families','staff_id','id');
+    }
+
 }

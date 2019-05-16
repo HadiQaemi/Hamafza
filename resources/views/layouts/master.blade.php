@@ -358,7 +358,7 @@
                             }
                         });
                     }
-                    function UpdateTask(form_id, again,action) {
+                    function UpdateTasks(form_id, again,action) {
                         //console.log(form_id);
                         $('#task_form_action').val(action);
                         $('#save_type').val(1);
@@ -517,7 +517,14 @@
                         var $this = $(this);
                         var form_id = $this.data('form_id');
                         var save_again = $this.data('again_save');
-                        UpdateTask(form_id, save_again,1);
+                        UpdateTasks(form_id, save_again,1);
+
+                        if(window.table_chart_grid2 != undefined){
+                            window.table_chart_grid2.ajax.reload();
+                        }
+                        if(window.table_chart_grid3 != undefined){
+                            window.table_chart_grid3.ajax.reload();
+                        }
                     });
                     $(document).on('click', '.save_task', function () {
                         var save_type = $("input[name='new_task_save_type']:checked").val() != undefined ? $("input[name='new_task_save_type']:checked").val() :

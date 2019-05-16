@@ -35,6 +35,7 @@ use App\Models\Hamahang\OrgChart\org_charts_items_jobs;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts_staff;
 use App\Models\Hamahang\OrgChart\org_organs;
+use App\Models\Hamahang\OrgChart\org_staff;
 use App\Models\Hamahang\PaymentGatewayRawLogs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
@@ -492,18 +493,32 @@ class ModalController extends Controller
     public function export()
     {
         $res = $this->getParams(['sid', 'pid', 'type']);
-        $content = SubjectClass::subjectExport($res['sid'], $res['pid'], $res['type'])->render();
-        $footer = '<span class="FloatLeft">'
-            . '<a id="wordexport" class="btn btn-primary">دریافت فایل ورد</a> '
-            . '<a target="_blank" class="btn btn-danger" href="'.route('modals.exportExcel').'"> دریافت فایل اکسل</a>'
-            //. ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
-            . '</span>';
-        return json_encode(['header' => 'بارگیری', 'content' => $content, 'footer' => $footer]);
+        if($res['type'] == 'EXCEL')
+        {
+            $Tasks = Session::get('MyTasksFetch');
+            dd($Tasks);
+            return Excel::create('Filename', function($excel) {
+                $excel->sheet('Sheetname', function($sheet) {
+                    $Tasks = Session::get('MyTasksFetch');
+                    $sheet->fromArray(
+                        $Tasks->original['data']
+                    );
+                });
+            })->download('xls');
+        }else{
+            $content = SubjectClass::subjectExport($res['sid'], $res['pid'], $res['type'])->render();
+            $footer = '<span class="FloatLeft">'
+                . '<a id="wordexport" class="btn btn-primary">دریافت فایل ورد</a> '
+                . '<a target="_blank" class="btn btn-danger" href="'.route('modals.exportExcel').'"> دریافت فایل اکسل</a>'
+                //. ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
+                . '</span>';
+            return json_encode(['header' => 'بارگیری', 'content' => $content, 'footer' => $footer]);
+        }
     }
 
     public function exportExcel()
     {
-        $Tasks = Session::get('MyTasksFetch');
+        $Tasks = Session::get('MyTasksFetchMyTasksFetch');
         return Excel::create('Filename', function($excel) {
             $excel->sheet('Sheetname', function($sheet) {
                 $Tasks = Session::get('MyTasksFetch');
@@ -1059,6 +1074,19 @@ class ModalController extends Controller
             'content' => view('modals.organ.add_organ.jsp_assign_staff_content')->with('staff', $staff)->with('sid', $res['sid'])
                 ->render(),
             'footer' => view('modals.organ.add_organ.jsp_assign_edit_staff_footer')
+                ->render()
+        ]);
+    }
+
+    public function ViewStaffDoc(){
+        $res = $this->getParams(['sid']);
+        $sid = deCode($res['sid']);
+        $staff = org_staff::where('id', '=', $sid)->with('childs', 'spouses', 'families')->first();
+        return json_encode([
+            'header' => trans('org_chart.staff'),
+            'content' => view('modals.organ.add_organ.jsp_doc_staff_content')->with('staff', $staff)->with('sid', $res['sid'])
+                ->render(),
+            'footer' => view('modals.organ.add_organ.jsp_doc_staff_footer')
                 ->render()
         ]);
     }

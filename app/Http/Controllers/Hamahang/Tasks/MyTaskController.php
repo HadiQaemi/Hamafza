@@ -43,7 +43,6 @@ use App\Models\Hamahang\keywords;
 class MyTaskController extends Controller
 {
     public function FetchAllTaskList(){
-        $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
         Session::put('AllTaskTitle',Request::input('title'));
         Session::put('AllTaskOfficialType',Request::input('official_type'));
         Session::put('AllTaskTaskImportantImmediate',Request::input('task_important_immediate'));
@@ -77,7 +76,8 @@ class MyTaskController extends Controller
         }
 
         $date = new jDateTime;
-        return Datatables::of($Tasks)
+        $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
+        $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
                 return GetTaskStatusName($data->type);
@@ -161,6 +161,8 @@ class MyTaskController extends Controller
             ->rawColumns(['employee'])
             ->rawColumns(['assigner'])
             ->make(true);
+        Session::put('MyTasksFetch', $Tasks);
+        return Session::get('MyTasksFetch');
     }
 
     public function get_transcripts($uname)

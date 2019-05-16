@@ -3127,8 +3127,14 @@ a .navbar-brand{
 .margin-bottom-30{
     margin-bottom: 30px !important;
 }
+.margin-bottom-50{
+    margin-bottom: 50px !important;
+}
 .margin-top--5{
     margin-top: -5px !important;
+}
+.margin-bottom-5{
+    margin-bottom: 5px !important;
 }
 input#task_title, .dataTables_filter input{
     border: none !important;

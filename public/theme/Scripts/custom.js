@@ -60,6 +60,52 @@ function parseArabic(str) {
     return str.replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2').replace(/۳/g, '3').replace(/۴/g, '4').replace(/٤/g, '4').replace(/۵/g, '5').replace(/۶/g, '6').replace(/۷/g, '7').replace(/٧/g, '7').replace(/۸/g, '8').replace(/٩/g, '9').replace(/۹/g, '9');
 }
 
+$(document).on("click", "#add_spouse", function () {
+    length = $("#spouse_list > .col-xs-12").length;
+    $('#spouse_list').append(
+        '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10">\n' +
+        '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="spouse_name[]" value="' + $('#spouse_name').val() + '">' + $('#spouse_name').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="spouse_lastname[]" value="' + $('#spouse_lastname').val() + '">' + $('#spouse_lastname').val() + '</div>\n' +
+        '   <div class="hidden"><input type="hidden" name="birth_date[]" value="' + $('#birth_date').val() + '">' + $('#birth_date').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="spouse_job[]" value="' + $('#spouse_job').val() + '">' + $('#spouse_job').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="spouse_mobile[]" value="' + $('#spouse_mobile').val() + '">' + $('#spouse_mobile').val() + '</div>\n' +
+        '   <div class="hidden"><input type="hidden" name="marry_date[]" value="' + $('#marry_date').val() + '">' + $('#marry_date').val() + '</div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
+        '</div>'
+    )
+});
+
+$(document).on("click", "#add_child", function () {
+    length = $("#child_list > .col-xs-12").length;
+    $('#child_list').append(
+        '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10">\n' +
+        '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="child_name[]" value="' + $('#child_name').val() + '">' + $('#child_name').val() + '</div>\n' +
+        '   <div class="hidden"><input type="hidden" name="child_birth_date[]" value="' + $('#child_birth_date').val() + '">' + $('#child_birth_date').val() + '</div>\n' +
+        '   <div class="hidden"><input type="hidden" name="child_edu_grade[]" value="' + $('#child_edu_grade').val() + '">' + $('#child_edu_grade').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="child_national_code[]" value="' + $('#child_national_code').val() + '">' + $('#child_national_code').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="child_job[]" value="' + $('#child_job').val() + '">' + $('#child_job').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="child_mobile[]" value="' + $('#child_mobile').val() + '">' + $('#child_mobile').val() + '</div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
+        '</div>'
+    )
+});
+
+$(document).on("click", "#add_related_persons", function () {
+    length = $("#related_persons_list > .col-xs-12").length;
+    $('#related_persons_list').append(
+        '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10">\n' +
+        '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="related_name[]" value="' + $('#related_name').val() + '">' + $('#related_name').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="related_lastname[]" value="' + $('#related_lastname').val() + '">' + $('#related_lastname').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="related_code_melli[]" value="' + $('#related_code_melli').val() + '">' + $('#related_code_melli').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="related_post[]" value="' + $('#related_post').val() + '">' + $('#related_post').val() + '</div>\n' +
+        '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
+        '</div>'
+    )
+});
+
 $(document).on("click", "#add_job", function () {
     length = $("#staff_job_list > .col-xs-12").length;
     $('#staff_job_list').append(

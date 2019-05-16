@@ -12,6 +12,7 @@ return [
     'add_organization'   => 'افزودن سازمان',
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
     'assign_new_staff'   => 'کارمند جدید',
+    'staff'   => 'کارمند',
     'add_new_post'   => 'افزودن سمت جدید',
     'edit_show_post'   => 'ویرایش سمت',
     'edit_job_unit'   => 'ویرایش شغل',

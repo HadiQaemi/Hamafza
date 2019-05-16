@@ -1,5 +1,8 @@
 <div class="rightSubMenu">
     <div class="pull-right">
+        @php
+            $type = preg_match('/(task|project)/',\Route::currentRouteName()) ? '&type=EXCEL' : '';
+        @endphp
         @foreach ($groups as $group)
             <div class="MenuDiv">
                 <a class="MenuHead" href="#{{ $group->name }}">{{ $group->name }}</a>
@@ -44,8 +47,9 @@
                                                @endforeach
                                                href="#"
                                                @elseif ($tool->url_type == 1 && $tool->available->modal==1)
-                                               class="jsPanels"
-                                               href="/modals/{{$tool->available->url.$get_url_str}}"
+                                               {{$type == '' ? '' : 'target=_blank'}}
+                                               {{$type == '' ? 'class=jsPanels' : ''}}
+                                               href="{{$type=='' ? '/modals/'.$tool->available->url.$get_url_str : route('modals.exportExcel')}}"
                                                @endif
                                                title="{{ $tool->title }}">
                                                 {{ $tool->title }}
@@ -65,7 +69,7 @@
                                            href="#"
                                            @elseif ($tool->url_type == 1 && $tool->available->modal==1)
                                            class="jsPanels"
-                                           href="/modals/{{$tool->available->url.$get_url_str}}"
+                                           href="/modals/{{$tool->available->url.$get_url_str.$type}}"
                                            @endif
                                            title="{{ $tool->title }}">
                                             {{ $tool->title }}
