@@ -4,10 +4,11 @@
         @if (@$see_alsos)
             @if (@$see_alsos->count())
                 <div>این موارد را نیز ببینید:</div>
-                @foreach ($see_alsos as $v)
-                    <a href="#" onclick="get_content(this, '{!! enCode($v->id) !!}');">{!! $v->title !!}</a>
-                    <br />
-                @endforeach
+                <ul>
+                    @foreach ($see_alsos as $v)
+                        <li><a href="#" onclick="get_content(this, '{!! enCode($v->id) !!}');">{!! $v->title !!}</a></li>
+                    @endforeach
+                </ul>
             @endif
         @endif
     </div>
