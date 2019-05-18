@@ -149,7 +149,7 @@
                 }
                 case (	strstr($route_name,'ugc.desktop.hamahang.tasks.library',false) ):
                 {
-                    $help_code = enCode('264');
+                    $help_code = enCode('365');
                     break;
                 }
 				case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_tasks',false) ):
@@ -159,7 +159,7 @@
                 }
 				case (	strstr($route_name,'ugc.desktop.hamahang.tasks.my_assigned_tasks',false) ):
                 {
-                    $help_code = 'O5e86Vdno5c';
+                    $help_code = encode('368');
                     break;
                 }
                 case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_tasks',false) ):
@@ -174,7 +174,7 @@
                 }
                 case (	strstr($route_name,'pgs.desktop.hamahang.tasks.library',false) ):
                 {
-                    $help_code = enCode('264');
+                    $help_code = enCode('365');
                     break;
                 }
 				case (	strstr($route_name,'pgs.desktop.hamahang.tasks.my_tasks',false) ):
@@ -194,12 +194,12 @@
                 }
 				case  (	strstr($route_name,'ugc.desktop.hamahang.project',false) ):
                 {
-                    $help_code = enCode('313');
+                    $help_code = enCode('130');
                     break;
                 }
 				case 'pgs.desktop.hamahang.project.list':
                 {
-                    $help_code = enCode('313');
+                    $help_code = enCode('130');
                     break;
                 }
 				case 'ugc.desktop.hamahang.process.list':
