@@ -40,7 +40,33 @@
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/assets/Packages/calendar/lib/moment/moment.js"></script>
 <script type="text/javascript" src="{{App::make('url')->to('/')}}/assets/Packages/calendar/lib/moment/moment-jalaali.js"></script>
 {{--<script src="{!! url('/assets/Packages/gemini-scrollbar/gemini-scrollbar.js') !!}"></script>--}}
+<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+@if(Auth::check())
+    <script>
 
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        var userid = {{Auth::user()->id}}
+        var pusher = new Pusher('70bb6aa696b7ba2cc310', {
+                cluster: 'mt1',
+                forceTLS: true
+            });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            if(userid == data.message)
+            {
+                jQuery.noticeAdd
+                ({
+                    text: 'وظیفه ی جدیدی برای شما ثبت شد',
+                    stay: false,
+                    type: 'success'
+                });
+            }
+
+        });
+    </script>
+@endif
 <script>
     $.ajaxSetup({
         headers: {

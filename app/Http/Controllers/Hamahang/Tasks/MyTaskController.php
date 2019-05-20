@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hamahang\Tasks;
 
 use DB;
 use Auth;
+use Pusher\Pusher;
 use Request;
 use Datatables;
 use Redirect;
@@ -76,7 +77,7 @@ class MyTaskController extends Controller
         }
 
         $date = new jDateTime;
-        $Tasks = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
+        $Tasks = $Tasks2 = tasks::ListAllAssignedTasks(Auth::id(), Request::input('subject_id'));
         $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
@@ -161,8 +162,88 @@ class MyTaskController extends Controller
             ->rawColumns(['employee'])
             ->rawColumns(['assigner'])
             ->make(true);
-        Session::put('MyTasksFetch', $Tasks);
-        return Session::get('MyTasksFetch');
+        $Tasks_session = Datatables::of($Tasks2)
+            ->removeColumn('type')->removeColumn('immediate')->removeColumn('pages')->removeColumn('desc')
+            ->removeColumn('importance')->removeColumn('title')->removeColumn('id')->removeColumn('employee')
+            ->removeColumn('Name')->removeColumn('Family')->removeColumn('Uname')->removeColumn('created_at')
+            ->removeColumn('duration_timestamp')->removeColumn('use_type')->removeColumn('schedule_id')->removeColumn('schedule_time')
+            ->removeColumn('task_status')->removeColumn('assignment_created_at')->removeColumn('assignment_assignment')->removeColumn('assignment_id')
+            ->removeColumn('t_uname')->removeColumn('t_name')->removeColumn('t_family')->removeColumn('f_uname')
+            ->removeColumn('f_name')->removeColumn('f_family')->removeColumn('t_family')->removeColumn('f_uname')
+            ->addColumn('کلید واژه', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = '';
+                foreach($r as $Ar)
+                    $rr .= ($rr=='' ? '' : ', ').$Ar->title;
+                return ($rr);
+            })
+            ->addColumn('اولویت', function ($data)
+            {
+                if ($data->importance == 1)
+                {
+                    $output = 'مهم ';
+                    $output_num = 'priority1';
+                }
+                else
+                {
+                    $output = 'غیرمهم ';
+                    $output_num = 'priority0';
+                }
+
+                if ($data->immediate == 1)
+                {
+                    $output .= 'و فوری';
+                    $output_num .= '1';
+                }
+                else
+                {
+                    $output .= 'و غیرفوری';
+                    $output_num .= '0';
+                }
+                return $output;
+            })
+            ->addColumn('صفحه', function ($data)
+            {
+                $pages = DB::table('hamahang_subject_ables')
+                    ->where('hamahang_subject_ables.target_id', '=',$data->id)
+                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
+                    ->whereNull('hamahang_subject_ables.deleted_at')->pluck('subject_id')->toArray();
+                $pages = DB::table('pages')
+                    ->leftJoin('subjects','subjects.id','=','pages.sid')
+                    ->whereIn('sid',$pages)->groupBy('sid')->select('pages.id','subjects.title')->get()->toArray();
+                $pages_detail = '';
+                foreach($pages as $page)
+                {
+                    $pages_detail .= (trim($pages_detail)=='' ? '' : ', ').$page->title;
+                }
+                return $pages_detail;
+            })
+            ->addColumn('مسئول', function ($data)
+            {
+                return $data->t_name . ' ' . $data->t_family;
+            })
+            ->addColumn('واگذارنده', function ($data)
+            {
+                return $data->f_name . ' ' . $data->f_family;
+            })
+            ->addColumn('توضیحات', function ($data)
+            {
+                return $data->desc;
+            })
+            ->addColumn('عنوان', function ($data)
+            {
+                return $data->title;
+            })
+            ->addColumn('تولید کننده', function ($data)
+            {
+                return $data->Name.' '.$data->Family;
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
+        Session::put('MyTasksFetch', $Tasks_session);
+        return $Tasks;
     }
 
     public function get_transcripts($uname)
@@ -519,6 +600,7 @@ class MyTaskController extends Controller
 
     public function MyTasksList($uname)
     {
+
 //        $total = tasks::FetchDraftsTasks();
 ////        $total = drafts::FetchDraftsList();
 //        foreach ($total as $t)
@@ -562,7 +644,7 @@ class MyTaskController extends Controller
     public function MyTasksFetch()
     {
 //        db::enableQueryLog();
-        $Tasks = tasks::MyTasks(Request::input('subject_id'));
+        $Tasks = $Tasks2 = tasks::MyTasks(Request::input('subject_id'));
 //        dd(db::getQueryLog());
         $date = new jDateTime;
         $Tasks = Datatables::of($Tasks)
@@ -665,7 +747,85 @@ class MyTaskController extends Controller
             })
             ->rawColumns(['employee'])
             ->make(true);
-        Session::put('MyTasksFetch', $Tasks);
+        $Tasks_session = Datatables::of($Tasks2)
+            ->removeColumn('type')->removeColumn('immediate')->removeColumn('pages')->removeColumn('desc')
+            ->removeColumn('importance')->removeColumn('title')->removeColumn('id')->removeColumn('employee')
+            ->removeColumn('Name')->removeColumn('Family')->removeColumn('Uname')->removeColumn('created_at')
+            ->removeColumn('duration_timestamp')->removeColumn('use_type')->removeColumn('schedule_id')->removeColumn('schedule_time')
+            ->removeColumn('task_status')->removeColumn('assignment_created_at')->removeColumn('assignment_assignment')->removeColumn('assignment_id')
+            ->addColumn('نوع', function ($data)
+            {
+                return GetTaskStatusName($data->task_status);
+            })
+            ->addColumn('کلید واژه', function ($data)
+            {
+                $r = (tasks::TakKeywords($data->id));
+
+                $rr = '';
+                foreach($r as $Ar)
+                    $rr .= ($rr=='' ? '' : ', ').$Ar->title;
+                return ($rr);
+            })
+            ->addColumn('اولویت', function ($data)
+            {
+                if ($data->importance == 1)
+                {
+                    $output = 'مهم ';
+                    $output_num = 'priority1';
+                }
+                else
+                {
+                    $output = 'غیرمهم ';
+                    $output_num = 'priority0';
+                }
+
+                if ($data->immediate == 1)
+                {
+                    $output .= 'و فوری';
+                    $output_num .= '1';
+                }
+                else
+                {
+                    $output .= 'و غیرفوری';
+                    $output_num .= '0';
+                }
+                return $output;
+            })
+            ->addColumn('صفحه', function ($data)
+            {
+                $pages = DB::table('hamahang_subject_ables')
+                    ->where('hamahang_subject_ables.target_id', '=',$data->id)
+                    ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks')
+                    ->whereNull('hamahang_subject_ables.deleted_at')->pluck('subject_id')->toArray();
+                $pages = DB::table('pages')
+                    ->leftJoin('subjects','subjects.id','=','pages.sid')
+                    ->whereIn('sid',$pages)->groupBy('sid')->select('pages.id','subjects.title')->get()->toArray();
+                $pages_detail = '';
+                foreach($pages as $page)
+                {
+                    $pages_detail .= (trim($pages_detail)=='' ? '' : ', ').$page->title;
+                }
+                return $pages_detail;
+            })
+            ->addColumn('مسئول', function ($data)
+            {
+                return $data->Name . ' ' . $data->Family;
+            })
+            ->addColumn('توضیحات', function ($data)
+            {
+                return $data->desc;
+            })
+            ->addColumn('عنوان', function ($data)
+            {
+                return $data->title;
+            })
+            ->addColumn('تولید کننده', function ($data)
+            {
+                return $data->Name.' '.$data->Family;
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
+        Session::put('MyTasksFetch', $Tasks_session);
         return $Tasks;
     }
 

@@ -1554,7 +1554,7 @@ class ProjectController extends Controller
                 });
             }
         });
-        $projects_roles2->union($projects_roles1);
+        $Tasks2 = $projects_roles2->union($projects_roles1);
 
         $Tasks = \Yajra\Datatables\Facades\Datatables::eloquent($projects_roles2)
             ->editColumn('start_date', function ($data)
@@ -1637,7 +1637,80 @@ class ProjectController extends Controller
                 return $pages;
             })
             ->make(true);
-        Session::put('MyTasksFetch', $Tasks);
+
+        $Tasks_session = Datatables::of($Tasks2)
+            ->removeColumn('type')->removeColumn('immediate')->removeColumn('pages')->removeColumn('desc')
+            ->removeColumn('importance')->removeColumn('title')->removeColumn('id')->removeColumn('employee')
+            ->removeColumn('Name')->removeColumn('Family')->removeColumn('Uname')->removeColumn('created_at')
+            ->removeColumn('duration_timestamp')->removeColumn('use_type')->removeColumn('schedule_id')->removeColumn('schedule_time')
+            ->removeColumn('task_status')->removeColumn('assignment_created_at')->removeColumn('assignment_assignment')->removeColumn('assignment_id')
+            ->removeColumn('start_date')->removeColumn('end_date')->removeColumn('progress')->removeColumn('status')
+            ->removeColumn('draft')->removeColumn('full_name')
+            ->addColumn('پیش نویس', function ($data)
+            {
+                return $data->draft;
+            })
+            ->addColumn('زمان شروع', function ($data)
+            {
+                return jDateTime::date('Y-m-d',$data->start_date,1,1);
+            })
+            ->addColumn('زمان پایان', function ($data)
+            {
+                return jDateTime::date('Y-m-d',$data->end_date,1,1);
+            })
+            ->addColumn('پیشرفت', function ($data)
+            {
+                return $data->progress;
+            })
+            ->addColumn('کلید واژه', function ($data)
+            {
+                $r = (self::ProjectKeywords($data->id));
+
+                $rr = '';
+                foreach($r as $Ar)
+                    $rr .= ($rr=='' ? '' : ', ').$Ar->title;
+                return ($rr);
+            })
+            ->addColumn('اولویت', function ($data)
+            {
+                if ($data->importance == 1)
+                {
+                    $output = 'مهم ';
+                    $output_num = 'priority1';
+                }
+                else
+                {
+                    $output = 'غیرمهم ';
+                    $output_num = 'priority0';
+                }
+
+                if ($data->immediate == 1)
+                {
+                    $output .= 'و فوری';
+                    $output_num .= '1';
+                }
+                else
+                {
+                    $output .= 'و غیرفوری';
+                    $output_num .= '0';
+                }
+                return $output;
+            })
+            ->addColumn('توضیحات', function ($data)
+            {
+                return $data->desc;
+            })
+            ->addColumn('عنوان', function ($data)
+            {
+                return $data->title;
+            })
+            ->addColumn('مدیر پروژه', function ($data)
+            {
+                return $data->full_name;
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
+        Session::put('MyTasksFetch', $Tasks_session);;
         return $Tasks;
     }
 

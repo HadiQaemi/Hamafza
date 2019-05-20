@@ -1,7 +1,12 @@
+@php
+    $currentRouteName = \Route::currentRouteName();
+    $currentRouteName = preg_split('/hamahang/', $currentRouteName);
+    $permisions = isset($currentRouteName[1]) ? \App\Permission::where('name', 'like', "%".$currentRouteName[1]."%")->first() : '';
+@endphp
 <div class="rightSubMenu">
     <div class="pull-right">
         @php
-            $type = preg_match('/(task|project)/',\Route::currentRouteName()) ? '&type=EXCEL' : '';
+            $type = preg_match('/(task|project)/',\Route::currentRouteName()) ? '&type=EXCEL&name=' : '';
         @endphp
         @foreach ($groups as $group)
             <div class="MenuDiv">
@@ -49,7 +54,7 @@
                                                @elseif ($tool->url_type == 1 && $tool->available->modal==1)
                                                {{$type == '' ? '' : 'target=_blank'}}
                                                {{$type == '' ? 'class=jsPanels' : ''}}
-                                               href="{{$type=='' ? '/modals/'.$tool->available->url.$get_url_str : route('modals.exportExcel')}}"
+                                               href="{{$type=='' ? '/modals/'.$tool->available->url.$get_url_str : route('modals.exportExcel').'?display_name='.(isset($permisions->display_name) ? $permisions->display_name : '')}}"
                                                @endif
                                                title="{{ $tool->title }}">
                                                 {{ $tool->title }}

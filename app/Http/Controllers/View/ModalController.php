@@ -518,8 +518,17 @@ class ModalController extends Controller
 
     public function exportExcel()
     {
-        $Tasks = Session::get('MyTasksFetchMyTasksFetch');
-        return Excel::create('Filename', function($excel) {
+//        $date = new jDateTime;
+//        $datetime = explode(' ', date('Y-m-d h:i:s'));
+//        $now = explode('-', $datetime[0]);
+//        $time = explode(':', $datetime[1]);
+//        $g_timestamp = mktime($time[0], $time[1], $time[2], $now[1], $now[2], $now[0]);
+//        $jdate = $date->getdate($g_timestamp);
+//        $jdateA = $jdate['year'] . '-' . $jdate['mon'] . '-' . $jdate['mday'].' '.$datetime[1];
+
+        $res = $this->getParams(['display_name']);
+        $Tasks = Session::get('MyTasksFetch');
+        return Excel::create($res['display_name'].'---'.date('Y-m-d-h:i:s'), function($excel) {
             $excel->sheet('Sheetname', function($sheet) {
                 $Tasks = Session::get('MyTasksFetch');
                 $sheet->fromArray(
