@@ -64,7 +64,7 @@
                                 <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
                             </div>
                             <div class="row main-desc">
-                                <textarea class="form-control row content_tab_text content_tab" {{$edit_able == 1 ? ' name=task_desc id=desc ' : 'disabled'}} name="task_desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{$task['desc']}}</textarea>
+                                <textarea class="form-control row content_tab_text content_tab" {{$edit_able == 1 ? ' name=task_desc id=desc ' : 'disabled'}}  name="task_desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{$task['desc']}}</textarea>
                                 <div class="content_tab_view content_tab hidden">
                                     {!! preg_replace('/img::/','<div><img src="'.route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/',preg_replace('/::img/','"></div>',$task['desc'])) !!}
                                 </div>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
+                <div class="row col-lg-12" style="margin: 0px;">
                     <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.responsible') }}</label></div>
                     <div class="col-lg-11">
                         <div class="col-sm-4 row" style="padding: 0px;">
@@ -118,58 +118,24 @@
                     </div>
                 </div>
                 <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
-                    <div class="col-lg-11">
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
-                            <select class="select2_auto_complete_transcripts"
-                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple name="transcripts[]" id="new_task_transcripts">
-                                @if(!empty($task->Transcripts))
-                                    @foreach($task->Transcripts as $transcript)
-                                        <option selected="selected" value="{{ $transcript->user->id }}">{{ $transcript->user->Name.' '.$transcript->user->Family }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
-                            <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
-                                <span class="icon icon-afzoodane-fard fonts"></span>
-                            </a>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_cr" id="report-type1" ' : 'disabled'}} value="1" {{isset($task['report_on_cr']) ? 'checked' : ''}}/>
-                            <label for="report-type1" class="">{{ trans('tasks.report_on_task_creation') }}</label>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_co" id="report-type2" ' : 'disabled'}} value="1" {{isset($task['report_on_co']) ? 'checked' : ''}}/>
-                            <label for="report-type2" class="">{{ trans('tasks.report_on_task_completion') }}</label>
-                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_to_manager" id="report-type3" ' : 'disabled'}} value="1" {{isset($task['report_to_manager']) ? 'checked' : ''}}/>
-                            <label for="report-type3" class="">{{ trans('tasks.report_on_responsible') }}</label>
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
+                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
                         </div>
                     </div>
-                </div>
-                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
-                    <div class="col-lg-11">
-                        <select class="select2_auto_complete_keywords"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple" name="keywords[]" id="new_task_keywords">
-                            @if(!empty($task->Keywords))
-                                @foreach($task->Keywords as $task_keywords)
-                                    <option selected="selected" value="{{ $task_keywords->keyword->id }}">{{ $task_keywords->keyword->title }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <span class=" Chosen-LeftIcon"></span>
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
-                    <div class="col-lg-11">
-                        <select class="select2_auto_complete_page"
-                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
-                                multiple="multiple"  name="pages[]" id="new_task_pages" >
-                            @if(!empty($task->Subjects))
-                                @foreach($task->Subjects as $subject)
-                                    <option selected="selected" value="{{ $subject->id }}">{{ $subject->title}}</option>
-                                @endforeach
-                            @endif
-                        </select>
+                    <div class="col-lg-11 line-height-35">
+                        <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{isset($task->Priority->importance) ? $task->Priority->importance==1 : '' ? 'checked' : 'checked'}}/>
+                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{isset($task->Priority->importance) ? $task->Priority->importance==0 : '' ? 'checked' : ''}}/>
+                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
+                        </div>
+                        <div class="pull-right" style="height: 30px;line-height: 30px;">
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_yes ' : 'disabled'}} value="1" {{isset($task->Priority->immediate) ? $task->Priority->immediate==1 : '' ? 'checked' : 'checked'}}/>
+                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
+                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_no ' : 'disabled'}} value="0"  {{isset($task->Priority->immediate) ? $task->Priority->immediate==0 : '' ? 'checked' : ''}}/>
+                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row col-lg-12">
@@ -206,25 +172,59 @@
 
                     </div>
                 </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding line-height-35">
-                            <label class="noRightPadding noLeftPadding">{{trans('tasks.priority')}}</label>
+                <div class="row col-lg-12" style="border-top: #ccc solid 1px;margin: 10px 0px;padding-top: 10px">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('app.transcript') }}</label></div>
+                    <div class="col-lg-11">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 row" style="padding: 0px;">
+                            <select class="select2_auto_complete_transcripts"
+                                    data-placeholder="{{trans('tasks.select_some_options')}}" multiple name="transcripts[]" id="new_task_transcripts">
+                                @if(!empty($task->Transcripts))
+                                    @foreach($task->Transcripts as $transcript)
+                                        <option selected="selected" value="{{ $transcript->user->id }}">{{ $transcript->user->Name.' '.$transcript->user->Family }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 smaller-90 line-height-35" style="padding-right: 5px;">
+                            <a href="{!! route('modals.setting_user_view',['id_select'=>'new_task_transcripts']) !!}" class="jsPanels" title="{{ trans('tasks.selecet_user') }}">
+                                <span class="icon icon-afzoodane-fard fonts"></span>
+                            </a>
+                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_cr" id="report-type1" ' : 'disabled'}} value="1" {{isset($task['report_on_cr']) ? 'checked' : ''}}/>
+                            <label for="report-type1" class="">{{ trans('tasks.report_on_task_creation') }}</label>
+                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_on_co" id="report-type2" ' : 'disabled'}} value="1" {{isset($task['report_on_co']) ? 'checked' : ''}}/>
+                            <label for="report-type2" class="">{{ trans('tasks.report_on_task_completion') }}</label>
+                            <input type="checkbox" {{$edit_able == 1 ? ' name="report_to_manager" id="report-type3" ' : 'disabled'}} value="1" {{isset($task['report_to_manager']) ? 'checked' : ''}}/>
+                            <label for="report-type3" class="">{{ trans('tasks.report_on_responsible') }}</label>
                         </div>
                     </div>
-                    <div class="col-lg-11 line-height-35">
-                        <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
-                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{isset($task->Priority->importance) ? $task->Priority->importance==1 : '' ? 'checked' : 'checked'}}/>
-                            <label for="importance_yes">{{ trans('tasks.important') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{isset($task->Priority->importance) ? $task->Priority->importance==0 : '' ? 'checked' : ''}}/>
-                            <label for="importance_no">{{ trans('tasks.unimportant')}}</label>
-                        </div>
-                        <div class="pull-right" style="height: 30px;line-height: 30px;">
-                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_yes ' : 'disabled'}} value="1" {{isset($task->Priority->immediate) ? $task->Priority->immediate==1 : '' ? 'checked' : 'checked'}}/>
-                            <label for="immediate_yes" >{{ trans('tasks.immediate') }}</label>
-                            <input type="radio" {{$edit_able == 1 ? ' name=immediate id=immediate_no ' : 'disabled'}} value="0"  {{isset($task->Priority->immediate) ? $task->Priority->immediate==0 : '' ? 'checked' : ''}}/>
-                            <label for="immediate_no">{{ trans('tasks.Non-urgent') }}</label>
-                        </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4"><label class="line-height-35">{{ trans('tasks.keyword') }}</label></div>
+                    <div class="col-lg-11">
+                        <select class="select2_auto_complete_keywords"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple" name="keywords[]" id="new_task_keywords">
+                            @if(!empty($task->Keywords))
+                                @foreach($task->Keywords as $task_keywords)
+                                    <option selected="selected" value="{{ $task_keywords->keyword->id }}">{{ $task_keywords->keyword->title }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <span class=" Chosen-LeftIcon"></span>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.page') }}</label></div>
+                    <div class="col-lg-11">
+                        <select class="select2_auto_complete_page"
+                                data-placeholder="{{trans('tasks.can_select_some_options')}}"
+                                multiple="multiple"  name="pages[]" id="new_task_pages" >
+                            @if(!empty($task->Subjects))
+                                @foreach($task->Subjects as $subject)
+                                    <option selected="selected" value="{{ $subject->id }}">{{ $subject->title}}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                 </div>
                 <div class="row-fluid">
