@@ -126,7 +126,7 @@ class PageClass extends PageClassExtend1
                     } else
                     {
                         $help_block = HelpBlock::find($id);
-                        $help_block->update($help_block_data_array);
+                        //$help_block->update($help_block_data_array);
                         $r[] = "$v$open$term$close";
                     }
                 }

@@ -3,7 +3,10 @@
         @php $do = ''; @endphp
             <div class="row" style="display: flex">
                 <div class="col-xs-6 priority_state_list">
-                    <h5 class="state_title">مهم و فوری</h5>
+                    <h5 class="state_title">
+                        مهم و فوری
+                        ({{isset($tasks_immediate_importance) ? count($tasks_immediate_importance) : 0}})
+                    </h5>
                     <ul class="task_items droppable" id="important_and_immediate">
                         <div style="direction: rtl;">
                             @if(isset($tasks_immediate_importance))
@@ -47,7 +50,10 @@
                     </ul>
                 </div>
                 <div class="col-xs-6 priority_state_list">
-                    <h5 class="state_title">غیر مهم و فوری</h5>
+                    <h5 class="state_title">
+                        غیر مهم و فوری
+                        ({{isset($tasks_immediate_not_importance) ? count($tasks_immediate_not_importance) : 0}})
+                    </h5>
                     <ul class="task_items droppable" id="not_important_and_immediate">
                         <div style="direction: rtl;">
                             @if(isset($tasks_immediate_not_importance))
@@ -93,7 +99,10 @@
             </div>
             <div class="row" style="display: flex">
                 <div class="col-xs-6 priority_state_list">
-                        <h5 class="state_title">مهم و غیر فوری</h5>
+                        <h5 class="state_title">
+                            مهم و غیر فوری
+                            ({{isset($tasks_not_immediate_importance) ? count($tasks_not_immediate_importance) : 0}})
+                        </h5>
                         <ul class="task_items droppable" id="important_and_not_immediate">
                         <div style="direction: rtl;">
                             @if(isset($tasks_not_immediate_importance))
@@ -137,7 +146,10 @@
                     </ul>
                 </div>
                 <div class="col-xs-6 priority_state_list">
-                    <h5 class="state_title">غیر مهم و غیر فوری</h5>
+                    <h5 class="state_title">
+                        غیر مهم و غیر فوری
+                        ({{isset($tasks_not_immediate_not_importance) ? count($tasks_not_immediate_not_importance) : 0}})
+                    </h5>
                     <ul class="task_items droppable" id="not_important_and_not_immediate">
                     <div style="direction: rtl;">
                         @if(isset($tasks_not_immediate_not_importance))
