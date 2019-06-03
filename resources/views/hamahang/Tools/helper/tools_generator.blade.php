@@ -52,9 +52,9 @@
                                                @endforeach
                                                href="#"
                                                @elseif ($tool->url_type == 1 && $tool->available->modal==1)
-                                               {{$type == '' ? '' : 'target=_blank'}}
-                                               {{$type == '' ? 'class=jsPanels' : ''}}
-                                               href="{{$type=='' ? '/modals/'.$tool->available->url.$get_url_str : route('modals.exportExcel').'?display_name='.(isset($permisions->display_name) ? $permisions->display_name : '')}}"
+                                               {{($type!='' && $tool->title=='بارگیری') ? 'target=_blank' : ''}}
+                                               {{($type!='' && $tool->title=='بارگیری') ? '' : 'class=jsPanels'}}
+                                               href="{{($type!='' && $tool->title=='بارگیری') ? route('modals.exportExcel').'?display_name='.(isset($permisions->display_name) ? $permisions->display_name : '') : '/modals/'.$tool->available->url.$get_url_str}}"
                                                @endif
                                                title="{{ $tool->title }}">
                                                 {{ $tool->title }}

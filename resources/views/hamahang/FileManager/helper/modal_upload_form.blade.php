@@ -1,6 +1,6 @@
 <!-- Modal Upload Form -->
 <div class="modal fade" id="HFM_Modal" role="dialog" data-section="" data-field="">
-    <input id="HFM_InputSectionName" type="hidden" name="Section" value="">
+    <input id="HFM_InputSectionName" type="text" name="Section" value="">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,40 +52,40 @@
                     </div>
                     <div id="HFM_UploadNewFiles" class="tab-pane fade">
                         <fieldset style="margin-top:25px;">
-                            <form method="post" class="HFM_UploadForm" enctype="multipart/form-data">
-                                <div class="col-xs-12">
-                                    {{
-                                        Form::file(
-                                            'Attachments[]',
-                                            array(
-                                                'multiple'              => true,
-                                                //'id'                    => 'id_input_files',
-                                                'class'                 => 'filestyle id_input_files',
-                                                'data-buttonText'       => trans('filemanager.select_file'),
-                                                //'data-iconName'         => 'fa fa-inbox',
-                                                'data-buttonName'       => 'btn btn-primary',
-                                                'data-size'             => 'sm',
-                                                'buttonBefore'          => 'true',
-                                                'data-input'            => 'true',
-                                                'data-placeholder'      => trans('filemanager.select_your_files')
-                                            )
-                                        )
-                                    }}
-                                </div>
-                                <div class="clearfix"></div>
-                            </form>
+                            {{--<form method="post" class="HFM_UploadForm" enctype="multipart/form-data">--}}
+                                {{--<div class="col-xs-12">--}}
+                                    {{--{{--}}
+                                        {{--Form::file(--}}
+                                            {{--'Attachments[]',--}}
+                                            {{--array(--}}
+                                                {{--'multiple'              => true,--}}
+                                                {{--//'id'                    => 'id_input_files',--}}
+                                                {{--'class'                 => 'filestyle id_input_files',--}}
+                                                {{--'data-buttonText'       => trans('filemanager.select_file'),--}}
+                                                {{--//'data-iconName'         => 'fa fa-inbox',--}}
+                                                {{--'data-buttonName'       => 'btn btn-primary',--}}
+                                                {{--'data-size'             => 'sm',--}}
+                                                {{--'buttonBefore'          => 'true',--}}
+                                                {{--'data-input'            => 'true',--}}
+                                                {{--'data-placeholder'      => trans('filemanager.select_your_files')--}}
+                                            {{--)--}}
+                                        {{--)--}}
+                                    {{--}}--}}
+                                {{--</div>--}}
+                                {{--<div class="clearfix"></div>--}}
+                            {{--</form>--}}
                             <div class="clearfix"></div>
-                            <div id="HFM_UploadProgress" class="progress" style="display: none;">
-                                <div id="HFM_progress_bar"
-                                     class="progress-bar progress-bar-striped active"
-                                     role="progressbar"
-                                     aria-valuenow="40"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style="width:0%">
-                                    <span id="HFM_progress_text"></span>
-                                </div>
-                            </div>
+                            {{--<div id="HFM_UploadProgress" class="progress" style="display: none;">--}}
+                                {{--<div id="HFM_progress_bar"--}}
+                                     {{--class="progress-bar progress-bar-striped active"--}}
+                                     {{--role="progressbar"--}}
+                                     {{--aria-valuenow="40"--}}
+                                     {{--aria-valuemin="0"--}}
+                                     {{--aria-valuemax="100"--}}
+                                     {{--style="width:0%">--}}
+                                    {{--<span id="HFM_progress_text"></span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="clearfix"></div>
                         </fieldset>
                         <div class="row-fluid" style="margin-top: 15px;">

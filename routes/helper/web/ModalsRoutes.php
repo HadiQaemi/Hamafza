@@ -98,6 +98,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     Route::post( 'add_edit_menu', ['as' => 'modals.add_edit_menu', 'uses' => 'View\ModalController@addEditMenu', 'middleware' => ['dynamic_permission:modals.add_tool_group']]);
     Route::post( 'add_edit_menu_items', ['as' => 'modals.add_edit_menu_items', 'uses' => 'View\ModalController@addEditMenuItems', 'middleware' => ['dynamic_permission:modals.add_edit_menu_items']]);
     /* ??? */Route::post('CreateNewTask', ['as' => 'modals.create_new_task', 'uses' => 'View\ModalController@CreateNewTask', 'middleware' => ['dynamic_permission:modals.create_new_task']]);
+    /* ??? */Route::post('FetchMyFiles', ['as' => 'modals.fetch_my_files', 'uses' => 'View\ModalController@FetchMyFiles', 'middleware' => ['dynamic_permission:modals.create_new_task']]);
     /* ??? */Route::post('ShowTaskForm', ['as' => 'modals.show_task_form', 'uses' => 'View\ModalController@ShowTaskForm', 'middleware' => ['dynamic_permission:modals.show_task_form']]);
     /* ??? */Route::post('ShowAssignTaskForm', ['as' => 'modals.show_assign_task_form', 'uses' => 'View\ModalController@ShowAssignTaskForm', 'middleware' => ['dynamic_permission:modals.show_assign_task_form']]);
     /* ??? */Route::post('ViewTaskForm', ['as' => 'modals.view_task_form', 'uses' => 'View\ModalController@ViewTaskForm', 'middleware' => ['dynamic_permission:modals.show_task_form']]);

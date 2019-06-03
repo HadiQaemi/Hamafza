@@ -13,6 +13,11 @@ use App\Models\Hamahang\FileManager\FileMimeTypes;
 
 class FileManagerController extends Controller
 {
+
+    public $file_type = [
+        'page_image' => ['jpg', 'jpeg', 'png'],
+        'page_file' => ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx', 'ppt', 'pptx'],
+    ];
     private function PrepareUploadedFilesForJSON($section)
     {
         if (session()->has('Files'))
@@ -252,6 +257,35 @@ class FileManagerController extends Controller
                 return HDate_GtoJ($data->created_at);
             })
             ->make(true);
+    }
+
+    public function LoadMyFiles()
+    {
+        $act = Request::get('act');
+        $act = trim($act) == '' ? '' : deCode($act);
+        return Datatables::of(
+            FileManager::select("id", "originalName", "extension", "mimeType", "size", "created_at")
+                ->where('uid', '=', Auth::id())->whereIn('extension', $this->file_type[$act])
+        )
+            ->editColumn('en_id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('id', function ($data)
+            {
+                return enCode($data->id);
+            })
+            ->editColumn('size', function ($data)
+            {
+                return HFM_FileSizeConvert($data->size);
+            })
+            ->editColumn('created_at', function ($data)
+            {
+                return HDate_GtoJ($data->created_at);
+            })
+            ->orderBy('created_at', 'desc')
+            ->make(true);
+        dd($res);
     }
 
     public function ShowUploadedFiles($section)

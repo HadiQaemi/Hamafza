@@ -490,6 +490,16 @@ class ModalController extends Controller
         return json_encode(['header' => '', 'content' => $content, 'footer' => '']);
     }
 
+    public function FetchMyFiles()
+    {
+        $res = $this->getParams(['uid', 'act', 'item']);
+        return json_encode([
+            'header' => trans('filemanager.selectd_file'),
+            'content' => view('hamahang.FileManager.ShowMyFiles')->with('act', $res['act'])->with('item', $res['item'])->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter')->with('btn_type', 'ddd')->render()
+        ]);
+    }
+
     public function export()
     {
         $res = $this->getParams(['sid', 'pid', 'type']);

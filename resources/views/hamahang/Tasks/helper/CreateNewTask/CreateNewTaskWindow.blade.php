@@ -77,6 +77,9 @@
                                     </svg>
                                     <div class="display-inline">{{trans('app.add_file')}}</div>
                                 </label>
+                                <a class="jsPanels btn btn-primary pull-left"
+                                   href="{{url('/modals/FetchMyFiles?uid='.auth()->id()).'&act='.enCode('page_image')}}"
+                                   title="{{trans('app.add_file')}}">{{trans('app.add_file')}}</a>
                             </div>
                         </div>
                     </div>

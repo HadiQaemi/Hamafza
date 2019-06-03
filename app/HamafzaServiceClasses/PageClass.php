@@ -112,7 +112,7 @@ class PageClass extends PageClassExtend1
                         $this_help = Help::find($help->first()->id);
                         $this_help->update(
                             [
-                               'title' => $title
+                                'title' => $title
                             ]);
                     }
                     $help_id = $help->count() ? $help->first()->id : Help::create($help_data_array)->id;
@@ -125,8 +125,8 @@ class PageClass extends PageClassExtend1
                         $r[] = str_replace($matches[$match_k][0], $open . $term . '|' . $title . '|' . $help_block->id . 'h' . $crc32 . $close . $content . $open . $term . $close, "$v$open$term$close");
                     } else
                     {
-                        $help_block = HelpBlock::find($id);
-                        //$help_block->update($help_block_data_array);
+                        $help_blockhelp_block = HelpBlock::find($id);
+                        $help_blockhelp_block->update($help_block_data_array);
                         $r[] = "$v$open$term$close";
                     }
                 }

@@ -101,7 +101,7 @@
                         <span style="margin-top: 10px;display: block;">{{trans('tasks.stage')}}</span>
                     </div>
                     <div class="checkboxVertical draft pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.draft')}}">
-                        <input type="checkbox" class="form-check-input" value="10" name="task_status[]" id="draft_tasks" />
+                        <input type="checkbox" class="form-check-input" value="10" name="draft_tasks" id="draft_tasks" />
                         <label for="draft_tasks" class="draft"></label>
                     </div>
                     <div class="checkboxVertical not_started pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_not_started')}}">

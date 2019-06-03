@@ -12,7 +12,7 @@
     };
 
     function HFM_UploadFiles(FormData, Section) {
-        console.log(FormData);
+        // console.log(FormData);
         $.ajax({
             type: 'post',
             url: "{{URL::route('FileManager.UploadWithAddToSession',array('section'=>""))}}/" + Section,
@@ -25,8 +25,19 @@
                 $("#HFM_progress_text").text('0%');
                 $("#HFM_progress_bar").css("width", "0%");
                 $('#HFM_Modal').modal('hide');
-                $('#HFM_ResultUploadFiles').modal({show: true});
-                HFM_ShowUploadResults(data.failed, data.succeeded);
+                // $('#HFM_ResultUploadFiles').modal({show: true});
+                // HFM_ShowUploadResults(data.failed, data.succeeded);
+                if (data.failed.length > 0) {
+                    var er_message = [];
+                    $('#HFM_ResultUploadFiles .nav-tabs a[href="#error_upload_content"]').tab('show');
+                    for (m in data.failed) {
+                        er_message.push(JSON.stringify(data.failed[m].error));
+                    }
+                    messageModal('error', '{{trans('app.operation_is_failed')}}', er_message);
+                }
+                else {
+                    $('.add_page_files').click();
+                }
                 HFM_LoadUploadedFiles(Section, data.attachment_files);
             },
             xhr: function () {
@@ -49,19 +60,30 @@
     }
 
     function HFM_AddSelectedFiles(Section) {
-        var selected = rows_selected;
-        //console.log(selected);
-        var Attachments = Object.keys(selected).map(function (key) {
-            return selected[key];
+        var selected = [];
+        $('.select_files').each(function(i, obj) {
+            if($(obj).is(':checked'))
+                selected.push($(obj).val());
         });
         $.ajax({
             type: 'post',
             url: '{{URL::route("FileManager.AddSelectedFileToSession",array("section"=>""))}}/' + Section,
-            data: {Attachments: Attachments},
+            data: {Attachments: selected},
             success: function (data) {
-                $('#HFM_Modal').modal('hide');
-                HFM_ShowUploadResults(data.failed, data.succeeded);
-                HFM_LoadUploadedFiles(Section, data.attachment_files);
+                // $('#HFM_Modal').modal('hide');
+                // HFM_ShowUploadResults(data.failed, data.succeeded);
+                // HFM_LoadUploadedFiles(Section, data.attachment_files);
+                if (data.failed.length > 0) {
+                    var er_message = [];
+                    $('#HFM_ResultUploadFiles .nav-tabs a[href="#error_upload_content"]').tab('show');
+                    for (m in data.failed) {
+                        er_message.push(JSON.stringify(data.failed[m].error));
+                    }
+                    messageModal('error', '{{trans('app.operation_is_failed')}}', er_message);
+                }
+                else {
+                    $('.add_page_files').click();
+                }
             },
             dataType: "json"
         });
@@ -247,7 +269,10 @@
         });
 
         $(document).on('click', '#HFM_AddSelectedFilesSubmitBtn', function () {
-            var Section = $('#HFM_Modal #HFM_InputSectionName').val();
+            // var Section = $('#HFM_Modal #HFM_InputSectionName').val();
+            var Section = $('#HFM_JsFrame #HFM_InputSectionName').val();
+            if(Section==undefined)
+                Section = $('#HFM_Modal #HFM_InputSectionName').val();
             HFM_AddSelectedFiles(Section);
         });
 
@@ -255,7 +280,10 @@
             // var formElement = document.querySelector('#HFM_UploadForm');
             var formElement = $('.HFM_UploadForm')[0];
             var formData = new FormData(formElement);
-            var Section = $('#HFM_Modal #HFM_InputSectionName').val();
+            // var Section = $('#HFM_Modal #HFM_InputSectionName').val();
+            var Section = $('#HFM_JsFrame #HFM_InputSectionName').val();
+            if(Section==undefined)
+                Section = $('#HFM_Modal #HFM_InputSectionName').val();
             $('#HFM_UploadForm').hide();
             $('#HFM_UploadProgress').show();
             HFM_UploadFiles(formData, Section);
@@ -390,4 +418,51 @@
         });
 
     });
+    $(document).on('click', '#btn_save_image', function () {
+        var formElement = document.querySelector('.HFM_UploadForm');
+        var formData = new FormData(formElement);
+        save_image(formData);
+    });
+
+    function save_image(form_data) {
+        $.ajax({
+            url: '{{ route('savePageImage') }}',
+            type: 'post',
+            data: form_data,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            async: false,
+            success: function (s) {
+                if (s.success == true) {
+                    // messageModal('success', 'آپلود فایل', s.result);
+                    $('.show_image img').attr('src', '{{route('FileManager.DownloadFile',['ID', '' ])}}/' + s.img_id);
+                    $('.image_originalName').val(s.image_name);
+                    $('.image_id').val(s.img_id);
+                    $('.upload_form').hide();
+                    $('.show_image').show();
+                    $(":file").filestyle('clear');
+                    $('.btn_save_image').hide();
+                    $('.show_add_image').addClass('hidden');
+                    $('.show_image').removeClass('hidden');
+                    $('.jsPanel-btn.jsPanel-btn-close').click();
+                }
+                else {
+                    messageModal('error', 'خطای آپلود فایل', s.result);
+                }
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        $("#HFM_progress_text").text(Math.round(percentComplete * 100) + '%');
+                        $("#HFM_progress_bar").css("width", percentComplete * 100 + '%')
+                    }
+                }, false);
+                return xhr;
+            },
+        });
+    }
+
 </script>

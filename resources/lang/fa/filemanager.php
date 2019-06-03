@@ -26,6 +26,7 @@ return [
     'attachs'=>'فایل&zwnj;های پیوست شده:',
     'are_you_sure'=>'آیا مطمئن هستید؟',
     'selectd_file'=>'انتخاب فایل',
+    'new_file'=>'فایل‌های جدید',
     'file_upload'=>'بارگذاری فایل',
     'file_uploaded_result'=>'نتیجه بارگذاری فایل های انتخاب شده:',
     'uploded'=>'بارگذاری شده ها',

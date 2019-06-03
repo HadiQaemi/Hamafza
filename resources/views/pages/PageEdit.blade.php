@@ -229,13 +229,14 @@
                 <div id="all_files_div"></div>
                 {{--<div class="hr hr-double dotted"></div>--}}
                 {{--<label class="col-lg-3 control-label">{{trans('app.add_file')}}</label>--}}
-                <div class="col-lg-9">
+                {{--<div class="col-lg-9">--}}
                     <div class="row-fluid">
                         <div class="filemanager-buttons-client">
-                            <div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('page_file') }}" data-multi_file="Multi" style="margin-right: 5px;">
+                            <a class="jsPanels btn btn-primary pull-left " href="{{url('/modals/FetchMyFiles?uid='.auth()->id()).'&act='.enCode('page_file').'&item='.enCode($item_id)}}" title="{{trans('app.add_file')}}">{{trans('app.add_file')}}</a>
+                            {{--<div class="btn btn-default pull-left HFM_ModalOpenBtn" data-section="{{ enCode('page_file') }}" data-multi_file="Multi" style="margin-right: 5px;">--}}
                                 {{--<i class="glyphicon glyphicon-plus-sign" style="color: skyblue"></i>--}}
-                                <span>{{trans('app.add_file')}}</span>
-                            </div>
+                                {{--<span>{{trans('app.add_file')}}</span>--}}
+                            {{--</div>--}}
                             {{--<div data-section="{{ enCode(session('page_file')) }}"  class="HFM_RemoveAllFileFSS_SubmitBtn btn btn-default pull-left" style=" color:#555;">--}}
                             {{--<i class="glyphicon glyphicon-remove-sign" style=" color:#FF6600;"></i>--}}
                             {{--<span>{{trans('filemanager.remove_all_attachs')}}</span>--}}
@@ -247,9 +248,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div>
-                </div>
+                {{--</div>--}}
                 {!! $HFM_media['ShowResultArea']['page_file'] !!}
-                <button name="addasubject" class="btn btn-primary FloatLeft add_page_files" type="button">بارگذاری</button>
+                <button name="addasubject" class="btn btn-primary FloatLeft add_page_files hidden" type="button">بارگذاری</button>
             </div>
             {{--<form action="{{App::make('url')->to('/')}}/AttachFileinPage" method="post" enctype="multipart/form-data" name="AttachFileinPage">--}}
             {{--<input type="hidden" name="_token" value="{{ csrf_token() }}"/>--}}
@@ -407,7 +408,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.success == true) {
-                        messageModal('success', 'افزودن فایل‌ها', result.message);
+                        // messageModal('success', 'افزودن فایل‌ها', result.message);
                         location.reload();
                     }
                     else {
@@ -434,8 +435,7 @@
                         success: function (result) {
                             if (result.success == true) {
                                 $this.parent().parent().remove();
-                                messageModal('success', 'حذف فایل', result.message);
-
+                                // messageModal('success', 'حذف فایل', result.message);
                             }
                             else {
                                 messageModal('error', 'خطا در حذف فایل', result.error);

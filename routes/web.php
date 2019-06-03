@@ -6,6 +6,7 @@ require(__DIR__ . '/helper/web/TestRoutes.php');
 require(__DIR__ . '/helper/web/LoginRegisterRoutes.php');
 
 Route::get('DownloadFile/{type}/{id?}/{default_img?}', ['prefix' => 'FileManager', 'as' => 'FileManager.DownloadFile', 'uses' => 'Hamahang\FileManagerController@Download']);
+//Route::get('DownloadFile/{type}/{id?}/{default_img?}', ['prefix' => 'FileManager', 'as' => 'FileManager.DownloadFile', 'uses' => 'Hamahang\FileManagerController@Download']);
 Route::get('Captcha/{section}', ['as' => 'captcha', 'uses' => 'Hamahang\CaptchaController@index']);
 
 //Route::group(['prefix' => 'services', 'middleware' => ['dynamic_permission:services']], function ()

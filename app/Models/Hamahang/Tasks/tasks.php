@@ -1099,6 +1099,7 @@ class tasks extends Model
         }
         else
         {
+
             $result = DB::table('hamahang_task')
                 ->select("hamahang_task.desc","hamahang_task_assignments.id as assignment_id","hamahang_task.schedule_id", "hamahang_task.schedule_time", "hamahang_task.use_type", "hamahang_task_status.type", "user.Uname", "user.Name", "user.Family", "hamahang_task.id", "hamahang_task.title", "hamahang_task_priority.immediate", "hamahang_task_priority.importance", "hamahang_task.created_at", "hamahang_task.duration_timestamp")
                 ->leftjoin('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
@@ -1114,6 +1115,14 @@ class tasks extends Model
                     ->whereNull('hamahang_subject_ables.deleted_at')
                     ->where('hamahang_subject_ables.subject_id', '=', $subject_id)
                     ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\Tasks\\tasks');
+            }
+
+            $draft_tasks = Request::exists('draft_tasks') ? Request::input('draft_tasks') : '';
+            if (trim($draft_tasks))
+            {
+                $result->whereIn('hamahang_task.is_save', [0,1]);
+            }else{
+                $result->where('hamahang_task.is_save', '=', 1);
             }
 
             $title = Request::exists('title') ? Request::input('title') : '';
