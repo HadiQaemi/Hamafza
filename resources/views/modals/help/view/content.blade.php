@@ -6,7 +6,7 @@
                 <div>این موارد را نیز ببینید:</div>
                 <ul>
                     @foreach ($see_alsos as $v)
-                        <li><a href="#" onclick="get_content(this, '{!! enCode($v->id) !!}');">{!! $v->title !!}</a></li>
+                        <li><a href="#" onclick="get_content(this, '{!! ($v->help->id == $id ? enCode($v->help2->id) : enCode($v->help->id)) !!}');">{!! ($v->help->id == $id ? $v->help2->title : $v->help->title) !!}</a></li>
                     @endforeach
                 </ul>
             @endif

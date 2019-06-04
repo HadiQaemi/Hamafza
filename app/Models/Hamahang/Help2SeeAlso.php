@@ -16,6 +16,10 @@ class Help2SeeAlso extends Model
 
     public function Help()
     {
+        return $this->belongsTo('App\Models\Hamahang\Help', 'help_1_id', 'id');
+    }
+    public function Help2()
+    {
         return $this->belongsTo('App\Models\Hamahang\Help', 'help_2_id', 'id');
     }
 

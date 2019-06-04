@@ -744,7 +744,7 @@ class ModalController extends Controller
                         $view .= "$block->content<br />\r\n";
                     }
                 }
-                $see_alsos = $help->SeeAlsos()->get();
+                $see_alsos = $help->SeeAlsos();
             }
         } else
         {
@@ -757,7 +757,7 @@ class ModalController extends Controller
             return json_encode(['header' => '', 'content' => $content->render(), 'footer' => '']);
         }
         $header = view('modals.help.view.header')->with([])->render();
-        $content = view('modals.help.view.content')->with(['view' => $view, 'see_alsos' => $see_alsos])->render();
+        $content = view('modals.help.view.content')->with(['view' => $view, 'see_alsos' => $see_alsos, 'id' => $id])->render();
         $footer = view('modals.help.view.footer')->with([])->render();
         if ($request->exists('content'))
         {
@@ -3456,9 +3456,9 @@ class ModalController extends Controller
     public function help_view(Request $request)
     {
         $id = deCode($request->input('id'));
-        $help = Help2::whereNull('hamahang_helps.deleted_at')
+        $help = Help::whereNull('hamahang_helps.deleted_at')
             ->where('hamahang_helps.id', '=', $id)
-            ->with('SeeAlsos', 'HelpBlocks')
+            ->with('SeeAlsos2', 'SeeAlsos1', 'HelpBlocks')
             ->first();
 //        dd($help);
 //            ->get();

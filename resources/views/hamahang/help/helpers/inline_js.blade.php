@@ -42,7 +42,6 @@
                     if (data.success == false) {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);
                     } else {
-                        alert($("#see_also_id option:selected").text());
                         $('#see_also_list').append(
                             '<div class="row margin-top-10">\n' +
                             '<div class="col-xs-1">' + (num + 1) + '</div>\n' +

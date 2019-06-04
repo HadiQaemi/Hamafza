@@ -781,15 +781,24 @@ class AutoCompleteController extends Controller
         $data = $request->term;
         if ($data['term'] == '...')
         {
-            $res['results'] = DB::table('hamahang_helps')
+            $query = DB::table('hamahang_helps')
                 ->select('id', 'title as text')
                 ->get();
+            $res['results'] = $query->map(function($items){
+                $data['text'] = str_replace('&nbsp;',' ',str_replace('&zwnj;',' ',$items->text));
+               return $data;
+            });
         } else
         {
-            $res['results'] = DB::table('hamahang_helps')
+            $query = DB::table('hamahang_helps')
                 ->select('id', 'title as text')
                 ->where('title', 'LIKE', "%$data[term]%")
                 ->get();
+            $res['results'] = $query->map(function($items){
+                $items->text = str_replace('&nbsp;',' ',str_replace('&zwnj;',' ',$items->text));
+                return $items;
+            });
+
         }
         return response()->json($res);
     }

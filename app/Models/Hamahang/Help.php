@@ -28,9 +28,19 @@ class Help extends Model
         return $this->Pages;
     }
 
+    public function SeeAlsos1()
+    {
+        return $this->hasMany('App\Models\Hamahang\Help2SeeAlso', 'help_1_id', 'id')->whereNull('hamahang_help_see_alsos.deleted_at');
+    }
+
+    public function SeeAlsos2()
+    {
+        return $this->hasMany('App\Models\Hamahang\Help2SeeAlso', 'help_2_id', 'id')->whereNull('hamahang_help_see_alsos.deleted_at');
+    }
+
     public function SeeAlsos()
     {
-        return $this->BelongsToMany('App\Models\Hamahang\Help', 'hamahang_help_see_alsos', 'help_1_id', 'help_2_id');
+        return $this->SeeAlsos1->union($this->SeeAlsos2);
     }
 
     public function getBlocksCountAttribute()

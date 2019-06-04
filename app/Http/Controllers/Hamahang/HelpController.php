@@ -45,11 +45,11 @@ class HelpController extends Controller
     public function HelpContent()
     {
         $help = DB::table('hamahang_helps')
-            ->leftJoin('hamahang_help_blocks', 'hamahang_help_blocks.help_id', '=', 'hamahang_helps.id')
+//            ->leftJoin('hamahang_help_blocks', 'hamahang_help_blocks.help_id', '=', 'hamahang_helps.id')
             ->whereNull('hamahang_helps.deleted_at')
-            ->whereNull('hamahang_help_blocks.deleted_at')
-            ->select('hamahang_helps.*', DB::raw('count(*) as total'))
-            ->groupBy('hamahang_help_blocks.help_id')
+//            ->whereNull('hamahang_help_blocks.deleted_at')
+//            ->select('hamahang_helps.*', DB::raw('count(*) as total'))
+//            ->groupBy('hamahang_help_blocks.help_id')
             ->get();
 
 //        $help = DB::table('hamahang_helps_new')

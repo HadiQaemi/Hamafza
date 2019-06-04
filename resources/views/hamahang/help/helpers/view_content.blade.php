@@ -37,10 +37,10 @@
                     <div class="col-xs-1">عملیات</div>
                 </div>
                 <div id="see_also_list">
-                    @foreach($items->SeeAlsos as $k=>$also)
+                    @foreach($items->SeeAlsos() as $k=>$also)
                         <div class="row margin-top-10">
                             <div class="col-xs-1">{{$k+1}}</div>
-                            <div class="col-xs-10">{{$also->Help->title}}</div>
+                            <div class="col-xs-10">{{enCode($also->Help2->id) == $id ? $also->Help->title : $also->Help2->title}}</div>
                             <div class="col-xs-1">
                                 <i class="fa fa-remove pointer remove_see_also" also="{{enCode($also->id)}}"></i>
                             </div>
