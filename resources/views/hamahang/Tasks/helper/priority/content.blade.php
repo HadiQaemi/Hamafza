@@ -205,11 +205,11 @@
                                             <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
                                                 @php
                                                     $title = $task->title;
-                                                    $words = str_word_count($task->title, 2);
-                                                    $pos = array_keys($words);
-                                                    $min = min(count($words),3);
-                                                    if(isset($pos[1]))
-                                                        $title = substr($words, 1, $pos[1]) . '...';
+//                                                    $words = str_word_count($task->title, 2);
+//                                                    $pos = array_keys($words);
+//                                                    $min = min(count($words),3);
+//                                                    if(isset($pos[1]))
+//                                                        $title = substr($words, 1, $pos[1]) . '...';
                                                 @endphp
                                                 {{$title}}
                                             </a>

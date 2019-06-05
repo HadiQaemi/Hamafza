@@ -1,4 +1,5 @@
 <script>
+
     $(document).ready(function () {
         $(".select2_auto_complete_see_also").select2({
             minimumInputLength: 3,

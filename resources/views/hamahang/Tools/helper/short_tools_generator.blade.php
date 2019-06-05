@@ -117,6 +117,16 @@
                     $help_code = 'dH_t4i3vxZE';
                     break;
                 }
+                case 'ugc.desktop.hamahang.calendar.set_task':
+                {
+                    $help_code = enCode('265');
+                    break;
+                }
+                case 'ugc.desktop.hamahang.calendar.set_task':
+                {
+                    $help_code = enCode('265');
+                    break;
+                }
                 case 'hamahang.project.show_project_tasks_list':
                 {
                     $help_code = enCode('312');
@@ -224,7 +234,7 @@
                 }
 				case 'ugc.desktop.hamahang.calendar_events.events':
                 {
-                    $help_code = 'Z25opedJJQc';
+                    $help_code = enCode('248');
                     break;
                 }
 				case 'ugc.desktop.hamahang.calendar_events.sessions':
