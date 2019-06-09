@@ -909,6 +909,8 @@ class MyAssignedTaskController extends Controller
         $Tasks = Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
+                if($data->is_save == 0)
+                    return ['status_name'=>trans('tasks.draft'),'id'=>'11'];
                 return GetTaskStatusName($data->type);
             })
             ->editColumn('id', function ($data)

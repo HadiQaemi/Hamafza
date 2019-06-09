@@ -1,10 +1,10 @@
-<div id="tab" class="row table-bordered" style="border-bottom: none">
+<div id="tab" class="row table-bordered file-frame" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
-            <a href="#tab_t1" data-toggle="tab">{{trans('filemanager.selectd_file')}}</a>
+            <a href="#file_tab_t1" data-toggle="tab">{{trans('filemanager.selectd_file')}}</a>
         </li>
         <li>
-            <a href="#tab_t2" class="tab_t2" data-toggle="tab">{{trans('filemanager.new_file')}}</a>
+            <a href="#file_tab_t2" class="file_tab_t2" data-toggle="tab">{{trans('filemanager.new_file')}}</a>
             {{--<a href="#" data-toggle="tab">تنظیم</a>--}}
         </li>
     </ul>
@@ -12,7 +12,7 @@
           enctype="multipart/form-data">
         <input type="hidden" id="item_id" name="item_id" value="{{ $item }}">
         <div class="tab-content new-task-form">
-            <div class="tab-pane active tab-view" id="tab_t1">
+            <div class="tab-pane active tab-view" id="file_tab_t1">
                 <div class="row-fluid">
                     <div class="col-xs-12">
                         <button id="HFM_AddSelectedFilesSubmitBtn" name="upload_files" value="upload"
@@ -40,7 +40,7 @@
                     </form>
                 </div>
             </div>
-            <div class="tab-pane tab-view" id="tab_t2">
+            <div class="tab-pane tab-view" id="file_tab_t2">
                 <fieldset style="margin-top:25px;">
                     <form method="post" class="HFM_UploadForm" enctype="multipart/form-data">
                         <input type="hidden" id="item_id" name="item_id" value="{{ deCode($item) }}">
@@ -82,7 +82,7 @@
                 <div class="row-fluid" style="margin-top: 15px;">
                     <hr>
                     <div class="col-xs-12">
-                        <button id="{{deCode($act) == 'page_image' ? 'btn_save_image' : 'HFM_UploadFormSubmitBtn'}}" name="upload_files" value="upload"
+                        <button id="{{deCode($act) == 'page_image' ? 'btn_save_image' : deCode($act) == 'task_image' ? 'btn_save_task_image' : 'HFM_UploadFormSubmitBtn'}}" name="upload_files" value="upload"
                                 class="btn btn-primary pull-left" type="button">
                             <span>{{trans('filemanager.upload_files_selected')}}</span>
                         </button>
@@ -99,8 +99,9 @@
 <script>
     $(document).ready(function () {
         $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('397') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+        $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('397') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 
-        $('.tab_t2').click();
+        $('.file-frame .file_tab_t2').click();
         loadMyFiles();
 
         function loadMyFiles() {

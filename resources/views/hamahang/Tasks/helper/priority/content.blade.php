@@ -18,7 +18,7 @@
                                             @endphp
                                             @if(isset($task->Assignments))
                                                 @foreach($task->Assignments as $employee)
-                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
+                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.responsible').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                         <a href="{{url((isset($employee->Employee->Uname) ? $employee->Employee->Uname : ''))}}" title="{{(isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                             <i >{!! isset($employee->Employee->BetweenSmallandBig) ? $employee->Employee->BetweenSmallandBig : '' !!}</i>
                                                         </a>
@@ -65,7 +65,7 @@
                                             @endphp
                                             @if(isset($task->Assignments))
                                                 @foreach($task->Assignments as $employee)
-                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
+                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.responsible').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                         <a href="{{url((isset($employee->Employee->Uname) ? $employee->Employee->Uname : ''))}}" title="{{(isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                             <i >{!! isset($employee->Employee->BetweenSmallandBig) ? $employee->Employee->BetweenSmallandBig : '' !!}</i>
                                                         </a>
@@ -114,7 +114,7 @@
                                             @endphp
                                             @if(isset($task->Assignments))
                                                 @foreach($task->Assignments as $employee)
-                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
+                                                    <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.responsible').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                         <a href="{{url((isset($employee->Employee->Uname) ? $employee->Employee->Uname : ''))}}" title="{{(isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                             <i >{!! isset($employee->Employee->BetweenSmallandBig) ? $employee->Employee->BetweenSmallandBig : '' !!}</i>
                                                         </a>
@@ -161,7 +161,7 @@
                                         @endphp
                                         @if(isset($task->Assignments))
                                             @foreach($task->Assignments as $employee)
-                                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reject_to').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
+                                                <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.responsible').': '. (isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                     <a href="{{url((isset($employee->Employee->Uname) ? $employee->Employee->Uname : ''))}}" title="{{(isset($employee->Employee->Name) ? $employee->Employee->Name : '') . ' ' . (isset($employee->Employee->Family) ? $employee->Employee->Family : '')}}">
                                                         <i >{!! isset($employee->Employee->BetweenSmallandBig) ? $employee->Employee->BetweenSmallandBig : '' !!}</i>
                                                     </a>

@@ -316,6 +316,35 @@
                 @yield('inline_scripts')
 
                 <script>
+                    $(document).on('click', '#btn_save_task_image', function () {
+                        var formElement = $( '.id_input_files' )[0].files[0];
+                        var data = new FormData();
+                        data.append('image',formElement);
+                        data.append('pid','{{rand(1,100).rand(1,100)}}');
+                        data.append('form_type','form');
+                        $this = $(this);
+                        $.ajax
+                        ({
+                            url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                            type: 'post',
+                            dataType: 'json',
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            success: function(data)
+                            {
+                                if (data.success)
+                                {
+                                    $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
+                                    $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                                    $('#'+$this.parents(".jsPanel").attr('id') + ' .jsPanel-btn-close').click();
+                                } else
+                                {
+                                    messageModal('fail', 'خطا', data.result);
+                                }
+                            }
+                        });
+                    });
                     function SaveTask(form_id, again,action) {
                         //console.log(form_id);
                         $('#task_form_action').val(action);

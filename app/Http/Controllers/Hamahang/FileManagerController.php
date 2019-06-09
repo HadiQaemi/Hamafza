@@ -16,6 +16,7 @@ class FileManagerController extends Controller
 
     public $file_type = [
         'page_image' => ['jpg', 'jpeg', 'png'],
+        'task_image' => ['jpg', 'jpeg', 'png'],
         'page_file' => ['zip', 'doc', 'docx', 'pdf', 'mpga', 'amr', 'xls', 'xlsx', 'ppt', 'pptx'],
     ];
     private function PrepareUploadedFilesForJSON($section)
