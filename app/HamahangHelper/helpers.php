@@ -787,6 +787,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                     $pid = $item;
                     $PgC = new \App\HamafzaViewClasses\PageClass();
                     $page = $PgC->PageDetail($pid, $uid, $sesid, '', '1');
+                    $page = str_ireplace('src="tinymce', 'src="/tinymce', $page);
                     $content = $page['Body'];
                     if ($content == 'EditNOK')
                     {

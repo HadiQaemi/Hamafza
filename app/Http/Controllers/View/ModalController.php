@@ -739,9 +739,10 @@ class ModalController extends Controller
                 if ($blocks = $help->HelpBlocks)
                 {
                     $view = "<h3 style=\"color: #6391C5;\">{$help->title}</h3>";
+//                    dd($blocks);
                     foreach ($blocks as $block)
                     {
-                        $view .= "$block->content<br />\r\n";
+                        $view .= str_ireplace('src="tinymce', 'src="/tinymce', $block->content)."<br />\r\n";
                     }
                 }
                 $see_alsos = $help->SeeAlsos();

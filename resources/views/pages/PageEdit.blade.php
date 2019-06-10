@@ -69,7 +69,7 @@
 @section('content')
     <textarea id="content_body" name="content_body" class="mceEditor" style="width:100%">
       {!! $content !!}
-</textarea>
+    </textarea>
     <div class="panel-body text-decoration"></div>
 @stop
 @section('content2')

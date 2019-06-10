@@ -90,7 +90,7 @@ body {
 }
 #TextSection p img,#helpviewDiv p img {
     margin: auto;
-    display:block;
+    display:inline-block;
 }
 .number {
     text-align: center;
