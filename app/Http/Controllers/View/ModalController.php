@@ -742,7 +742,7 @@ class ModalController extends Controller
 //                    dd($blocks);
                     foreach ($blocks as $block)
                     {
-                        $view .= str_ireplace('src="', 'src="/', $block->content)."<br />\r\n";
+                        $view .= str_ireplace('src="tinymce', 'src="/tinymce', str_ireplace('src="FileManager', 'src="/FileManager', $block->content))."<br />\r\n";
                     }
                 }
                 $see_alsos = $help->SeeAlsos();
