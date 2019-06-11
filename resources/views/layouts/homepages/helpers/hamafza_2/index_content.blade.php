@@ -101,6 +101,7 @@
                         <div class="col-md-6 noRightPadding noLeftPadding">
                             <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off" placeholder="کد امنیتی را وارد نمایید">
                         </div>
+                        <div id="captcha_request_errors_ham2" class="error-login col-xs-12"></div>
                         <div class="col-md-6 noLeftPadding noRightPadding">
                             <div class="col-md-7 noLeftPadding noRightPadding">
                                 <img style="height: 30px;" class="login_captcha_image" src="{{ route('captcha', 'login') }}">
