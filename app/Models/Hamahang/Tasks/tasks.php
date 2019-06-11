@@ -1482,7 +1482,7 @@ class tasks extends Model
             }
         }
 
-        $tasks_immediate_importance = $tasks_immediate_importance->get();
+        $tasks_immediate_importance = $tasks_immediate_importance->orderBy('hamahang_task.id', 'DESC')->get();
         return $tasks_immediate_importance;
     }
 
@@ -1524,7 +1524,7 @@ class tasks extends Model
         $myTasks['not_started'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 0);
         });
-        $myTasks['not_started'] = $myTasks['not_started']->get();
+        $myTasks['not_started'] = $myTasks['not_started']->orderBy('hamahang_task.id', 'DESC')->get();
 
         ////////////
         $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
@@ -1546,7 +1546,7 @@ class tasks extends Model
         $myTasks['started'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 1);
         });
-        $myTasks['started'] = $myTasks['started']->get();
+        $myTasks['started'] = $myTasks['started']->orderBy('hamahang_task.id', 'DESC')->get();
 
         ///////////////
         $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
@@ -1569,7 +1569,7 @@ class tasks extends Model
         $myTasks['done'] =$tasks_status->whereHas('Status', function ($q){
             $q->where('type', 2);
         });
-        $myTasks['done'] = $myTasks['done']->get();
+        $myTasks['done'] = $myTasks['done']->orderBy('hamahang_task.id', 'DESC')->get();
 
         ///////////////
         $tasks_status = self::whereHas('Subjects', function ($query) use ($arr) {
@@ -1592,7 +1592,7 @@ class tasks extends Model
         $myTasks['ended'] = $tasks_status->whereHas('Status', function ($q){
             $q->where('type', 3);
         });
-        $myTasks['ended'] = $myTasks['ended']->get();
+        $myTasks['ended'] = $myTasks['ended']->orderBy('hamahang_task.id', 'DESC')->get();
         $user = auth()->user();
         return view('hamahang.Tasks.MyTask..helper.MyTasksState.content', compact('user', 'myTasks'));
     }
@@ -1694,7 +1694,7 @@ class tasks extends Model
             }
         }
 
-        $tasks_immediate_importance = $tasks_immediate_importance->get();
+        $tasks_immediate_importance = $tasks_immediate_importance->orderBy('hamahang_task.id', 'DESC')->get();
 //        dd($tasks_immediate_importance,db::getQueryLog());
         return $tasks_immediate_importance;
     }

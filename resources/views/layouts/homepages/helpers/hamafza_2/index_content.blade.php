@@ -98,7 +98,7 @@
                         <input style="height: 30px;" type="password" class="form-control" name="password" placeholder="رمزعبور" required=""/>
                         <div id="password_request_errors_ham2" class="error-login"></div>
                         <div id="login_fail_request_errors_ham2" class="error-login"></div>
-                        <div class="col-md-6 noRightPadding noLeftPadding">
+                        <div class="col-md-12 noRightPadding noLeftPadding">
                             <input type="text" name="captcha_code" class="form-control" style="direction: ltr; height: 30px;" autocomplete="off" placeholder="کد امنیتی را وارد نمایید">
                             <div id="captcha_request_errors_ham2" class="error-login"></div>
                         </div>

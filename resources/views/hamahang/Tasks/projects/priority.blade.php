@@ -36,7 +36,7 @@
         }
         .task_items {
             width: 100%;
-            height: 40%;
+            height: 280px;
             overflow-y: scroll;
             overflow-x: hidden;
             border: 1px solid #ececec;

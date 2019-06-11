@@ -172,15 +172,15 @@
                                         @php
                                             $do = 'ViewTaskForm?act=do&';
                                         @endphp
-                                        <div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
-                                            <a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">
-                                                <i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>
-                                            </a>
-                                        </div>
+                                        {{--<div class="referrer" style="top: 1px;" data-toggle="tooltip" title="{{trans('tasks.reffered').': '.$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">--}}
+                                            {{--<a href="{{url($task->Assignment->Assigner->Uname)}}" title="{{$task->Assignment->Assigner->Name . ' ' . $task->Assignment->Assigner->Family}}">--}}
+                                                {{--<i >{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</i>--}}
+                                            {{--</a>--}}
+                                        {{--</div>--}}
                                     @endif
                                     <div class="task_title">
                                         <h5 class="text_ellipsis">
-                                            <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}&aid={{enCode($task->Assignment->id)}}'>
+                                            <a class='cursor-pointer jsPanels' data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" href='/modals/{{$do}}tid={{enCode($task->id)}}'>
                                                 {{$task->title}}
                                             </a>
                                         </h5>
