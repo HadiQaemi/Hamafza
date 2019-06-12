@@ -328,7 +328,7 @@
     }
 
 	var num_add_rel_task = 1;
-    $("#add_rel_task").click(function () {
+    $("#add_rel_project").click(function () {
         if($('#new_task_projects').val()>0)
         {
             var project_span = '' +
@@ -356,8 +356,10 @@
                 '       </td>\n' +
                 '    </tr>\n';
             $('#task_project').trigger("reset");
-            $('#rel_task_list').prepend(project_span);
+            $('#rel_project_list').prepend(project_span);
         }
+    });
+    $("#add_rel_task").click(function () {
         if($('#new_task_rel').val()>0)
         {
             var project_span = '' +

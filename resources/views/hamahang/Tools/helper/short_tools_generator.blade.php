@@ -71,9 +71,14 @@
                     }
                     break;
                 }
+                case 'ugc.desktop.hamahang.user_list.index':
+                {
+                    $help_code = enCode('207');
+                    break;
+                }
                 case 'page.forum':
                 {
-                    $help_code = 'XXkr9sQi3iI';
+                    $help_code = enCode('314');
                     break;
                 }
                 case 'page.desktop.index':
@@ -83,7 +88,7 @@
                 }
                 case 'ugc.desktop.hamahang.acl.index':
                 {
-                    $help_code = 'KcmXxvdX0u0';
+                    $help_code = enCode('161');
                     break;
                 }
                 case 'ugc.desktop.Hamahang.files.follow_ME':
@@ -98,13 +103,13 @@
                 }
                 case 'ugc.index':
                 {
-                    $help_code = 'pHZtB1B2sMk';
+                    $help_code = enCode('160');
                     break;
                 }
                 case 'contents.UserContents':
                 case 'ugc.wall':
                 {
-                    $help_code = 'GOfFSFzmFG8';
+                    $help_code = enCode('235');
                     break;
                 }
                 case 'page.desktop.announces':
@@ -304,7 +309,7 @@
                 }
 				case 'chart':
                 {
-                    $help_code = 'XIz_3yUSMfY';
+                    $help_code = enCode('275');
                     break;
                 }
 				case 'ugc.desktop.hamahang.acl.index':
@@ -314,22 +319,22 @@
                 }
 				case 'ugc.desktop.hamahang.subjects.index':
                 {
-                    $help_code = 'KBylI3uxKNA';
+                    $help_code = enCode('157');
                     break;
                 }
 				case 'ugc.desktop.hamahang.relations_index':
                 {
-                    $help_code = 'FplHsEzcGXI';
+                    $help_code = enCode('269');
                     break;
                 }
 				case 'ugc.desktop.hamahang.subst_index':
                 {
-                    $help_code = 'xt8KkJ5z77g';
+                    $help_code = enCode('84');
                     break;
                 }
 				case 'ugc.desktop.hamahang.alerts_index':
                 {
-                    $help_code = 'op7dbrZ6s08';
+                    $help_code = enCode('271');
                     break;
                 }
 				case 'ugc.desktop.hamahang.alerts_index':
@@ -339,17 +344,17 @@
                 }
 				case 'ugc.desktop.hamahang.basicdata.index':
                 {
-                    $help_code = '7cEatcNTIik';
+                    $help_code = enCode('406');
                     break;
                 }
 				case 'ugc.desktop.hamahang.menus.index':
                 {
-                    $help_code = 'qNMuBK4h9tA';
+                    $help_code = enCode('274');
                     break;
                 }
 				case 'ugc.desktop.hamahang.tools.index':
                 {
-                    $help_code = 'A7R9nk-ZHk8';
+                    $help_code = enCode('14');
                     break;
                 }
 				case 'ugc.desktop.hamahang.org_chart.OrgOrgans.organs':

@@ -254,6 +254,7 @@
         var table_chart_grid = "";
         var RowData = [];
         var cur_org_id = '';
+        $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('332') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 
         function AddNewChart2() {
             $('#ShowOrganCharts').modal('hide');

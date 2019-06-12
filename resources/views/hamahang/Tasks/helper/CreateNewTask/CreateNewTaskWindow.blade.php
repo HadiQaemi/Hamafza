@@ -486,79 +486,122 @@
                 </div>
             </div>
             <div class="tab-pane tab-view" id="tab_t4">
-                <div class="row col-lg-12 border-bottom">
-                    <div class="col-lg-1"><label>{{ trans('tasks.task') }}</label></div>
-                    <div class="col-lg-11">
-                        <span class="task_title line-height-35"></span>
-                    </div>
-                </div>
+                {{--<div class="row col-lg-12 border-bottom">--}}
+                    {{--<div class="col-lg-1"><label>{{ trans('tasks.task') }}</label></div>--}}
+                    {{--<div class="col-lg-11">--}}
+                        {{--<span class="task_title line-height-35"></span>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="col-xs-12 border-bottom">
                     <form id="task_project">
-                        <div class="row col-lg-6 noLeftPadding">
-                            <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
-                            <div class="col-lg-11">
-                                <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"
-                                        data-placeholder="{{trans('tasks.enter_project_name')}}">
-                                    <option value=""></option>
-                                    @if(isset($project))
-                                        <option value="{{$project->id}}" selected>{{$project->title}}</option>
-                                    @endif
-                                </select>
+                        <div class="row col-lg-12 noLeftPadding noRightPadding">
+                            <div class="row col-lg-12 noLeftPadding noRightPadding">
+                                <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
+                                <div class="col-lg-10">
+                                    <select id="new_task_projects" name="project_tasks[]" class="select2_auto_complete_projects col-xs-12"
+                                            data-placeholder="{{trans('tasks.enter_project_name')}}">
+                                        <option value=""></option>
+                                        @if(isset($project))
+                                            <option value="{{$project->id}}" selected>{{$project->title}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-xs-1">
+                                    <span class="fa fa-plus pointer line-height-30" id="add_rel_project"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 border-bottom padding-bottom-10">
+                                <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
+                                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
+                                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
+                                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
+                                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rel_project_list">
+                                        @if(isset($project))
+                                            <tr id="num_add_rel_task1">
+                                                <td>
+                                                    <label class="pull-right line-height-30">پایین دستی</label>
+                                                </td>
+                                                <td>
+                                                    <label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">{{$project->title}}</label>
+                                                    <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
+                                                    <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
+                                                </td>
+                                                <td>
+                                                    <label class="input-group pull-right">
+                                                        <input name="new_project_weight[]" class="form-control" type="text" value="0"/>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(1)" for="r2"></span>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="row col-lg-6 noLeftPadding noRightPadding">
-                            <div class="col-xs-1">
-                                <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                        <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-50">
+                            <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-50">
+                                <div class="col-xs-1">
+                                    <label class="line-height-35">{{ trans('tasks.task') }}</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <select id="new_task_rel" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
+                                            {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
+                                            data-placeholder="{{trans('tasks.select_some_options')}}">
+                                        <option value=""></option>
+                                    </select>
+                                    <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
+                                </div>
+                                <div class="col-xs-1">
+                                    <span class="fa fa-plus pointer line-height-30" id="add_rel_task"></span>
+                                </div>
                             </div>
-                            <div class="col-xs-10">
-                                <select id="new_task_rel" name="rel_tasks[]" class="select2_auto_complete_tasks col-xs-12"
-                                        {{--<select id="new_task_users" name="class[]" class="select2_auto_complete_tasks col-xs-12"--}}
-                                        data-placeholder="{{trans('tasks.select_some_options')}}">
-                                    <option value=""></option>
-                                </select>
-                                <span style=" position: absolute; left: 20px; top: 10px;" class=""></span>
-                            </div>
-                            <div class="col-xs-1">
-                                <span class="fa fa-plus pointer line-height-30" id="add_rel_task"></span>
+                            <div class="col-xs-12">
+                                <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
+                                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
+                                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
+                                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
+                                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rel_task_list">
+                                        @if(isset($project))
+                                            <tr id="num_add_rel_task1">
+                                                <td>
+                                                    <label class="pull-right line-height-30">پایین دستی</label>
+                                                </td>
+                                                <td>
+                                                    <label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">{{$project->title}}</label>
+                                                    <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
+                                                    <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
+                                                </td>
+                                                <td>
+                                                    <label class="input-group pull-right">
+                                                        <input name="new_project_weight[]" class="form-control" type="text" value="0"/>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(1)" for="r2"></span>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-xs-12">
-                    <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
-                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
-                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody id="rel_task_list">
-                            @if(isset($project))
-                                <tr id="num_add_rel_task1">
-                                    <td>
-                                        <label class="pull-right line-height-30">پایین دستی</label>
-                                    </td>
-                                    <td>
-                                        <label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">{{$project->title}}</label>
-                                        <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
-                                        <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
-                                    </td>
-                                    <td>
-                                        <label class="input-group pull-right">
-                                            <input name="new_project_weight[]" class="form-control" type="text" value="0"/>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(1)" for="r2"></span>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
+
             </div>
             <div class="tab-pane tab-view" id="tab_t5">
                 <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding: 10px 0px">

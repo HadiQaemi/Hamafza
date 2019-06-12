@@ -1074,8 +1074,14 @@ $(document).on("click", ".jsPanels", function () {
         title = 'بازنشر';
     if (link.indexOf('print?sid') > 0)
         title = 'چاپ';
-    var h = $(window).height();
-    var w = $(window).width();
+    if($(this).hasClass('HelpIcon'))
+    {
+        var h = $(window).height() + 150;
+        var w = $(window).width() - 150;
+    }else{
+        var h = $(window).height();
+        var w = $(window).width();
+    }
 
     var JS_Panel = $.jsPanel({
         contentAjax: {
