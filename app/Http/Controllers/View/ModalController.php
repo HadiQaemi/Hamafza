@@ -742,7 +742,7 @@ class ModalController extends Controller
 //                    dd($blocks);
                     foreach ($blocks as $block)
                     {
-                        $view .= str_ireplace('src="tinymce', 'src="'.env('MASTER_URL').'/tinymce', str_ireplace('src="FileManager', 'src="'.env('MASTER_URL').'/FileManager', str_ireplace('src="../../', 'src="'.env('MASTER_URL').'/', str_ireplace('src="/FileManager', 'src="'.env('MASTER_URL').'/FileManager', $block->content))))."<br />\r\n";
+                        $view .= str_ireplace('src="tinymce', 'src="'.env('MASTER_URL').'/tinymce', str_ireplace('src="FileManager', 'src="'.env('MASTER_URL').'/FileManager', str_ireplace('src="../../', 'src="'.env('MASTER_URL').'/', str_ireplace('src="/FileManager', 'src="'.env('MASTER_URL').'/FileManager', $block->content))))."\n";
                     }
                 }
                 $see_alsos = $help->SeeAlsos();
