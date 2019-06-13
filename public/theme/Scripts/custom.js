@@ -290,6 +290,34 @@ $(document).on("click", "#btn_submit_staff", function () {
         }
     });
 });
+$(document).on("click", "#btn_submit_staff_new", function () {
+    $.ajax({
+        type: "POST",
+        url: $(this).attr('rel'),
+        dataType: "json",
+        data: $('#staff_form').serialize(),
+        success: function (result) {
+        if (result.success == true) {
+                $('#staff_form').trigger("reset");
+                $('#add_organ').trigger("reset");
+                $('#add_edu').trigger("reset");
+                $('#select_job').trigger("reset");
+                $('#staff_position_list').html("");
+                $('#staff_edu_list').html("");
+                $('#staff_job_list').html("");
+                $('#staff_organ').val('');
+                $('#chart_item').val('');
+                $('#chart_item_job').val('');
+                $('#chart_item_job_position').val('');
+                window.table_organs_grid.ajax.reload();
+            }
+            else {
+                messageModal('error', '', result.error);
+            }
+            setTimeout(function(){$("#alert_insert").html('') }, 4000);
+        }
+    });
+});
 $(document).on("click", ".remove-staff-item", function () {
     $(this).parent().parent().remove();
 });

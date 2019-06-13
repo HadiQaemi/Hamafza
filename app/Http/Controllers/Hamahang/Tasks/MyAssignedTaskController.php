@@ -616,7 +616,7 @@ class MyAssignedTaskController extends Controller
                 }
             }
 
-            $result['data']=$this->my_assigned_task_in_status()->render();
+            $result['data'] = [];//$this->my_assigned_task_in_status()->render();
             return $result;
 
         }

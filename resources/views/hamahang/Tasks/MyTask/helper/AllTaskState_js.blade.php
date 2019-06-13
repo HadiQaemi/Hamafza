@@ -99,7 +99,7 @@
                 if (!res.success) {
                     messageModal('fail', 'خطا', ['شما مجوز لازم را ندارید']);
                 }
-                $("#base_items").html(res.data);
+                // $("#base_items").html(res.data);
                 filter_mytask();
                 //initDraggable();
             }

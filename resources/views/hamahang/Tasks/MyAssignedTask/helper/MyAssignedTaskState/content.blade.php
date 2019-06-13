@@ -236,7 +236,7 @@
                                                     $sub_title .= '...';
                                                     break;
                                                 }
-                                            }ثد
+                                            }
                                         @endphp
                                         {{$sub_title}}
                                     </a>

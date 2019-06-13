@@ -55,7 +55,7 @@
             <table style="width:98%;" id="FormTable" dir="ltr">
                 <tr style="direction: rtl;">
                     <td colspan="2">
-                        <span style=" font-size: 14px;"><label>{{trans('projects.view_project')}}</label></span>
+                        <span style=" font-size: 14px;"><label>مجوز مشاهده سازمان</label></span>
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +75,7 @@
                 <tr style="direction: rtl;">
                     <td colspan="2">
                         <hr/>
-                        <span style="font-size: 14px;"><label>{{trans('projects.edit_view_project_tasks')}}</label></span>
+                        <span style="font-size: 14px;"><label>مجوز ویرایش کارکنان</label></span>
                     </td>
                 </tr>
                 <tr>
@@ -95,7 +95,7 @@
                 <tr style="direction: rtl;">
                     <td colspan="2">
                         <hr/>
-                        <span style="font-size: 14px;"><label>{{trans('projects.edit_view_project')}}</label></span>
+                        <span style="font-size: 14px;"><label>مجوز تنظیمات</label></span>
                     </td>
                 </tr>
                 <tr>

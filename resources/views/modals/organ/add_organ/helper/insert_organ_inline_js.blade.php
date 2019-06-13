@@ -41,6 +41,24 @@
                 }
             });
         });
+        $('#btn_insert_organ_new').click(function () {
+            $.ajax({
+                type: "POST",
+                url: '{{ route('hamahang.org_chart.insert_organs')}}',
+                dataType: "json",
+                data: $('#Form_Add_Organ').serialize(),
+                success: function (result) {
+                    if (result.success == true) {
+                        $('#Form_Add_Organ').trigger("reset");
+                        window.table_organs_grid.ajax.reload();
+                    }
+                    else {
+                        messageBox('error', '',result.error,{'id': 'alert_insert'},'hide_modal');
+                    }
+                    setTimeout(function(){$("#alert_insert").html('') }, 4000);
+                }
+            });
+        });
 
         $(".select2_auto_complete_user").select2({
             minimumInputLength: 3,

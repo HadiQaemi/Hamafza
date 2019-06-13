@@ -1,6 +1,6 @@
-<div class="panel-body text-decoration " id="helpviewDiv" style="top: 10px;margin:0; padding: 20px;width:100%;line-height: 16pt;height: 100%;overflow: auto" id="HelpContent">
-    {!! $view !!}<br />
-    <div>
+<div class="panel-body text-decoration " id="helpviewDiv" style="top: 10px;margin:0; padding: 0px 20px;width:100%;line-height: 16pt;height: 100%;overflow: auto" id="HelpContent">
+    {!! $view !!}
+    <div style="border-top: 1px solid #DDD;padding-top: 10px;">
         @if (@$see_alsos)
             @if (@$see_alsos->count())
                 <div>این موارد را نیز ببینید:</div>
@@ -12,7 +12,7 @@
             @endif
         @endif
     </div>
-    <div class="row col-lg-11" style="border-top: 1px solid #eee;padding-top: 10px;">
+    <div class="row col-lg-11" style="border-top: 1px solid #DDD;padding-top: 10px;">
         آیا این راهنما مفید بود؟
         <span class="margin-right-10"><input type="radio" name="help_status" value="yes" id="good_help" checked><label for="good_help">بله</label></span>
         <span><input type="radio" name="help_status" value="no" id="bad_help"><label for="bad_help">خیر</label></span>

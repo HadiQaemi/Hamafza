@@ -23,16 +23,16 @@
 <div id="tab" class="row table-bordered" style="border-bottom: none">
     <ul class="nav nav-tabs">
         <li class="active" id="define">
-            <a href="#tab_t1" data-toggle="tab">اطلاعات فردی</a>
+            <a href="#tab_t1" data-toggle="tab">عمومی</a>
         </li>
         <li>
-            <a href="#tab_t2" data-toggle="tab">اطلاعات شغلی</a>
+            <a href="#tab_t2" data-toggle="tab">سوابق شغلی</a>
         </li>
         <li>
-            <a href="#tab_t3" data-toggle="tab">اطلاعات تحصیلی</a>
+            <a href="#tab_t3" data-toggle="tab">سوابق تحصیلی</a>
         </li>
         <li>
-            <a href="#tab_t4" data-toggle="tab">انتساب شغل</a>
+            <a href="#tab_t4" data-toggle="tab">سمت</a>
         </li>
         <li style="float: left">
             <h5 id="task_type" style="color: blue"></h5>
@@ -149,48 +149,50 @@
             <div class="tab-pane tab-view" id="tab_t2">
                 <div class="row">
                     <div class="base_tabs">
-                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>نام شرکت</label>
+                        <form id="add_organ">
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>نام سازمان</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input id="staff_job_corp" class="form-control" placeholder="نام سازمان" value=""/>
+                                    </div>
                                 </div>
-                                <div class="col-xs-10">
-                                    <input id="staff_job_corp" class="form-control" placeholder="نام شرکت" value=""/>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>سمت</label>
-                                </div>
-                                <div class="col-xs-9">
-                                    <input id="staff_job_pos" class="form-control" required placeholder="سمت"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>تاریخ شروع</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <input id="staff_job_begin" class="form-control persianDatepicker" placeholder="تاریخ شروع"/>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>سمت</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input id="staff_job_pos" class="form-control" required placeholder="سمت"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>تاریخ پایان</label>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>تاریخ شروع</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input id="staff_job_begin" class="form-control persianDatepicker" placeholder="تاریخ شروع"/>
+                                    </div>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input id="staff_job_end" class="form-control persianDatepicker" required placeholder="تاریخ پایان"/>
-                                </div>
-                                <div class="pull-right line-height-35">
-                                    <a class="fa fa-plus pointer" id="add_job"></a>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>تاریخ پایان</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input id="staff_job_end" class="form-control persianDatepicker" required placeholder="تاریخ پایان"/>
+                                    </div>
+                                    <div class="pull-right line-height-35">
+                                        <a class="fa fa-plus pointer" id="add_job"></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                         <div class="col-xs-12 margin-top-20 border-bottom">
                             <div class="col-xs-1">ردیف</div>
-                            <div class="col-xs-4">نام شرکت</div>
+                            <div class="col-xs-4">نام سازمان</div>
                             <div class="col-xs-2">سمت</div>
                             <div class="col-xs-2">شروع</div>
                             <div class="col-xs-2">پایان</div>
@@ -217,51 +219,53 @@
             <div class="tab-pane tab-view" id="tab_t3">
                 <div class="row">
                     <div class="base_tabs">
-                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>نام دانشگاه</label>
+                        <form id="add_edu">
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>نام دانشگاه</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input id="staff_edu_uni" class="form-control" placeholder="نام دانشگاه"/>
+                                    </div>
                                 </div>
-                                <div class="col-xs-10">
-                                    <input id="staff_edu_uni" class="form-control" placeholder="نام دانشگاه"/>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>مقطع تحصیلی</label>
-                                </div>
-                                <div class="col-xs-9">
-                                    <select id="staff_edu_grade" class="form-control">
-                                        <option value="diploma">دیپلم</option>
-                                        <option value="after_diploma">فوق دیپلم</option>
-                                        <option value="bsc">لیسانس</option>
-                                        <option value="msc">فوق لیسانس</option>
-                                        <option value="phd">دکتری</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>رشته تحصیلی</label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <input id="staff_edu_major" class="form-control" placeholder="رشته تحصیلی"/>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>مقطع تحصیلی</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <select id="staff_edu_grade" class="form-control">
+                                            <option value="diploma">دیپلم</option>
+                                            <option value="after_diploma">فوق دیپلم</option>
+                                            <option value="bsc">لیسانس</option>
+                                            <option value="msc">فوق لیسانس</option>
+                                            <option value="phd">دکتری</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
-                                    <label>فارغ التحصیلی</label>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>رشته تحصیلی</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input id="staff_edu_major" class="form-control" placeholder="رشته تحصیلی"/>
+                                    </div>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input id="staff_edu_date_grade" class="form-control persianDatepicker" required placeholder="تاریخ فارغ التحصیلی"/>
-                                </div>
-                                <div class="pull-right line-height-35">
-                                    <a class="fa fa-plus pointer" id="staff_add_edu"></a>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>فارغ التحصیلی</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input id="staff_edu_date_grade" class="form-control persianDatepicker" required placeholder="تاریخ فارغ التحصیلی"/>
+                                    </div>
+                                    <div class="pull-right line-height-35">
+                                        <a class="fa fa-plus pointer" id="staff_add_edu"></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                         <div class="col-xs-12 margin-top-20 border-bottom">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-3">نام دانشگاه</div>
@@ -291,38 +295,40 @@
             <div class="tab-pane tab-view" id="tab_t4">
                 <div class="row">
                     <div class="base_tabs">
-                        <div class="form-group col-md-12">
-                            <div class="col-xs-1">
-                                <label>سازمان</label>
+                        <form id="select_job">
+                            <div class="form-group col-md-12">
+                                <div class="col-xs-1">
+                                    <label>سازمان</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select name="staff_organ" id="staff_organ" class="select2_auto_complete_organ col-xs-12" data-placeholder="" ></select>
+                                </div>
                             </div>
-                            <div class="col-xs-11">
-                                <select name="staff_organ" id="staff_organ" class="select2_auto_complete_organ col-xs-12" data-placeholder="" ></select>
+                            <div class="form-group col-md-12">
+                                <div class="col-xs-1">
+                                    <label>واحد</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select name="chart_item" id="chart_item" class="select2_auto_complete_chart col-xs-12" data-placeholder="" ></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <div class="col-xs-1">
-                                <label>واحد</label>
+                            <div class="form-group col-md-12">
+                                <div class="col-xs-1">
+                                    <label>شغل</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select name="chart_item_job" id="chart_item_job" class="select2_auto_complete_onet_jobs_item col-xs-12" data-placeholder="" ></select>
+                                </div>
                             </div>
-                            <div class="col-xs-11">
-                                <select name="chart_item" id="chart_item" class="select2_auto_complete_chart col-xs-12" data-placeholder="" ></select>
+                            <div class="form-group col-md-12">
+                                <div class="col-xs-1">
+                                    <label>سمت</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select id="chart_item_job_position" name="chart_item_job_position[]" class="select2_auto_complete_job_position col-xs-12" class="js-states form-control"></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <div class="col-xs-1">
-                                <label>شغل</label>
-                            </div>
-                            <div class="col-xs-11">
-                                <select name="chart_item_job" id="chart_item_job" class="select2_auto_complete_onet_jobs_item col-xs-12" data-placeholder="" ></select>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <div class="col-xs-1">
-                                <label>سمت</label>
-                            </div>
-                            <div class="col-xs-11">
-                                <select id="chart_item_job_position" name="chart_item_job_position[]" class="select2_auto_complete_job_position col-xs-12" class="js-states form-control"></select>
-                            </div>
-                        </div>
+                        </form>
                         <div class="col-xs-12 margin-top-20 border-bottom">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-4">سمت</div>
