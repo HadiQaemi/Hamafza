@@ -1,10 +1,11 @@
 <style>
-    .HFM_ModalOpenBtn{
+    .HFM_ModalOpenBtn {
         border: none !important;
     }
 </style>
 <script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-date.js')}}"></script>
-<script type="text/javascript" src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js')}}"></script>
+<script type="text/javascript"
+        src="{{URL::to('assets/Packages/PersianDateOrTimePicker/js/persian-datepicker-0.4.5.js')}}"></script>
 <script>
     $(".persianDatepicker").persianDatepicker({
         observer: true,
@@ -45,9 +46,9 @@
             <div class="tab-pane active tab-view" id="tab_t1">
                 <div class="row">
                     {{--<pre>--}}
-                        {{--{{print_r($staff)}}--}}
-                        {{--<hr/>--}}
-                        {{--{{print_r($staff->staff)}}--}}
+                    {{--{{print_r($staff)}}--}}
+                    {{--<hr/>--}}
+                    {{--{{print_r($staff->staff)}}--}}
                     {{--</pre>--}}
                     <div class="base_tabs">
                         <div class="row-fluid">
@@ -57,10 +58,12 @@
                                         <label for="system_user">کاربران سامانه</label>
                                     </div>
                                     <div class="col-xs-9">
-                                        <select id="system_user" class="select2_auto_complete_system_user col-xs-12" data-placeholder="انتخاب از کاربران سیستم"></select>
+                                        <select id="system_user" class="select2_auto_complete_system_user col-xs-12"
+                                                data-placeholder="انتخاب از کاربران سیستم"></select>
                                     </div>
                                     <div class="col-xs-1 line-height-35">
-                                        <a class="fa fa-check pointer" id="select_from_system_user" rel="{{route('hamahang.org_chart.get_user_info')}}"></a>
+                                        <a class="fa fa-check pointer" id="select_from_system_user"
+                                           rel="{{route('hamahang.org_chart.get_user_info')}}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +73,8 @@
                                         <label>نام</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_name" id="staff_name" class="form-control" placeholder="نام" value="{{isset($staff->staff->first_name) ? $staff->staff->first_name : ''}}"/>
+                                        <input name="staff_name" id="staff_name" class="form-control" placeholder="نام"
+                                               value="{{isset($staff->staff->first_name) ? $staff->staff->first_name : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -78,7 +82,9 @@
                                         <label>نام خانوادگی</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_last_name" id="staff_last_name" class="form-control" required placeholder="نام خانوادگی" value="{{isset($staff->staff->last_name) ? $staff->staff->last_name : ''}}"/>
+                                        <input name="staff_last_name" id="staff_last_name" class="form-control" required
+                                               placeholder="نام خانوادگی"
+                                               value="{{isset($staff->staff->last_name) ? $staff->staff->last_name : ''}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +94,9 @@
                                         <label>کد ملی</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_national_id" id="staff_national_id" class="form-control" placeholder="کد ملی" value="{{isset($staff->staff->national_id) ? $staff->staff->national_id : ''}}"/>
+                                        <input name="staff_national_id" id="staff_national_id" class="form-control"
+                                               placeholder="کد ملی"
+                                               value="{{isset($staff->staff->national_id) ? $staff->staff->national_id : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -96,7 +104,9 @@
                                         <label>شماره موبایل</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_mobile" id="staff_mobile" class="form-control" required placeholder="شماره موبایل" value="{{isset($staff->staff->mobile) ? $staff->staff->mobile : ''}}"/>
+                                        <input name="staff_mobile" id="staff_mobile" class="form-control" required
+                                               placeholder="شماره موبایل"
+                                               value="{{isset($staff->staff->mobile) ? $staff->staff->mobile : ''}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +116,9 @@
                                         <label>تاریخ تولد</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input name="staff_birth_day" id="staff_birth_day" class="form-control persianDatepicker-bd" placeholder="تاریخ تولد" value="{{isset($staff->staff->birth_date) ? $staff->staff->birth_date : ''}}"/>
+                                        <input name="staff_birth_day" id="staff_birth_day"
+                                               class="form-control persianDatepicker-bd" placeholder="تاریخ تولد"
+                                               value="{{isset($staff->staff->birth_date) ? $staff->staff->birth_date : ''}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -116,11 +128,13 @@
                                         </div>
                                         <div class="pull-right line-height-35">
                                             <div class="pull-right">
-                                                <input type="radio" name="is_married" id="single" value="0" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==0 ? 'checked' : '') : ''}}/>
+                                                <input type="radio" name="is_married" id="single"
+                                                       value="0" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==0 ? 'checked' : '') : ''}}/>
                                                 <label for="single" class="pointer">مجرد</label>
                                             </div>
                                             <div class="pull-right">
-                                                <input type="radio" name="is_married" id="married" value="1" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==1 ? 'checked' : '') : ''}}/>
+                                                <input type="radio" name="is_married" id="married"
+                                                       value="1" {{isset($staff->staff->is_married) ? ($staff->staff->is_married ==1 ? 'checked' : '') : ''}}/>
                                                 <label for="married" class="pointer">متاهل</label>
                                             </div>
                                         </div>
@@ -131,11 +145,13 @@
                                         </div>
                                         <div class="pull-right line-height-35">
                                             <div class="pull-right">
-                                                <input type="radio" name="gender" id="man" value="man" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'man' ? 'checked' : '') : ''}}/>
+                                                <input type="radio" name="gender" id="man"
+                                                       value="man" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'man' ? 'checked' : '') : ''}}/>
                                                 <label for="man" class="pointer">مرد</label>
                                             </div>
                                             <div class="pull-right">
-                                                <input type="radio" name="gender" id="woman" value="woman" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'woman' ? 'checked' : '') : ''}}/>
+                                                <input type="radio" name="gender" id="woman"
+                                                       value="woman" {{isset($staff->staff->is_man) ? ($staff->staff->is_man == 'woman' ? 'checked' : '') : ''}}/>
                                                 <label for="woman" class="pointer">زن</label>
                                             </div>
                                         </div>
@@ -156,7 +172,8 @@
                                         <label>نام سازمان</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input id="staff_job_corp" class="form-control" placeholder="نام سازمان" value=""/>
+                                        <input id="staff_job_corp" class="form-control" placeholder="نام سازمان"
+                                               value=""/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -174,7 +191,8 @@
                                         <label>تاریخ شروع</label>
                                     </div>
                                     <div class="col-xs-10">
-                                        <input id="staff_job_begin" class="form-control persianDatepicker" placeholder="تاریخ شروع"/>
+                                        <input id="staff_job_begin" class="form-control persianDatepicker"
+                                               placeholder="تاریخ شروع"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
@@ -182,7 +200,8 @@
                                         <label>تاریخ پایان</label>
                                     </div>
                                     <div class="col-xs-9">
-                                        <input id="staff_job_end" class="form-control persianDatepicker" required placeholder="تاریخ پایان"/>
+                                        <input id="staff_job_end" class="form-control persianDatepicker" required
+                                               placeholder="تاریخ پایان"/>
                                     </div>
                                     <div class="pull-right line-height-35">
                                         <a class="fa fa-plus pointer" id="add_job"></a>
@@ -204,11 +223,20 @@
                                 @foreach($staff->staff->jobs as $job)
                                     <div class="col-xs-12">
                                         <div class="col-xs-1">{{$cnt++}}</div>
-                                        <div class="col-xs-4"><input type="hidden" name="staff_job_corp[]" value="{{$job->staff_job_corp}}"/>{{$job->staff_job_corp}}</div>
-                                        <div class="col-xs-2"><input type="hidden" name="staff_job_pos[]" value="{{$job->staff_job_pos}}"/>{{$job->staff_job_pos}}</div>
-                                        <div class="col-xs-2"><input type="hidden" name="staff_job_begin[]" value="{{$job->staff_job_begin}}"/>{{$job->staff_job_begin}}</div>
-                                        <div class="col-xs-2"><input type="hidden" name="staff_job_end[]" value="{{$job->staff_job_end}}"/>{{$job->staff_job_end}}</div>
-                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                        <div class="col-xs-4"><input type="hidden" name="staff_job_corp[]"
+                                                                     value="{{$job->staff_job_corp}}"/>{{$job->staff_job_corp}}
+                                        </div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_pos[]"
+                                                                     value="{{$job->staff_job_pos}}"/>{{$job->staff_job_pos}}
+                                        </div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_begin[]"
+                                                                     value="{{$job->staff_job_begin}}"/>{{$job->staff_job_begin}}
+                                        </div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_job_end[]"
+                                                                     value="{{$job->staff_job_end}}"/>{{$job->staff_job_end}}
+                                        </div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i>
+                                        </div>
                                     </div>
                                 @endforeach
                             @endif
@@ -258,7 +286,8 @@
                                         <label>فارغ التحصیلی</label>
                                     </div>
                                     <div class="col-xs-9">
-                                        <input id="staff_edu_date_grade" class="form-control persianDatepicker" required placeholder="تاریخ فارغ التحصیلی"/>
+                                        <input id="staff_edu_date_grade" class="form-control persianDatepicker" required
+                                               placeholder="تاریخ فارغ التحصیلی"/>
                                     </div>
                                     <div class="pull-right line-height-35">
                                         <a class="fa fa-plus pointer" id="staff_add_edu"></a>
@@ -280,11 +309,20 @@
                                 @foreach($staff->staff->edus as $edu)
                                     <div class="col-xs-12">
                                         <div class="col-xs-1">{{$cnt++}}</div>
-                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_uni[]" value="{{$edu->staff_edu_uni}}"/>{{$edu->staff_edu_uni}}</div>
-                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_grade[]" value="{{$edu->staff_edu_grade}}"/>{{$edu->staff_edu_grade}}</div>
-                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_major[]" value="{{$edu->staff_edu_major}}"/>{{$edu->staff_edu_major}}</div>
-                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_date_grade[]" value="{{$edu->staff_edu_date_grade}}"/>{{$edu->staff_edu_date_grade}}</div>
-                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_uni[]"
+                                                                     value="{{$edu->staff_edu_uni}}"/>{{$edu->staff_edu_uni}}
+                                        </div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_grade[]"
+                                                                     value="{{$edu->staff_edu_grade}}"/>{{$edu->staff_edu_grade}}
+                                        </div>
+                                        <div class="col-xs-3"><input type="hidden" name="staff_edu_major[]"
+                                                                     value="{{$edu->staff_edu_major}}"/>{{$edu->staff_edu_major}}
+                                        </div>
+                                        <div class="col-xs-2"><input type="hidden" name="staff_edu_date_grade[]"
+                                                                     value="{{$edu->staff_edu_date_grade}}"/>{{$edu->staff_edu_date_grade}}
+                                        </div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i>
+                                        </div>
                                     </div>
                                 @endforeach
                             @endif
@@ -301,7 +339,8 @@
                                     <label>سازمان</label>
                                 </div>
                                 <div class="col-xs-11">
-                                    <select name="staff_organ" id="staff_organ" class="select2_auto_complete_organ col-xs-12" data-placeholder="" ></select>
+                                    <select name="staff_organ" id="staff_organ"
+                                            class="select2_auto_complete_organ col-xs-12" data-placeholder=""></select>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
@@ -309,7 +348,8 @@
                                     <label>واحد</label>
                                 </div>
                                 <div class="col-xs-11">
-                                    <select name="chart_item" id="chart_item" class="select2_auto_complete_chart col-xs-12" data-placeholder="" ></select>
+                                    <select name="chart_item" id="chart_item"
+                                            class="select2_auto_complete_chart col-xs-12" data-placeholder=""></select>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
@@ -317,7 +357,9 @@
                                     <label>شغل</label>
                                 </div>
                                 <div class="col-xs-11">
-                                    <select name="chart_item_job" id="chart_item_job" class="select2_auto_complete_onet_jobs_item col-xs-12" data-placeholder="" ></select>
+                                    <select name="chart_item_job" id="chart_item_job"
+                                            class="select2_auto_complete_onet_jobs_item col-xs-12"
+                                            data-placeholder=""></select>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
@@ -325,7 +367,37 @@
                                     <label>سمت</label>
                                 </div>
                                 <div class="col-xs-11">
-                                    <select id="chart_item_job_position" name="chart_item_job_position[]" class="select2_auto_complete_job_position col-xs-12" class="js-states form-control"></select>
+                                    <select id="chart_item_job_position" name="chart_item_job_position[]"
+                                            class="select2_auto_complete_job_position col-xs-12"
+                                            class="js-states form-control"></select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-xs-1">
+                                    <label>نوع همکاری:</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <input type="radio" name="staff_type" id="official"/>
+                                    <label for="official">
+                                        رسمی
+                                    </label>
+                                    <input type="radio" name="staff_type" id="pemani"/>
+                                    <label for="pemani">
+                                        پیمانی
+                                    </label>
+                                    <input type="radio" name="staff_type" id="azmayeshi"/>
+                                    <label for="azmayeshi">
+                                        آزمایشی
+                                    </label>
+                                    <input type="radio" name="staff_type" id="gharadadi"/>
+                                    <label for="gharadadi">
+                                        قراردادی
+                                    </label>
+                                    <input type="radio" name="staff_type" id="mamor"/>
+                                    <label for="mamor">
+                                        مامور
+                                    </label>
+                                    <input type="text" name="staff_type" placeholder="سایر که قابل تایپ کردن"/>
                                 </div>
                             </div>
                         </form>
@@ -343,7 +415,10 @@
                                         <div class="col-xs-1">{{$cnt++}}</div>
                                         <div class="col-xs-4">{{isset($staff->posts->extra_title) ? $staff->posts->extra_title : ''}}</div>
                                         <div class="col-xs-6">{{isset($staff->posts->job->job->title) ? $staff->posts->job->job->title : ''}}</div>
-                                        <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i><input type="hidden" name="chart_item_job_position[]" value="{{$staff->posts->id}}"/></div>
+                                        <div class="col-xs-1"><i
+                                                    class="fa fa-remove pointer remove-staff-item"></i><input
+                                                    type="hidden" name="chart_item_job_position[]"
+                                                    value="{{$staff->posts->id}}"/></div>
                                     </div>
                                 @endforeach
                             @endif
