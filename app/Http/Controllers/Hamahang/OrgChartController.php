@@ -289,7 +289,8 @@ class OrgChartController extends Controller
 
     public function AjaxOrgOrgans()
     {
-        $data = org_organs::leftJoin('user', 'user.id', '=', 'hamahang_org_organs.uid')
+        $data = org_organs::with('charts', 'charts.items', 'charts.items.jobs', 'charts.items.jobs.posts', 'charts.items.jobs.posts.users')
+            ->leftJoin('user', 'user.id', '=', 'hamahang_org_organs.uid')
             ->leftJoin('hamahang_org_organs AS ParentOrg', 'ParentOrg.id', '=', 'hamahang_org_organs.parent_id')
             ->leftJoin('hamahang_org_charts AS ChartsOrg', 'ChartsOrg.org_organs_id', '=', 'hamahang_org_organs.id')
             ->select(
@@ -301,6 +302,35 @@ class OrgChartController extends Controller
                 'hamahang_org_organs.*'
             )->whereNull('hamahang_org_organs.deleted_at')->groupBy('id');
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
+            ->addColumn('chartsCount', function ($data) {
+                $chartCount = 0;
+                $chartItemCount = 0;
+                $chartItemJobCount = 0;
+                $chartItemJobPostCount = 0;
+                $chartItemJobPostUserCount = 0;
+                $chart = $data->charts[0];
+                $chartCount++;
+                foreach ($chart->items as $item) {
+                    $chartItemCount++;
+                    foreach ($item->jobs as $job) {
+                        $chartItemJobCount++;
+                        foreach ($job->posts as $post) {
+                            $chartItemJobPostCount++;
+                            foreach ($post->users as $user) {
+                                $chartItemJobPostUserCount++;
+                            }
+                        }
+                    }
+                }
+
+                return [
+                    'chartCount' => $chartCount,
+                    'chartItemCount' => $chartItemCount,
+                    'chartItemJobCount' => $chartItemJobCount,
+                    'chartItemJobPostCount' => $chartItemJobPostCount,
+                    'chartItemJobPostUserCount' => $chartItemJobPostUserCount,
+                ];
+            })
             ->addColumn('oid', function ($data) {
                 return enCode($data->id);
             })
@@ -635,12 +665,13 @@ class OrgChartController extends Controller
             })
             ->make(true);
     }
+
     public function fetchPortalJob()
     {
 
         $data = onet_job::with('skill', 'ability', 'knowledge')->limit(10)->get();
         return json_encode(
-            ['data'=>$data]
+            ['data' => $data]
         );
     }
 
@@ -670,31 +701,46 @@ class OrgChartController extends Controller
 
     public function fetchStaff()
     {
-        $data = org_charts_items_jobs_posts_staff::whereNull('deleted_at')->with('staff', 'post');
+        $data = org_staff::whereNull('deleted_at')->with('posts', 'posts.job');
         $staff = \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('enId', function ($data) {
                 return enCode($data->id);
             })
             ->addColumn('staff', function ($data) {
-                return $data->staff->first_name . ' ' . $data->staff->last_name;
+                return $data->first_name . ' ' . $data->last_name;
             })
             ->addColumn('staffId', function ($data) {
-                return enCode($data->staff->id);
+                return enCode($data->id);
             })
             ->addColumn('post', function ($data) {
-                return $data->post->extra_title;
+                $ret = '';
+                foreach ($data->posts as $post)
+                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->extra_title;
+                return $ret;
             })
             ->addColumn('charts', function ($data) {
-                return $data->post->job;
+                $ret = '';
+                foreach ($data->posts as $post)
+                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job;
+                return $ret;
             })
             ->addColumn('job', function ($data) {
-                return $data->post->job->job->title;
+                $ret = '';
+                foreach ($data->posts as $post)
+                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->job->title;
+                return $ret;
             })
             ->addColumn('item', function ($data) {
-                return $data->post->job->item->title;
+                $ret = '';
+                foreach ($data->posts as $post)
+                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->title;
+                return $ret;
             })
             ->addColumn('org', function ($data) {
-                return $data->post->job->item->chart->title;
+                $ret = '';
+                foreach ($data->posts as $post)
+                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->chart->title;
+                return $ret;
             })
             ->make(true);
 
@@ -1267,6 +1313,7 @@ class OrgChartController extends Controller
                 'staff_organ' => 'integer',
                 'chart_item' => 'integer',
                 'chart_item_job' => 'integer',
+                'chart_item_job_position_new' => 'integer',
                 'chart_item_job_position.*' => 'integer'
             ],
             [],
@@ -1289,6 +1336,7 @@ class OrgChartController extends Controller
                 'staff_organ' => 'سازمان',
                 'chart_item' => 'واحد',
                 'chart_item_job' => 'شغل',
+                'chart_item_job_position_new' => 'سمت',
                 'chart_item_job_position.*' => 'سمت'
             ]
         );
@@ -1300,7 +1348,7 @@ class OrgChartController extends Controller
         } else {
             $d = new jDateTime;
             $date = explode('-', Request::get('staff_birth_day'));
-            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2], '-');
 
             $staff = org_staff::create([
                 'uid' => auth()->id(),
@@ -1313,9 +1361,8 @@ class OrgChartController extends Controller
                 'is_man' => Request::get('gender')
             ]);
             if ($staff->save()) {
-                if (Request::exists('staff_edu_uni'))
-                {
-                    foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
+                if (Request::exists('staff_edu_uni')) {
+                    foreach (Request::get('staff_edu_uni') as $k => $staff_edu_uni) {
                         org_staff_edu::create([
                             'uid' => auth()->id(),
                             'staff_id' => $staff->id,
@@ -1326,9 +1373,8 @@ class OrgChartController extends Controller
                         ]);
                     }
                 }
-                if (Request::exists('staff_job_corp'))
-                {
-                    foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
+                if (Request::exists('staff_job_corp')) {
+                    foreach (Request::get('staff_job_corp') as $k => $staff_job_corp) {
                         org_staff_jobs::create([
                             'uid' => auth()->id(),
                             'staff_id' => $staff->id,
@@ -1339,15 +1385,21 @@ class OrgChartController extends Controller
                         ]);
                     }
                 }
-                if (Request::exists('chart_item_job_position'))
-                {
-                    foreach (Request::get('chart_item_job_position') as $k=>$chart_item_job_position) {
+                if (Request::exists('chart_item_job_position')) {
+                    foreach (Request::get('chart_item_job_position') as $k => $chart_item_job_position) {
                         org_charts_items_jobs_posts_staff::create([
                             'uid' => auth()->id(),
                             'staff_id' => $staff->id,
                             'chart_item_post_job_id' => $chart_item_job_position
                         ]);
                     }
+                }
+                if (Request::exists('chart_item_job_position_new')) {
+                    org_charts_items_jobs_posts_staff::create([
+                        'uid' => auth()->id(),
+                        'staff_id' => $staff,
+                        'chart_item_post_job_id' => Request::get('chart_item_job_position_new')
+                    ]);
                 }
             }
             $result['success'] = true;
@@ -1377,6 +1429,7 @@ class OrgChartController extends Controller
                 'staff_organ' => 'integer',
                 'chart_item' => 'integer',
                 'chart_item_job' => 'integer',
+                'chart_item_job_position_new' => 'integer',
                 'chart_item_job_position.*' => 'integer'
             ],
             [],
@@ -1399,6 +1452,7 @@ class OrgChartController extends Controller
                 'staff_organ' => 'سازمان',
                 'chart_item' => 'واحد',
                 'chart_item_job' => 'شغل',
+                'chart_item_job_position_new' => 'سمت',
                 'chart_item_job_position.*' => 'سمت'
             ]
         );
@@ -1409,30 +1463,28 @@ class OrgChartController extends Controller
             return json_encode($result);
         } else {
 
-            $d = new jDateTime;
-            $date = explode('-', Request::get('staff_birth_day'));
-            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
-
-
+//            $d = new jDateTime;
+//            $date = explode('-', Request::get('staff_birth_day'));
+//            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
             $sid = deCode(Request::get('sid'));
-            $staff_info = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('post', 'staff', 'staff.edus', 'staff.jobs')->first();
-            $staff_info->staff->update([
+            $staff_info = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'childs', 'spouses', 'families', 'posts.job')->first();
+            $staff_info->update([
                 'first_name' => Request::get('staff_name'),
                 'last_name' => Request::get('staff_last_name'),
                 'national_id' => Request::get('staff_national_id'),
                 'mobile' => Request::get('staff_mobile'),
-                'birth_date' => $date,
+                'birth_date' => Request::get('staff_birth_day'),
                 'is_married' => Request::get('is_married'),
                 'is_man' => Request::get('gender')
             ]);
-            $staff = $staff_info->staff->id;
-            $staff_info->staff->edus()->delete();
-            $staff_info->staff->jobs()->delete();
-            $staff_info->delete();
+            $staff = $staff_info->id;
+            $staff_info->edus()->delete();
+            $staff_info->jobs()->delete();
+            org_charts_items_jobs_posts_staff::where('staff_id', '=', $sid)
+                ->whereIn('chart_item_post_job_id', array_column($staff_info->posts->toArray(), 'id'))->delete();
 
-            if (Request::exists('staff_edu_uni'))
-            {
-                foreach (Request::get('staff_edu_uni') as $k=>$staff_edu_uni){
+            if (Request::exists('staff_edu_uni')) {
+                foreach (Request::get('staff_edu_uni') as $k => $staff_edu_uni) {
                     org_staff_edu::create([
                         'uid' => auth()->id(),
                         'staff_id' => $staff,
@@ -1443,9 +1495,8 @@ class OrgChartController extends Controller
                     ]);
                 }
             }
-            if (Request::exists('staff_job_corp'))
-            {
-                foreach (Request::get('staff_job_corp') as $k=>$staff_job_corp) {
+            if (Request::exists('staff_job_corp')) {
+                foreach (Request::get('staff_job_corp') as $k => $staff_job_corp) {
                     org_staff_jobs::create([
                         'uid' => auth()->id(),
                         'staff_id' => $staff,
@@ -1456,15 +1507,22 @@ class OrgChartController extends Controller
                     ]);
                 }
             }
-            if (Request::exists('chart_item_job_position'))
-            {
-                foreach (Request::get('chart_item_job_position') as $k=>$chart_item_job_position) {
+            if (Request::exists('chart_item_job_position')) {
+                foreach (Request::get('chart_item_job_position') as $k => $chart_item_job_position) {
                     org_charts_items_jobs_posts_staff::create([
                         'uid' => auth()->id(),
                         'staff_id' => $staff,
                         'chart_item_post_job_id' => $chart_item_job_position
                     ]);
                 }
+            }
+
+            if (Request::exists('chart_item_job_position_new')) {
+                org_charts_items_jobs_posts_staff::create([
+                    'uid' => auth()->id(),
+                    'staff_id' => $staff,
+                    'chart_item_post_job_id' => Request::get('chart_item_job_position_new')
+                ]);
             }
 
             $result['success'] = true;
@@ -1474,8 +1532,12 @@ class OrgChartController extends Controller
 
     public function update_doc_staff()
     {
+        Request::merge([
+            'staff_id' => deCode(Request::get('sid'))
+        ]);
         $validator = Validator::make(Request::all(),
             [
+                'staff_id' => 'required|exists:hamahang_org_staff,id',
                 'home_type' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
                 'contract_type' => 'regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
                 'insurance_num' => 'numeric',
@@ -1501,6 +1563,7 @@ class OrgChartController extends Controller
             ],
             [],
             [
+                'staff_id' => 'کارمند ',
                 'home_type' => 'نوع مسکن',
                 'contract_type' => 'نوع قرارداد',
                 'insurance_num' => 'شماره بیمه',
@@ -1531,49 +1594,55 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
-            $staff = org_staff::find(deCode(Request::get('sid')));
+            $staff = org_staff::find(Request::get('staff_id'));
             $staff->home_type = Request::get('home_type');
             $staff->contract_type = Request::get('contract_type');
             $staff->insurance_num = Request::get('insurance_num');
             $staff->veteran_precent = Request::get('veteran_precent');
             $staff->captivity_duration = Request::get('captivity_duration');
             $staff->time_war = Request::get('time_war');
-            if($staff->save())
-            {
+            if ($staff->save()) {
                 $staff->spouses()->delete();
                 $staff->childs()->delete();
                 $staff->families()->delete();
-                foreach(Request::get('marry_date') as $k => $marry_date)
-                {
-                    $staff->spouses()->create([
-                        'name' => Request::get('spouse_name')[$k],
-                        'last_name' => Request::get('spouse_lastname')[$k],
-                        'birth_date' => Request::get('birth_date')[$k],
-                        'job' => Request::get('spouse_job')[$k],
-                        'mobile' => Request::get('spouse_mobile')[$k],
-                        'married_date' => Request::get('marry_date')[$k],
-                    ]);
+
+                if (Request::exists('marry_date')) {
+                    foreach (Request::get('marry_date') as $k => $marry_date) {
+                        $staff->spouses()->create([
+                            'name' => Request::get('spouse_name')[$k],
+                            'last_name' => Request::get('spouse_lastname')[$k],
+                            'birth_date' => Request::get('birth_date')[$k],
+                            'job' => Request::get('spouse_job')[$k],
+                            'mobile' => Request::get('spouse_mobile')[$k],
+                            'married_date' => Request::get('marry_date')[$k],
+                        ]);
+                    }
                 }
-                foreach(Request::get('child_name') as $k => $child_name)
-                {
-                    $staff->childs()->create([
-                        'name' => Request::get('child_name')[$k],
-                        'birth_date' => Request::get('child_birth_date')[$k],
-                        'grade' => Request::get('child_edu_grade')[$k],
-                        'national_id' => Request::get('child_national_code')[$k],
-                        'job' => Request::get('child_job')[$k],
-                        'mobile' => Request::get('child_mobile')[$k],
-                    ]);
+
+                if (Request::exists('child_name')) {
+                    foreach (Request::get('child_name') as $k => $child_name) {
+                        $staff->childs()->create([
+                            'name' => Request::get('child_name')[$k],
+                            'birth_date' => Request::get('child_birth_date')[$k],
+                            'grade' => Request::get('child_edu_grade')[$k],
+                            'national_id' => Request::get('child_national_code')[$k],
+                            'job' => Request::get('child_job')[$k],
+                            'mobile' => Request::get('child_mobile')[$k],
+                        ]);
+                    }
                 }
-                foreach(Request::get('child_name') as $k => $child_name)
-                {
-                    $staff->families()->create([
-                        'name' => Request::get('related_name')[$k],
-                        'last_name' => Request::get('related_lastname')[$k],
-                        'national_id' => Request::get('related_code_melli')[$k],
-                        'post' => Request::get('related_post')[$k]
-                    ]);
+
+                if (Request::exists('related_name')) {
+                    foreach (Request::get('related_name') as $k => $related_name) {
+                        $staff->families()->create([
+                            'name' => Request::get('related_name')[$k],
+                            'last_name' => Request::get('related_lastname')[$k],
+                            'national_id' => Request::get('related_code_melli')[$k],
+                            'post' => Request::get('related_post')[$k]
+                        ]);
+                    }
                 }
+
             }
 
             $result['success'] = true;
@@ -1748,7 +1817,6 @@ class OrgChartController extends Controller
             ]);
 
 
-
             $Charts_ID = $chart->id;
             $current_root = org_chart_items::where('chart_id', '=', $Charts_ID)->where('parent_id', '=', 0)->first();
 
@@ -1917,10 +1985,9 @@ class OrgChartController extends Controller
             return json_encode($result);
         } else {
             $job_id = Request::get('job');
-            if (substr($job_id, 0, 8) == 'exist_in')
-            {
+            if (substr($job_id, 0, 8) == 'exist_in') {
                 $job_id = (int)substr($job_id, 8);
-            }else{
+            } else {
                 $new_job = onet_job::create([
                     'title' => $job_id
                 ]);
@@ -2149,15 +2216,19 @@ class OrgChartController extends Controller
         }
         return $result;
     }
+
     public function delete_staff()
     {
+        Request::merge([
+            'staff_id' => deCode(Request::get('ref_id'))
+        ]);
         $validator = Validator::make(Request::all(),
             [
-                'ref_id' => 'required|exists:hamahang_org_charts_items_jobs_posts_staff,id'
+                'staff_id' => 'required|exists:hamahang_org_staff,id'
             ],
             [],
             [
-                'ref_id' => 'شغل ',
+                'staff_id' => 'کارمند ',
             ]
         );
         if ($validator->fails()) {
@@ -2165,13 +2236,12 @@ class OrgChartController extends Controller
             $result['success'] = false;
             return json_encode($result);
         } else {
-            $staff_post = org_charts_items_jobs_posts_staff::find(Request::get('ref_id'));
-            $staff = org_staff::find($staff_post->staff_id);
-            $staff->edus()->delete();
-            $staff->jobs()->delete();
-            $staff->delete();
+            $staff_info = org_staff::where('id', '=', Request::get('staff_id'))->with('posts', 'edus', 'jobs', 'childs', 'spouses', 'families', 'posts.job')->first();
+            $staff_info->edus()->delete();
+            $staff_info->jobs()->delete();
+            org_charts_items_jobs_posts_staff::where('staff_id', '=', Request::get('staff_id'))->delete();
 
-            if ($staff_post->delete())
+            if ($staff_info->delete())
                 $result['success'] = true;
             else $result['success'] = false;
         }
@@ -2208,12 +2278,11 @@ class OrgChartController extends Controller
                 if ($chart_item->save()) {
                     $result['success'] = true;
                     org_charts_items_missions::where('chart_item_id', '=', $chart_item->id)->delete();
-                    if(Request::exists('unit_missions')){
+                    if (Request::exists('unit_missions')) {
                         foreach (Request::get('unit_missions') as $missions) {
-                            if (substr($missions, 0, 8) == 'exist_in')
-                            {
+                            if (substr($missions, 0, 8) == 'exist_in') {
                                 $missions = (int)substr($missions, 8);
-                            }else{
+                            } else {
                                 $new_missions = org_osi::create([
                                     'title' => $missions
                                 ]);

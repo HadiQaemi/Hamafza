@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 margin-top-20 border-bottom">
+                        <div class="col-xs-12 margin-top-20 border-bottom padding-bottom-10">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-2">نام</div>
                             <div class="col-xs-2">نام خانوادگی</div>
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 margin-top-20 border-bottom">
+                        <div class="col-xs-12 margin-top-20 border-bottom padding-bottom-10">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-2">نام</div>
                             <div class="col-xs-2">کدملی</div>
@@ -324,7 +324,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 margin-top-20 border-bottom margin-bottom-5">
+                        <div class="col-xs-12 margin-top-20 border-bottom margin-bottom-5 padding-bottom-10">
                             <div class="col-xs-1">ردیف</div>
                             <div class="col-xs-2">نام</div>
                             <div class="col-xs-2">نام خانوادگی</div>

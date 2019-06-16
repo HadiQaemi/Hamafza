@@ -18,6 +18,12 @@ class org_staff extends Model
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_edu','staff_id','id');
     }
 
+    public function posts()
+    {
+        return $this->belongsToMany('App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts','hamahang_org_charts_items_jobs_posts_staff','staff_id','chart_item_post_job_id')
+            ->whereNull('hamahang_org_charts_items_jobs_posts_staff.deleted_at');
+    }
+
     public function jobs()
     {
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_jobs','staff_id','id');

@@ -12,6 +12,7 @@ use App\Models\Hamahang\OrgChart\onet_skill;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_organs;
+use App\Models\Hamahang\OrgChart\org_staff_jobs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
 use App\Models\Hamahang\Tasks\tasks;
@@ -44,15 +45,44 @@ class AutoCompleteController extends Controller
         $x = $request->term;
         if ($x['term'] == '...')
         {
-            $data = User::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
+            $data = tasks::select("id", "title as text")->get();
         }
         else
         {
-            $data = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                ->where("Name", "LIKE", "%" . $x['term'] . "%")
-                ->Orwhere("Family", "LIKE", "%" . $x['term'] . "%")
-                ->Orwhere("Uname", "LIKE", "%" . $x['term'] . "%")
-                ->Orwhere("Email", "LIKE", "%" . $x['term'] . "%")
+            $data = tasks::select("id", "title as text")->where("title", "LIKE", "%" . $x['term'] . "%")->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function job_corp(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = org_staff_jobs::all(["id", DB::raw('staff_job_corp AS text')]);
+        }
+        else
+        {
+            $data = org_staff_jobs::select("id", DB::raw('staff_job_corp AS text'))
+                ->where("org_staff_jobs", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function job_pos(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = org_staff_jobs::all(["id", DB::raw('staff_job_pos AS text')]);
+        }
+        else
+        {
+            $data = org_staff_jobs::select("id", DB::raw('staff_job_pos AS text'))
+                ->where("staff_job_pos", "LIKE", "%" . $x['term'] . "%")
                 ->get();
         }
         $data = array('results' => $data);

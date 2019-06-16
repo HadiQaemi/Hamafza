@@ -273,11 +273,16 @@ $(document).on("click", ".staff_remove_edu", function () {
 });
 
 $(document).on("click", "#btn_submit_staff", function () {
+    var $staff_form = "";
+    if($('#chart_item_job_position_new').val() == null)
+        $staff_form = $('#staff_form').serialize() + '&staff_type=' + $('[name="staff_type"]').val();
+    else
+        $staff_form = $('#staff_form').serialize() + '&chart_item_job_position_new=' + $('#chart_item_job_position_new').val() + '&staff_type=' + $('[name="staff_type"]').val();
     $.ajax({
         type: "POST",
         url: $(this).attr('rel'),
         dataType: "json",
-        data: $('#staff_form').serialize(),
+        data: $staff_form,
         success: function (result) {
         if (result.success == true) {
                 $('.jsPanel-btn.jsPanel-btn-close').click();
@@ -291,11 +296,16 @@ $(document).on("click", "#btn_submit_staff", function () {
     });
 });
 $(document).on("click", "#btn_submit_staff_new", function () {
+    var $staff_form = "";
+    if($('#chart_item_job_position_new').val() == null)
+        $staff_form = $('#staff_form').serialize() + '&staff_type=' + $('[name="staff_type"]').val();
+    else
+        $staff_form = $('#staff_form').serialize() + '&chart_item_job_position_new=' + $('#chart_item_job_position_new').val() + '&staff_type=' + $('[name="staff_type"]').val();
     $.ajax({
         type: "POST",
         url: $(this).attr('rel'),
         dataType: "json",
-        data: $('#staff_form').serialize(),
+        data: $staff_form,
         success: function (result) {
         if (result.success == true) {
                 $('#staff_form').trigger("reset");

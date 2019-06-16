@@ -1088,7 +1088,12 @@ class ModalController extends Controller
     public function ViewStaffForm(){
         $res = $this->getParams(['sid']);
         $sid = deCode($res['sid']);
-        $staff = org_charts_items_jobs_posts_staff::where('id', '=', $sid)->with('post', 'staff', 'staff.edus', 'staff.jobs')->first();
+        $staff = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'childs', 'spouses', 'families', 'posts.job')->first();
+        $d = new jDateTime;
+        $birth_date = preg_split('/ /', $staff->birth_date);
+        $date = preg_split('/-/', $birth_date[0]);
+        $staff->birth_date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+
         return json_encode([
             'header' => trans('org_chart.assign_new_staff'),
             'content' => view('modals.organ.add_organ.jsp_assign_staff_content')->with('staff', $staff)->with('sid', $res['sid'])

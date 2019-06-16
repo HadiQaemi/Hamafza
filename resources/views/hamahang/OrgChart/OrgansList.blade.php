@@ -35,7 +35,10 @@
                                     {{--<th>{{ trans('org_chart.organ') }}</th>--}}
                                     <th>{{ trans('app.title') }}</th>
                                     <th>{{ trans('app.description') }}</th>
-                                    <th>{{ trans('org_chart.create') }}</th>
+                                    <th>{{ trans('org_chart.amount').' '.trans('org_chart.organizational_unit') }}</th>
+                                    <th>{{ trans('org_chart.amount').' '.trans('org_chart.jobs') }}</th>
+                                    <th>{{ trans('org_chart.amount').' '.trans('org_chart.position') }}</th>
+                                    <th>{{ trans('org_chart.amount').' '.trans('org_chart.staff') }}</th>
                                     <th>{{ trans('app.action') }}</th>
                                 </tr>
                                 </thead>
@@ -298,7 +301,38 @@
                     // {"data": "ParentTitle"},
                     {"data": "title"},
                     {"data": "description"},
-                    {"data": "created_at"},
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+
+                            return full.chartsCount.chartItemCount;
+                        }
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+
+                            return full.chartsCount.chartItemJobCount;
+                        }
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+
+                            return full.chartsCount.chartItemJobPostCount;
+                        }
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mRender": function (data, type, full) {
+
+                            return full.chartsCount.chartItemJobPostUserCount;
+                        }
+                    },
                     {
                         "bSearchable": false,
                         "bSortable": false,
@@ -311,15 +345,15 @@
 
                             window.RowData[id] = full;
                             return "" +
-                                '<a class="link_pointer fa fa-trash color_red margin-right-10" style="font-size: 10px"  onclick="RemoveOrg(' + oid + ')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>' +
-                                '<a class="jsPanels fa fa-edit gray_light_color edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'&level='+level+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
+                                '<a class="jsPanels fa fa-cogs edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'&level='+level+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
                                 (full.ChartID==null ?
                                     '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+oid+'"><i class="fa fa-object-group"></i></a>' :
                                     '<a class="fa fa-sitemap margin-right-10 showOrgChart pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.chart_view')}}"></a>' +
                                     '<a class="fa fa-table margin-right-10 showOrglist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.table_view')}}"></a>' +
                                     '<a class="fa fa-vcard margin-right-10 showJoblist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_job_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.job_view')}}"></a>' +
                                     '<a class="fa fa-laptop margin-right-10 showPostlist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_post_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.position_view')}}"></a>'
-                                )
+                                ) +
+                                '<a class="link_pointer fa fa-trash color_red margin-right-10 color_red" style="font-size: 10px"  onclick="RemoveOrg(' + oid + ')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>'
 
                                 /*'<a style="font-size: 10px" onClick="OpenModalListOrganCharts(' + id + ',' + '"' + title + '"' + ')">' +
                                 '   <i class="fa fa-object-group"></i>' +
