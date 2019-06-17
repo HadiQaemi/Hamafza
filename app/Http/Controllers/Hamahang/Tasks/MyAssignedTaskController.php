@@ -1688,7 +1688,9 @@ class MyAssignedTaskController extends Controller
                     {
                         task_assignments::create_task_assignment($value_employee_id ,$staff ,$task_id,$assign_id);
                     }
-                    task_priority::create_task_priority($task_id, $task_all['immediate'] ,$task_all['importance'] ,[0] ,$value_employee_id);
+                    $immediate = Request::exists('immediate') ? Request::input('immediate') : 0;
+                    $importance = Request::exists('importance') ? Request::input('importance') : 0;
+                    task_priority::create_task_priority($task_id, $immediate ,$importance ,[0] ,$value_employee_id);
                     task_status::create_task_status($task_id, 0, 0, $value_employee_id, time());
                 }
                 $UserController = new UserController();

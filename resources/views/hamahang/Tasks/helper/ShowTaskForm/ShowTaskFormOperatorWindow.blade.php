@@ -125,6 +125,8 @@
                     </div>
                     <div class="col-lg-11 line-height-35">
                         <div class="pull-right" style="height: 30px;line-height: 30px;border-left:1px solid #aaa">
+                            {!! $edit_able != 1 ? '<input type=hidden name=importance value="'.(isset($task->Priority->importance) ? $task->Priority->importance : '' ).'" />' : '' !!}
+                            {!! $edit_able != 1 ? '<input type=hidden name=immediate value="'.(isset($task->Priority->immediate) ? $task->Priority->immediate : '' ).'" />' : '' !!}
                             <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_yes ' : 'disabled'}} value="1" {{isset($task->Priority->importance) ? $task->Priority->importance==1 : '' ? 'checked' : 'checked'}}/>
                             <label for="importance_yes">{{ trans('tasks.important') }}</label>
                             <input type="radio" {{$edit_able == 1 ? ' name=importance id=importance_no ' : 'disabled'}} value="0" {{isset($task->Priority->importance) ? $task->Priority->importance==0 : '' ? 'checked' : ''}}/>
@@ -495,11 +497,11 @@
                                     <div id="num_add_rel_task{{$k+1}}">
                                         <div class="col-xs-5 text-right">پایین دستی</div>
                                         <div class="col-xs-5 text-right">
-                                            {{$project->Project->title}}
-                                            <input name="new_task_projects_[]" type="hidden" value="{{$project->Project->id}}"/>
-                                            <input name="new_task_projects_t[]" type="hidden" value="{{$project->Project->title}}"/>
+                                            {{isset($project->Project->title) ? $project->Project->title : ''}}
+                                            <input name="new_task_projects_[]" type="hidden" value="{{isset($project->Project->id) ? $project->Project->id : ''}}"/>
+                                            <input name="new_task_projects_t[]" type="hidden" value="{{isset($project->Project->title) ? $project->Project->title : ''}}"/>
                                         </div>
-                                        <div class="col-xs-1">{{$project->weight}}</div>
+                                        <div class="col-xs-1">{{isset($project->weight) ? $project->weight : ''}}</div>
                                     </div>
                                 @endforeach
                             @endif
