@@ -877,7 +877,7 @@
                                         {{$task_history->user->Name.' '.$task_history->user->Family}}
                                     </td>
                                     <td style="border-bottom: 1px solid #999;text-align: right !important;white-space: initial;" class="col-xs-8">
-                                        {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ') }}.{!! nl2br($action_explain['action_explain']) !!}
+                                        {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ') }}.{!! isset($action_explain['action_explain']) ? nl2br($action_explain['action_explain']) : $task_history->operation_value !!}
                                     </td>
                                 </tr>
                             @endforeach
