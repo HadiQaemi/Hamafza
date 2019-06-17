@@ -986,6 +986,9 @@
                         <tbody id="message_task_list">
                         @if(isset($task->History))
                             @foreach($task->History as $k=>$task_history)
+                                @php
+                                    $action_explain = unserialize($task_history->operation_value);
+                                @endphp
                                 <tr id="add_resource_task{{$k.'show'}}">
                                     <td style="border-bottom: 1px solid #999;text-align: center">
                                         {{$task_history->jalali_created_at}}
@@ -994,7 +997,7 @@
                                         {{$task_history->user->Name.' '.$task_history->user->Family}}
                                     </td>
                                     <td style="border-bottom: 1px solid #999;text-align: right !important;white-space: initial;">
-                                        {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ').$task_history->descript }}
+                                        {{ trans('tasks.'.$task_history->operation_type).''.(trim($task_history->descript)=='' ? '' : ': ') }}.{!! nl2br($action_explain['action_explain']) !!}
                                     </td>
                                 </tr>
                             @endforeach
