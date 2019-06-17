@@ -345,7 +345,7 @@
 
                             window.RowData[id] = full;
                             return "" +
-                                '<a class="jsPanels fa fa-cogs edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'&level='+level+'" data-toggle="tooltip" data-placement="top" title="{{trans('app.edit')}}"></a>' +
+                                '<a class="jsPanels fa fa-cog edit_btn margin-right-10" href="{!! route('modals.edit_organ')!!}?org_id='+oid+'&org_title='+title+'&org_description='+description+'&level='+level+'" data-toggle="tooltip" data-placement="top" title="{{trans('projects.settings')}}"></a>' +
                                 (full.ChartID==null ?
                                     '<a class="jsPanels" href="{!! route('modals.manager_charts', ['org_id' =>'']) !!}'+oid+'"><i class="fa fa-object-group"></i></a>' :
                                     '<a class="fa fa-sitemap margin-right-10 showOrgChart pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_chart',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.chart_view')}}"></a>' +
@@ -353,7 +353,7 @@
                                     '<a class="fa fa-vcard margin-right-10 showJoblist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_job_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.job_view')}}"></a>' +
                                     '<a class="fa fa-laptop margin-right-10 showPostlist pointer" add="{!! route('ugc.desktop.hamahang.org_chart.show_post_list',['username'=> auth()->user()->Uname,'ChartID'=>''])!!}/'+full.ChartID+'" rel="'+full.ChartID+'" data-toggle="tooltip" data-placement="top" title="{{trans('org_chart.position_view')}}"></a>'
                                 ) +
-                                '<a class="link_pointer fa fa-trash color_red margin-right-10 color_red" style="font-size: 10px"  onclick="RemoveOrg(' + oid + ')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>'
+                                '<a class="link_pointer fa fa-trash color_red margin-right-10 color_red" style="font-size: 10px"  onclick="RemoveOrg(\'' + oid + '\')" data-toggle="tooltip" data-placement="top" title="{{trans('app.delete')}}"></a>'
 
                                 /*'<a style="font-size: 10px" onClick="OpenModalListOrganCharts(' + id + ',' + '"' + title + '"' + ')">' +
                                 '   <i class="fa fa-object-group"></i>' +

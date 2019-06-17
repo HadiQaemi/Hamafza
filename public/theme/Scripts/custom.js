@@ -65,11 +65,13 @@ $(document).on("click", "#add_spouse", function () {
     $('#spouse_list').append(
         '<div class="col-xs-12 noRightPadding noLeftPadding margin-top-10">\n' +
         '   <div class="col-xs-1">' + (parseInt(length) + 1) +'</div>\n' +
-        '   <div class="col-xs-2"><input type="hidden" name="spouse_name[]" value="' + $('#spouse_name').val() + '">' + $('#spouse_name').val() + '</div>\n' +
-        '   <div class="col-xs-2"><input type="hidden" name="spouse_lastname[]" value="' + $('#spouse_lastname').val() + '">' + $('#spouse_lastname').val() + '</div>\n' +
-        '   <div class="hidden"><input type="hidden" name="birth_date[]" value="' + $('#birth_date').val() + '">' + $('#birth_date').val() + '</div>\n' +
-        '   <div class="col-xs-2"><input type="hidden" name="spouse_job[]" value="' + $('#spouse_job').val() + '">' + $('#spouse_job').val() + '</div>\n' +
-        '   <div class="col-xs-2"><input type="hidden" name="spouse_mobile[]" value="' + $('#spouse_mobile').val() + '">' + $('#spouse_mobile').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="rel_name[]" value="' + $('#rel_name').val() + '">' + $('#rel_name').val() + '</div>\n' +
+        '   <input type="hidden" name="staff_rel_type[]" value="' + $('[name="rel_type"]').val() + '">' +
+        '   <input type="hidden" name="rel_edu_grade[]" value="' + $('#rel_edu_grade').val() + '">' +
+        '   <div class="col-xs-2"><input type="hidden" name="rel_lastname[]" value="' + $('#rel_lastname').val() + '">' + $('#rel_lastname').val() + '</div>\n' +
+        '   <div class="hidden"><input type="hidden" name="rel_date[]" value="' + $('#rel_date').val() + '">' + $('#rel_date').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="rel_job[]" value="' + $('#rel_job').val() + '">' + $('#rel_job').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="rel_mobile[]" value="' + $('#rel_mobile').val() + '">' + $('#rel_mobile').val() + '</div>\n' +
         '   <div class="hidden"><input type="hidden" name="marry_date[]" value="' + $('#marry_date').val() + '">' + $('#marry_date').val() + '</div>\n' +
         '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
         '</div>'
@@ -100,6 +102,7 @@ $(document).on("click", "#add_related_persons", function () {
         '   <div class="col-xs-2"><input type="hidden" name="related_name[]" value="' + $('#related_name').val() + '">' + $('#related_name').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="related_lastname[]" value="' + $('#related_lastname').val() + '">' + $('#related_lastname').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="related_code_melli[]" value="' + $('#related_code_melli').val() + '">' + $('#related_code_melli').val() + '</div>\n' +
+        '   <div class="col-xs-2"><input type="hidden" name="related_org[]" value="' + $('#related_org').val() + '">' + $('#related_org').val() + '</div>\n' +
         '   <div class="col-xs-2"><input type="hidden" name="related_post[]" value="' + $('#related_post').val() + '">' + $('#related_post').val() + '</div>\n' +
         '   <div class="col-xs-1"><i class="fa fa-remove pointer remove-staff-item"></i></div>\n' +
         '</div>'

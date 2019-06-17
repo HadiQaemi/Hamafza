@@ -395,10 +395,29 @@ class OrgChartController extends Controller
 
     public function RemoveOrgan()
     {
-        DB::table('hamahang_org_organs')
-            ->where('id', Request::input('id'))
-            ->update(['deleted_at' => 1]);
-        return json_encode('1');
+        Request::merge([
+            'org_id' => deCode(Request::get('id'))
+        ]);
+        $validator = Validator::make(Request::all(),
+            [
+                'org_id' => 'required|exists:hamahang_org_organs,id'
+            ],
+            [],
+            [
+                'org_id' => 'سازمان'
+            ]
+        );
+        if ($validator->fails()) {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        } else {
+            DB::table('hamahang_org_organs')
+                ->where('id', Request::input('org_id'))
+                ->update(['deleted_at' => 1]);
+            return json_encode('1');
+
+        }
     }
 
     public function AjaxOrgCharts($OrgID)
@@ -1358,9 +1377,57 @@ class OrgChartController extends Controller
                 'mobile' => Request::get('staff_mobile'),
                 'birth_date' => $date,
                 'is_married' => Request::get('is_married'),
-                'is_man' => Request::get('gender')
+                'is_man' => Request::get('gender'),
+                'home_type' => Request::get('home_type'),
+                'contract_type' => Request::get('contract_type'),
+                'insurance_num' => Request::get('insurance_num'),
+                'veteran_precent' => Request::get('veteran_precent'),
+                'captivity_duration' => Request::get('captivity_duration'),
+                'address' => Request::get('address'),
+                'phone' => Request::get('phone'),
+                'time_war' => Request::get('time_war')
             ]);
             if ($staff->save()) {
+
+                if (Request::exists('rel_name')) {
+                    foreach (Request::get('rel_name') as $k => $marry_date) {
+                        $staff->relations()->create([
+                            'name' => Request::get('rel_name')[$k],
+                            'edu_grade' => Request::get('rel_edu_grade')[$k],
+                            'last_name' => Request::get('rel_lastname')[$k],
+                            'birth_date' => Request::get('rel_date')[$k],
+                            'job' => Request::get('rel_job')[$k],
+                            'mobile' => Request::get('rel_mobile')[$k],
+                            'rel_type' => Request::get('staff_rel_type')[$k],
+                            'married_date' => Request::get('marry_date')[$k],
+                        ]);
+                    }
+                }
+
+                if (Request::exists('child_name')) {
+                    foreach (Request::get('child_name') as $k => $child_name) {
+                        $staff->childs()->create([
+                            'name' => Request::get('child_name')[$k],
+                            'birth_date' => Request::get('child_birth_date')[$k],
+                            'grade' => Request::get('child_edu_grade')[$k],
+                            'national_id' => Request::get('child_national_code')[$k],
+                            'job' => Request::get('child_job')[$k],
+                            'mobile' => Request::get('child_mobile')[$k],
+                        ]);
+                    }
+                }
+
+                if (Request::exists('related_name')) {
+                    foreach (Request::get('related_name') as $k => $related_name) {
+                        $staff->families()->create([
+                            'name' => Request::get('related_name')[$k],
+                            'last_name' => Request::get('related_lastname')[$k],
+                            'national_id' => Request::get('related_code_melli')[$k],
+                            'org' => Request::get('related_org')[$k],
+                            'post' => Request::get('related_post')[$k]
+                        ]);
+                    }
+                }
                 if (Request::exists('staff_edu_uni')) {
                     foreach (Request::get('staff_edu_uni') as $k => $staff_edu_uni) {
                         org_staff_edu::create([
@@ -1397,7 +1464,7 @@ class OrgChartController extends Controller
                 if (Request::exists('chart_item_job_position_new')) {
                     org_charts_items_jobs_posts_staff::create([
                         'uid' => auth()->id(),
-                        'staff_id' => $staff,
+                        'staff_id' => $staff->id,
                         'chart_item_post_job_id' => Request::get('chart_item_job_position_new')
                     ]);
                 }
@@ -1469,13 +1536,21 @@ class OrgChartController extends Controller
             $sid = deCode(Request::get('sid'));
             $staff_info = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'childs', 'spouses', 'families', 'posts.job')->first();
             $staff_info->update([
+                'is_man' => Request::get('gender'),
                 'first_name' => Request::get('staff_name'),
                 'last_name' => Request::get('staff_last_name'),
                 'national_id' => Request::get('staff_national_id'),
                 'mobile' => Request::get('staff_mobile'),
                 'birth_date' => Request::get('staff_birth_day'),
                 'is_married' => Request::get('is_married'),
-                'is_man' => Request::get('gender')
+                'home_type' => Request::get('home_type'),
+                'contract_type' => Request::get('contract_type'),
+                'insurance_num' => Request::get('insurance_num'),
+                'veteran_precent' => Request::get('veteran_precent'),
+                'captivity_duration' => Request::get('captivity_duration'),
+                'address' => Request::get('address'),
+                'phone' => Request::get('phone'),
+                'time_war' => Request::get('time_war')
             ]);
             $staff = $staff_info->id;
             $staff_info->edus()->delete();

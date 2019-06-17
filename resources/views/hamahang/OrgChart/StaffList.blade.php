@@ -141,8 +141,7 @@
                             return "" +
                                 "" +
                                 "<a class='cursor-pointer jsPanels white-space margin-right-10' href='/modals/ViewStaffForm?sid="+full.staffId+"'><i class='fa fa-edit pointer'></i></a>" +
-                                "<a class='cursor-pointer jsPanels white-space margin-right-10' href='/modals/ViewStaffDoc?sid="+full.staffId+"'><i class='fa fa-file-text-o pointer'></i></a>" +
-                                "<i class='fa fa-remove pointer margin-right-10 remove_staff_position' title='حذف سمت' data-toggle='tooltip' ref=\" + full.staffId + \" add='{{ route('hamahang.org_chart.delete_staff_position') }}'></i>" +
+                                // "<a class='cursor-pointer jsPanels white-space margin-right-10' href='/modals/ViewStaffDoc?sid="+full.staffId+"'><i class='fa fa-file-text-o pointer'></i></a>" +
                                 "<i class='fa fa-trash pointer remove_staff margin-right-10 color_red' title='حذف کارمند' data-toggle='tooltip' ref=" + full.staffId + " add='{{ route('hamahang.org_chart.delete_staff') }}'></i>" +
                                 ""
                         }

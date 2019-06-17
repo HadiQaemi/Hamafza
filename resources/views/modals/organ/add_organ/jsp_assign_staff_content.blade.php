@@ -35,6 +35,12 @@
         <li>
             <a href="#tab_t4" data-toggle="tab">سمت</a>
         </li>
+        <li>
+            <a href="#tab_t5" data-toggle="tab">خانواده</a>
+        </li>
+        <li>
+            <a href="#tab_t6" data-toggle="tab">آشنایان</a>
+        </li>
         <li style="float: left">
             <h5 id="task_type" style="color: blue"></h5>
         </li>
@@ -156,6 +162,68 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>نوع قرارداد</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="contract_type" id="contract_type" class="form-control" required placeholder="نوع قرارداد" value="{{isset($staff->contract_type) ? $staff->contract_type: ''}}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>بیمه</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="insurance_num" id="insurance_num" class="form-control" placeholder="شماره تامین اجتماعی" value="{{isset($staff->insurance_num) ? ($staff->insurance_num ==0 ? '' : $staff->insurance_num) : ''}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>جانبازی</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="veteran_precent" id="veteran_precent" class="form-control" required placeholder="درصد جانبازی" value="{{isset($staff->veteran_precent) ? ($staff->veteran_precent ==0 ? '' : $staff->veteran_precent) : ''}}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>آزاده</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="captivity_duration" id="captivity_duration" class="form-control" required placeholder="مدت اسارت به ماه" value="{{isset($staff->captivity_duration) ? ($staff->captivity_duration == 0  ? '' : $staff->captivity_duration) : ''}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>رزمنده</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="time_war" id="time_war" class="form-control" required placeholder="مدت حضور در جبهه به ماه" value="{{isset($staff->time_war) ? ($staff->time_war ==0 ? '' : $staff->time_war) : ''}}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                        <label>تلفن ثابت</label>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <input name="phone" id="phone" class="form-control" required placeholder="تلفن ثابت" value="{{isset($staff->phone) ? ($staff->phone ==0 ? '' : $staff->phone) : ''}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                                <div class="col-xs-1 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>ادرس منزل</label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <input name="address" id="address" class="form-control" required placeholder="ادرس منزل" value="{{isset($staff->address) ? ($staff->address ==0 ? '' : $staff->address) : ''}}"/>
                                 </div>
                             </div>
                         </div>
@@ -376,43 +444,43 @@
                                             class="js-states form-control"></select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <div class="col-xs-1 line-height-35">
-                                    <label>نوع همکاری</label>
-                                </div>
-                                <div class="col-xs-11">
-                                    <div class="pull-right line-height-35">
-                                        <input type="radio" name="staff_type" id="official" value="official" checked/>
-                                        <label for="official">
-                                            رسمی
-                                        </label>
-                                        <input type="radio" name="staff_type" id="pemani" value="pemani"/>
-                                        <label for="pemani">
-                                            پیمانی
-                                        </label>
-                                        <input type="radio" name="staff_type" id="azmayeshi" value="azmayeshi"/>
-                                        <label for="azmayeshi">
-                                            آزمایشی
-                                        </label>
-                                        <input type="radio" name="staff_type" id="gharadadi" value="gharadadi"/>
-                                        <label for="gharadadi">
-                                            قراردادی
-                                        </label>
-                                        <input type="radio" name="staff_type" id="mamor" value="mamor"/>
-                                        <label for="mamor">
-                                            مامور
-                                        </label>
-                                        <input type="radio" name="staff_type" id="other" value="other"/>
-                                        <label for="other">
-                                            سایر
-                                        </label>
-                                    </div>
-                                    <div class="pull-right line-height-35">
-                                        <input type="text" name="staff_type" class="form-control inline width-240"
-                                               placeholder="سایر"/>
-                                    </div>
-                                </div>
-                            </div>
+                            {{--<div class="form-group col-md-12">--}}
+                                {{--<div class="col-xs-1 line-height-35">--}}
+                                    {{--<label>نوع همکاری</label>--}}
+                                {{--</div>--}}
+                                {{--<div class="col-xs-11">--}}
+                                    {{--<div class="pull-right line-height-35">--}}
+                                        {{--<input type="radio" name="staff_type" id="official" value="official" checked/>--}}
+                                        {{--<label for="official">--}}
+                                            {{--رسمی--}}
+                                        {{--</label>--}}
+                                        {{--<input type="radio" name="staff_type" id="pemani" value="pemani"/>--}}
+                                        {{--<label for="pemani">--}}
+                                            {{--پیمانی--}}
+                                        {{--</label>--}}
+                                        {{--<input type="radio" name="staff_type" id="azmayeshi" value="azmayeshi"/>--}}
+                                        {{--<label for="azmayeshi">--}}
+                                            {{--آزمایشی--}}
+                                        {{--</label>--}}
+                                        {{--<input type="radio" name="staff_type" id="gharadadi" value="gharadadi"/>--}}
+                                        {{--<label for="gharadadi">--}}
+                                            {{--قراردادی--}}
+                                        {{--</label>--}}
+                                        {{--<input type="radio" name="staff_type" id="mamor" value="mamor"/>--}}
+                                        {{--<label for="mamor">--}}
+                                            {{--مامور--}}
+                                        {{--</label>--}}
+                                        {{--<input type="radio" name="staff_type" id="other" value="other"/>--}}
+                                        {{--<label for="other">--}}
+                                            {{--سایر--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="pull-right line-height-35">--}}
+                                        {{--<input type="text" name="staff_type" class="form-control inline width-240"--}}
+                                               {{--placeholder="سایر"/>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                         </form>
                         <div class="col-xs-12 margin-top-20 border-bottom">
                             <div class="col-xs-1">ردیف</div>
@@ -441,6 +509,215 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane tab-view" id="tab_t5">
+                <div class="row">
+                    <div class="base_tabs">
+                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>نسبت</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <div class="pull-right line-height-35">
+                                        <input type="radio" name="rel_type" id="spouse" value="spouse" checked/>
+                                        <label for="spouse">
+                                            همسر
+                                        </label>
+                                        <input type="radio" name="rel_type" id="child" value="child"/>
+                                        <label for="child">
+                                            فرزند
+                                        </label>
+                                        <input type="radio" name="rel_type" id="father" value="father"/>
+                                        <label for="father">
+                                            پدر
+                                        </label>
+                                        <input type="radio" name="rel_type" id="mother" value="mother"/>
+                                        <label for="mother">
+                                            مادر
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>نام</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="rel_name" class="form-control" required placeholder="نام"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>نام خانوادگی</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="rel_lastname" class="form-control" required placeholder="نام خانوادگی"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>تاریخ تولد</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="rel_date" class="form-control persianDatepicker" required placeholder="تاریخ تولد"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>شغل</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="rel_job" class="form-control" required placeholder="شغل"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>موبایل</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="rel_mobile" class="form-control" required placeholder="شماره موبایل"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>تحصیلات</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <select id="rel_edu_grade" class="form-control">
+                                        <option value="diploma">دیپلم</option>
+                                        <option value="after_diploma">فوق دیپلم</option>
+                                        <option value="bsc">لیسانس</option>
+                                        <option value="msc">فوق لیسانس</option>
+                                        <option value="phd">دکتری</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>تاریخ ازدواج</label>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input id="marry_date" class="form-control persianDatepicker" required placeholder="تاریخ ازدواج"/>
+                                </div>
+                                <div class="pull-right line-height-35">
+                                    <a class="fa fa-plus pointer" id="add_spouse"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20 border-bottom padding-bottom-10">
+                            <div class="col-xs-1">ردیف</div>
+                            <div class="col-xs-2">نام</div>
+                            <div class="col-xs-2">نام خانوادگی</div>
+                            <div class="col-xs-2">شغل</div>
+                            <div class="col-xs-2">موبایل</div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        @php $cnt = 1; @endphp
+                        <div class="col-xs-12" id="spouse_list">
+                            @if(!empty($staff->relations))
+                                @foreach($staff->relations as $relation)
+                                    <div class="col-xs-12 margin-top-10">
+                                        <div class="col-xs-1">{{$cnt++}}</div>
+                                        <input type="hidden" name="staff_rel_type[]" value="{{$relation->rel_type}}"/>
+                                        <input type="hidden" name="staff_rel_type[]" value="{{$relation->rel_type}}"/>
+                                        <div class="col-xs-2"><input type="hidden" name="rel_name[]" value="{{$relation->name}}"/>{{$relation->name}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="rel_lastname[]" value="{{$relation->last_name}}"/>{{$relation->last_name}}</div>
+                                        <div class="hidden"><input type="hidden" name="rel_edu_grade[]" value="{{$relation->edu_grade}}"/>{{$relation->edu_grade}}</div>
+                                        <div class="hidden"><input type="hidden" name="rel_date[]" value="{{$relation->birth_date}}"/>{{$relation->birth_date}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="rel_job[]" value="{{$relation->job}}"/>{{$relation->job}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="rel_mobile[]" value="{{$relation->mobile}}"/>{{$relation->mobile}}</div>
+                                        <div class="hidden"><input type="hidden" name="marry_date[]" value="{{$relation->married_date}}"/>{{$relation->married_date}}</div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane tab-view" id="tab_t6">
+                <div class="row">
+                    <div class="base_tabs">
+                        <div class="form-group col-md-12 noLeftMargin noRightMargin noLeftPadding">
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>نام</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="related_name" class="form-control" required placeholder="نام اشنا"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>نام خانوادگی</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="related_lastname" class="form-control" required placeholder="نام خانوادگی اشنا"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>سازمان</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="related_org" class="form-control" required placeholder="سازمان"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>سمت</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="related_post" class="form-control" required placeholder="سمت"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="col-xs-2 line-height-35 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                    <label>کدملی</label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input id="related_code_melli" class="form-control" required placeholder="کدملی"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 noLeftMargin noRightMargin noRightPadding noLeftPadding">
+                                <div class="pull-right line-height-35">
+                                    <a class="fa fa-plus pointer" id="add_related_persons"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20 border-bottom margin-bottom-5 padding-bottom-10">
+                            <div class="col-xs-1">ردیف</div>
+                            <div class="col-xs-2">نام</div>
+                            <div class="col-xs-2">نام خانوادگی</div>
+                            <div class="col-xs-2">کدملی</div>
+                            <div class="col-xs-2">سازمان</div>
+                            <div class="col-xs-2">سمت</div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        @php $cnt = 1; @endphp
+                        <div class="col-xs-12" id="related_persons_list">
+                            @if(!empty($staff->families))
+                                @foreach($staff->families as $family)
+                                    <div class="col-xs-12 margin-top-10">
+                                        <div class="col-xs-1">{{$cnt++}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="related_name[]" value="{{$family->name}}"/>{{$family->name}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="related_lastname[]" value="{{$family->last_name}}"/>{{$family->last_name}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="related_code_melli[]" value="{{$family->national_id}}"/>{{$family->national_id}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="related_org[]" value="{{$family->org}}"/>{{$family->org}}</div>
+                                        <div class="col-xs-2"><input type="hidden" name="related_post[]" value="{{$family->post}}"/>{{$family->post}}</div>
+                                        <div class="col-xs-1"><i class="fa fa-remove remove-staff-item pointer"></i></div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </form>
 </div>

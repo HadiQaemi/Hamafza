@@ -1088,7 +1088,7 @@ class ModalController extends Controller
     public function ViewStaffForm(){
         $res = $this->getParams(['sid']);
         $sid = deCode($res['sid']);
-        $staff = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'childs', 'spouses', 'families', 'posts.job')->first();
+        $staff = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'relations', 'childs', 'spouses', 'families', 'posts.job')->first();
         $d = new jDateTime;
         $birth_date = preg_split('/ /', $staff->birth_date);
         $date = preg_split('/-/', $birth_date[0]);

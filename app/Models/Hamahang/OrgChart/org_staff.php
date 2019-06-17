@@ -11,7 +11,10 @@ class org_staff extends Model
 
     protected $dates = ['deleted_at'];
     protected $table = 'hamahang_org_staff';
-    protected $fillable = ['uid','first_name','last_name','national_id','mobile','birth_date','is_married','is_man'];
+    protected $fillable = [
+        'uid','first_name','last_name','national_id','mobile','birth_date','is_married','is_man',
+        'home_type','contract_type','insurance_num','veteran_precent','captivity_duration','time_war','phone','address'
+    ];
 
     public function edus()
     {
@@ -32,6 +35,11 @@ class org_staff extends Model
     public function childs()
     {
         return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_childs','staff_id','id');
+    }
+
+    public function relations()
+    {
+        return $this->hasMany('App\Models\Hamahang\OrgChart\org_staff_relations','staff_id','id');
     }
 
     public function spouses()
