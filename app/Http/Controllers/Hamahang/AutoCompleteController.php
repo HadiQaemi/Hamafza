@@ -45,11 +45,16 @@ class AutoCompleteController extends Controller
         $x = $request->term;
         if ($x['term'] == '...')
         {
-            $data = tasks::select("id", "title as text")->get();
+            $data = User::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
         }
         else
         {
-            $data = tasks::select("id", "title as text")->where("title", "LIKE", "%" . $x['term'] . "%")->get();
+            $data = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Family", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Email", "LIKE", "%" . $x['term'] . "%")
+                ->get();
         }
         $data = array('results' => $data);
         return response()->json($data);
