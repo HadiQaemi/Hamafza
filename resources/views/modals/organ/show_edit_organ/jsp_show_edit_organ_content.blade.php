@@ -62,10 +62,10 @@
                                 <select name="job" id="job" class="form-control select2_auto_complete_onet_jobs line-height-35 height-35"></select>
                             </div>
                             <div class="pull-right margin-right-10 line-height-35 height-35 ">
-                                <label for="item_title" class="pull-right">سمت</label>
+                                <label for="item_title" class="pull-right">تعداد</label>
                             </div>
                             <div class="pull-right">
-                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="{{trans('app.amount')}}"/>
+                                <input type="text" name="amount" id="amount" class="form-control line-height-30 height-30 width-50" placeholder="سمت"/>
                             </div>
                             <div class="pull-left line-height-35">
                                 <a class="fa fa-plus pointer add_job_post"></a>
@@ -116,7 +116,7 @@
                         @foreach($job->posts as $post)
                             <tr>
                                 <td class="col-xs-4">{{isset($job->job->title) ? $job->job->title : ''}}</td>
-                                <td class="col-xs-3">{{isset($post->users[0]) ? (isset($post->users[0]->user->Name) ? $post->users[0]->user->Name : '').' '.(isset($post->users[0]->user->Family) ? $post->users[0]->user->Family : '') : ''}}</td>
+                                <td class="col-xs-3">{{isset($post->users[0]) ? (isset($post->users[0]->staff->first_name) ? $post->users[0]->staff->first_name : '').' '.(isset($post->users[0]->staff->last_name) ? $post->users[0]->staff->last_name : '') : ''}}</td>
                                 <td class="col-xs-2">{{$post->extra_title}}</td>
                                 <td class="col-xs-2">{{$post->location}}</td>
                                 <td class="col-xs-1">

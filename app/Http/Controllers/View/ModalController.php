@@ -3135,8 +3135,7 @@ class ModalController extends Controller
 
     public function edit_show_post(Request $request)
     {
-        $post = org_charts_items_jobs_posts::with('job', 'accesses', 'adventages', 'worktime')->where('id', deCode($request->post))->first();
-
+        $post = org_charts_items_jobs_posts::with('job', 'accesses', 'users', 'adventages', 'worktime')->where('id', deCode($request->post))->first();
         return json_encode([
             'header' => trans('org_chart.edit_show_post'),
             'content' => view('modals.organ.add_organ.jsp_edit_show_post_content')

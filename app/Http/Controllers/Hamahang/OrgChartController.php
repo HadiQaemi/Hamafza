@@ -1796,7 +1796,7 @@ class OrgChartController extends Controller
                         org_charts_items_jobs_posts_staff::create([
                             'uid' => auth()->id(),
                             'chart_item_post_job_id' => $post->id,
-                            'user_id' => $users,
+                            'staff_id' => $users,
                         ]);
                 }
             }
@@ -2084,7 +2084,7 @@ class OrgChartController extends Controller
                 for ($i = 0; $i < Request::get('amount'); $i++) {
                     $org_charts_items_jobs_posts = new org_charts_items_jobs_posts();
                     $org_charts_items_jobs_posts->uid = auth()->id();
-                    $org_charts_items_jobs_posts->extra_text = $job->title;
+                    $org_charts_items_jobs_posts->extra_title = $job->title;
                     $org_charts_items_jobs_posts->chart_item_job_id = $org_chart_items_jobs->id;
                     $org_charts_items_jobs_posts->save();
                     $semats[] = [

@@ -248,9 +248,9 @@
                     'nodeTitle': 'name',
                 'createNode': function ($node, data) {
                     var secondMenuIcon = '<div>\n\
-                            <i onclick="RemoveChartItem(' + data.id + ')" class="cursor-pointer fa fa-minus text-danger"></i>\n\
-                            <a href="{!! route('modals.show_edit_data_organ') !!}?item_id='+data.id+'"  class="jsPanels cursor-pointer fa fa-edit text-info"></a>\n\
-                            <i class="fa fa-plus pointer add_root_item" parent_id="' + data.id + '"></i>\n\
+                            <i onclick="RemoveChartItem(' + data.id + ')" class="cursor-pointer fa fa-minus text-danger margin-left-10"></i>\n\
+                            <a href="{!! route('modals.show_edit_data_organ') !!}?item_id='+data.id+'"  class="jsPanels cursor-pointer fa fa-edit text-info margin-left-10"></a>\n\
+                            <i class="fa fa-plus pointer add_root_item margin-left-10" parent_id="' + data.id + '"></i>\n\
                         </div>';
                     var secondMenu = '';
                     $node.append(secondMenuIcon).append(secondMenu);

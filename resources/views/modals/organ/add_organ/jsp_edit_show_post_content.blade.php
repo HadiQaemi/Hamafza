@@ -14,10 +14,10 @@
                 <label for="need_successor_users">{{trans('org_chart.add_users')}}</label>
             </div>
             <div class="col-xs-10">
-                <select name="add_users[]" id="add_users" class="select2_auto_complete_user col-xs-12" data-placeholder="{{trans('org_chart.add_users')}}" multiple>
-                @if(!empty($post->users))
+                <select name="add_users[]" id="add_users" class="select2_auto_complete_staffs col-xs-12" data-placeholder="{{trans('org_chart.add_users')}}">
+                    @if(!empty($post->users))
                         @foreach($post->users as $user)
-                            <option selected="selected" value="{{ $user->user->id }}">{{ $user->user->Name.' '.$user->user->Family }}</option>
+                            <option selected="selected" value="{{ $user->staff->id }}">{{ $user->staff->first_name.' '.$user->staff->last_name}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -164,6 +164,34 @@
         tags: false,
         ajax: {
             url: "{{route('auto_complete.onet_jobs_items')}}",
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term,
+                    item_id: $(this).attr('rel')
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    $(".select2_auto_complete_staffs").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: "{{route('auto_complete.staffs')}}",
             dataType: "json",
             type: "POST",
             quietMillis: 150,

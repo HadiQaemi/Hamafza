@@ -12,6 +12,7 @@ use App\Models\Hamahang\OrgChart\onet_skill;
 use App\Models\Hamahang\OrgChart\org_chart_items;
 use App\Models\Hamahang\OrgChart\org_charts_items_jobs_posts;
 use App\Models\Hamahang\OrgChart\org_organs;
+use App\Models\Hamahang\OrgChart\org_staff;
 use App\Models\Hamahang\OrgChart\org_staff_jobs;
 use App\Models\Hamahang\ProvinceCity\City;
 use App\Models\Hamahang\ProvinceCity\Province;
@@ -165,6 +166,24 @@ class AutoCompleteController extends Controller
                 ->where('hamahang_org_charts_items_jobs.chart_item_id', "=", $request->item_id)
                 ->where('hamafza_onet_job.title', "LIKE", "%" . $x['term'] . "%")
                 ->select('hamafza_onet_job.title as text', 'hamahang_org_charts_items_jobs.id')
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
+    public function staffs(Request $request)
+    {
+        $x = $request->term;
+        if ($x['term'] == '...')
+        {
+            $data = org_staff::all(["id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text')]);
+        }
+        else
+        {
+            $data = org_staff::select("id", DB::raw('CONCAT(first_name, " ", last_name) AS text'))
+                ->where("first_name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("last_name", "LIKE", "%" . $x['term'] . "%")
                 ->get();
         }
         $data = array('results' => $data);
