@@ -35,9 +35,10 @@
                         <div class="form-group col-xs-12 margin-top-20 noRightPadding noLeftPadding">
                             <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
                             <div class="col-xs-11 noRightPadding noLeftPadding item_parent_id">
-                                <select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">
-                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
-                                </select>
+                                <select id="" name="item_parent_id" class="form-control select2_auto_complete_chart line-height-35 height-35" multiple="multiple"></select>
+                                {{--<select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">--}}
+                                    {{--<option value="{{$parent[0]}}">{{$parent[1]}}</option>--}}
+                                {{--</select>--}}
                             </div>
                         </div>
                         <div class="form-group col-xs-12 noRightPadding noLeftPadding">
@@ -193,3 +194,33 @@
         </div>
     </div>
 </div>
+<script>
+    $(".select2_auto_complete_chart").select2({
+        minimumInputLength: 3,
+        dir: "rtl",
+        width: "100%",
+        tags: false,
+        ajax: {
+            url: '{{URL::route('auto_complete.sibling_chart_items')}}',
+            dataType: "json",
+            type: "POST",
+            quietMillis: 150,
+            data: function (term) {
+                return {
+                    term: term,
+                    organ: {{$item_id}}
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+</script>

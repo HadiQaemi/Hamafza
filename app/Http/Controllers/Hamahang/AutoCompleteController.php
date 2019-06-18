@@ -326,14 +326,14 @@ class AutoCompleteController extends Controller
 
     public function organs(Request $request)
     {
-        $x = $request->data;
-        if ($x['q'] == '...')
+        $x = $request->term;
+        if ($x['term'] == '...')
         {
             $data = org_organs::all(["id", "title as text"]);
         }
         else
         {
-            $data = org_organs::select("id", "title as text")->where("title", "LIKE", "%" . $x['q'] . "%")->get();
+            $data = org_organs::select("id", "title as text")->where("title", "LIKE", "%" . $x['term'] . "%")->get();
         }
         $data = array('results' => $data);
         return response()->json($data);
@@ -385,7 +385,40 @@ class AutoCompleteController extends Controller
 
     }
 
-    public function chart_items(Request $request)
+    public function sibling_chart_items(Request $request)
+    {
+        if (!empty($request->term))
+        {
+
+            if ($request->term['term'] == '...')
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->whereIn('chart_id', function($query) use ($request)
+                    {
+                        $query->select('chart_id')
+                            ->from('hamahang_org_charts_items')
+                            ->where('hamahang_org_charts_items.id', '=', $request->organ);
+                    })
+                    ->get();
+            }
+            else
+            {
+                $data = org_chart_items::select("id", "title as text")
+                    ->whereIn('chart_id', function($query) use ($request)
+                    {
+                        $query->select('chart_id')
+                            ->from('hamahang_org_charts_items')
+                            ->where('hamahang_org_charts_items.id', '=', $request->organ);
+                    })
+                    ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+            }
+            $data = array('results' => $data);
+            return response()->json($data);
+        }
+
+    }
+
+    public function chart_itemss(Request $request)
     {
         if (!empty($request->term))
         {

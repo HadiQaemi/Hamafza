@@ -11,6 +11,7 @@
         $('#modify_chart_info_modal').modal({show: true});
     });
     $(document).on("click", ".add_root_item", function () {
+        $('#Parent_ID').val($(this).attr('parent_id'));
         $('#add_root_item_modal').modal({show: true});
     });
     function modify_chart_info() {
@@ -249,7 +250,7 @@
                     var secondMenuIcon = '<div>\n\
                             <i onclick="RemoveChartItem(' + data.id + ')" class="cursor-pointer fa fa-minus text-danger"></i>\n\
                             <a href="{!! route('modals.show_edit_data_organ') !!}?item_id='+data.id+'"  class="jsPanels cursor-pointer fa fa-edit text-info"></a>\n\
-                            <i class="fa fa-plus pointer add_root_item"></i>\n\
+                            <i class="fa fa-plus pointer add_root_item" parent_id="' + data.id + '"></i>\n\
                         </div>';
                     var secondMenu = '';
                     $node.append(secondMenuIcon).append(secondMenu);

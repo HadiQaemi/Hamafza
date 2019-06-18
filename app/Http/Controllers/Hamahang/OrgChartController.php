@@ -1023,7 +1023,6 @@ class OrgChartController extends Controller
     {
         $validator = Validator::make(Request::all(), [
             'root_item_title' => 'required',
-            'root_item_description' => 'required',
             'Organs_ID' => 'required',
             'Charts_ID' => 'required'
         ]);
@@ -1039,15 +1038,15 @@ class OrgChartController extends Controller
             $node = new org_chart_items;
             $node->uid = auth()->id();
             $node->chart_id = $Charts_ID;
-            $node->parent_id = 0;
+            $node->parent_id = Request::input('Parent_ID');
             $node->title = Request::input('root_item_title');
             $node->description = Request::input('root_item_description');
             $node->save();
 
-            if ($current_root) {
-                $current_root->parent_id = $node->id;
-                $current_root->save();
-            }
+//            if ($current_root) {
+//                $current_root->parent_id = $node->id;
+//                $current_root->save();
+//            }
 
             $result['item_id'] = Request::input('item_id');
             $result['success'] = true;
@@ -1366,8 +1365,13 @@ class OrgChartController extends Controller
             return json_encode($result);
         } else {
             $d = new jDateTime;
-            $date = explode('-', Request::get('staff_birth_day'));
-            $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2], '-');
+            if(trim(Request::get('staff_birth_day')) == '')
+            {
+                $date = Request::get('staff_birth_day');
+            }else{
+                $date = explode('-', Request::get('staff_birth_day'));
+                $date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2], '-');
+            }
 
             $staff = org_staff::create([
                 'uid' => auth()->id(),
@@ -2080,6 +2084,7 @@ class OrgChartController extends Controller
                 for ($i = 0; $i < Request::get('amount'); $i++) {
                     $org_charts_items_jobs_posts = new org_charts_items_jobs_posts();
                     $org_charts_items_jobs_posts->uid = auth()->id();
+                    $org_charts_items_jobs_posts->extra_text = $job->title;
                     $org_charts_items_jobs_posts->chart_item_job_id = $org_chart_items_jobs->id;
                     $org_charts_items_jobs_posts->save();
                     $semats[] = [

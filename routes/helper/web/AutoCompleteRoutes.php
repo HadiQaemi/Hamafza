@@ -21,8 +21,9 @@ Route::group(['prefix' => 'auto_complete', 'namespace' => 'Hamahang', 'middlewar
     Route::post('about_user_keywords', ['as' => 'auto_complete.about_user_keywords', 'uses' => 'AutoCompleteController@about_user_keywords', 'middleware' => ['dynamic_permission:auto_complete.about_user_keywords']]);
     Route::post('organs', ['as' => 'auto_complete.organs', 'uses' => 'AutoCompleteController@organs', 'middleware' => ['dynamic_permission:auto_complete.organs']]);
     Route::post('units', ['as' => 'auto_complete.units', 'uses' => 'AutoCompleteController@units', 'middleware' => ['dynamic_permission:auto_complete.organs']]);
-    Route::post('chart_items', ['as' => 'auto_complete.chart_items', 'uses' => 'AutoCompleteController@chart_items', 'middleware' => ['dynamic_permission:auto_complete.chart_items']]);
     Route::post('organ_chart_items', ['as' => 'auto_complete.organ_chart_items', 'uses' => 'AutoCompleteController@organ_chart_items', 'middleware' => ['dynamic_permission:auto_complete.chart_items']]);
+    Route::post('sibling_chart_items', ['as' => 'auto_complete.sibling_chart_items', 'uses' => 'AutoCompleteController@sibling_chart_items', 'middleware' => ['dynamic_permission:auto_complete.chart_items']]);
+    Route::post('chart_items', ['as' => 'auto_complete.chart_items', 'uses' => 'AutoCompleteController@chart_items', 'middleware' => ['dynamic_permission:auto_complete.chart_items']]);
     Route::post('projects', ['as' => 'auto_complete.projects', 'uses' => 'AutoCompleteController@projects', 'middleware' => ['dynamic_permission:auto_complete.projects']]);
     Route::post('process', ['as' => 'auto_complete.process', 'uses' => 'AutoCompleteController@process', 'middleware' => ['dynamic_permission:auto_complete.process']]);
     Route::post('calendars', ['as' => 'auto_complete.calendars', 'uses' => 'AutoCompleteController@calendars', 'middleware' => ['dynamic_permission:auto_complete.calendars']]);

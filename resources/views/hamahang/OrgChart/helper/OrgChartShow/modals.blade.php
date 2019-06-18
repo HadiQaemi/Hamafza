@@ -263,6 +263,7 @@
                     <div class="clearfix"></div>
                     <input type="hidden" name="Organs_ID" value="{{$Chart->org_organs_id}}">
                     <input type="hidden" name="Charts_ID" value="{{$Chart->id}}">
+                    <input type="hidden" name="Parent_ID" id="Parent_ID" value="">
                     <!---------------->
                 </div>
                 <div class="modal-footer">
