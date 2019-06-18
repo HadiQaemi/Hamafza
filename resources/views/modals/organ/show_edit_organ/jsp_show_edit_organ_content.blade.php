@@ -115,7 +115,7 @@
                         @foreach($job->posts as $post)
                             <tr>
                                 <td class="col-xs-4">{{isset($job->job->title) ? $job->job->title : ''}}</td>
-                                <td class="col-xs-3">{{isset($post->users[0]) ? $post->users[0]->user->Name.' '.$post->users[0]->user->Family : ''}}</td>
+                                <td class="col-xs-3">{{isset($post->users[0]) ? (isset($post->users[0]->user->Name) ? $post->users[0]->user->Name : '').' '.(isset($post->users[0]->user->Family) ? $post->users[0]->user->Family : '') : ''}}</td>
                                 <td class="col-xs-2">{{$post->extra_title}}</td>
                                 <td class="col-xs-2">{{$post->location}}</td>
                                 <td class="col-xs-1">
