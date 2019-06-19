@@ -2335,7 +2335,7 @@ class OrgChartController extends Controller
                 [
                     'item_title' => 'required',
                     'item_id' => 'required',
-                    'item_parent_id' => 'required',
+//                    'item_parent_id' => 'required',
                 ],
                 [],
                 [
@@ -2354,7 +2354,10 @@ class OrgChartController extends Controller
 
                 $chart_item->title = (Request::get('item_title'));
                 $chart_item->description = (Request::get('item_description'));
-                $chart_item->parent_id = (Request::get('item_parent_id'));
+                if(Request::exists('item_parent_id'))
+                {
+                    $chart_item->parent_id = (Request::get('item_parent_id'));
+                }
                 if ($chart_item->save()) {
                     $result['success'] = true;
                     org_charts_items_missions::where('chart_item_id', '=', $chart_item->id)->delete();
