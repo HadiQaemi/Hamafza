@@ -734,31 +734,56 @@ class OrgChartController extends Controller
             ->addColumn('post', function ($data) {
                 $ret = '';
                 foreach ($data->posts as $post)
+                {
                     $ret .= (trim($ret) == '' ? '' : ', ') . $post->extra_title;
+                    if(count($data->posts)>1)
+                        $ret .= ',...';
+                    break;
+                }
                 return $ret;
             })
             ->addColumn('charts', function ($data) {
                 $ret = '';
                 foreach ($data->posts as $post)
+                {
                     $ret .= (trim($ret) == '' ? '' : ', ') . $post->job;
+                    if(count($data->posts)>1)
+                        $ret .= ',...';
+                    break;
+                }
                 return $ret;
             })
             ->addColumn('job', function ($data) {
                 $ret = '';
                 foreach ($data->posts as $post)
+                {
                     $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->job->title;
+                    if(count($data->posts)>1)
+                        $ret .= ',...';
+                    break;
+                }
                 return $ret;
             })
             ->addColumn('item', function ($data) {
                 $ret = '';
                 foreach ($data->posts as $post)
+                {
                     $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->title;
+                    if(count($data->posts)>1)
+                        $ret .= ',...';
+                    break;
+                }
                 return $ret;
             })
             ->addColumn('org', function ($data) {
                 $ret = '';
                 foreach ($data->posts as $post)
+                {
                     $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->chart->title;
+                    if(count($data->posts)>1)
+                        $ret .= ',...';
+                    break;
+                }
                 return $ret;
             })
             ->make(true);
