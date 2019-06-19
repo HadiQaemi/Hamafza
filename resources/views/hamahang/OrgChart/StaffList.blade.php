@@ -16,79 +16,76 @@
             padding: 10px;
         }
     </style>
-    <div class="row-fluid">
-        <div class="row" style="margin-top: -10px;background: #eee" >
-            <form id="form_filter_priority">
-                <div class="row padding-bottom-20 opacity-7">
-                    <i class="fa fa-user int-icon3"></i>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                        <select id="organs_staff_search" name="organs_staff_search[]" class="select2_auto_complete_staff col-xs-12"
-                                data-placeholder="{{trans('org_chart.search_some_staff')}}" multiple>
-                        </select>
-                    </div>
-                    <i class="fa fa-sitemap int-icon2"></i>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                        <select id="organs_organs_search" class="select2_auto_complete_organs" name="select_org_lists[]"
-                                data-placeholder="{{trans('org_chart.select_org_list')}}" multiple></select>
-                    </div>
-                    <i class="fa fa-sitemap int-icon1"></i>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                        <select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"
-                                data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>
-                        </select>
-                    </div>
+    <div class="row opacity-7" style="margin-top: -10px;background: #eee">
+        <form id="form_filter_priority">
+            <div class="row padding-bottom-20 opacity-7">
+                <i class="fa fa-user int-icon3"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_staff_search" name="organs_staff_search[]" class="select2_auto_complete_staff col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_staff')}}" multiple>
+                    </select>
                 </div>
-                <div class="row padding-bottom-20 opacity-7">
-                    <i class="fa fa-sitemap int-icon3"></i>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                        <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs_item col-xs-12"
-                                data-placeholder="{{trans('org_chart.search_some_job')}}" multiple>
-                        </select>
-                    </div>
-                    <i class="fa fa-sitemap int-icon2"></i>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                        <select id="organs_posts_search" name="organs_posts_search[]" class="select2_auto_complete_organ_posts col-xs-12"
-                                data-placeholder="{{trans('org_chart.search_some_post')}}" multiple>
-                        </select>
-                    </div>
-                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-
-                    </div>
+                <i class="fa fa-sitemap int-icon2"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_organs_search" class="select2_auto_complete_organs" name="select_org_lists[]"
+                            data-placeholder="{{trans('org_chart.select_org_list')}}" multiple></select>
                 </div>
-            </form>
-        </div>
+                <i class="fa fa-sitemap int-icon1"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>
+                    </select>
+                </div>
+            </div>
+            <div class="row padding-bottom-20 opacity-7">
+                <i class="fa fa-sitemap int-icon3"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs_item col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_job')}}" multiple>
+                    </select>
+                </div>
+                <i class="fa fa-sitemap int-icon2"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_posts_search" name="organs_posts_search[]" class="select2_auto_complete_organ_posts col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_post')}}" multiple>
+                    </select>
+                </div>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
 
-        <div class="col-xs-12">
-            <fieldset>
-                <div id="OrgList">
-                    {{--<legend>--}}
-                        {{--<h3>--}}
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
+        <fieldset>
+            <div id="OrgList">
+                {{--<legend>--}}
+                    {{--<h3>--}}
 {{--                            <span>{{ trans('org_chart.organizations_list') }}</span>--}}
 {{--                            <a href="{!! route('modals.assign_new_staff') !!}" class="jsPanels btn btn-default pull-left jspa btn-primary btn fa fa-plus"></a>--}}
-                            {{--<div class="clearfix"></div>--}}
-                        {{--</h3>--}}
-                    {{--</legend>--}}
-                    <div class="row-fluid">
-                        <div class="col-lg-12">
-                            <table id="StaffListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
-                                <thead>
-                                <tr>
-                                    <th>{{ trans('org_chart.clerk') }}</th>
-                                    <th>{{ trans('org_chart.organization') }}</th>
-                                    <th>{{ trans('org_chart.organizational_unit') }}</th>
-                                    <th>{{ trans('org_chart.job') }}</th>
-                                    <th>{{ trans('org_chart.post') }}</th>
-                                    <th>{{ trans('app.action') }}</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="clearfix"></div>
+                        {{--<div class="clearfix"></div>--}}
+                    {{--</h3>--}}
+                {{--</legend>--}}
+                <div class="row-fluid">
+                    <div class="col-lg-12">
+                        <table id="StaffListGrid" class="table dt-responsive nowrap display text-center" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>{{ trans('org_chart.clerk') }}</th>
+                                <th>{{ trans('org_chart.organization') }}</th>
+                                <th>{{ trans('org_chart.organizational_unit') }}</th>
+                                <th>{{ trans('org_chart.job') }}</th>
+                                <th>{{ trans('org_chart.post') }}</th>
+                                <th>{{ trans('app.action') }}</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-            </fieldset>
-        </div>
-        <div class="clearfix"></div>
+            </div>
+        </fieldset>
     </div>
 @stop
 

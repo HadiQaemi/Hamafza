@@ -9,12 +9,54 @@
 
 @section('content')
     <style>
+        .hd-body{
+            overflow: hidden !important;
+        }
         .base_tabs{
             padding: 10px;
         }
     </style>
-    <div class="row-fluid">
-        <div class="space-10"></div>
+    <div class="row opacity-7" style="margin-top: -10px;background: #eee">
+        <form id="form_filter_priority">
+            <div class="row padding-bottom-20 opacity-7">
+                <i class="fa fa-user int-icon3"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_staff_search" name="organs_staff_search[]" class="select2_auto_complete_staff col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_staff')}}" multiple>
+                    </select>
+                </div>
+                <i class="fa fa-sitemap int-icon2"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_organs_search" class="select2_auto_complete_organs" name="select_org_lists[]"
+                            data-placeholder="{{trans('org_chart.select_org_list')}}" multiple></select>
+                </div>
+                <i class="fa fa-sitemap int-icon1"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>
+                    </select>
+                </div>
+            </div>
+            <div class="row padding-bottom-20 opacity-7">
+                <i class="fa fa-sitemap int-icon3"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs_item col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_job')}}" multiple>
+                    </select>
+                </div>
+                <i class="fa fa-sitemap int-icon2"></i>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                    <select id="organs_posts_search" name="organs_posts_search[]" class="select2_auto_complete_organ_posts col-xs-12"
+                            data-placeholder="{{trans('org_chart.search_some_post')}}" multiple>
+                    </select>
+                </div>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid noLeftPadding noRightPadding task-list-height" id="base_items_div">
         <div class="col-xs-12">
             <fieldset>
                 <div id="OrgList">
@@ -34,7 +76,7 @@
                                     {{--<th>{{ trans('org_chart.creator') }}</th>--}}
                                     {{--<th>{{ trans('org_chart.organ') }}</th>--}}
                                     <th>{{ trans('app.title') }}</th>
-                                    <th>{{ trans('app.description') }}</th>
+                                    {{--<th>{{ trans('app.description') }}</th>--}}
                                     <th>{{ trans('org_chart.amount').' '.trans('org_chart.organizational_unit') }}</th>
                                     <th>{{ trans('org_chart.amount').' '.trans('org_chart.jobs') }}</th>
                                     <th>{{ trans('org_chart.amount').' '.trans('org_chart.position') }}</th>
@@ -64,186 +106,6 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="modal fade" id="ModalAddOrgan" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ trans('org_chart.add_new_organization') }}</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid" id="ModalContent">
-                        <div id="add_organ_form_error"></div>
-                        <form id="add_organ_form" action="#">
-                            <div class="row-fluid">
-                                <div class="form-group col-md-12">
-                                    <label>
-                                        <span class="required">*</span>
-                                        <span>{{ trans('app.title') }}</span>
-                                    </label>
-                                    <input name="organ_title" id="root_item_title" class="form-control" required placeholder="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>
-                                        <span class="required">*</span>
-                                        <span>{{ trans('org_chart.parent') }}</span>
-                                    </label>
-                                    <select id="organ_parent_id"
-                                            name="organ_parent_id"
-                                            class="chosen-rtl col-xs-11"
-                                            data-placeholder="{{trans('tasks.select_some_options')}}"
-                                    >
-                                        <option id="default_parent_item" value="0">{{ trans('org_chart.main_parent') }}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label> <span>{{ trans('app.description') }}</span></label>
-                                    <textarea name="organ_description" id="organ_description" class="form-control" placeholder=""></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('org_chart.cancel') }}</button>
-                    <button onclick="create_new_organ()" class="btn btn-info" type="button">
-                        <i ></i>
-                        <span>{{ trans('app.register_and_save') }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ModalEditOrgan" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ trans('org_chart.edit_organization') }}<span>ss</span></h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid" id="ModalContent">
-                        <div id="edit_organ_form_error"></div>
-                        <form id="edit_organ_form" action="#">
-                            <div class="row-fluid">
-                                <div class="form-group col-md-12">
-                                    <label>
-                                        <span class="required">*</span>
-                                        <span>{{ trans('app.title') }}</span>
-                                    </label>
-                                    <input name="organ_title" id="edit_organ_title" class="form-control" required placeholder="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>
-                                        <span class="required">*</span>
-                                        <span>{{ trans('org_chart.parent') }}</span>
-                                    </label>
-                                    <select id="edit_organ_parent_id"
-                                            name="organ_parent_id"
-                                            class="chosen-rtl col-xs-11"
-                                            data-placeholder="{{trans('tasks.select_some_options')}}">
-                                        <option id="edit_default_parent_item" value="0">{{ trans('org_chart.main_parent') }}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label><span>{{ trans('app.description') }}</span></label>
-                                    <textarea name="organ_description" id="edit_organ_description" class="form-control" placeholder=""></textarea>
-                                </div>
-                            </div>
-                            <input id="EditOrganID" type="hidden" name="organ_id" value="">
-                        </form>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">انصراف</button>
-                    <button onclick="update_organ()" class="btn btn-warning" type="button">
-                        <i class="fa  fa-edit"></i>
-                        <span>{{ trans('app.register_and_edit') }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ShowOrganCharts" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ trans('org_chart.organizations_chart_list') }}<span id="ModalOrgTitle"></span></h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid" id="ModalContent">
-                        <table id="OrgOrgansChartGrid" class="table table-striped table-bordered dt-responsive nowrap display" cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>{{ trans('app.id') }}</th>
-                                <th>{{ trans('org_chart.creator') }}</th>
-                                <th>{{ trans('app.title') }}</th>
-                                <th>{{ trans('app.description') }}</th>
-                                <th>{{ trans('org_chart.create') }}</th>
-                                <th>{{ trans('app.action') }}</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-default pull-right" onclick="AddNewChart2()">{{ trans('org_chart.add_new_chart') }}</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{trans('filemanager.cancel')}}</button>
-                    <button id="NewTaskPackageSubmitBtn" name="upload_files" value="save" class="btn btn-info" type="button">
-                        <i class="glyphicon  glyphicon-save-file bigger-125"></i>
-                        <span>{{ trans('app.register') }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="AddNewChart" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ trans('org_chart.add_new_chart') }}</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-
-                        </div>
-                        <div class="panel-body">
-                            <table class="table table-striped">
-                                <tr>
-                                    <td>{{ trans('org_chart.chart_name') }}</td>
-                                    <td><input type="text" class="form-control" id="NewChartTitle"/></td>
-                                </tr>
-                                <tr>
-                                    <td>{{ trans('app.description') }}</td>
-                                    <td><input type="text" class="form-control" id="NewChartDesc"/></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row left">
-                        <button id="NewChartSubmitBtn" onclick="SaveNewChart()" value="save" class="btn btn-info" type="button">
-                            <i class="glyphicon  glyphicon-save-file bigger-125"></i>
-                            <span>{{ trans('app.register') }}</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{trans('filemanager.cancel')}}</button>
-                    <button id="NewChartSubmitBtn" onclick="SaveNewChart()" value="save" class="btn btn-info" type="button">
-                        <i class="glyphicon  glyphicon-save-file bigger-125"></i>
-                        <span>{{ trans('app.register') }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 @stop
 
 @section('specific_plugin_scripts')
@@ -258,6 +120,144 @@
         var RowData = [];
         var cur_org_id = '';
         $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('332') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+
+        $(".select2_auto_complete_organ_posts").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.org_charts_posts')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term,
+                        item_id: $(this).attr('rel')
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_onet_jobs_item").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.onet_jobs_items')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term,
+                        item_id: $(this).attr('rel')
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_organs").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.organs')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_organ_units").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.units')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+        $(".select2_auto_complete_staff").select2({
+            minimumInputLength: 3,
+            dir: "rtl",
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "{{route('auto_complete.users')}}",
+                dataType: "json",
+                type: "POST",
+                quietMillis: 150,
+                data: function (term) {
+                    return {
+                        term: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
 
         function AddNewChart2() {
             $('#ShowOrganCharts').modal('hide');
@@ -300,7 +300,7 @@
                     // },
                     // {"data": "ParentTitle"},
                     {"data": "title"},
-                    {"data": "description"},
+                    // {"data": "description"},
                     {
                         "bSearchable": false,
                         "bSortable": false,
