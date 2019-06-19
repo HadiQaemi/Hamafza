@@ -35,7 +35,9 @@
                         <div class="form-group col-xs-12 margin-top-20 noRightPadding noLeftPadding">
                             <div class="col-xs-1 line-height-30 noRightPadding noLeftPadding"><label for="item_parent_id">{{trans('org_chart.up')}}</label></div>
                             <div class="col-xs-11 noRightPadding noLeftPadding item_parent_id">
-                                <select id="" name="item_parent_id" class="form-control select2_auto_complete_chart line-height-35 height-35" multiple="multiple"></select>
+                                <select id="" name="item_parent_id" class="form-control select2_auto_complete_chart line-height-35 height-35">
+                                    <option value="{{$parent[0]}}">{{$parent[1]}}</option>
+                                </select>
                                 {{--<select id="item_parent_id" name="item_parent_id" class="col-xs-12 js-states form-control">--}}
                                     {{--<option value="{{$parent[0]}}">{{$parent[1]}}</option>--}}
                                 {{--</select>--}}

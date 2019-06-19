@@ -2333,15 +2333,15 @@ class OrgChartController extends Controller
         {
             $validator = Validator::make(Request::all(),
                 [
-                    'item_title' => 'required',
-                    'item_id' => 'required',
-//                    'item_parent_id' => 'required',
+                    'item_title' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+                    'item_id' => 'exists:hamahang_org_charts_items,id',
+                    'item_parent_id' => 'exists:hamahang_org_charts_items,id'
                 ],
                 [],
                 [
-                    /*'item_title' => 'عنوان',
+                    'item_title' => 'عنوان',
                     'item_description' => 'توضیحات',
-                    'item_parent_id'=>'والد',*/
+                    'item_parent_id'=>'والد',
                 ]
             );
             if ($validator->fails()) {

@@ -287,7 +287,7 @@
                     load_orgchart();
                 }
                 else {
-                    messageBox('error', '', result.error, {'id': 'alert_insert_post'}, 'hide_modal');
+                    messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
 
                 }
                 setTimeout(function () {
