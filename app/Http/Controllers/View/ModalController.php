@@ -1090,9 +1090,9 @@ class ModalController extends Controller
         $sid = deCode($res['sid']);
         $staff = org_staff::where('id', '=', $sid)->with('posts', 'edus', 'jobs', 'relations', 'childs', 'spouses', 'families', 'posts.job')->first();
         $d = new jDateTime;
-        $birth_date = preg_split('/ /', $staff->birth_date);
-        $date = preg_split('/-/', $birth_date[0]);
-        $staff->birth_date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
+//        $birth_date = preg_split('/ /', $staff->birth_date);
+//        $date = preg_split('/-/', $birth_date[0]);
+//        $staff->birth_date = $d->Jalali_to_Gregorian($date[0], $date[1], $date[2],'-');
 
         return json_encode([
             'header' => trans('org_chart.assign_new_staff'),
