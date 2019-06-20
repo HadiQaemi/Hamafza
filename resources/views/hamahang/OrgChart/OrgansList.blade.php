@@ -426,7 +426,7 @@
                             '<i class="fa fa-edit pointer jsPanelsEditJob" href="{!! route('modals.add_new_post') !!}" rel="'+$('#amount').val()+'" ref="'+result.job_item+'" ></i>' +
                             '</td></tr>');
                         $.each(result.semats, function (index, semat) {
-                            $('#list_positions').append('<tr><td class="col-xs-4">' + semat.title + '</td><td class="col-xs-3"></td><td class="col-xs-2"></td><td class="col-xs-2"></td><td class="col-xs-1">' +
+                            $('#list_positions').append('<tr><td class="col-xs-4">' + semat.title + '</td><td class="col-xs-3" id="staff_'+semat.jobId+'"></td><td class="col-xs-2" id="extra_title_'+semat.jobId+'"></td><td class="col-xs-2" id="location_'+semat.jobId+'"></td><td class="col-xs-1">' +
                                 '<i class="fa fa-remove margin-left-10 pointer remove_job" ref="'+semat.id+'" add="{{ route('hamahang.org_chart.delete_item_job') }}" ></i>' +
                                 '<i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="'+semat.jobId+'" ></i>' +
                                 '</td></tr>');
@@ -954,6 +954,9 @@
             });
         });
         $(document).on("click", "#btn_edit_post", function (e) {
+            var $extra_title = $('#extra_title').val();
+            var $work_place = $('#work_place').val();
+            var $post_id = $('#post_id').val();
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -961,9 +964,11 @@
                 dataType: "json",
                 data: $('#add_new_post_frm').serialize(),
                 success: function (result) {
-                    console.log(result);
                     if (result.success == true) {
                         JS_Panel_2.close();
+                        $("#staff_" + $post_id).html(result.user);
+                        $("#extra_title_" + $post_id).html($extra_title);
+                        $("#location_" + $post_id).html($work_place);
                     } else {
                         messageModal('error', '{{trans('app.operation_is_failed')}}', result.error);
                     }

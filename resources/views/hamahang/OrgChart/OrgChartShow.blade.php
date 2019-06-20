@@ -23,17 +23,19 @@
 <div class="row-fluid">
     <div class="row" style="height:25px;"></div>
     <div class="col-xs-12">
-    <div>
-{{--        <span class="span_title">{{ trans('org_chart.edit_organization_chart') }} </span>--}}
-        {{--<span  class="span_title" id="ChartTitle">{{$Chart->title}}</span>--}}
-        {{--<a href="{!! route('modals.edit_chart',['chart_title'=>$Chart->title,'chart_id'=>$Chart->id])!!}" class="jsPanels pull-left btn btn-default"  >--}}
-            {{--<span>{{ trans('org_chart.edit_chart_main_info') }}</span>--}}
-        {{--</a>--}}
-        {{--<button class="pull-left btn btn-default" type="button" id="add_root_item">--}}
-            {{--<i ></i>--}}
-            {{--<span>{{ trans('org_chart.register_main_unit') }}</span>--}}
-        {{--</button>--}}
-    </div>
+        <div>
+            <span style="font-weight: bold;font-size: large">{{trans('org_chart.organization')}}: </span>
+            <span style="font-size: large">{{isset($chart_title) ? $chart_title : ''}}</span>
+    {{--        <span class="span_title">{{ trans('org_chart.edit_organization_chart') }} </span>--}}
+            {{--<span  class="span_title" id="ChartTitle">{{$Chart->title}}</span>--}}
+            {{--<a href="{!! route('modals.edit_chart',['chart_title'=>$Chart->title,'chart_id'=>$Chart->id])!!}" class="jsPanels pull-left btn btn-default"  >--}}
+                {{--<span>{{ trans('org_chart.edit_chart_main_info') }}</span>--}}
+            {{--</a>--}}
+            {{--<button class="pull-left btn btn-default" type="button" id="add_root_item">--}}
+                {{--<i ></i>--}}
+                {{--<span>{{ trans('org_chart.title') }}</span>--}}
+            {{--</button>--}}
+        </div>
         <hr>
         <div class="panel panel-info" style="border:0px;">
             <div class="panel-body p_body_scrool">

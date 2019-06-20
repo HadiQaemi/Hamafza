@@ -118,9 +118,9 @@
                         @foreach($job->posts as $post)
                             <tr>
                                 <td class="col-xs-4">{{isset($job->job->title) ? $job->job->title : ''}}</td>
-                                <td class="col-xs-3">{{isset($post->users[0]) ? (isset($post->users[0]->staff->first_name) ? $post->users[0]->staff->first_name : '').' '.(isset($post->users[0]->staff->last_name) ? $post->users[0]->staff->last_name : '') : ''}}</td>
-                                <td class="col-xs-2">{{$post->extra_title}}</td>
-                                <td class="col-xs-2">{{$post->location}}</td>
+                                <td class="col-xs-3" id="staff_{{enCode($post->id)}}">{{isset($post->users[0]) ? (isset($post->users[0]->staff->first_name) ? $post->users[0]->staff->first_name : '').' '.(isset($post->users[0]->staff->last_name) ? $post->users[0]->staff->last_name : '') : ''}}</td>
+                                <td class="col-xs-2" id="extra_title_{{enCode($post->id)}}">{{$post->extra_title}}</td>
+                                <td class="col-xs-2" id="location_{{enCode($post->id)}}">{{$post->location}}</td>
                                 <td class="col-xs-1">
                                     <i class="fa fa-remove margin-left-10 pointer remove_job_post" ref="{{$post->id}}" add="{{ route('hamahang.org_chart.delete_item_job_post') }}"></i>
                                     <i class="fa fa-edit pointer edit_job jsPanelsEditPositions" post="{{enCode($post->id)}}" ></i>

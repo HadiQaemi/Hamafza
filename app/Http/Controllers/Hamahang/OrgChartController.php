@@ -475,14 +475,13 @@ class OrgChartController extends Controller
 
     public function OrgChartShow($username, $chart_id)
     {
-        /* $validator = Validator::make([$username,$chart_id],
+        $validator = Validator::make([ 'username'=>$username, 'chart_id'=>$chart_id],
               [
-                'chart_id'=>'required'
+                'chart_id'=>'required|exists:hamahang_org_charts,id'
               ],
               [],
               [
-                  'new_item_title' => 'عنوان ',
-                  'new_item_title' => 'عنوان ',
+                  'chart_id' => 'سازمان',
               ]
           );
           if ($validator->fails())
@@ -492,14 +491,15 @@ class OrgChartController extends Controller
               $result['success'] = false;
               return json_encode($result);
           }
-          else
-          {*/
-        $Chart = org_charts::findOrFail($chart_id);
-        $arr = variable_generator('user', 'desktop', $username);
-        $arr['chart_id'] = $chart_id;
-        $arr['Chart'] = $Chart;
-        $arr['UName'] = $username;
-        return view('hamahang.OrgChart.OrgChartShow', $arr);
+          else {
+              $Chart = org_charts::findOrFail($chart_id);
+              $arr = variable_generator('user', 'desktop', $username);
+              $arr['chart_id'] = $chart_id;
+              $arr['chart_title'] = $Chart->title;
+              $arr['Chart'] = $Chart;
+              $arr['UName'] = $username;
+              return view('hamahang.OrgChart.OrgChartShow', $arr);
+          }
     }
 
     public function OrgListShow($username, $organ_id)
@@ -1825,6 +1825,12 @@ class OrgChartController extends Controller
                         ]);
                 }
             }
+            $updated_post = org_charts_items_jobs_posts::with('users')->find(deCode(Request::input('post_id')));
+
+            $result['user'] = '';
+            if(isset($updated_post->user->staff))
+                $result['user'] = $updated_post->user->staff->first_name. ' '. $updated_post->user->staff->last_name;
+
             $result['success'] = true;
             $post->id = enCode($post->id);
             $result['post'] = $post;

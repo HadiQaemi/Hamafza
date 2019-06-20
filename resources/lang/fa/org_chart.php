@@ -60,6 +60,7 @@ return [
     'access'   => 'دسترسی‌ها',
     'working_hours'   => 'ساعات کار',
     'job_title'   => 'عنوان شغل',
+    'title'   => 'عنوان',
     'full_time'   => 'تمام وقت',
     'part_time'   => 'پاره وقت',
     'shift'   => 'شیفت',
