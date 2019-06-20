@@ -721,6 +721,12 @@ class OrgChartController extends Controller
     public function fetchStaff()
     {
         $data = org_staff::whereNull('deleted_at')->with('posts', 'posts.job');
+
+        if(Request::exists('staff_name'))
+        {
+            $data->where("first_name", "LIKE", "%" . Request::get('staff_name') . "%")
+                ->Orwhere("last_name", "LIKE", "%" . Request::get('staff_name') . "%");
+        }
         $staff = \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('enId', function ($data) {
                 return enCode($data->id);
