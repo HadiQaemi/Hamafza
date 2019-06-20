@@ -3,7 +3,7 @@
 return [
     'select_org_list'   => 'یک یا چند سازمان را انتخاب کنید',
     'search_some_unit'   => 'یک یا چند واحد سازمانی را انتخاب کنید',
-    'search_some_staff'   => 'نام یک یا چند کارمند را بنویسید ...',
+    'search_some_staff'   => 'غربال براساس نام کارمند ...',
     'search_some_onet_skill'   => 'نام یک یا چند مهارت را بنویسید ...',
     'search_some_onet_ability'   => 'نام یک یا چند توانایی را بنویسید ...',
     'search_some_onet_knowledge'   => 'نام یک یا چند دانش را بنویسید ...',

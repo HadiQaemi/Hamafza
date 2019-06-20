@@ -19,7 +19,7 @@
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-user int-icon3"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="staff_name" name="staff_name" placeholder="{{trans('tasks.search_title')}}" autocomplete="off">
+                    <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="staff_name" name="staff_name" placeholder="{{trans('org_chart.search_some_staff')}}" autocomplete="off">
                 </div>
                 <i class="fa fa-sitemap int-icon2"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
@@ -179,7 +179,7 @@
                 "bSortable": true,
                 "autoWidth": false,
                 "searching": false,
-                "pageLength": 10,
+                "pageLength": 25,
                 // "scrollY": 400,
                 "language": LangJson_DataTables,
                 "processing": false,
