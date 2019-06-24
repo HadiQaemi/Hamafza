@@ -18,37 +18,36 @@
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
                 <i class="fa fa-user int-icon3"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre no-border">
                     <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="staff_name" name="staff_name" placeholder="{{trans('org_chart.search_some_staff')}}" autocomplete="off">
                 </div>
                 <i class="fa fa-sitemap int-icon2"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre no-border">
                     <select id="organs_organs_search" class="select2_auto_complete_organs" name="select_org_lists[]"
                             data-placeholder="{{trans('org_chart.select_org_list')}}" multiple></select>
                 </div>
+                {{--<i class="fa fa-sitemap int-icon1"></i>--}}
+                {{--<div class="pull-right search-task-keywords margin-right-10 width-30-pre">--}}
+                    {{--<select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"--}}
+                            {{--data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="row padding-bottom-20 opacity-7">--}}
+                {{--<i class="fa fa-sitemap int-icon3"></i>--}}
                 <i class="fa fa-sitemap int-icon1"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>
-                    </select>
-                </div>
-            </div>
-            <div class="row padding-bottom-20 opacity-7">
-                <i class="fa fa-sitemap int-icon3"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs_item col-xs-12"
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre no-border">
+                    <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs col-xs-12"
                             data-placeholder="{{trans('org_chart.search_some_job')}}" multiple>
                     </select>
                 </div>
-                <i class="fa fa-sitemap int-icon2"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_posts_search" name="organs_posts_search[]" class="select2_auto_complete_organ_posts col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_post')}}" multiple>
-                    </select>
-                </div>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
+                {{--<i class="fa fa-sitemap int-icon2"></i>--}}
+                {{--<div class="pull-right search-task-keywords margin-right-10 width-30-pre">--}}
+                    {{--<select id="organs_posts_search" name="organs_posts_search[]" class="select2_auto_complete_organ_posts col-xs-12"--}}
+                            {{--data-placeholder="{{trans('org_chart.search_some_post')}}" multiple>--}}
+                    {{--</select>--}}
+                {{--</div>--}}
 
-                </div>
             </div>
         </form>
     </div>
@@ -161,6 +160,16 @@
                 organs_grid(form_search_staff);
             } // missing closing if brace
         });
+        $("#organs_jobs_search").change(function(e){
+            window.table_organs_grid.destroy();
+            var form_search_staff = $("#form_filter_priority").serializeObject();
+            organs_grid(form_search_staff);
+        });
+        $("#organs_organs_search").change(function(e){
+            window.table_organs_grid.destroy();
+            var form_search_staff = $("#form_filter_priority").serializeObject();
+            organs_grid(form_search_staff);
+        });
         function organs_grid(form_search_staff) {
             LangJson_DataTables = window.LangJson_DataTables;
             LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
@@ -235,13 +244,13 @@
                 }
             }
         });
-        $(".select2_auto_complete_onet_jobs_item").select2({
+        $(".select2_auto_complete_onet_jobs").select2({
             minimumInputLength: 3,
             dir: "rtl",
             width: "100%",
             tags: false,
             ajax: {
-                url: "{{route('auto_complete.onet_jobs_items')}}",
+                url: "{{route('auto_complete.onet_jobs')}}",
                 dataType: "json",
                 type: "POST",
                 quietMillis: 150,

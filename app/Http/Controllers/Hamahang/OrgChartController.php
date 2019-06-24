@@ -301,6 +301,10 @@ class OrgChartController extends Controller
                 'ParentOrg.title AS ParentTitle',
                 'hamahang_org_organs.*'
             )->whereNull('hamahang_org_organs.deleted_at')->groupBy('id');
+        if(Request::exists('organ_name'))
+        {
+            $data->where('hamahang_org_organs.title', 'like', '%' . Request::get('organ_name') . '%');
+        }
         return \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('chartsCount', function ($data) {
                 $chartCount = 0;
@@ -720,12 +724,33 @@ class OrgChartController extends Controller
 
     public function fetchStaff()
     {
-        $data = org_staff::whereNull('deleted_at')->with('posts', 'posts.job');
+        $data = org_staff::whereNull('deleted_at');
+        $data->with(['posts','posts.job']);
+
+        if(Request::exists('organs_jobs_search'))
+        {
+            $organs_jobs_search = array_map(function($var) {
+                return str_ireplace('exist_in', '', $var);
+            }, Request::get('organs_jobs_search'));
+            $data->whereHas('posts.job', function($q) use($organs_jobs_search){
+                $q->whereIn('job_id', $organs_jobs_search);
+            });
+        }
+
+        if(Request::exists('select_org_lists'))
+        {
+            $data->whereHas('posts.job.item.chart', function($q){
+                $q->whereIn('org_organs_id', Request::get('select_org_lists'));
+            });
+        }
 
         if(Request::exists('staff_name'))
         {
-            $data->where("first_name", "LIKE", "%" . Request::get('staff_name') . "%")
-                ->Orwhere("last_name", "LIKE", "%" . Request::get('staff_name') . "%");
+            $staff_name = Request::get('staff_name');
+            $data->where(function ($query) use ($staff_name) {
+                $query->where("first_name", "LIKE", "%" . Request::get('staff_name') . "%")
+                    ->orWhere("last_name", "LIKE", "%" . Request::get('staff_name') . "%");
+            });
         }
         $staff = \Yajra\Datatables\Facades\Datatables::eloquent($data)
             ->addColumn('enId', function ($data) {
@@ -763,10 +788,13 @@ class OrgChartController extends Controller
                 $ret = '';
                 foreach ($data->posts as $post)
                 {
-                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->job->title;
-                    if(count($data->posts)>1)
-                        $ret .= ',...';
-                    break;
+                    if(isset($post->job->job->title))
+                    {
+                        $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->job->title;
+                        if(count($data->posts)>1)
+                            $ret .= ',...';
+                        break;
+                    }
                 }
                 return $ret;
             })
@@ -774,10 +802,12 @@ class OrgChartController extends Controller
                 $ret = '';
                 foreach ($data->posts as $post)
                 {
-                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->title;
-                    if(count($data->posts)>1)
-                        $ret .= ',...';
-                    break;
+                    if(isset($post->job->item->title)){
+                        $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->title;
+                        if(count($data->posts)>1)
+                            $ret .= ',...';
+                        break;
+                    }
                 }
                 return $ret;
             })
@@ -785,10 +815,13 @@ class OrgChartController extends Controller
                 $ret = '';
                 foreach ($data->posts as $post)
                 {
-                    $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->chart->title;
-                    if(count($data->posts)>1)
-                        $ret .= ',...';
-                    break;
+                    if(isset($post->job->item->chart->title))
+                    {
+                        $ret .= (trim($ret) == '' ? '' : ', ') . $post->job->item->chart->title;
+                        if(count($data->posts)>1)
+                            $ret .= ',...';
+                        break;
+                    }
                 }
                 return $ret;
             })

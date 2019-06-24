@@ -19,25 +19,14 @@
     <div class="row opacity-7" style="margin-top: -10px;background: #eee">
         <form id="form_filter_priority">
             <div class="row padding-bottom-20 opacity-7">
-                <i class="fa fa-user int-icon3"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_staff_search" name="organs_staff_search[]" class="select2_auto_complete_staff col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_staff')}}" multiple>
-                    </select>
-                </div>
-                <i class="fa fa-sitemap int-icon2"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_organs_search" class="select2_auto_complete_organs" name="select_org_lists[]"
-                            data-placeholder="{{trans('org_chart.select_org_list')}}" multiple></select>
-                </div>
                 <i class="fa fa-sitemap int-icon1"></i>
-                <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
-                    <select id="organs_units_search" name="organs_units_search[]" class="select2_auto_complete_organ_units col-xs-12"
-                            data-placeholder="{{trans('org_chart.search_some_unit')}}" multiple>
-                    </select>
+                <div class="pull-right search-task-keywords margin-right-10 width-30-pre no-border">
+                    <div class="pull-right search-task-keywords margin-right-10 width-30-pre no-border">
+                        <input type="text" class="form-control int-btm-brd" style="padding: 6px 20px;" id="organ_name" name="organ_name" placeholder="{{trans('org_chart.select_org_list')}}" autocomplete="off">
+                    </div>
                 </div>
             </div>
-            <div class="row padding-bottom-20 opacity-7">
+            <div class="row padding-bottom-20 opacity-7 hidden">
                 <i class="fa fa-sitemap int-icon3"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
                     <select id="organs_jobs_search" name="organs_jobs_search[]" class="select2_auto_complete_onet_jobs_item col-xs-12"
@@ -115,12 +104,86 @@
 @stop
 @section('inline_scripts')
     <script>
+        (function($){
+            $.fn.serializeObject = function(){
+
+                var self = this,
+                    json = {},
+                    push_counters = {},
+                    patterns = {
+                        "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                        "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                        "push":     /^$/,
+                        "fixed":    /^\d+$/,
+                        "named":    /^[a-zA-Z0-9_]+$/
+                    };
+
+
+                this.build = function(base, key, value){
+                    base[key] = value;
+                    return base;
+                };
+
+                this.push_counter = function(key){
+                    if(push_counters[key] === undefined){
+                        push_counters[key] = 0;
+                    }
+                    return push_counters[key]++;
+                };
+
+                $.each($(this).serializeArray(), function(){
+
+                    // skip invalid keys
+                    if(!patterns.validate.test(this.name)){
+                        return;
+                    }
+
+                    var k,
+                        keys = this.name.match(patterns.key),
+                        merge = this.value,
+                        reverse_key = this.name;
+
+                    while((k = keys.pop()) !== undefined){
+
+                        // adjust reverse_key
+                        reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                        // push
+                        if(k.match(patterns.push)){
+                            merge = self.build([], self.push_counter(reverse_key), merge);
+                        }
+
+                        // fixed
+                        else if(k.match(patterns.fixed)){
+                            merge = self.build([], k, merge);
+                        }
+
+                        // named
+                        else if(k.match(patterns.named)){
+                            merge = self.build({}, k, merge);
+                        }
+                    }
+
+                    json = $.extend(true, json, merge);
+                });
+
+                return json;
+            };
+        })(jQuery);
         var table_organs_grid = "";
         var table_chart_grid = "";
         var RowData = [];
         var cur_org_id = '';
+        var form_search_staff
         $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('332') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
-
+        $("#organ_name").keyup(function(e){
+            var code = e.which; // recommended to use e.which, it's normalized across browsers
+            if(code==32||code==13||code==188||code==186){
+                window.table_organs_grid.destroy();
+                form_search_staff = $("#form_filter_priority").serializeObject();
+                organs_grid(form_search_staff);
+            } // missing closing if brace
+        });
         $(".select2_auto_complete_organ_posts").select2({
             minimumInputLength: 3,
             dir: "rtl",
@@ -274,6 +337,7 @@
                 "serverSide": false,
                 "ajax": {
                     "url": "{!! URL::route('hamahang.org_chart.org_organs.ajax_org_organs',['username'=>$UName]) !!}",
+                    "data" : form_search_staff,
                     "type": "POST"
                 },
                 "bSort": true,

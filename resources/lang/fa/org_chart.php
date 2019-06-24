@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'select_org_list'   => 'یک یا چند سازمان را انتخاب کنید',
+    'select_org_list'   => 'غربال براساس سازمان ...',
     'search_some_unit'   => 'یک یا چند واحد سازمانی را انتخاب کنید',
     'search_some_staff'   => 'غربال براساس نام کارمند ...',
     'search_some_onet_skill'   => 'نام یک یا چند مهارت را بنویسید ...',
     'search_some_onet_ability'   => 'نام یک یا چند توانایی را بنویسید ...',
     'search_some_onet_knowledge'   => 'نام یک یا چند دانش را بنویسید ...',
-    'search_some_job'   => 'نام یک یا چند شغل را بنویسید ...',
+    'search_some_job'   => 'غربال براساس شغل ...',
     'search_some_post'   => 'نام یک یا چند پست را بنویسید ...',
     'add_organization'   => 'افزودن سازمان',
     'add_new_organization'   => 'افزودن سازمان‌ جدید',
