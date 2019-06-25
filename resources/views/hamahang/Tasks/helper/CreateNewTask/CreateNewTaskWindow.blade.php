@@ -511,12 +511,12 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 border-bottom padding-bottom-10">
-                                <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                                <table id="ChildsGrid" class="table dt-responsive nowrap display hidden ChildsGridProjectRel" style="text-align: center" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
-                                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
+{{--                                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>--}}
+                                            <th class="col-xs-5 text-right">{{ trans('tasks.project') }}</th>
                                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                                             <th class="col-xs-1">{{ trans('tasks.action') }}</th>
                                         </tr>
@@ -564,12 +564,12 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table id="ChildsGrid" class="table dt-responsive nowrap display" style="text-align: center" cellspacing="0" width="100%">
+                                <table id="ChildsGrid" class="table dt-responsive nowrap display hidden ChildsGridtaskRel" style="text-align: center" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
                                             <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
-                                            <th class="col-xs-5">{{ trans('tasks.task').', '.trans('tasks.project') }}</th>
+                                            <th class="col-xs-5">{{ trans('tasks.task')}}</th>
                                             <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
                                             <th class="col-xs-1">{{ trans('tasks.action') }}</th>
                                         </tr>

@@ -1417,7 +1417,6 @@ class MyAssignedTaskController extends Controller
 
     public function update_task()
     {
-//        dd(Request::all());
         $validator = Validator::make(Request::all(), [
             'title' => 'required|string',
             'users' => 'required|array',
@@ -1600,6 +1599,7 @@ class MyAssignedTaskController extends Controller
                 task_priority::create_task_priority($task->id, Request::input('immediate') ,Request::input('importance'),[1] , Auth::id());
 
 
+
                 task_action::create_task_action($task->id, Request::input('task_status'), Request::input('progress'), '',Request::input('explain_reject'),
                     Request::input('ready_mental'), Request::input('ready_body'), Request::exists('quality'), Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
                 task_status::where('uid', '=', Auth::id())
@@ -1607,6 +1607,23 @@ class MyAssignedTaskController extends Controller
                     ->delete();
                 task_status::create_task_status($task->id, Request::input('task_status'), Request::input('progress'));
             }
+
+            $describ = '';
+            if($task->task_status != Request::input('task_status')){
+                $status = 'status_not_started';
+                if(Request::input('task_status') == 1)
+                    $status = 'status_started';
+                if(Request::input('task_status') == 2)
+                    $status = 'status_done';
+                if(Request::input('task_status') == 3)
+                    $status = 'status_finished';
+                if(Request::input('task_status') == 4)
+                    $status = 'status_suspended';
+
+                $describ .= (trim($describ) == '' ? '' : ', ').trans('tasks.change_status')." (".trans('tasks.'.$status).") ";
+            }
+            if($task->progress != Request::input('progress') && Request::input('task_status')==1)
+                $describ .= (trim($describ) == '' ? '' : ', ').trans('tasks.change_progress')." (".Request::input('progress').") ";
 
             $task->form_data = serialize(Request::all());
             $task->task_attributes = serialize(Request::all());
@@ -1627,7 +1644,7 @@ class MyAssignedTaskController extends Controller
             $task->report_to_managers = Request::input('report_to_manager');
             $task->respite_timing_type = Request::input('respite_timing_type');
             $task->save();
-            task_history::create_task_history($task->id, 'edit_task', serialize(Request::all()), '');
+            task_history::create_task_history($task->id, 'edit_task', serialize(Request::all()), $describ);
 
         }
         $result['success'] = true;

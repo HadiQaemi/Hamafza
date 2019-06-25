@@ -329,6 +329,7 @@
 
 	var num_add_rel_task = 1;
     $("#add_rel_project").click(function () {
+        $('.ChildsGridProjectRel').removeClass('hidden');
         if($('#new_task_projects').val()>0)
         {
             var project_span = '' +
@@ -336,13 +337,13 @@
                 //			'       <td>\n' +
                 //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
                 //			'       </td>\n' +
-                '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
-                '       </td>\n' +
+                // '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
+                // '       </td>\n' +
                 '       <td>\n' +
                 // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
                 // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
                 '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
                 '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
                 '       </td>\n' +
@@ -360,6 +361,7 @@
         }
     });
     $("#add_rel_task").click(function () {
+        $('.ChildsGridtaskRel').removeClass('hidden');
         if($('#new_task_rel').val()>0)
         {
             var project_span = '' +
