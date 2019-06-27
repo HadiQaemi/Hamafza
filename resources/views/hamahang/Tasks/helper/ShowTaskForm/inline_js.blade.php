@@ -11,6 +11,104 @@
     function remove_new_task(num_add_rel_task) {
         $('#num_add_rel_task' + num_add_rel_task).remove();
     }
+
+    function remove_new_task(num_add_rel_task) {
+        $('#num_add_rel_task' + num_add_rel_task).remove();
+    }
+
+    var num_add_rel_task = 1;
+    $("#add_rel_project").click(function () {
+        $('.ChildsGridProjectRel').removeClass('hidden');
+        $('.rel_project_list').removeClass('hidden');
+        if($('#new_task_projects').val()>0)
+        {
+            var project_span = '' +
+                '   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
+                //			'       <td>\n' +
+                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+                //			'       </td>\n' +
+                // '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
+                // '       </td>\n' +
+                '       <td>\n' +
+                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       </td>\n' +
+                '       <td>\n' +
+                '           <label class="input-group pull-right">\n' +
+                '       		<input name="new_project_weight[]" class="form-control" type="text" value="0"/>' +
+                '           </label>\n' +
+                '       </td>\n' +
+                '       <td>\n' +
+                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+                '       </td>\n' +
+                '    </tr>\n';
+            $('#task_project').trigger("reset");
+            $('#rel_project_list').prepend(project_span);
+        }
+    });
+    $("#add_rel_task").click(function () {
+        $('.ChildsGridtaskRel').removeClass('hidden');
+        if($('#new_task_rel').val()>0)
+        {
+            var task_span = '' +
+                '   <div id="num_add_rel_task'+num_add_rel_task+'">\n' +
+                //			'       <td>\n' +
+                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
+                //			'       </td>\n' +
+                '       <div class="col-xs-5">\n' +
+                '       	<select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this,' + num_add_rel_task + ')" style="width: 150px;">\n' +
+                '				<option value="end_start">پایان به شروع</option>\n' +
+                '				<option value="start_start">شروع به شروع</option>\n' +
+                '				<option value="start_end">شروع به پایان</option>\n' +
+                '				<option value="end_end">پایان به پایان</option>\n' +
+                '				<option value="up">بالادستی</option>\n' +
+                '				<option value="down">پایین دستی</option>\n' +
+                // '				<option value="after">گردش کار - بعدی</option>\n' +
+                // '				<option value="previous">گردش کار - قبلی</option>\n' +
+                '			</select>\n' +
+                '           <label class="input-group pull-right intrupt_div" style="width: 150px;">\n' +
+                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
+                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><select name="new_task_delay_type[]" class="form-control" >\n' +
+                '					<option value="day">روز</option>\n' +
+                '					<option value="week">هفته</option>\n' +
+                '					<option value="month">ماه</option>\n' +
+                '				</select></div>\n' +
+                '           </label>\n' +
+                '       </div>\n' +
+                '       <div class="col-xs-4">\n' +
+                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
+                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
+                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
+                '       	<label class="pull-right line-height-30" for="r2">وظیفه: '+$('#select2-new_task_rel-container').attr('title')+'</label>\n' +
+                '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_rel').val()+ '"/>' +
+                '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_rel-container').attr('title')+ '"/>' +
+                '       </div>\n' +
+                '       <div class="col-xs-2">\n' +
+                '       	<input name="new_task_weight[]" class="form-control new_task_weight'+num_add_rel_task+'" type="text" value="0"/>' +
+                '       </div>\n' +
+                '       <div class="col-xs-1">\n' +
+                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
+                '       </div>\n' +
+                '    </div>\n';
+            $('#task_project').trigger("reset");
+            $('#rel_task_list').append(task_span);
+        }
+    });
+    function new_task_relation(t,num) {
+        if($(t).val() == 'up' || $(t).val() == 'down'){
+            $(t).next().addClass('hidden');
+            $('.new_task_weight'+(num)).removeClass('hidden');
+        }
+        else{
+            $(t).next().removeClass('hidden');
+            $('.new_task_weight'+(num)).addClass('hidden');
+        }
+
+    }
     $(".select2_auto_complete_projects").select2({
         minimumInputLength: 3,
         dir: "rtl",
@@ -38,94 +136,6 @@
             }
         }
     });
-    var num_add_rel_task = 100;
-    $("#add_rel_task").click(function () {
-        if($('#new_task_projects').val()>0)
-        {
-            var project_span = '' +
-                '   <tr id="num_add_rel_task'+num_add_rel_task+'">\n' +
-                //			'       <td>\n' +
-                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-                //			'       </td>\n' +
-                '       <td><label class="pull-right line-height-30" for="r2">پایین دستی<\label>\n' +
-                '       </td>\n' +
-                '       <td>\n' +
-                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
-                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
-                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       	<label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">پروژه: '+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
-                '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
-                '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       </td>\n' +
-                '       <td>\n' +
-                '           <label class="input-group pull-right">\n' +
-                '       		<input name="new_project_weight[]" class="form-control" type="text" value="0"/>' +
-                '           </label>\n' +
-                '       </td>\n' +
-                '       <td>\n' +
-                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
-                '       </td>\n' +
-                '    </tr>\n';
-            $('#task_project').trigger("reset");
-            $('#rel_task_list').prepend(project_span);
-        }
-        if($('#new_task_rel').val()>0)
-        {
-            var project_span = '' +
-                '   <div id="num_add_rel_task'+num_add_rel_task+'">\n' +
-                //			'       <td>\n' +
-                //			'       	<label class="pull-right" for="r2">'+(num_add_rel_task++)+'</label>\n' +
-                //			'       </td>\n' +
-                '       <div class="col-xs-5">\n' +
-                '       	<select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this,' + num_add_rel_task + ')" style="width: 150px;">\n' +
-                '				<option value="end_start">پایان به شروع</option>\n' +
-                '				<option value="start_start">شروع به شروع</option>\n' +
-                '				<option value="start_end">شروع به پایان</option>\n' +
-                '				<option value="end_end">پایان به پایان</option>\n' +
-                '				<option value="up">بالادستی</option>\n' +
-                '				<option value="down">پایین دستی</option>\n' +
-                // '				<option value="after">گردش کار - بعدی</option>\n' +
-                // '				<option value="previous">گردش کار - قبلی</option>\n' +
-                '			</select>\n' +
-                '           <label class="input-group pull-right intrupt_div" style="width: 150px;">\n' +
-                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه"/></div>' +
-                '       		<div class="col-xs-6 noLeftPadding noRightPadding"><select name="new_task_delay_type[]" class="form-control" >\n' +
-                '					<option value="day">روز</option>\n' +
-                '					<option value="week">هفته</option>\n' +
-                '					<option value="month">ماه</option>\n' +
-                '				</select></div>\n' +
-                '           </label>\n' +
-                '       </div>\n' +
-                '       <div class="col-xs-5">\n' +
-                // '       	<label class="pull-right" for="r2">'+$('#select2-new_task_projects-container').attr('title')+'</label>\n' +
-                // '       		<input name="new_task_projects_[]" type="hidden" value="' +$('#new_task_projects').val()+ '"/>' +
-                // '       		<input name="new_task_projects_t[]" type="hidden" value="' +$('#select2-new_task_projects-container').attr('title')+ '"/>' +
-                '       	<label class="pull-right line-height-30" for="r2">وظیفه: '+$('#select2-new_task_rel-container').attr('title')+'</label>\n' +
-                '       		<input name="new_task_tasks_[]" type="hidden" value="' +$('#new_task_rel').val()+ '"/>' +
-                '       		<input name="new_task_tasks_t[]" type="hidden" value="' +$('#select2-new_task_rel-container').attr('title')+ '"/>' +
-                '       </div>\n' +
-                '       <div class="col-xs-1">\n' +
-                '           <input name="new_task_weight[]" class="form-control hidden new_task_weight'+num_add_rel_task+'" type="text" value="0"/>' +
-                '       </div>\n' +
-                '       <div class="col-xs-1">\n' +
-                '       	<span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task('+(num_add_rel_task++)+')" for="r2"></span>\n' +
-                '       </div>\n' +
-                '    </div>\n';
-            $('#task_project').trigger("reset");
-            $('#rel_task_list').append(project_span);
-        }
-    });
-    function new_task_relation(t,num) {
-        if($(t).val() == 'up' || $(t).val() == 'down'){
-            $(t).next().addClass('hidden');
-            $('.new_task_weight'+(num)).removeClass('hidden');
-        }
-        else{
-            $(t).next().removeClass('hidden');
-            $('.new_task_weight'+(num)).addClass('hidden');
-        }
-
-    }
     var num_add_resource_task = 1;
     $("#add_resource_task").click(function () {
         var project_span = '' +

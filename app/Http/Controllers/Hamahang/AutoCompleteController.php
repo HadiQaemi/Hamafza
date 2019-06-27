@@ -31,11 +31,16 @@ class AutoCompleteController extends Controller
         $x = $request->term;
         if ($x['term'] == '...')
         {
-            $data = tasks::select("id", "title as text")->get();
+            $data = tasks::select("id", "title as text")
+                ->whereNull('hamahang_task.deleted_at')
+                ->get();
         }
         else
         {
-            $data = tasks::select("id", "title as text")->where("title", "LIKE", "%" . $x['term'] . "%")->get();
+            $data = tasks::select("id", "title as text")
+                ->where("title", "LIKE", "%" . $x['term'] . "%")
+                ->whereNull('hamahang_task.deleted_at')
+                ->get();
         }
         $data = array('results' => $data);
         return response()->json($data);
@@ -534,11 +539,15 @@ class AutoCompleteController extends Controller
         if ($data['term'] == '...')
         {
             $res ['results'] = DB::table('hamahang_project')
+                ->whereNull('hamahang_project.deleted_at')
                 ->select("id", "title as text")->get();
         }
         else
         {
-            $res ['results'] = DB::table('hamahang_project')->select("id", "title as text")->where("title", "LIKE", "%" . $data['term'] . "%")->get();
+            $res ['results'] = DB::table('hamahang_project')
+                ->select("id", "title as text")
+                ->whereNull('hamahang_project.deleted_at')
+                ->where("title", "LIKE", "%" . $data['term'] . "%")->get();
         }
         return response()->json($res);
     }

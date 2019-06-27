@@ -493,7 +493,7 @@
                     {{--</div>--}}
                 {{--</div>--}}
                 <div class="col-xs-12 border-bottom">
-                    <form id="task_project">
+                    <span id="task_project">
                         <div class="row col-lg-12 noLeftPadding noRightPadding">
                             <div class="row col-lg-12 noLeftPadding noRightPadding">
                                 <div class="col-lg-1"><label class="line-height-35">{{ trans('tasks.project') }}</label></div>
@@ -546,8 +546,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-50">
-                            <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-50">
+                        <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-10">
+                            <div class="row col-lg-12 noLeftPadding noRightPadding">
                                 <div class="col-xs-1">
                                     <label class="line-height-35">{{ trans('tasks.task') }}</label>
                                 </div>
@@ -568,10 +568,10 @@
                                     <thead>
                                         <tr>
                                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
-                                            <th class="col-xs-5">{{ trans('tasks.relation') }}</th>
-                                            <th class="col-xs-5">{{ trans('tasks.task')}}</th>
-                                            <th class="col-xs-1">{{ trans('tasks.weight') }}</th>
-                                            <th class="col-xs-1">{{ trans('tasks.action') }}</th>
+                                            <th class="col-xs-5 text-right">{{ trans('tasks.relation') }}</th>
+                                            <th class="col-xs-5 text-right">{{ trans('tasks.task')}}</th>
+                                            <th class="col-xs-1 text-right">{{ trans('tasks.weight') }}</th>
+                                            <th class="col-xs-1 text-right">{{ trans('tasks.action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody id="rel_task_list">
@@ -599,7 +599,7 @@
                                 </table>
                             </div>
                         </div>
-                    </form>
+                    </span>
                 </div>
 
             </div>

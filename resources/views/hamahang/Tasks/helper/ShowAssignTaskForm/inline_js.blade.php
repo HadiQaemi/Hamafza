@@ -184,7 +184,7 @@
                 '               <span class="input-group-addon" id="">\n' +
                 '                   <i class="fa fa-tasks"></i>\n' +
                 '               </span>\n' +
-                '               <select id="project_id" name="project_id" class="select2_auto_complete_project" data-placeholder="{{trans('app.select_one_record')}}" ></select>\n' +
+                '               <select id="project_id" name="project_id" class="select2_auto_c`omplete_project" data-placeholder="{{trans('app.select_one_record')}}" ></select>\n' +
                 '            </div>\n' +
                 '         </td>\n' +
                 '    </tr>\n' +

@@ -110,4 +110,9 @@ class task_project extends Model
         array_push($arr,['user_permission' => $user_permission]);
         return $arr;
     }
+
+    public function Projects()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'project_id', 'id');
+    }
 }

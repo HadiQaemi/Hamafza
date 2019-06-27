@@ -930,12 +930,27 @@ class MyAssignedTaskController extends Controller
             ->addColumn('respite', function ($data)
             {
                 $date = new jDateTime;
-                $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-                $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                if($data->type>1)
+                {
+                    $task_action = task_action::where('task_id', '=', $data->id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->first();
+                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+//                    dd($data,$task_action->created_at);
+                    $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp, strtotime($task_action->created_at));
+                }else{
+                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                    $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                }
                 if ($respite_days[0]['delayed'] == 1)
                 {
-                    $respite_days = ($respite_days[0]['day_no']) * (-1);
-                    $bg = 'bg_red';
+                    if($respite_days[0]['day_no']==0 )
+                    {
+                        $respite_days = 1;
+                        $bg = 'bg_yellow';
+
+                    }else{
+                        $respite_days = ($respite_days[0]['day_no']) * (-1);
+                        $bg = 'bg_red';
+                    }
                 }
                 else
                 {
@@ -1544,9 +1559,8 @@ class MyAssignedTaskController extends Controller
                 }
 
                 DB::table('hamahang_project_task')
-                    ->where('hamahang_project_task.task_id','=', deCode(Request::input('tid')))
-                    ->whereNull('deleted_at')
-                    ->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    ->where('hamahang_project_task.task_id','=', $task->id)
+                    ->delete();
                 if (Request::exists('new_task_projects_'))
                 {
                     $new_project_weight = Request::input('new_project_weight');
@@ -1556,14 +1570,7 @@ class MyAssignedTaskController extends Controller
                     }
                 }
 
-                if (Request::exists('rel_tasks'))
-                {
-                    foreach (Request::input('rel_tasks') as $p)
-                    {
-                        if(strlen(trim($p))>0)
-                            hamahang_project_task::create_task_project($task->id, $p);
-                    }
-                }
+
 
                 $staff = '';
                 if (Request::exists('users'))
@@ -2129,14 +2136,14 @@ class MyAssignedTaskController extends Controller
                     task_keywords::create_task_keyword($task->id, hamahang_add_keyword($kw));
                 }
             }
-            if (Request::exists('rel_tasks'))
-            {
-                foreach (Request::input('rel_tasks') as $p)
-                {
-                    if(strlen(trim($p))>0)
-                        hamahang_project_task::create_task_project($task->id, $p);
-                }
-            }
+//            if (Request::exists('new_task_projects_'))
+//            {
+//                foreach (Request::input('new_task_projects_') as $k=>$p)
+//                {
+//                    if(strlen(trim($p))>0)
+//                        hamahang_project_task::create_task_project($task->id, $p, Request::get('new_project_weight')[$k]);
+//                }
+//            }
             $staff = '';
             if (Request::exists('users'))
             {

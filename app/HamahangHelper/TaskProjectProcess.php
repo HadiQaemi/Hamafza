@@ -36,10 +36,13 @@ if (!function_exists('hamahang_get_task_use_type_name'))
 }
 if (!function_exists('hamahang_respite_remain'))
 {
-    function hamahang_respite_remain($creation_timestamp, $duration_timestamp, $api = false)
+    function hamahang_respite_remain($creation_timestamp, $duration_timestamp, $time = '', $api = false)
     {
         date_default_timezone_set('Asia/Tehran');
-        $dif = (($creation_timestamp + $duration_timestamp) - time());
+        if(trim($time)=='')
+            $time = time();
+        $dif = (($creation_timestamp + $duration_timestamp) - $time);
+//        dd($time,($creation_timestamp + $duration_timestamp),$dif);
         if ($api)
         {
             return hamahang_get_respite($dif, 'd', true);

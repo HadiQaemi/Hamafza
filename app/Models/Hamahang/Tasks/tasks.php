@@ -1106,7 +1106,8 @@ class tasks extends Model
                 ->leftjoin('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
                 ->leftjoin('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->leftjoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
-//                ->whereNull('hamahang_task_assignments.deleted_at')
+                ->whereNull('hamahang_task_assignments.deleted_at')
+                //                ->whereNull('hamahang_task_assignments.deleted_at')
                 ->where('hamahang_task.uid', '=', $uid);
 
             if ($subject_id)
@@ -3092,9 +3093,26 @@ class tasks extends Model
         return $this->hasMany('App\Models\Hamahang\Tasks\task_assignments', 'task_id', 'id');
     }
 
+
+    public function Actions()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_action', 'task_id', 'id');
+    }
+
+    public function Projects1()
+    {
+//        return $this->belongsToMany('App\Models\Hamahang\Tasks\project_task','hamahang_project','id','project_id');
+//        return $this->morphToMany('App\Models\Hamahang\Tasks\task_project', 'target','hamahang_project_task','task_id','id');
+//        return $this->morphToMany('App\Models\hamafza\Subject', 'target','hamahang_subject_ables','target_id','subject_id')->whereNull('hamahang_subject_ables.deleted_at');
+        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'task_id', 'id');
+    }
+
     public function Projects()
     {
-        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'task_id', 'id');
+//        return $this->belongsToMany('App\Models\Hamahang\Tasks\project_task','hamahang_project','project_id','id');
+        return $this->morphToMany('App\Models\Hamahang\Tasks\task_project', 'target','hamahang_project_task','task_id','project_id');
+//        return $this->morphToMany('App\Models\hamafza\Subject', 'target','hamahang_subject_ables','target_id','subject_id')->whereNull('hamahang_subject_ables.deleted_at');
+//        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'task_id', 'id');
     }
 
     public function Tasks1()

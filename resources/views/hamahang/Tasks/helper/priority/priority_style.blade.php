@@ -55,6 +55,10 @@
         background: #ff6162;
     }
 
+    .bg_yellow {
+        background: #ffbb40;
+    }
+
     .bg_green {
         background: #00AD00;
     }
