@@ -15,7 +15,7 @@
             <a href="#tab_t4" data-toggle="tab">روابط</a>
         </li>
         <li>
-            <a href="#tab_t6" data-toggle="tab">تخصیص</a>
+            <a href="#tab_t6" data-toggle="tab">زمانبندی</a>
         </li>
         <li class="active">
             <a href="#tab_t5" data-toggle="tab">اقدام</a>
@@ -677,7 +677,10 @@
                     @endforeach
                 </div>
                 <div class="row col-lg-12 margin-top-15">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noRightPadding noLeftPadding">
+                    <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noRightPadding noLeftPadding">
+                        <label class="line-height-35">مواجه</label>
+                    </div>
+                    <div class="col-lg-1 col-md-9 col-sm-8 col-xs-8 noRightPadding noLeftPadding">
                         <div class="pull-right">
                             <input type="radio" name="reject_assigner" id="reject_assigner" class="reject_assigner" value="3" checked/>
                             <label for="reject_assigner" style="height: 30px;line-height: 30px;" class="rejected_options noRightPadding noLeftPadding">{{ trans('tasks.accept') }}</label>

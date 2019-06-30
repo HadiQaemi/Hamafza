@@ -31,7 +31,7 @@
         <div class="gkCode10" style="  margin: 10px;">
             @if(auth()->check() && $user->id == auth()->id())
                 <a href="{!! route('modals.edit_user_detail') !!}?user_id={{ $user->id }}" title="تنظیمات صفحه کاربری" style=" height: 10px;margin-left: -15px;padding: 0;" class=" iconEdit  edit_user_detail_icon FloatLeft jsPanels">
-                    <span class="fa fa-edit" style="color: black; font-size: 17px;"></span>
+                    <span class="fa fa-cog" style="color: black; font-size: 17px;"></span>
                 </a>
             @endif
                 <div style="max-width:170px; display:inline-block; vertical-align:top">

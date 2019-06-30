@@ -82,7 +82,7 @@
                 <div class="row-fluid" style="margin-top: 15px;">
                     <hr>
                     <div class="col-xs-12">
-                        <button id="{{deCode($act) == 'page_image' ? 'btn_save_image' : deCode($act) == 'task_image' ? 'btn_save_task_image' : 'HFM_UploadFormSubmitBtn'}}" name="upload_files" value="upload"
+                        <button id="{{deCode($act) == 'page_image' ? 'btn_save_image' : (deCode($act) == 'task_image' ? 'btn_save_task_image' : 'HFM_UploadFormSubmitBtn')}}" name="upload_files" value="upload"
                                 class="btn btn-primary pull-left" type="button">
                             <span>{{trans('filemanager.upload_files_selected')}}</span>
                         </button>

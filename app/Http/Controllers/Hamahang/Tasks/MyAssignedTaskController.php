@@ -615,6 +615,9 @@ class MyAssignedTaskController extends Controller
                     break;
                 }
             }
+            $res = Request::all();
+            $res['action_explain'] = trans('tasks.change_state').": ".trans('tasks.'.Request::get('type'));
+            task_history::create_task_history($task_id, 'submit_action', serialize($res), "");
 
             $result['data'] = [];//$this->my_assigned_task_in_status()->render();
             return $result;

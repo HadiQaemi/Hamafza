@@ -3217,16 +3217,20 @@ class ModalController extends Controller
 
     public function edit_user_detail(Request $request)
     {
+        $act = '';
+        if($request->exists('act'))
+            $act = $request->get('act');
+
         $user = User::find($request->user_id);
-//        dd($user);
         $provinces = Province::all();
         $cities = City::all();
         return json_encode([
-            'header' => 'تنظیمات صفحه کاربری',
+            'header' => $user['Name'].' '.$user['Family'],
             'content' => view('hamahang.Users.view_user_details_modal.content')
                 ->with('user', $user)
                 ->with('provinces', $provinces)
                 ->with('cities', $cities)
+                ->with('act', $act)
                 ->render(),
             'footer' => view('hamahang.Users.view_user_details_modal.footer')
                 ->render()

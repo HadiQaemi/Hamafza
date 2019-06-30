@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_priority;
 use DB;
 use Auth;
@@ -1195,6 +1196,9 @@ class TaskController extends Controller
             $task_id = Request::get('task_id');
             $task = tasks::find($task_id);
 //            $task->Priorities()->delete();
+            $res = Request::all();
+            $res['action_explain'] = trans('tasks.change_priority').": ".trans('tasks.'.Request::get('type'));
+            task_history::create_task_history($task_id, 'submit_action', serialize($res), "");
 
             $action = Request::get('action');
             if($action=='my_assigned' || $task->uid==auth()->id())

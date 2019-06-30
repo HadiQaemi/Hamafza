@@ -5,14 +5,14 @@
     <div style="padding: 0 15px 15px 15px;">
         <div class="navbar ">
             <ul class="nav nav-tabs">
-                <li class="active" id="tab_edit"><a aria-controls="art-tab-1" href="#edit_user" role="tab" data-toggle="tab">مشخصات</a></li>
-                <li id="tab_pic"><a aria-controls="art-tab-1" href="#edit_pic" role="tab" data-toggle="tab">تصویر</a></li>
+                <li class="{{$act == 'photo' ? '' : 'active'}}" id="tab_edit"><a aria-controls="art-tab-1" href="#edit_user" role="tab" data-toggle="tab">عمومی</a></li>
+                <li class="{{$act == 'photo' ? 'active' : ''}}" id="tab_pic"><a aria-controls="art-tab-1" href="#edit_pic" role="tab" data-toggle="tab">تصویر</a></li>
                 <li id="tab_pass"><a aria-controls="art-tab-2" href="#edit_pass" role="tab" data-toggle="tab">تغییر رمز عبور</a></li>
             </ul>
         </div>
         <div class="user_edit_jspanel_content">
             <div class="tab-content">
-                <div id="edit_user" role="tabpanel" class="tab-pane active">
+                <div id="edit_user" role="tabpanel" class="tab-pane {{$act == 'photo' ? '' : 'active'}}">
                     <div id="user_detail_edit">
                         <div id="edit_user_detail" style="padding: 10px 10px 10px 32px;">
                             <form id="user_detail_edit_form" enctype="multipart/form-data" method="post" action="{{ route('hamahang.users.update_user_detail') }}">
@@ -175,7 +175,7 @@
                         </table>
                     </form>
                 </div>
-                <div id="edit_pic" role="tabpanel" class="tab-pane">
+                <div id="edit_pic" role="tabpanel" class="tab-pane {{$act == 'photo' ? 'active' : ''}}">
                     {{--<div class="col-xs-12 margin-top-10">--}}
 
                         {{--<div class="col-xs-6 text-center">--}}
@@ -219,6 +219,9 @@
                             @else
                                 <button type="button" id="footer_selec_avatar" class="btn btn-primary select_file">{{ trans('profile.select_file') }}</button>
                             @endif
+                            <div class="text-center font-large margin-top-20">
+                                نام کاربری: <a href="{{url($user->Uname)}}" target="_blank">{{$user->Name.' '.$user->Family}}</a>
+                            </div>
                         </center>
                     </div>
 

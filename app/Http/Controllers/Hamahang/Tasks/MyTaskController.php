@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hamahang\Tasks;
 
 
+use App\Models\Hamahang\Tasks\task_history;
 use DB;
 use Auth;
 use Pusher\Pusher;
@@ -1065,6 +1066,11 @@ class MyTaskController extends Controller
                     break;
                 }
             }
+
+            $res = Request::all();
+            $res['action_explain'] = trans('tasks.change_state').": ".trans('tasks.'.Request::get('type'));
+            task_history::create_task_history($task_id, 'submit_action', serialize($res), "");
+
             $arr['filter_subject_id'] = Request::input('filter_subject_id');
             $result['data']=$this->my_task_in_status($arr)->render();
             return $result;

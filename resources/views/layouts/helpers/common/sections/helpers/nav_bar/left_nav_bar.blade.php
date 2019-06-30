@@ -20,14 +20,26 @@
 
         <div class="pull-left user-config dropdown"{!! $change_color !!}>
             {{--<a href="#" style="background-color: transparent !important;" id="avatar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">--}}
-            <a style="background-color: transparent !important;" id="avatar" aria-expanded="false" href="{{App::make('url')->to('/')}}/{{ auth()->user()->Uname }}">
-                {{ auth()->user()->Name .' '. auth()->user()->Family }}
-                {{--<span class="caret"></span>--}}
-                <img class="img-circle img-responsive jsPanels" href="{{route('modals.profile_avatar')}}" src="{{ auth()->user()->avatar_link }}"/>
-            </a>
-            <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
-            <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
-            <a href="{{App::make('url')->to('/')}}/Logout" class="exit glyphicon glyphicon-off" style="font-size: 12pt;"></a>
+            <div class="col-xl-12 noLeftPadding noRightPadding">
+                <div class="col-xs-4 noLeftPadding noRightPadding">
+                    <a style="background-color: transparent !important;" id="avatar" aria-expanded="false" href="{{App::make('url')->to('/')}}/{{ auth()->user()->Uname }}">
+                        {{--<span class="caret"></span>--}}
+                        <a href="{!! route('modals.edit_user_detail') !!}?act=photo&user_id={{ auth()->id() }}" title="تنظیمات صفحه کاربری" style=" height: 10px;margin-left: -15px;padding: 0;" class=" iconEdit  edit_user_detail_icon user-config img-icon FloatLeft jsPanels">
+                            <img class="img-circle img-responsive " src="{{ auth()->user()->avatar_link }}"/>
+                        </a>
+                    </a>
+                </div>
+                <div class="col-xs-8 noLeftPadding noRightPadding">
+                    <div class="col-xs-12 noLeftPadding noRightPadding">
+                        {{ auth()->user()->Name .' '. auth()->user()->Family }}
+                    </div>
+                    <div class="col-xs-12 noLeftPadding noRightPadding padding-top-5">
+                        <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/wall') }}" class="wall color-white">دیوار @if(user_notifications_count('wall', auth()->id()) > 0)<span class="badge">{{ user_notifications_count('wall', auth()->id()) }}</span>@endif</a>
+                        <a style="background-color: transparent !important;" href="{{ url(auth()->user()->Uname . '/desktop') }}" class="wall color-white">میز کار @if(user_notifications_count('', auth()->id()) > 0)<span class="badge DesktopNotificaton">{{ user_notifications_count('', auth()->id()) }}</span>@endif</a>
+                        <a href="{{App::make('url')->to('/')}}/Logout" class="exit glyphicon glyphicon-off color-white" style="font-size: 12pt;"></a>
+                    </div>
+                </div>
+            </div>
             <!-- begin cart`s basket -->
 
         {{--<a href="{{ route('ugc.desktop.hamahang.bazaar.cart', ['username' => auth()->user()->Uname]) }}" class="wall" style="visibility: {!! count(Session::get('cart')) ? 'visible' : 'hidden' !!}" id="basket_area">--}}

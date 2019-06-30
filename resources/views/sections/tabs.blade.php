@@ -3,7 +3,7 @@
         @foreach($tabs as $item)
             @if(is_array($item))
                 @if (isset($current_tab) && trim($item['link']) === trim($current_tab))
-                    <li class="active"><a href="{{App::make('url')->to('/')}}/{{ $item['href'] }}">{{ $item['title'] }}</a></li>
+                    <li class="active{{$current_tab=='desktop' ? '' : '-white'}}"><a href="{{App::make('url')->to('/')}}/{{ $item['href'] }}">{{ $item['title'] }}</a></li>
                 @else
                     <li><a href="{{App::make('url')->to('/')}}/{{ $item['href'] }}">{{ $item['title']}}</a></li>
                 @endif

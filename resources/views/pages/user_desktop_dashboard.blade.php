@@ -20,7 +20,6 @@
         }
     </style>
     <div class="row" style="background-color:#eee; ">
-
         @foreach($desktop_sections as $section)
             <div class="row">
                 @foreach($section['data'] as $sub_section)

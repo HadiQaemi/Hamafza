@@ -143,7 +143,8 @@
             send_info["subject_id"] = '{{ $filter_subject_id }}'
         @endif
 
-            LangJson_DataTables = window.LangJson_DataTables;
+        LangJson_DataTables = window.LangJson_DataTables;
+        LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
             "dom": window.CommonDom_DataTables,
@@ -156,7 +157,7 @@
             "autoWidth": false,
             "order": [[3, "desc"]],
             "language": LangJson_DataTables,
-            "processing": true,
+            "processing": false,
             "pageLength": 25,
             columns: [
                 {

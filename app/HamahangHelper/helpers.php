@@ -1643,53 +1643,6 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         [
                                             'active' => '1',
                                             'primary' => '1',
-                                            'title' => 'جلسات',
-                                            'new' => '-1',
-                                            'value' => "0",
-                                            'icon' => 'fa-tasks',
-                                            'url' => '#',
-                                            'subData' => [
-                                                [
-                                                    "title" => "",
-                                                    "icon" => "fa fa-list-alt",
-                                                    "url" => ''
-                                                ],
-                                                [
-                                                    "title" => "",
-                                                    "icon" => "fa fa-calendar",
-                                                    "url" => ''
-                                                ]
-                                            ]
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'primary' => '1',
-                                            'title' => 'فرم‌های من',
-                                            'new' => '-1',
-                                            'value' => "0",
-                                            'icon' => 'fa-wpforms',
-                                            'url' => '#'
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'primary' => '1',
-                                            'title' => 'یادآوری‌ها',
-                                            'new' => '-1',
-                                            'value' => "0",
-                                            'icon' => 'fa fa-bell-o',
-                                            'url' => '#'
-                                        ]
-                                    ]
-                            ],
-                            [
-                                'type' => 'tasks',
-                                'title' => 'وظایف',
-                                'order' => '1',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '1',
-                                            'primary' => '1',
                                             'title' => 'واگذاری‌های من',
                                             'new' => '-1',
                                             'value' => $auth_user->MyAssignedTasksCount(),
@@ -1747,6 +1700,53 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                     "url" => ''
                                                 ]
                                             ]
+                                        ]
+                                    ]
+                            ],
+                            [
+                                'type' => 'tasks',
+                                'title' => 'وظایف',
+                                'order' => '1',
+                                'data' =>
+                                    [
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'جلسات',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-tasks',
+                                            'url' => '#',
+                                            'subData' => [
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-list-alt",
+                                                    "url" => ''
+                                                ],
+                                                [
+                                                    "title" => "",
+                                                    "icon" => "fa fa-calendar",
+                                                    "url" => ''
+                                                ]
+                                            ]
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'فرم‌های من',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa-wpforms',
+                                            'url' => '#'
+                                        ],
+                                        [
+                                            'active' => '1',
+                                            'primary' => '1',
+                                            'title' => 'یادآوری‌ها',
+                                            'new' => '-1',
+                                            'value' => "0",
+                                            'icon' => 'fa fa-bell-o',
+                                            'url' => '#'
                                         ]
                                     ]
                             ],
