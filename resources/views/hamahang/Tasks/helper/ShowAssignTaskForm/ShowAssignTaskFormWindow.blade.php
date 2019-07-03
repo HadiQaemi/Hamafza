@@ -825,13 +825,18 @@
 
             </div>
             <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
+                @php
+                    $date = new App\HamahangCustomClasses\jDateTime;
+                    $now = $date->date("Y/m/d : H:i:s");
+                @endphp
                 <div class="col-xs-12 margin-bottom-30">
                     <div class="col-xs-11">
                         <input type="text" id="message" class="form-control border-radius" placeholder="پیام"/>
                         <input type="hidden" id="user" class="form-control border-radius" value="{{Session::get('Name').' '.Session::get('Family')}}"/>
+                        <input type="hidden" id="user_id" class="form-control border-radius" value="{{Session::get('uid')}}"/>
                     </div>
                     <div class="col-xs-1 pointer line-height-35">
-                        <a id="add_message_task" class="btn btn-primary">{{trans('app.submit')}}</a>
+                        <a id="add_message_task" class="btn btn-primary" date="{{$now}}">{{trans('app.submit')}}</a>
                     </div>
 
                 </div>
@@ -840,26 +845,36 @@
                         <thead>
                         <tr>
                             <th class="col-xs-2">کاربر</th>
-                            <th class="col-xs-10">پیام</th>
+                            <th class="col-xs-2">زمان</th>
+                            <th class="col-xs-8">پیام</th>
                         </tr>
                         </thead>
                         <tbody id="message_task_list">
-                            @if(isset($res['task']['message_username']))
-                                @foreach($res['task']['message_username'] as $k=>$message_username)
-                                    <tr id="add_resource_task{{$k.'show'}}">
-                                        <td>
-                                            <label class="pull-right" for="r2">{{$res['task']['message_username'][$k]}}</label>
-                                            <input name="message_username[]" type="hidden" value="{{$res['task']['message_username'][$k]}}"/>
-                                        </td>
-                                        <td>
-                                            <label class="input-group pull-right">
-                                                {{$res['task']['messages'][$k]}}
-                                                <input name="messages[]" type="hidden" value="{{$res['task']['messages'][$k]}}"/>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                        @if(isset($task->Messages))
+                            @foreach($task->Messages as $k=>$message_username)
+                                @php
+                                    $datetime = explode(' ', $message_username->created_at);
+                                    $task_date = explode('-', $datetime[0]);
+                                    $time = explode(':', $datetime[1]);
+                                    $g_timestamp = mktime($time[0], $time[1], $time[2], $task_date [1], $task_date [2], $task_date [0]);
+                                    $jdate = $date->getdate($g_timestamp);
+                                    $jdateA = $jdate['year'] . '/' . $jdate['mon'] . '/' . $jdate['mday'] .' : '. $datetime[1];
+                                @endphp
+                                <tr id="add_resource_task{{$k.'show'}}">
+                                    <td>
+                                        <label class="pull-right" for="r2">{{$message_username->user->Name.' '.$message_username->user->Family}}</label>
+                                    </td>
+                                    <td>
+                                        <label class="pull-right" for="r2">{{$jdateA}}</label>
+                                    </td>
+                                    <td>
+                                        <label class="input-group pull-right">
+                                            {{$message_username->message}}
+                                        </label>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

@@ -3115,6 +3115,11 @@ class tasks extends Model
 //        return $this->hasMany('App\Models\Hamahang\Tasks\project_task', 'task_id', 'id');
     }
 
+    public function Messages()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_messages', 'task_id', 'id');
+    }
+
     public function Tasks1()
     {
         return $this->hasMany('App\Models\Hamahang\Tasks\task_relations', 'task_id1', 'id');

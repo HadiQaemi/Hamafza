@@ -1218,7 +1218,7 @@ class ModalController extends Controller
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
-            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Messages', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         if(isset($task->History)){
             foreach ($task->History as $k => $history){
                 $created_at = preg_split('/ /', $history->created_at);
@@ -1267,7 +1267,7 @@ class ModalController extends Controller
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
-            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+            ->with('Keywords', 'Status', 'Events', 'Subjects', 'Messages', 'Pages', 'Projects', 'Tasks1', 'Tasks2', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         if(isset($task->History)){
             foreach ($task->History as $k => $history){
                 $created_at = preg_split('/ /', $history->created_at);
@@ -1330,6 +1330,7 @@ class ModalController extends Controller
             ->with('Status')
             ->with('Subjects')
             ->with('Pages')
+            ->with('Messages')
             ->with('AbroadPriority')
             ->with('Assignments')
             ->with('Transcripts')
@@ -1368,7 +1369,7 @@ class ModalController extends Controller
         $res = $this->getParams(['tid','sid','aid']);
         $tid = deCode($res['tid']);
         $task = tasks::where('id','=',$tid)
-            ->with('Keywords', 'Status', 'Subjects', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
+            ->with('Keywords', 'Status', 'Subjects', 'Messages', 'Pages', 'Priority', 'Assignments', 'Transcripts', 'History')->first();
         $res['task'] = $task;
         $jdate ->getdate(strtotime($task->schedule_time) + $task->duration_timestamp);
 

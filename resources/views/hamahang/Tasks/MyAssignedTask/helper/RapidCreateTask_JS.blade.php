@@ -65,7 +65,11 @@
     }
     $("#create_rapid_task_btn_submit").off();
     $(document).on('click', '#create_rapid_task_btn_submit', function () {
-        var sendInfo = $('#form_create_rapid_task').serialize();
+        if($('#CreateNewTaskLink').attr('sid') == 'undefined') {
+            var sendInfo = $('#form_create_rapid_task').serialize();
+        }else{
+            var sendInfo = $('#form_create_rapid_task').serialize() + '&sid=' + $('#CreateNewTaskLink').attr('sid');
+        }
         $.ajax({
             type: "POST",
             url: '{{ URL::route('hamahang.tasks.rapid_new_task') }}',
@@ -81,8 +85,10 @@
                         //reload_mytask();
                     $('#create_rapid_task_title').html("");
                     // $('#create_rapid_task_multi_selected_users').empty().trigger('change');
-                    window.table_chart_grid2.ajax.reload();
-                    window.table_chart_grid3.ajax.reload();
+                    if(window.table_chart_grid2 != undefined)
+                        window.table_chart_grid2.ajax.reload();
+                    if(window.table_chart_grid3 != undefined)
+                        window.table_chart_grid3.ajax.reload();
                 }
                 else {
                     messageModal('error', '{{trans('app.operation_is_failed')}}', data.error);

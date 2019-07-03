@@ -461,9 +461,11 @@
 			'       	<label class="pull-right" for="r2">'+$('#user').val()+'</label>\n' +
 			'       		<input name="message_username[]" type="hidden" value="' +$('#user').val()+ '"/>' +
 			'       </td>\n' +
+            '       <td>\n' +
+            '       	<label class="pull-right" for="r2">' + $(this).attr('date') + '</label>' +
+            '       </td>\n' +
 			'       <td>\n' +
-			'           <label class="input-group pull-right">\n' +
-							$('#message').val() +
+			'           <label class="input-group pull-right">\n' + $('#message').val() +
 			'       		<input name="messages[]" type="hidden" value="' +$('#message').val()+ '"/>' +
 			'           </label>\n' +
 			'       </td>\n' +

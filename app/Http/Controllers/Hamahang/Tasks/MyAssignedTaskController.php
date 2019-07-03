@@ -9,9 +9,11 @@ use App\Models\hamafza\Pages;
 use App\Models\Hamahang\hamahang_subject_able;
 use App\Models\Hamahang\Tasks\hamahang_process_tasks_relations;
 use App\Models\Hamahang\Tasks\hamahang_project_task;
+use App\Models\Hamahang\Tasks\hamahang_task_messages;
 use App\Models\Hamahang\Tasks\projects;
 use App\Models\Hamahang\Tasks\task_history;
 use App\Models\Hamahang\Tasks\task_action;
+use App\Models\Hamahang\Tasks\task_messages;
 use App\Models\Hamahang\Tasks\task_priority_assigner;
 use App\Models\Hamahang\Tasks\task_resources;
 use App\Models\Hamahang\Tasks\task_relations;
@@ -1452,6 +1454,13 @@ class MyAssignedTaskController extends Controller
             return json_encode($result);
         }
         else {
+            if(Request::exists('messages'))
+            {
+                foreach (Request::get('messages') as $k=>$message)
+                {
+                    task_messages::create_new_message(deCode(Request::input('tid')), $message);
+                }
+            }
             $result = '';
             $respite_duration_timestamp = 0;
             if (Request::input('respite_timing_type') == 1)
@@ -1680,9 +1689,14 @@ class MyAssignedTaskController extends Controller
         else{
 
         }
-//        dd(Request::all());
 //        dd($assign_id,Request::all(),$task_assignment);
-
+        if(Request::exists('messages'))
+        {
+            foreach (Request::get('messages') as $k=>$message)
+            {
+                task_messages::create_new_message($task_id, $message);
+            }
+        }
         $action = "";
         if(Request::input('reject_assigner')!=3)
         {
@@ -2664,6 +2678,7 @@ class MyAssignedTaskController extends Controller
                 $task->schedule_time = date('Y-m-d H:i:s');
                 $task->use_type = 0;
                 $task->type = 0;
+                $task->is_save = 1;
                 $task->uid = Auth::id();
                 $task->save();
 
@@ -2702,6 +2717,14 @@ class MyAssignedTaskController extends Controller
                 {
                     $task->respite_days = $respite_date[0]['day_no'];
                 }
+
+                if (Request::exists('sid'))
+                {
+                    if (Request::get('sid') != 'undefined'){
+                        hamahang_subject_ables::create_items_page(Request::get('sid'), $task->id,  'App\Models\Hamahang\Tasks\tasks');
+                    }
+                }
+
             });
 
             $res =

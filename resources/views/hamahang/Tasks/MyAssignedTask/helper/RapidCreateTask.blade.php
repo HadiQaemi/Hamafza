@@ -4,14 +4,18 @@
         top: 50% !important;
         left: -80% !important;
     }
+    #form_create_rapid_task .input-group-addon{
+        background-color: #fff !important;
+        border: none !important;
+    }
 </style>
 <div class="row row_height rapid-task">
     <hr class="hr-4"/>
     <form method="POST" id="form_create_rapid_task">
-        <div class="col-xs-3" dir="rtl">
+        <div class="col-xs-6" dir="rtl">
             <input type="text" class="form-control" autocomplete="off" placeholder="عنوان وظیفه" name='task_title' id="create_rapid_task_title"/>
         </div>
-        <div class="col-xs-6" style="padding-left: 15px">
+        <div class="col-xs-3" style="padding-left: 15px">
             <div class="input-group">
                 <select id="create_rapid_task_multi_selected_users" name="selected_users[]" data-placeholder="{{trans('tasks.responsible')}}" multiple="multiple"></select>
                 <span class="input-group-addon">
