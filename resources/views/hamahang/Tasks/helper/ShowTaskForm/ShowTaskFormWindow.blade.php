@@ -36,7 +36,6 @@
         </li>
     </ul>
     {{--<form action="{{ route('hamahang.tasks.save_task') }}" class="" name="ShowTaskForm" id="ShowTaskForm" method="post"--}}
-    <form action="{{ route('hamahang.tasks.update_task') }}" class="" name="ShowTaskForm" id="edit_task_form" method="post" enctype="multipart/form-data">
         <div class="tab-content new-task-form">
                 {{--<pre>--}}
                     @php
@@ -982,7 +981,7 @@
                         <input type="hidden" id="user_id" class="form-control border-radius" value="{{Session::get('uid')}}"/>
                     </div>
                     <div class="col-xs-1 pointer line-height-35">
-                        <a id="add_message_task" class="btn btn-primary" date="{{$now}}">{{trans('app.submit')}}</a>
+                        <a id="add_message_task_transcription" class="btn btn-primary" date="{{$now}}">{{trans('app.submit')}}</a>
                     </div>
 
                 </div>
@@ -1060,25 +1059,23 @@
             </div>
 
         </div>
-    </form>
 </div>
 <script>
     $(document).ready(function()
     {
         {{isset($task['respite_timing_type']) ? 'change_normal_task_timing_type('.$task['respite_timing_type'].')' : ''}}
         <?php if(isset($disabled)) { ?>
-            $('.jsPanel input, .jsPanel textarea, .jsPanel select').attr('disabled', 'disabled');
+            $('.jsPanel input, .jsPanel textarea, .jsPanel select').prop('disabled', true);
+            $('#message').prop('disabled', false);
         <?php }?>
 
-        $(".fileToUpload").on('change', function() {
-            var formElement = $( '.fileToUpload' )[0].files[0];
+        $("#add_message_task_transcription").on('click', function() {
             var data = new FormData();
-            data.append('image',formElement);
-            data.append('pid','{{rand(1,100).rand(1,100)}}');
-            data.append('form_type','form');
+            data.append('task_id',"{{$res['tid']}}");
+            data.append('message',$('#message').val());
             $.ajax
             ({
-                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
+                url: '{{ route('hamahang.tasks.add_message_to_task') }}',
                 type: 'post',
                 dataType: 'json',
                 data: data,
@@ -1088,51 +1085,13 @@
                 {
                     if (data.success)
                     {
-                        $('#desc').val($('#desc').val() + "\nimg::" + data.FileID + "::img");
-                        if($('#desc').val() != undefined)
-                            $('.content_tab_view').html($('#desc').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
+                        $('.jsglyph-close').click();
                     } else
                     {
                         messageModal('fail', 'خطا', data.result);
                     }
                 }
             });
-        });
-        $(".fileToUpload2").on('change', function() {
-            var formElement = $( '.fileToUpload2' )[0].files[0];
-            var data = new FormData();
-            data.append('image',formElement);
-            data.append('pid','{{rand(1,100).rand(1,100)}}');
-            data.append('form_type','form');
-            $.ajax
-            ({
-                url: '{{ route('FileManager.tinymce_external_filemanager') }}',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                processData: false,
-                contentType: false,
-                success: function(data)
-                {
-                    if (data.success)
-                    {
-                        $('#explain').val($('#explain').val() + "\nimg::" + data.FileID + "::img");
-                        if($('#explain').val() != undefined)
-                            $('.content_tab_view').html($('#explain').val().replace('img::','<img src="{{route('FileManager.DownloadFile',['type'=> 'ID','id'=>'']).'/'}}').replace('::img','">'));
-                    } else
-                    {
-                        messageModal('fail', 'خطا', data.result);
-                    }
-                }
-            });
-        });
-        //tab_text tab_view
-        $(".tab_desc").on('click', function() {
-            $(".tab_desc").removeClass('active');
-            $(".content_tab").addClass('hidden');
-            $("#for-desc .header").css('height','30px !important');
-            $(this).addClass('active');
-            $(".content_"+$(this).attr('rel')).removeClass('hidden');
         });
         $(document).on('click', '#form_tinymce_upload .form-submit', function()
         {

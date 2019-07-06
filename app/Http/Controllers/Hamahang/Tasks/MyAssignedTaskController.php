@@ -1671,6 +1671,28 @@ class MyAssignedTaskController extends Controller
 
     }
 
+    public function addMessage()
+    {
+        Request::merge([
+            'tid' => deCode(Request::get('task_id'))
+        ]);
+        $validator = Validator::make(Request::all(), [
+            'message' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+            'tid' => 'required|exists:hamahang_task,id',
+        ],[
+                'message'=>'پیام'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+        if(task_messages::create_new_message(deCode(Request::get('task_id')), Request::get('message')))
+            return json_encode(['success' => true]);
+
+    }
     public function SetActToTask()
     {
         $task_all = Session::get('TaskForm_task_all');
