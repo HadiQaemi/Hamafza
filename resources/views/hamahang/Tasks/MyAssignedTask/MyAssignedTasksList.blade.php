@@ -153,7 +153,7 @@
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12 no-task-div hidden">
+            <div class="col-xs-12 no-task-div {{Auth::user()->MyAssignedTasksCount() > 0 ? 'has-task' : '' }} hidden">
                 <div class="message text-center"></div>
                 <div class="no-task-div-buttons">
                     <a class="jsPanels btn btn-primary" href="{{url('/modals/CreateNewTask?resid='.auth()->id())}}" title="وظیفه جدید">ایجاد وظیفه جدید</a>

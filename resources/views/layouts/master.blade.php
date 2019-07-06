@@ -364,12 +364,12 @@
                                     else {
                                         $('.jsPanel-btn-close').click();
                                     }
-                                    if(window.table_chart_grid2 != undefined){
+                                    // if(window.table_chart_grid2 != undefined){
                                         window.table_chart_grid2.ajax.reload();
-                                    }
-                                    if(window.table_chart_grid3 != undefined){
+                                    // }
+                                    // if(window.table_chart_grid3 != undefined){
                                         window.table_chart_grid3.ajax.reload();
-                                    }
+                                    // }
                                     eventInfo = (result.event);
                                     // (function ($) {
                                     //     $("#calendar").fullCalendar('addEventSource', [{

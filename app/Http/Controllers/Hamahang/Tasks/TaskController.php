@@ -119,8 +119,24 @@ class TaskController extends Controller
 
     public function task_delete()
     {
+        Request::merge([
+            'task_id' => deCode(Request::get('id'))
+        ]);
+        $validator = Validator::make(Request::all(), [
+            'task_id' => 'required|exists:hamahang_task,id'
+        ],[
+                'task_id'=>'وظیفه'
+            ]
+        );
+        if ($validator->fails())
+        {
+            $result['error'] = $validator->errors();
+            $result['success'] = false;
+            return json_encode($result);
+        }
+
         $id = deCode(Request::input('id'));
-        $task = tasks::where('id', '=', $id)
+        $task = tasks::where('id', '=', $id)->where('uid','=', Auth::user()->id)
             ->delete();
         $result['success'] = $task ? true : false;
         return $result;

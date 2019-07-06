@@ -89,7 +89,7 @@ return [
     'ok'                => 'تایید',
     'accept'                => 'پذیرش',
     'submit'            => 'ثبت',
-    'submit_action'     => 'ثبت اقدام',
+    'submit_action'     => 'اقدام',
     'manual'     => 'دستی',
     'automatic'     => 'خودکار',
     'page'     => 'صفحه',
@@ -245,5 +245,7 @@ return [
     'search_in_task_title_placeholder'=>'جستجو در عنوان ...',
     'no_task_sended'=>'تاکنون وظیفه‌ای را به دیگران واگذار نکرده اید. ',
     'no_task_inserted'=>'تاکنون وظیفه‌ای برای شما تعیین نشده است.',
+    'not_delete_permission'=>'شما مجاز به حذف وظیفه نیستید!',
+    'no_task_found'=>'موردی یافت نشد.',
     'selecet_user'=>'انتخاب کاربر',
 ];

@@ -949,13 +949,11 @@ class MyAssignedTaskController extends Controller
                 {
                     if($respite_days[0]['day_no']==0 )
                     {
-                        $respite_days = 1;
                         $bg = 'bg_yellow';
-
                     }else{
-                        $respite_days = ($respite_days[0]['day_no']) * (-1);
                         $bg = 'bg_red';
                     }
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
                 }
                 else
                 {
@@ -1437,13 +1435,18 @@ class MyAssignedTaskController extends Controller
 
     public function update_task()
     {
+        Request::merge([
+            'task_id' => deCode(Request::get('tid'))
+        ]);
         $validator = Validator::make(Request::all(), [
             'title' => 'required|string',
             'users' => 'required|array',
+            'task_id' => 'required|exists:hamahang_task,id',
         ],[
             'selected_users.required'=>'باید کاربر انتخاب شود'
         ],[
                 'title'=>'عنوان وظیفه',
+                'task_id'=>'وظیفه',
                 'users'=>'کاربر'
             ]
         );
@@ -1627,6 +1630,7 @@ class MyAssignedTaskController extends Controller
                 task_status::create_task_status($task->id, Request::input('task_status'), Request::input('progress'));
             }
 
+            $action = 'edit_task';
             $describ = '';
             if($task->task_status != Request::input('task_status')){
                 $status = 'status_not_started';
@@ -1640,9 +1644,13 @@ class MyAssignedTaskController extends Controller
                     $status = 'status_suspended';
 
                 $describ .= (trim($describ) == '' ? '' : ', ').trans('tasks.change_status')." (".trans('tasks.'.$status).") ";
+                $action = 'submit_action';
             }
             if($task->progress != Request::input('progress') && Request::input('task_status')==1)
+            {
                 $describ .= (trim($describ) == '' ? '' : ', ').trans('tasks.change_progress')." (".Request::input('progress').") ";
+                $action = 'submit_action';
+            }
 
             $task->form_data = serialize(Request::all());
             $task->task_attributes = serialize(Request::all());
@@ -1663,7 +1671,7 @@ class MyAssignedTaskController extends Controller
             $task->report_to_managers = Request::input('report_to_manager');
             $task->respite_timing_type = Request::input('respite_timing_type');
             $task->save();
-            task_history::create_task_history($task->id, 'edit_task', serialize(Request::all()), $describ);
+            task_history::create_task_history($task->id, $action, serialize(Request::all()), $describ);
 
         }
         $result['success'] = true;
@@ -2757,7 +2765,7 @@ class MyAssignedTaskController extends Controller
                     'respite_days' => $respite_date,
                     'type' => $status->type
                 ];
-            task_history::create_task_history($task->id, 'create', serialize(Request::all()));
+            task_history::create_task_history($task->id, 'create', '');
 
             return response()->json($res);
         }

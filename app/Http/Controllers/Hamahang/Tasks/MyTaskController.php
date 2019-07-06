@@ -120,13 +120,11 @@ class MyTaskController extends Controller
                 {
                     if($respite_days[0]['day_no']==0 )
                     {
-                        $respite_days = 1;
                         $bg = 'bg_yellow';
-
                     }else{
-                        $respite_days = ($respite_days[0]['day_no']) * (-1);
                         $bg = 'bg_red';
                     }
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
                 }
                 else
                 {
@@ -709,13 +707,12 @@ class MyTaskController extends Controller
                 {
                     if($respite_days[0]['day_no']==0 )
                     {
-                        $respite_days = 1;
                         $bg = 'bg_yellow';
 
                     }else{
-                        $respite_days = ($respite_days[0]['day_no']) * (-1);
                         $bg = 'bg_red';
                     }
+                    $respite_days = ($respite_days[0]['day_no']) * (-1);
                 }
                 else
                 {

@@ -165,7 +165,7 @@
         }
         LangJson_DataTables = window.LangJson_DataTables;
         LangJson_DataTables.searchPlaceholder = '{{trans('tasks.search_in_task_title_placeholder')}}';
-        LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_inserted')}}';
+        LangJson_DataTables.emptyTable = '{{trans('tasks.no_task_found')}}';
         LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         // console.log(LangJson_DataTables);
         window.table_chart_grid2 = $('#MyTasksTable').DataTable({
@@ -207,7 +207,7 @@
                         //     }
                         // });
                         return "<a class='cursor-pointer jsPanels white-space" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' href='/modals/ViewTaskForm?act=do&tid="+full.id+"&aid="+full.assignment_id+"' data-toggle='tooltip'  data-html='true' " +
-                            // "title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'" +
+                            "title='" + full.title + (full.desc == null ? '' : "\n" + full.desc) + "'" +
                             ">" + full.title + "</a>";
                     },
                     "width": "50%"
@@ -251,7 +251,7 @@
                 },
                 {"data": "operation",
                     "mRender": function (data, type, full) {
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task color_red" data-toggle="tooltip" title="حذف"></a>';
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task color_red" data-toggle="tooltip" title="حذف" rel="' + full.id + '"></a>';
                     },
                     "width": "5%"
                 }
@@ -270,9 +270,14 @@
         });
         $("#MyTasksTable").on('DOMNodeInserted DOMNodeRemoved', function() {
             if ($(this).find('tbody tr td').first().attr('colspan')) {
-                $('#MyTasksTable_wrapper').hide();
-                $('.no-task-div').removeClass('hidden');
-                $('.message').html("{{trans('tasks.no_task_inserted')}}");
+                if($('.no-task-div').hasClass('has-task'))
+                {
+                    $('.message').html("{{trans('tasks.no_task_found')}}");
+                }else{
+                    $('#MyTasksTable_wrapper').hide();
+                    $('.no-task-div').removeClass('hidden');
+                    $('.message').html("{{trans('tasks.no_task_inserted')}}");
+                }
             } else {
                 $('#MyTasksTable_wrapper').show();
                 $('.no-task-div').addClass('hidden');
@@ -281,10 +286,37 @@
     }
     // $(".remove_task").off();
     $(document).on('click', '.remove_task', function () {
+        id = $(this).attr('rel');
         confirmModal({
             title: 'حذف وظیفه',
             message: 'آیا از حذف وظیفه مطمئن هستید؟',
             onConfirm: function () {
+                $.ajax({
+                    type: "POST",
+                    url: '{{ URL::route('hamahang.tasks.task_delete') }}',
+                    dataType: "json",
+                    data: {id:id},
+                    success: function (data) {
+                        if(data.success == true)
+                        {
+                            window.table_chart_grid2.ajax.reload();
+                            window.table_chart_grid3.ajax.reload();
+                        }else{
+                            messageModal('error', 'خطا در حذف وظیفه', ["{{trans('tasks.not_delete_permission')}}"]);
+                        }
+                    }
+                });
+                {{--messageModal('success','حذف وظیفه' , {0:'{{trans('app.operation_is_success')}}'});--}}
+
+            },
+            afterConfirm: 'close'
+        });
+    });
+    $(document).on('click', '.remove_task', function () {
+        {{--confirmModal({--}}
+            {{--title: 'حذف وظیفه',--}}
+            {{--message: 'آیا از حذف وظیفه مطمئن هستید؟',--}}
+            {{--onConfirm: function () {--}}
                 {{--$.ajax({--}}
                 {{--url: '{{ route($remove_route, $params['remove_route']) }}',--}}
                 {{--type: 'post',--}}
@@ -307,11 +339,11 @@
                 {{--// else {--}}
                 {{--//     messageModal('error', 'خطای آپلود فایل', s.result);--}}
                 {{--// }--}}
-                {{--}--}}
+                {{--// }--}}
                 {{--});--}}
-            },
-            afterConfirm: 'close'
-        });
+            {{--},--}}
+            {{--afterConfirm: 'close'--}}
+        {{--});--}}
     });
     function call_modal(title, message, callback_function) {
         $('#confirm_modal_massage').html(message);

@@ -1115,7 +1115,7 @@ $(document).on("click", ".jsPanels", function () {
         title = 'بازنشر';
     if (link.indexOf('print?sid') > 0)
         title = 'چاپ';
-    if($(this).hasClass('HelpIcon'))
+    if($(this).hasClass('HelpIcon') || $(this).hasClass('HelpIcons'))
     {
         var h = $(window).height() + 150;
         var w = $(window).width() - 150;
