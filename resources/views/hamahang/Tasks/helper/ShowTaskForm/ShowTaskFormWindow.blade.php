@@ -22,10 +22,10 @@
         <li>
             <a href="#tab_t6" data-toggle="tab">زمانبندی</a>
         </li>
-        <li class="active">
+        <li class="{{isset($disabled) ? '' : 'active'}}">
             <a href="#tab_t5" data-toggle="tab">اقدام</a>
         </li>
-        <li>
+        <li class="{{isset($disabled) ? 'active' : ''}}">
             <a href="#tab_t7" data-toggle="tab">گفتگو</a>
         </li>
         <li>
@@ -626,7 +626,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane active" id="tab_t5" style="padding: 8px;">
+            <div class="tab-pane {{isset($disabled) ? '' : 'active'}}" id="tab_t5" style="padding: 8px;">
                 @if($act != 'do')
                     @if($edit_able == 1)
                         <div class="row col-lg-12" style="margin-top: 20px;">
@@ -679,25 +679,25 @@
                         </div>
                         <div class="col-lg-11">
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="task_status" id="not_start" value="0"  {{$task->task_status ==0 ? 'checked' : ''}}/>
+                                <input type="radio" name="task_status" id="not_start" value="0"  {{$task->Status->type ==0 ? 'checked' : ''}}/>
                                 <label for="not_start">{{ trans('tasks.not_start') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="task_status" id="on_done" value="1" {{$task->task_status ==1 ? 'checked' : ''}}/>
+                                <input type="radio" name="task_status" id="on_done" value="1" {{$task->Status->type==1 ? 'checked' : ''}}/>
                                 <label for="on_done">{{ trans('tasks.on_done')}}</label>
                                 <input type="text" id="num_event" class="form-control border-radius" placeholder="{{ trans('tasks.precent_progress') }}" style="width: 40px;display: inline" name="progress" value="{{$task->Status->percent}}" >
                                 {{--<label for="on_done">{{ trans('tasks.precent_progress') }}</label>--}}
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="task_status" id="status_done" value="2" {{$task->task_status ==2 ? 'checked' : ''}}/>
+                                <input type="radio" name="task_status" id="status_done" value="2" {{$task->Status->type ==2 ? 'checked' : ''}}/>
                                 <label for="status_done">{{ trans('tasks.status_done') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="task_status" id="status_finished" value="3" {{$task->task_status ==3 ? 'checked' : ''}}/>
+                                <input type="radio" name="task_status" id="status_finished" value="3" {{$task->Status->type ==3 ? 'checked' : ''}}/>
                                 <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
                             </div>
                             <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                                <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->task_status ==4 ? 'checked' : ''}}/>
+                                <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->Status->type ==4 ? 'checked' : ''}}/>
                                 <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
                             </div>
                         </div>
@@ -970,7 +970,7 @@
                 </div>
 
             </div>
-            <div class="tab-pane" id="tab_t7" style="padding-top: 8px;margin-top:20px">
+            <div class="tab-pane {{isset($disabled) ? 'active' : ''}}" id="tab_t7" style="padding-top: 8px;margin-top:20px">
                 @php
                     $date = new App\HamahangCustomClasses\jDateTime;
                     $now = $date->date("Y/m/d : H:i:s");
@@ -1090,7 +1090,7 @@
                         $('.jsglyph-close').click();
                     } else
                     {
-                        messageModal('fail', 'خطا', data.result);
+                        messageModal('fail', 'خطا', data.error);
                     }
                 }
             });
