@@ -1165,6 +1165,8 @@ class ModalController extends Controller
             return $this->ShowTaskFormAbroadMode();
         }elseif(in_array(ProjectController::$_MANAGE_TASK_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_MANAGE_PROJECT_PERMISSSION,$projectRole) || in_array(ProjectController::$_VIEW_PROJECT_PERMISSSION,$projectRole)){
             return $this->ShowTaskFormAbroadMode();
+        }else{
+            return $this->ShowTaskFormAbroadMode();
         }
     }
 

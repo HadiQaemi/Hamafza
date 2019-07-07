@@ -382,7 +382,7 @@ class UserClass
 //                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
 //                ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id)')->count();
 //            $auth_user = getUser();
-            $AM_EghdamNew = auth()->user()->MyTasksCount(false, false, 1);//$auth_user->MyTasksCount(false, false, 1);
+            $AM_EghdamNew = (auth()->check()) ? auth()->user()->MyTasksCount(false, false, 1) : 0;//$auth_user->MyTasksCount(false, false, 1);
             $res['Eghdam'] = $AM_EghdamNew;
             $AM_EmailNew = DB::table('emails')->where('uid', $uid)->where('type', 'SMS_NEW')->where('view', '0')->count();
             $res['Email'] = $AM_EmailNew;

@@ -606,25 +606,25 @@
                     </div>
                     <div class="col-lg-11 noRightPadding noLeftPadding">
                         <div class="pull-right noRightPadding noLeftPadding" style="height: 30px;line-height: 30px;">
-                            <input type="radio" name="task_status" id="not_start" value="0"  {{$task->Status->type ==0 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="not_start" value="0"  {{$task->Status[0]->type ==0 ? 'checked' : ''}}/>
                             <label for="not_start">{{ trans('tasks.not_start') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="on_done" value="1" {{$task->Status->type ==1 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="on_done" value="1" {{$task->Status[0]->type ==1 ? 'checked' : ''}}/>
                             <label for="on_done">{{ trans('tasks.on_done')}}</label>
-                            <input type="text" id="num_event" class="form-control border-radius" placeholder="{{ trans('tasks.precent_progress') }}" style="width: 60px;display: inline" name="progress" {{$task->Status->percent>0 ? 'value="'.$task->Status->percent.'"' : ''}} >
+                            <input type="text" id="num_event" class="form-control border-radius" placeholder="{{ trans('tasks.precent_progress') }}" style="width: 60px;display: inline" name="progress" {{$task->Status[0]->percent>0 ? 'value="'.$task->Status[0]->percent.'"' : ''}} >
                             {{--<label for="on_done">{{ trans('tasks.precent_progress') }}</label>--}}
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_done" value="2" {{$task->Status->type ==2 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_done" value="2" {{$task->Status[0]->type ==2 ? 'checked' : ''}}/>
                             <label for="status_done">{{ trans('tasks.status_done') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_finished" value="3" {{$task->Status->type ==3 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_finished" value="3" {{$task->Status[0]->type ==3 ? 'checked' : ''}}/>
                             <label for="status_finished">{{ trans('tasks.status_finished') }}</label>
                         </div>
                         <div class="pull-right" style="height: 30px;line-height: 30px;margin-right: 10px">
-                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->Status->type ==4 ? 'checked' : ''}}/>
+                            <input type="radio" name="task_status" id="status_suspended" value="4" {{$task->Status[0]->type ==4 ? 'checked' : ''}}/>
                             <label for="status_suspended">{{ trans('tasks.status_suspended') }}</label>
                         </div>
                     </div>

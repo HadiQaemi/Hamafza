@@ -938,9 +938,14 @@ class MyAssignedTaskController extends Controller
                 if($data->type>1)
                 {
                     $task_action = task_action::where('task_id', '=', $data->id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->first();
-                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-//                    dd($data,$task_action->created_at);
-                    $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp, strtotime($task_action->created_at));
+                    if($task_action != null)
+                    {
+                        $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                        $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp, strtotime($task_action->created_at));
+                    }else{
+                        $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                        $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                    }
                 }else{
                     $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                     $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
@@ -1685,7 +1690,8 @@ class MyAssignedTaskController extends Controller
             'tid' => deCode(Request::get('task_id'))
         ]);
         $validator = Validator::make(Request::all(), [
-            'message' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+//            'message' => 'required|regex:/^(([\x{600}-\x{6FF}\x{200c}])*\s*)*$/u',
+            'message' => 'required',
             'tid' => 'required|exists:hamahang_task,id',
         ],[
                 'message'=>'پیام'

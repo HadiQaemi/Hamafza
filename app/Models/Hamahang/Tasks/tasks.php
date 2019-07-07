@@ -1087,6 +1087,7 @@ class tasks extends Model
                 ->where('hamahang_task_assignments.uid', '=', $uid)
                 ->whereNull('hamahang_task_assignments.deleted_at')
                 ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
+
                 ->whereRaw('hamahang_task_priority.id = (select max(`id`) from hamahang_task_priority where `task_id` = hamahang_task.id and user_id = ?)', [Auth::id()]);
             if ($subject_id)
             {
@@ -1107,6 +1108,7 @@ class tasks extends Model
                 ->leftjoin('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
                 ->leftjoin('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
                 ->whereNull('hamahang_task_assignments.deleted_at')
+                ->whereRaw('hamahang_task_status.id = (select max(`id`) from hamahang_task_status where `task_id` = hamahang_task.id )')
                 //                ->whereNull('hamahang_task_assignments.deleted_at')
                 ->where('hamahang_task.uid', '=', $uid);
 
@@ -3179,7 +3181,7 @@ class tasks extends Model
 
     public function Status()
     {
-        return $this->hasOne('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id');
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id')->orderBy('hamahang_task_status.id','DESC');
     }
 
     public function Action()
