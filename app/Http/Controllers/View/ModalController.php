@@ -654,8 +654,10 @@ class ModalController extends Controller
             $pid = (isset($res['pid'])) ? $res['pid'] : '0';
             $content = GroupClass::GroupSetting($res['sid'], $pid, \Auth::id(), $res['sesid'], $title)->render();
         }
-        $apply = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" data-apply="apply" value="ذخیره " style=" float: left" id="submit2"> ';
-        $save = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" value="تایید " style=" float: left" id="submit2">';
+//        $apply = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" data-apply="apply" value="ذخیره " style=" float: left" id="submit2"> ';
+//        $save = '<input type="submit" class="btn btn-primary btn-footer omomi_btn" value="تایید " style=" float: left" id="submit2">';
+        $apply = '<input type="submit" class="btn btn-primary btn-footer all_btn" data-apply="apply" value="ذخیره " style=" float: left" id="submit2"> ';
+        $save = '<input type="submit" class="btn btn-primary btn-footer all_btn" value="تایید " style=" float: left" id="submit2">';
         return json_encode(['header' => '', 'content' => $content, 'footer' => $apply . $save]);
     }
 
@@ -3492,12 +3494,12 @@ class ModalController extends Controller
         $target_type = $request->input('target_type');
         $target_id = $request->input('target_id');
         $help_items = $request->input('help_id');
-
-        foreach ($help_items as $help_item)
-        {
-            //$get_id = str_replace(['help_relation_add[', ']'], null, $help_item['name']);
-            $help_ids[/*$get_id*/] = $help_item['value'];
-        }
+        if(is_array($help_items))
+            foreach ($help_items as $help_item)
+            {
+                //$get_id = str_replace(['help_relation_add[', ']'], null, $help_item['name']);
+                $help_ids[/*$get_id*/] = $help_item['value'];
+            }
 
         $get_page = Pages::find($target_id);
         if ($get_page)

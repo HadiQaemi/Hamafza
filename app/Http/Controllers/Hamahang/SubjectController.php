@@ -8,6 +8,8 @@ use App\Models\hamafza\Pages;
 use App\Models\hamafza\Subject;
 use App\Models\hamafza\SubjectFieldValue;
 use App\Models\hamafza\SubjectType;
+use App\Models\Hamahang\SubjectRel;
+use App\User;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,7 +123,7 @@ class SubjectController extends Controller
     }
 
 
-    static public function update_new(Request $request){
+    static public function update_new_(Request $request){
         ////
         ///  update
         $messages =
@@ -139,211 +141,9 @@ class SubjectController extends Controller
             return json_encode($result);
         } else
         {
-
             ////
-            ///  relations
+            ///  informations
             ///
-            if (!Auth::check())
-            {
-                return Redirect()->to('/')->with('message', 'عدم دسترسی')->with('mestype', 'error');
-            }
-            else
-            {
-                $sid = $request->input('rel_sid');
-                $relations = $request->input('relations');
-                $subject_rel = $request->input('subject_rel');
-                //DB::table('subjects_rel')->where('sid1', $sid)->orWhere('sid2', $sid)->delete();
-                SubjectRel::where('sid1', $sid)->orWhere('sid2', $sid)->delete();
-                if(isset($subject_rel)){
-                    foreach ($subject_rel as $key => $value)
-                    {
-                        if (!empty($value))
-                        {
-                            if (isset($relations[$key]))
-                            {
-                                $relate = $relations[$key];
-                                if ($relate != '')
-                                {
-                                    if (substr($relate[0], 0, 1) == "D")
-                                    {
-                                        $relate = str_replace("D", '', $relate[0]);
-                                        //DB::table('subjects_rel')->insert(array('sid1' => $sid, 'sid2' => $sid2, 'rel' => $relate));
-                                        foreach ($value as $val)
-                                        {
-                                            $sid2 = $val;
-                                            $check = SubjectRel::where('sid1', $sid)
-                                                ->Where('sid2', $sid2)
-                                                ->Where('rel', $relate)
-                                                ->first();
-                                            if (count($check) == 0)
-                                            {
-                                                $subjectRel = new SubjectRel();
-                                                $subjectRel->sid1 = $sid;
-                                                $subjectRel->sid2 = $sid2;
-                                                $subjectRel->rel = $relate;
-                                                $subjectRel->save();
-                                            }
-                                        }
-                                    }
-                                    elseif (substr($relate[0], 0, 1) == "I")
-                                    {
-                                        $relate = str_replace("I", '', $relate[0]);
-                                        //DB::table('subjects_rel')->insert(array('sid1' => $sid2, 'sid2' => $sid, 'rel' => $relate));
-                                        foreach ($value as $val)
-                                        {
-                                            $sid2 = $val;
-                                            $check = SubjectRel::where('sid1', $sid2)
-                                                ->Where('sid2', $sid)
-                                                ->Where('rel', $relate)
-                                                ->first();
-
-                                            if (count($check) == 0)
-                                            {
-                                                $subjectRel = new SubjectRel();
-                                                $subjectRel->sid1 = $sid2;
-                                                $subjectRel->sid2 = $sid;
-                                                $subjectRel->rel = $relate;
-                                                $subjectRel->save();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                }else{
-                    $result['success'] = true;
-                    session()->flash('message', 'روابط با موفقیت ویرایش شد');
-                    session()->flash('mestype', 'success');
-                    return json_encode($result);
-                }
-
-                $result=[];
-                if($subjectRel){
-                    $result['success'] = true;
-                    session()->flash('message', 'روابط با موفقیت ویرایش شد');
-                    session()->flash('mestype', 'success');
-                    return json_encode($result);
-                }else{
-                    $result['success'] = false;
-                    $result['message'][] = 'ویرایش اطلاعات با مشکل مواجه شد . دوباره امتحان کنید.';
-                    return json_encode($result);
-                }
-                //return Redirect()->back()->with('message', $user)->with('mestype', 'success');
-            }
-            ////
-            ///  relations
-            ///
-
-
-
-            ////
-            ///  access
-            ///
-            $show = $request->input('show');
-            $sid = $request->input('access_sid');
-            $pid = $request->input('access_pid');
-            $subject_view = $request->input('subject_view');
-            $subject_search = $request->input('subject_search');
-            $admin_change = $request->input('admin_change');
-
-            $user = User::find($admin_change);
-            if ($user)
-            {
-                $subject = Subject::find($sid);
-                if ($subject)
-                {
-                    $subject->admin = $admin_change;
-                    $subject->save();
-                }
-            }
-
-
-            DB::table('tab_view')->where('sid', $sid)->delete();
-            if (is_array($show) && count($show) > 0)
-            {
-                foreach ($show as $key => $value)
-                {
-                    DB::table('tab_view')->insert(array('tabid' => $value, 'sid' => $sid));
-                }
-            }
-            $subject = Subject::find($sid);
-            $subject->list = $subject_view;
-            $subject->search = $subject_search;
-            $subject->save();
-
-
-            if ($subject)
-            {
-
-                if ($request->input('users_list_setting_view'))
-                {
-                    $users_list_setting_view = $request->input('users_list_setting_view');
-                    foreach ($users_list_setting_view as $key => $value)
-                    {
-                        $users_list_setting_view_array[$value] = ['type' => '1'];
-                    }
-
-                    $subject->user_policies_view()->sync($users_list_setting_view_array);
-                }
-                else
-                {
-                    $subject->user_policies_view()->sync([]);
-                }
-
-                if ($request->input('roles_list_setting_view'))
-                {
-                    $roles_list_setting_view = $request->input('roles_list_setting_view');
-                    foreach ($roles_list_setting_view as $key => $value)
-                    {
-                        $roles_list_setting_view_array[$value] = ['type' => '1'];
-                    }
-                    $subject->role_policies_view()->sync($roles_list_setting_view_array);
-                }
-                else
-                {
-                    $subject->role_policies_view()->sync([]);
-                }
-
-
-                if ($request->input('users_list_setting_edit'))
-                {
-                    $users_list_setting_edit = $request->input('users_list_setting_edit');
-                    foreach ($users_list_setting_edit as $key => $value)
-                    {
-                        $users_list_setting_edit_array[$value] = ['type' => '2'];
-                    }
-                    $subject->user_policies_edit()->sync($users_list_setting_edit_array);
-                }
-                else
-                {
-                    $subject->user_policies_edit()->sync([]);
-                }
-
-                if ($request->input('roles_list_setting_edit'))
-                {
-                    $roles_list_setting_edit = $request->input('roles_list_setting_edit');
-                    foreach ($roles_list_setting_edit as $key => $value)
-                    {
-                        $roles_list_setting_edit_array[$value] = ['type' => '2'];
-                    }
-                    $subject->role_policies_edit()->sync($roles_list_setting_edit_array);
-                }
-                else
-                {
-                    $subject->role_policies_edit()->sync([]);
-                }
-            }
-            $message = trans('labels.subjectAccessOK');
-            return json_encode($message);
-            ////
-            ///  access
-            ///
-
-
-
-
             $subject = Subject::find($request->sid);
             $subject->title = $request->subject_title;
             if (-1 != $subject->sub_kind)
@@ -412,15 +212,340 @@ class SubjectController extends Controller
                         }
                     }
                     $message[] = 'با موفقیت ویرایش شد';
-                    return json_encode($message);
                 } else
                 {
                     $message[] = 'متن مورد نظر ویرایش نشد';
-                    return json_encode($message);
                 }
             }
+
+//            return json_encode($message);
+
+            ////
+            ///  informations
+            ///
+
+            if (!Auth::check())
+            {
+                return Redirect()->to('/')->with('message', 'عدم دسترسی')->with('mestype', 'error');
+            }
+            else
+            {
+                ////
+                ///  relations
+                ///
+                ///
+                $sid = $request->input('rel_sid');
+                $relations = $request->input('relations');
+                $subject_rel = $request->input('subject_rel');
+                //DB::table('subjects_rel')->where('sid1', $sid)->orWhere('sid2', $sid)->delete();
+                SubjectRel::where('sid1', $sid)->orWhere('sid2', $sid)->delete();
+                if(isset($subject_rel)){
+                    foreach ($subject_rel as $key => $value)
+                    {
+                        if (!empty($value))
+                        {
+                            if (isset($relations[$key]))
+                            {
+                                $relate = $relations[$key];
+                                if ($relate != '')
+                                {
+                                    if (substr($relate[0], 0, 1) == "D")
+                                    {
+                                        $relate = str_replace("D", '', $relate[0]);
+                                        //DB::table('subjects_rel')->insert(array('sid1' => $sid, 'sid2' => $sid2, 'rel' => $relate));
+                                        foreach ($value as $val)
+                                        {
+                                            $sid2 = $val;
+                                            $check = SubjectRel::where('sid1', $sid)
+                                                ->Where('sid2', $sid2)
+                                                ->Where('rel', $relate)
+                                                ->first();
+                                            if (count($check) == 0)
+                                            {
+                                                $subjectRel = new SubjectRel();
+                                                $subjectRel->sid1 = $sid;
+                                                $subjectRel->sid2 = $sid2;
+                                                $subjectRel->rel = $relate;
+                                                $subjectRel->save();
+                                            }
+                                        }
+                                    }
+                                    elseif (substr($relate[0], 0, 1) == "I")
+                                    {
+                                        $relate = str_replace("I", '', $relate[0]);
+                                        //DB::table('subjects_rel')->insert(array('sid1' => $sid2, 'sid2' => $sid, 'rel' => $relate));
+                                        foreach ($value as $val)
+                                        {
+                                            $sid2 = $val;
+                                            $check = SubjectRel::where('sid1', $sid2)
+                                                ->Where('sid2', $sid)
+                                                ->Where('rel', $relate)
+                                                ->first();
+
+                                            if (count($check) == 0)
+                                            {
+                                                $subjectRel = new SubjectRel();
+                                                $subjectRel->sid1 = $sid2;
+                                                $subjectRel->sid2 = $sid;
+                                                $subjectRel->rel = $relate;
+                                                $subjectRel->save();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }else{
+                    $message[] = 'روابط با موفقیت ویرایش شد';
+                }
+
+                $result=[];
+                if(isset($subjectRel)){
+                    $message[] = 'روابط با موفقیت ویرایش شد';
+                }else{
+                    $message[] = 'ویرایش روابط با مشکل مواجه شد . دوباره امتحان کنید.';
+                }
+                //return Redirect()->back()->with('message', $user)->with('mestype', 'success');
+            }
+            ////
+            ///  relations
+            ///
+
+
+
+            ////
+            ///  access
+            ///
+            $show = $request->input('show');
+            $sid = $request->input('access_sid');
+            $pid = $request->input('access_pid');
+            $subject_view = $request->input('subject_view');
+            $subject_search = $request->input('subject_search');
+            $admin_change = $request->input('admin_change');
+
+            $user = User::find($admin_change);
+            if ($user)
+            {
+                $subject = Subject::find($sid);
+                if ($subject)
+                {
+                    $subject->admin = $admin_change;
+                    $subject->save();
+                }
+            }
+
+
+            DB::table('tab_view')->where('sid', $sid)->delete();
+            if (is_array($show) && count($show) > 0)
+            {
+                foreach ($show as $key => $value)
+                {
+                    DB::table('tab_view')->insert(array('tabid' => $value, 'sid' => $sid));
+                }
+            }
+//            $subject = Subject::find($sid);
+            $subject->list = $subject_view;
+            $subject->search = $subject_search;
+            $subject->save();
+
+
+            if ($subject)
+            {
+
+                if ($request->input('users_list_setting_view'))
+                {
+                    $users_list_setting_view = $request->input('users_list_setting_view');
+                    foreach ($users_list_setting_view as $key => $value)
+                    {
+                        $users_list_setting_view_array[$value] = ['type' => '1'];
+                    }
+
+                    $subject->user_policies_view()->sync($users_list_setting_view_array);
+                }
+                else
+                {
+                    $subject->user_policies_view()->sync([]);
+                }
+
+                if ($request->input('roles_list_setting_view'))
+                {
+                    $roles_list_setting_view = $request->input('roles_list_setting_view');
+                    foreach ($roles_list_setting_view as $key => $value)
+                    {
+                        $roles_list_setting_view_array[$value] = ['type' => '1'];
+                    }
+                    $subject->role_policies_view()->sync($roles_list_setting_view_array);
+                }
+                else
+                {
+                    $subject->role_policies_view()->sync([]);
+                }
+
+
+                if ($request->input('users_list_setting_edit'))
+                {
+                    $users_list_setting_edit = $request->input('users_list_setting_edit');
+                    foreach ($users_list_setting_edit as $key => $value)
+                    {
+                        $users_list_setting_edit_array[$value] = ['type' => '2'];
+                    }
+                    $subject->user_policies_edit()->sync($users_list_setting_edit_array);
+                }
+                else
+                {
+                    $subject->user_policies_edit()->sync([]);
+                }
+
+                if ($request->input('roles_list_setting_edit'))
+                {
+                    $roles_list_setting_edit = $request->input('roles_list_setting_edit');
+                    foreach ($roles_list_setting_edit as $key => $value)
+                    {
+                        $roles_list_setting_edit_array[$value] = ['type' => '2'];
+                    }
+                    $subject->role_policies_edit()->sync($roles_list_setting_edit_array);
+                }
+                else
+                {
+                    $subject->role_policies_edit()->sync([]);
+                }
+            }
+            $message[] = trans('labels.subjectAccessOK');
+            ////
+            ///  access
+            ///
+
+            ////
+            ///  help
+            ////
+
+            $help_ids = [];
+            $target_type = $request->input('target_type');
+            $target_id = $request->input('target_id');
+            $help_items = $request->input('help_id');
+            if(is_array($help_items))
+            {
+                foreach ($help_items as $help_item)
+                {
+                    //$get_id = str_replace(['help_relation_add[', ']'], null, $help_item['name']);
+                    $help_ids[/*$get_id*/] = $help_item['value'];
+                }
+            }
+
+            $get_page = Pages::find($target_id);
+            if ($get_page)
+            {
+                if ($get_page->subject)
+                {
+                    $get_subject_id = $get_page->subject->id;
+                    $pages = Pages::where('sid', $get_subject_id)->select('id')->get();
+                    if ($pages)
+                    {
+                        foreach ($pages as $page_k => $page)
+                        {
+                            if (isset($help_ids[$page_k]))
+                            {
+                                if ($help_ids[$page_k])
+                                {
+                                    DB::table('hamahang_help_relations')
+                                        ->where('target_type', 'App\Models\hamafza\Pages')
+                                        ->where('target_id', $page->id)->delete();
+                                    DB::table('hamahang_help_relations')->insert
+                                    ([
+                                        'target_type' => 'App\Models\hamafza\Pages',
+                                        'target_id' => $page->id,
+                                        'help_id' => $help_ids[$page_k],
+                                        'created_by' => auth()->id(),
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            ///
+            ///  help
+            ///
+
+            ////
+            ///  bazzar
+            ///
+
+            $rfs = $request->responsible_for_sales_id;
+            $request->merge(['responsible_for_sales_id' => $rfs[0]]);
+            $validator = Validator::make
+            (
+                $request->all(),
+                [
+                    'id' => 'required',
+                    'subject_id' => 'required',
+                    'price' => 'required|integer|min:0',
+                    'discount' => 'required|integer|min:0',
+                    'tax' => 'required|integer|min:0|max:100',
+                    'responsible_for_sales_id' => 'required|integer',
+                    'weight' => 'required|integer|min:0',
+                    'size' => 'required|string',
+                    'shipping_cost' => 'required|integer|min:0',
+                    'maximum_delivery_time' => 'required|integer|min:0',
+                    'how_to_send' => 'required|integer',
+                    'count' => 'required|integer|min:0',
+                    'payment_methods' => 'required|array',
+                    //'ready_to_supply' => 'required',
+                    //'created_by' => 'required',
+                ]
+            );
+
+            if ($validator->fails())
+            {
+                $message[] = 'ویرایش اظلاعات بازار با عدم موفقیت همراه است';
+            }else{
+
+                $id = $request->input('id');
+                $subject_id = $request->input('subject_id');
+                $price = $request->input('price');
+                $discount = $request->input('discount');
+                $tax = $request->input('tax');
+                $responsible_for_sales_id = $request->input('responsible_for_sales_id');
+                $weight = $request->input('weight');
+                $size = $request->input('size');
+                $shipping_cost = $request->input('shipping_cost');
+                $maximum_delivery_time = $request->input('maximum_delivery_time');
+                $how_to_send = $request->input('how_to_send');
+                $count = $request->input('count');
+                $payment_methods = $request->input('payment_methods');
+                $description = $request->input('description');
+                $ready_to_supply = $request->input('ready_to_supply');
+
+                $spi = SubjectsProductInfo::find($id);
+                if (null == $spi)
+                {
+                    $spi = new SubjectsProductInfo();
+                }
+
+                $spi->subject_id = $subject_id;
+                $spi->price = $price;
+                $spi->discount = $discount;
+                $spi->tax = $tax;
+                $spi->responsible_for_sales_id = $responsible_for_sales_id;
+                $spi->weight = $weight;
+                $spi->size = $size;
+                $spi->shipping_cost = $shipping_cost;
+                $spi->maximum_delivery_time = $maximum_delivery_time;
+                $spi->how_to_send = $how_to_send;
+                $spi->count = $count;
+                $spi->payment_methods = implode(',', $payment_methods);
+                $spi->description = $description;
+                $spi->ready_to_supply = $ready_to_supply;
+                $spi->created_by = auth()->id();
+                $result = $spi->save();
+            }
         }
-        ///
+        $res['success'] = true;
+        $res['message'] = $message;
+        return json_encode($res);
     }
     static public function update(Request $request)
     {

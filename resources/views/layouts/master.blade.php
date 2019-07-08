@@ -514,7 +514,60 @@
                     //     });
                     //
                     // });
+                    $(document).on('click', '.all_btn', function () {
+                        var $this = $(this);
+                        var is_apply = $this.data('apply');
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('hamahang.subjects.update') }}",
+                            dataType: 'json',
+                            data: $('#form_subject_omomi').serialize(),
+                            success: function (data) {
+                                if (data.success == false) {
+                                    messageBox('error', '', data.error.subject_title, {'id': 'alert_setting_omomi'});
+                                } else {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "{{ route('hamafza.update_relations') }}",
+                                        dataType: 'json',
+                                        data: $('#form_subject_ravabet').serialize(),
+                                        success: function (theResponse) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "{{ route('hamafza.update_access') }}",
+                                                dataType: 'json',
+                                                data: $('#manager_form').serialize(),
+                                                success: function (theResponse) {
+                                                    $.ajax
+                                                    ({
+                                                        url: '{{ route('modals.help.relation.add') }}',
+                                                        type: 'post',
+                                                        data: data,
+                                                        dataType: 'json',
+                                                        success: function(response)
+                                                        {
+                                                            jQuery.noticeAdd({
+                                                                text: 'تغییرات با موفقیت انجام شد',
+                                                                stay: false,
+                                                                type: 'success'
+                                                            });
+                                                            jQuery.noticeAdd({type: response[0], text: response[1], stay: false});
+                                                            $('.jsglyph-close').click();
+                                                            // location.reload();
+                                                            return false;
 
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                    /*messageBox('success', '', data,{'id': 'alert_setting_omomi'},'hide_modal');*/
+//                    $('.jsglyph-close').click();
+                                }
+                            }
+                        });
+                    });
                     $(document).on('click', '.change-score-btn', function () {
                         $this = $(this);
                         var form_id = $this.data('form_id');

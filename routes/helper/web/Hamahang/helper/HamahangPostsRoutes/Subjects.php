@@ -1,5 +1,6 @@
 <?php
 Route::post('update', ['as' => 'hamahang.subjects.update', 'uses' => 'SubjectController@update', 'middleware' => ['dynamic_permission:posts.hamahang.subjects.update']]);
+Route::post('update_new', ['as' => 'hamahang.subjects.update_new', 'uses' => 'SubjectController@update_new', 'middleware' => ['dynamic_permission:posts.hamahang.subjects.update']]);
 Route::post('get_subjects', ['as' => 'hamahang.subjects.get_subjects', 'uses' => 'SubjectController@get_subjects', 'middleware' => ['dynamic_permission:posts.hamahang.subjects.get_subjects']]);
 Route::post('get_subjects_jsPanel', ['as' => 'hamahang.subjects.get_subjects_jsPanel', 'uses' => 'SubjectController@get_subjects_jsPanel', 'middleware' => ['dynamic_permission:posts.hamahang.subjects.get_subjects_jsPanel']]);
 Route::post('edit_subject_type', ['as' => 'hamahang.subjects.edit_subject_type', 'uses' => 'SubjectController@edit_subject_type', 'middleware' => ['dynamic_permission:posts.hamahang.subjects.edit_subject_type']]);

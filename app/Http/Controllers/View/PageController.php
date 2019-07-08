@@ -35,6 +35,7 @@ class PageController extends Controller
             $subject_rel = $request->input('subject_rel');
             //DB::table('subjects_rel')->where('sid1', $sid)->orWhere('sid2', $sid)->delete();
             SubjectRel::where('sid1', $sid)->orWhere('sid2', $sid)->delete();
+            $subjectRel = 0;
             if(isset($subject_rel)){
                 foreach ($subject_rel as $key => $value)
                 {

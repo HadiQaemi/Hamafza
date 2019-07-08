@@ -346,20 +346,26 @@
         {
             $('.HelpIcon').attr('href', '{{App::make('url')->to('/')}}/modals/helpview?code={{enCode('105')}}');
             $('.HelpIcon').show();
-            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" class="btn btn-primary omomi_btn" value="تایید " style=" float: left" name="addSubject" >');
+            // $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" class="btn btn-primary omomi_btn" value="تایید " style=" float: left" name="addSubject" >');
+            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" data-apply="apply" class="btn btn-primary all_btn" value="تایید و ادامه" style=" float: left" name="addSubject" >');
+            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" class="btn btn-primary all_btn" value="تایید " style=" float: left" name="addSubject" >');
         } else if ($idTab == 'ravabet')
         {
             $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=sAFaNZQ1JM0') !!}');
             $('.HelpIcon').show();
-            var ravabet_apply = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
-            var ravabet_save = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" value="تایید " style=" float: left" >';
+            // var ravabet_apply = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
+            // var ravabet_save = '<input type="submit" class="btn btn-primary btn-footer ravabet_btn" value="تایید " style=" float: left" >';
+            var ravabet_apply = '<input type="submit" class="btn btn-primary btn-footer all_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
+            var ravabet_save = '<input type="submit" class="btn btn-primary btn-footer all_btn" value="تایید " style=" float: left" >';
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(ravabet_apply + ravabet_save);
         } else if ($idTab == 'dasrasi')
         {
             $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=NU2JrTxdorE') !!}');
             $('.HelpIcon').show();
-            var dasrasi_apply = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
-            var dasrasi_save = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" value="تایید " style=" float: left" >';
+            // var dasrasi_apply = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
+            // var dasrasi_save = '<input type="submit" class="btn btn-primary btn-footer dasrasi_btn" value="تایید " style=" float: left" >';
+            var dasrasi_apply = '<input type="submit" class="btn btn-primary btn-footer all_btn" data-apply="apply" value="تایید و ادامه " style=" float: left" >';
+            var dasrasi_save = '<input type="submit" class="btn btn-primary btn-footer all_btn" value="تایید " style=" float: left" >';
             $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html(dasrasi_apply + dasrasi_save);
         } else if ($idTab == 'bazar')
         {
@@ -373,11 +379,15 @@
         {
             $('.HelpIcon').attr('href', '{!! url('/modals/helpview?code=Eam9v8FiPEA') !!}');
             $('.HelpIcon').show();
-            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit"  style=" float: left" value="تایید " class="btn btn-primary rahnama_btn">');
+            // $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit"  style=" float: left" value="تایید " class="btn btn-primary rahnama_btn">');
+            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit" data-apply="apply" style=" float: left" value="تایید و ادامه" class="btn btn-primary all_btn">');
+            $(this).parent().parent().parent().parent().parent().find('.jsPanel-ftr').html('<input type="submit"  style=" float: left" value="تایید " class="btn btn-primary all_btn">');
         }
     });
 
     $(document).click(function () {
+        $('.omomi_btn').off();
+
 
         $('.omomi_btn').off();
         $('.omomi_btn').click(function () {
