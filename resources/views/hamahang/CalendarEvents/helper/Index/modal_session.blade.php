@@ -171,7 +171,7 @@
                                 <div class="col-xs-1">
                                     <label>{{trans('calendar_events.keyword')}}</label>
                                 </div>
-                                <div class="col-xs-11">
+                                <div class="col-xs-9">
                                     <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                             data-placeholder="{{trans('calendar_events.ce_select_some_keywords')}}"
                                             multiple="multiple">
@@ -183,6 +183,12 @@
                                             @endif
                                         @endif
                                     </select>
+                                </div>
+                                <div class="col-xs-1 line-height-35">
+                                    {{trans('calendar_events.choose_color')}}
+                                </div>
+                                <div class="col-xs-1">
+                                    <input type='color' name='session_color' value='#3355cc' class="form-control" />
                                 </div>
                             </div>
 
@@ -223,10 +229,14 @@
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label><span>{{trans('calendar_events.ce_agenda_label')}}</span></label>
                                 </div>
-                                <div class="col-xs-11">
+                                <div class="col-xs-10">
                                     <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
                                 </div>
+                                <div class="col-xs-1">
+                                    <a class="fa fa-plus pointer line-height-35" id="add_agenda"></a>
+                                </div>
                             </div>
+                            <div class="col-xs-12 margin-top-20 hidden" id="agenda_list"></div>
                             <div class="col-xs-12 margin-top-20">
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>{{trans('calendar_events.ce_moda_session_modal_session_chief')}}</label>
@@ -283,7 +293,7 @@
                             </div>
                             <div class="col-xs-12 margin-top-20">
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
-                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_voting')}}</label>
+                                    <label>{{trans('calendar_events.users')}}</label>
                                 </div>
                                 <div class="col-xs-10">
                                     <select name="session_voting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_voting_users')}}" multiple>
@@ -306,7 +316,7 @@
                             </div>
                             <div class="col-xs-12 margin-top-20">
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
-                                    <label>{{trans('calendar_events.ce_moda_session_modal_session_notvoting')}}</label>
+                                    <label>{{trans('calendar_events.users')}}</label>
                                 </div>
                                 <div class="col-xs-10">
                                     <select name="session_notvoting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_notvoting_users')}}" multiple>
@@ -339,7 +349,8 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="form-check">
+                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35"></div>
+                                <div class="col-xs-11">
                                     <input name="send_Invitation" type="checkbox" id="send_Invitation" class="form-check-input" value="1" disabled>
                                     <label class="form-check-label" for="send_Invitation">{{trans('calendar_events.ce_send_Invitation')}}</label>
                                     <input name="create_session_page" type="checkbox" id="create_session_page" class="form-check-input" value="1">
@@ -423,6 +434,11 @@
             autoClose: true,
             format: 'YYYY-MM-DD',
 
+        });
+
+        $('#add_agenda').click(function () {
+            $('#agenda_list').append('<div class="col-xs-12 margin-top-10"><div class="col-xs-1"><input type="hidden" class="agendas" name="agendas[]" value="' + $('#agenda').val() + '" /></div><div class="col-xs-10">' + $('#agenda').val() + '</div><div class="col-xs-1"><a class="fa fa-remove remove-agenda pointer"></a></div></div>');
+            $('#agenda_list').removeClass('hidden');
         });
         // $(".DatePicker").val('');
         $(".TimePicker").persianDatepicker({

@@ -564,7 +564,8 @@
                 <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id().'&gid='.$params['sid'].'&type='.$type)}}" title="وظیفه جدید"></a>
             @endif
         @else
-            <a style="float: right;float: right;color: #fff;position: relative;top: 22px;margin-right: 12px;" class="jsPanels icon-moredi-2" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"></a>
+            <img style="width: 20px;float: right;float: right;color: #fff;position: relative;top: 15px;margin-right: 0px;" src="/img/task-icon-white.svg" class="jsPanels pointer" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"/>
+            <img style="width: 20px;float: right;float: right;color: #fff;position: relative;top: 15px;margin-right: 10px;" src="/img/task-icon-white-2.svg" class="jsPanels pointer" href="{{url('/modals/CreateNewTask?uid='.auth()->id())}}" title="وظیفه جدید"/>
         @endif
         @if ('[REMOVE]' != $help_code)
             <div class="btn-group help-btn" style="float: left;"><a href="{!! url("/modals/helpview?code=$help_code") !!}" title="راهنمای اینجا" class="jsPanels icon icon-help HelpIcons"></a></div>

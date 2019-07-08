@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/Packages/bootstrap/css/bootstrap-rtl.css')}}"/>
 <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/Packages/FontAwesome/css/font-awesome.css')}}"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/Content/css/spectrum.css"/>
 <link type="text/css" rel="stylesheet" href="{{URL::to('assets/Packages/PersianDateOrTimePicker/css/persian-datepicker-0.4.5.css')}}">
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/homslider/animate.css"/>
 <link rel="stylesheet" type="text/css" href="{{App::make('url')->to('/')}}/theme/homslider/bootslider.css"/>

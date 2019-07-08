@@ -1106,6 +1106,9 @@ function AddTags(Tid, Tname, val) {
 }
 
 //++++++++++++++++++++++++++++++++++++++++
+$(document).on("click", ".remove-agenda", function () {
+    $(this).parent().parent().remove();
+});
 $(document).on("click", ".jsPanels", function () {
     link = $(this).attr('href');
     title = $(this).attr('title');
