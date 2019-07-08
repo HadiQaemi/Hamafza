@@ -111,6 +111,8 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     /* ??? */Route::post('CreateNewProject', ['as' => 'modals.create_new_project', 'uses' => 'View\ModalController@CreateNewProject', 'middleware' => ['dynamic_permission:modals.create_new_project']]);
     /* ??? */Route::post('CreateNewProcess', ['as' => 'modals.create_new_process', 'uses' => 'View\ModalController@CreateNewProcess', 'middleware' => ['dynamic_permission:modals.create_new_process']]);
     /* ??? */Route::post('CreateNewCalendar', ['as' => 'modals.create_new_calendar', 'uses' => 'View\ModalController@CreateNewCalendar', 'middleware' => ['dynamic_permission:modals.create_new_calendar']]);
+    Route::post('addSessionModal', ['as' => 'hamahang.calendar_events.session_modal', 'uses' => 'Hamahang\CalendarEventsController@sessionModal', 'middleware' => ['dynamic_permission:posts.hamahang.calendar_events.session_modal']]);
+
     /* ??? */Route::post('BasicData_adssetting_view', ['as' => 'modals.BasicData_adssetting_view', 'uses' => 'View\ModalController@BasicData_adssetting_view', 'middleware' => ['dynamic_permission:modals.BasicData_adssetting_view']]);
     /* ??? */Route::post('BasicdataValueCreateEdit_adsettings', ['as' => 'modals.BasicdataValueCreateEdit_adsettings', 'uses' => 'View\ModalController@BasicdataValueCreateEdit_adsettings', 'middleware' => ['dynamic_permission:modals.BasicdataValueCreateEdit_adsettings']]);
     /* ??? */Route::post('BasicData_value_edit_view', ['as' => 'modals.basicdata_value_edit_view', 'uses' => 'View\ModalController@BasicData_value_edit_view', 'middleware' => ['dynamic_permission:modals.BasicData_value_edit_view']]);
