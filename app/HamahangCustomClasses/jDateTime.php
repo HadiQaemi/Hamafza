@@ -175,7 +175,7 @@ class jDateTime
 						$v = sprintf('%02d', $jday);
 						break;
 					case 'D':
-						$v = self::getDayNames($obj->format('D'), true);
+						$v = self::getDayNames($obj->format('D'), false);
 						break;
 					case 'j':
 						$v = $jday;
@@ -504,7 +504,7 @@ class jDateTime
 	 */
 	public static function getDayNames($day, $shorten = false, $len = 1, $numeric = false)
 	{
-		$days = array('sat' => array(1, 'شنبه'), 'sun' => array(2, 'یکشنبه'), 'mon' => array(3, 'دوشنبه'), 'tue' => array(4, 'سه شنبه'), 'wed' => array(5, 'چهارشنبه'), 'thu' => array(6, 'پنجشنبه'), 'fri' => array(7, 'جمعه'));
+		$days = array('sat' => array(1, 'شنبه'), 'sun' => array(2, 'یکشنبه'), 'mon' => array(3, 'دوشنبه'), 'tue' => array(4, 'سه‌شنبه'), 'wed' => array(5, 'چهارشنبه'), 'thu' => array(6, 'پنجشنبه'), 'fri' => array(7, 'جمعه'));
 		$day = substr(strtolower($day), 0, 3);
 		$day = $days[$day];
 		return ($numeric) ? $day[0] : (($shorten) ? self::substr($day[1], 0, $len) : $day[1]);

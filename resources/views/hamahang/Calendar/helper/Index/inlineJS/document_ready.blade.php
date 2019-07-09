@@ -1363,7 +1363,7 @@
         /*----------------------------------------------------------------------------------------*/
         /*-------------------------------------save  event of session modal---------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
-        $(document).on('click', '.saveSessionUserEvent', function () {
+        $(document).on('click', '.saveSessionUserEvents', function () {
             //alert('ffffffffffffffff');
             var do_again = $(this).attr('do_type');
             var saveObj = {};

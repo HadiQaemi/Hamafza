@@ -59,6 +59,24 @@
                     <div class="col-md-12">
                         <div class="">
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1 line-height-35">
+                                    <label>
+                                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                                    </label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select name="cid" class="chosen-rtl" multiple data-placeholder="{{trans('calendar_events.ce_modal_events_cid_field_lable')}}">
+                                        @if(!empty($form_data['hcid']))
+                                            @if(!empty($form_data['hcid']))
+                                                @foreach($form_data['hcid'] as $hcid)
+                                                    <option selected="selected" value="{{ $hcid->id }}">{{ $hcid->title }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1">
                                     <label>
                                         {{--<span class="required">*</span>--}}
@@ -75,6 +93,18 @@
                                     <input type="radio" name="session_type" id="session_type1" value="1" {{isset($form_data['type']) ? ($form_data['type']==2 ? 'checked' : '') : ''}}/><label for="session_type1"> {{trans('calendar_events.ce_modal_session_personal')}}</label>
                                 </div>
                             </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1 line-height-35">
+                                    <label><span>{{trans('calendar_events.ce_agenda_label')}}</span></label>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
+                                </div>
+                                <div class="col-xs-1">
+                                    <a class="fa fa-plus pointer line-height-35" id="add_agenda"></a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 margin-top-20 hidden" id="agenda_list"></div>
                             <div class="row col-lg-12 margin-top-20">
                                 <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noLeftPadding noRightPadding"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
                                 <div class="col-lg-11 noLeftPadding noRightPadding">
@@ -100,51 +130,44 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-1">
+                                <div class="col-xs-1 line-height-35">
                                     <label>{{trans('calendar_events.ce_place')}}</label>
                                 </div>
-                                <div class="col-xs-11">
+                                <div class="col-xs-7">
                                     <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}" />
+                                </div>
+                                <div class="pull-right line-height-35">
+                                    <label>{{trans('calendar_events.ce_modal_session_phone')}}</label>
+                                </div>
+                                <div class="pull-right">
+                                    <input type="text" class="form-control" name="location_phone" value="{{isset($form_data['location_phone']) ? $form_data['location_phone'] : ''}}" placeholder="{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1">
                                     <label class="line-height-30 pull-right">{{trans('calendar_events.ce_time_label')}}</label>
                                 </div>
-
-                                <div class="col-xs-9 noLeftPadding noRightPadding">
-                                    <div class="col-xs-4 noLeftPadding noRightPadding">
-                                        <div class="col-xs-3">
-                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_date_label')}}</label>
-                                        </div>
-                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
-                                            <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
-                                        </div>
+                                <div class="col-xs-11">
+                                    <div class="pull-right height-30 line-height-30">
+                                        <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
                                     </div>
-                                    <div class="col-xs-4 noLeftPadding noRightPadding">
-                                        <div class="col-xs-3">
-                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_startdate_label')}}</label>
-                                        </div>
-                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" name="starttime" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}" autocomplete="off" aria-describedby="starttime">
-                                        </div>
+                                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                                        <label for="determined-time">{{ trans('tasks.duration') }}</label>
                                     </div>
-                                    <div class="col-xs-4 noLeftPadding noRightPadding">
-                                        <div class="col-xs-3 noLeftPadding noRightPadding">
-                                            <label class="line-height-30 pull-right">{{trans('calendar_events.ce_enddate_label')}}</label>
-                                        </div>
-                                        <div class="col-sm-9 col-xs-10 noLeftPadding noRightPadding">
-                                            <input type="text" class="form-control TimePicker" placeholder="{{trans('calendar_events.ce_hour_label')}}" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}" name="endtime" autocomplete="off" aria-describedby="endtime">
-                                        </div>
+                                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                                        <input type="number" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act"  value="{{isset($form_data['term']) ? $form_data['term'] : ''}}" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
                                     </div>
-                                </div>
-                                <div class="col-xs-2">
-                                    <div class="col-xs-4 noLeftPadding noRightPadding">
-                                        <label class="line-height-30 pull-right">{{trans('calendar_events.ce_term_of_session')}}</label>
+                                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                                        <select class="form-control" id="action_duration_act_type">
+                                            <option value="ساعت">ساعت</option>
+                                            <option value="دقیقه">دقیقه</option>
+                                        </select>
                                     </div>
-                                    <div class="col-sm-8 col-xs-10 noLeftPadding noRightPadding">
-                                        <input type="text" class="form-control" placeholder="" name="term" aria-describedby="term" value="{{isset($form_data['term']) ? $form_data['term'] : ''}}">
-
+                                    <div class="pull-right height-30 line-height-30 margin-right-10">
+                                        <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
+                                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="starttime" name="starttime" aria-describedby="respite_time" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}">
+                                        <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
+                                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="endtime" name="endtime" aria-describedby="respite_time" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +211,7 @@
                                     {{trans('calendar_events.choose_color')}}
                                 </div>
                                 <div class="col-xs-1">
-                                    <input type='color' name='session_color' value='#3355cc' class="form-control" />
+                                    <input type="text" name="session_color" id="session_color" style="display: none;" class="form-control">
                                 </div>
                             </div>
 
@@ -207,36 +230,6 @@
                 <div id="s_form" class="tab-pane fade">
                     <div class="col-md-12">
                         <div class="">
-                            <div class="col-xs-12 margin-top-20">
-                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
-                                    <label>
-                                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
-                                    </label>
-                                </div>
-                                <div class="col-xs-11">
-                                    <select name="cid" class="chosen-rtl" multiple data-placeholder="{{trans('calendar_events.ce_modal_events_cid_field_lable')}}">
-                                        @if(!empty($form_data['hcid']))
-                                            @if(!empty($form_data['hcid']))
-                                                @foreach($form_data['hcid'] as $hcid)
-                                                    <option selected="selected" value="{{ $hcid->id }}">{{ $hcid->title }}</option>
-                                                @endforeach
-                                            @endif
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 margin-top-20">
-                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
-                                    <label><span>{{trans('calendar_events.ce_agenda_label')}}</span></label>
-                                </div>
-                                <div class="col-xs-10">
-                                    <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
-                                </div>
-                                <div class="col-xs-1">
-                                    <a class="fa fa-plus pointer line-height-35" id="add_agenda"></a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 margin-top-20 hidden" id="agenda_list"></div>
                             <div class="col-xs-12 margin-top-20">
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
                                     <label>{{trans('calendar_events.ce_moda_session_modal_session_chief')}}</label>
@@ -340,14 +333,6 @@
                             {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
                                 {{--<div id="map_canvas" class="col-md-12"></div>--}}
                             {{--</div>--}}
-                            <div class="col-xs-12 margin-top-20">
-                                <div class="col-xs-1 noLeftPadding noRightPadding line-height-35">
-                                    <label>{{trans('calendar_events.ce_modal_session_phone')}}</label>
-                                </div>
-                                <div class="col-xs-11">
-                                    <input type="text" class="form-control" name="location_phone" value="{{isset($form_data['location_phone']) ? $form_data['location_phone'] : ''}}" placeholder="{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}"/>
-                                </div>
-                            </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1 noLeftPadding noRightPadding line-height-35"></div>
                                 <div class="col-xs-11">
@@ -428,6 +413,23 @@
 
 
     <script>
+        $("#starttime").on('keyup', function() {
+            var starttime = $('#starttime').val().split(':');
+            starttime = parseInt(starttime[0])*60 + parseInt(starttime[1]);
+            var endtime = $('#endtime').val().split(':');
+            endtime = parseInt(endtime[0])*60 + parseInt(endtime[1]);
+            if(endtime > starttime)
+                $("#action_duration_act").val(Math.floor((endtime-starttime)/(parseInt($('#action_duration_act_type').val()=='ساعت' ? 60 : 1))));
+        });
+
+        $("#action_duration_act").on('keyup', function() {
+            var pe = new persianDate().subtract('milliseconds', 1000*$('#action_duration_act').val()*($('#action_duration_act_type').val()=='ساعت' ? 3600 : 60));
+            $("#starttime").val(parseArabic(pe.format('HH:mm')));
+        });
+        $("#action_duration_act_type").on('change', function() {
+            var pe = new persianDate().subtract('milliseconds', 1000*$('#action_duration_act').val()*($('#action_duration_act_type').val()=='ساعت' ? 3600 : 60));
+            $("#starttime").val(parseArabic(pe.format('HH:mm')));
+        });
         $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute; left: 40px; top: -3px;"><a href="{!! url('/modals/helpview?code=').enCode('350') !!}" title="راهنمای اینجا" class="jsPanels icon-help HelpIcon" style="float: left; padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
         $(".DatePicker").persianDatepicker({
 
@@ -673,7 +675,22 @@
                 }
             }
         });
-
+        $("#session_color").spectrum({
+            showPaletteOnly: true,
+            togglePaletteOnly: false,
+            togglePaletteLessText: 'less',
+            color: 'blanchedalmond',
+            palette: [
+                ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
+                ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
+                ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
+                ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
+                ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
+                ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
+                ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
+                ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
+            ]
+        });
     </script>
 
 {!! $HFM_CalendarEvent['UploadForm'] !!}

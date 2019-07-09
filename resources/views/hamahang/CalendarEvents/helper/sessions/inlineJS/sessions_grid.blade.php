@@ -89,7 +89,7 @@
                     {
                         data: 'rowIndex',
                         name: 'rowIndex' ,
-                        width :'10%'
+                        width :'5%'
                     },
                     {   data: 'agenda',
                         name: 'agenda' ,
@@ -102,7 +102,7 @@
                             // }
                             // else
                             // {
-                                return data;
+                                return '<span data-toggle="tooltip" data-html="true" title="' + data + '">' + data + '</span>';
                             // }
                         }
                     },
@@ -125,7 +125,7 @@
                     {
                         data: 'startdate',
                         name: 'startdate',
-                        width : '20%',
+                        width : '10%',
                         mRender :function(data, type, full)
                         {
                             var startdate = data.split(' ');
@@ -156,14 +156,14 @@
                         }
                     },
                     {
-                        data: 'title',
-                        name: 'title',
-                        width : '10%',
+                        data: 'location',
+                        name: 'location',
+                        width : '20%',
                         mRender :function(data, type, full)
                         {
                             if(data==null)
                                 data = '';
-                            if(data.length > 8)
+                            if(data.length > 15)
                             {
                                 return data.slice(0,8)+'...';
                             }
@@ -186,7 +186,7 @@
                                         '';
                             // if(full.showMinutesDailog==true)
                             // {
-                            actions += '<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' title='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' style="margin: 2px" onclick="minutesDailog('+full.id+')" href="#"><i class="fa fa-building-o"></i></a>';
+                            {{--actions += '<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' title='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' style="margin: 2px" onclick="minutesDailog('+full.id+')" href="#"><i class="fa fa-building-o"></i></a>';--}}
                             // }
                             actions +='<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteEvent('+full.id+')" href="#"><i class="fa fa-close"></i></a>';
                             return actions;

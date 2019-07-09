@@ -962,7 +962,7 @@ class MyAssignedTaskController extends Controller
                 }
                 else
                 {
-                    $respite_days = $respite_days[0]['day_no'];
+                    $respite_days = $respite_days[0]['day_no'] + 1;
                     $bg = 'bg_green';
                 }
                 return ['bg'=>$bg,'respite_days'=>$respite_days,'gdate'=>$r['year'].'/'.$r['mon'].'/'.$r['mday']];
