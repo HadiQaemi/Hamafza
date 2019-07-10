@@ -700,12 +700,18 @@ class MyTaskController extends Controller
             ->addColumn('respite', function ($data) use ($date)
             {
                 $date = new jDateTime;
+
                 if($data->task_status>1)
                 {
                     $task_action = task_action::where('task_id', '=', $data->id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->first();
-                    $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
-//                    dd($data,$task_action->created_at);
-                    $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp, strtotime($task_action->created_at));
+                    if($task_action != null)
+                    {
+                        $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                        $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp, strtotime($task_action->created_at));
+                    }else{
+                        $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
+                        $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
+                    }
                 }else{
                     $r = $date->getdate(strtotime($data->schedule_time) + $data->duration_timestamp);
                     $respite_days = hamahang_respite_remain(strtotime($data->schedule_time), $data->duration_timestamp);
