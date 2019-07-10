@@ -25,9 +25,24 @@ class Session_Events extends Model
         return $this->hasOne('App\User','id','session_facilitator');
     }
 
-    function agenda()
+    function agendas()
     {
-        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_Agenda','id','session_id');
+        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_Agenda','session_id','id');
+    }
+
+    function calendars()
+    {
+        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_Calendars','session_id','id');
+    }
+
+    function keywords()
+    {
+        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_keywords','session_id','id');
+    }
+
+    function members()
+    {
+        return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_Members','session_id','id');
     }
 
 }

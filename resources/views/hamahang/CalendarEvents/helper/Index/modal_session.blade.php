@@ -66,7 +66,7 @@
                                     </label>
                                 </div>
                                 <div class="col-xs-8">
-                                    <input name="title" id="session_title" class="form-control" placeholder="{{trans('calendar_events.ce_modal_events_title_field_lable')}}" value="{{isset($form_data['htitle']) ? $form_data['htitle'] : ''}}">
+                                    <input name="title" id="session_title" class="form-control" placeholder="{{trans('calendar_events.ce_modal_events_title_field_lable')}}" value="{{isset($session['title']) ? $session['title'] : ''}}">
 {{--                                    <input type="hidden" {{isset($form_data['htitle']) ? 'name=event_id value='.$form_data["session_id"].'' : ''}}>--}}
                                     <input name="event_type" type="hidden" class="form-control" placeholder="">
                                 </div>

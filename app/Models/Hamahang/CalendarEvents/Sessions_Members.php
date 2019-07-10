@@ -10,6 +10,7 @@ class Sessions_Members extends Model
     use SoftDeletes;
     protected $table = "hamahang_calendar_sessions_members";
     protected $dates = ['deleted_at'];
+    protected $guarded = [];
 
 
 }

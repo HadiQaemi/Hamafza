@@ -10,6 +10,6 @@ class Sessions_keywords extends Model
     use SoftDeletes;
     protected $table = "hamahang_calendar_sessions_keywords";
     protected $dates = ['deleted_at'];
-
+    protected $guarded = [];
 
 }

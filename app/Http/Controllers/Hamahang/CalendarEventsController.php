@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Hamahang;
 use App\Models\hamafza\Pages;
 use app\Models\Hamahang\CalendarEvents\Sessions_Agenda;
 use app\Models\Hamahang\CalendarEvents\Sessions_Calendars;
+use App\Models\Hamahang\Tasks\hamahang_subject_ables;
 use DB;
 use Auth;
 use Request;
@@ -519,9 +520,8 @@ class CalendarEventsController extends Controller
                 {
                     foreach (Request::get('agendas') as $agenda)
                     {
-                        $sessionObj->agenda()->create([
-                            'session_id' => $sessionObj->id,
-                            'title' => $agenda,
+                        $sessionObj->agendas()->create([
+                            'agenda' => $agenda,
                             'uid' => $uid
                         ]);
                     }
@@ -530,8 +530,7 @@ class CalendarEventsController extends Controller
                 {
                     foreach (Request::get('hcid') as $cid)
                     {
-                        Sessions_Calendars::create([
-                            'session_id' => $sessionObj->id,
+                        $sessionObj->calendars()->create([
                             'cid' => $cid,
                             'uid' => $uid
                         ]);
@@ -541,8 +540,8 @@ class CalendarEventsController extends Controller
                 {
                     foreach (Request::get('keywords') as $keyword)
                     {
-                        Sessions_keywords::create([
-                            'session_id' => $sessionObj->id,
+                        $keyword = str_replace('exist_in', '', $keyword);
+                        $sessionObj->keywords()->create([
                             'keyword_id' => $keyword,
                             'uid' => $uid
                         ]);
@@ -552,9 +551,8 @@ class CalendarEventsController extends Controller
                 {
                     foreach (Request::get('session_voting_users') as $user)
                     {
-                        Sessions_Members::create([
-                            'session_id' => $sessionObj->id,
-                            'session_id' => $user,
+                        $sessionObj->members()->create([
+                            'user_id' => $user,
                             'user_type' => 1,
                             'uid' => $uid
                         ]);
@@ -564,9 +562,8 @@ class CalendarEventsController extends Controller
                 {
                     foreach (Request::get('session_notvoting_users') as $user)
                     {
-                        Sessions_Members::create([
-                            'session_id' => $sessionObj->id,
-                            'session_id' => $user,
+                        $sessionObj->members()->create([
+                            'user_id' => $user,
                             'user_type' => 2,
                             'uid' => $uid
                         ]);
@@ -574,9 +571,8 @@ class CalendarEventsController extends Controller
                 }
                 if (Request::exists('session_facilitator'))
                 {
-                    Sessions_Members::create([
-                        'session_id' => $sessionObj->id,
-                        'session_id' => $user,
+                    $sessionObj->members()->create([
+                        'user_id' => $user,
                         'user_type' => 3,
                         'uid' => $uid
                     ]);
@@ -584,9 +580,8 @@ class CalendarEventsController extends Controller
 
                 if (Request::exists('session_secretary'))
                 {
-                    Sessions_Members::create([
-                        'session_id' => $sessionObj->id,
-                        'session_id' => $user,
+                    $sessionObj->members()->create([
+                        'user_id' => $user,
                         'user_type' => 4,
                         'uid' => $uid
                     ]);
@@ -594,9 +589,8 @@ class CalendarEventsController extends Controller
 
                 if (Request::exists('session_chief'))
                 {
-                    Sessions_Members::create([
-                        'session_id' => $sessionObj->id,
-                        'session_id' => $user,
+                    $sessionObj->members()->create([
+                        'user_id' => $user,
                         'user_type' => 5,
                         'uid' => $uid
                     ]);
@@ -1716,62 +1710,10 @@ class CalendarEventsController extends Controller
         $form_data = '';
         if(Request::input('mode')=='editSession')
         {
+            $session = Session_Events::whereId(Request::input('id'))->with('keywords','members','calendars','agendas')->get();
             $btn= 'editSession';
-            $session = Session_Events::where('hamahang_calendar_sessions_events.id', '=', Request::input('id'))->first();
-            Session::put('id_session_edit_form',Request::input('id'));
-            $form_data = unserialize($session->form_data);
-            $form_data["session_id"] = Request::input('id');
             $title = trans('calendar_events.ce_modal_session_header_edit_title');
-            $session_pages = preg_split('/,/',$form_data['session_pages']);
-
-            if($form_data['session_pages']){
-                $data = DB::table('pages')
-                    ->join('subjects', 'subjects.id', '=', 'pages.sid')
-                    ->whereIn('pages.id', $session_pages)
-                    ->select('subjects.title as title', 'pages.id')
-                    ->get()->toArray();
-                $form_data['session_pages'] = $data;
-            }
-            if($form_data['hcid']){
-                $list = DB::table("hamahang_calendar")
-                    ->select('id', 'title', 'is_default')
-                    ->where('hamahang_calendar.id', '=', $form_data['hcid'])
-                    ->get()->toArray();
-                $form_data['hcid'] = $list;
-            }
-            if($form_data['session_chief']){
-                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                    ->where("id", "=", $form_data['session_chief'])
-                    ->get()->toArray();
-                $form_data['session_chief'] = $usermodel;
-            }
-            if($form_data['session_secretary']){
-                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                    ->where("id", "=", $form_data['session_secretary'])
-                    ->get()->toArray();
-                $form_data['session_secretary'] = $usermodel;
-            }
-            if($form_data['session_facilitator']){
-                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                    ->where("id", "=", $form_data['session_facilitator'])
-                    ->get()->toArray();
-                $form_data['session_facilitator'] = $usermodel;
-            }
-            $session_voting_users = preg_split('/,/',$form_data['session_voting_users']);
-            if($form_data['session_voting_users']){
-                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                    ->whereIn("id", $session_voting_users)
-                    ->get()->toArray();
-                $form_data['session_voting_users'] = $usermodel;
-            }
-            $session_notvoting_users = preg_split('/,/',$form_data['session_notvoting_users']);
-            if($form_data['session_notvoting_users']){
-                $usermodel = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
-                    ->whereIn("id", $session_notvoting_users)
-                    ->get()->toArray();
-                $form_data['session_notvoting_users'] = $usermodel;
-            }
-//            dd($form_data);
+            $form_data['save_type'] = $btn;
         }else{
             $btn='session';
             $title = trans("calendar_events.ce_modal_session_header_title");
@@ -1779,7 +1721,7 @@ class CalendarEventsController extends Controller
         $HFM_CalendarEvent = HFM_GenerateUploadForm([['CalendarEvent', ['doc', 'docx', 'pdf', 'rar', 'zip', 'tar.gz', 'gz'], 'Multi']]);
         return json_encode([
             'header'=>$title,
-            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_session')->with('HFM_CalendarEvent',$HFM_CalendarEvent)->with('form_data',$form_data)->render(),
+            'content'=>view('hamahang.CalendarEvents.helper.Index.modal_session')->with('HFM_CalendarEvent',$HFM_CalendarEvent)->with('session',$session)->render(),
             'footer'=>view('hamahang.CalendarEvents.helper.Index.modal_buttons')->with('btn_type',$btn)->with('form_data',$form_data)->render()
         ]);
 

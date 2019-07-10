@@ -318,8 +318,6 @@
                 <script>
                     //add by hadi
                     $(document).on('click', '.saveSessionUserEvent', function () {
-                        alert($('.agendas').map(function(){return $(this).val();}).get());
-                        console.log($('.agendas').map(function(){return $(this).val();}).get());
                         var do_again = $(this).attr('do_type');
                         var saveObj = {};
                         var cid = 0;
@@ -329,15 +327,17 @@
                         //console.log($('#' + form_id + ' select[name="cid"]').val());
                         saveObj.htitle = $('#' + form_id + ' input[name="title"]').val();
                         saveObj.event_type = $('#' + form_id + ' input[name="event_type"]').val();
-                        saveObj.session_pages = $('select[name="new_session_pages[]"]').select().val().toString();
+                        saveObj.agendas = $('#' + form_id + ' .agendas').map(function(){return $(this).val()}).get();
                         saveObj.description = $('#' + form_id + ' textarea[name="descriotion"]').val();
                         saveObj.hstartdate = $('#' + form_id + ' input[name="startdate"]').val();
                         saveObj.starttime = $('#' + form_id + ' input[name="starttime"]').val();
                         saveObj.henddate = $('#' + form_id + ' input[name="enddate"]').val();
                         saveObj.endtime = $('#' + form_id + ' input[name="endtime"]').val();
-                        saveObj.term = $('input[name="term"]').val();
-                        saveObj.hlocation = $('textarea[name="location"]').val();
+                        saveObj.term = $('#' + form_id + ' input[name="term"]').val();
+                        saveObj.hlocation = $('#' + form_id + ' input[name="location"]').val();
                         saveObj.hcid = $('#' + form_id + ' select[name="cid"]').val();
+                        saveObj.session_pages = $('#' + form_id + ' select[name="new_session_pages[]"]').val();
+                        saveObj.keywords = $('#' + form_id + ' select[name="keywords[]"]').val();
 
 
                         ///////////////////////////////////////////////
@@ -358,21 +358,19 @@
                         ///////////////////////////////////////////////
                         // Session Data
                         // sessionObj = {};
-                        saveObj.hagenda = $('#agenda').val();
-                        saveObj.agendas = $('input[name="agendas[]"]').val();
-                        saveObj.session_color = $('input[name="session_color"]').val();
-                        saveObj.session_chief = $('select[name="session_chief"]').select().val();
-                        saveObj.session_secretary = $('select[name="session_secretary"]').select().val();
-                        saveObj.session_facilitator = $('select[name="session_facilitator"]').select().val();
-                        saveObj.session_voting_users = $('select[name="new_session_save_type[]"]').select().val();
-                        saveObj.session_voting_users = $('select[name="session_voting_users[]"]').select().val().toString();
-                        saveObj.session_notvoting_users = $('select[name="session_notvoting_users[]"]').select().val().toString();
+                        saveObj.hagenda = $('#' + form_id + ' #agenda').val();
+                        saveObj.session_color = $('#' + form_id + ' input[name="session_color"]').val();
+                        saveObj.session_chief = $('#' + form_id + ' select[name="session_chief"]').select().val();
+                        saveObj.session_secretary = $('#' + form_id + ' select[name="session_secretary"]').select().val();
+                        saveObj.session_facilitator = $('#' + form_id + ' select[name="session_facilitator"]').val();
+                        saveObj.session_voting_users = $('#' + form_id + ' select[name="session_voting_users[]"]').val();
+                        saveObj.session_notvoting_users = $('#' + form_id + ' select[name="session_notvoting_users[]"]').val();
                         saveObj.save_type = $('input[name="new_session_save_type"]').val();
-                        saveObj.long = $('input[name="long"]').val();
-                        saveObj.lat = $('input[name="lat"]').val();
-                        saveObj.type = $('input[name="session_type"]:checked').val();
-                        saveObj.location_phone = $('input[name="location_phone"]').val();
-                        saveObj.coordination_phone = $('input[name="coordination_phone"]').val();
+                        saveObj.long = $('#' + form_id + ' input[name="long"]').val();
+                        saveObj.lat = $('#' + form_id + ' input[name="lat"]').val();
+                        saveObj.type = $('#' + form_id + ' input[name="session_type"]:checked').val();
+                        saveObj.location_phone = $('#' + form_id + ' input[name="location_phone"]').val();
+                        saveObj.coordination_phone = $('#' + form_id + ' input[name="coordination_phone"]').val();
                         // saveObj.hevent_id = result.event.id;
                         saveObj.mode = 'edit';
                         if ($('input[name="mode"]').length) {
@@ -416,7 +414,7 @@
 
                                     if(do_again=='close-form')
                                     {
-                                        sessionModal.close();
+                                        $('.jsPanel-btn-close').click();
 
                                     }else{
                                         $('.sessionForm input').val('');

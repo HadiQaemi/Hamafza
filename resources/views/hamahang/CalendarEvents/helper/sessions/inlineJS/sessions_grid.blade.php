@@ -184,7 +184,8 @@
                         width : '10%',
                         mRender :function (data, type, full)
                         {
-                            var actions ='<a class="cls3 margin-right-10"   alt='+'{{trans('calendar_events.ce_edit_label')}}'+' title='+'{{trans('calendar_events.ce_edit_label')}}'+' style="margin: 2px" onclick="editEvent('+full.id+')" href="#"><i class="fa fa-edit"></i></a>'+
+                            var actions =
+                                "<a class='cursor-pointer jsPanels white-space' href='/CalendarEvents/sessionModal?mode=editSession&id="+full.id+"' data-toggle='tooltip'  data-html='true' ><i class='fa fa-edit'></i></a>" +
                                     {{--var actions ='<a class="cls3 margin-right-10"   alt='+'{{trans('calendar_events.ce_edit_label')}}'+' title='+'{{trans('calendar_events.ce_edit_label')}}'+' style="margin: 2px" onclick="editEvent('+full.id+','+full.type+')" href="#"><i class="fa fa-edit"></i></a>'+--}}
                                             {{--'<a class="cls3"   alt='+'{{trans('calendar_events.ce_events_grid_add_reminder')}}'+' title='+'{{trans('calendar_events.ce_events_grid_add_reminder')}}'+' style="margin: 2px" onclick="addReminder('+full.id+')" href="#"><i class="fa fa-bell-o"></i></a>';--}}
                                         '';
