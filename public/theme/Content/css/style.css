@@ -4307,6 +4307,7 @@ input::-webkit-inner-spin-button {
     padding: 1px;
 }
 .sp-replacer{
+    border: none;
+    width: 55px;
     padding: 5px;
-    border-radius: 5px;
 }

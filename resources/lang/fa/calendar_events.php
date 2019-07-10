@@ -39,6 +39,7 @@ return [
     'ce_term_of_session'=>'مدت',
     'ce_location'=>'مکان تشکیل جلسه',
     'ce_place'=>'مکان',
+    'ce_role'=>'نقش',
     'choose_color'=>'انتخاب رنگ',
     'keyword'=>'کلیدواژه',
     'ce_longitute'=>'طول جغرافیایی',

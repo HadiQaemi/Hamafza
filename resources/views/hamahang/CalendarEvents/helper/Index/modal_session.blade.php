@@ -59,24 +59,6 @@
                     <div class="col-md-12">
                         <div class="">
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
-                                <div class="col-xs-1 line-height-35">
-                                    <label>
-                                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
-                                    </label>
-                                </div>
-                                <div class="col-xs-11">
-                                    <select name="cid" class="chosen-rtl" multiple data-placeholder="{{trans('calendar_events.ce_modal_events_cid_field_lable')}}">
-                                        @if(!empty($form_data['hcid']))
-                                            @if(!empty($form_data['hcid']))
-                                                @foreach($form_data['hcid'] as $hcid)
-                                                    <option selected="selected" value="{{ $hcid->id }}">{{ $hcid->title }}</option>
-                                                @endforeach
-                                            @endif
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1">
                                     <label>
                                         {{--<span class="required">*</span>--}}
@@ -105,30 +87,6 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 margin-top-20 hidden" id="agenda_list"></div>
-                            <div class="row col-lg-12 margin-top-20">
-                                <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noLeftPadding noRightPadding"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
-                                <div class="col-lg-11 noLeftPadding noRightPadding">
-                                    <div id="for-desc">
-                                        <div class="row col-lg-12 header">
-                                            <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
-                                            <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
-                                        </div>
-                                        <div class="row main-desc">
-                                            <textarea class="form-control row content_tab_text content_tab" name="descriotion" id="desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{isset($form_data['description']) ? $form_data['description'] : ''}}</textarea>
-                                            <div class="content_tab_view content_tab hidden">{{isset($form_data['description']) ? $form_data['description'] : ''}}</div>
-                                        </div>
-                                        <div class="filemanager-buttons-client pull-right bottom-desc">
-                                            <label for="fileToUpload" class="pointer">
-                                                <input type="file" class="fileToUpload form-control" style="display: none;" id="fileToUpload"/>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
-                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
-                                                </svg>
-                                                <div class="display-inline">{{trans('app.add_file')}}</div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1 line-height-35">
                                     <label>{{trans('calendar_events.ce_place')}}</label>
@@ -171,6 +129,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
+                                <div class="col-xs-1 line-height-35">
+                                    <label>
+                                        {{trans('calendar_events.ce_modal_events_cid_field_lable')}}
+                                    </label>
+                                </div>
+                                <div class="col-xs-11">
+                                    <select name="cid" class="chosen-rtl" multiple data-placeholder="{{trans('calendar_events.ce_modal_events_cid_field_lable')}}">
+                                        @if(!empty($form_data['hcid']))
+                                            @if(!empty($form_data['hcid']))
+                                                @foreach($form_data['hcid'] as $hcid)
+                                                    <option selected="selected" value="{{ $hcid->id }}">{{ $hcid->title }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row col-lg-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-lg-1">
                                     <label class="line-height-35">
@@ -207,14 +183,34 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-xs-1 line-height-35">
-                                    {{trans('calendar_events.choose_color')}}
-                                </div>
-                                <div class="col-xs-1">
+                                <div class="col-xs-2">
                                     <input type="text" name="session_color" id="session_color" style="display: none;" class="form-control">
                                 </div>
                             </div>
-
+                            <div class="row col-lg-12 margin-top-20">
+                                <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 noLeftPadding noRightPadding"><label class="line-height-35">{{ trans('tasks.description') }}</label></div>
+                                <div class="col-lg-11 noLeftPadding noRightPadding">
+                                    <div id="for-desc">
+                                        <div class="row col-lg-12 header">
+                                            <span class="pointer tab_desc active tab_text" rel="tab_text">{{trans('app.text')}}</span>
+                                            <span class="pointer tab_desc tab_view" rel="tab_view">{{trans('app.view')}}</span>
+                                        </div>
+                                        <div class="row main-desc">
+                                            <textarea class="form-control row content_tab_text content_tab" name="descriotion" id="desc" placeholder="{{ trans('tasks.description') }}" cols="30" rows="4">{{isset($form_data['description']) ? $form_data['description'] : ''}}</textarea>
+                                            <div class="content_tab_view content_tab hidden">{{isset($form_data['description']) ? $form_data['description'] : ''}}</div>
+                                        </div>
+                                        <div class="filemanager-buttons-client pull-right bottom-desc">
+                                            <label for="fileToUpload" class="pointer">
+                                                <input type="file" class="fileToUpload form-control" style="display: none;" id="fileToUpload"/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                </svg>
+                                                <div class="display-inline">{{trans('app.add_file')}}</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {{--<div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">--}}
                                 {{--<div class="col-xs-2">--}}
                                     {{--<label class="form-check-label">{{trans('calendar_events.ce_allday_label')}}</label>--}}

@@ -86,13 +86,8 @@
                     data: send_info
                 },
                 columns: [
-                    {
-                        data: 'rowIndex',
-                        name: 'rowIndex' ,
-                        width :'5%'
-                    },
-                    {   data: 'agenda',
-                        name: 'agenda' ,
+                    {   data: 'title',
+                        name: 'title' ,
                         width : '20%',
                         mRender :function(data, type, full)
                         {
@@ -171,6 +166,15 @@
                             {
                                 return data;
                             }
+                        }
+                    },
+                    {
+                        data: 'location',
+                        name: 'location',
+                        width : '10%',
+                        mRender :function(data, type, full)
+                        {
+                            return 'ایجاد کننده';
                         }
                     },
                     { data: 'action',
