@@ -425,10 +425,10 @@ class UserController extends Controller {
     }
 
     public function portals() {
-        $user = getUser();
+        /*$user = getUser();
         if (!isset($user->id)) {
             return $user;
-        }
+        }*/
         $subject_types = ['public' => 'رسمی', 'private' => 'شخصی',];
         $term = trim(Request::input('term'));
         $subjects['public'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '1')->where('list', '1')->where('archive', '0');
