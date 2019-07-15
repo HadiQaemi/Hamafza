@@ -12,4 +12,8 @@ class Sessions_keywords extends Model
     protected $dates = ['deleted_at'];
     protected $guarded = [];
 
+    public function keyword(){
+        return $this->belongsTo('App\Models\hamafza\Keyword', 'keyword_id', 'id');
+    }
+
 }

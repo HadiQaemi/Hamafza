@@ -102,52 +102,31 @@
                         }
                     },
                     {
-                        data: 'startdate',
-                        name: 'startdate',
+                        data: 'date',
+                        name: 'date',
                         width : '20%',
                         mRender :function(data, type, full)
                         {
-                            var startdate = data.split(' ');
-                            // if(startdate[1]=='00:00:00')
-                            // {
-                            //     startdate[1] ='------';
-                            // }
-                            return  '<table class=col-xs-12"><tr>' +
-                                '<td class="col-xs-6"> <spane>'+startdate[0]+'</span></td>'+
-                                '</tr></table>';
+                            return  full.date;
                         }
                     },
                     {
-                        data: 'startdate',
-                        name: 'startdate',
+                        data: 'starttime',
+                        name: 'starttime',
                         width : '10%',
                         mRender :function(data, type, full)
                         {
-                            var startdate = data.split(' ');
-                            // if(startdate[1]=='00:00:00')
-                            // {
-                            //     startdate[1] ='------';
-                            // }
-                            return  '<table class=col-xs-12"><tr>' +
-                                '<td class="col-xs-6"> <spane>'+startdate[1]+'</span></td>'+
-                                '</tr></table>';
+                            return full.starttime;
                         }
                     },
                     {
-                        data: 'enddate',
-                        name: 'enddate',
+                        data: 'endtime',
+                        name: 'endtime',
                         width : '10%',
                         mRender :function(data, type, full)
                         {
-                            // alert(data);
-                            var enddate = data.split(' ');
-                            // if(enddate[1]=='00:00:00')
-                            // {
-                            //     enddate[1] ='------';
-                            // }
-                                return  '<table class=col-xs-12"><tr>' +
-                                    '<td class="col-xs-12"> <spane>'+enddate[1]+'</span></td>'+
-                                    '</tr></table>';
+
+                            return full.endtime;
                         }
                     },
                     {

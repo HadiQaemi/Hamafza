@@ -65,6 +65,12 @@
                                         {{trans('calendar_events.ce_modal_events_title_field_lable')}}
                                     </label>
                                 </div>
+                                @if(isset($session['title']))
+                                    <input name="mode" id="mode" type="hidden" class="form-control" value="edit">
+                                    <input name="sid" id="sid" type="hidden" class="form-control" value="{{enCode($session->id)}}">
+                                @else
+                                    <input name="mode" id="mode" type="hidden" class="form-control" value="insert">
+                                @endif
                                 <div class="col-xs-8">
                                     <input name="title" id="session_title" class="form-control" placeholder="{{trans('calendar_events.ce_modal_events_title_field_lable')}}" value="{{isset($session['title']) ? $session['title'] : ''}}">
 {{--                                    <input type="hidden" {{isset($form_data['htitle']) ? 'name=event_id value='.$form_data["session_id"].'' : ''}}>--}}
@@ -80,25 +86,31 @@
                                     <label><span>{{trans('calendar_events.ce_agenda_label')}}</span></label>
                                 </div>
                                 <div class="col-xs-10">
-                                    <input type="text" name="agenda" id="agenda" value="{{isset($form_data['hagenda']) ? $form_data['hagenda'] : ''}}" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
+                                    <input type="text" name="agenda" id="agenda" value="" class="form-control" placeholder="{{trans('calendar_events.ce_agenda_label')}}"/>
                                 </div>
                                 <div class="col-xs-1">
                                     <a class="fa fa-plus pointer line-height-35" id="add_agenda"></a>
                                 </div>
                             </div>
-                            <div class="col-xs-12 margin-top-20 hidden" id="agenda_list"></div>
+                            <div class="col-xs-12 margin-top-20 {{isset($session->agendas) ? (count($session->agendas)>0 ? '' : 'hidden') : ''}}" id="agenda_list">
+                                @if(isset($session->agendas))
+                                    @foreach($session->agendas as $agenda)
+                                        <div class="col-xs-12 margin-top-10"><div class="col-xs-1"><input type="hidden" class="agendas" name="agendas[]" value="{{$agenda->agenda}}"></div><div class="col-xs-10">{{$agenda->agenda}}</div><div class="col-xs-1"><a class="fa fa-remove remove-agenda pointer"></a></div></div>
+                                    @endforeach
+                                @endif
+                            </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
                                 <div class="col-xs-1 line-height-35">
                                     <label>{{trans('calendar_events.ce_place')}}</label>
                                 </div>
                                 <div class="col-xs-7">
-                                    <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($form_data['hlocation']) ? $form_data['hlocation'] : ''}}" />
+                                    <input name="location" class="form-control" placeholder="{{trans('calendar_events.ce_location')}}" value="{{isset($session->location) ? $session->location : ''}}" />
                                 </div>
                                 <div class="pull-right line-height-35">
                                     <label>{{trans('calendar_events.ce_modal_session_phone')}}</label>
                                 </div>
                                 <div class="pull-right">
-                                    <input type="text" class="form-control" name="location_phone" value="{{isset($form_data['location_phone']) ? $form_data['location_phone'] : ''}}" placeholder="{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}"/>
+                                    <input type="text" class="form-control" name="location_phone" value="{{isset($session->location_phone) ? $session->location_phone : ''}}" placeholder="{{trans('calendar_events.ce_modal_session_coordination_phone_phone')}}"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 noLeftPadding noRightPadding margin-top-20">
@@ -107,25 +119,25 @@
                                 </div>
                                 <div class="col-xs-11">
                                     <div class="pull-right height-30 line-height-30">
-                                        <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="2018-7-12" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
+                                        <input type="text" class="form-control DatePicker clsDatePicker" name="startdate" value="{{isset($session->date) ? $session->date : ''}}" autocomplete="off" placeholder="{{trans('calendar_events.ce_date_label')}}" aria-describedby="startdate-session">
                                     </div>
                                     <div class="pull-right height-30 line-height-30 margin-right-10">
                                         <label for="determined-time">{{ trans('tasks.duration') }}</label>
                                     </div>
                                     <div class="pull-right height-30 line-height-30 margin-right-10">
-                                        <input type="number" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act"  value="{{isset($form_data['term']) ? $form_data['term'] : ''}}" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
+                                        <input type="number" class="form-control border-radius" style="display: inline;width: 50px;" id="action_duration_act"  value="{{isset($session->date) ? $session->date : ''}}" name="action_duration_act" placeholder="{{ trans('tasks.duration') }}" aria-describedby="respite_date">
                                     </div>
                                     <div class="pull-right height-30 line-height-30 margin-right-10">
                                         <select class="form-control" id="action_duration_act_type">
-                                            <option value="ساعت">ساعت</option>
-                                            <option value="دقیقه">دقیقه</option>
+                                            <option value="60">ساعت</option>
+                                            <option value="1">دقیقه</option>
                                         </select>
                                     </div>
                                     <div class="pull-right height-30 line-height-30 margin-right-10">
                                         <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
-                                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="starttime" name="starttime" aria-describedby="respite_time" value="{{isset($form_data['starttime']) ? $form_data['starttime'] : ''}}">
+                                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="starttime" name="starttime" aria-describedby="respite_time" value="{{isset($session->starttime) ? $session->starttime : ''}}">
                                         <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
-                                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="endtime" name="endtime" aria-describedby="respite_time" value="{{isset($form_data['endtime']) ? $form_data['endtime'] : ''}}">
+                                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="endtime" name="endtime" aria-describedby="respite_time" value="{{isset($session->endtime) ? $session->endtime : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -156,12 +168,10 @@
                                 <div class="col-lg-11">
                                     <select id="new_session_pages" class="select2_auto_complete_page " name="new_session_pages[]"
                                             data-placeholder="{{trans('calendar_events.can_select_some_options')}}" multiple="multiple">
-                                        @if(!empty($form_data['session_pages']))
-                                            @if(is_array($form_data['session_pages']))
-                                                @foreach($form_data['session_pages'] as $page)
-                                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session['relations']['pages']))
+                                            @foreach($session['relations']['pages'] as $page)
+                                                <option selected="selected" value="{{ $page->page->id }}">{{ $page->page->subject->title}}</option>
+                                            @endforeach
                                         @endif
                                     </select>
                                 </div>
@@ -174,17 +184,15 @@
                                     <select id="new_task_keywords" class="select2_auto_complete_keywords" name="keywords[]"
                                             data-placeholder="{{trans('calendar_events.ce_select_some_keywords')}}"
                                             multiple="multiple">
-                                        @if(!empty($form_data['session_pages']))
-                                            @if(is_array($form_data['session_pages']))
-                                                @foreach($form_data['session_pages'] as $page)
-                                                    <option selected="selected" value="{{ $page->id }}">{{ $page->title }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->keywords))
+                                            @foreach($session->keywords as $key)
+                                                <option selected="selected" value="{{ $key->keyword->id }}">{{ $key->keyword->title }}</option>
+                                            @endforeach
                                         @endif
                                     </select>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="text" name="session_color" id="session_color" style="display: none;" class="form-control">
+                                    <input type="text" name="session_color" id="session_color" value="{{isset($session->scolor) ? $session->scolor : 'rgb(106, 168, 79)'}}" style="display: none;" class="form-control">
                                 </div>
                             </div>
                             <div class="row col-lg-12 margin-top-20">
@@ -233,14 +241,11 @@
                                 <div class="col-xs-11">
                                     <select name="session_chief" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_chief')}}" >
                                         <option value=""></option>
-                                        @if(!empty($form_data['session_chief']))
-                                            @if(is_array($form_data['session_chief']))
-                                                @foreach($form_data['session_chief'] as $session_chief)
-                                                    <option selected="selected" value="{{ $session_chief['id'] }}">{{ $session_chief['text'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->members))
+                                            @foreach($session->members->where('user_type', '=', 5) as $session_chief)
+                                                <option selected="selected" value="{{ $session_chief->user['id'] }}">{{ $session_chief->user['Name'].' '.$session_chief->user['Family'] }}</option>
+                                            @endforeach
                                         @endif
-                                        <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
                             </div>
@@ -251,14 +256,11 @@
                                 <div class="col-xs-11">
                                     <select name="session_secretary" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_secretary')}}" >
                                         <option value=""></option>
-                                        @if(!empty($form_data['session_secretary']))
-                                            @if(is_array($form_data['session_secretary']))
-                                                @foreach($form_data['session_secretary'] as $session_secretary)
-                                                    <option selected="selected" value="{{ $session_secretary['id'] }}">{{ $session_secretary['text'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->members))
+                                            @foreach($session->members->where('user_type', '=', 4) as $session_chief)
+                                                <option selected="selected" value="{{ $session_chief->user['id'] }}">{{ $session_chief->user['Name'].' '.$session_chief->user['Family'] }}</option>
+                                            @endforeach
                                         @endif
-                                        <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
                             </div>
@@ -269,14 +271,11 @@
                                 <div class="col-xs-11">
                                     <select name="session_facilitator" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_facilitator')}}">
                                         <option value=""></option>
-                                        @if(!empty($form_data['session_facilitator']))
-                                            @if(is_array($form_data['session_facilitator']))
-                                                @foreach($form_data['session_facilitator'] as $session_facilitator)
-                                                    <option selected="selected" value="{{ $session_facilitator['id'] }}">{{ $session_facilitator['text'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->members))
+                                            @foreach($session->members->where('user_type', '=', 3) as $session_chief)
+                                                <option selected="selected" value="{{ $session_chief->user['id'] }}">{{ $session_chief->user['Name'].' '.$session_chief->user['Family'] }}</option>
+                                            @endforeach
                                         @endif
-                                        <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
                             </div>
@@ -287,14 +286,11 @@
                                 <div class="col-xs-10">
                                     <select name="session_voting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_voting_users')}}" multiple>
                                         <option value=""></option>
-                                        @if(!empty($form_data['session_voting_users']))
-                                            @if(is_array($form_data['session_voting_users']))
-                                                @foreach($form_data['session_voting_users'] as $session_voting_user)
-                                                    <option selected="selected" value="{{ $session_voting_user['id'] }}">{{ $session_voting_user['text'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->members))
+                                            @foreach($session->members->where('user_type', '=', 2) as $session_chief)
+                                                <option selected="selected" value="{{ $session_chief->user['id'] }}">{{ $session_chief->user['Name'].' '.$session_chief->user['Family'] }}</option>
+                                            @endforeach
                                         @endif
-                                        <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
                                 <div class="col-xs-1 line-height-35">
@@ -310,14 +306,11 @@
                                 <div class="col-xs-10">
                                     <select name="session_notvoting_users[]" class="chosen-rtl col-xs-12" data-placeholder="{{trans('calendar_events.ce_moda_session_modal_session_notvoting_users')}}" multiple>
                                         <option value=""></option>
-                                        @if(!empty($form_data['session_notvoting_users']))
-                                            @if(is_array($form_data['session_notvoting_users']))
-                                                @foreach($form_data['session_notvoting_users'] as $session_notvoting_user)
-                                                    <option selected="selected" value="{{ $session_notvoting_user['id'] }}">{{ $session_notvoting_user['text'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if(isset($session->members))
+                                            @foreach($session->members->where('user_type', '=', 1) as $session_chief)
+                                                <option selected="selected" value="{{ $session_chief->user['id'] }}">{{ $session_chief->user['Name'].' '.$session_chief->user['Family'] }}</option>
+                                            @endforeach
                                         @endif
-                                        <!--<option value="10000" selected>hhhhhhhhhhhhhhhhhhhhhhh</option>-->
                                     </select>
                                 </div>
                                 <div class="col-xs-1 line-height-35">

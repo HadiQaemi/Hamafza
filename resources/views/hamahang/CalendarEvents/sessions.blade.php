@@ -49,7 +49,7 @@
                 <i class="fa fa-users int-icon1"></i>
                 <div class="pull-right search-task-keywords margin-right-10 width-30-pre">
                     <select id="new_task_users_all_tasks" name="users[]" class="select2_auto_complete_user col-xs-12"
-                            data-placeholder="{{trans('tasks.search_some_persons')}}" multiple>
+                            data-placeholder="{{trans('calendar_events.search_some_persons')}}" multiple>
                         <option value=""></option>
                     </select>
                 </div>

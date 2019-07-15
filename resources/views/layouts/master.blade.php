@@ -360,6 +360,8 @@
                         // sessionObj = {};
                         saveObj.hagenda = $('#' + form_id + ' #agenda').val();
                         saveObj.session_color = $('#' + form_id + ' input[name="session_color"]').val();
+                        saveObj.action_duration_act = $('#' + form_id + ' #action_duration_act').val();
+                        saveObj.action_duration_act_type = $('#' + form_id + ' #action_duration_act_type').val();
                         saveObj.session_chief = $('#' + form_id + ' select[name="session_chief"]').select().val();
                         saveObj.session_secretary = $('#' + form_id + ' select[name="session_secretary"]').select().val();
                         saveObj.session_facilitator = $('#' + form_id + ' select[name="session_facilitator"]').val();
@@ -372,8 +374,9 @@
                         saveObj.location_phone = $('#' + form_id + ' input[name="location_phone"]').val();
                         saveObj.coordination_phone = $('#' + form_id + ' input[name="coordination_phone"]').val();
                         // saveObj.hevent_id = result.event.id;
-                        saveObj.mode = 'edit';
-                        if ($('input[name="mode"]').length) {
+                        saveObj.mode = $('input[name="mode"]').val();
+                        if ($('input[name="sid"]').length) {
+                            saveObj.sid = $('input[name="sid"]').val();
                         }
                         if ($('input[type="checkbox"][name="send_Invitation"]').is(':checked')) {
                             saveObj.send_Invitation = 1;

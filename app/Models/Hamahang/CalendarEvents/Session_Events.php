@@ -8,6 +8,8 @@ class Session_Events extends Model
     use SoftDeletes;
     protected $table = "hamahang_calendar_sessions_events";
     protected $dates = ['deleted_at'];
+    protected $guarded = [];
+
     public function event()
     {
         return $this->belongsTo('CalendarEvents\User_Event');
@@ -43,6 +45,13 @@ class Session_Events extends Model
     function members()
     {
         return $this->hasMany('App\Models\Hamahang\CalendarEvents\Sessions_Members','session_id','id');
+    }
+
+    function pages()
+    {
+        return $this->hasMany('App\Models\Hamahang\SubjectAbles','target_id','id')
+            ->where('hamahang_subject_ables.target_type', '=', 'App\\Models\\Hamahang\\CalendarEvents\\Session_Events')->whereNull('deleted_at')
+            ;
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 return [
+    'search_some_persons' => 'غربال براساس افراد ...',
     'ce_rowindex_label'=>'ردیف',
     'ce_attachment'=>'پیوست',
     'ce_title'=>'عنوان',
