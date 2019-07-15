@@ -4045,6 +4045,9 @@ input{
 #KeywordFehresrt,#PrtalFehresrt{
     padding-right: 20px;
 }
+#personalCalendarGrid tr:hover .HazfCalendar{
+    display: inline !important;
+}
 .bookmark_page li:hover .HazfBookmark{
     display: inline !important;
 }

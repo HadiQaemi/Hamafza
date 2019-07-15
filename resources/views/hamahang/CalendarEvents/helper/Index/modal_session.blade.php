@@ -135,9 +135,9 @@
                                     </div>
                                     <div class="pull-right height-30 line-height-30 margin-right-10">
                                         <label for="determined-time">{{ trans('tasks.from').' '.trans('tasks.hour') }}</label>
-                                        <input type="text" class="form-control border-radius TimePicker" value="0" style="display: inline" id="starttime" name="starttime" aria-describedby="respite_time" value="{{isset($session->starttime) ? $session->starttime : ''}}">
+                                        <input type="text" class="form-control border-radius TimePicker" style="display: inline" id="starttime" name="starttime" aria-describedby="respite_time" value="{{isset($session->starttime) ? $session->starttime : ''}}">
                                         <label for="determined-time">{{ trans('tasks.to').' '.trans('tasks.hour') }}</label>
-                                        <input type="text" class="form-control border-radius TimePicker" value="" style="display: inline" id="endtime" name="endtime" aria-describedby="respite_time" value="{{isset($session->endtime) ? $session->endtime : ''}}">
+                                        <input type="text" class="form-control border-radius TimePicker" style="display: inline" id="endtime" name="endtime" aria-describedby="respite_time" value="{{isset($session->endtime) ? $session->endtime : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                                     </select>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="text" name="session_color" id="session_color" value="{{isset($session->scolor) ? $session->scolor : 'rgb(106, 168, 79)'}}" style="display: none;" class="form-control">
+                                    <input type="text" name="session_color" id="session_color" value="{{isset($session->scolor) ? $session->scolor : 'rgb(255, 235, 205)'}}" style="display: none;" class="form-control">
                                 </div>
                             </div>
                             <div class="row col-lg-12 margin-top-20">

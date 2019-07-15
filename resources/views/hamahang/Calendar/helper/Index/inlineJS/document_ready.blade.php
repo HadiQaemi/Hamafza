@@ -477,7 +477,11 @@
                             }
                             if (res.sharing_events.length) {
                                 for (var i = 0; i < res.sharing_events.length; i++) {
-                                    if (sharing_options != null && (typeof sharing_options[res.sharing_events[i].sharId] !== 'undefined' || sharing_options[res.sharing_events[i].sharId] != null)) {
+                                    if (res.sharing_events[i].color != null) {
+
+                                        var color = res.sharing_events[i].color;
+                                    }
+                                    else if (sharing_options != null && (typeof sharing_options[res.sharing_events[i].sharId] !== 'undefined' || sharing_options[res.sharing_events[i].sharId] != null)) {
                                         var color = sharing_options[res.sharing_events[i].sharId].color;
                                     }
                                     else {

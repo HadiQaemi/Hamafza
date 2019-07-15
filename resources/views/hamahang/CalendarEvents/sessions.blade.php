@@ -54,26 +54,26 @@
                     </select>
                 </div>
             </div>
-            <div class="row margin-bottom-15">
-                <div class="pull-right" style="margin-top: 10px;">
-                    <label class="container-checkmark">
-                        <input type="checkbox" checked="checked" class="form-check-input" name="types[]" value="0" id="draft" checked>
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <span>{{trans('general.draft')}}</span>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <label class="container-checkmark">
-                        <input type="checkbox" checked="checked" class="form-check-input" name="types[]" value="1" id="final" checked>
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="pull-right" style="margin-top: 10px;">
-                    <span>{{trans('general.final')}}</span>
-                </div>
-            </div>
+            {{--<div class="row margin-bottom-15">--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<label class="container-checkmark">--}}
+                        {{--<input type="checkbox" checked="checked" class="form-check-input" name="types[]" value="0" id="draft" checked>--}}
+                        {{--<span class="checkmark"></span>--}}
+                    {{--</label>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<span>{{trans('general.draft')}}</span>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<label class="container-checkmark">--}}
+                        {{--<input type="checkbox" checked="checked" class="form-check-input" name="types[]" value="1" id="final" checked>--}}
+                        {{--<span class="checkmark"></span>--}}
+                    {{--</label>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right" style="margin-top: 10px;">--}}
+                    {{--<span>{{trans('general.final')}}</span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             @if(isset($filter_subject_id))
                 <input type="hidden" value="{{$filter_subject_id}}" name="filter_subject_id" id="filter_subject_id"/>

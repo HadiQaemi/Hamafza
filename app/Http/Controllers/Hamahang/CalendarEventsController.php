@@ -471,6 +471,7 @@ class CalendarEventsController extends Controller
             $sessionObj->is_save = Request::input('is_save');
 
             if ($sessionObj->save()) {
+
                 if (Request::exists('agendas')) {
                     $sessionObj->agendas()->delete();
                     foreach (Request::get('agendas') as $agenda) {
@@ -483,10 +484,18 @@ class CalendarEventsController extends Controller
                 if (Request::exists('hcid')) {
                     $sessionObj->calendars()->delete();
                     foreach (Request::get('hcid') as $cid) {
-                        $sessionObj->calendars()->create([
-                            'cid' => $cid,
-                            'uid' => $uid
-                        ]);
+
+                        $userEvent = new User_Event();
+                        $userEvent->uid = $uid;
+                        $userEvent->title = Request::input('htitle');
+                        $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' '.$starttime[0];
+                        $userEvent->enddate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' '.$endtime[0];
+                        $userEvent->description = Request::input('description');
+                        $userEvent->type = 0;
+                        $userEvent->event_type = 'session';
+                        $userEvent->color = Request::input('session_color');
+                        $userEvent->cid = $cid;
+                        $userEvent->save();
                     }
                 }
                 if (Request::exists('keywords')) {
@@ -1093,7 +1102,7 @@ class CalendarEventsController extends Controller
             $sharing_options = null;
         }
         $events = DB::table('hamahang_calendar_user_events as eventTable')
-            ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate', 'eventTable.allDay')
+            ->select('eventTable.id', 'eventTable.title', 'eventTable.startdate', 'eventTable.enddate', 'eventTable.allDay', 'eventTable.color')
             ->where('eventTable.cid', '=', $cid)
             ->whereNull('deleted_at');
 //        if(trim($startDate)!='')
@@ -1372,16 +1381,35 @@ class CalendarEventsController extends Controller
 
     public function fetchSessionData()
     {
+//        dd(Request::all());
         $Sessions_Members = \App\Models\Hamahang\CalendarEvents\Sessions_Members::where(function($q) {
             $q->where('user_id', Auth::id())
                 ->orWhere('uid', Auth::id());
-        });
+        })
+        ->groupBy('session_id');
         if(Request::exists('title'))
         {
             $Sessions_Members->whereHas('session', function ($query)
             {
                 $query->where('title', 'like', '%'.Request::get('title').'%');
             });
+        }
+        if(Request::exists('keywords'))
+        {
+            $keywords = [];
+            foreach (Request::get('keywords') as $keyword)
+                $keywords[] = str_ireplace('exist_in', '', $keyword);
+            $Sessions_Members->whereHas('session.keywords', function ($query) use ($keywords)
+            {
+                $query->whereIn('keyword_id', $keywords);
+            });
+        }
+        if(Request::exists('users'))
+        {
+            $users = [];
+            foreach (Request::get('users') as $user)
+                $users[] = $user;
+            $Sessions_Members->whereIn('user_id', $users);
         }
         return Datatables::eloquent($Sessions_Members)
             ->addColumn('title', function($data)
@@ -1398,6 +1426,14 @@ class CalendarEventsController extends Controller
             ->addColumn('starttime', function ($data)
             {
                 return $data->session->starttime;
+            })
+            ->addColumn('keywords', function ($data)
+            {
+                $keywords = [];
+                foreach ( $data->session->keywords as $keyword) {
+                    $keywords[] = ['id'=>$keyword->keyword->id,'title'=>$keyword->keyword->title];
+                }
+                return json_encode($keywords);
             })
             ->addColumn('endtime', function ($data)
             {
