@@ -1714,21 +1714,21 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             'primary' => '1',
                                             'title' => 'جلسات',
                                             'new' => '-1',
-                                            'value' => "0",
+                                            'value' => $auth_user->MySessionsCount(),
                                             'icon' => 'fa-tasks',
-                                            'url' => '#',
-                                            'subData' => [
-                                                [
-                                                    "title" => "",
-                                                    "icon" => "fa fa-list-alt",
-                                                    "url" => ''
-                                                ],
-                                                [
-                                                    "title" => "",
-                                                    "icon" => "fa fa-calendar",
-                                                    "url" => ''
-                                                ]
-                                            ]
+                                            'url' => route('ugc.desktop.hamahang.calendar_events.sessions',['username'=>$auth_user->Uname]),
+//                                            'subData' => [
+//                                                [
+//                                                    "title" => "",
+//                                                    "icon" => "fa fa-list-alt",
+//                                                    "url" => ''
+//                                                ],
+//                                                [
+//                                                    "title" => "",
+//                                                    "icon" => "fa fa-calendar",
+//                                                    "url" => ''
+//                                                ]
+//                                            ]
                                         ],
                                         [
                                             'active' => '0',
@@ -1757,7 +1757,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                 'data' =>
                                     [
                                         [
-                                            'active' => '1',
+                                            'active' => '0',
                                             'primary' => '1',
                                             'title' => 'دنبال شده‌ها',
                                             'new' => '-1',

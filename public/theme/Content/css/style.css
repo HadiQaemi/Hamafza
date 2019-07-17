@@ -2713,11 +2713,14 @@ a .navbar-brand{
     width: 65px;
     padding: 2%;
     float: right;
-    margin-top: 20px;
+    margin-top: 35px;
     border-left: 1px solid #eee;
     color: #b0c8e2;
 }
 
+.div-desktop-tool{
+    padding: 0px 5px !important;
+}
 .text-desktop-tool {
     font-size: 1.2em;
     width: 70%;
@@ -2725,6 +2728,16 @@ a .navbar-brand{
 }
 .text-desktop-tool li {
     line-height: 2em;
+}
+.text-desktop-tool .tool-link {
+    font-size: 24px;
+}
+.text-desktop-tool .link-div {
+    padding-top: 5px;
+}
+.text-desktop-tool .title {
+    padding-bottom: 10px;
+    padding-top: 5px;
 }
 
 .key {
@@ -2737,7 +2750,7 @@ a .navbar-brand{
     background-color: red;
     float: left;
     position: relative;
-    top: -70px;
+    top: -140px;
     right: -10px;
     margin-bottom: -50px;
 }

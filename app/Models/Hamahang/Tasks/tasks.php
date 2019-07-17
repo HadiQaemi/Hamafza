@@ -3184,6 +3184,22 @@ class tasks extends Model
         return $this->hasMany('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id')->orderBy('hamahang_task_status.id','DESC');
     }
 
+    public function StatusColor()
+    {
+        $color = '';
+        if($this->Status[0]->type == 0)
+            $color = '#de643d26';
+        else if($this->Status[0]->type == 1)
+            $color = '#d0c00026';
+        else if($this->Status[0]->type == 2)
+            $color = '#8bad0326';
+        else if($this->Status[0]->type == 3)
+            $color = '#1fce1426';
+        else
+            $color = '#96969626';
+        return $color;
+    }
+
     public function Action()
     {
         return $this->hasOne('App\Models\Hamahang\Tasks\task_action', 'task_id', 'id');
@@ -3198,30 +3214,28 @@ class tasks extends Model
     {
         return $this->morphToMany('App\Models\hamafza\Pages', 'target','hamahang_subject_ables','target_id','subject_id')->whereNull('hamahang_subject_ables.deleted_at');
     }
-    /* public function getPriorityAttribute()
+    public function PriorityColor()
      {
-         //dd($this->priorities->first());
          if(isset($this->priorities->first()->importance)&& isset($this->priorities->first()->immediate))
          {
              if ($this->priorities->first()->importance && $this->priorities->first()->immediate)
              {
-                 return 'فوری' . ' - ' . 'مهم';
+                 return '#ff000026';
              }
              elseif (!$this->priorities->first()->importance && $this->priorities->first()->immediate)
              {
-                 return 'فوری' . ' - ' . 'غیر مهم';
+                 return '#d5d56626';
              }
              elseif ($this->priorities->first()->importance && !$this->priorities->first()->immediate)
              {
-                 return 'غیر فوری' . ' - ' . 'مهم';
+                 return '#ce892326';
              }
              elseif (!$this->priorities->first()->importance && !$this->priorities->first()->immediate)
              {
-                 return 'غیر فوری' . ' - ' . 'غیر مهم';
+                 return '#96969626';
              }
          }
-         return 'اهمیت - اولویت ';
-     }*/
+     }
     /*---------------------------------------------- Accessors  --------------------------------------------*/
     public function getImportanceAttribute()
     {

@@ -961,6 +961,7 @@ div.dataTables_wrapper .text-left .dataTables_paginate {
     border-color: #bbb;
     cursor: not-allowed;
     background: #f9f9f9 !important;
+    height: 137px !important;
 }
 
 .dashboard_box_disabled a {

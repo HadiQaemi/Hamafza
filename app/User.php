@@ -538,6 +538,17 @@ class User extends Authenticatable
         return $this->MyDraftTasks->count();
     }
 
+    public function MySessions()
+    {
+        return $this->hasMany('\App\Models\Hamahang\CalendarEvents\Sessions_Members', 'uid', 'id')->whereNull('deleted_at');
+    }
+
+    public function MySessionsCount()
+    {
+        return ($this->MySessions->count());
+        return $this->MySessions()->count();
+    }
+
     public function menuItems()
     {
         return $this->morphedByMany('App\Models\MenuItem', 'target');

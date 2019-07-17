@@ -12,7 +12,7 @@
         <ul class="ul_dropp">
             @if(!empty($myTasks['not_started']))
                 @foreach($myTasks['not_started'] as $task)
-                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
+                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
                         <div class="header_div_list_task container-fluid prl-1">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
@@ -74,7 +74,7 @@
         <ul class="ul_dropp">
             @if(!empty($myTasks['started']))
                 @foreach($myTasks['started'] as $task)
-                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
+                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
                         <div class="header_div_list_task container-fluid prl-1">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
@@ -136,7 +136,7 @@
         <ul class="ul_dropp">
             @if(!empty($myTasks['done']))
                 @foreach($myTasks['done'] as $task)
-                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
+                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
                         <div class="header_div_list_task container-fluid prl-1">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
@@ -196,7 +196,7 @@
         <ul class="ul_dropp">
             @if(!empty($myTasks['ended']))
                 @foreach($myTasks['ended'] as $task)
-                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}">
+                    <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
                         <div class="header_div_list_task container-fluid prl-1">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))

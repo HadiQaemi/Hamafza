@@ -25,14 +25,14 @@
                 @foreach($section['data'] as $sub_section)
                     @if($sub_section['active'])
                         @if($sub_section['primary'])
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 div-desktop-tool">
                                 <div class="desktop-tool">
                                     <i class="img-responsive fa fa-4x {{$sub_section['icon']}}"></i>
                                     <ul class="text-desktop-tool">
-                                        <li id="text-desktop-tool" class="text-center">
-                                            <a href="{{$sub_section['url']}}">{!! $sub_section['value']>0 ? $sub_section['value'] : '&nbsp' !!}</a>
+                                        <li id="text-desktop-tool" class="text-center link-div">
+                                            <a class="tool-link" href="{{$sub_section['url']}}">{!! $sub_section['value']>0 ? $sub_section['value'] : '&nbsp' !!}</a>
                                         </li>
-                                        <li id="text-desktop-tool" class="text-center">
+                                        <li id="text-desktop-tool" class="text-center title">
                                             {{$sub_section['title']}}
                                         </li>
                                         <li id="text-desktop-tool" class="text-center">

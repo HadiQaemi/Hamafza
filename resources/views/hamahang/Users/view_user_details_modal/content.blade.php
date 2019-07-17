@@ -41,14 +41,14 @@
                                     <div class="col-xs-6">
                                         <div class="col-xs-2 noRightPadding noLeftPadding line-height-35">محل تولد</div>
                                         <div class="col-xs-10 noLeftPadding noRightPadding">
-                                            <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province pull-right' style="width: 50%">
+                                            <select id="province" name="province" class='select2 province form-control js-example-basic-single jsp_user_detail_province pull-right' style="width: 40%">
                                                 @if($provinces)
                                                     @foreach($provinces as $province)
                                                         <option value="{{ $province->id }}" @if($province->id==isset($user->profile->Province) ? $user->profile->Province : '') selected="selected" @endif>{{ $province->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city pull-left' style="width: 49%">
+                                            <select id="city" name="city" class='select2 form-control js-example-basic-single jsp_user_detail_city pull-left' style="width: 40%">
                                                 @if($cities)
                                                     @foreach($cities as $city)
                                                         <option value="{{ isset($city->id) ? $city->id : '' }}" @if($city->id==(isset($user->profile->City) ? $user->profile->City : '')) selected="selected" @endif>{{ $city->name }}</option>
@@ -214,13 +214,13 @@
                             </div>
                         </div>
                         <center>
-                            @if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )
-                                <button type="button" class="btn btn-primary remove_avatar_image">{{ trans('profile.delete_profile') }}</button>
-                            @else
-                                <button type="button" id="footer_selec_avatar" class="btn btn-primary select_file">{{ trans('profile.select_file') }}</button>
-                            @endif
-                            <div class="text-center font-large margin-top-20">
-                                نام کاربری: <a href="{{url($user->Uname)}}" target="_blank">{{$user->Name.' '.$user->Family}}</a>
+                            {{--@if(isset($user->avatar) &&!empty($user->avatar) &&($user->avatar!=null) &&($user->avatar!=0) )--}}
+                                {{--<button type="button" class="btn btn-primary remove_avatar_image">{{ trans('profile.delete_profile') }}</button>--}}
+                            {{--@else--}}
+                                {{--<button type="button" id="footer_selec_avatar" class="btn btn-primary select_file">{{ trans('profile.select_file') }}</button>--}}
+                            {{--@endif--}}
+                            <div class="text-center font-large margin-top-20" style="font-size: large">
+                                <a href="{{url($user->Uname)}}" target="_blank">{{$user->Name.' '.$user->Family}}</a>
                             </div>
                         </center>
                     </div>
