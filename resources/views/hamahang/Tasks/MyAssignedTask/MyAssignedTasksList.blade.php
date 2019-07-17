@@ -112,17 +112,17 @@
                         <input type="checkbox" class="form-check-input" value="1" name="task_status[]" id="started_tasks" checked/>
                         <label for="started_tasks" class="started"></label>
                     </div>
-                    <div class="checkboxVertical done pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_done')}}">
+                    <div class="checkboxVertical done pull-right margin-right-10 background-gray" data-toggle="tooltip" title="{{trans('tasks.status_done')}}">
                         <input type="checkbox" class="form-check-input" value="2" name="task_status[]" id="done_tasks"/>
-                        <label for="done_tasks" class="done"></label>
+                        <label for="done_tasks" class="done background-gray"></label>
                     </div>
-                    <div class="checkboxVertical completed pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}">
+                    <div class="checkboxVertical completed pull-right margin-right-10 background-gray" data-toggle="tooltip" title="{{trans('tasks.status_finished')}}">
                         <input type="checkbox" class="form-check-input" value="3" name="task_status[]" id="completed_tasks"/>
-                        <label for="completed_tasks" class="completed"></label>
+                        <label for="completed_tasks" class="completed background-gray"></label>
                     </div>
-                    <div class="checkboxVertical pull-right margin-right-10" data-toggle="tooltip" title="{{trans('tasks.status_suspended')}}">
+                    <div class="checkboxVertical pull-right margin-right-10 background-gray" data-toggle="tooltip" title="{{trans('tasks.status_suspended')}}">
                         <input type="checkbox" class="form-check-input" value="4" name="task_status[]" id="stoped_tasks"/>
-                        <label for="stoped_tasks"></label>
+                        <label for="stoped_tasks" class="background-gray"></label>
                     </div>
                 </div>
             </div>

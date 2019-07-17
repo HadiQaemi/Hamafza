@@ -3971,18 +3971,18 @@ input{
     left: 0;
     height: 15px;
     width: 15px;
-    background-color: #eee;
+    background-color: #b5b1b1;
     border-radius: 5px;
 }
 
 /* On mouse-over, add a grey background color */
 .container-checkmark:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: #cac9c9;
 }
 
 /* When the radio button is checked, add a blue background */
 .container-checkmark input:checked ~ .checkmark {
-    background-color: #999;
+    background-color: #b5b1b1;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -4125,28 +4125,28 @@ input{
     margin-left: 10px;
 }
 .checkboxVertical label.not_started{
-    background: #de643d !important;
+    background: #de643d;
 }
 .checkboxVertical.not_started{
-    background: #f7c3b3 !important;
+    background: #f7c3b3;
 }
 .checkboxVertical label.started{
-    background: #d0c000 !important;
+    background: #d0c000;
 }
 .checkboxVertical.started{
-    background: #cec98c !important;
+    background: #cec98c;
 }
 .checkboxVertical label.done{
-    background: #8bad03 !important;
+    background: #8bad03;
 }
 .checkboxVertical.done{
-    background: #c7d492 !important;
+    background: #c7d492;
 }
 .checkboxVertical label.completed{
-    background: #1fce14 !important;
+    background: #1fce14;
 }
 .checkboxVertical.completed{
-    background: #96d492 !important;
+    background: #96d492;
 }
 .color_grey{
     color: #999 !important;
@@ -4326,4 +4326,7 @@ input::-webkit-inner-spin-button {
     border: none;
     width: 55px;
     padding: 5px;
+}
+.background-gray{
+    background-color: #999 !important;
 }
