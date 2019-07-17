@@ -1104,6 +1104,9 @@ function AddTags(Tid, Tname, val) {
         $("#TagBut").trigger("click");
     }
 }
+$(document).on("click", ".btn_edit_user_detail", function () {
+    $('#user_detail_form_data').click();
+});
 
 //++++++++++++++++++++++++++++++++++++++++
 $(document).on("click", ".remove-agenda", function () {

@@ -29,7 +29,9 @@
                                 <div class="desktop-tool">
                                     <i class="img-responsive fa fa-4x {{$sub_section['icon']}}"></i>
                                     <ul class="text-desktop-tool">
-                                        <li id="text-desktop-tool" class="text-center"><a href="{{$sub_section['url']}}">{{$sub_section['value']}}</a></li>
+                                        <li id="text-desktop-tool" class="text-center">
+                                            <a href="{{$sub_section['url']}}">{!! $sub_section['value']>0 ? $sub_section['value'] : '&nbsp' !!}</a>
+                                        </li>
                                         <li id="text-desktop-tool" class="text-center">
                                             {{$sub_section['title']}}
                                         </li>
@@ -52,7 +54,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="desktop-tool" style="height: 30px;">
                                     <i class="img-responsiv desktop-not-primary">
-                                        <a href="{{$sub_section['url']}}">{{$sub_section['value']}}</a>
+                                        <a href="{{$sub_section['url']}}">{!! $sub_section['value']>0 ? $sub_section['value'] : '&nbsp' !!}</a>
                                     </i>
                                     <ul class="text-desktop-tool">
                                         <li id="text-desktop-tool" class="text-center">{{$sub_section['title']}}</li>
@@ -67,7 +69,7 @@
                                 <div class="desktop-tool dashboard_box_disabled">
                                     <i class="img-responsive fa fa-4x {{$sub_section['icon']}}"></i>
                                     <ul class="text-desktop-tool">
-                                        <li id="text-desktop-tool" class="text-center"><a href="{{$sub_section['url']}}">{{$sub_section['value']}}</a></li>
+                                        <li id="text-desktop-tool" class="text-center"><a href="{{$sub_section['url']}}">{!! $sub_section['value']>0 ? $sub_section['value'] : '&nbsp' !!}</a></li>
                                         <li id="text-desktop-tool" class="text-center">
                                             {{$sub_section['title']}}
                                         </li>

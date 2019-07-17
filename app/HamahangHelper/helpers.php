@@ -605,7 +605,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                                 [
                                                     'active' => '1',
                                                     'primary' => '1',
-                                                    'title' => 'وظایف بدون وقت',
+                                                    'title' => 'وظایف من - زمان بندی نشده',
                                                     'new' => '-1',
                                                     'value' => "0",
                                                     'icon' => 'fa-list-alt',
@@ -1604,7 +1604,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         [
                                             'active' => '1',
                                             'primary' => '1',
-                                            'title' => 'وظایف بدون وقت',
+                                            'title' => 'وظایف من - زمان بندی نشده',
                                             'new' => '-1',
                                             'value' => "0",
                                             'icon' => 'fa-list-alt',
@@ -1731,7 +1731,7 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                             ]
                                         ],
                                         [
-                                            'active' => '1',
+                                            'active' => '0',
                                             'primary' => '1',
                                             'title' => 'فرم‌های من',
                                             'new' => '-1',
@@ -1832,41 +1832,41 @@ function variable_generator($type = "page", $sub_type = "desktop", $item = false
                                         ]
                                     ]
                             ],
-                            [
-                                'type' => 'announces_and_forms_and_marked',
-                                'title' => 'یادداشت‌ها، فرم‌ها',
-                                'order' => '4',
-                                'data' =>
-                                    [
-                                        [
-                                            'active' => '0',
-                                            'primary' => '0',
-                                            'title' => 'شاید بشناسید',
-                                            'new' => '-1',
-                                            'value' => '0',
-                                            'icon' => 'fa-user-o',
-                                            'url' => '#'
-                                        ],
-                                        [
-                                            'active' => '0',
-                                            'primary' => '0',
-                                            'title' => 'دفترچه تماس',
-                                            'new' => '-1',
-                                            'value' => '---',
-                                            'icon' => 'fa-commenting ',
-                                            'url' => '#'
-                                        ],
-                                        [
-                                            'active' => '1',
-                                            'primary' => '0',
-                                            'title' => 'امتیاز‌ها',
-                                            'new' => '-1',
-                                            'value' => get_user_sumscores(),
-                                            'icon' => 'fa-certificate ',
-                                            'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
-                                        ]
-                                    ]
-                            ]
+//                            [
+//                                'type' => 'announces_and_forms_and_marked',
+//                                'title' => 'یادداشت‌ها، فرم‌ها',
+//                                'order' => '4',
+//                                'data' =>
+//                                    [
+//                                        [
+//                                            'active' => '0',
+//                                            'primary' => '0',
+//                                            'title' => 'شاید بشناسید',
+//                                            'new' => '-1',
+//                                            'value' => '0',
+//                                            'icon' => 'fa-user-o',
+//                                            'url' => '#'
+//                                        ],
+//                                        [
+//                                            'active' => '0',
+//                                            'primary' => '0',
+//                                            'title' => 'دفترچه تماس',
+//                                            'new' => '-1',
+//                                            'value' => '---',
+//                                            'icon' => 'fa-commenting ',
+//                                            'url' => '#'
+//                                        ],
+//                                        [
+//                                            'active' => '1',
+//                                            'primary' => '0',
+//                                            'title' => 'امتیاز‌ها',
+//                                            'new' => '-1',
+//                                            'value' => get_user_sumscores(),
+//                                            'icon' => 'fa-certificate ',
+//                                            'url' => route('ugc.desktop.hamahang.summary.index', ['username' => $auth_user->Uname])
+//                                        ]
+//                                    ]
+//                            ]
                         ];
                     $res['pid'] = 'desktop';
                     break;

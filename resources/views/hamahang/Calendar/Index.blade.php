@@ -93,6 +93,7 @@
     <script type="text/javascript">var jQuery_2 = $.noConflict(true);</script>
     @include('hamahang.Calendar.helper.Index.inlineJS')
     <script>
+        $('.fc-agendaDay-button').click();
         $('.ful-scrn').attr('rel',3);
         $('#inlineDatepicker').persianDatepicker({
             timePicker: {

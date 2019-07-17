@@ -76,9 +76,9 @@
                         <span>دورنگار:</span> {{ $user->profile->Fax_number }}-{{ $user->profile->Fax_code }}
                     @endif
                 </div>
-                @if(trim($user_comment)!='')
+                @if(trim($user->profile->Comment)!='')
                     <div class="col-xs-9 user_comment">
-                        {{ $user_comment }}
+                        {{ $user->profile->Comment }}
                     </div>
                 @endif
             </div>
