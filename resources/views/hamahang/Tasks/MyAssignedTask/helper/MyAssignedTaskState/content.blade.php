@@ -13,7 +13,7 @@
             @if(!empty($myTasks['not_started']))
                 @foreach($myTasks['not_started'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
-                        <div class="header_div_list_task container-fluid prl-1">
+                        <div class="header_div_list_task container-fluid prl-1 text_ellipsis">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
@@ -41,22 +41,22 @@
                                 @endif
                             </span>
                             <span class="">
-                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
+                                <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="text_ellipsis" style="margin: 0px 5px">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = preg_split('/ /',$task->title);
-                                            $cnt = 0;
-                                            $sub_title = '';
-                                            foreach($msgTrimmed as $word){
-                                                if($cnt++ <=5){
-                                                    $sub_title .= " $word";
-                                                }else{
-                                                    $sub_title .= '...';
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        {{$sub_title}}
+                                        {{--@php--}}
+                                            {{--$msgTrimmed = preg_split('/ /',$task->title);--}}
+                                            {{--$cnt = 0;--}}
+                                            {{--$sub_title = '';--}}
+                                            {{--foreach($msgTrimmed as $word){--}}
+                                                {{--if($cnt++ <=5){--}}
+                                                    {{--$sub_title .= " $word";--}}
+                                                {{--}else{--}}
+                                                    {{--$sub_title .= '...';--}}
+                                                    {{--break;--}}
+                                                {{--}--}}
+                                            {{--}--}}
+                                        {{--@endphp--}}
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </span>
@@ -75,7 +75,7 @@
             @if(!empty($myTasks['started']))
                 @foreach($myTasks['started'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
-                        <div class="header_div_list_task container-fluid prl-1">
+                        <div class="header_div_list_task container-fluid prl-1 text_ellipsis">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
@@ -105,20 +105,20 @@
                             <span >
                                 <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = preg_split('/ /',$task->title);
-                                            $cnt = 0;
-                                            $sub_title = '';
-                                            foreach($msgTrimmed as $word){
-                                                if($cnt++ <=5){
-                                                    $sub_title .= " $word";
-                                                }else{
-                                                    $sub_title .= '...';
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        {{$sub_title}}
+                                        {{--@php--}}
+                                            {{--$msgTrimmed = preg_split('/ /',$task->title);--}}
+                                            {{--$cnt = 0;--}}
+                                            {{--$sub_title = '';--}}
+                                            {{--foreach($msgTrimmed as $word){--}}
+                                                {{--if($cnt++ <=5){--}}
+                                                    {{--$sub_title .= " $word";--}}
+                                                {{--}else{--}}
+                                                    {{--$sub_title .= '...';--}}
+                                                    {{--break;--}}
+                                                {{--}--}}
+                                            {{--}--}}
+                                        {{--@endphp--}}
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </span>
@@ -137,7 +137,7 @@
             @if(!empty($myTasks['done']))
                 @foreach($myTasks['done'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
-                        <div class="header_div_list_task container-fluid prl-1">
+                        <div class="header_div_list_task container-fluid prl-1 text_ellipsis">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
@@ -165,20 +165,20 @@
                             <span >
                                 <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = preg_split('/ /',$task->title);
-                                            $cnt = 0;
-                                            $sub_title = '';
-                                            foreach($msgTrimmed as $word){
-                                                if($cnt++ <=5){
-                                                    $sub_title .= " $word";
-                                                }else{
-                                                    $sub_title .= '...';
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        {{$sub_title}}
+                                        {{--@php--}}
+                                            {{--$msgTrimmed = preg_split('/ /',$task->title);--}}
+                                            {{--$cnt = 0;--}}
+                                            {{--$sub_title = '';--}}
+                                            {{--foreach($msgTrimmed as $word){--}}
+                                                {{--if($cnt++ <=5){--}}
+                                                    {{--$sub_title .= " $word";--}}
+                                                {{--}else{--}}
+                                                    {{--$sub_title .= '...';--}}
+                                                    {{--break;--}}
+                                                {{--}--}}
+                                            {{--}--}}
+                                        {{--@endphp--}}
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </span>
@@ -197,7 +197,7 @@
             @if(!empty($myTasks['ended']))
                 @foreach($myTasks['ended'] as $task)
                     <li class="draggable {{$task->RespiteRemain['border_color_class']}}" data-task_id="{{$task->id}}" style="background-color: {{$task->PriorityColor()}} !important;">
-                        <div class="header_div_list_task container-fluid prl-1">
+                        <div class="header_div_list_task container-fluid prl-1 text_ellipsis">
                             <span class="div_img">
                                 @if(strstr(\Route::currentRouteName(),'hamahang.tasks.my_assigned_tasks.state'))
                                     @php
@@ -225,20 +225,20 @@
                             <span >
                                 <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/{{$do}}?tid={{enCode($task->id)}}&aid={{$task->Assignment->id}}'>
-                                        @php
-                                            $msgTrimmed = preg_split('/ /',$task->title);
-                                            $cnt = 0;
-                                            $sub_title = '';
-                                            foreach($msgTrimmed as $word){
-                                                if($cnt++ <=5){
-                                                    $sub_title .= " $word";
-                                                }else{
-                                                    $sub_title .= '...';
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        {{$sub_title}}
+                                        {{--@php--}}
+                                            {{--$msgTrimmed = preg_split('/ /',$task->title);--}}
+                                            {{--$cnt = 0;--}}
+                                            {{--$sub_title = '';--}}
+                                            {{--foreach($msgTrimmed as $word){--}}
+                                                {{--if($cnt++ <=5){--}}
+                                                    {{--$sub_title .= " $word";--}}
+                                                {{--}else{--}}
+                                                    {{--$sub_title .= '...';--}}
+                                                    {{--break;--}}
+                                                {{--}--}}
+                                            {{--}--}}
+                                        {{--@endphp--}}
+                                        {{$task->title}}
                                     </a>
                                 </span>
                             </span>

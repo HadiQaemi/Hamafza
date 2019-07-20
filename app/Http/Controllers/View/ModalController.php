@@ -805,7 +805,7 @@ class ModalController extends Controller
     {
         $tid = '';
         $task = '';
-        $res = $this->getParams(['sid', 'pid', 'sel', 'urid', 'kdid', 'tid']);
+        $res = $this->getParams(['sid', 'pid', 'sel', 'urid', 'kdid', 'tid', 'ctid']);
         if ($res['sid'])
         {
             $res['subject'] = Subject::find($res['sid']);
@@ -820,13 +820,16 @@ class ModalController extends Controller
         }
         if ($res['tid'])
         {
-            $tid = $res['tid'];
             $task = tasks::find(deCode($res['tid']));
             $res['task'] = $this->TakeTaskInfo($res,$task);
         }
+        if ($res['ctid'])
+        {
+            $task = tasks::find(deCode($res['ctid']));
+            $res['ctask'] = $task;
+        }
         if ($res['pid'])
         {
-            $tid = $res['pid'];
             $res['project'] = projects::find($res['pid']);
         }
         $arr['HFM_CN_Task'] = HFM_GenerateUploadForm(
@@ -836,7 +839,6 @@ class ModalController extends Controller
                     'Multi']
             ]
         );
-//        dd($res);
         $arr = array_merge($arr, $res);
         return json_encode([
             'header' => trans('tasks.create_new_task'),

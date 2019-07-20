@@ -85,7 +85,7 @@ class MyAssignedTaskController extends Controller
 
         if(Request::input('package_type')=='persons')
         {
-            $result = $result->select("hamahang_task.id as task_id", "hamahang_task_assignments.employee_id as type_field", "hamahang_task.title", "hamahang_task.id", "user.id as object_id", "user.Name", "user.Family", DB::raw('CONCAT(user.Name," ",user.Family) AS u_name'));
+            $result = $result->select("hamahang_task.id as task_id", "hamahang_task_assignments.employee_id as type_field", "hamahang_task.title", "hamahang_task.id", "user.id as object_id", "user.Name", "user.uname", "user.Family", DB::raw('CONCAT(user.Name," ",user.Family) AS u_name'));
         }else if(Request::input('package_type')=='pages')
         {
             $result = $result
@@ -1025,7 +1025,7 @@ class MyAssignedTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>" . $data->Name . " " . $data->Family . "</a>";
+                return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>". $data->Assignment->Employee->BetweenSmallandBig . $data->Name . " " . $data->Family . "</a>";
             })
             ->rawColumns(['employee'])
             ->make(true);

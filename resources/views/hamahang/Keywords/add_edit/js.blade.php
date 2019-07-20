@@ -142,26 +142,30 @@
     {
         target.select2
         ({
-            minimumInputLength: 3,
-            dir: 'rtl',
+            dir: "rtl",
             width: '100%',
             tags: true,
-            ajax:
-            {
+            minimumInputLength: 2,
+            insertTag: function(data, tag){
+                tag.text = 'جدید: ' + tag.text;
+                data.push(tag);
+            },
+            ajax: {
                 url: "{{route('auto_complete.keywords')}}",
                 dataType: "json",
                 type: "POST",
                 quietMillis: 150,
-                data: function (term)
-                {
-                    return { term: term };
+                data: function (term) {
+                    return {term: term};
                 },
-                results: function (data)
-                {
+                results: function (data) {
+                    console.log(data);
                     return {
-                        results: $.map(data, function (item)
-                        {
-                            return { text: item.text, id: item.id }
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
                         })
                     };
                 }

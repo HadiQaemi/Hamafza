@@ -13,6 +13,9 @@
         tr.shown td.details-control:before {
             content: '-';
         }
+        .dataTable td{
+            text-align: right !important;
+        }
     </style>
 @stop
 <style>

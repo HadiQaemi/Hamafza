@@ -204,7 +204,10 @@
                         $.each(keywords, function (index) {
                             data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="' + keywords[index].id + '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">' + keywords[index].title + '</span></span>';
                         });
-                        return full.employee + "<div class='' style='margin: 2px 0px;padding: 5px;'>" + data2 + "</div>";
+                        employee = full.employee;
+                        employee = employee.split('--**--');
+                        avator = '<a href="'+employee[1]+'"><img src="'+employee[0]+'" style="border: 1px solid #eee; padding: 1px; margin: 0 5px; border-radius: 30px; height: 30px; width: 30px;"></a>';
+                        return avator + "<a href='/" + employee[1] + "'>" + employee[2] + "</a>" + "<div class='' style='margin: 2px 0px;padding: 5px;'>" + data2 + "</div>";
                     },
                     "width": "10%"
                 },

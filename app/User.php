@@ -62,7 +62,7 @@ class User extends Authenticatable
     }
     public function getBetweenSmallandBigAttribute()
     {
-        return '<a href="' . url($this->Uname) . '"><img src="' . $this->avatar_link . '" style="border: 1px solid #eee; padding: 1px; margin: 0 5px; border-radius: 30px; height: 30px; width: 30px;" /></a>';;
+        return '<a href="' . url($this->Uname) . '"><img src="' . $this->avatar_link . '" style="border: 1px solid #eee; padding: 1px; margin: 0 5px; border-radius: 30px; height: 30px; width: 30px;" /></a>';
     }
 
     public function getSmallAvatar2Attribute()

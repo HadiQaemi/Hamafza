@@ -176,10 +176,14 @@ class MyTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return $data->f_name . " " . $data->f_family;
+                $user = user::find($data->f_uid);
+                return (isset($user->avatar_link) ? $user->avatar_link  : '')."--**--".$data->f_uname."--**--".$data->f_name . " " . $data->f_family;
             })->addColumn('assigner', function ($data)
             {
-                return $data->t_name . " " . $data->t_family;
+                $user = user::find($data->t_uid);
+//                dd($user->BetweenSmallandBig);
+//                return '<a href="' . url('/' . $data->t_uname) . '" target="_blank">' . $data->t_name . ' ' . $data->t_family . '</a>'.$user->BetweenSmallandBig;
+                return (isset($user->BetweenSmallandBig) ? $user->BetweenSmallandBig  : '')."<a href='". url('/' . $data->t_uname) ."' target='_blank'>".$data->t_name . " " . $data->t_family."</a>";
             })
             ->rawColumns(['employee'])
             ->rawColumns(['assigner'])
@@ -786,7 +790,7 @@ class MyTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return '<a href="' . url('/' . $data->Uname) . '" target="_blank">' . $data->Name . ' ' . $data->Family . '</a>';
+                return '<a href="' . url('/' . $data->Uname) . '" target="_blank">'.$data->Assignment->Assigner->BetweenSmallandBig . $data->Name . ' ' . $data->Family . '</a>';
             })
             ->rawColumns(['employee'])
             ->make(true);

@@ -523,7 +523,8 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table id="ChildsGrid" class="table dt-responsive nowrap display hidden ChildsGridtaskRel" style="text-align: center" cellspacing="0" width="100%">
+{{--                                {{print_r($ctask)}}--}}
+                                <table id="ChildsGrid" class="table dt-responsive nowrap display {{isset($ctask) ? '' : 'hidden'}} ChildsGridtaskRel" style="text-align: center" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{--<th class="col-xs-1">{{ trans('tasks.number') }}</th>--}}
@@ -534,24 +535,43 @@
                                         </tr>
                                     </thead>
                                     <tbody id="rel_task_list">
-                                        @if(isset($project))
-                                            <tr id="num_add_rel_task1">
-                                                <td>
-                                                    <label class="pull-right line-height-30">پایین دستی</label>
-                                                </td>
-                                                <td>
-                                                    <label class="pull-right line-height-30" style="width:100%;text-align: right" for="r2">{{$project->title}}</label>
-                                                    <input name="new_task_projects_[]" type="hidden" value="{{$project->id}}"/>
-                                                    <input name="new_task_projects_t[]" type="hidden" value="{{$project->title}}"/>
-                                                </td>
-                                                <td>
-                                                    <label class="input-group pull-right">
-                                                        <input name="new_project_weight[]" class="form-control" type="text" value="0"/>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(1)" for="r2"></span>
-                                                </td>
+                                        @if(isset($ctask))
+                                            <tr id="num_add_rel_task0">
+                                               <td>
+                                                    <select name="new_task_relation[]" class="new_task_relation form-control pull-right noLeftPadding noRightPadding" onchange="new_task_relation(this,0)" style="width: 150px;">
+                                                        <option value="end_start" selected>پایان به شروع</option>
+                                                        <option value="start_start">شروع به شروع</option>
+                                                        <option value="start_end">شروع به پایان</option>
+                                                        <option value="end_end">پایان به پایان</option>
+                                                        <option value="up">بالادستی</option>
+                                                        <option value="down">پایین دستی</option>
+                                                    </select>
+                                                   <label class="input-group pull-right intrupt_div" style="width: 150px;">
+                                                       <div class="col-xs-6 noLeftPadding noRightPadding">
+                                                           <input name="new_task_delay_num[]" type="text" class="form-control" placeholder="وقفه">
+                                                       </div>
+                                                       <div class="col-xs-6 noLeftPadding noRightPadding">
+                                                           <select name="new_task_delay_type[]" class="form-control">
+                                                               <option value="day">روز</option>
+                                                               <option value="week">هفته</option>
+                                                               <option value="month">ماه</option>
+                                                           </select>
+                                                       </div>
+                                                   </label>
+                                               </td>
+                                               <td>
+                                                   <label class="pull-right line-height-30" for="r2">وظیفه: {{$ctask->title}}</label>
+                                                   <input name="new_task_tasks_[]" type="hidden" value="{{$ctask->id}}">
+                                                   <input name="new_task_tasks_t[]" type="hidden" value="{{$ctask->title}}">
+                                               </td>
+                                               <td>
+                                                   <label class="input-group pull-right">
+                                                       <input name="new_task_weight[]" class="form-control new_task_weight0" type="text" value="0">
+                                                   </label>
+                                               </td>
+                                               <td>
+                                                   <span class="fa fa-trash remove_new_task pointer" onclick="remove_new_task(0)" for="r2"></span>
+                                               </td>
                                             </tr>
                                         @endif
                                     </tbody>

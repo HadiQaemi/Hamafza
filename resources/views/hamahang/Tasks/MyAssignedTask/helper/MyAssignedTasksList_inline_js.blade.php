@@ -240,7 +240,7 @@
                     "mRender": function (data, type, full) {
                         var id = full.id;
                         // return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="وظیفه جدید"></a><i class="fa fa-clock-o pointer margin-right-10 disabled"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه" href="/'+ full.pages[0] +'"></a>' : '<i class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="صفحه"></i>')+'<a class="fa fa-trash pointer margin-right-10 remove_task" data-toggle="tooltip" title="حذف"></a>';
-                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>') + "<a class='fa fa-trash margin-right-10 pointer remove_task color_red' data-toggle='tooltip' title='حذف' rel='" + full.id + "'></a>" +"<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?pid=')}}"+full.id +"' title='وظیفه جدید'></a>";
+                        return '<a class="jsPanels fa fa-copy pointer margin-right-10" data-toggle="tooltip" title="کپی وظیفه" href="/modals/CreateNewTask?tid='+full.id+'" title="'+full.title+'"></a><i class="fa fa-clock-o pointer margin-right-10 disabled gray_light_color"  data-toggle="tooltip" title="پیگیری"></i>'+(full.pages[0] != undefined ? '<a class="fa fa-file pointer margin-right-10" target="_blank" data-toggle="tooltip" title="'+ full.pages[0].title +'" href="/'+ full.pages[0].id +'"></a>' : '<i class="fa fa-file pointer margin-right-10 gray_light_color" target="_blank" data-toggle="tooltip" title="صفحه"></i>') + "<a class='fa fa-trash margin-right-10 pointer remove_task color_red' data-toggle='tooltip' title='حذف' rel='" + full.id + "'></a>" +"<a class='jsPanels margin-right-10 fa fa-plus' href='{{url('/modals/CreateNewTask?ctid=')}}"+full.id +"' title='وظیفه جدید'></a>";
                     },
                     "width": "5%"
                 }
@@ -391,21 +391,24 @@
 
     }
     $(".select2_auto_complete_keywords").select2({
-        minimumInputLength: 3,
         dir: "rtl",
-        width: "100%",
+        width: '100%',
         tags: true,
+        minimumInputLength: 2,
+        insertTag: function(data, tag){
+            tag.text = 'جدید: ' + tag.text;
+            data.push(tag);
+        },
         ajax: {
             url: "{{route('auto_complete.keywords')}}",
             dataType: "json",
             type: "POST",
             quietMillis: 150,
             data: function (term) {
-                return {
-                    term: term
-                };
+                return {term: term};
             },
             results: function (data) {
+                console.log(data);
                 return {
                     results: $.map(data, function (item) {
                         return {
