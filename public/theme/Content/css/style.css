@@ -4330,3 +4330,6 @@ input::-webkit-inner-spin-button {
 .background-gray{
     background-color: #999 !important;
 }
+.background-gray label{
+    background-color: #d0cbcb !important;
+}

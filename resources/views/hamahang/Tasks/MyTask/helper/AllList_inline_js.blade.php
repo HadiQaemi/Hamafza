@@ -100,6 +100,23 @@
         {{--});--}}
 
     }
+    $('.form-check-input').click(function () {
+        // $(document).on('click','')
+        if($('label[for="'+$(this).attr('id')+'"]').hasClass('background-gray')){
+            $('label[for="'+$(this).attr('id')+'"]').removeClass('background-gray');
+            $(this).parent().removeClass('background-gray');
+        }
+        else{
+            $(this).parent().addClass('background-gray');
+            $('label[for="'+$(this).attr('id')+'"]').addClass('background-gray');
+        }
+        // $(document).on('click', 'input[name="task_status[]"]', function () {
+        //     if($(this).checked)
+        //     {
+        //         alert('hi hadi');
+        //     }
+        // });
+    });
 
     function ShowErrorModal(data) {
         err_list_txt = '';
