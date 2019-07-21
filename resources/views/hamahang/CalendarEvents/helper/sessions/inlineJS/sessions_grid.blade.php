@@ -103,7 +103,7 @@
                             $.each(keywords, function(index) {
                                 data2 += '<span class="bottom_keywords one_keyword task_keywords" data-id="'+keywords[index].id+ '" ><i class="fa fa-tag"></i> <span style="color: #6391C5;">'+keywords[index].title+'</span></span>';
                             });
-                            return "<div class='" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "'>"+full.title+"</div><div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
+                            return "<div class='" + ( full.assignment_assignment==1 ? 'color_grey' : '' ) + "' data-toggle='tooltip' title='"+full.agendas+"'>"+full.title+"</div><div class='' style='margin: 2px 0px;padding: 5px;'>"+data2+"</div>";
                             // }
                         }
                     },
@@ -170,7 +170,7 @@
                         mRender :function (data, type, full)
                         {
                             var actions =
-                                "<a class='cursor-pointer jsPanels white-space' href='/CalendarEvents/sessionModal?mode=editSession&id="+full.session_id+"' data-toggle='tooltip'  data-html='true' ><i class='fa fa-edit'></i></a>" +
+                                "<a class='cursor-pointer jsPanels white-space' href='/CalendarEvents/sessionModal?mode=editSession&id="+full.session_id+"' data-toggle='tooltip'  data-html='true'><i class='fa fa-edit'></i></a>" +
                                     {{--var actions ='<a class="cls3 margin-right-10"   alt='+'{{trans('calendar_events.ce_edit_label')}}'+' title='+'{{trans('calendar_events.ce_edit_label')}}'+' style="margin: 2px" onclick="editEvent('+full.id+','+full.type+')" href="#"><i class="fa fa-edit"></i></a>'+--}}
                                             {{--'<a class="cls3"   alt='+'{{trans('calendar_events.ce_events_grid_add_reminder')}}'+' title='+'{{trans('calendar_events.ce_events_grid_add_reminder')}}'+' style="margin: 2px" onclick="addReminder('+full.id+')" href="#"><i class="fa fa-bell-o"></i></a>';--}}
                                         '';

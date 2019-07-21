@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 40px;top: -3px;"><a href="{{App::make('url')->to('/')}}/modals/helpview?code={{enCode('351')}}" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
+    $('.jsPanel-controlbar').append('<span class="jsPanel-btn help-icon-span" style="position: absolute;left: 40px;top: -3px;"><a href="{{App::make('url')->to('/')}}/modals/helpview?code={{enCode('79')}}" title="راهنمای اینجا" href="#" class="jsPanels icon-help HelpIcon" style="float: left;padding-left: 20px;" title="راهنمای اینجا" data-placement="top" data-toggle="tooltip"></a></span>');
 
     ChageSel($("#PublicSel"), $("#PublicSel option:selected"));
     function addCheckbox(name, valu) {

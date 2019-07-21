@@ -309,7 +309,7 @@
                 }
 				case 'chart':
                 {
-                    $help_code = enCode('275');
+                    $help_code = enCode('276');
                     break;
                 }
 				case 'ugc.desktop.hamahang.acl.index':

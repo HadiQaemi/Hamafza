@@ -18,6 +18,7 @@
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/JSPanel/jquery.jspanel.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{url('theme/Content/css/jquery.notice.css')}}"/>
+<link type="text/css" rel="stylesheet" href="{{url('theme/Content/css/jquery.notice.css')}}"/>
 <link type="text/css" rel="stylesheet" href="{{url('theme/Content/css/treemenu.css')}}"/>
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}}">
 <link type="text/css" rel="stylesheet" href="{{url('assets/Packages/select2/dist/css/select2.min.css')}}"/>

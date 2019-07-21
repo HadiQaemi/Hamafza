@@ -1416,6 +1416,13 @@ class CalendarEventsController extends Controller
             {
                 return $data->session->title;
             })
+            ->addColumn('agendas', function($data)
+            {
+                $text = '';
+                foreach ($data->session->agendas as $agenda)
+                    $text .= (trim($text) == '' ? '' : ', ').$agenda->agenda;
+                return $text;
+            })
             ->addColumn('date', function ($data)
             {
                 $jdate = new jDateTime();
