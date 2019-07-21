@@ -70,8 +70,7 @@ class MyAssignedTaskController extends Controller
         $filter_subject_id = Request::exists('filter_subject_id') ? Request::get('filter_subject_id') : '';
         $task_important_immediate = Request::input('task_important_immediate');
 
-        $result = DB::table('hamahang_task')
-            ->join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
+        $result = tasks::join('hamahang_task_assignments', 'hamahang_task.id', '=', 'hamahang_task_assignments.task_id')
             ->join('hamahang_task_priority', 'hamahang_task_priority.task_id', '=', 'hamahang_task.id')
             ->join('hamahang_task_status', 'hamahang_task_status.task_id', '=', 'hamahang_task.id')
             ->join('user', 'user.id', '=', 'hamahang_task_assignments.employee_id')
@@ -1025,7 +1024,7 @@ class MyAssignedTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return "<a href='" . url('/' . $data->Uname) . "' target='_blank'>". $data->Assignment->Employee->BetweenSmallandBig . $data->Name . " " . $data->Family . "</a>";
+                return $data->Assignment->Employee->BetweenSmallandBig . "<a href='" . url('/' . $data->Uname) . "' target='_blank'>". $data->Name . " " . $data->Family . "</a>";
             })
             ->rawColumns(['employee'])
             ->make(true);

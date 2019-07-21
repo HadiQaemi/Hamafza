@@ -8,10 +8,10 @@ use Auth;
 
 class task_status extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
     protected $table = 'hamahang_task_status';
-    protected $dates = ['deleted_at'];
-    protected $fillable = ['uid', 'user_id', 'task_id', 'percent', 'type'];
+//    protected $dates = ['deleted_at'];
+    protected $fillable = ['uid', 'user_id', 'task_id', 'percent', 'type', 'deleted_at'];
 
     public static function create_task_status($task_id,$type=0,$percent=0,$user_id=-1,$timestamp=-1,$uid=-1)
     {

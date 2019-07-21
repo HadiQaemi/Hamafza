@@ -18,6 +18,7 @@
             <h6>
                 {{--<span style="margin-left: 10px"><i class="fa fa-sort-up pointer font-large"></i><i class="fa fa-sort-down pointer font-large"></i></span>--}}
                 @if(Request::input('package_type')=='persons')
+                    {!! $list_task['tasks'][0]->Assignment->Employee->BetweenSmallandBig !!}
                     <a href='{{url('/' . $list_task['tasks'][0]->uname)}}' target='_blank'>{{$list_task['name']}}</a>
                 @else
                     {{$list_task['name']}}
@@ -34,7 +35,8 @@
                     @foreach($list_task['tasks'] as $task)
                         <li>
                             <div class="header_div_list_task container-fluid prl-1 text_ellipsis">
-                                <div class="span_title text_ellipsis" style="margin: 0px 10px" >
+                                <div class="pull-right col-xs-1" style="padding: 0px;margin-right: -7px;">{!! $task->Assignment->Assigner->BetweenSmallandBig !!}</div>
+                                <div class="span_title text_ellipsis pull-right col-xs-9" style="margin: 0px" >
                                     <span data-toggle="tooltip" title="{{$task->title}}">
                                         <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->task_id)}}'>
                                             {{--@php--}}
@@ -54,6 +56,7 @@
                                         </a>
                                     </span>
                                 </div>
+                                <div class="pull-right col-xs-1" style="padding: 0px;margin-right: -7px;">{!! $task->Assignment->Employee->BetweenSmallandBig !!}</div>
                             </div>
                         </li>
                     @endforeach

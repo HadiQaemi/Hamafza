@@ -4333,3 +4333,6 @@ input::-webkit-inner-spin-button {
 .background-gray label{
     background-color: #d0cbcb !important;
 }
+.task-redo{
+    border: 3px solid #770404;
+}

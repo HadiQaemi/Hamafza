@@ -3177,7 +3177,12 @@ class tasks extends Model
 
     public function Status()
     {
-        return $this->hasMany('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id')->orderBy('hamahang_task_status.id','DESC');
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id')->orderBy('hamahang_task_status.id','DESC')->whereNull('deleted_at');
+    }
+
+    public function AllStatus()
+    {
+        return $this->hasMany('App\Models\Hamahang\Tasks\task_status', 'task_id', 'id');
     }
 
     public function StatusColor()

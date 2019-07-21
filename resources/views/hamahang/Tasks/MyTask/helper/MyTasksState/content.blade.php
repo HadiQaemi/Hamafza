@@ -20,7 +20,7 @@
                                     </a>
                                 </span>
                             </div>
-                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                             <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}} {{$task->AllStatus->where('type', '>=', 1)->count()>0 ? 'task-redo' : ''}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
                 @endforeach
@@ -46,11 +46,11 @@
                             <div class="span_title text_ellipsis" >
                                 <span data-toggle="tooltip" title="{{$task->title."\n".$task->desc}}" class="">
                                     <a class='cursor-pointer jsPanels' href='/modals/ViewTaskForm?tid={{enCode($task->id)}}&aid={{isset($task->Assignment->id) ? $task->Assignment->id : ''}}'>
-                                        {{$task->title}}
+                                        <span>{{$task->title}}</span>
                                     </a>
                                 </span>
                             </div>
-                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                            <div style="" class="respite_number_task_state {{$task->RespiteRemain['bg_color_class']}} {{$task->AllStatus->where('type', '>=', 2)->count()>0 ? 'task-redo' : ''}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
                 @endforeach
@@ -80,7 +80,7 @@
                                     </a>
                                 </span>
                             </div>
-                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}} {{$task->AllStatus->where('type', '>=', 3)->count()>0 ? 'task-redo' : ''}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
                 @endforeach
@@ -110,7 +110,7 @@
                                     </a>
                                 </span>
                             </div>
-                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}}">{{$task->RespiteRemain['days']}}</div>
+                            <div style="" class="respite_number_task_state  {{$task->RespiteRemain['bg_color_class']}} {{$task->AllStatus->where('type', '>=', 4)->count()>0 ? 'task-redo' : ''}}">{{$task->RespiteRemain['days']}}</div>
                         </div>
                     </li>
                 @endforeach
