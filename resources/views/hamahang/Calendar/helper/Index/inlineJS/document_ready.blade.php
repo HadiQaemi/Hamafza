@@ -311,11 +311,12 @@
                 lang: 'fa',
                 isJalaali: true,
                 isRTL: true,
+                defaultView: 'agendaWeek',
                 defaultDate: nowArr[0],
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 header: {
-                    left: 'prev,next today',
+                    left: 'next,prev today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
@@ -478,7 +479,6 @@
                             if (res.sharing_events.length) {
                                 for (var i = 0; i < res.sharing_events.length; i++) {
                                     if (res.sharing_events[i].color != null) {
-
                                         var color = res.sharing_events[i].color;
                                     }
                                     else if (sharing_options != null && (typeof sharing_options[res.sharing_events[i].sharId] !== 'undefined' || sharing_options[res.sharing_events[i].sharId] != null)) {

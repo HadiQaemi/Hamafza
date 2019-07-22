@@ -103,7 +103,7 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 .fc-icon-left-single-arrow:after {
-	content: "\02039";
+	content: "\0203A";
 	font-weight: bold;
 	font-size: 200%;
 	top: -7%;
@@ -111,7 +111,7 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 .fc-icon-right-single-arrow:after {
-	content: "\0203A";
+	content: "\02039";
 	font-weight: bold;
 	font-size: 200%;
 	top: -7%;

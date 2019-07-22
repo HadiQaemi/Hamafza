@@ -790,7 +790,8 @@ class MyTaskController extends Controller
             })
             ->addColumn('employee', function ($data)
             {
-                return $data->Assignment->Assigner->BetweenSmallandBig . '<a href="' . url('/' . $data->Uname) . '" target="_blank">' . $data->Name . ' ' . $data->Family . '</a>';
+//                return $data->Assignment->Assigner->BetweenSmallandBig . '<a href="' . url('/' . $data->Uname) . '" target="_blank">' . $data->Name . ' ' . $data->Family . '</a>';
+                return '<a href="' . url('/' . $data->Uname) . '" target="_blank">' . $data->Name . ' ' . $data->Family . '</a>';
             })
             ->rawColumns(['employee'])
             ->make(true);

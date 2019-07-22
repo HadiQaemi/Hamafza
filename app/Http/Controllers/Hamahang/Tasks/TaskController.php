@@ -1294,7 +1294,6 @@ class TaskController extends Controller
     public function MyAssignedTasksFetch()
     {
         $Tasks = tasks::MyAssignedTasks(Auth::id(), Request::input('subject_id'));
-
         return Datatables::of($Tasks)
             ->editColumn('type', function ($data)
             {
