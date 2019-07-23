@@ -170,7 +170,11 @@
                                 </div>
                             </div>
                             <div class="pull-left" style="margin-top: 7px;margin-top: 7px;width: 30px;">
-                                <img src="{{ url('theme/hamafza/index_2/img/avatar.png') }}" style="float:right">
+                                @if(auth()->check())
+                                    <img class="img-circle img-responsive " src="{{ auth()->user()->avatar_link }}"/>
+                                @else
+                                    <img src="{{ url('theme/hamafza/index_2/img/avatar.png') }}" style="float:right">
+                                @endif
                             </div>
                         </div>
                         <div class="pull-left quick-links" style="margin-top: 12px;margin-left: 20px;">

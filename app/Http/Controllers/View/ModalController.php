@@ -519,7 +519,7 @@ class ModalController extends Controller
             $content = SubjectClass::subjectExport($res['sid'], $res['pid'], $res['type'])->render();
             $footer = '<span class="FloatLeft">'
                 . '<a id="wordexport" class="btn btn-primary">دریافت فایل ورد</a> '
-                . '<a target="_blank" class="btn btn-danger" href="'.route('modals.exportExcel').'"> دریافت فایل اکسل</a>'
+//                . '<a target="_blank" class="btn btn-danger" href="'.route('modals.exportExcel').'"> دریافت فایل اکسل</a>'
                 //. ' <a id="pdfexport" class="btn btn-primary">دریافت فایل پی دی اف</a>'
                 . '</span>';
             return json_encode(['header' => 'بارگیری', 'content' => $content, 'footer' => $footer]);
