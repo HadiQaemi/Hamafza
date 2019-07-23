@@ -592,23 +592,23 @@ class MyAssignedTaskController extends Controller
                 }
                 case 'task_ended':
                 {
-//                    if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
-//                        $result['success'] = false;
-//                        $result['error']= trans('tasks.cant_end_this_task');
-//                        return $result;
-//                    }
-//                    else{
+                    if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
+                        $result['success'] = false;
+                        $result['error']= trans('tasks.cant_end_this_task');
+                        return $result;
+                    }
+                    else{
                         $task->Status()->delete();
                         $task->Statuses()->create([
                             'uid' => auth()->id(),
                             'user_id' => auth()->id(),
                             'task_id' => $task_id,
                             'percent' => 0,
-                            'type' => 3,
+                            'type' => 4,
                             'timestamp' => time(),
                         ]);
                         $result['success'] = true;
-//                    }
+                    }
                     break;
                 }
                 default :
@@ -1709,11 +1709,15 @@ class MyAssignedTaskController extends Controller
     }
     public function SetActToTask()
     {
+
+
         $task_all = Session::get('TaskForm_task_all');
         $task_id = Session::get('TaskForm_tid');
         $assign_id = Session::get('TaskForm_aid');
 
         $task_id = deCode(Request::input('tid'));
+        $task = tasks::where('id', '=', $task_id)->first();
+
         $assign_id = deCode(Request::input('aid'));
         $task_assignment = task_assignments::where('id', '=', $assign_id)
             ->select('assigner_id', 'uid', 'staff_id')->first();
@@ -1813,8 +1817,27 @@ class MyAssignedTaskController extends Controller
                 $power_mental, $power_physical, $quality, Request::input('action_duration')*Request::input('action_time_type'), $respite_duration_timestamp, Request::input('action_explain'));
             task_status::where('task_id', '=', $task_id)
                 ->delete();
-            task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
-            DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
+
+            if(Request::input('task_status') == 3)
+            {
+                if($task->end_on_assigner_accept == 0 || auth()->id() != $task->uid){
+
+                }
+                else{
+                    $task->Statuses()->create([
+                        'uid' => auth()->id(),
+                        'user_id' => auth()->id(),
+                        'task_id' => $task_id,
+                        'percent' => 0,
+                        'type' => 4,
+                        'timestamp' => time(),
+                    ]);
+                }
+            }else{
+                task_status::create_task_status($task_id, Request::input('task_status'), Request::input('progress'));
+                DB::table('hamahang_task')->where('id','=', (int) $task_id)->update(['progress'=>(float) Request::input('progress')]);
+            }
+
 
             task_history::create_task_history($task_id, 'submit_action', serialize(Request::all()), task_status::getTaskStatusTitleAttribute(Request::input('task_status')).(Request::input('progress')> 0 ? ', '.trans('tasks.precent_progress').': '.Request::input('progress')  : '').(trim(Request::input('action_explain'))!= '' ? '، '.Request::input('action_explain') : ''));
 

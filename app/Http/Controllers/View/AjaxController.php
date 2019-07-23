@@ -2202,11 +2202,14 @@ preventDuplicates: true,
         $subject_types = ['public' => 'رسمی', 'private' => 'شخصی',];
         $term = trim($request->input('term'));
         $subjects['public'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '1')->where('list', '1')->where('archive', '0');
-        $subjects['private'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '0')->where('admin', auth()->id());
+        if(auth()->check()){
+            $subjects['private'] = Subject::whereIn('kind', [20, 21, 22, 27])->where('ispublic', '0')->where('admin', auth()->id());
+            $subjects['private'] = $term ? $subjects['private']->where('title', 'like', "%$term%") : $subjects['private'];
+            $subjects['private'] = $subjects['private']->get();
+        }
         $subjects['public'] = $term ? $subjects['public']->where('title', 'like', "%$term%") : $subjects['public'];
-        $subjects['private'] = $term ? $subjects['private']->where('title', 'like', "%$term%") : $subjects['private'];
         $subjects['public'] = $subjects['public']->get();
-        $subjects['private'] = $subjects['private']->get();
+
         $r = view('layouts.helpers.common.sections.helpers.nav_bar.left_nav_bar_portals')->with
         ([
             'subject_types' => $subject_types,
