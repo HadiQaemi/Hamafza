@@ -487,6 +487,7 @@ class CalendarEventsController extends Controller
 
                         $userEvent = new User_Event();
                         $userEvent->uid = $uid;
+                        $userEvent->session_id = $sessionObj->id;
                         $userEvent->title = Request::input('htitle');
                         $userEvent->startdate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' '.$starttime[0];
                         $userEvent->enddate = $jdate->Jalali_to_Gregorian($startdate[0], $startdate[1], $startdate[2], '-') . ' '.$endtime[0];
@@ -897,9 +898,9 @@ class CalendarEventsController extends Controller
             $delete = DB::transaction(function () {
                 //die(dd(Request::input('rec_id')));
 //                $record = User_Event::find(Request::input('rec_id'));
-                $record = Session_Events::find(Request::input('rec_id'));
+                $record = Session_Events::find(Request::input('id'));
                 $record->delete();
-                $record = User_Event::find($record->event_id);
+                $record = User_Event::where('session_id', $record->event_id);
                 $record->delete();
                 if ($record->type == 1) {
                     Session_Events::where('event_id', '=', Request::input('rec_id'))->delete();

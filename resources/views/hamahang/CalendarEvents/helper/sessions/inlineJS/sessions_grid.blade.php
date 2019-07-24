@@ -178,7 +178,7 @@
                             // {
                             {{--actions += '<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' title='+'{{trans('calendar_events.ce_grid_session_register_minute')}}'+' style="margin: 2px" onclick="minutesDailog('+full.id+')" href="#"><i class="fa fa-building-o"></i></a>';--}}
                             // }
-                            actions +='<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteEvent('+full.session_id+')" href="#"><i class="fa fa-close"></i></a>';
+                            actions +='<a class="cls3 margin-right-10" alt='+'{{trans('calendar_events.ce_delete_label')}}'+' title='+'{{trans('calendar_events.ce_delete_label')}}'+'  style="margin: 2px" onclick="deleteEvent('+full.session_id+',\''+full.agendas+'\')" href="#"><i class="fa fa-close"></i></a>';
                             return actions;
                         }
                     }

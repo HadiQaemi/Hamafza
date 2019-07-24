@@ -1,5 +1,6 @@
 <?php
 Route::get('me', ['as' => 'ugc.desktop.form_list.me', 'uses' => 'View\UserController@form_list_me', 'middleware' => ['dynamic_permission:ugc.desktop.form_list.me']]);
+Route::get('diagram_list_all', ['as' => 'ugc.desktop.form_list.diagram_list_all', 'uses' => 'Hamahang\DiagramController@diagram_list_all', 'middleware' => ['dynamic_permission:ugc.desktop.form_list.me']]);
 Route::get('sent', ['as' => 'ugc.desktop.form_list.sent', 'uses' => 'View\UserController@form_list_sent', 'middleware' => ['dynamic_permission:ugc.desktop.form_list.sent']]);
 Route::get('copy', ['as' => 'ugc.desktop.form_list.copy', 'uses' => 'View\UserController@form_list_copy', 'middleware' => ['dynamic_permission:ugc.desktop.form_list.copy']]);
 Route::get('edit', ['as' => 'ugc.desktop.form_list.edit', 'uses' => 'View\UserController@form_list_edit', 'middleware' => ['dynamic_permission:ugc.desktop.form_list.edit']]);

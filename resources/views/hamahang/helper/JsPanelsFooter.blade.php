@@ -17,6 +17,10 @@
             <button type="button" onclick="add_selected_tasks()" class="btn btn-default pull-left btn-primary">{{ trans('tasks.add') }}</button>
 
     </div>
+@elseif($btn_type == 'DiagramOptions')
+    <div class="">
+        <button type="button" id="DiagramOptionsBtn" class="btn btn-default pull-left btn-primary">{{ trans('app.confirm') }}</button>
+    </div>
 @elseif($btn_type=='MyTaskInfo')
     <div class="">
         <button id="NewTaskPackageSubmitBtn" onclick="do_action()" name="AddNewPackage" value="save"

@@ -13,6 +13,7 @@ use App\Models\Hamahang\Basicdata;
 use App\Models\Hamahang\BasicdataAttributes;
 use App\Models\Hamahang\BasicdataAttributesValues;
 use App\Models\Hamahang\BasicdataValue;
+use App\Models\Hamahang\diagrams;
 use App\Models\Hamahang\DiscountCoupon;
 use App\Models\Hamahang\DiscountCouponRequest;
 use App\Models\Hamahang\FileManager\FileManager;
@@ -844,6 +845,19 @@ class ModalController extends Controller
             'header' => trans('tasks.create_new_task'),
             'content' => view('hamahang.Tasks.helper.CreateNewTask.CreateNewTaskWindow', $arr)->render(),
             'footer' => view('hamahang.helper.JsPanelsFooter',['tid'=>$tid])->with('btn_type', 'CreateNewTask')->render()
+        ]);
+    }
+
+    public function diagramOptions()
+    {
+        $tid = '';
+        $res = $this->getParams(['did']);
+        $diagram = diagrams::find(deCode($res['did']));
+
+        return json_encode([
+            'header' => 'ویرایش نمودار',
+            'content' => view('hamahang.Diagram.DiagramOptions', ['diagram' => $diagram])->render(),
+            'footer' => view('hamahang.helper.JsPanelsFooter',['did'=>$tid])->with('btn_type', 'DiagramOptions')->render()
         ]);
     }
 

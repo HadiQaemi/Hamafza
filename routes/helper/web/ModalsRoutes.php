@@ -96,6 +96,7 @@ Route::group(['prefix' => 'modals', 'middleware' => ['dynamic_permission:modals'
     Route::post( 'add_users_tools', ['as' => 'modals.add_users_tools', 'uses' => 'View\ModalController@addUsersTools', 'middleware' => ['dynamic_permission:modals.add_users_tools']]);
     Route::post( 'add_tool_group', ['as' => 'modals.add_tool_group', 'uses' => 'View\ModalController@addToolGroup', 'middleware' => ['dynamic_permission:modals.add_tool_group']]);
     Route::post( 'add_edit_menu', ['as' => 'modals.add_edit_menu', 'uses' => 'View\ModalController@addEditMenu', 'middleware' => ['dynamic_permission:modals.add_tool_group']]);
+    Route::post( 'diagramOptions', ['as' => 'modals.diagramOptions', 'uses' => 'View\ModalController@diagramOptions', 'middleware' => ['dynamic_permission:modals.add_tool_group']]);
     Route::post( 'add_edit_menu_items', ['as' => 'modals.add_edit_menu_items', 'uses' => 'View\ModalController@addEditMenuItems', 'middleware' => ['dynamic_permission:modals.add_edit_menu_items']]);
     /* ??? */Route::post('CreateNewTask', ['as' => 'modals.create_new_task', 'uses' => 'View\ModalController@CreateNewTask', 'middleware' => ['dynamic_permission:modals.create_new_task']]);
     /* ??? */Route::post('FetchMyFiles', ['as' => 'modals.fetch_my_files', 'uses' => 'View\ModalController@FetchMyFiles', 'middleware' => ['dynamic_permission:modals.create_new_task']]);

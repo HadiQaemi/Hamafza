@@ -710,6 +710,24 @@
                             }
                         });
                     });
+                    $(document).on('click', '#DiagramOptionsBtn', function () {
+                        var $this = $(this);
+                        var is_apply = $this.data('apply');
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('hamahang.diagram.save_diagram') }}",
+                            dataType: 'json',
+                            data: $('#digram_form').serialize(),
+                            success: function (data) {
+                                if (data.success == false) {
+                                    messageBox('error', '', data.error.subject_title, {'id': 'alert_setting_omomi'});
+                                }else{
+                                    $('.jsPanel-btn-close').click();
+                                    window.table_diagram.ajax.reload();
+                                }
+                            }
+                        });
+                    });
                     $(document).on('click', '.change-score-btn', function () {
                         $this = $(this);
                         var form_id = $this.data('form_id');

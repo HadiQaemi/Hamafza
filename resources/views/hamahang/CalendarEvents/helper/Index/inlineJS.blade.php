@@ -203,7 +203,7 @@
     /*-------------------------------------------------------------------------------------*/
     /*-------------------------------delete even in grid ------------------------------*/
     /*-------------------------------------------------------------------------------------*/
-    function deleteEvent(id) {
+    function deleteEvent(id, title) {
         //  var answer = confirm('آیا از حذف این رکورد اطمینان دارید؟ ');
 
         var obj = {};
@@ -266,12 +266,12 @@
 
                 confirmModal({
                     title: 'حذف رویداد',
-                    message: '{{trans("calendar_events.ce_delete_title1")}}' + data.agenda + ' {{trans("calendar_events.ce_delete_title2")}} ',
+                    message: '{{trans("calendar_events.ce_delete_title1")}} "' + title + '" {{trans("calendar_events.ce_delete_title2")}} ',
                     onConfirm: function () {
                         $.ajax({
                             url: '{{ URL::route('hamahang.calendar_events.delete_event')}}',
                             type: 'POST', // Send post dat
-                            data: obj,
+                            data: {id: id},
                             async: false,
                             success: function (s) {
                                 res = JSON.parse(s);

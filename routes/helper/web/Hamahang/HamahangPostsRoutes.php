@@ -6,6 +6,11 @@ Route::group(['namespace' => 'Hamahang', 'middleware' => ['dynamic_permission:po
         require(__DIR__ . '/helper/HamahangPostsRoutes/TasksLibrary.php');
     });
 
+    Route::group(['prefix' => 'Diagrams', 'middleware' => ['dynamic_permission:posts.hamahang.tasks_library']], function ()
+    {
+        require(__DIR__ . '/helper/HamahangPostsRoutes/diagrams.php');
+    });
+
     Route::group(['prefix' => 'Calendar', 'middleware' => ['dynamic_permission:posts.hamahang.calendar']], function ()
     {
         require(__DIR__ . '/helper/HamahangPostsRoutes/Calendar.php');
