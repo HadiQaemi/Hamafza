@@ -46,6 +46,42 @@ class AutoCompleteController extends Controller
         return response()->json($data);
     }
 
+    public function diagrams(Request $request)
+    {
+        $x = $request->term;
+        if ($request->term['term'] == '...')
+        {
+            $data = org_chart_items::select("id", "title as text")
+                ->whereHas('chart', function ($query) use ($request) {
+                    $query->where('org_organs_id', '=', $request->organ);
+                })->get();
+        }
+        else
+        {
+            $data = org_chart_items::select("id", "title as text")
+                ->whereHas('chart', function ($query) use ($request) {
+                    $query->where('org_organs_id', '=', $request->organ);
+                })
+                ->where("title", "LIKE", '%' . $request->term['term'] . '%')->get();
+        }
+        if ($x['term'] == '...')
+        {
+            $data = \App\Models\Hamahang\diagram_users_permission::width('diagram')->where('user_id',auth()->user()->id)->get()->select('diagram.id', 'diagram.title');
+            dd($data);
+        }
+        else
+        {
+            $data = User::select("id", DB::raw('CONCAT(Name, " ", Family, " (", Uname, ")") AS text'))
+                ->where("Name", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Family", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Uname", "LIKE", "%" . $x['term'] . "%")
+                ->Orwhere("Email", "LIKE", "%" . $x['term'] . "%")
+                ->get();
+        }
+        $data = array('results' => $data);
+        return response()->json($data);
+    }
+
     public function users(Request $request)
     {
         $x = $request->term;

@@ -1,7 +1,14 @@
-@include('modals.modalheader')
+@include('layouts.master_tinymce')
+{{--@include('modals.modalheader')--}}
+
 <style>
-    body {
-        background-color: white;
+    table#table_pages_list
+    {
+        display: none;
+    }
+    table#table_pages_list tr td
+    {
+        vertical-align: middle;
     }
 </style>
 <style>
@@ -186,134 +193,32 @@
     }
 </style>
 
-<div id="dashbord-page" class="container" style="overflow: auto;height: 390px;background-color: #FFF;width: 100%;">
-    <form class="form-horizontal" role="form">
-        {{ csrf_field() }}
-        <table class="table">
-            <tr>
-                <td style="border: none;">عنوان</td>
-                <td style="border: none;"><input class="form-control" id="name-diagram" placeholder="عنوان را وارد کنید" type="text">
-                    <input id="defvalue" value="0" type="hidden">
-                </td>
-            </tr>
-
-            <tr>
-                <td>نوع نمایش</td>
-                <td><select id="selectMe" class="select-form form-control" style="padding: 0.5rem;width: 150px;display: inline-block;" placeholder="عنوان را وارد کنید">
-                        <option value="option1">جدول</option>
-                        <option value="Pie">نمودار دایره ای</option>
-                        <option value="Histogram">نمودار ستونی</option>
-                        <option value="Linear">نمودار خطی</option>
-                        <option value="Radar">نمودار راداری</option>
-                    </select>
-
-                    <span style="margin-right: 50px;">
-                         عرض نمودار(پیکسل)                <input class="form-control" id="width-diagram" placeholder="عرض را وارد کنید" type="text" style="width: 120px;display: inline;">
-                    </span>
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>انتخاب داده</td>
-                <td><input type="radio" name="choice" id="choice-form" required>
-                    <label for="choice-form">فرم</label>
-                    <span class="reveal-if-active ">
-                        <select class="select-form form-control" id="Forms" style="max-width: 200px;display: inline-block;" placeholder="عنوان را وارد کنید">
-                            @php($Forms = \App\Models\hamafza\Form::all())
-                            @foreach($Forms as $item)
-                                <option value="{{$item->id}}">{{$item->title}}</option>
-                            @endforeach
-                        </select>
-                    </span>
-
-                    <input type="radio" name="choice" id="choice-exell-form">
-                    <label for="choice-exell-form">فرم اکسل </label>
-                    <span class="reveal-if-active">
-                        <a href="#">مدیریت فایل ها</a>
-                    </span></td>
-
-            </tr>
-
-            <tr>
-
-                <td colspan="2">
-
-                    <div id="jadval" class="jadval">
-                        <div class="first col-sm-4 list-group first">
-                            <label>ستون‌های(فیلدهای) داده</label>
-
-                            <select size="7" multiple="multiple" id="jadval_col1" class="columns select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">
-                            </select>
-                        </div>
-
-                        <div class="col-sm-4 btn-wrapper" style="text-align: center; ">
-                            <span class=" btn btn-4 btn-4b btn-success" style="margin: auto;  width: 90px;" onclick="myFunction_jadval()">افزودن</span>
-                            <p></p>
-                            <span class="btn btn-4 btn-4b btn-danger " style="margin: auto;  width: 90px;" onclick="myFunction_jadval2()">حذف کردن</span>
-                        </div>
-                        <div class="second col-sm-4 list-group">
-                            <label> سطرها -محورعمودی </label>
-                            <select size="7" multiple="multiple" id="jadval_col2" class="select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">
-                            </select>
-                        </div>
-                        <div class="row">
-                            <div class="first col-sm-4 list-group">
-                                <p></p>
-
-                                <label>ستون‌های(فیلدهای) داده</label>
-                                <p></p>
-
-                                <select size="7" multiple="multiple" id="jadval_row1" class="columns select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">
-                                </select>
-                            </div>
-
-                            <div class="col-sm-4 btn-wrapper" style="text-align: center;">
-                                <span class=" btn btn-4 btn-4b btn-success" style="margin: auto;  width: 90px;" onclick="jadval_rows_add()">افزودن</span>
-                                <p></p>
-                                <span class="btn btn-4 btn-4b btn-danger " style="margin: auto;  width: 90px;" onclick="jadval_rows_remove()">حذف کردن</span>
-
-
-                            </div>
-                            <div class="third col-sm-4 list-group">
-                                <img src="{{App::make('url')->to('/')}}/img/refresh.png" id="RepSels">
-                                <select size="7" multiple="multiple" id="vaset" style="display: none;">
-                                </select>
-                                <br>
-                                <label>ستون‌ها - محور افقی</label>
-                                <select size="7" multiple="multiple" id="jadval_row2" class="select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                </td>
-
-            </tr>
-
-            <tr>
-                <td>فیلتر
-                    <select id="Fillter" class="select-form form-control" style="padding: 0.5rem;width: 150px;display: inline-block;" placeholder="عنوان را وارد کنید">
-                        <option value="0">بدون فیلتر</option>
-
-                    </select>
-                </td>
-                <td>
-                    <input type="radio" required="" id="choice-first" name="choice2">اولین رکورد
-                    <input type="radio" required="" id="choice-second" name="choice2">آخرین رکورد
-                    <input type="radio" required="" id="choice-value" name="choice2">مقدار
-                    <input type="text" class="form-control" name="values" id="filtervalue" style="width: 150px;display: inline;visibility: hidden">
-                </td>
-
-            </tr>
-        </table>
-
-    </form>
-</div>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#keywords').select2
+        ({
+            minimumInputLength: 3,
+            dir: 'rtl',
+            width: '100%',
+            tags: false,
+            ajax:
+                {
+                    dataType: 'json',
+                    quietMillis: 150,
+                    type: 'post',
+                    url: '{{ route('auto_complete.keywords') }}',
+                    data: function(term)
+                    {
+                        return {term: term};
+                    }, results: function(data)
+                    {
+                        return { results: $.map(data, function(item) { return {text: item.text, id: item.id} }) };
+                    }
+                }
+        });
+        $('#types').select2({'width': '100%'});
+
         $('#RepSels').on('click', function () {
             var Sjadval_col2 = $('select#jadval_col2 option').sort().clone();
             var Sjadval_row2 = $('select#jadval_row2 option').sort().clone();
@@ -419,8 +324,8 @@
                     });
 
                     @endif
-                     @if($filter!="0")
-$("#Fillter").val("{{$filter}}");
+                    @if($filter!="0")
+                    $("#Fillter").val("{{$filter}}");
                     @endif
 
 
@@ -458,7 +363,7 @@ $("#Fillter").val("{{$filter}}");
         $('.group').hide();
         $('#option1').show();
         @if ($formexcel == 'form')
-            $("#choice-form").trigger("click");
+        $("#choice-form").trigger("click");
         $("#selectMe").val("{{$nemodar}}");
         $("#selectMe").trigger("change");
         $("#Forms").val("{{$formid}}");
@@ -466,27 +371,28 @@ $("#Fillter").val("{{$filter}}");
 
 
         @else
-            $("#choice-exell-form").trigger("click");
+        $("#choice-exell-form").trigger("click");
         @endif
 
         @if($filtertype=='first')
-            $("#choice-first").trigger("click");
+        $("#choice-first").trigger("click");
         @elseif($filtertype=='second')
-                    $("#choice-second").trigger("click");
+        $("#choice-second").trigger("click");
         @else
-$("#choice-value").trigger("click");
+        $("#choice-value").trigger("click");
         $("#filtervalue").val("{{$filtertype}}");
         @endif
 
 
     });
     @if($Xs != '')
-$("#width-diagram").val("{{$width}}");
+    $("#width-diagram").val("{{$width}}");
     $("#name-diagram").val("{{$title}}");
     @endif
 
 
-$(document).ready(function () {
+    $(document).ready(function () {
+
 
         $(function () {
             $("#selectMe").val('option1');
@@ -716,3 +622,229 @@ $(document).ready(function () {
         $("#mySelectnine option[value='" + vals + "']").remove();
     }
 </script>
+
+<div id="dashbord-page" class="container" style="overflow: auto;height: 390px;background-color: #FFF;width: 100%;">
+    <form class="form-horizontal" role="form">
+        {{ csrf_field() }}
+        <div class="col-xs-12" style="border-bottom: 1px solid #eee">
+            <div class="col-xs-1">
+                <label >داده</label>
+            </div>
+            <div class="col-xs-3">
+                <input type="radio" name="choice" id="choice-form" value="out" checked>
+                <label for="choice-form">نمودار بیرونی</label>
+            </div>
+            <div class="col-xs-4">
+                <input type="radio" name="choice" id="choice-form-2" value="form" style="margin-top: -8px;">
+                <label for="choice-form-2">فرم</label>
+                <span class="reveal-if-active ">
+                        <select class="select-form form-control" id="Forms"
+                                style="max-width: 150px;display: inline-block;" placeholder="عنوان را وارد کنید">
+                            @php($Forms = \App\Models\hamafza\Form::all())
+                            @foreach($Forms as $item)
+                                <option value="{{$item->id}}">{{$item->title}}</option>
+                            @endforeach
+                        </select>
+                    </span>
+            </div>
+            <div class="col-xs-4">
+                <input type="radio" name="choice" id="choice-exell-form">
+                <label for="choice-exell-form">فرم اکسل </label>
+                <span class="reveal-if-active">
+                    <a href="#">مدیریت فایل ها</a>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-1">
+                <label >نمودار</label>
+            </div>
+            <div class="col-xs-10">
+                <span class="">
+                    @php($diagram = \App\Models\Hamahang\diagram_users_permission::where('user_id',auth()->user()->id)->get())
+                    <select class="form-control" id="types">
+                        @foreach ($diagram as $item)
+                            <option value="{{$item->diagram->id}}">{{$item->diagram->title}}</option>
+                        @endforeach
+                    </select>
+
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding-bottom: 5px;margin-bottom: 5px;">
+            <div class="col-xs-1">
+                <label >کلیدواژه</label>
+            </div>
+            <div class="col-xs-10">
+                <span class="">
+                    <select class="form-control" id="keywords" multiple="multiple"></select><br />
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12" style="border-bottom: 1px solid #eee;padding-bottom: 10px;margin-bottom: 5px;">
+            <div class="col-xs-1 line-height-35">
+                <label >پارامترها</label>
+            </div>
+            <div class="col-xs-10 line-height-35">
+                <div class="col-xs-1">
+                    <label >از</label>
+                </div>
+                <div class="col-xs-5">
+                    <input type="text" name="since" placeholder="9804" class="form-control"/>
+                </div>
+                <div class="col-xs-1">
+                    <label >تا</label>
+                </div>
+                <div class="col-xs-5">
+                    <input type="text" name="untim" placeholder="9804" class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-1 line-height-35">
+                <label >ابعاد</label>
+            </div>
+            <div class="col-xs-10 line-height-35">
+                <div class="col-xs-1">
+                    <label >طول</label>
+                </div>
+                <div class="col-xs-5">
+                    <input type="text" name="tol" placeholder="طول" class="form-control"/>
+                </div>
+                <div class="col-xs-1">
+                    <label >عرض</label>
+                </div>
+                <div class="col-xs-5">
+                    <input type="text" name="arz" placeholder="عرض" class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-1 line-height-35">
+                <label >عنوان</label>
+            </div>
+            <div class="col-xs-10 line-height-35">
+                <input type="text" name="title" placeholder="عنوان" class="form-control"/>
+            </div>
+        </div>
+        {{--<table class="table">--}}
+            {{--<tr>--}}
+                {{--<td style="border: none;">عنوان</td>--}}
+                {{--<td style="border: none;"><input class="form-control" id="name-diagram" placeholder="عنوان را وارد کنید" type="text">--}}
+                    {{--<input id="defvalue" value="0" type="hidden">--}}
+                {{--</td>--}}
+            {{--</tr>--}}
+
+            {{--<tr>--}}
+                {{--<td>نوع نمایش</td>--}}
+                {{--<td><select id="selectMe" class="select-form form-control" style="padding: 0.5rem;width: 150px;display: inline-block;" placeholder="عنوان را وارد کنید">--}}
+                        {{--<option value="option1">جدول</option>--}}
+                        {{--<option value="Pie">نمودار دایره ای</option>--}}
+                        {{--<option value="Histogram">نمودار ستونی</option>--}}
+                        {{--<option value="Linear">نمودار خطی</option>--}}
+                        {{--<option value="Radar">نمودار راداری</option>--}}
+                    {{--</select>--}}
+
+                    {{--<span style="margin-right: 50px;">--}}
+                         {{--عرض نمودار(پیکسل)                <input class="form-control" id="width-diagram" placeholder="عرض را وارد کنید" type="text" style="width: 120px;display: inline;">--}}
+                    {{--</span>--}}
+                {{--</td>--}}
+
+            {{--</tr>--}}
+
+            {{--<tr>--}}
+                {{--<td>انتخاب داده</td>--}}
+                {{--<td><input type="radio" name="choice" id="choice-form" required>--}}
+                    {{--<label for="choice-form">فرم</label>--}}
+                    {{--<span class="reveal-if-active ">--}}
+                        {{--<select class="select-form form-control" id="Forms" style="max-width: 200px;display: inline-block;" placeholder="عنوان را وارد کنید">--}}
+                            {{--@php($Forms = \App\Models\hamafza\Form::all())--}}
+                            {{--@foreach($Forms as $item)--}}
+                                {{--<option value="{{$item->id}}">{{$item->title}}</option>--}}
+                            {{--@endforeach--}}
+                        {{--</select>--}}
+                    {{--</span>--}}
+
+                    {{--<input type="radio" name="choice" id="choice-exell-form">--}}
+                    {{--<label for="choice-exell-form">فرم اکسل </label>--}}
+                    {{--<span class="reveal-if-active">--}}
+                        {{--<a href="#">مدیریت فایل ها</a>--}}
+                    {{--</span></td>--}}
+
+            {{--</tr>--}}
+
+            {{--<tr>--}}
+
+                {{--<td colspan="2">--}}
+
+                    {{--<div id="jadval" class="jadval">--}}
+                        {{--<div class="first col-sm-4 list-group first">--}}
+                            {{--<label>ستون‌های(فیلدهای) داده</label>--}}
+
+                            {{--<select size="7" multiple="multiple" id="jadval_col1" class="columns select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+
+                        {{--<div class="col-sm-4 btn-wrapper" style="text-align: center; ">--}}
+                            {{--<span class=" btn btn-4 btn-4b btn-success" style="margin: auto;  width: 90px;" onclick="myFunction_jadval()">افزودن</span>--}}
+                            {{--<p></p>--}}
+                            {{--<span class="btn btn-4 btn-4b btn-danger " style="margin: auto;  width: 90px;" onclick="myFunction_jadval2()">حذف کردن</span>--}}
+                        {{--</div>--}}
+                        {{--<div class="second col-sm-4 list-group">--}}
+                            {{--<label> سطرها -محورعمودی </label>--}}
+                            {{--<select size="7" multiple="multiple" id="jadval_col2" class="select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="first col-sm-4 list-group">--}}
+                                {{--<p></p>--}}
+
+                                {{--<label>ستون‌های(فیلدهای) داده</label>--}}
+                                {{--<p></p>--}}
+
+                                {{--<select size="7" multiple="multiple" id="jadval_row1" class="columns select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+
+                            {{--<div class="col-sm-4 btn-wrapper" style="text-align: center;">--}}
+                                {{--<span class=" btn btn-4 btn-4b btn-success" style="margin: auto;  width: 90px;" onclick="jadval_rows_add()">افزودن</span>--}}
+                                {{--<p></p>--}}
+                                {{--<span class="btn btn-4 btn-4b btn-danger " style="margin: auto;  width: 90px;" onclick="jadval_rows_remove()">حذف کردن</span>--}}
+
+
+                            {{--</div>--}}
+                            {{--<div class="third col-sm-4 list-group">--}}
+                                {{--<img src="{{App::make('url')->to('/')}}/img/refresh.png" id="RepSels">--}}
+                                {{--<select size="7" multiple="multiple" id="vaset" style="display: none;">--}}
+                                {{--</select>--}}
+                                {{--<br>--}}
+                                {{--<label>ستون‌ها - محور افقی</label>--}}
+                                {{--<select size="7" multiple="multiple" id="jadval_row2" class="select-form form-control" style="padding: 0.5rem" placeholder="عنوان را وارد کنید">--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                {{--</td>--}}
+
+            {{--</tr>--}}
+
+            {{--<tr>--}}
+                {{--<td>فیلتر--}}
+                    {{--<select id="Fillter" class="select-form form-control" style="padding: 0.5rem;width: 150px;display: inline-block;" placeholder="عنوان را وارد کنید">--}}
+                        {{--<option value="0">بدون فیلتر</option>--}}
+
+                    {{--</select>--}}
+                {{--</td>--}}
+                {{--<td>--}}
+                    {{--<input type="radio" required="" id="choice-first" name="choice2">اولین رکورد--}}
+                    {{--<input type="radio" required="" id="choice-second" name="choice2">آخرین رکورد--}}
+                    {{--<input type="radio" required="" id="choice-value" name="choice2">مقدار--}}
+                    {{--<input type="text" class="form-control" name="values" id="filtervalue" style="width: 150px;display: inline;visibility: hidden">--}}
+                {{--</td>--}}
+
+            {{--</tr>--}}
+        {{--</table>--}}
+
+    </form>
+</div>

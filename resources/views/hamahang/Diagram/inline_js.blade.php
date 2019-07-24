@@ -82,7 +82,7 @@
         LangJson_DataTables.sLoadingRecords = '<div class="loader preloader"></div>';
         // console.log(LangJson_DataTables);
         window.table_diagram = $('#diagramListTable').DataTable({
-            "dom": '<"bottom">rt<"bottom"ipl><"clear">',
+            dom: "<'row'<'col-sm-12'tr>> <'row'<'col-sm-4'p><'col-sm-4'l><'col-sm-4'i>>",
             "ajax": {
                 "url": "{{ route('hamahang.diagram.fetech_all_diagram') }}",
                 "type": "POST",
@@ -149,21 +149,7 @@
 //            }
             ]
         });
-        $("#MyTasksTable").on('DOMNodeInserted DOMNodeRemoved', function() {
-            if ($(this).find('tbody tr td').first().attr('colspan')) {
-                if($('.no-task-div').hasClass('has-task'))
-                {
-                    $('.message').html("{{trans('tasks.no_task_found')}}");
-                }else{
-                    $('#MyTasksTable_wrapper').hide();
-                    $('.no-task-div').removeClass('hidden');
-                    $('.message').html("{{trans('tasks.no_task_inserted')}}");
-                }
-            } else {
-                $('#MyTasksTable_wrapper').show();
-                $('.no-task-div').addClass('hidden');
-            }
-        });
+
     }
     // $(".remove_task").off();
     $(document).on('click', '.remove_task', function () {
