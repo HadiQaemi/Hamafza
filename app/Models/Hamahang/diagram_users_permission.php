@@ -20,7 +20,7 @@ class diagram_users_permission extends Model
 
     public function diagram()
     {
-        return $this->belongsTo('App\Models\hamahang\diagrams','diagram_id','id');
+        return $this->belongsTo('App\Models\Hamahang\diagrams','diagram_id','id');
 
     }
 }

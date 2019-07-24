@@ -13,12 +13,12 @@ class diagrams extends Model
 
     public function keywords()
     {
-        return $this->hasMany('App\Models\hamahang\diagram_keywords','diagram_id','id');
+        return $this->hasMany('App\Models\Hamahang\diagram_keywords','diagram_id','id');
 
     }
     public function users_permissions()
     {
-        return $this->hasMany('App\Models\hamahang\diagram_users_permission','diagram_id','id');
+        return $this->hasMany('App\Models\Hamahang\diagram_users_permission','diagram_id','id');
 
     }
 }
