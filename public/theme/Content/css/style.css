@@ -4336,3 +4336,16 @@ input::-webkit-inner-spin-button {
 .task-redo{
     border: 3px solid #770404;
 }
+.service-out{
+    text-align: center;
+}
+.service-out iframe{
+    width: 600px;
+    height: 500px;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    font-family: IranSharp !important;
+}
+.service-out tspan{
+    font-family: IranSharp !important;
+}

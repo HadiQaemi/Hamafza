@@ -16,26 +16,19 @@ class PageClassExtend1
 
     public function Like($type, $user_id, $sid, $uid, $session_id = "")
     {
-        switch ($type)
-        {
+        switch ($type) {
             case 'subject':
                 $like = DB::table('subject_member')
                     ->where('uid', '=', $uid)
                     ->where('sid', '=', $sid)
                     ->get()->toArray();
                 $PageClass = new PageClass();
-                if(!isset($like[0]))
-                {
+                if (!isset($like[0])) {
                     return $PageClass->LikeADD($user_id, $sid);
-                }
-                else
-                {
-                    if($like[0]->like)
-                    {
+                } else {
+                    if ($like[0]->like) {
                         return $PageClass->LikeRemove($user_id, $sid);
-                    }
-                    else
-                    {
+                    } else {
                         return $PageClass->LikeADD($user_id, $sid);
                     }
                 }
@@ -53,26 +46,19 @@ class PageClassExtend1
 
     public function DisLike($type, $userid, $sid, $uid, $session_id)
     {
-        switch ($type)
-        {
+        switch ($type) {
             case 'subject':
                 $like = DB::table('subject_member')
                     ->where('uid', '=', $uid)
                     ->where('sid', '=', $sid)
                     ->first();
                 $PageClass = new PageClass();
-                if(!isset($like))
-                {
+                if (!isset($like)) {
                     return $PageClass->LikeADD($userid, $sid);
-                }
-                else
-                {
-                    if($like->like)
-                    {
+                } else {
+                    if ($like->like) {
                         return $PageClass->LikeRemove($userid, $sid);
-                    }
-                    else
-                    {
+                    } else {
                         return $PageClass->LikeADD($userid, $sid);
                     }
                 }
@@ -90,26 +76,19 @@ class PageClassExtend1
 
     public function Follow($type, $userid, $sid, $uid, $session_id)
     {
-        switch ($type)
-        {
+        switch ($type) {
             case 'subject':
                 $follow = DB::table('subject_member')
                     ->where('uid', '=', $uid)
                     ->where('sid', '=', $sid)
                     ->first();
                 $PageClass = new PageClass();
-                if(!isset($follow))
-                {
+                if (!isset($follow)) {
                     return $PageClass->FollowADD($userid, $sid);
-                }
-                else
-                {
-                    if($follow->follow)
-                    {
+                } else {
+                    if ($follow->follow) {
                         return $PageClass->FollowRemove($uid, $sid);
-                    }
-                    else
-                    {
+                    } else {
                         return $PageClass->FollowADD($uid, $sid);
                     }
                 }
@@ -131,26 +110,19 @@ class PageClassExtend1
 
     public function UnFollow($type, $userid, $sid, $uid, $session_id)
     {
-        switch ($type)
-        {
+        switch ($type) {
             case 'subject':
                 $follow = DB::table('subject_member')
                     ->where('uid', '=', $uid)
                     ->where('sid', '=', $sid)
                     ->first();
                 $PageClass = new PageClass();
-                if(!isset($follow))
-                {
+                if (!isset($follow)) {
                     return $PageClass->FollowADD($userid, $sid);
-                }
-                else
-                {
-                    if($follow->follow)
-                    {
+                } else {
+                    if ($follow->follow) {
                         return $PageClass->FollowRemove($uid, $sid);
-                    }
-                    else
-                    {
+                    } else {
                         return $PageClass->FollowADD($uid, $sid);
                     }
                 }
@@ -215,29 +187,22 @@ class PageClassExtend1
             ->select('u.Name as editUname', 'u.Family as editUfamily', 'p.part', 'p.type', 'p.view', 'p.form', 'p.body as pbody', 'p.ver_date', 'd.uid', 'd.edit_date', 'd.last_date', 'd.body as dbody', 'd.editing', 'p.viewtext', 'p.viewslide', 'p.viewfilm')
             ->first();
 
-        if ($page)
-        {
+        if ($page) {
             $isdraft = is_null($page->dbody) ? 0 : 1;
             $page->editing = '1';
-            if ($uid == $page->uid || $now_date > $page->last_date)
-            {
+            if ($uid == $page->uid || $now_date > $page->last_date) {
                 $page->editing = 0;
             }
-            if ($page->part == 0)
-            {
+            if ($page->part == 0) {
                 $edit_date = gmdate("Y-m-d H:i:s", time() + 12600);
-                if ($page->pbody != '')
-                {
+                if ($page->pbody != '') {
                     $body = $page->pbody;
-                }
-                else
-                {
+                } else {
                     $body = '<br>';
                 }
 //                    $body = PublicsClass::to_latin_num($body);
 //                    $body = PageClass::ModifyContent($body);
-                if ($isdraft == 0)
-                {
+                if ($isdraft == 0) {
                     DB::table('page_draft')
                         ->insert(
                             [
@@ -249,9 +214,7 @@ class PageClassExtend1
                                 'editing' => '1'
                             ]
                         );
-                }
-                elseif ($isdraft == 1)
-                {
+                } elseif ($isdraft == 1) {
                     DB::table('page_draft')
                         ->where('id', $pid)
                         ->update(
@@ -282,8 +245,7 @@ class PageClassExtend1
         $view = 1;
         $admin = UserClass::permission('ViewSubjects', $uid);
 
-        if (intval($sid) != 0)
-        {
+        if (intval($sid) != 0) {
             $row = DB::table('process_phase as pp')
                 ->leftJoin('process_phase_subject as pps', 'pp.id', '=', 'pps.ppid')
                 ->select('pp.view')
@@ -291,39 +253,26 @@ class PageClassExtend1
                 ->where('pps.active', '1')
                 ->first();
 
-            if ($row)
-            {
+            if ($row) {
                 $view = 0;
-                if ($row->view == '1')
-                {
+                if ($row->view == '1') {
                     $view = 1;
-                }
-                else
-                {
+                } else {
                     $row = DB::table('subjects')
                         ->select('manager', 'supporter', 'supervisor', 'admin')
                         ->where('id', $sid)
                         ->first();
-                    if ($row)
-                    {
-                        if ((isset($uid) && ($row->admin == $uid || $row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $admin == '1')))
-                        {
+                    if ($row) {
+                        if ((isset($uid) && ($row->admin == $uid || $row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $admin == '1'))) {
                             $view = 1;
-                        }
-                        else
-                        {
+                        } else {
                             $sr = '';
                             $show = 'on';
-                            if ($show == 'in')
-                            {
+                            if ($show == 'in') {
                                 $sr = 'AND (pps.active = 1 OR pps.pass = 1)';
-                            }
-                            elseif ($show == 'on')
-                            {
+                            } elseif ($show == 'on') {
                                 $sr = 'AND pps.active = 1';
-                            }
-                            elseif ($show == 'out')
-                            {
+                            } elseif ($show == 'out') {
                                 $sr = 'AND pps.pass = 1';
                             }
 
@@ -363,10 +312,8 @@ class PageClassExtend1
                                     ORDER BY
                                             pps.reg_date DESC";
                             $row2 = DB::select(DB::raw($sql2));
-                            if ($row2)
-                            {
-                                if ($row2->cnt > 0)
-                                {
+                            if ($row2) {
+                                if ($row2->cnt > 0) {
                                     $view = 1;
                                 }
                             }
@@ -376,8 +323,7 @@ class PageClassExtend1
                                 ->where('r.uid', $uid)
                                 ->where('pid', $secid)
                                 ->count();
-                            if ($row > 0)
-                            {
+                            if ($row > 0) {
                                 $view = 1;
                             }
                         }
@@ -396,34 +342,24 @@ class PageClassExtend1
         $row = DB::table('pages as p')
             ->leftJoin('subjects as s', 'p.sid', '=', 's.id')
             ->select('p.edit', 's.manager', 's.supporter', 's.supervisor', 's.admin', 's.ispublic')->where('p.id', $pid)->first();
-        if ($row)
-        {
+        if ($row) {
             $edit = $row->edit;
-            if ((isset($uid) && ($row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $row->admin == $uid || $admin == '1' || $allowEdit == '1')))
-            {
+            if ((isset($uid) && ($row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $row->admin == $uid || $admin == '1' || $allowEdit == '1'))) {
                 $view = 1;
-            }
-            elseif ($edit == 1 || $edit == 2)
-            {
+            } elseif ($edit == 1 || $edit == 2) {
                 $users = array();
                 $row = DB::table('page_limit_edit')->where('pid', $pid)->select('uid')->get();
-                foreach ($row as $value)
-                {
+                foreach ($row as $value) {
                     $users[] = $value->uid;
                 }
-                if (is_array($users))
-                {
-                    if ($uid != 0)
-                    {
-                        if (in_array($uid, $users))
-                        {
+                if (is_array($users)) {
+                    if ($uid != 0) {
+                        if (in_array($uid, $users)) {
                             $view = 1;
                         }
                     }
                 }
-            }
-            elseif ($edit == 0)
-            {
+            } elseif ($edit == 0) {
                 $view = 1;
             }
         }
@@ -436,45 +372,34 @@ class PageClassExtend1
         // 0 : عدم نمایش
         //۱ : نمایش
         //۲ : نمایش محرمانه
-        if ($uid == 0)
-        {
+        if ($uid == 0) {
             $uid = '-1';
         }
         $admin = UserClass::permission('viewallpages', $uid);
         $view = 0;
-        if (intval($sid) != 0)
-        {
+        if (intval($sid) != 0) {
             $view = $this->subjectView($sid);
-            if ($view == 1 && intval($pid) != 0)
-            {
+            if ($view == 1 && intval($pid) != 0) {
                 $row = DB::table('pages as p')
                     ->leftJoin('subjects as s', 'p.sid', '=', 's.id')
                     ->select('p.view', 's.manager', 's.supporter', 's.supervisor', 's.ispublic')->where('p.id', $pid)->first();
-                if ($row)
-                {
+                if ($row) {
                     $view = $row->view;
                     $ispublic = $row->ispublic;
                 }
 
-                if ((isset($uid) && ($row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $admin == '1')))
-                {
+                if ((isset($uid) && ($row->manager == $uid || $row->supporter == $uid || $row->supervisor == $uid || $admin == '1'))) {
                     $view = 1;
-                }
-                elseif ($view == 0 || $view == 2)
-                {
+                } elseif ($view == 0 || $view == 2) {
                     $users = array();
                     $row = DB::table('page_limit_view')->where('pid', $pid)->select('uid')->get();
-                    foreach ($row as $value)
-                    {
+                    foreach ($row as $value) {
                         $users[] = $value->uid;
                     }
 
-                    if (is_array($users))
-                    {
-                        if ($uid != 0)
-                        {
-                            if (in_array($uid, $users))
-                            {
+                    if (is_array($users)) {
+                        if ($uid != 0) {
+                            if (in_array($uid, $users)) {
                                 $view = 1;
                             }
                         }
@@ -488,33 +413,25 @@ class PageClassExtend1
     public static function GetPoodmanNode($uid, $sesid, $id)
     {
         $user = UserClass::CheckLogin($uid, $sesid);
-        if ($user == TRUE)
-        {
+        if ($user == TRUE) {
             $user = 'true';
-        }
-        else
-        {
+        } else {
             $user = 'false';
         }
-        if ($user)
-        {
+        if ($user) {
             $n = DB::table('page_tree as pt')
                 ->leftJoin('pages AS p', 'p.id', '=', 'pt.pid')->join('subjects AS s', 'p.sid', '=', 's.id')
                 ->select('pt.*', 's.title', 's.id as Subjectid')->where('pt.id', $id)->count();
-            if ($n == 0)
-            {
+            if ($n == 0) {
                 $s = DB::table('page_tree as pt')->select('pt.*')->where('pt.id', $id)->first();
-            }
-            else
-            {
+            } else {
                 $s = DB::table('page_tree as pt')
                     ->leftJoin('pages AS p', 'p.id', '=', 'pt.pid')->join('subjects AS s', 'p.sid', '=', 's.id')
                     ->select('pt.*', 's.title', 's.id as Subjectid')->where('pt.id', $id)->first();
             }
             $mes['Node'] = $s;
             $mes['Highlight'] = '';
-            if ($s)
-            {
+            if ($s) {
                 $pageid = $s->pid;
 
                 $mes['Highlight'] = DB::table('announces')->where('pid', $pageid)->get();
@@ -522,9 +439,7 @@ class PageClassExtend1
 
 
             $err = false;
-        }
-        else
-        {
+        } else {
             $mes = trans('labels.FailUser');
             $err = true;
         }
@@ -552,8 +467,7 @@ class PageClassExtend1
 
     public static function ADDPageFilm($uid, $sesid, $films, $pics, $PreTitle, $Title, $Desce, $pid, $Time)
     {
-        foreach ($PreTitle as $key => $value)
-        {
+        foreach ($PreTitle as $key => $value) {
             $Titles = $Title[$key];
             $Desces = $Desce[$key];
             $picss = $pics[$key];
@@ -569,8 +483,7 @@ class PageClassExtend1
 
     function ChangeTitle($param)
     {
-        switch ($param)
-        {
+        switch ($param) {
             case "1":
                 return 'جدول';
                 break;
@@ -587,8 +500,7 @@ class PageClassExtend1
     {
         $order = DB::table('page_slides')->where('pid', $pid)->max('order');
         $order++;
-        foreach ($files as $value)
-        {
+        foreach ($files as $value) {
             DB::table('page_slides')->insert(array('pid' => $pid, 'src' => 'slides/' . $value['name'], 'title' => $value['title'], 'order' => $order));
         }
         $mes = trans('labels.PageSlideOK');
@@ -626,14 +538,12 @@ class PageClassExtend1
 
     public static function GetPageSetting($uid, $sesid, $sid, $pid)
     {
-        try
-        {
+        try {
             $admin = UserClass::permission('manager_edit', $uid);
             $subject_edit = UserClass::permission('subject_edit', $uid);
             $manager_edit = UserClass::permission('manager_edit', $uid);
             $ManagerPage = PageClass::GetManagerPage($sid);
-            if ($ManagerPage)
-            {
+            if ($ManagerPage) {
                 $manager = $ManagerPage->manager;
                 $supporter = $ManagerPage->supporter;
                 $supervisor = $ManagerPage->supervisor;
@@ -647,8 +557,7 @@ class PageClassExtend1
             $Setting = array();
             $Setting['propertie'] = 0;
             //dd("admin: $admin == '1', subject_edit: $subject_edit == '1', $manager: $manager == uid: $uid, supporter: $supporter == uid: $uid, supervisor: $supervisor == uid: $uid, admin: $admin == uid: $uid");
-            if (count($user_group) || $admin == '1' || $subject_edit > 0 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
-            {
+            if (count($user_group) || $admin == '1' || $subject_edit > 0 || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid) {
                 $rowT = DB::table('subjects as s')
                     ->leftJoin('subject_type as sa', 'sa.id', '=', 's.kind')
                     ->select('s.title', 'sa.name', 's.kind', 's.sub_kind')
@@ -669,8 +578,7 @@ class PageClassExtend1
                 $title = $rowT->title;
             }
             $Setting['Relations'] = '0';
-            if ($admin == '1' || $subject_edit == '1' || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid)
-            {
+            if ($admin == '1' || $subject_edit == '1' || $manager == $uid || $supporter == $uid || $supervisor == $uid || $admin == $uid) {
                 $Setting['Relations'] = PageClass::GetRelations($sid);
             }
             $Setting['Access'] = PageClass::GetAccess($pid, $sid, $manager, $supporter, $supervisor, $admin);
@@ -681,13 +589,10 @@ class PageClassExtend1
                 ->where('s.id', $sid)->get();
 
 
-            foreach ($rowT as $value)
-            {
+            foreach ($rowT as $value) {
                 $pattern = "/{{Help\+.*=.*}}/";
-                if ($num1 = preg_match_all($pattern, $value->help_tag, $array))
-                {
-                    for ($x = 0; $x < $num1; $x++)
-                    {
+                if ($num1 = preg_match_all($pattern, $value->help_tag, $array)) {
+                    for ($x = 0; $x < $num1; $x++) {
                         $orig = $array['0'][$x];
                         $key = str_replace("{{Help+", "", $array['0'][$x]);
                         $key = str_replace("}}", "", $key);
@@ -699,16 +604,14 @@ class PageClassExtend1
             }
             $Setting['Helps'] = $rowT;
             return $Setting;
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return $e;
         }
     }
 
     public static function GetAccess($pid, $sid, $manager, $supporter, $supervisor, $admin)
     {
-        if ($manager != 0)
-        {
+        if ($manager != 0) {
             $rowT = DB::table('user as u')
                 ->select('Name', 'Family', 'id')
                 ->where('u.id', $manager)->first();
@@ -716,9 +619,7 @@ class PageClassExtend1
             $user['Name'] = $rowT->Name;
             $user['Family'] = $rowT->Family;
             $USER['manager'] = $user;
-        }
-        else
-        {
+        } else {
             $user['id'] = 0;
             $user['Name'] = '';
             $user['Family'] = '';
@@ -726,8 +627,7 @@ class PageClassExtend1
         }
         $user = array();
 
-        if ($supporter != 0)
-        {
+        if ($supporter != 0) {
             $rowT = DB::table('user as u')
                 ->select('Name', 'Family', 'id')
                 ->where('u.id', $supporter)->first();
@@ -735,17 +635,14 @@ class PageClassExtend1
             $user['Name'] = $rowT->Name;
             $user['Family'] = $rowT->Family;
             $USER['supporter'] = $user;
-        }
-        else
-        {
+        } else {
             $user['id'] = 0;
             $user['Name'] = '';
             $user['Family'] = '';
             $USER['supporter'] = $user;
         }
         $user = array();
-        if ($supervisor != 0)
-        {
+        if ($supervisor != 0) {
             $rowT = DB::table('user as u')
                 ->select('Name', 'Family', 'id')
                 ->where('u.id', $supervisor)->first();
@@ -753,17 +650,14 @@ class PageClassExtend1
             $user['Name'] = $rowT->Name;
             $user['Family'] = $rowT->Family;
             $USER['supervisor'] = $user;
-        }
-        else
-        {
+        } else {
             $user['id'] = 0;
             $user['Name'] = '';
             $user['Family'] = '';
             $USER['supervisor'] = $user;
         }
         $user = array();
-        if ($admin != 0)
-        {
+        if ($admin != 0) {
             $rowT = DB::table('user as u')
                 ->select('Name', 'Family', 'id')
                 ->where('u.id', $admin)->first();
@@ -771,9 +665,7 @@ class PageClassExtend1
             $user['Name'] = $rowT->Name;
             $user['Family'] = $rowT->Family;
             $USER['admin'] = $user;
-        }
-        else
-        {
+        } else {
             $user['id'] = 0;
             $user['Name'] = '';
             $user['Family'] = '';
@@ -795,8 +687,7 @@ class PageClassExtend1
         $user['editusers'] = array();
 
         $kinds = $rowT->kind;
-        if ($rowT->view == 0)
-        {
+        if ($rowT->view == 0) {
             $rowTs = DB::table('user as u')
                 ->leftJoin('page_limit_view as v', 'u.id', '=', 'v.uid')
                 ->select(DB::Raw("u.id,  CONCAT(u.Name,' ', u.Family) as name"))
@@ -804,8 +695,7 @@ class PageClassExtend1
             $user['viewusers'] = $rowTs;
         }
 
-        if ($rowT->edit == '1')
-        {
+        if ($rowT->edit == '1') {
             $rowTs = DB::table('user as u')
                 ->leftJoin('page_limit_edit as e', 'u.id', '=', 'e.uid')
                 ->select(DB::Raw("u.id,  CONCAT(u.Name,' ', u.Family) as name"))
@@ -818,14 +708,12 @@ class PageClassExtend1
             ->select(DB::Raw("p.id as pid, p.view as pview, stt.name as tab_name, stt.view,stt.id as sttid, stt.help_pid"))
             ->where('p.sid', $sid)->where('stt.stid', $kinds)->orderBy('stt.orders')->get();
 
-        foreach ($rowTs as $value)
-        {
+        foreach ($rowTs as $value) {
             $value->check = '';
             $C = DB::table('tab_view as tv')
                 ->select('tv.sid')
                 ->where('tabid', $value->sttid)->where('tv.sid', $sid)->count();
-            if ($C > 0)
-            {
+            if ($C > 0) {
                 $value->check = 'checked';
             }
         }
@@ -841,8 +729,7 @@ class PageClassExtend1
         $Rels = array();
         $rows = DB::table('subjects')
             ->select('id', 'title')->get();
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $subject[$row->id] = $row->title;
             $SubjectS[$row->id] = $row->id;
         }
@@ -850,23 +737,19 @@ class PageClassExtend1
         $rowsCount = DB::table('subjects_rel')
             ->where('sid1', $sid)->orWhere('sid2', $sid)
             ->select('id', 'sid1', 'sid2', 'rel')->count();
-        if ($rowsCount > 0)
-        {
+        if ($rowsCount > 0) {
             $rows = DB::table('subjects_rel')
                 ->where('sid1', $sid)->orWhere('sid2', $sid)
                 ->select('id', 'sid1', 'sid2', 'rel')->get();
-            foreach ($rows as $row)
-            {$sidd = '';
-                if ($row->sid1 == $sid)
-                {
+            foreach ($rows as $row) {
+                $sidd = '';
+                if ($row->sid1 == $sid) {
                     $sub = $row->sid2;
-                    $rel = 'D'.$row->rel;
+                    $rel = 'D' . $row->rel;
 
-                }
-                elseif ($row->sid2 == $sid)
-                {
+                } elseif ($row->sid2 == $sid) {
                     $sub = $row->sid1;
-                    $rel = 'I'.$row->rel;
+                    $rel = 'I' . $row->rel;
 
 
                 }
@@ -874,21 +757,16 @@ class PageClassExtend1
                 $rels['right']['title'] = $subject[$sid];
                 $rels['right']['id'] = $sid;
                 $rels['rel'] = $rel;
-                if (array_key_exists($sub, $subject))
-                {
+                if (array_key_exists($sub, $subject)) {
                     $rels['left']['title'] = $subject[$sub];
-                }
-                else
-                {
+                } else {
                     $rels['left']['title'] = '';
                 }
 
                 $rels['left']['id'] = $sub;
                 array_push($Rels, $rels);
             }
-        }
-        else
-        {
+        } else {
             $rels['right']['title'] = $subject[$sid];
             $rels['right']['id'] = $sid;
             $rels['rel'] = 0;
@@ -981,12 +859,9 @@ class PageClassExtend1
             ->select('manager', 'supporter', 'supervisor', 'admin')
             ->where('id', $sid)->first();
 
-        if ($s->manager == $uid || $s->supporter == $uid || $s->supervisor == $uid || $s->admin == $uid)
-        {
+        if ($s->manager == $uid || $s->supporter == $uid || $s->supervisor == $uid || $s->admin == $uid) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -995,12 +870,9 @@ class PageClassExtend1
     {
         $s = DB::table('page_limit_edit')
             ->where('pid', $pid)->where('uid', $uid)->count();
-        if ($s > 0)
-        {
+        if ($s > 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -1013,36 +885,26 @@ class PageClassExtend1
             ->leftJoin('process_phase_subject as pps', 'pp.id', '=', 'pps.ppid')
             ->select('pps.id', 'pps.sid', 'pp.form', 'pp.pform', 'pp.alert', 'pp.view', 'a.name', 'a.scroll', 'a.comment')
             ->where('pps.sid', $sid)->where('pps.active', '1')->get();
-        foreach ($rowT as $value)
-        {
+        foreach ($rowT as $value) {
             $comment = $value->comment;
-            if ($uid != 0)
-            {
+            if ($uid != 0) {
                 $pattern = "/{{Form\+[0-9]+}}/";
-                if ($num1 = preg_match_all($pattern, $comment, $array))
-                {
-                    for ($x = 0; $x < $num1; $x++)
-                    {
+                if ($num1 = preg_match_all($pattern, $comment, $array)) {
+                    for ($x = 0; $x < $num1; $x++) {
                         $key = $array['0'][$x];
                     }
                 }
                 $key = str_replace('{{Form+', "", $key);
                 $key = str_replace('}}', "", $key);
                 $show = 'on';
-                if ($show == 'in')
-                {
+                if ($show == 'in') {
                     $sr = 'AND (pps.active = 1 OR pps.pass = 1)';
-                }
-                elseif ($show == 'on')
-                {
+                } elseif ($show == 'on') {
                     $sr = 'AND pps.active = 1';
-                }
-                elseif ($show == 'out')
-                {
+                } elseif ($show == 'out') {
                     $sr = 'AND pps.pass = 1';
                 }
-                if ($key != '')
-                {
+                if ($key != '') {
                     $secid = $sid;
 //                       $rowT = DB::table('process as pr')
 //                                    ->leftJoin('process_phase as pp', 'pr.id', '=', 'pp.pid')
@@ -1080,8 +942,7 @@ class PageClassExtend1
                         pps.reg_date DESC";
                     $SQL2 = DB::table('process_phase_subject as pps')
                             ->leftJoin('process as p', 'p.id', '=', 'pps.pid')
-                            ->leftJoin('process_phase as pp', function ($join)
-                            {
+                            ->leftJoin('process_phase as pp', function ($join) {
                                 $join->on('p.id', '=', 'pp.pid');
                                 $join->on('pp.id', '=', 'pps.ppid');
                             })
@@ -1092,42 +953,32 @@ class PageClassExtend1
                             ->orderBy('pps.reg_date', 'desc')->get();
 
                     $i = 0;
-                    foreach ($SQL2 as $values)
-                    {
+                    foreach ($SQL2 as $values) {
                         $i++;
                         $psid = $values->id;
-                        if ($num1 = preg_match_all($pattern, $comment, $array))
-                        {
-                            for ($x = 0; $x < $num1; $x++)
-                            {
+                        if ($num1 = preg_match_all($pattern, $comment, $array)) {
+                            for ($x = 0; $x < $num1; $x++) {
                                 $comments = str_replace($array['0'][$x], "<a href='process.php?processid=$psid&pid=$pid&secid=$sid' class='fancybox fancybox.ajax' style='text-size:12pt;'>", $comment);
                             }
                         }
                         $pattern = "/{{Form-.*}}/";
-                        if ($num1 = preg_match_all($pattern, $comments, $array))
-                        {
-                            for ($x = 0; $x < $num1; $x++)
-                            {
+                        if ($num1 = preg_match_all($pattern, $comments, $array)) {
+                            for ($x = 0; $x < $num1; $x++) {
                                 $comments = str_replace($array['0'][$x], "</a>", $comments);
                             }
                         }
                     }
 
-                    if ($i == 0)
-                    {
+                    if ($i == 0) {
                         $pattern = "/{{Form+.*}}/";
-                        if ($num1 = preg_match_all($pattern, $comment, $array))
-                        {
-                            for ($x = 0; $x < $num1; $x++)
-                            {
+                        if ($num1 = preg_match_all($pattern, $comment, $array)) {
+                            for ($x = 0; $x < $num1; $x++) {
                                 $comments = str_replace($array['0'][$x], "", $comment);
                             }
                         }
                         $pattern = "/{{Form-.*}}/";
-                        if ($num1 = preg_match_all($pattern, $comments, $array))
-                        {
-                            for ($x = 0; $x < $num1; $x++)
-                            {
+                        if ($num1 = preg_match_all($pattern, $comments, $array)) {
+                            for ($x = 0; $x < $num1; $x++) {
                                 $comments = str_replace($array['0'][$x], "", $comments);
                             }
                         }
@@ -1136,27 +987,19 @@ class PageClassExtend1
             }
 
             $pform = $value->pform;
-            if ($pform == 1)
-            {
+            if ($pform == 1) {
                 $pform = DB::table('subjects as s')->select('s.pform')->where('id', $sid)->first();
             }
             $class = ($res['scroll'] == 1) ? 'class="gkCode1 highlight1" id="highlight"' : 'class="gkCode1"';
 
-            if (1 == 1)
-            {
-                if ($forum == 0)
-                {
-                    if ($pform == 0)
-                    {
+            if (1 == 1) {
+                if ($forum == 0) {
+                    if ($pform == 0) {
                         $page_alert .= '<div ' . $class . ' style="margin-right:15px;">' . $comments . '</div>';
-                    }
-                    else
-                    {
+                    } else {
                         $page_alert .= '<div ' . $class . ' style="margin-right:15px;"><a class="fancybox fancybox.ajax" href="process.php?processid=' . $res['id'] . '&pid=' . $pid . '&form=public" style="text-size:12pt;">' . $comments . '</a></div>';
                     }
-                }
-                elseif ($forum == 1 && $pform != 0)
-                {
+                } elseif ($forum == 1 && $pform != 0) {
                     $page_alert .= '<div ' . $class . ' style="margin-right:15px;"><a class="fancybox fancybox.ajax" href="process.php?processid=' . $res['id'] . '&pid=' . $pid . '&form=public"  style="text-size:12pt;">' . $comments . '</a></div>';
                 }
             }
@@ -1170,81 +1013,62 @@ class PageClassExtend1
 
         $user = UserClass::CheckLogin($uid, $sesid);
         $user = ($user == TRUE) ? 'true' : 'false';
-        if ($user)
-        {
+        if ($user) {
             $despageid = $repid;
             $announces = '0';
             $showtype = '1';
-            if (trim($Matn_Part) == 'قسمت مورد نظر را از متن زیر انتخاب و در اینجا درج نمایید')
-            {
+            if (trim($Matn_Part) == 'قسمت مورد نظر را از متن زیر انتخاب و در اینجا درج نمایید') {
                 $Matn_Part = '';
             }
-            if ($tozih == 'true')
-            {
+            if ($tozih == 'true') {
                 $showtype = '1';
             }
-            if ($all == 'true')
-            {
+            if ($all == 'true') {
                 $showtype = '2';
             }
-            if ($mosh == 'true')
-            {
+            if ($mosh == 'true') {
                 $showtype = '3';
             }
-            if ($matinpart == 'true')
-            {
+            if ($matinpart == 'true') {
                 $showtype = '0';
             }
-            if ($alamat == 'true')
-            {
+            if ($alamat == 'true') {
                 $announces = $announce;
                 $showtype = '4';
             }
             $select = '0';
-            if ($PishShomare_select != 'true')
-            {
+            if ($PishShomare_select != 'true') {
                 $select = '1';
                 $PishShomare = '0';
             }
-            if ($type == "add")
-            {
+            if ($type == "add") {
                 $work = $old_id;
                 DB::table('page_tree')->where('id', $old_id)->update(
                     array('tid' => $pageid, 'uid' => $uid, 'name' => $Title, 'orders' => $order, 'reg_date' => 'CURRENT_TIMESTAMP()', 'descr' => $Matn, 'showtype' => $showtype, 'prenum' => $PishShomare,
                         'prenumselect' => $select, 'highid' => $announces, 'pid' => $despageid, 'slave' => '1', 'parent_id' => $parentid, 'partoftext' => $Matn_Part)
                 );
 
-                if ($showtype == '2')
-                {
+                if ($showtype == '2') {
                     DB::table('pagetree_pages')->where('ptid', $work)->delete();
                     $myArray = explode(',', $pages);
-                    if (is_array($myArray))
-                    {
+                    if (is_array($myArray)) {
 
-                        foreach ($myArray as $value)
-                        {
-                            if ($value != '')
-                            {
+                        foreach ($myArray as $value) {
+                            if ($value != '') {
                                 DB::table('pagetree_pages')->insert(
                                     array('ptid' => $work, 'pid' => $value));
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         DB::table('pagetree_pages')->insert(
                             array('ptid' => $work, 'pid' => $pages));
                     }
                 }
-            }
-            elseif ($type == "edit")
-            {
-                if ($despageid == '0')
-                {
+            } elseif ($type == "edit") {
+                if ($despageid == '0') {
                     $showtype = '0';
                 }
-                if ($all = 'true')
-                {
+                if ($all = 'true') {
                     $showtype = '2';
                 }
                 DB::table('page_tree')
@@ -1253,10 +1077,8 @@ class PageClassExtend1
                     , 'highid' => $announces, 'pid' => $despageid));
 
                 DB::table('pagetree_pages')->where('ptid', '=', $treeid)->delete();
-                if ($all == 'true' && is_array($pages))
-                {
-                    foreach ($pages as $key => $value)
-                    {
+                if ($all == 'true' && is_array($pages)) {
+                    foreach ($pages as $key => $value) {
                         DB::table('pagetree_pages')->insert(
                             array('ptid' => $treeid, 'pid' => $value));
                     }
@@ -1265,9 +1087,7 @@ class PageClassExtend1
 
             $mes = trans('labels.PoodmanUpdate');
             $err = false;
-        }
-        else
-        {
+        } else {
             $mes = trans('labels.FailUser');
             $err = true;
         }
@@ -1281,81 +1101,62 @@ class PageClassExtend1
     {
         $user = UserClass::CheckLogin($uid, $sesid);
         $user = ($user == TRUE) ? 'true' : 'false';
-        if ($user)
-        {
+        if ($user) {
             $despageid = $repid;
             $announces = '0';
             $order = DB::table('page_tree')->where('tid', $pageid)->where('parent_id', '0')->max('orders');
             $order++;
 
             $showtype = '1';
-            if (trim($Matn_Part) == 'قسمت مورد نظر را از متن زیر انتخاب و در اینجا درج نمایید')
-            {
+            if (trim($Matn_Part) == 'قسمت مورد نظر را از متن زیر انتخاب و در اینجا درج نمایید') {
                 $Matn_Part = '';
             }
-            if ($tozih == 'true')
-            {
+            if ($tozih == 'true') {
                 $showtype = '1';
             }
-            if ($all == 'true')
-            {
+            if ($all == 'true') {
                 $showtype = '2';
             }
-            if ($mosh == 'true')
-            {
+            if ($mosh == 'true') {
                 $showtype = '3';
             }
-            if ($matinpart == 'true')
-            {
+            if ($matinpart == 'true') {
                 $showtype = '0';
             }
-            if ($alamat == 'true')
-            {
+            if ($alamat == 'true') {
                 $announces = $announce;
                 $showtype = '4';
             }
             $select = '0';
-            if ($PishShomare_select != 'true')
-            {
+            if ($PishShomare_select != 'true') {
                 $select = '1';
                 $PishShomare = '0';
             }
-            if ($type == "add")
-            {
+            if ($type == "add") {
                 $work = DB::table('page_tree')->insertGetId(
                     array('tid' => $pageid, 'uid' => $uid, 'name' => $Title, 'orders' => $order, 'reg_date' => 'CURRENT_TIMESTAMP()', 'descr' => $Matn, 'showtype' => $showtype, 'prenum' => $PishShomare,
                         'prenumselect' => $select, 'highid' => $announces, 'pid' => $despageid, 'slave' => '1', 'parent_id' => $parentid, 'partoftext' => $Matn_Part)
                 );
 
-                if ($showtype == '2')
-                {
+                if ($showtype == '2') {
                     $myArray = explode(',', $pages);
-                    if (is_array($myArray))
-                    {
-                        foreach ($myArray as $value)
-                        {
-                            if ($value != '')
-                            {
+                    if (is_array($myArray)) {
+                        foreach ($myArray as $value) {
+                            if ($value != '') {
                                 DB::table('pagetree_pages')->insert(
                                     array('ptid' => $work, 'pid' => $value));
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         DB::table('pagetree_pages')->insert(
                             array('ptid' => $work, 'pid' => $pages));
                     }
                 }
-            }
-            elseif ($type == "edit")
-            {
-                if ($despageid == '0')
-                {
+            } elseif ($type == "edit") {
+                if ($despageid == '0') {
                     $showtype = '0';
                 }
-                if ($all = 'true')
-                {
+                if ($all = 'true') {
                     $showtype = '2';
                 }
                 DB::table('page_tree')
@@ -1363,10 +1164,8 @@ class PageClassExtend1
                     ->update(array('name' => $Title, 'descr' => $Matn, 'showtype' => $showtype, 'prenum' => $PishShomare, 'prenumselect' => $select, 'highid' => $announces, 'pid' => $despageid));
 
                 DB::table('pagetree_pages')->where('ptid', '=', $treeid)->delete();
-                if ($all == 'true')
-                {
-                    foreach ($pages as $key => $value)
-                    {
+                if ($all == 'true') {
+                    foreach ($pages as $key => $value) {
                         DB::table('pagetree_pages')->insert(
                             array('ptid' => $treeid, 'pid' => $value));
                     }
@@ -1375,9 +1174,7 @@ class PageClassExtend1
 
             $mes = trans('labels.PoodmanUpdate');
             $err = false;
-        }
-        else
-        {
+        } else {
             $mes = trans('labels.FailUser');
             $err = true;
         }
@@ -1391,14 +1188,11 @@ class PageClassExtend1
     {
         $user = UserClass::CheckLogin($uid, $sesid);
         $user = ($user == TRUE) ? 'true' : 'false';
-        if ($user)
-        {
+        if ($user) {
             DB::table('page_tree')->where('id', '=', $ptid)->delete();
             $mes = trans('labels.PoodmanUpdate');
             $err = false;
-        }
-        else
-        {
+        } else {
             $mes = trans('labels.FailUser');
             $err = true;
         }
@@ -1416,11 +1210,9 @@ class PageClassExtend1
         $rowT = DB::table('page_tree as pt')->select('pt.id', 'pt.name as url', 'parent_id', 'pt.id as url2')->where('pt.tid', $pid)->orderBy('pt.parent_id')->orderBy('pt.orders')->orderBy('pt.id')->get();
         $row = DB::table('page_tree as pt')->select('pt.id', 'pt.name', 'parent_id', 'pt.id as url', 'pt.*')->where('pt.tid', $pid)->where('pt.parent_id', '0')->orderBy('pt.parent_id')->orderBy('pt.orders')->take(1)->orderBy('pt.id')->get();
         $PC = new PageClass();
-        if ($row)
-        {
+        if ($row) {
             $rows = $PC->PageTreeBody($row);
-            foreach ($row as $value)
-            {
+            foreach ($row as $value) {
                 $rows .= '<input type="hidden" class="ptid" value="' . $value->id . '">';
             }
         }
@@ -1437,10 +1229,8 @@ class PageClassExtend1
         $sr = '';
         $x = 0;
         $rowT = DB::table('page_tree as pt')->select('pt.id', 'pt.name as url', 'parent_id', 'pt.id as url2')->where('pt.tid', $pid)->orderBy('pt.parent_id')->orderBy('pt.orders')->orderBy('pt.id')->get();
-        foreach ($rowT as $value)
-        {
-            if ($value->parent_id == '0')
-            {
+        foreach ($rowT as $value) {
+            if ($value->parent_id == '0') {
                 $value->parent_id = '#';
             }
         }
@@ -1488,16 +1278,12 @@ class PageClassExtend1
     function CrtaeData($row)
     {
         $bodys = '';
-        if ($row->parent_id == 0)
-        {
+        if ($row->parent_id == 0) {
             $bodys .= '<h1 id="' . $row->id . '">' . $row->name . '</h1>';
-        }
-        else
-        {
+        } else {
             $bodys .= '<h2 id="' . $row->id . '">' . $row->name . '</h2>';
         }
-        switch ($row->showtype)
-        {
+        switch ($row->showtype) {
             case "0":
                 $tarix2 = $row->partoftext;
                 //$Page = DB::table('subjectss AS s')->join('pages AS p', 'p.sid', '=', 's.id')->select('s.title')->where('p.id', $row->pid)->first();
@@ -1507,32 +1293,24 @@ class PageClassExtend1
                 $bodys .= $tarix2;
                 break;
             case "1":
-                if ($row->pid != '0')
-                {
+                if ($row->pid != '0') {
                     $Page = DB::table('pages')->select('description')->where('id', $row->pid)->first();
-                    if ($Page)
-                    {
+                    if ($Page) {
                         $bodys .= $Page->description;
                     }
-                }
-                else
-                {
+                } else {
                     $bodys .= '';
                 }
                 break;
             case "2":
                 $Page = DB::table('page_tree_pages')->where('ptid', $row->id)->get();
-                foreach ($Page as $value)
-                {
+                foreach ($Page as $value) {
                     $Pages = DB::table('pages')->where('id', $value->pid)->first();
-                    if ($Pages)
-                    {
+                    if ($Pages) {
                         $page_tree = DB::table('page_tree')->find($row->id);
-                        if ('370450' == $page_tree->tid)
-                        {
+                        if ('370450' == $page_tree->tid) {
                             $bodys .= $Pages->body;
-                        } else
-                        {
+                        } else {
                             $PageClass = new PageClass();
                             $bodys .= $PageClass->modifyText($Pages->body);
                         }
@@ -1547,8 +1325,7 @@ class PageClassExtend1
                 break;
             case "4":
                 $tarix = '';
-                if ($row->highid != '0')
-                {
+                if ($row->highid != '0') {
 
                     $Page = DB::table('announces as a')->select('a.pid', 'a.id', 'a.title,a.quote')->where('id', $row->highid)->first();
                     $Htext = str_replace("\\n", ' ', $Page->quote);
@@ -1574,8 +1351,7 @@ class PageClassExtend1
             ->where('p.id', $pid)
             ->select('s.kind')
             ->first();
-        if(isset($page->kind))
-        {
+        if (isset($page->kind)) {
             $kind = $page->kind;
             $tabs = DB::table('pages as p')
                 ->leftJoin("subject_type_tab as stt", 'p.type', '=', 'stt.tid')
@@ -1598,8 +1374,7 @@ class PageClassExtend1
     {
         $ret = array();
 
-        if ($type == '1')
-        {
+        if ($type == '1') {
             $page = DB::table('pages as p')
                 ->join('subjects as s', 's.id', '=', 'p.sid')
                 ->where('p.id', $pid)->select('p.viewslide', 'p.viewfilm', 'p.viewtext', 'p.defimage', 'p.showDefimg', 'p.id', 'p.sid', 'p.body', 'p.description', 'p.form', 'p.view', 'p.edit', 'p.ver_date', 's.title as Title', 's.kind', 'p.type as type')->first();
@@ -1607,13 +1382,10 @@ class PageClassExtend1
             $kind = $page->kind;
             $subject_type_tab = DB::table('subject_type_tab')->where('stid', $kind)->where('tid', $page->type)->first();
             $pAGEtYPE = $subject_type_tab->type;
-            if ($pAGEtYPE == '7')
-            {
+            if ($pAGEtYPE == '7') {
                 $Trees = $PC->tree_bodyOnlyList($pid);
                 $page = $Trees['body'];
-            }
-            else
-            {
+            } else {
                 $page = $PC->modifyText($page->body);
                 $page = $PC->bodyPara($page, '', '', $numbers);
             }
@@ -1625,14 +1397,11 @@ class PageClassExtend1
             $ret['print'] = $page;
             $err = false;
             $mes = $ret;
-        }
-        else
-        {
+        } else {
 
             $page = '';
             $myArray = explode(',', $ch);
-            foreach ($myArray as &$value)
-            {
+            foreach ($myArray as &$value) {
                 $pages = DB::table('pages as p')
                     ->join('subjects as s', 's.id', '=', 'p.sid')
                     ->where('p.id', $value)->select('p.viewslide', 'p.viewfilm', 'p.viewtext', 'p.defimage', 'p.showDefimg', 'p.id', 'p.sid', 'p.body', 'p.description', 'p.form', 'p.view', 'p.edit', 'p.ver_date', 's.title as Title', 's.kind', 'p.type as type')->first();
@@ -1640,13 +1409,10 @@ class PageClassExtend1
                 $kind = $pages->kind;
                 $subject_type_tab = DB::table('subject_type_tab')->where('stid', $kind)->where('tid', $pages->type)->first();
                 $pAGEtYPE = $subject_type_tab->type;
-                if ($pAGEtYPE == '7')
-                {
+                if ($pAGEtYPE == '7') {
                     $Trees = $PC->tree_bodyOnlyList($pid);
                     $page = $Trees['body'];
-                }
-                else
-                {
+                } else {
                     $page = $PC->modifyText($pages->body);
                     $page = $PC->bodyPara($page, '', '', $numbers);
                 }
@@ -1672,14 +1438,11 @@ class PageClassExtend1
 
     public static function DefimagePage($pid, $uid, $sesid, $check, $file)
     {
-        if ($file != '')
-        {
+        if ($file != '') {
             DB::table('pages')
                 ->where('id', $pid)
                 ->update(array('defimage' => $file, 'showDefimg' => "$check"));
-        }
-        else
-        {
+        } else {
             DB::table('pages')
                 ->where('id', $pid)
                 ->update(array('showDefimg' => "$check"));
@@ -1693,16 +1456,13 @@ class PageClassExtend1
     {
         $user = UserClass::CheckLogin($uid, $sesid);
         $user = ($user == TRUE) ? 'true' : 'false';
-        if ($user)
-        {
+        if ($user) {
             DB::table('pages')
                 ->where('id', $pid)
                 ->update(array('description' => $descr));
             $mes = trans('labels.editok');
             $err = false;
-        }
-        else
-        {
+        } else {
             trans('labels.FailUser');
             $err = true;
         }
@@ -1712,7 +1472,7 @@ class PageClassExtend1
         )->setCallback(Input::get('callback'));
     }
 
-    public static function page_edit($pageid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_numm, $description, $show_pic='')
+    public static function page_edit($pageid, $uid, $sesid, $content, $ver_comment, $ver_date, $edit_numm, $description, $show_pic = '')
     {
         $edit_date = gmdate("Y-m-d H:i:s", time() + 12600);
         $ver_date = $edit_date;
@@ -1792,8 +1552,7 @@ class PageClassExtend1
     {
         $newwords = array("ك" => "ک", "ي" => "ی", "&nbsp;" => " ", "­" => " ", "&zwnj;" => " ", "&zwj;" => " ", "&rlm;" => " ", "&lrm;" => " ", "&thinsp;" => " ", "&ensp;" => " ", "&emsp;" => " ", " " => " ", " " => " ", "  " => " ", "   " => " ", "    " => " ", "" => "‌"); //"‌"هشت‌ساله
 
-        foreach ($newwords as $key => $val)
-        {
+        foreach ($newwords as $key => $val) {
             $string = str_replace($key, $val, $string);
         }
         return $string;
@@ -1802,8 +1561,7 @@ class PageClassExtend1
     public static function page_field_html($pid = 0, $sid = 0, $kind)
     {
         $Pfields = array();
-        if ($pid != 0)
-        {
+        if ($pid != 0) {
             $page_field = '';
             $pageDet = DB::table('subject_fields_report as r')
                 ->leftJoin('subject_type_fields as t', 'r.field_id', '=', 't.field_id')
@@ -1813,51 +1571,35 @@ class PageClassExtend1
                 ->orderBy('t.orders')->orderBy('v.orders')
                 ->select('r.field_id', 'r.check_id', 'r.field_value as field_val', 'f.field_name', 'f.field_type'
                     , 'v.field_value', 'v.id as vid')->get();
-            if ($pageDet)
-            {
+            if ($pageDet) {
                 $name = array();
                 $value = array();
                 $i = 1;
-                foreach ($pageDet as $row)
-                {
+                foreach ($pageDet as $row) {
                     $field_id = $row->field_id;
                     $name[$row->field_id] = $row->field_name;
-                    if ($row->field_type == 'select' || $row->field_type == 'radio')
-                    {
-                        if ($row->field_val == $row->vid)
-                        {
+                    if ($row->field_type == 'select' || $row->field_type == 'radio') {
+                        if ($row->field_val == $row->vid) {
+                            $value[$row->field_id] = $row->field_value;
+                        } else {
                             $value[$row->field_id] = $row->field_value;
                         }
-                        else
-                        {
-                            $value[$row->field_id] = $row->field_value;
-                        }
-                    }
-                    else
-                    {
-                        if ($row->field_type == 'checkbox')
-                        {
-                            if ($row->check_id == $row->vid)
-                            {
+                    } else {
+                        if ($row->field_type == 'checkbox') {
+                            if ($row->check_id == $row->vid) {
                                 $value[$row->field_id] = $row->field_value;
-                            }
-                            else
-                            {
+                            } else {
                                 $index = $row->field_id + $i;
                                 $value[$index] = $row->field_value;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             $value[$row->field_id] = $row->field_val;
                         }
                     }
                     $i++;
                 }
-                foreach ($name as $key => $val)
-                {
-                    if (trim($value[$key]) != '')
-                    {
+                foreach ($name as $key => $val) {
+                    if (trim($value[$key]) != '') {
                         $notempty = true;
                         $page_field['label'] = $val;
 
@@ -1868,11 +1610,9 @@ class PageClassExtend1
             }
         }
         $str = '';
-        if (is_array($Pfields))
-        {
+        if (is_array($Pfields)) {
             $str = '<table class="table-condensed">';
-            foreach ($Pfields as $value)
-            {
+            foreach ($Pfields as $value) {
                 $str .= '<tr><td style="padding:2px 5px 0 5px ;">' . $value['label'] . '</td><td>' . $value['val'] . '</td></tr>';
             }
             $str .= '</table>';
@@ -1882,8 +1622,7 @@ class PageClassExtend1
     public static function page_field($pid = 0, $sid = 0, $kind)
     {
         $Pfields = array();
-        if ($pid != 0)
-        {
+        if ($pid != 0) {
             $page_field = '';
             $fields = DB::table('subject_type_fields')
                 ->where('stid', $kind)
@@ -1922,14 +1661,11 @@ class PageClassExtend1
 
     public function template($subid = 0)
     {
-        if ($subid == 0)
-        {
+        if ($subid == 0) {
             $pageDet = DB::table('subjects as s')
                 ->join('subject_key as sk', 's.id', '=', 'sk.sid')
                 ->where('sk.kid', '254')->select('s.id', 's.title')->get();
-        }
-        else
-        {
+        } else {
 
         }
 
@@ -1945,13 +1681,11 @@ class PageClassExtend1
         $tabname = '';
         $user = UserClass::CheckLogin($uid, $session_id);
         $user = ($user == TRUE) ? 'true' : 'false';
-        if ($subtype == 'subject')
-        {
+        if ($subtype == 'subject') {
             $help = array();
             $helps = DB::table('pages')->where('id', $pid)->select('help_pid', 'help_tag')->first();
             $typehelp = DB::table('subject_type_tab AS stt')->join('subjects AS s', 's.kind', '=', 'stt.stid')->where('s.id', $sid)->select('help_pid', 'help_tag')->first();
-            if ($helps->help_pid != '' && $helps->help_pid != '0')
-            {
+            if ($helps->help_pid != '' && $helps->help_pid != '0') {
                 $help['id'] = $helps->help_pid;
                 $help['pageid'] = $helps->help_pid;
                 $tag = $helps->help_tag;
@@ -1959,11 +1693,8 @@ class PageClassExtend1
                 $e = strpos($tag, '=');
                 $tag = substr($tag, $p + 1, $e - $p - 1);
                 $help['tagname'] = $tag;
-            }
-            else
-            {
-                if ($typehelp->help_pid != '' && $typehelp->help_pid != '0')
-                {
+            } else {
+                if ($typehelp->help_pid != '' && $typehelp->help_pid != '0') {
                     $help['id'] = $typehelp->help_pid;
                     $help['pageid'] = $typehelp->help_pid;
                     $tag = $typehelp->help_tag;
@@ -1971,38 +1702,28 @@ class PageClassExtend1
                     $e = strpos($tag, '=');
                     $tag = substr($tag, $p + 1, $e - $p - 1);
                     $help['tagname'] = $tag;
-                }
-                else
-                {
+                } else {
                     $help = PublicsClass::HelpManage($sid, $tabname, $subtype);
                 }
             }
-        }
-        elseif ($subtype == 'subjectdesktop')
-        {
+        } elseif ($subtype == 'subjectdesktop') {
             $help = array();
             $help = PublicsClass::HelpManage($sid, 'Subject', 'Desktop');
-        }
-        elseif ($subtype == 'subjectwall')
-        {
+        } elseif ($subtype == 'subjectwall') {
             $help = array();
             $help = PublicsClass::HelpManage($sid, 'Subject', 'bahs');
         }
 
 
-        if ($user == 'true')
-        {
+        if ($user == 'true') {
             $pageDet = DB::table('subject_member')
                 ->where('uid', $uid)->where('sid', $sid)->select('id', 'relation', 'follow', 'like')->first();
             $res = array();
-            if ($pageDet)
-            {
+            if ($pageDet) {
                 $res['like'] = $pageDet->like;
                 $res['follow'] = $pageDet->follow;
                 $res['relation'] = $pageDet->relation;
-            }
-            else
-            {
+            } else {
                 $res['like'] = '0';
                 $res['follow'] = 0;
                 $res['relation'] = 0;
@@ -2010,14 +1731,11 @@ class PageClassExtend1
             $Taamol = array();
             $Abzar = array();
             $i = 1;
-            if ($subtype == 'subject')
-            {
+            if ($subtype == 'subject') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subject', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subject', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2025,15 +1743,11 @@ class PageClassExtend1
                     }
                     $i++;
                 }
-            }
-            elseif ($subtype == 'subjectwall')
-            {
+            } elseif ($subtype == 'subjectwall') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subjectforum', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subjectforum', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2041,15 +1755,11 @@ class PageClassExtend1
                     }
                     $i++;
                 }
-            }
-            elseif ($subtype == 'subjectdesktop')
-            {
+            } elseif ($subtype == 'subjectdesktop') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subjectdesktop', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subjectdesktop', '1')->where('menuid', $value->id)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2058,23 +1768,18 @@ class PageClassExtend1
                     $i++;
                 }
             }
-        }
-        else
-        {
+        } else {
             $res['like'] = '0';
             $res['follow'] = 0;
             $res['relation'] = 0;
             $Taamol = array();
             $Abzar = array();
             $i = 1;
-            if ($subtype == 'subject')
-            {
+            if ($subtype == 'subject') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subject', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subject', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2082,15 +1787,11 @@ class PageClassExtend1
                     }
                     $i++;
                 }
-            }
-            elseif ($subtype == 'subjectwall')
-            {
+            } elseif ($subtype == 'subjectwall') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subjectforum', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subjectforum', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2098,15 +1799,11 @@ class PageClassExtend1
                     }
                     $i++;
                 }
-            }
-            elseif ($subtype == 'subjectdesktop')
-            {
+            } elseif ($subtype == 'subjectdesktop') {
                 $menutools = DB::table('tools_group')->orderBy('orders')->get();
-                foreach ($menutools as $value)
-                {
+                foreach ($menutools as $value) {
                     $toolsCount = DB::table('tools')->where('subjectdesktop', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->count();
-                    if ($toolsCount > 0)
-                    {
+                    if ($toolsCount > 0) {
                         $tools = DB::table('tools')->where('subjectdesktop', '1')->where('menuid', $value->id)->where('login', '>', 0)->select('id', 'farsi', 'icon', 'url', 'modal', 'login')->orderBy('orders')->get();
                         $Taamol['label'] = $value->name;
                         $Taamol['tools'] = $tools;
@@ -2116,54 +1813,37 @@ class PageClassExtend1
                 }
             }
         }
-        if ($user)
-        {
+        if ($user) {
             $Admin = $this->ISManagerPage($sid, $uid);
             $edit = $this->allowEdit($pid, $uid);
-            foreach ($Abzar as $value)
-            {
-                if (is_array($value['tools']) && count($value['tools']) > 0)
-                {
+            foreach ($Abzar as $value) {
+                if (is_array($value['tools']) && count($value['tools']) > 0) {
                     $tt = $value['tools'];
-                    foreach ($tt as $item)
-                    {
+                    foreach ($tt as $item) {
                         $acess = UserClass::permission('subject_new', $uid);
-                        if ($item->url == 'newsubject' && $acess == 2)
-                        {
+                        if ($item->url == 'newsubject' && $acess == 2) {
                             $item->modal = 100;
-                        }
-                        elseif ($item->url == 'newsubject' && $acess == 4)
-                        {
+                        } elseif ($item->url == 'newsubject' && $acess == 4) {
                             $item->modal = 200;
                         }
 
                         $acess = UserClass::permission('manager_edit', $uid);
-                        if ($item->url == 'setting' && $acess == 2)
-                        {
-                            if (!$Admin)
-                            {
+                        if ($item->url == 'setting' && $acess == 2) {
+                            if (!$Admin) {
                                 $item->modal = 100;
                             }
-                        }
-                        elseif ($item->url == 'setting' && $acess == 4)
-                        {
-                            if (!$Admin)
-                            {
+                        } elseif ($item->url == 'setting' && $acess == 4) {
+                            if (!$Admin) {
                                 $item->modal = 200;
                             }
                         }
                         $acess = UserClass::permission('DelSubjects', $uid);
-                        if ($item->url == 'delete' && $acess == 2)
-                        {
-                            if (!$Admin)
-                            {
+                        if ($item->url == 'delete' && $acess == 2) {
+                            if (!$Admin) {
                                 $item->modal = 100;
                             }
-                        }
-                        elseif ($item->url == 'delete' && $acess == 4)
-                        {
-                            if (!$Admin)
-                            {
+                        } elseif ($item->url == 'delete' && $acess == 4) {
+                            if (!$Admin) {
                                 $item->modal = 200;
                             }
                         }
@@ -2210,8 +1890,7 @@ class PageClassExtend1
         $Slides = DB::table('page_films')->where('pid', '=', $pid)->get();
         $slides = array();
         $slide = array();
-        foreach ($Slides as $Slide)
-        {
+        foreach ($Slides as $Slide) {
             $slide['id'] = $Slide->id;
             $slide['pretitle'] = $Slide->pretitle;
             $slide['title'] = $Slide->title;
@@ -2229,8 +1908,7 @@ class PageClassExtend1
         $Slides = DB::table('page_slides')->where('pid', '=', $pid)->orderby('order')->get();
         $slides = array();
         $slide = array();
-        foreach ($Slides as $Slide)
-        {
+        foreach ($Slides as $Slide) {
             $slide['id'] = $Slide->id;
             $slide['src'] = $Slide->src;
             $slide['order'] = $Slide->order;
@@ -2288,19 +1966,15 @@ class PageClassExtend1
             ->get();
         //$keywords0 = '';
         $TT_ttype = array();
-        if ($Keys)
-        {
-            foreach ($Keys as $Key)
-            {
+        if ($Keys) {
+            foreach ($Keys as $Key) {
                 //$value = $Key->field_value;
                 //$myArray = explode(',', $value);
                 //$nums = sizeof($myArray);
                 //$nums--;
-                foreach ($TT_ttype as $key => $value)
-                {
+                foreach ($TT_ttype as $key => $value) {
 
-                    if (trim($value) != '')
-                    {
+                    if (trim($value) != '') {
                         $keys = trim($value);
                         //$ttype = (isset($TT_ttype[$key])) ? $this->Filter($TT_ttype[$key]) : '';
 
@@ -2308,18 +1982,14 @@ class PageClassExtend1
                             ->where('title', '=', $keys)
                             ->select('id', 'title', 'user_id')
                             ->get();
-                        foreach ($Keyws as $Keyw)
-                        {
+                        foreach ($Keyws as $Keyw) {
                             $keyword = $Keyw->title;
                             $keyword = str_replace('،', ' ', $keyword);
-                            if ($Keyw->user_id != '')
-                            {
+                            if ($Keyw->user_id != '') {
                                 $keywordsAr['type'] = 'user';
                                 $keywordsAr['id'] = $Keyw->user_id;
                                 $keywordsAr['title'] = $keyword;
-                            }
-                            else
-                            {
+                            } else {
                                 $keywordsAr['type'] = 'keyword';
                                 $keywordsAr['id'] = $Keyw->id;
                                 $keywordsAr['title'] = $keyword;
@@ -2335,13 +2005,11 @@ class PageClassExtend1
             ->where('sid', '=', $sid)
             ->select('kid')
             ->get();
-        foreach ($KeySs as $KeyS)
-        {
+        foreach ($KeySs as $KeyS) {
             $keys_catch .= $KeyS->kid . ',';
         }
         $keys_catch = substr($keys_catch, 0, (strLen($keys_catch) - 1));
-        if ($keys_catch != "")
-        {
+        if ($keys_catch != "") {
             /* $nums = DB::table('keywords as k')
               ->leftJoin('subject_key as c', 'k.id', '=', 'c.kid')
               ->whereRaw('(k.id IN (' . $keys_catch . '))')
@@ -2357,8 +2025,7 @@ class PageClassExtend1
             //$n = 1;
             //$All = '';
             //$keywords = '';
-            foreach ($KeySs as $KeyS)
-            {
+            foreach ($KeySs as $KeyS) {
                 $keywordsAr['type'] = 'keyword';
                 $keywordsAr['id'] = $KeyS->id;
                 $keywordsAr['title'] = $KeyS->keyword;
@@ -2371,16 +2038,13 @@ class PageClassExtend1
     public function LikeADD($user, $sid)
     {
         $like = DB::table('subject_member')->where('uid', '=', $user)->where('sid', '=', $sid)->first();
-        if ($like)
-        {
+        if ($like) {
             DB::table('subject_member')->where('uid', '=', $user)->where('sid', '=', $sid)->update(['like' => '1']);;
-        }
-        else
-        {
+        } else {
             DB::table('subject_member')->insert(['uid' => $user, 'sid' => $sid, 'like' => '1']);
         }
         DB::table('subjects')->where('id', '=', $sid)->increment('like');
-        $message = array('val'=>'1','message'=>trans('labels.LikeOK'));
+        $message = array('val' => '1', 'message' => trans('labels.LikeOK'));
         return $message;
     }
 
@@ -2388,8 +2052,7 @@ class PageClassExtend1
     {
         $type = 'subject';
         $bookmark = DB::table('bookmarks')->where('uid', '=', $user)->where('type', '=', $type)->where('link', '=', $link)->where('Title', '=', $Title)->first();
-        if (is_null($bookmark))
-        {
+        if (is_null($bookmark)) {
             DB::table('bookmarks')->insert(['uid' => $user, 'type' => $type, 'link' => $link, 'Title' => $Title]);
         }
         $message = trans('labels.BookmarkOK');
@@ -2402,12 +2065,9 @@ class PageClassExtend1
     public function bookmarkRemove($user, $Bookid)
     {
         $like = DB::table('bookmarks')->where('uid', '=', $user)->where('id', '=', $Bookid)->first();
-        if (is_null($like))
-        {
+        if (is_null($like)) {
             $message = trans('labels.Fail');
-        }
-        else
-        {
+        } else {
             DB::table('bookmarks')->where('uid', '=', $user)->where('id', '=', $Bookid)->delete();
             $message = trans('labels.BookmarkRemove');
         }
@@ -2423,15 +2083,12 @@ class PageClassExtend1
             ->where('uid', '=', $user)
             ->where('sid', '=', $sid)
             ->first();
-        if ($like)
-        {
+        if ($like) {
             DB::table('subject_member')
                 ->where('uid', '=', $user)
                 ->where('sid', '=', $sid)
                 ->update(['follow' => '1']);
-        }
-        else
-        {
+        } else {
             DB::table('subject_member')
                 ->insert(['uid' => $user, 'sid' => $sid, 'follow' => '1']);
         }
@@ -2439,7 +2096,7 @@ class PageClassExtend1
             ->where('id', '=', $sid)
             ->increment('follow');
 
-        $message = array('val'=>'1','message'=>trans('labels.followOK'));
+        $message = array('val' => '1', 'message' => trans('labels.followOK'));
         return $message;
     }
 
@@ -2449,12 +2106,9 @@ class PageClassExtend1
             ->where('uid', '=', $user)
             ->where('sid', '=', $sid)
             ->first();
-        if (is_null($Followed))
-        {
+        if (is_null($Followed)) {
             $message = 'False';
-        }
-        else
-        {
+        } else {
             DB::table('subject_member')
                 ->where('uid', '=', $user)
                 ->where('sid', '=', $sid)
@@ -2463,13 +2117,12 @@ class PageClassExtend1
                 ->where('id', '=', $sid)
                 ->where('follow', '>', '1')
                 ->first();
-            if (!is_null($follow))
-            {
+            if (!is_null($follow)) {
                 DB::table('subjects')
                     ->where('id', '=', $sid)
                     ->decrement('follow');
             }
-            $message = array('val'=>'0','message'=>trans('labels.followRemove'));
+            $message = array('val' => '0', 'message' => trans('labels.followRemove'));
         }
         return $message;
     }
@@ -2480,12 +2133,9 @@ class PageClassExtend1
             ->where('uid', '=', $user)
             ->where('sid', '=', $sid)
             ->first();
-        if (is_null($like))
-        {
+        if (is_null($like)) {
             $message = 'False';
-        }
-        else
-        {
+        } else {
             DB::table('subject_member')
                 ->where('uid', '=', $user)
                 ->where('sid', '=', $sid)
@@ -2495,14 +2145,13 @@ class PageClassExtend1
                 ->where('id', '=', $sid)
                 ->where('like', '>', '1')
                 ->first();
-            if (!is_null($follow))
-            {
+            if (!is_null($follow)) {
                 DB::table('subjects')
                     ->where('id', '=', $sid)
                     ->decrement('like');
             }
 
-            $message = array('val'=>'0','message'=>trans('labels.LikeRemove'));
+            $message = array('val' => '0', 'message' => trans('labels.LikeRemove'));
         }
         return $message;
     }
@@ -2510,25 +2159,20 @@ class PageClassExtend1
     public function SubjectDetails($pid, $sid)
     {
         $Subjects = '0';
-        if ($pid != 0)
-        {
+        if ($pid != 0) {
             $Subjects = DB::table('subjects')
                 ->join('pages', 'pages.sid', '=', 'subjects.id')
                 ->where('pages.id', $pid)
                 ->select('subjects.*')
                 ->first();
-        }
-        else
-        {
-            if ($sid != 0)
-            {
+        } else {
+            if ($sid != 0) {
                 $Subjects = DB::table('subjects')
                     ->where('id', $sid)
                     ->first();
             }
         }
-        if ($Subjects)
-        {
+        if ($Subjects) {
             return $Subjects;
         }
     }
@@ -2551,16 +2195,12 @@ class PageClassExtend1
         $head = preg_split("|<h1[^>]*>(.*)<\/h1>|U", $body, 2);
         $header = $head['0'];
         // $body = substr($body, strLen($head['0']), (strLen($body)));
-        if (trim($head['0']) != '')
-        {
+        if (trim($head['0']) != '') {
             $header = '<div class="gkblock-4">' . $head['0'] . '</div>';
         }
-        if ($num = preg_match_all("|<h([1-9]{1})[^>]*>(.*)<\/h[1-9]{1}>|U", $body, $array))
-        {
-            for ($x = 0; $x < $num; $x++)
-            {
-                if ($x > 0 && ($array['1'][$x] > $array['1'][$x - 1] + 1))
-                {
+        if ($num = preg_match_all("|<h([1-9]{1})[^>]*>(.*)<\/h[1-9]{1}>|U", $body, $array)) {
+            for ($x = 0; $x < $num; $x++) {
+                if ($x > 0 && ($array['1'][$x] > $array['1'][$x - 1] + 1)) {
                     $array['1'][$x] = $array['1'][$x - 1] + 1;
                 }
                 $depth = $array['1'][$x] - 1;
@@ -2568,10 +2208,8 @@ class PageClassExtend1
 //                if ($x > 0 && ($array['1'][$x] <= $array['1'][$x - 1])) {
 //                    $end_header = str_repeat('</div></div>', $array['1'][$x - 1] - $array['1'][$x] + 1);
 //                }
-                if ($x > 0 && ($array['1'][$x] < $array['1'][$x - 1]))
-                {
-                    for ($z = $array['1'][$x - 1]; $z > $array['1'][$x]; $z--)
-                    {
+                if ($x > 0 && ($array['1'][$x] < $array['1'][$x - 1])) {
+                    for ($z = $array['1'][$x - 1]; $z > $array['1'][$x]; $z--) {
                         $h[$z] = 0;
                     }
                 }
@@ -2581,12 +2219,10 @@ class PageClassExtend1
                 $numeral3 = array();
                 $id = '';
                 $parent = '';
-                for ($n = 1; $n <= $array['1'][$x]; $n++)
-                {
+                for ($n = 1; $n <= $array['1'][$x]; $n++) {
                     $numeral3[$n] = $h[$n];
                     $id .= $h[$n] * 10;
-                    if ($n != $array['1'][$x])
-                    {
+                    if ($n != $array['1'][$x]) {
                         $parent .= $h[$n] * 10;
                     }
                 }
@@ -2599,12 +2235,9 @@ class PageClassExtend1
                 $tit = $sub_cache[$x]['title'];
                 $hindex = intval($array['1'][$x]) + 1;
                 $sub_cache[$x]['url'] = '<a rel="nofollow" href="#t' . $ids . ($x + 1) . '">' . $numeral1 . '' . $tit . '</a>';
-                if ($headingNumber == 'on')
-                {
+                if ($headingNumber == 'on') {
                     $body = $this->str_replace_first($array['0'][$x], $end_header . '<h' . $hindex . ' id="t' . $id . '" class="heading">' . $numeral1 . $title . '</h' . $hindex . '>', $body);
-                }
-                else
-                {
+                } else {
                     $body = $this->str_replace_first($array['0'][$x], $end_header . '<h' . $hindex . ' id="t' . $id . '" class="heading">' . $title . '</h' . $hindex . '>', $body);
                 }
 //                
@@ -2614,23 +2247,18 @@ class PageClassExtend1
             //$end_header = str_repeat("</div></div>", $array['1'][$x - 1]);
             //  $body = $body . $end_header;
         }
-        if (isset($sub_cache) && is_array($sub_cache))
-        {
+        if (isset($sub_cache) && is_array($sub_cache)) {
             $page['list'] = $sub_cache;
         }
         $pattern = "/{{Help\+.*=.*}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace($array['0'][$x], "", $body);
             }
         }
         $pattern = "/{{Help-.*}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace($array['0'][$x], "", $body);
             }
         }
@@ -2655,28 +2283,21 @@ class PageClassExtend1
         $head = preg_split("|<h1[^>]*>(.*)<\/h1>|U", $body, 2);
         $header = $head['0'];
         $body = substr($body, strLen($head['0']), (strLen($body)));
-        if (trim($head['0']) != '')
-        {
+        if (trim($head['0']) != '') {
             $header = '<div class="gkblock-4">' . $head['0'] . '</div>';
         }
-        if ($num = preg_match_all("|<h([1-9]{1})[^>]*>(.*)<\/h[1-9]{1}>|U", $body, $array))
-        {
-            for ($x = 0; $x < $num; $x++)
-            {
-                if ($x > 0 && ($array['1'][$x] > $array['1'][$x - 1] + 1))
-                {
+        if ($num = preg_match_all("|<h([1-9]{1})[^>]*>(.*)<\/h[1-9]{1}>|U", $body, $array)) {
+            for ($x = 0; $x < $num; $x++) {
+                if ($x > 0 && ($array['1'][$x] > $array['1'][$x - 1] + 1)) {
                     $array['1'][$x] = $array['1'][$x - 1] + 1;
                 }
                 $depth = $array['1'][$x] - 1;
                 $end_header = '';
-                if ($x > 0 && ($array['1'][$x] <= $array['1'][$x - 1]))
-                {
+                if ($x > 0 && ($array['1'][$x] <= $array['1'][$x - 1])) {
                     $end_header = str_repeat('</div></div>', $array['1'][$x - 1] - $array['1'][$x] + 1);
                 }
-                if ($x > 0 && ($array['1'][$x] < $array['1'][$x - 1]))
-                {
-                    for ($z = $array['1'][$x - 1]; $z > $array['1'][$x]; $z--)
-                    {
+                if ($x > 0 && ($array['1'][$x] < $array['1'][$x - 1])) {
+                    for ($z = $array['1'][$x - 1]; $z > $array['1'][$x]; $z--) {
                         $h[$z] = 0;
                     }
                 }
@@ -2686,12 +2307,10 @@ class PageClassExtend1
                 $numeral3 = array();
                 $id = '';
                 $parent = '';
-                for ($n = 1; $n <= $array['1'][$x]; $n++)
-                {
+                for ($n = 1; $n <= $array['1'][$x]; $n++) {
                     $numeral3[$n] = $h[$n];
                     $id .= $h[$n] * 10;
-                    if ($n != $array['1'][$x])
-                    {
+                    if ($n != $array['1'][$x]) {
                         $parent .= $h[$n] * 10;
                     }
                 }
@@ -2712,8 +2331,7 @@ class PageClassExtend1
             $end_header = str_repeat("</div></div>", $array['1'][$x - 1]);
             $body = $body . $end_header;
         }
-        if (isset($sub_cache) && is_array($sub_cache))
-        {
+        if (isset($sub_cache) && is_array($sub_cache)) {
             $page['list'] = $sub_cache;
         }
         return $page['list'];
@@ -2721,8 +2339,7 @@ class PageClassExtend1
 
     function array2json($arr)
     {
-        if (function_exists('json_encode'))
-        {
+        if (function_exists('json_encode')) {
             return json_encode($arr);
         } //Lastest versions of PHP already has this functionality.
         $parts = array();
@@ -2730,62 +2347,46 @@ class PageClassExtend1
         //Find out if the given array is a numerical array
         $keys = array_keys($arr);
         $max_length = count($arr) - 1;
-        if (($keys[0] == 0) and ($keys[$max_length] == $max_length))
-        {//See if the first key is 0 and last key is length - 1
+        if (($keys[0] == 0) and ($keys[$max_length] == $max_length)) {//See if the first key is 0 and last key is length - 1
             $is_list = true;
-            for ($i = 0; $i < count($keys); $i++)
-            { //See if each key correspondes to its position
-                if ($i != $keys[$i])
-                { //A key fails at position check.
+            for ($i = 0; $i < count($keys); $i++) { //See if each key correspondes to its position
+                if ($i != $keys[$i]) { //A key fails at position check.
                     $is_list = false; //It is an associative array.
                     break;
                 }
             }
         }
 
-        foreach ($arr as $key => $value)
-        {
-            if (is_array($value))
-            { //Custom handling for arrays
-                if ($is_list)
-                {
+        foreach ($arr as $key => $value) {
+            if (is_array($value)) { //Custom handling for arrays
+                if ($is_list) {
                     $parts[] = array2json($value);
                 } /* :RECURSION: */
-                else
-                {
+                else {
                     $parts[] = '"' . $key . '":' . array2json($value);
                 } /* :RECURSION: */
-            }
-            else
-            {
+            } else {
                 $str = '';
-                if (!$is_list)
-                {
+                if (!$is_list) {
                     $str = '"' . $key . '":';
                 }
                 //Custom handling for multiple data types
-                if (is_numeric($value))
-                {
+                if (is_numeric($value)) {
                     $str .= $value;
                 } //Numbers
-                elseif ($value === false)
-                {
+                elseif ($value === false) {
                     $str .= 'false';
                 } //The booleans
-                elseif ($value === true)
-                {
+                elseif ($value === true) {
                     $str .= 'true';
-                }
-                else
-                {
+                } else {
                     $str .= '"' . addslashes($value) . '"';
                 }
                 $parts[] = $str;
             }
         }
         $json = implode(',', $parts);
-        if ($is_list)
-        {
+        if ($is_list) {
             return '[' . $json . ']';
         }
         return '{' . $json . '}';
@@ -2806,18 +2407,15 @@ class PageClassExtend1
         $body = $this->resource($body);
         $body = $this->replace_subtitle($body);
         $body = $this->subtitle($body);
-        if ($tabtype)
-        {
+        if ($tabtype) {
             $body = $this->thesaurusinPage($body, $sid);
         }
-        if (config('constants.ChangeTable') == '1')
-        {
+        if (config('constants.ChangeTable') == '1') {
             $body = $this->table($body);
         }
         $body = $this->Forms($body, $pid, $sid);
         $body = $this->Dashboard_Replace($body);
-        if (config('constants.styleDel') == '1')
-        {
+        if (config('constants.styleDel') == '1') {
             $body = $this->styleDel($body);
         }
         $body = $this->Person_Replace($body);
@@ -2836,16 +2434,18 @@ class PageClassExtend1
         //$body = $this->FaqList_Replace($body);
         //$body = $this->table_replace($body);
         //$body = $this->ReplaceImages($body);
+        $body = $this->service_out($body);
         $body = $this->pages_list($body);
         $body = $this->highlight($body, $uid, $pid);
         return $body;
     }
 
-    public function AsubjectinPage($body) {
+    public function AsubjectinPage($body)
+    {
         $S = '';
         $pattern = "/<span class=\"ShowAsubInPage.*/";
         $S = '';
-        $html = new HtmlDomSTR('str',$body);
+        $html = new HtmlDomSTR('str', $body);
         $i = 1;
         if ($body != '' && $html->find('.ShowAsubInPage')) {
             foreach ($html->find('span[class=ShowAsubInPage]') as $element) {
@@ -2875,16 +2475,16 @@ class PageClassExtend1
                 foreach ($row as $value) {
                     if ($count <= $Tedad) {
                         if ($Stype == 2) {
-                            $S.='<li> <a href="' . $value->pid . '">' . $value->title . '</a></li> ';
+                            $S .= '<li> <a href="' . $value->pid . '">' . $value->title . '</a></li> ';
                         } else {
-                            $S.='<span> <a href="' . $value->pid . '">' . $value->title . '</a>' . $Sep . '</span> ';
+                            $S .= '<span> <a href="' . $value->pid . '">' . $value->title . '</a>' . $Sep . '</span> ';
                         }
                     }
                     $count++;
                 }
 
                 if ($Stype == 2) {
-                    $S.='</ol>';
+                    $S .= '</ol>';
                 }
 
                 $body = str_replace($rep, $S, $body);
@@ -2897,17 +2497,14 @@ class PageClassExtend1
     public function insert_mohtava($body)
     {
         $bodysss = '';
-        if (trim($body) != '')
-        {
-            preg_match_all('/INSCON_(.*)_INSCON/',$body,$matches);
-            foreach($matches[0] as $k=>$matche)
-            {
+        if (trim($body) != '') {
+            preg_match_all('/INSCON_(.*)_INSCON/', $body, $matches);
+            foreach ($matches[0] as $k => $matche) {
                 $explode_ex = explode_ex('_', $matches[1][$k]);
                 @list ($pid, $gume, $makhaz) = @$explode_ex;
-                $Page = DB::table('pages')->whereIn('id', [$pid*10])->select('body')->first();
+                $Page = DB::table('pages')->whereIn('id', [$pid * 10])->select('body')->first();
 
-                if ($Page)
-                {
+                if ($Page) {
                     $PageClass = new PageClass();
                     $Con = ($Page) ? $PageClass->modifyText($Page->body) : "";
                 }
@@ -2957,6 +2554,7 @@ class PageClassExtend1
         }
         return $body;
     }
+
     public function insert_a_mohtava($innertext, $Con, $body)
     {
         return str_replace($innertext, $Con, $body);
@@ -3041,14 +2639,12 @@ class PageClassExtend1
         $parent = array();
         $ids = array();
         $allRels = array();
-        foreach ($keys as $value)
-        {
+        foreach ($keys as $value) {
             $parent[$i] = $value->parent;
             $ids[$i] = $value->id;
             array_push($parent, $value->parent);
             array_push($ids, $value->id);
-            if ($i == '1')
-            {
+            if ($i == '1') {
                 $root = $value->parent;
             }
             array_push($allRels, $value);
@@ -3057,17 +2653,14 @@ class PageClassExtend1
             $i++;
         }
         $i = 1;
-        foreach ($parent as $value)
-        {
-            if (!in_array($value, $ids))
-            {
+        foreach ($parent as $value) {
+            if (!in_array($value, $ids)) {
                 $key = DB::table('keywords')
                     ->select('keyword', 'id')
                     ->where('id', $value)
                     ->first();
                 $i++;
-                if ($key)
-                {
+                if ($key) {
                     $ar['id'] = $key->id;
                     $ar['parent'] = '#';
                     $ar['text'] = $key->keyword;
@@ -3107,49 +2700,40 @@ var id = data.node.id;
         return $body;
         $S = '';
         $pattern = "/STagT_.*/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $keys = $array['0'][$x];
                 $key = str_replace('STagT_', '', $keys);
                 $myArray = explode('_', $key);
                 //dd($myArray);
                 $Tags = $myArray[0];
                 $Tedad = $myArray[1];
-                $Stype = isset($myArray[2])?$myArray[2]:'';
+                $Stype = isset($myArray[2]) ? $myArray[2] : '';
                 $myArray = explode(',', $Tags);
                 $i = 1;
                 $sql = '';
                 $script = "";
                 $n = 1;
-                foreach ($myArray as &$value)
-                {
+                foreach ($myArray as &$value) {
                     $KEyVals = DB::table('keywords')->where('id', $value)->get();
                     $nums = DB::table('keywords')->where('id', $value)->count();
                     Schema::dropIfExists("t{$i}");
                     $productList = DB::insert(DB::raw("CREATE TEMPORARY TABLE t{$i} select * from subject_key where kid={$value};"));
                     $i++;
-                    foreach ($KEyVals as $KEyVal)
-                    {
+                    foreach ($KEyVals as $KEyVal) {
 
-                        if ($n == 1)
-                        {
+                        if ($n == 1) {
                             $script .= "AddTags('" . $KEyVal->id . "','" . $KEyVal->title . "',1);";
-                        }
-                        else
-                        {
+                        } else {
                             $script .= "AddTags('" . $KEyVal->id . "','" . $KEyVal->title . "',2);";;
                         }
                     }
                     $n++;
                 }
                 --$i;
-                if ($i >= 1)
-                {
+                if ($i >= 1) {
                     $subsql = '';
-                    switch ($i)
-                    {
+                    switch ($i) {
                         case 1:
                             $subsql = "select t1.sid from t1  group by t1.sid ";
                             break;
@@ -3183,21 +2767,17 @@ var id = data.node.id;
                 $count = 1;
                 $S = '';
                 $Sep = ' <span style="font-size:4pt;height:5px;" class="icon-2-2"></span>  ';
-                if ($Stype == 2)
-                {
+                if ($Stype == 2) {
                     $Sep = '<br>';
                 }
-                foreach ($SQL as $value)
-                {
-                    if ($count <= $Tedad)
-                    {
+                foreach ($SQL as $value) {
+                    if ($count <= $Tedad) {
                         $S .= '<span> <a href="' . $value->pid . '">' . $value->title . '</a>' . $Sep . '</span> ';
                     }
                     $count++;
                 }
 
-                if ($count >= $Tedad)
-                {
+                if ($count >= $Tedad) {
                     $S .= '<a style="cursor:pointer;" class="KeywordClick" onclick="' . $script . 'ShowTagPanel();"> <span style="font-weight:bold;">سایر موارد...</span></a>';
                 }
 
@@ -3209,10 +2789,8 @@ var id = data.node.id;
 
     public function keyword($body)
     {
-        if ($num = preg_match_all("/\*\*(.*?)\*\*/", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/\*\*(.*?)\*\*/", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $vals = '';
                 $subjects = '';
                 $keywords = array();
@@ -3222,11 +2800,9 @@ var id = data.node.id;
                 $star = $array['0'][$y];
                 $keyword = $array['1'][$y];
                 $keyword = $this->keywords($keyword);
-                if ($keyword == $this->lang['import'] || $keyword == $this->lang['export'])
-                {
+                if ($keyword == $this->lang['import'] || $keyword == $this->lang['export']) {
                     $cats = '';
-                    if ($keyword == $this->lang['import'])
-                    {
+                    if ($keyword == $this->lang['import']) {
                         $sql = "SELECT DISTINCT 
 										r.sid1 , r.sid2
 									FROM 
@@ -3234,8 +2810,7 @@ var id = data.node.id;
 									WHERE
 										(r.sid2 = '{$this->sid}') AND r.rel = '13'";
                     }
-                    if ($keyword == $this->lang['export'])
-                    {
+                    if ($keyword == $this->lang['export']) {
                         $sql = "SELECT DISTINCT 
 										r.sid1 , r.sid2
 									FROM 
@@ -3245,12 +2820,9 @@ var id = data.node.id;
                     }
                     $query = mysql_query($sql);
                     $nums = mysql_num_rows($query);
-                    if ($nums != 0)
-                    {
-                        while ($row = mysql_fetch_assoc($query))
-                        {
-                            if ($row->sid2 == $this->sid)
-                            {
+                    if ($nums != 0) {
+                        while ($row = mysql_fetch_assoc($query)) {
+                            if ($row->sid2 == $this->sid) {
                                 $export1 = array();
                                 $sub_cache[] = $row->sid1;
                                 $sql1 = "SELECT DISTINCT 
@@ -3269,13 +2841,10 @@ var id = data.node.id;
 												(r.sid2 = '{$row['sid1']}') AND r.rel = '13' AND ($this->sel_page)";
                                 $query1 = mysql_query($sql1);
                                 $nums1 = mysql_num_rows($query1);
-                                if ($nums1 != 0)
-                                {
-                                    while ($row1 = mysql_fetch_assoc($query1))
-                                    {
+                                if ($nums1 != 0) {
+                                    while ($row1 = mysql_fetch_assoc($query1)) {
                                         $title = $this->url_text($row1['title']);
-                                        if ($row1['kind'] != 3 && $row1['kind'] != 4)
-                                        {
+                                        if ($row1['kind'] != 3 && $row1['kind'] != 4) {
                                             $title .= '-' . $this->url_text($this->lang['page_types'][$row1['kind']][$row1['type']]);
                                         }
                                         $export1[] = '<a rel="canonical" href="' . HAMAFZA . '/' . $row1['id'] . '/' . $title . '/" target="_blank">' . $row1['title'] . '</a>';
@@ -3284,8 +2853,7 @@ var id = data.node.id;
                                     $export_to[$row['sid1']] = implode(' , ', $export1);
                                 }
                             }
-                            if ($row['sid1'] == $this->sid)
-                            {
+                            if ($row['sid1'] == $this->sid) {
                                 $export1 = array();
                                 $sub_cache[] = $row->sid2;
                                 $sql1 = "SELECT DISTINCT 
@@ -3304,13 +2872,10 @@ var id = data.node.id;
 												(r.sid1 = '{$row->sid2}') AND r.rel = '13' AND ($this->sel_page)";
                                 $query1 = mysql_query($sql1);
                                 $nums1 = mysql_num_rows($query1);
-                                if ($nums1 != 0)
-                                {
-                                    while ($row1 = mysql_fetch_assoc($query1))
-                                    {
+                                if ($nums1 != 0) {
+                                    while ($row1 = mysql_fetch_assoc($query1)) {
                                         $title = $this->url_text($row1['title']);
-                                        if ($row1['kind'] != 3 && $row1['kind'] != 4)
-                                        {
+                                        if ($row1['kind'] != 3 && $row1['kind'] != 4) {
                                             $title .= '-' . $this->url_text($this->lang['page_types'][$row1['kind']][$row1['type']]);
                                         }
                                         $export1[] = '<a rel="canonical" href="' . HAMAFZA . '/' . $row1['id'] . '/' . $title . '/" target="_blank">' . $row1['title'] . '</a>';
@@ -3323,8 +2888,7 @@ var id = data.node.id;
                         mysql_free_result($query);
                         $cats = implode(',', $sub_cache);
                     }
-                    if ($cats != '')
-                    {
+                    if ($cats != '') {
                         $subjects = '<div style="display: block; padding:0px 10px;" class="subjects">';
                         $sql = "SELECT
 										p.id , p.sid , s.title , s.kind , p.type
@@ -3338,39 +2902,30 @@ var id = data.node.id;
 										(s.id IN ({$cats})) AND ($this->sel_page)";
 
                         $result = mysql_query($sql);
-                        while ($row = mysql_fetch_assoc($result))
-                        {
+                        while ($row = mysql_fetch_assoc($result)) {
                             $title = $this->url_text($row['title']);
-                            if ($row['kind'] != 3 && $row['kind'] != 4)
-                            {
+                            if ($row['kind'] != 3 && $row['kind'] != 4) {
                                 $title .= '-' . $this->url_text($this->lang['page_types'][$row['kind']][$row['type']]);
                             }
-                            if ($row['sid'] != $this->sid)
-                            {
+                            if ($row['sid'] != $this->sid) {
                                 $subjects .= '<span  style="font-size:12px;"><a rel="canonical" href="' . HAMAFZA . '/' . $row['id'] . '/' . $title . '/" target="_blank"><img src="theme/images/arrow.png">&nbsp;' . $row['title'] . '</a> ( ' . $export_to[$row['sid']] . ' ) </span><br/>';
                             }
                         }
                         $subjects .= '</div>';
                     }
-                }
-                else
-                {
+                } else {
                     $keywords = explode(',', $keyword);
-                    if (is_array($keywords))
-                    {
+                    if (is_array($keywords)) {
                         $n = 0;
-                        foreach ($keywords as $key => $val)
-                        {
+                        foreach ($keywords as $key => $val) {
                             ++$n;
-                            if (trim($val) != '')
-                            {
+                            if (trim($val) != '') {
                                 $val = $this->Filter($val);
                                 $val = $this->stem($val);
 
                                 $skeys = mysql_query("SELECT id FROM keywords WHERE title = '" . $val . "'");
                                 $nkeys = mysql_num_rows($skeys);
-                                if ($nkeys != "0")
-                                {
+                                if ($nkeys != "0") {
                                     $row = mysql_fetch_assoc($skeys);
                                     $keyid = $row['id'];
 
@@ -3383,45 +2938,32 @@ var id = data.node.id;
                                     $query = mysql_query($sql);
                                     $ncat = mysql_num_rows($query);
 
-                                    if ($ncat != 0)
-                                    {
-                                        while ($row = mysql_fetch_assoc($query))
-                                        {
-                                            if ($n == 1)
-                                            {
+                                    if ($ncat != 0) {
+                                        while ($row = mysql_fetch_assoc($query)) {
+                                            if ($n == 1) {
                                                 $c_catch[$row['sid']] = $row['sid'];
-                                            }
-                                            else
-                                            {
-                                                if (in_array($row['sid'], $c_catch))
-                                                {
+                                            } else {
+                                                if (in_array($row['sid'], $c_catch)) {
                                                     $s_catch[$row['sid']] = $row['sid'];
                                                 }
                                             }
                                         }
-                                        if ($n != 1)
-                                        {
+                                        if ($n != 1) {
                                             $c_catch = $s_catch;
                                         }
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         $c_catch = array();
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     $c_catch = array();
                                 }
                             }
                         }
-                        if (is_array($c_catch))
-                        {
+                        if (is_array($c_catch)) {
                             $cats = implode(',', $c_catch);
                             $c_catch = array();
                             $subjects = '';
-                            if ($cats != '')
-                            {
+                            if ($cats != '') {
                                 $subjects = '<div style="display: block; padding:0px 10px;" class="subjects">';
                                 $sql = "SELECT
 												p.id , p.sid , s.title , s.kind , p.type
@@ -3434,11 +2976,9 @@ var id = data.node.id;
 											WHERE 
 												(s.id IN ({$cats})) AND ($this->sel_page)";
                                 $result = mysql_query($sql);
-                                while ($row = mysql_fetch_assoc($result))
-                                {
+                                while ($row = mysql_fetch_assoc($result)) {
                                     $title = $this->url_text($row['title']);
-                                    if ($row['kind'] != 3 && $row['kind'] != 4)
-                                    {
+                                    if ($row['kind'] != 3 && $row['kind'] != 4) {
                                         $title .= '-' . $this->url_text($this->lang['page_types'][$row['kind']][$row['type']]);
                                     }
                                     $subjects .= '<a class="ksubject1" rel="canonical" href="' . HAMAFZA . '/' . $row['id'] . '/' . $title . '/" target="_blank">&nbsp;' . $row['title'] . '</a>';
@@ -3458,15 +2998,12 @@ var id = data.node.id;
     {
         $S = '';
         $pattern = "/{{{.*}}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $keys = $array['0'][$x];
                 $keys2 = $array['0'][$x];
             }
-            if (intval(strpos($keys2, '-')) > 0)
-            {
+            if (intval(strpos($keys2, '-')) > 0) {
                 $keys = str_replace("{{{", "", $keys);
                 $keys = str_replace("}}}", "", $keys);
                 $keys = str_replace("-", "", $keys);
@@ -3476,21 +3013,16 @@ var id = data.node.id;
                     ->select('id', 'title')
                     ->first();
                 $category = '';
-                if ($Keywords)
-                {
+                if ($Keywords) {
                     $id = $Keywords->id;
                     $name = $Keywords->title;
                     $strings = '<span style="cursor: pointer;color:#428bca;" class="KeywordClick" onclick="AddTags(\'' . $id . '\',\'' . $name . '\',1);">' . $name . '</span>';
-                }
-                else
-                {
+                } else {
                     $strings = $keys;
                 }
 
                 $body = str_replace($keys2, $strings, $body);
-            }
-            else
-            {
+            } else {
                 $keys = str_replace("{{{", "", $keys);
                 $keys = str_replace("}}}", "", $keys);
                 $Keywords = DB::table('keywords')
@@ -3498,14 +3030,11 @@ var id = data.node.id;
                     ->select('id', 'title')
                     ->first();
                 $category = '';
-                if ($Keywords)
-                {
+                if ($Keywords) {
                     $id = $Keywords->id;
                     $name = $Keywords->title;
                     $category = $this->thesaurus_tree($id);
-                }
-                else
-                {
+                } else {
                     $category = $keys;
                 }
 
@@ -3535,18 +3064,13 @@ var id = data.node.id;
     {
         $n = 1;
         $t = 1;
-        if ($num = preg_match_all("/<(p|table|ul|ol|h[1-9])([^>]*)>(.*?)<\/\\1>/is", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/<(p|table|ul|ol|h[1-9])([^>]*)>(.*?)<\/\\1>/is", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $array['1'][$y] = strtolower($array['1'][$y]);
-                if ($array['1'][$y] == 'h1' || $array['1'][$y] == 'h2' || $array['1'][$y] == 'h3' || $array['1'][$y] == 'h4' || $array['1'][$y] == 'h5' || $array['1'][$y] == 'h6' || $array['1'][$y] == 'h7' || $array['1'][$y] == 'h8' || $array['1'][$y] == 'h9')
-                {
+                if ($array['1'][$y] == 'h1' || $array['1'][$y] == 'h2' || $array['1'][$y] == 'h3' || $array['1'][$y] == 'h4' || $array['1'][$y] == 'h5' || $array['1'][$y] == 'h6' || $array['1'][$y] == 'h7' || $array['1'][$y] == 'h8' || $array['1'][$y] == 'h9') {
                     $id = 't' . $t;
                     ++$t;
-                }
-                else
-                {
+                } else {
                     $id = $n;
                     ++$n;
                 }
@@ -3560,28 +3084,23 @@ var id = data.node.id;
     public function Ref_Replace($body)
     {
         $pattern = "/{{.{1,22}}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $Con = $array['0'][$x];
                 $Con = str_replace("{{", "", $Con);
                 $Con = str_replace("}}", "", $Con);
                 $gid = trim($Con);
                 $myArray = explode('|', $Con);
-                if (is_array($myArray) && count($myArray) > 2)
-                {
+                if (is_array($myArray) && count($myArray) > 2) {
                     $sid = $myArray[0];
                     $type = $myArray[1];
                     $numb = trim($myArray[2]);
                     $numb = "، " . $numb;
-                    if (trim($type) == 'اس')
-                    {
+                    if (trim($type) == 'اس') {
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3591,27 +3110,23 @@ var id = data.node.id;
                         $zabans = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
-                            })->whereIn('st.field_id', ['36','2588'])
+                            })->whereIn('st.field_id', ['36', '2588'])
                             ->where('p.id', $sid)
                             ->select('r.field_value as field_val', 'r.field_id')->first();
                         $zaban = 'fa';
-                        if ($zabans && $zabans->field_val == 'انگلیسی')
-                        {
+                        if ($zabans && $zabans->field_val == 'انگلیسی') {
                             $zaban = 'en';
                         }
 
                         $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
-                        if ($year == '')
-                        {
+                        if ($year == '') {
                             $reps = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -3619,15 +3134,12 @@ var id = data.node.id;
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
                         }
-                        $nev = "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($year.$numb).")</a>";
-                    }
-                    else
-                    {
+                        $nev = "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($year . $numb) . ")</a>";
+                    } else {
                         $repcount = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3638,24 +3150,21 @@ var id = data.node.id;
                         $zabans = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
-                            })->whereIn('st.field_id', ['36','2588'])
+                            })->whereIn('st.field_id', ['36', '2588'])
                             ->where('p.id', $sid)
                             ->select('r.field_value as field_val', 'r.field_id')->first();
                         $zaban = 'fa';
-                        if ($zabans && $zabans->field_val == 'انگلیسی')
-                        {
+                        if ($zabans && $zabans->field_val == 'انگلیسی') {
                             $zaban = 'en';
                         }
 
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3665,8 +3174,7 @@ var id = data.node.id;
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3674,37 +3182,29 @@ var id = data.node.id;
                             ->select('r.field_value as field_val', 'r.field_id')->first();
                         $year = ($reps && trim($reps->field_val) != '') ? "، " . trim($reps->field_val) : '';
                         $myArrays = explode('؛', $name);
-                        if (is_array($myArrays) && count($myArrays) > 0)
-                        {
+                        if (is_array($myArrays) && count($myArrays) > 0) {
                             $hamkar = (count($myArrays) > 1) ? "و همکاران " : "";
 
                             $nev = $myArrays[0];
                             $my = explode('،', $nev);
                             $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                            $nev = ($nev != '') ? "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($nev.$year.$numb).")</a>" : '';
-                        }
-                        else
-                        {
-                            $nev = "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($name.$year.$numb).")</a>";
+                            $nev = ($nev != '') ? "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($nev . $year . $numb) . ")</a>" : '';
+                        } else {
+                            $nev = "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($name . $year . $numb) . ")</a>";
                         }
                     }
                     $body = str_replace($array['0'][$x], $nev, $body);
-                }
-                else
-                {
-                    if (is_array($myArray) && count($myArray) > 1)
-                    {
+                } else {
+                    if (is_array($myArray) && count($myArray) > 1) {
                         $nev = "";
                         $sid = $myArray[0];
                         $type = $myArray[1];
                         $nev = '';
-                        if (trim($type) == 'اس')
-                        {
+                        if (trim($type) == 'اس') {
                             $reps = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -3714,26 +3214,22 @@ var id = data.node.id;
                             $zabans = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
-                                })->whereIn('st.field_id', ['36','2588'])
+                                })->whereIn('st.field_id', ['36', '2588'])
                                 ->where('p.id', $sid)
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $zaban = 'fa';
-                            if ($zabans && $zabans->field_val == 'انگلیسی')
-                            {
+                            if ($zabans && $zabans->field_val == 'انگلیسی') {
                                 $zaban = 'en';
                             }
                             $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
-                            if ($year == '')
-                            {
+                            if ($year == '') {
                                 $reps = DB::table('subject_fields_report as r')
                                     ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                     ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                    ->leftJoin('subject_type_fields as st', function ($join)
-                                    {
+                                    ->leftJoin('subject_type_fields as st', function ($join) {
                                         $join->on('st.stid', '=', 's.kind');
                                         $join->on('st.id', '=', 'r.field_id');
                                     })
@@ -3741,16 +3237,13 @@ var id = data.node.id;
                                     ->select('r.field_value as field_val', 'r.field_id')->first();
                                 $year = ($reps && trim($reps->field_val) != '') ? trim($reps->field_val) : '';
                             }
-                            $nev = "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($year).")</a>";
+                            $nev = "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($year) . ")</a>";
 
-                        }
-                        else
-                        {
+                        } else {
                             $repcount = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -3759,24 +3252,21 @@ var id = data.node.id;
                             $zabans = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
-                                })->whereIn('st.field_id', ['36','2588'])
+                                })->whereIn('st.field_id', ['36', '2588'])
                                 ->where('p.id', $sid)
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $zaban = 'fa';
-                            if ($zabans && $zabans->field_val == 'انگلیسی')
-                            {
+                            if ($zabans && $zabans->field_val == 'انگلیسی') {
                                 $zaban = 'en';
                             }
                             $hamkar = ($repcount > 1) ? " و همکاران " : "";
                             $reps = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -3786,8 +3276,7 @@ var id = data.node.id;
                             $reps = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -3795,28 +3284,22 @@ var id = data.node.id;
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $year = ($reps && trim($reps->field_val) != '') ? "، " . trim($reps->field_val) : '';
                             $myArrays = explode('؛', $name);
-                            if (is_array($myArrays) && count($myArrays) > 0)
-                            {
+                            if (is_array($myArrays) && count($myArrays) > 0) {
                                 $nev = $myArrays[0];
                                 $my = explode('،', $nev);
                                 $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                                $nev = ($nev != '') ? "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($nev.$year).")</a>" : '';
-                            }
-                            else
-                            {
-                                $nev = "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$sid'>(".trim($name.$year).")</a>";
+                                $nev = ($nev != '') ? "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($nev . $year) . ")</a>" : '';
+                            } else {
+                                $nev = "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$sid'>(" . trim($name . $year) . ")</a>";
                             }
                         }
                         $body = str_replace($array['0'][$x], $nev, $body);
-                    }
-                    else
-                    {
+                    } else {
                         $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>()</a>";
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3825,24 +3308,21 @@ var id = data.node.id;
                         $zabans = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
-                            })->whereIn('st.field_id', ['36','2588'])
+                            })->whereIn('st.field_id', ['36', '2588'])
                             ->where('p.id', $gid)
                             ->select('r.field_value as field_val', 'r.field_id')->first();
                         $zaban = 'fa';
-                        if ($zabans && $zabans->field_val == 'انگلیسی')
-                        {
+                        if ($zabans && $zabans->field_val == 'انگلیسی') {
                             $zaban = 'en';
                         }
                         $name = ($reps && trim($reps->field_val) != '') ? "$reps->field_val" : '';
                         $reps = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                             ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -3850,19 +3330,15 @@ var id = data.node.id;
                             ->select('r.field_value as field_val', 'r.field_id')->first();
                         $year = ($reps && trim($reps->field_val) != '') ? "، " . trim($reps->field_val) : '';
                         $nev = "<a target='_blank'  href='" . url('/') . "/$Con'>($name ،$year)</a>";
-                        if ($name != '')
-                        {
+                        if ($name != '') {
                             $myArray = explode('؛', $name);
-                            if (is_array($myArray) && count($myArray) > 1)
-                            {
+                            if (is_array($myArray) && count($myArray) > 1) {
                                 $nev = $myArray[0];
                                 $my = explode('،', $nev);
                                 $nev = (is_array($my) && count($my) > 0 && array_key_exists(1, $my)) ? $my[1] : '';
-                                $nev = ($nev != '') ? "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$Con'>(".($zaban == 'en' ? ''.trim($nev.'  و همکاران'.$year) : trim($nev.'  و همکاران'.$year)).")</a>" : '';
-                            }
-                            else
-                            {
-                                $nev = "<a lang='".$zaban."' target='_blank'  href='" . url('/') . "/$Con'>(".trim($name.$year).")</a>";
+                                $nev = ($nev != '') ? "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$Con'>(" . ($zaban == 'en' ? '' . trim($nev . '  و همکاران' . $year) : trim($nev . '  و همکاران' . $year)) . ")</a>" : '';
+                            } else {
+                                $nev = "<a lang='" . $zaban . "' target='_blank'  href='" . url('/') . "/$Con'>(" . trim($name . $year) . ")</a>";
                             }
                         }
                         $body = str_replace($array['0'][$x], $nev, $body);
@@ -3875,10 +3351,8 @@ var id = data.node.id;
 
     public function quran_Translate($body)
     {
-        if ($num1 = preg_match_all("|QuranTran_([0-9]{1,2}-[0-9]{1,3}-[0-9]{1,2})|U", $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all("|QuranTran_([0-9]{1,2}-[0-9]{1,3}-[0-9]{1,2})|U", $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace('<p class="translate">' . $array['0'][$x] . '</p>', $this->quranTranslate_create($array['1'][$x]), $body);
             }
         }
@@ -3888,18 +3362,14 @@ var id = data.node.id;
     public function Help_Replace($body)
     {
         $pattern = "/{{Help\+.*=.*}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace($array['0'][$x], "", $body);
             }
         }
         $pattern = "/{{Help-.*}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace($array['0'][$x], "", $body);
             }
         }
@@ -3914,28 +3384,22 @@ var id = data.node.id;
         $quran = intval(trim($filter['0']));
         $sura = intval(trim($filter['1']));
         $aya = intval(trim($filter['2']));
-        if ($quran != 0 && $sura != 0)
-        {
-            if ($aya == 0)
-            {
+        if ($quran != 0 && $sura != 0) {
+            if ($aya == 0) {
                 $Qurans = DB::table('quran_text as Q')
                     ->join('fa_ansarian as T', 'Q.index', '=', 'T.index')
                     ->where('Q.sura', '=', $sura)->select('Q.text as matn', 'T.text as Trans', 'Q.aya as aya')->get();
                 $text .= '<tr> <td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;"><span  class="Amirqurans">بسم الله الرحمن الرحیم<span class="aya_number">  </span></span></td>' . '<td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;font-size: 10pt;">به نام خداوند بخشاینده مهربان<span class="aya_number">  </span></td></tr>';
-                foreach ($Qurans as $Quran)
-                {
+                foreach ($Qurans as $Quran) {
                     $text .= '<tr> <td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;"><span  class="Amirqurans">' . $Quran->matn . '<span class="aya_number"> (' . $Quran->aya . ') </span></span></td>' . '<td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;font-size: 10pt;">' . $Quran->Trans . '<span class="aya_number"> (' . $Quran->aya . ') </span></td></tr>';
                     $text = str_replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '', $text);
                 }
-            }
-            else
-            {
+            } else {
 
                 $Qurans = DB::table('quran_text as Q')
                     ->join('fa_ansarian as T', 'Q.index', '=', 'T.index')
                     ->where('Q.sura', '=', $sura)->where('Q.aya', '=', $aya)->select('Q.text as matn', 'T.text as Trans', 'Q.aya as aya')->get();
-                foreach ($Qurans as $Quran)
-                {
+                foreach ($Qurans as $Quran) {
                     $text .= '<tr> <td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;"><span  class="Amirqurans"> ' . $Quran->matn . '</span><span class="aya_number"> (' . $Quran->aya . ') </span></td>' . '<td style="text-align: justify;vertical-align: top;direction: rtl;width: 50%;font-size: 10pt;">' . $Quran->Trans . '<span class="aya_number"> (' . $Quran->aya . ') </span></td>';
                 }
             }
@@ -3961,11 +3425,9 @@ var id = data.node.id;
             ->groupBy('p.id')
             ->orderBy('stt.orders')
             ->get();
-        foreach ($posts as $value)
-        {
+        foreach ($posts as $value) {
             $value->selected = "false";
-            if ($pid == $value->href)
-            {
+            if ($pid == $value->href) {
                 $value->selected = "true";
             }
         }
@@ -3988,8 +3450,7 @@ var id = data.node.id;
 
     public function Group_Replace($body)
     {
-        if ($num1 = preg_match_all("|NewGroups|U", $body, $array))
-        {
+        if ($num1 = preg_match_all("|NewGroups|U", $body, $array)) {
             $body = str_replace('<p class="NewGroups">لیست دسته</p>', $this->NewGroups(), $body);
         }
         return $body;
@@ -4012,8 +3473,7 @@ var id = data.node.id;
                         <span class="member"><a class="jsPanels" title="جستجو " href="modals/sociasearch?type=group">جستجو </a></span>
                     </div>
                 </div><table class=" person-list GroupList row col-md-9">';
-        foreach ($user_groups as $UserS)
-        {
+        foreach ($user_groups as $UserS) {
             $tid = $UserS->id;
             $link = $UserS->link;
             $title = $UserS->name;
@@ -4021,28 +3481,23 @@ var id = data.node.id;
             $pic = (trim($UserS->pic)) ? $UserS->pic : 'Groups.png';
             $link = config('constants.SiteAddress') . $link;
 
-            if ($i == 1)
-            {
+            if ($i == 1) {
                 $res .= '<tr>';
             }
-            if ($i > 0 && $i < 3)
-            {
+            if ($i > 0 && $i < 3) {
                 $res .= '<td style="width:50%;"><li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
                 $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail"></div>';
                 $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li></td>';
             }
-            if ($i == 3)
-            {
+            if ($i == 3) {
                 $res .= '</tr><tr>'; //<td style="border: hidden;"><div id="' . $title . '" class="holder float"><a href="' . $link . '" target="_blank"><img src="pics/user/' . $pic . '"style="margin:1px 5px;float:right;border-radius: 50%; height:50px;width:50px;"/><span>' . $title . '</span>';
             }
-            if ($i >= 3)
-            {
+            if ($i >= 3) {
                 $res .= '<td><li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
                 $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail">' . '</div>';
                 $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li></td>';
             }
-            if ($i > 4)
-            {
+            if ($i > 4) {
                 $res .= '</tr>'; //<td style="border: hidden;"><div id="' . $title . '" class="holder float"><a href="' . $link . '" target="_blank"><img src="pics/user/' . $pic . '"style="margin:1px 5px;float:right;border-radius: 50%; height:50px;width:50px;"/><span>' . $title . '</span>';
             }
 
@@ -4054,8 +3509,7 @@ var id = data.node.id;
 
     public function Chanel_Replace($body)
     {
-        if ($num1 = preg_match_all("|NewChanels|U", $body, $array))
-        {
+        if ($num1 = preg_match_all("|NewChanels|U", $body, $array)) {
             $body = str_replace('<p class="NewChanels">لیست کانال</p>', $this->NewChanels(), $body);
         }
         return $body;
@@ -4078,8 +3532,7 @@ var id = data.node.id;
                         <span class="member"><a class="jsPanels" title="جستجو " href="modals/sociasearch?type=chanel">جستجو </a></span>
                     </div>
                 </div><table class=" person-list GroupList row col-md-9">';
-        foreach ($user_groups as $UserS)
-        {
+        foreach ($user_groups as $UserS) {
             $tid = $UserS->id;
             $link = $UserS->link;
             $title = $UserS->name;
@@ -4087,28 +3540,23 @@ var id = data.node.id;
             $link = config('constants.SiteAddress') . $link;
             $pic = (trim($UserS->pic)) ? $UserS->pic : 'Groups.png';
 
-            if ($i == 1)
-            {
+            if ($i == 1) {
                 $res .= '<tr>';
             }
-            if ($i > 0 && $i < 3)
-            {
+            if ($i > 0 && $i < 3) {
                 $res .= '<td style="width:50%;"><li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
                 $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail"></div>';
                 $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li></td>';
             }
-            if ($i == 3)
-            {
+            if ($i == 3) {
                 $res .= '</tr><tr>'; //<td style="border: hidden;"><div id="' . $title . '" class="holder float"><a href="' . $link . '" target="_blank"><img src="pics/user/' . $pic . '"style="margin:1px 5px;float:right;border-radius: 50%; height:50px;width:50px;"/><span>' . $title . '</span>';
             }
-            if ($i >= 3)
-            {
+            if ($i >= 3) {
                 $res .= '<td><li  style="list-style:none !important; width: 90% !important;" class="col-sm-2"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded"><div class="person-detail">';
                 $res .= '<div class="close"></div><div class="person-name"><a href="' . $link . '">' . $title . '</a></div><div class="person-moredetail">' . '</div>';
                 $res .= '<div class="person-relation"></div></div><br><div class="" style="padding-left:10px;"></div></li></td>';
             }
-            if ($i > 4)
-            {
+            if ($i > 4) {
                 $res .= '</tr>'; //<td style="border: hidden;"><div id="' . $title . '" class="holder float"><a href="' . $link . '" target="_blank"><img src="pics/user/' . $pic . '"style="margin:1px 5px;float:right;border-radius: 50%; height:50px;width:50px;"/><span>' . $title . '</span>';
             }
 
@@ -4120,8 +3568,7 @@ var id = data.node.id;
 
     public function Person_Replace($body)
     {
-        if ($num1 = preg_match_all("|NewPersons|U", $body, $array))
-        {
+        if ($num1 = preg_match_all("|NewPersons|U", $body, $array)) {
             $body = str_replace('<p class="NewPersons">لیست افراد</p>', $this->Newusers(), $body);
             // $body .= str_replace('<p class="NewPersons">لیست گروه‌ها</p>', $this->NewGroups(), $body);
         }
@@ -4132,14 +3579,11 @@ var id = data.node.id;
     {
         $html = '';
         $res = '';
-        if (trim($body) != '')
-        {
+        if (trim($body) != '') {
             $html = new HtmlDomSTR('str', $body);
             $i = 1;
-            try
-            {
-                foreach ($html->find('p[class=DashboardClass]') as $element)
-                {
+            try {
+                foreach ($html->find('p[class=DashboardClass]') as $element) {
                     $res = '';
                     $class = $element->class;
                     $title = $element->innertext;
@@ -4163,35 +3607,24 @@ var id = data.node.id;
                     $filter = (array_key_exists(8, $myArray)) ? $myArray[8] : 0;
                     $filtertype = (array_key_exists(9, $myArray)) ? $myArray[9] : 0;
                     $Ys = ltrim($Ys, ',');
-                    if ($type == 'table' && $FidorEid != '0')
-                    {
+                    if ($type == 'table' && $FidorEid != '0') {
                         $res .= '<label>' . str_replace('داشبورد: ', '', $title) . '</label>';
                         $res .= PublicsClass::FormReportForContext($FidorEid, $Xs, $Ys, $filter, $filtertype);
-                    }
-                    elseif ($type == 'Pie' && $FidorEid != '0')
-                    {
+                    } elseif ($type == 'Pie' && $FidorEid != '0') {
                         $res .= PublicClass::PieReportForContext($FidorEid, $Xs, $title, $Ys, $filter, $filtertype);
-                    }
-                    elseif (($type == 'Histogram' || $type == 'Linear') && $FidorEid != '0')
-                    {
+                    } elseif (($type == 'Histogram' || $type == 'Linear') && $FidorEid != '0') {
 
                         $rowsArr = ($Ys != '') ? explode($Ys, ',') : '';
 
                         $pos = strpos($Ys, ',');
                         $d = (is_array($rowsArr)) ? 'yes' : 'no';
-                        if ($Xs != '' && $Ys != '')
-                        {
-                            if ($pos != '')
-                            {
+                        if ($Xs != '' && $Ys != '') {
+                            if ($pos != '') {
                                 $res .= PublicsClass::Histogram($FidorEid, $Xs, $title, $Ys, $type, $Coltype, $i, $ytitle, $w, $filter, $filtertype);
-                            }
-                            else
-                            {
+                            } else {
                                 $res .= PublicsClass::Histogram_2($FidorEid, $Xs, $title, $Ys, $type, $Coltype, $i, $ytitle, $w, $filter, $filtertype);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             $res .= 'نمودار غیر قابل نمایش';
                         }
 
@@ -4205,8 +3638,7 @@ var id = data.node.id;
                     $i++;
                     $element->innertext = $res;
                 }
-            } catch (Exception $exc)
-            {
+            } catch (Exception $exc) {
                 //echo $exc->getTraceAsString();
             }
         }
@@ -4217,10 +3649,8 @@ var id = data.node.id;
     {
         $S = '';
         $pattern = "/SPortal_.*/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $keys = $array['0'][$x];
                 $key = str_replace('SPortal_', '', $keys);
                 $myArray = explode('_', $key);
@@ -4228,8 +3658,7 @@ var id = data.node.id;
                 $Tedad = $myArray[1];
                 $Stype = $myArray[2];
                 $Sep = '،  ';
-                if ($Stype == 2)
-                {
+                if ($Stype == 2) {
                     $Sep = '<br>';
                 }
                 $Portals = DB::table('subjects as s')
@@ -4243,8 +3672,7 @@ var id = data.node.id;
                     ->orderBy('p.id', 'desc')
                     ->take($Tedad)
                     ->get();
-                foreach ($Portals as $Portal)
-                {
+                foreach ($Portals as $Portal) {
                     $S .= '<a href="' . $Portal->pid . '">' . $Portal->title . '</a>' . $Sep;
                 }
 
@@ -4260,15 +3688,12 @@ var id = data.node.id;
         $PKeys = DB::table('subject_type_tab')
             ->select('tid', 'stid', 'name', 'first')
             ->get();
-        foreach ($PKeys as $PKey)
-        {
-            if ($PKey->first == 1)
-            {
+        foreach ($PKeys as $PKey) {
+            if ($PKey->first == 1) {
                 $first[$PKey->stid] = $PKey->tid;
             }
         }
-        foreach ($first as $key => $val)
-        {
+        foreach ($first as $key => $val) {
             $selpage[] = '(kind = ' . $key . ' AND type = ' . $val . ')';
         }
         $sel_pages = '(' . implode($selpage, ' OR ') . ')';
@@ -4277,51 +3702,37 @@ var id = data.node.id;
 
     public function styleDel($body)
     {
-        if ($num = preg_match_all("/tr style=\"background-color: #78ceeb;\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/tr style=\"background-color: #78ceeb;\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], 'tr class="th"', $body);
                 }
             }
         }
-        if ($num = preg_match_all("/tr style=\"background-color: #87ceeb;\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/tr style=\"background-color: #87ceeb;\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], 'tr class="th"', $body);
                 }
             }
         }
-        if ($num = preg_match_all("/td style=\"background-color: #78ceeb;\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/td style=\"background-color: #78ceeb;\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], 'td class="th"', $body);
                 }
             }
         }
-        if ($num = preg_match_all("/td style=\"background-color: #87ceeb;\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/td style=\"background-color: #87ceeb;\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], 'td class="th"', $body);
                 }
             }
         }
 
-        if ($num = preg_match_all("/<td([^>]*)>(.*?)<\/td>/is", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/<td([^>]*)>(.*?)<\/td>/is", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $pattern = "|<p[^>]*>(.*?)<\/p>|U";
                 $replacement = "$1";
                 $array['2'][$y] = preg_replace($pattern, $replacement, $array['2'][$y]);
@@ -4330,78 +3741,57 @@ var id = data.node.id;
             }
         }
 
-        if ($num = preg_match_all("/<span>(.*?)<\/span>/is", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/<span>(.*?)<\/span>/is", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $body = str_replace($array['0'][$y], $array['1'][$y], $body);
             }
         }
 
 
-        if ($num = preg_match_all("|<h[1-9]>(.*)<\/h[1-9]>|U", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
-                if (trim($array['1'][$y]) == '')
-                {
+        if ($num = preg_match_all("|<h[1-9]>(.*)<\/h[1-9]>|U", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
+                if (trim($array['1'][$y]) == '') {
                     $body = str_replace($array['0'][$y], '', $body);
                 }
             }
         }
-        if ($num = preg_match_all("/ style=\"[a-zA-Z0-9 :,\';#\-]+\"/", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/ style=\"[a-zA-Z0-9 :,\';#\-]+\"/", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $body = str_replace($array['0'][$y], '', $body);
             }
         }
-        if ($num = preg_match_all("/ align=\"[a-z]+\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/ align=\"[a-z]+\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], '', $body);
 //		echo $array[$x][$y] ;	
                 }
             }
         }
-        if ($num = preg_match_all("/ valign=\"[a-z]+\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/ valign=\"[a-z]+\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], '', $body);
 //		echo $array[$x][$y] ;	
                 }
             }
         }
-        if ($num = preg_match_all("/ dir=\"RTL\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/ dir=\"RTL\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], '', $body);
                 }
             }
         }
-        if ($num = preg_match_all("/ dir=\"rtl\"/", $body, $array))
-        {
-            for ($x = 0; $x < count($array); $x++)
-            {
-                for ($y = 0; $y < count($array[$x]); $y++)
-                {
+        if ($num = preg_match_all("/ dir=\"rtl\"/", $body, $array)) {
+            for ($x = 0; $x < count($array); $x++) {
+                for ($y = 0; $y < count($array[$x]); $y++) {
                     $body = str_replace($array[$x][$y], '', $body);
                 }
             }
         }
-        if ($num1 = preg_match_all("|table_([0-9]{1,2}-[0-9]{1,2}-[0-9]{1,2}-[0-9]{2})|U", $body, $array1))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all("|table_([0-9]{1,2}-[0-9]{1,2}-[0-9]{1,2}-[0-9]{2})|U", $body, $array1)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace('<div class="tables">' . $array1['0'][$x] . '</div>', '<p class="tables">' . $array1['0'][$x] . '</p>', $body);
             }
         }
@@ -4413,8 +3803,7 @@ var id = data.node.id;
     public function table($body)
     {
         $html = '';
-        if (trim($body) != '')
-        {
+        if (trim($body) != '') {
             $html = new HtmlDomSTR('str', $body);
             foreach ($html->find('table') as $element)
                 $element->class = 'table table-bordered';
@@ -4435,11 +3824,9 @@ var id = data.node.id;
         return $body;
         //dd();
         $html = '';
-        if (trim($body) != '')
-        {
+        if (trim($body) != '') {
             $html = new HtmlDomSTR('str', $body);
-            foreach ($html->find('p[id=FormInPage]') as $element)
-            {
+            foreach ($html->find('p[id=FormInPage]') as $element) {
                 $title = strip_tags($element->outertext);
                 $C = $element->class;
                 $C = explode('_', $C);
@@ -4458,18 +3845,15 @@ var id = data.node.id;
         $last = '';
         $n = 0;
         $s = 1;
-        if ($num = preg_match_all("|<span class=\"subtitle\"[^>]*>(.*)<\/span>|U", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("|<span class=\"subtitle\"[^>]*>(.*)<\/span>|U", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 ++$n;
                 ++$s;
                 $body = $this->str_replace_first($array['0'][$y], '<sup><a id="s' . $n . '" rel="nofollow" href="#f' . $n . '">' . $n . '</a></sup>', $body);
                 $last .= '<a id="f' . $n . '" rel="nofollow" href="#s' . $n . '">↑ [' . $n . ']</a> ' . $array['1'][$y] . ' <br />';
             }
         }
-        if ($last != '')
-        {
+        if ($last != '') {
             $body .= '<hr style="background-color:#DDDDDD; height:1px; border:0px; ">' . $last;
         }
         return $body;
@@ -4480,10 +3864,8 @@ var id = data.node.id;
         $last = '';
         $n = 0;
         $s = 1;
-        if ($num = preg_match_all("/\{\{(.*?)\|(.*?)\}\}/", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/\{\{(.*?)\|(.*?)\}\}/", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $body = str_replace($array['0'][$y], '<span class="subtitle">' . $array['2'][$y] . '</span>', $body);
             }
         }
@@ -4492,10 +3874,8 @@ var id = data.node.id;
 
     public function resource($body)
     {
-        if ($num = preg_match_all("|<p class=\"resource\"[^>]*>(.*)<\/p>|U", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("|<p class=\"resource\"[^>]*>(.*)<\/p>|U", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
 
                 $body = str_replace($array['0'][$y], '<p class="resource">مأخذ  : ' . strip_tags($array['1'][$y]) . '</p>', $body);
             }
@@ -4513,96 +3893,62 @@ var id = data.node.id;
         $number[1] = (!isset($number[1]) || $reset == 1) ? 0 : $number[1];
         $number[2] = (!isset($number[2]) || $reset == 1) ? 0 : $number[2];
         $number[3] = (!isset($number[3]) || $reset == 1) ? 0 : $number[3];
-        if ($num = preg_match_all("|<[p]*[span]* class=\"number([1-9]{0,1})\"[^>]*>(.*)<\/[p]*[span]*>|U", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("|<[p]*[span]* class=\"number([1-9]{0,1})\"[^>]*>(.*)<\/[p]*[span]*>|U", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $n = $array['1'][$y];
                 $name = trim(strip_tags($array['2'][$y]));
 
-                if ($n == 0)
-                {
-                    if ($name == 'جدول بالا')
-                    {
+                if ($n == 0) {
+                    if ($name == 'جدول بالا') {
                         $n = 1;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n];
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] - 1;
                         }
-                    }
-                    elseif ($name == 'جدول زیر')
-                    {
+                    } elseif ($name == 'جدول زیر') {
                         $n = 1;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n] + 1;
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] + 1;
                         }
                     }
-                    if ($name == 'نمودار بالا')
-                    {
+                    if ($name == 'نمودار بالا') {
                         $n = 2;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n];
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] - 1;
                         }
-                    }
-                    elseif ($name == 'نمودار زیر')
-                    {
+                    } elseif ($name == 'نمودار زیر') {
                         $n = 2;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n] + 1;
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] + 1;
                         }
                     }
-                    if ($name == 'عکس بالا' || $name == 'تصویر بالا')
-                    {
+                    if ($name == 'عکس بالا' || $name == 'تصویر بالا') {
                         $n = 3;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n];
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] - 1;
                         }
-                    }
-                    elseif ($name == 'عکس زیر' || $name == 'تصویر زیر')
-                    {
+                    } elseif ($name == 'عکس زیر' || $name == 'تصویر زیر') {
                         $n = 3;
-                        if ($number[$n] == 0)
-                        {
+                        if ($number[$n] == 0) {
                             $number[$n] = $numbers[$n] + 1;
-                        }
-                        else
-                        {
+                        } else {
                             $number[$n] = $number[$n] + 1;
                         }
                     }
-                    if ($n == 1 || $n == 2 || $n == 3)
-                    {
+                    if ($n == 1 || $n == 2 || $n == 3) {
                         $body = $this->str_replace_first($array['0'][$y], '<span class="number">' . $this->ChangeTitle($n) . ' ' . $number[$n] . '</span>', $body);
                     }
-                }
-                else
-                {
-                    if (intval($n) != 0)
-                    {
+                } else {
+                    if (intval($n) != 0) {
                         $number[$n] = 0;
                         ++$numbers[$n];
                         $body = $this->str_replace_first($array['0'][$y], '<p class="number">' . $this->ChangeTitle($n) . ' ' . $numbers[$n] . ' : ' . $name . '</p>', $body);
@@ -4616,8 +3962,7 @@ var id = data.node.id;
     public function str_replace_first($search, $replace, $subject)
     {
         $pos = strpos($subject, $search);
-        if ($pos !== false)
-        {
+        if ($pos !== false) {
             $subject = substr_replace($subject, $replace, $pos, strlen($search));
         }
         return $subject;
@@ -4625,10 +3970,8 @@ var id = data.node.id;
 
     public function quran_replace($body)
     {
-        if ($num1 = preg_match_all("|quran_([0-9]{1,2}-[0-9]{1,3}-[0-9]{1,2})|U", $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all("|quran_([0-9]{1,2}-[0-9]{1,3}-[0-9]{1,2})|U", $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $body = str_replace('<p class="qurans">' . $array['0'][$x] . '</p>', '<div class="Amirqurans">' . $this->quran_create($array['1'][$x]) . '</div>', $body);
             }
         }
@@ -4637,10 +3980,8 @@ var id = data.node.id;
 
     public function RefList_Replace($body, $list)
     {
-        try
-        {
-            if ($list != '')
-            {
+        try {
+            if ($list != '') {
                 $pattern = "/{{.{1,20}}}/";
                 $i = 1;
                 $str = '';
@@ -4657,8 +3998,7 @@ var id = data.node.id;
                     ->select('s.kind', 's.title', 'p.id as pid')
                     ->orderby('s.title')
                     ->get();
-                foreach ($repss as $reps)
-                {
+                foreach ($repss as $reps) {
                     $Nevisande = '';
                     $pid = $reps->pid;
                     $title = trim($reps->title);
@@ -4668,8 +4008,7 @@ var id = data.node.id;
                     $writer = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })
@@ -4680,15 +4019,13 @@ var id = data.node.id;
                     $zabans = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })->where('st.field_id', '36')
                         ->where('p.id', $pid)
                         ->select('r.field_value as field_val', 'r.field_id')->first();
-                    if ($zabans && $zabans->field_val == 'انگلیسی')
-                    {
+                    if ($zabans && $zabans->field_val == 'انگلیسی') {
                         $zaban = 'en';
                     }
 
@@ -4696,8 +4033,7 @@ var id = data.node.id;
                     $motarjems = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })->where('st.field_id', '8')
@@ -4710,8 +4046,7 @@ var id = data.node.id;
                     $yeartarjome = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })->where('st.field_id', '14')->where('p.id', $pid)
@@ -4721,8 +4056,7 @@ var id = data.node.id;
                     $nashertarjome = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                         ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })
@@ -4735,8 +4069,7 @@ var id = data.node.id;
 
                     $year = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })
@@ -4748,8 +4081,7 @@ var id = data.node.id;
                     $Ref['year'] = ($year) ? $year->field_val : '-';
                     $mahalenteshar = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })
@@ -4762,8 +4094,7 @@ var id = data.node.id;
 
                     $nasher = DB::table('subject_fields_report as r')
                         ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                        ->leftJoin('subject_type_fields as st', function ($join)
-                        {
+                        ->leftJoin('subject_type_fields as st', function ($join) {
                             $join->on('st.stid', '=', 's.kind');
                             $join->on('st.id', '=', 'r.field_id');
                         })
@@ -4774,15 +4105,12 @@ var id = data.node.id;
                         ->first();
                     $Ref['nasher'] = ($nasher) ? $nasher->field_val : '';
 
-                    if ($kind == '42')
-                    {
-                        if (trim($writer) == '')
-                        {
+                    if ($kind == '42') {
+                        if (trim($writer) == '') {
                             $nasher = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
                                 ->leftjoin('pages as p', 's.id', '=', 'p.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -4791,39 +4119,27 @@ var id = data.node.id;
                                 ->select('r.field_value as field_val', 'r.field_id')
                                 ->first();
                             $Ref['Nevisande'] = ($nasher) ? $nasher->field_val : ' ';
-                        }
-                        else
-                        {
+                        } else {
                             $myArrays = explode('؛', $writer);
                             $Nevisande = '';
-                            if (is_array($myArrays) && count($myArrays) > 0)
-                            {
-                                foreach ($myArrays as $value)
-                                {
+                            if (is_array($myArrays) && count($myArrays) > 0) {
+                                foreach ($myArrays as $value) {
                                     $my = explode('،', $value);
-                                    if (is_array($my) && count($my) > 0)
-                                    {
+                                    if (is_array($my) && count($my) > 0) {
                                         $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                         $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                         $Nevisande = (count($myArrays) > 1 && end($myArrays) == $value) ? ltrim($Nevisande, '. ') . ' و ' . $family . '، ' . $name : $Nevisande . $family . '، ' . $name . '. ';
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         $Nevisande .= $my . '. ';
                                     }
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 $my = explode('،', $writer);
-                                if (is_array($my) && count($my) > 0)
-                                {
+                                if (is_array($my) && count($my) > 0) {
                                     $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                     $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                     $Nevisande .= $family . '، ' . $name;
-                                }
-                                else
-                                {
+                                } else {
                                     $Nevisande .= $my;
                                 }
                             }
@@ -4832,38 +4148,27 @@ var id = data.node.id;
 
 
                         $Motargem = '';
-                        if ($motarjem != '')
-                        {
+                        if ($motarjem != '') {
 
                             $myArrays = explode('؛', $motarjem);
-                            if (is_array($myArrays) && count($myArrays) > 0)
-                            {
-                                foreach ($myArrays as $value)
-                                {
+                            if (is_array($myArrays) && count($myArrays) > 0) {
+                                foreach ($myArrays as $value) {
                                     $my = explode('،', $value);
-                                    if (is_array($my) && count($my) > 0)
-                                    {
+                                    if (is_array($my) && count($my) > 0) {
                                         $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                         $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                         $Motargem = (count($myArrays) > 1 && end($myArrays) == $value) ? ltrim($Motargem, '. ') . ' و ' . $family . '، ' . $name : $Motargem . $family . '، ' . $name . '. ';
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         $Motargem .= $my . '. ';
                                     }
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 $my = explode('،', $writer);
-                                if (is_array($my) && count($my) > 0)
-                                {
+                                if (is_array($my) && count($my) > 0) {
                                     $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                     $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                     $Motargem .= $family . '، ' . $name;
-                                }
-                                else
-                                {
+                                } else {
                                     $Motargem .= $my;
                                 }
                             }
@@ -4874,21 +4179,15 @@ var id = data.node.id;
                         $Ref['nashertarjome'] = $nashertarjome;
 
 
-                        if ($zaban == 'en' && !in_array($Ref, $EnBooks))
-                        {
+                        if ($zaban == 'en' && !in_array($Ref, $EnBooks)) {
                             array_push($EnBooks, $Ref);
-                        }
-                        elseif ($zaban == 'fa' && !in_array($Ref, $Books))
-                        {
+                        } elseif ($zaban == 'fa' && !in_array($Ref, $Books)) {
                             array_push($Books, $Ref);
                         }
-                    }
-                    elseif ($kind == '50')
-                    {
+                    } elseif ($kind == '50') {
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -4901,8 +4200,7 @@ var id = data.node.id;
 
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -4912,8 +4210,7 @@ var id = data.node.id;
                         $Ref['dore'] = ($nasher) ? $nasher->field_val : ' ';
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -4923,8 +4220,7 @@ var id = data.node.id;
                         $Ref['shomare'] = ($nasher) ? $nasher->field_val : ' ';
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -4934,46 +4230,34 @@ var id = data.node.id;
                         $Ref['shomaresafhe'] = ($nasher) ? $nasher->field_val : ' ';
                         $myArrays = explode('؛', $writer);
                         $Nevisande = '';
-                        if (is_array($myArrays) && count($myArrays) > 0)
-                        {
-                            foreach ($myArrays as $value)
-                            {
+                        if (is_array($myArrays) && count($myArrays) > 0) {
+                            foreach ($myArrays as $value) {
                                 $my = explode('،', $value);
-                                if (is_array($my) && count($my) > 0)
-                                {
+                                if (is_array($my) && count($my) > 0) {
                                     $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                     $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                     $Nevisande = (count($myArrays) > 1 && end($myArrays) == $value) ? ltrim($Nevisande, '.') . ' و ' . $family . '، ' . $name : $Nevisande . $family . '، ' . $name . '. ';
 // $Nevisande.= (count($myArrays) > 1 && end($myArrays) == $value) ? ' و ' . $family . '،' . $name : $family . '،' . $name.'. ';
-                                }
-                                else
-                                {
+                                } else {
                                     $Nevisande .= $my . '. ';
                                 }
                             }
-                        }
-                        else
-                        {
+                        } else {
                             $my = explode('،', $writer);
-                            if (is_array($my) && count($my) > 0)
-                            {
+                            if (is_array($my) && count($my) > 0) {
                                 $family = (array_key_exists('1', $my)) ? $my[1] : '';
                                 $name = (array_key_exists('0', $my)) ? $my[0] : '';
                                 $Nevisande .= $family . '، ' . $name;
-                            }
-                            else
-                            {
+                            } else {
                                 $Nevisande .= $my;
                             }
                         }
                         $Ref['Nevisande'] = $Nevisande;
 
-                        if (trim($Nevisande) == '' || trim($Nevisande) == '،')
-                        {
+                        if (trim($Nevisande) == '' || trim($Nevisande) == '،') {
                             $nasher = DB::table('subject_fields_report as r')
                                 ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                                ->leftJoin('subject_type_fields as st', function ($join)
-                                {
+                                ->leftJoin('subject_type_fields as st', function ($join) {
                                     $join->on('st.stid', '=', 's.kind');
                                     $join->on('st.id', '=', 'r.field_id');
                                 })
@@ -4982,22 +4266,16 @@ var id = data.node.id;
                                 ->select('r.field_value as field_val', 'r.field_id')->first();
                             $Ref['Nevisande'] = ($nasher) ? $nasher->field_val : ' ';
                         }
-                        if ($zaban == 'en' && !in_array($Ref, $EnArticle))
-                        {
+                        if ($zaban == 'en' && !in_array($Ref, $EnArticle)) {
                             array_push($EnArticle, $Ref);
-                        }
-                        elseif ($zaban == 'fa' && !in_array($Ref, $Article))
-                        {
+                        } elseif ($zaban == 'fa' && !in_array($Ref, $Article)) {
                             array_push($Article, $Ref);
                         }
-                    }
-                    elseif ($kind == '45')
-                    {
+                    } elseif ($kind == '45') {
 
                         $writer = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -5008,14 +4286,11 @@ var id = data.node.id;
                         $Nevisande = '';
 
                         $my = explode('،', $writer);
-                        if (is_array($my) && count($my) > 0)
-                        {
+                        if (is_array($my) && count($my) > 0) {
                             $family = (array_key_exists('1', $my)) ? $my[1] : '';
                             $name = (array_key_exists('0', $my)) ? $my[0] : '';
                             $Nevisande = $family . '، ' . $name;
-                        }
-                        else
-                        {
+                        } else {
                             $Nevisande = $my;
                         }
 
@@ -5024,8 +4299,7 @@ var id = data.node.id;
 
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -5039,8 +4313,7 @@ var id = data.node.id;
 
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -5051,8 +4324,7 @@ var id = data.node.id;
 
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -5062,8 +4334,7 @@ var id = data.node.id;
                         $Ref['university'] = ($nasher) ? $nasher->field_val : ' ';
                         $nasher = DB::table('subject_fields_report as r')
                             ->leftjoin('subjects as s', 's.id', '=', 'r.sid')
-                            ->leftJoin('subject_type_fields as st', function ($join)
-                            {
+                            ->leftJoin('subject_type_fields as st', function ($join) {
                                 $join->on('st.stid', '=', 's.kind');
                                 $join->on('st.id', '=', 'r.field_id');
                             })
@@ -5073,57 +4344,45 @@ var id = data.node.id;
                         $Ref['country'] = ($nasher) ? $nasher->field_val : ' ';
 
 
-                        if ($zaban == 'en' && !in_array($Ref, $Enpayan))
-                        {
+                        if ($zaban == 'en' && !in_array($Ref, $Enpayan)) {
                             array_push($Enpayan, $Ref);
-                        }
-                        elseif ($zaban == 'fa' && !in_array($Ref, $payan))
-                        {
+                        } elseif ($zaban == 'fa' && !in_array($Ref, $payan)) {
                             array_push($payan, $Ref);
                         }
                     }
                 }
                 $i = 1;
                 $str .= '<ol>';
-                foreach ($Books as $value)
-                {
+                foreach ($Books as $value) {
                     $value['year'] = ($value['year'] != '') ? " ({$value['year']})" : '';
                     $value['Yeartarjome'] = ($value['Yeartarjome'] != '') ? " ({$value['Yeartarjome']})" : '';
 
-                    if ($value['Motargem'] != '' && $value['Motargem'] != '، -. ')
-                    {
+                    if ($value['Motargem'] != '' && $value['Motargem'] != '، -. ') {
                         $str .= '<li>' . $value['Motargem'] . $value['Yeartarjome'] . ' <i><a href="' . $value['pid'] . '">' . $value['title'] . '</a></i>. (' . trim($value['Nevisande']) . ') ' . $value['mahalenteshar'] . ': ' . $value['nashertarjome'] . '.' . $value['year'] . '</li>';
-                    }
-                    else
-                    {
+                    } else {
                         $str .= '<li>' . $value['Nevisande'] . $value['year'] . ' <i><a href="' . $value['pid'] . '">' . $value['title'] . '</a></i>. ' . $value['mahalenteshar'] . ': ' . $value['nasher'] . '.</li>';
                     }
                     $i++;
                 }
-                foreach ($Article as $value)
-                {
+                foreach ($Article as $value) {
                     $str .= '<li>' . $value['Nevisande'] . ' (' . $value['year'] . ') <a href="' . $value['pid'] . '">' . $value['title'] . '</a>. <i>' . $value['nashrieh'] . '. دوره ' . $value['dore'] . ' شماره ' . $value['shomare'] . ' صص ' . $value['shomaresafhe'] . '.</i></li>';
                     $i++;
                 }
-                foreach ($payan as $value)
-                {
+                foreach ($payan as $value) {
                     $str .= '<li>' . $value['Nevisande'] . ' (' . $value['year'] . ') <i><a href="' . $value['pid'] . '">' . $value['title'] . '</a></i>. ' . $value['maghta'] . ': ' . $value['university'] . '. ' . $value['country'] . '</li>';
                     $i++;
                 }
                 //$str .='</ol><div style="direction:ltr;"><ol style="direction:ltr;">';
-                foreach ($EnBooks as $value)
-                {
+                foreach ($EnBooks as $value) {
                     $str .= '<li>' . $value['Nevisande'] . '(' . $value['year'] . ') <i><a href="' . $value['pid'] . '">' . $value['title'] . '</a></i>. ' . $value['mahalenteshar'] . ': ' . $value['nasher'] . '.</li>';
                     $i++;
                 }
-                foreach ($EnArticle as $value)
-                {
+                foreach ($EnArticle as $value) {
                     $str .= '<li>' . $value['Nevisande'] . ' (' . $value['year'] . ') <a href="' . $value['pid'] . '">' . $value['title'] . '</a>. <i>' . $value['nashrieh'] . '. Vol. ' . $value['dore'] . ' No. ' . $value['shomare'] . ' pp. ' . $value['shomaresafhe'] . '.</i></li>';
 
                     $i++;
                 }
-                foreach ($Enpayan as $value)
-                {
+                foreach ($Enpayan as $value) {
                     $str .= '<li>' . $value['Nevisande'] . '(' . $value['year'] . ') <i><a href="' . $value['pid'] . '">' . $value['title'] . '</a></i>. ' . $value['maghta'] . ': ' . $value['university'] . '. ' . $value['country'] . '</li>';
                     $i++;
                 }
@@ -5131,8 +4390,7 @@ var id = data.node.id;
                 $body = $body . $str;
                 return $body;
             }
-        } catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             return '';
         }
     }
@@ -5141,35 +4399,26 @@ var id = data.node.id;
     {
         $str = '';
         $pattern = "/{{.{1,22}}}/";
-        if ($num1 = preg_match_all($pattern, $body, $array))
-        {
-            for ($x = 0; $x < $num1; $x++)
-            {
+        if ($num1 = preg_match_all($pattern, $body, $array)) {
+            for ($x = 0; $x < $num1; $x++) {
                 $Con = $array['0'][$x];
                 //if (strpos($Con, "{{Help")!='') {
                 $Con = str_replace("{{", "", $Con);
                 $Con = str_replace("}}", "", $Con);
                 $pid = trim($Con);
                 $myArray = explode('|', $Con);
-                if (is_array($myArray) && count($myArray) > 2)
-                {
+                if (is_array($myArray) && count($myArray) > 2) {
                     $pid = $myArray[0];
-                }
-                else
-                {
-                    if (is_array($myArray) && count($myArray) > 1)
-                    {
+                } else {
+                    if (is_array($myArray) && count($myArray) > 1) {
                         $pid = $myArray[0];
                     }
                 }
                 $pid = trim(str_replace("و", ',', $pid));
                 $pid = trim(str_replace("،", ',', $pid));
-                if ($pid != '')
-                {
+                if ($pid != '') {
                     $str .= $pid . ',';
-                }
-                else
-                {
+                } else {
                     $str .= '';
                 }
                 // }
@@ -5185,13 +4434,10 @@ var id = data.node.id;
         $numbers[1] = 0;
         $numbers[2] = 0;
         $numbers[3] = 0;
-        if ($num = preg_match_all("/\#\#(.*?)\|(.*?)\#\#/", $body, $array))
-        {
-            for ($y = 0; $y < count($array['0']); $y++)
-            {
+        if ($num = preg_match_all("/\#\#(.*?)\|(.*?)\#\#/", $body, $array)) {
+            for ($y = 0; $y < count($array['0']); $y++) {
                 $n = $array['1'][$y];
-                if (intval($n) != 0)
-                {
+                if (intval($n) != 0) {
                     ++$numbers[$n];
                     $body = str_replace($array['0'][$y], '<p class="number' . $n . '">' . $array['2'][$y] . '</p>', $body);
                 }
@@ -5207,30 +4453,21 @@ var id = data.node.id;
         $quran = intval(trim($filter['0']));
         $sura = intval(trim($filter['1']));
         $aya = intval(trim($filter['2']));
-        if ($quran != 0 && $sura != 0)
-        {
-            if ($aya == 0)
-            {
+        if ($quran != 0 && $sura != 0) {
+            if ($aya == 0) {
                 $Qurans = DB::table('quran_text')->where('sura', '=', $sura)->select('index', 'aya', 'text')->get();
-                foreach ($Qurans as $Quran)
-                {
-                    if ($Quran->aya == 1)
-                    {
+                foreach ($Qurans as $Quran) {
+                    if ($Quran->aya == 1) {
                         $text1 = $Quran->text;
                         $text1 = str_replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '<div style="text-align:Center !important;font-family:Quran_Taha">' . 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ' . '</div>', $text1);
                         $text .= $text1 . '<img style="display: initial;padding-right: 15px;padding-left: 15px;" src="QuranImages/' . $Quran->aya . '.gif" />';
-                    }
-                    else
-                    {
+                    } else {
                         $text .= $Quran->text . '<img style="display: initial;padding-right: 15px;padding-left: 15px;" src="QuranImages/' . $Quran->aya . '.gif" />';
                     }
                 }
-            }
-            else
-            {
+            } else {
                 $Qurans = DB::table('quran_text')->where('sura', '=', $sura)->where('aya', '=', $aya)->select('index', 'aya', 'text')->get();
-                foreach ($Qurans as $Quran)
-                {
+                foreach ($Qurans as $Quran) {
                     $text = $Quran->text . '<span class="aya_number"> (' . $Quran->aya . ') </span>';
                 }
             }
@@ -5243,8 +4480,7 @@ var id = data.node.id;
         $pashapes = array();
         $tooltips = array();
         $contexts = DB::table('context')->select('id', 'pid', 'pshape', 'definition')->get();
-        foreach ($contexts as $context)
-        {
+        foreach ($contexts as $context) {
 
             $plusplus[$context->id] = '++' . $context->pshape . '++';
             $tooltips[$context->id] = '<a rel="canonical" href="' . config('constants.HAMAFZA') . '/' . $context->pid . '/' . $context->pshape . '/" class="stooltip" original-title="' . $context->definition . '" target="_blank">' . $context->pshape . '</a>';
@@ -5283,8 +4519,7 @@ var id = data.node.id;
 			
 				<div class="CountDiVBordered-content">
 					<div class="CountDiVBordered-content-li">';
-        foreach ($Users as $UserS)
-        {
+        foreach ($Users as $UserS) {
             $tid = $UserS->id;
             $title = $UserS->Name . ' ' . $UserS->Family;
             $title = wordwrap($title, 80, '<br/>', true);
@@ -5295,18 +4530,15 @@ var id = data.node.id;
             $summary1 = explode('<br/>', $summary);
             $summary = (trim($summary1[0]) != '' && strlen($summary) > 100) ? $summary1[0] . ' ...' : $summary1[0];
             $pic = (trim($UserS->Pic)) ? $UserS->Pic : 'defusers.png';
-            if(trim($UserS->avatar) != ''){
+            if (trim($UserS->avatar) != '') {
                 $pic = route('FileManager.DownloadFile', ['type' => 'ID', 'id' => $UserS->avatar ? enCode($UserS->avatar) : -1, 'default_img' => 'user_avatar.png']);
-            }else{
+            } else {
                 $pic = '"pics/user/' . $pic;
             }
 
-            if (($UserS->uname) != '')
-            {
+            if (($UserS->uname) != '') {
                 $link = config('constants.SiteAddress') . "$UserS->uname";
-            }
-            else
-            {
+            } else {
                 $link = config('constants.SiteAddress') . "user/{$tid}";
             }
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
@@ -5347,8 +4579,7 @@ var id = data.node.id;
 				
 				<div class="CountDiVBordered-content">
 					<div class="CountDiVBordered-content-li">';
-        foreach ($user_groups as $UserS)
-        {
+        foreach ($user_groups as $UserS) {
             $tid = $UserS->id;
             $link = $UserS->link;
             $title = $UserS->name;
@@ -5358,7 +4589,7 @@ var id = data.node.id;
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
 						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . ($link) . '">' . ($title) . '</a></div>
-                        <div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">'.$UserS->post_view_count()->count().'</span></div>
+                        <div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">' . $UserS->post_view_count()->count() . '</span></div>
 					</div>';
 
             $i++;
@@ -5402,8 +4633,7 @@ var id = data.node.id;
 			<div class="CountDiVBordered-content">
 				<div class="CountDiVBordered-content-li">';
 
-        foreach ($user_groups as $UserS)
-        {
+        foreach ($user_groups as $UserS) {
             $tid = $UserS->id;
             $link = $UserS->link;
             $title = $UserS->name;
@@ -5418,7 +4648,7 @@ var id = data.node.id;
             $ress .= '<div class="col-xs-12" style="background-color: #fff;margin: 5px 0px;height: 50px;">
 						<div class="col-xs-3 noPadding" style="height: 50px;"><img  src="pics/group/' . $pic . '" class="person-avatar mCS_img_loaded" style="height: 50px;width: 50px;"></div>
 						<div class="col-xs-8 text-align-right noPadding" style="line-height: 50px;"><a href="' . ($link) . '">' . ($title) . '</a></div>
-						<div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">'.$UserS->post_view_count()->count().'</span></div>
+						<div class="col-xs-1 text-align-right noPadding" style="line-height: 50px;"><span class="badge-red">' . $UserS->post_view_count()->count() . '</span></div>
 					</div>';
             $i++;
         }
@@ -5429,7 +4659,7 @@ var id = data.node.id;
 
     public function tinymce_url($html)
     {
-        $res = str_replace('img src="tinymce' ,'img src="/tinymce',$html);
+        $res = str_replace('img src="tinymce', 'img src="/tinymce', $html);
         return $res;
     }
 
@@ -5506,8 +4736,7 @@ var id = data.node.id;
         $defs = array();
         $array = (array)$Keys;
         $category_list2 = '';
-        if ($Keys)
-        {
+        if ($Keys) {
             $PF = new PublicFunctions();
             $PF2 = $PF->CretaeTree1L($array, 'keyword_1_id', 'keyword_2_id', 'title');
             $PF2 = $PF->toUL($PF2);
@@ -5518,27 +4747,21 @@ var id = data.node.id;
 
     public function highlight($body, $uid = 0, $pid = 0)
     {
-        if ($uid != 0)
-        {
-            if ($pid != 0)
-            {
+        if ($uid != 0) {
+            if ($pid != 0) {
                 $sr = "pid = '{$pid}' AND uid = '{$uid}'";
-            }
-            else
-            {
+            } else {
                 $sr = "pid = '0'";
             }
             $sql = "select id , quote , type , reg_date from highlights where (" . $sr . ") ";
             $h = DB::select(DB::raw($sql));
             $n = 0;
-            foreach ($h as $value)
-            {
+            foreach ($h as $value) {
                 $n++;
                 $quote[$value->id] = '' . $value->quote . '';
                 $quotestyle[$value->id] = '<span class="highlight">' . $value->quote . '</span>';
             }
-            if ($n > 0)
-            {
+            if ($n > 0) {
                 $body = str_replace($quote, $quotestyle, $body);
             }
             // dd($quote, $quotestyle, $body);
@@ -5547,13 +4770,35 @@ var id = data.node.id;
     }
 
 
-
-
-
-
-
-
-
+    static public function service_out($html, $page = -1)
+    {
+        //return $html;
+        $r = null;
+        $result1 = null;
+        $SRVOT_key = 'SRVOT';
+        $preg_match = preg_match_all('/SRVOT_(.|[^SRVOT;]+)_SRVOT;/', $html, $matches, PREG_SET_ORDER);
+        if ($preg_match) {
+            foreach ($matches as $matche) {
+                if (isset($matche[1])) {
+                    $SRVOT = $matche[0];
+                    $SRVOT_ed = $matche[1];
+                    if ($SRVOT_ed) {
+                        list($diagram, $since, $until, $height, $width) = explode_ex('-', $SRVOT_ed);
+                        $url = "http://192.168.5.93/Forms/Payesh/Frm_ShowChart.aspx?id=$diagram&fdate=$since&tdate=$until";
+                        $r = '<iframe src="' . $url . '" style="width:' . (isset($width) ? $width.'px' : '600px') . ';height:' . (isset($height) ? $height.'px' : '500px') . '"></iframe>';
+                        return str_replace($SRVOT, $r, $html);
+                    } else {
+                        return $html;
+                    }
+                } else {
+                    return $html;
+                }
+            }
+            return -1 == $page ? $html : [$html, $result1];
+        } else {
+            return $html;
+        }
+    }
 
     static public function pages_list($html, $page = -1)
     {
@@ -5562,119 +4807,97 @@ var id = data.node.id;
         $result1 = null;
         $SPLIP_key = 'SPLIP';
         $preg_match = preg_match_all('/SPLIP_(.|[^SPLIP;]+)_SPLIP;/', $html, $matches, PREG_SET_ORDER);
-        if ($preg_match)
-        {
-            foreach ($matches as $matche)
-            {
-                if (isset($matche[1]))
-                {
+        if ($preg_match) {
+            foreach ($matches as $matche) {
+                if (isset($matche[1])) {
                     $SPLIP = $matche[0];
                     $SPLIP_ed = $matche[1];
-                    if ($SPLIP_ed)
-                    {
+                    if ($SPLIP_ed) {
                         $explode_ex = explode_ex('_', $SPLIP_ed);
                         @list ($types, $keywords, $admins, $count, $count_num, $all_links, $layout, $arrange, $order, $contents, $animates, $keywords_and_or) = @$explode_ex;
                         $types = explode_ex(',', $types);
                         $keywords = explode_ex(',', $keywords);
                         $admins = explode_ex(',', $admins);
-                        $all_links = (bool) $all_links;
+                        $all_links = (bool)$all_links;
                         $contents = explode_ex(',', $contents);
                         $contents['image'] = array_shift($contents);
                         $contents['fields'] = array_shift($contents);
                         $contents['abstract'] = array_shift($contents);
                         $contents['date'] = array_shift($contents);
                         $subjects = Subject::whereIn('kind', $types)->whereHas('pages')->orderBy(1 == $arrange ? 'reg_date' : 'title', 1 == $order ? 'ASC' : 'DESC');
-                        if ($keywords)
-                        {
-                            if ($keywords_and_or)
-                            {
-                                foreach ($keywords as $keyword)
-                                {
-                                    $subjects = $subjects->whereHas('keywords', function($q) use ($keyword)
-                                    {
+                        if ($keywords) {
+                            if ($keywords_and_or) {
+                                foreach ($keywords as $keyword) {
+                                    $subjects = $subjects->whereHas('keywords', function ($q) use ($keyword) {
                                         $q->where('keywords.id', $keyword);
                                     });
                                 }
-                            } else
-                            {
-                                $subjects = $subjects->whereHas('keywords', function($q) use ($keywords)
-                                {
+                            } else {
+                                $subjects = $subjects->whereHas('keywords', function ($q) use ($keywords) {
                                     $q->whereIn('keywords.id', $keywords);
                                 });
                             }
                         }
                         $subjects = $admins ? $subjects->whereIn('admin', $admins) : $subjects;
-                        if (1 == $count)
-                        {
+                        if (1 == $count) {
                             $subjects = $subjects->get();
-                        } elseif (2 == $count && $count_num)
-                        {
-                            if (-1 == $page)
-                            {
+                        } elseif (2 == $count && $count_num) {
+                            if (-1 == $page) {
                                 $result1 = $subjects->count() - $count_num;
                                 $subjects = $subjects->take($count_num)->get();
-                            } else
-                            {
+                            } else {
                                 $subjects = $subjects->paginate($count_num);
                                 $subjects_array = $subjects->toArray();
                                 $result1 = $subjects_array['total'] - ($subjects_array['current_page'] * $subjects_array['per_page']);
                                 //if ($page >= $subjects_array['last_page']) { return '[:end:]'; };
                             }
-                        } else
-                        {
+                        } else {
                             return $html;
                         }
 
-                        if ($subjects)
-                        {
+                        if ($subjects) {
                             $items = [];
-                            foreach ($subjects as $subject)
-                            {
+                            foreach ($subjects as $subject) {
                                 $items[] = '<a href="' . url($subject->pages[0]->id) . '" target="_blank">' . trim($subject->title) . '</a>';
                             }
                             $is_showing_more = $all_links && -1 != $page;
                             $with = ['subjects' => $subjects, 'contents' => $contents, 'SPLIP' => $SPLIP, 'layout' => $layout, 'is_showing_more' => $is_showing_more, 'items' => $items, 'animates' => $animates, 'show_more' => $all_links, 'show_more_sign' => hash('crc32', $SPLIP . rand(100000, 999999)), 'more_count' => $result1, 'count_num' => $count_num];
-                            switch (true)
-                            {
+                            switch (true) {
                                 case '1' == $layout:
-                                {
-                                    $r = view('modals.editor.pages-list-layout-1')->with($with);
-                                    break;
-                                }
+                                    {
+                                        $r = view('modals.editor.pages-list-layout-1')->with($with);
+                                        break;
+                                    }
                                 case '2' == $layout && '0000' == implode(null, $contents):
-                                {
-                                    $r = view('modals.editor.pages-list-layout-2-ul')->with($with);
-                                    break;
-                                }
+                                    {
+                                        $r = view('modals.editor.pages-list-layout-2-ul')->with($with);
+                                        break;
+                                    }
                                 case '2' == $layout:
-                                {
-                                    $r = view('modals.editor.pages-list-layout-2')->with($with);
-                                    break;
-                                }
+                                    {
+                                        $r = view('modals.editor.pages-list-layout-2')->with($with);
+                                        break;
+                                    }
                                 case '3' == $layout:
                                 case '4' == $layout:
-                                {
-                                    $r = view('modals.editor.pages-list-layout-3')->with($with);
-                                }
+                                    {
+                                        $r = view('modals.editor.pages-list-layout-3')->with($with);
+                                    }
                             }
                             $include = view('modals.editor.pages-list-js')->with(['SPLIP' => $SPLIP])->render() . view('modals.editor.pages-list-css')->render();
                             $html = ($is_showing_more ? null : $include) . str_replace($SPLIP, $r, $html);
-                        } else
-                        {
+                        } else {
                             return $html;
                         }
-                    } else
-                    {
+                    } else {
                         return $html;
                     }
-                } else
-                {
+                } else {
                     return $html;
                 }
             }
             return -1 == $page ? $html : [$html, $result1];
-        } else
-        {
+        } else {
             return $html;
         }
     }

@@ -217,7 +217,7 @@
                     }
                 }
         });
-        $('#types').select2({'width': '100%'});
+        $('#types-diagram').select2({'width': '100%'});
 
         $('#RepSels').on('click', function () {
             var Sjadval_col2 = $('select#jadval_col2 option').sort().clone();
@@ -662,12 +662,11 @@
             <div class="col-xs-10">
                 <span class="">
                     @php($diagram = \App\Models\Hamahang\diagram_users_permission::where('user_id',auth()->user()->id)->get())
-                    <select class="form-control" id="types">
+                    <select class="form-control" id="types-diagram">
                         @foreach ($diagram as $item)
-                            <option value="{{$item->diagram->id}}">{{$item->diagram->title}}</option>
+                            <option value="{{$item->diagram->diagram_id}}">{{$item->diagram->title}}</option>
                         @endforeach
                     </select>
-
                 </span>
             </div>
         </div>
@@ -690,13 +689,13 @@
                     <label >از</label>
                 </div>
                 <div class="col-xs-5">
-                    <input type="text" name="since" placeholder="9804" class="form-control"/>
+                    <input type="text" name="since" id="since" placeholder="9804" class="form-control"/>
                 </div>
                 <div class="col-xs-1">
                     <label >تا</label>
                 </div>
                 <div class="col-xs-5">
-                    <input type="text" name="untim" placeholder="9804" class="form-control"/>
+                    <input type="text" name="until" id="until" placeholder="9804" class="form-control"/>
                 </div>
             </div>
         </div>
@@ -709,13 +708,13 @@
                     <label >طول</label>
                 </div>
                 <div class="col-xs-5">
-                    <input type="text" name="tol" placeholder="طول" class="form-control"/>
+                    <input type="text" name="height" id="height" placeholder="طول" class="form-control"/>
                 </div>
                 <div class="col-xs-1">
                     <label >عرض</label>
                 </div>
                 <div class="col-xs-5">
-                    <input type="text" name="arz" placeholder="عرض" class="form-control"/>
+                    <input type="text" name="width" id="width" placeholder="عرض" class="form-control"/>
                 </div>
             </div>
         </div>
